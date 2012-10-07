@@ -1,0 +1,183 @@
+#!/bin/sh
+#----------------------------------------------------------
+# install moServices3
+#
+chkErr()
+{
+	if [ $1 != 0 ] ; then
+		echo "$2"
+		[ -n $3 ] && rm -f $3
+		exit 1
+	fi
+}
+
+addFile()
+{
+	if [ ! -f /usr/local/etc/$1 ] ; then
+		cp -a /etc/$1 /usr/local/etc/$1
+		mount -o bind /usr/local/etc/$1 /etc/$1
+	fi
+		
+	grep -q $1 $2 || echo "mount -o bind /usr/local/etc/$1 /etc/$1" >> $2
+}
+#
+# =====================================
+cd /tmp
+
+if [ $# -eq 0 ] ; then
+	clear
+	echo "==========================================
+ Installing moServices 3
+------------------------------------------
+ Version: 0.5
+------------------------------------------
+ 12/01/27 > FarVoice  > www.moservices.org
+==========================================
+Choose destination:
+=> (1) - auto (root or etc partition)
+=> (2) - root partition
+=> (3) - etc partition
+=> (0) - Exit"
+	read option
+
+	if   [ "$option" == "1" ] ; then
+		target='auto'
+	elif [ "$option" == "2" ] ; then
+		target='root'
+	elif [ "$option" == "3" ] ; then
+		target='etc'
+	else
+		exit 0;
+	fi
+else
+	target=$1
+fi
+
+repdir="http://www.moservices.org/mos3"
+[ -f repo ] && repdir="$( head -n 1 repo )"
+
+# checking and remove previous installation
+etc=/usr/local/etc
+mos=$etc/mos
+
+if [ -d $mos ] && [ -n "$( ls $mos )" ] ; then
+  echo "Remove previous installation..."
+  $mos/services stop
+  $mos/services disable
+  rm -Rf /usr/local/etc/mos/*
+fi
+[ ! -d $mos ] && mkdir $mos
+
+# analize where install
+# mos already mounted?
+if ! df | grep -q $mos ; then
+	if [ "$target" == "auto" ] ; then
+		# check root
+		sr=$( echo $( df | grep -E ' /$' ) | cut -d' ' -f4 )
+		# check etc
+		se=$( echo $( df | grep -E ' /usr/local/etc$' ) | cut -d' ' -f4 )
+		if [ $sr -gt $se ] ; then
+			target='root'
+		else
+			target='etc'
+		fi
+	fi
+
+	if [ "$target" == "root" ] ; then
+
+		# goes to root
+		# patch rcS
+		sed -i '
+/\/sbin\/modprobe sata_mars\&/a\
+\
+# moServices goes to root\
+mount -o remount,rw /\
+mount /usr/share/mos /usr/local/etc/mos\
+#\
+' $etc/rcS
+		# mount & remount
+		mount -o remount,rw /
+		mkdir -p /usr/share/mos
+		mount /usr/share/mos $mos
+	fi
+fi
+
+# Seagate FW patch
+if [ ! -f $etc/rcS ] ; then
+
+	if [ ! -f $etc/autorun.sh ] ; then
+		echo '#!/bin/sh' > $etc/autorun.sh
+		chmod +x $etc/autorun.sh
+	fi
+
+	addFile ld.so.conf $etc/autorun.sh
+	addFile profile $etc/autorun.sh
+	addFile passwd $etc/autorun.sh
+fi
+
+# Asus HD2 FW patch
+if mount | grep -q ' /etc ' ; then
+
+	rm -f /etc/ld.so.conf
+	ln -s $etc/ld.so.conf /etc/ld.so.conf
+
+	rm -f /etc/ld.so.cache
+	ln -s $etc/ld.so.cache /etc/ld.so.cache
+fi
+
+# check uclibc
+
+if ls /lib | grep -q ld-uClibc-0.9.28 ; then
+
+	echo 'detected uClibc 0.9.28'
+	f=base.tar.bz2
+else
+	echo 'uClibc 0.9.28 is not present. Try to install mos for 0.3.30.3'
+	f=mos30.tar.bz2
+fi
+
+if [ ! -f $f ]; then
+	wget $repdir/$f
+	chkErr $? "Unable to download $f" $f
+fi
+# checking archive
+tar -tjf $f >/dev/null 2>&1
+chkErr $? "Archive $f is corrupt!" $f
+
+# extract
+tar -xjf $f -C $mos/
+chkErr $? "Archive $f extract error!" $f
+rm -f $f
+
+# initial action
+if [ "$f" = 'base.tar.bz2' ] ; then
+	rm -f $mos/base.package
+	$mos/bin/pm install base
+fi
+
+# starting packages
+$mos/services enable
+$mos/services start
+
+n=30
+while [ $n -ge 0 ] ; do
+	s=0
+	for i in $mos/etc/init/* ; do
+		[ -x i ] && $i status | grep -q 'stop' && s=1
+	done
+	[ $s -eq 0 ] && break
+	sleep 2
+	let n-=1
+done
+
+if [ $s -eq 0 ] ; then
+	for i in $mos/etc/init/* ; do
+		[ -x i ] && $i status
+	done
+
+	echo "moServices installed succesfully."
+	exit 0
+else
+	echo "moServices not installed succesfully!"
+	exit 1
+fi
