@@ -14,15 +14,6 @@
 	files="bin/awk"
 	size = 1272
 
-[base]
-	revision = 13
-	title = "moServices base"
-	role = package
-	init = S00base
-	files="services bin/mos_remove bin/pm bin/wait_ip bin/wait_mount bin/wget etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop base.noinit.patch"
-	require="libgcc_s busybox web core"
-	size = 404
-
 [busybox]
 	revision= 3
 	title = "BusyBox v1.18.4"
@@ -560,15 +551,6 @@
 	files="www/modules/weather/"
 	size = 80
 
-[web]
-	revision = 2
-	title ="Lighttpd web server v1.4.28 pcre"
-	role = package
-	backup = "etc/lighttpd.conf etc/lighttpd.plain"
-	files="bin/lighttpd bin/php etc/lighttpd.conf etc/lighttpd.plain etc/init/S03web lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so lib/libpcre.so lib/libpcre.so.0 lib/libpcre.so.0.0.1 lib/mod_proxy.so"
-	require="libgcc_s php"
-	size = 8956
-
 [woowza]
 	revision = 3
 	title = "Woowza movies"
@@ -591,4 +573,22 @@
 	init = S43zswap
 	files="etc/init/S43zswap zswap/"
 	size = 120
+
+[base]
+	revision = 13
+	title = "moServices base"
+	role = package
+	init = S00base
+	files="services bin/mos_remove bin/pm bin/wait_ip bin/wait_mount bin/wget etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop base.noinit.patch"
+	require="libgcc_s busybox web core"
+	size = 404
+
+[web]
+	revision = 2
+	title ="Lighttpd web server v1.4.28 pcre"
+	role = package
+	backup = "etc/lighttpd.conf etc/lighttpd.plain"
+	files="bin/lighttpd etc/lighttpd.conf etc/lighttpd.plain etc/init/S03web lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so lib/libpcre.so lib/libpcre.so.0 lib/libpcre.so.0.0.1 lib/mod_proxy.so"
+	require="libgcc_s php"
+	size = 1168
 

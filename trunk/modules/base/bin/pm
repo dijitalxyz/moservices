@@ -7,13 +7,42 @@ mos=$etc/mos
 pm=$mos/etc/pm
 tmp=/tmp
 
+
+localrepo=''
 repository="http://www.moservices.org/mos3"
+enviroment=''
 
 # read config
 if [ -f $mos/etc/pm.conf ] ; then
-	eval "$( cat $mos/etc/pm.conf )"
+	. $mos/etc/pm.conf
 else
 	echo 'repository="'$repository'"' > $mos/etc/pm.conf
+fi
+
+# get enviroment
+if [ -z "$enviroment" ] ; then
+	s="$( uname -r )"
+	if [ "$s" = '2.6.12.6-VENUS' ] ; then
+		enviroment='12'
+	elif [ "$s" = '2.6.34-VENUS' ] ; then
+		enviroment='34'
+	else
+		echo "Env error: Linux $s is not supported"
+		exit 1
+	fi
+	echo "  Detected $s core"
+
+	if ls /lib | grep -q 'ld-uClibc-0\.9\.28' ; then
+		echo '  Detected uClibc 0.9.28'
+		enviroment=$enviroment'28'
+	elif ls /lib | grep -q 'ld-uClibc-0\.9\.30' ; then
+		echo '  Detected uClibc 0.9.30'
+		enviroment=$enviroment'30'
+	else
+		echo "Env error: Didn't detect supported uClibc"
+		exit 1
+	fi
+	echo "enviroment=$enviroment" >> $mos/etc/pm.conf
 fi
 
 # other repo
@@ -26,11 +55,19 @@ loadFile()
 
 	# download
 	if [ ! -f $tmp/$1.tar.bz2 ]; then
-		wget $repository/$1.tar.bz2 -O $tmp/$1.tar.bz2
-		if [ $? -ne 0 ] ; then
-			echo "Unable to download $repository/$1.tar.bz2"
-			rm -f $tmp/$1.tar.bz2
-			return 1
+		if [ -n "$localrepo" ] ; then
+			if [ ! -e $localrepo/$1.tar.bz2 ] ; then
+				echo "File $localrepo/$1.tar.bz2 not found"
+				return 1
+			fi
+			cp -a $localrepo/$1.tar.bz2 $tmp/
+		else
+			wget $repository/$1.tar.bz2 -O $tmp/$1.tar.bz2
+			if [ $? -ne 0 ] ; then
+				echo "Unable to download $repository/$1.tar.bz2"
+				rm -f $tmp/$1.tar.bz2
+				return 1
+			fi
 		fi
 	fi
 	# check
@@ -63,6 +100,7 @@ getFreeMem()
 {
 	s=$( echo $( df | grep -E ' '$mos'$' ) | cut -d' ' -f4 )
 	[ -z "$s" ] && s=$( echo $( df | grep -E ' '$etc'$' ) | cut -d' ' -f4 )
+	[ -z "$s" ] && s=$( echo $( df | grep -E ' /data$'  ) | cut -d' ' -f4 )
 	echo $s
 }
 
@@ -129,6 +167,27 @@ checkPackageInstalled()
 }
 
 #--------------------------------------
+getPackageSize()
+{
+local s
+local h
+local p
+	checkPackageInList $1 || return 1
+
+	s=$( getParameterFromList $pm/packages $1 size )
+
+	# required packages
+	h="$( getParameterFromList $pm/packages $1 require )"
+	if [ -n "$h" ] ; then
+		for p in $h ; do
+			checkPackageInstalled $p || let s=s+$( getPackageSize $p )
+		done
+	fi
+
+	echo $s
+}
+
+#--------------------------------------
 runPatches()
 {
 	for i in $mos/*.patch ; do
@@ -153,6 +212,14 @@ local p
 		echo "  Package $1 already installed"
 	else
 		if [ "$2" != 'alone' ] ; then
+			# check enviroment
+			h="$( getParameterFromList $pm/packages $1 env )"
+			if [ -n "$h" ] ; then
+				if [ $h -ne $enviroment ] ; then
+					echo "  Package $1 not supported by enviroment"
+					return 1
+				fi
+			fi
 			# check for installable
 			h="$( getParameterFromList $pm/packages $1 check )"
 			if [ -n "$h" ] ; then
@@ -175,7 +242,7 @@ local p
 			fi
 			# check memory
 			h=$( getFreeMem )
-			v=$( getParameterFromList $pm/packages $1 size )
+			v=$( getPackageSize $1 )
 			if [ $v -gt $h ] ; then
 				echo "  No enough memory for $1"
 				return 1
@@ -405,7 +472,7 @@ case "$1" in
 
 		echo "Making full..."
 		cd $mos
-		tar cjf $d/full.tar.bz2 *
+		tar cjf $d/mos_full.tar.bz2 *
 
 	else
 		s=$( ls $pm/files/$m* )
@@ -422,25 +489,55 @@ case "$1" in
 	  repository)
 		echo $repository
 		;;
+	  enviroment)
+		echo $enviroment
+		;;
 	  freememory)
 		getFreeMem
+		;;
+	  size)
+		getPackageSize $3
+		;;
+	  installed)
+		getPackageFromList $pm/installed $3
+		;;
+	  package)
+		getPackageFromList $pm/packages $3
+		;;
+	esac
+	;;
+
+  list)
+	case "$2" in
+	  installed)
+		sed -nr 's/\[(.*)\]/\1/p' $pm/installed
+		;;
+	  *)
+		sed -nr 's/\[(.*)\]/\1/p' $pm/packages
 		;;
 	esac
 	;;
 
   *)
-	echo "moServices Package Manager v 0.10 (http://www.moservices.org)
+	echo "moServices Package Manager rev10 (http://www.moservices.org)
 Usage: pm <action> ...
 Avaiable:
 	install <package> [alone]
 	remove <package>
-	update <package> [alone]
+	update <package> [now]
 	updatelist
 	make <package>|all|full [<destination_path>] (default /tmp)
 	get <package> [<destination_path>] (default /tmp)
 	show
 		repository
-		freememory"
+		enviroment
+		freememory
+		size <package>
+		installed <package>
+		package <package>
+	list
+		installed
+		packages"
 	;;
 esac
 
