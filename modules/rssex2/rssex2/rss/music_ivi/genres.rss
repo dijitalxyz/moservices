@@ -1,0 +1,291 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=onePartView
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemImageXPC="22"
+	itemImageYPC="18"
+	itemXPC="35"
+	itemYPC="18"
+	capXPC="88"
+	capYPC="17"
+	capHeightPC="10"
+	headerCapXPC="90"
+	headerCapYPC="10"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	showHeader=no
+	menuXPC=5
+	menuYPC=20
+	menuWidthPC=15
+	menuHeightPC=10
+  selectMenuOnRight=no
+  forceFocusOnItem=yes
+  forceFocusOnMenu=no
+	showDefaultInfo=yes
+	infoYPC=90
+	fontSize=18
+	imageFocus=""
+	imageUnFocus=""
+	imageParentFocus=""
+>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1 backgroundColor=255:255:255 >
+		../etc/translate/rss/image/gradient_line.bmp
+  </image>
+  <image offsetXPC=80 offsetYPC=3 widthPC=15 heightPC=6>
+    <script>pageLogo;</script>
+    <widthPC>
+      <script>
+        205 * 6 / 26 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 205 * 6 / 26 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+  </image>
+
+	<itemDisplay>
+		<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" fontSize="18" backgroundColor="0:0:0" foregroundColor="250:250:250">
+			<script>
+			  idx = getQueryItemIndex();
+			  focus = getFocusItemIndex();
+		    getItemInfo(idx, "title");
+			</script>
+		  <backgroundColor>
+  			<script>
+  			  idx = getQueryItemIndex();
+  			  focus = getFocusItemIndex();
+  		    if(idx==focus) "200:200:200"; else "0:0:0";
+  			</script>
+		  </backgroundColor>
+		  <foregroundColor>
+  			<script>
+  			  idx = getQueryItemIndex();
+  			  focus = getFocusItemIndex();
+  		    if(idx==focus) "0:0:0"; else "100:100:100";
+  			</script>
+		  </foregroundColor>
+		</text>
+	</itemDisplay>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -5;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 5;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      ret;
+    </script>
+  </onUserInput>
+
+</mediaDisplay>
+
+<onEnter>
+  print("music_ivi_ru_genres::onEnter start");
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  pageLogo = "../etc/translate/rss/image/ivi-music.png";
+  pageTitle = "MUSIC.IVI.RU - Жанры";
+
+  setReturnString("");
+</onEnter>
+
+  <item_template>
+    <onClick>
+	idx = getFocusItemIndex();
+	id  = getItemInfo(idx, "id");
+	setReturnString(id);
+	print("genre=",id);
+        postMessage("return");
+    </onClick>
+  </item_template>
+
+<channel>
+  <title>MUSIC.IVI.RU - Жанры</title>
+  <item>
+   <title>Все жанры</title>
+   <id>all</id>
+  </item>
+  <item>
+   <title>R&amp;B</title>
+   <id>RnB</id>
+  </item>
+  <item>
+   <title>Альтернативная музыка</title>
+   <id>Alternative</id>
+  </item>
+  <item>
+   <title>Блюз</title>
+   <id>Blues</id>
+  </item>
+  <item>
+   <title>Детская музыка</title>
+   <id>Kids</id>
+  </item>
+  <item>
+   <title>Джаз</title>
+   <id>Jazz</id>
+  </item>
+  <item>
+   <title>Документальное видео</title>
+   <id>Documentary</id>
+  </item>
+  <item>
+   <title>Другая музыка</title>
+   <id>Other</id>
+  </item>
+  <item>
+   <title>Инструментальная музыка</title>
+   <id>Instrumental</id>
+  </item>
+  <item>
+   <title>Кантри</title>
+   <id>Country</id>
+  </item>
+  <item>
+   <title>Классическая музыка</title>
+   <id>Classic</id>
+  </item>
+  <item>
+   <title>Клубная музыка</title>
+   <id>Club</id>
+  </item>
+  <item>
+   <title>Концерты</title>
+   <id>Concerts</id>
+  </item>
+  <item>
+   <title>Латино</title>
+   <id>Latino</id>
+  </item>
+  <item>
+   <title>Легкая музыка</title>
+   <id>Louge</id>
+  </item>
+  <item>
+   <title>Панк</title>
+   <id>Punk</id>
+  </item>
+  <item>
+   <title>Поп</title>
+   <id>Pop</id>
+  </item>
+  <item>
+   <title>Рок</title>
+   <id>Rock</id>
+  </item>
+  <item>
+   <title>Рэгги</title>
+   <id>Reggae</id>
+  </item>
+  <item>
+   <title>Рэп/Хип-Хоп</title>
+   <id>RapHipHop</id>
+  </item>
+  <item>
+   <title>Саундтреки</title>
+   <id>Soundtracks</id>
+  </item>
+  <item>
+   <title>Хардрок/Метал</title>
+   <id>HardrocknMetal</id>
+  </item>
+  <item>
+   <title>Шансон</title>
+   <id>Shanson</id>
+  </item>
+  <item>
+   <title>Электронная музыка</title>
+   <id>Electro</id>
+  </item>
+  <item>
+   <title>Этническая музыка</title>
+   <id>Ethnik</id>
+  </item>
+
+</channel>
+</rss>

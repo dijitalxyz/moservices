@@ -1,0 +1,144 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+#
+# Translate CGI module
+# 'youtube.com' plug-in
+#
+# version: 2.7 27.01.2012 23:40
+#
+# http://www.youtube.com/v/JZtcw6GIxTY
+# http://www.youtube.com/watch?v=JZtcw6GIxTY
+# http://www.youtube.com/movie?v=xO19ipsCxfI
+# http://m.youtube.com/watch?gl=RU&client=mv-google&hl=ru&v=V-_YxX94cQ8
+# http://www.youtube.com/embed/0v1ijbQocqo
+#
+# http://www.youtube.com/watch?v=v--IqqusnNQ&feature=list_related&playnext=1&list=AVGxdCwVVULXeKBZbzNyDrXn1k_UU4pSf9
+#
+# options:
+#   HD:[0|1]
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -qs 'youtube\.com.*\(/embed/\|/v/\|/watch?\|movie?\).*$'; then 
+
+  local TIMELIFE=60
+  
+  get_opt "HD"
+    [ -z "$opt" ] && opt=`sed -n '4p' $RSSCONF 2>/dev/null`
+    [ -z "$opt" ] && opt=$YOUTUBE_HD
+  case $opt in
+    yes|Yes|YES|1)
+      hdc=$opt
+    ;;
+    *)
+      hdc=''
+    ;;
+  esac
+  
+  local video_id=`echo "$arg_url" | sed -e 's/.*[?&]v=//;s/.*\///;s/&.*//'`
+  local CACHEFILE=$CACHEPATH/yt.$video_id
+  local USERAGENTG="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+
+  if echo "${arg_url}" | grep -qs '&list='; then
+    host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENTG}" ${arg_url} 2>&1`
+    if grep -qs "data-list-id=" ${TMPFILE}; then
+
+      local PLAYLISTFILE=$CACHEPATH/temp.xspf
+      rm -f $PLAYLISTFILE
+      
+      awk '/data-list-id=/{
+        match($0,/data-video-ids="([^"]*)"/,arr);
+        len = split(arr[1],vid,",");
+				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+				print "<playlist version=\"1\" xmlns=\"http://xspf.org/ns/0/\">"
+	  		print "<title>YouTube playlist</title>"
+	  		print "<trackList>"
+        for(i=1; i<=len; i++) {
+  				print "<track>"
+		  		print "<title>" vid[i] "</title>"
+		  		print "<location>http://www.youtube.com/v/" vid[i] "</location>"
+		  		print "<image>http://i.ytimg.com/vi/" vid[i] "/default.jpg</image>"
+  				print "</track>"
+        }
+				print "</trackList>"
+				print "</playlist>"
+        exit;
+      }' ${TMPFILE} > $PLAYLISTFILE
+
+      stream_type='application/xspf+xml'
+      stream_url=$PLAYLISTFILE
+      protocol='file'
+      arg_opt='Resolve-playlist:0;Autoplay:1'
+
+      return $RC_OK
+    fi
+  fi 
+    
+  local tsttime=
+  local fmt_url_map=
+  
+  let tsttime=`date +%s`-$TIMELIFE
+  
+  if [ -f $CACHEFILE ]; then
+    if [ `date +%s -r $CACHEFILE` -gt $tsttime ]; then
+      fmt_url_map=`sed -ne "1p" $CACHEFILE`
+      icy_name=`sed -ne "2p" $CACHEFILE`
+    fi
+  fi
+  
+  if [ -z "$fmt_url_map" ]; then   
+      host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENTG}" http://www.youtube.com/watch?v=$video_id 2>&1`
+      if [ -f ${TMPFILE} ]; then
+        fmt_url_map=`grep -i 'url_encoded_fmt_stream_map=' ${TMPFILE} | sed -n '1p'`
+        if [ -z "$fmt_url_map" ]; then
+	        fmt_url_map=`grep -i 'fmt_url_map=' ${TMPFILE} | sed '1p'`
+	        fmt_url_map=`echo "$fmt_url_map" | unidecode | unescapeXML | awk '{match($0, /&fmt_url_map=([^&]*)&/, arr);print arr[1];}' | urldecode`
+	      else
+        	fmt_url_map=`echo "$fmt_url_map" | unidecode | unescapeXML | awk '{match($0, /&url_encoded_fmt_stream_map=url%3D([^&]*)&/, arr);print arr[1];}' | urldecode | urldecode`
+        fi
+        icy_name=`grep 'meta name="title"' ${TMPFILE} | sed 's/.*t="//;s/".*//'`
+        icy_name=`unescapeXML "$icy_name"`
+        icy_name=`unescapeXML "$icy_name"`
+        echo $fmt_url_map > $CACHEFILE
+        echo $icy_name >> $CACHEFILE
+        rm -f $TMPFILE
+      fi
+  fi
+  
+  if [ -n "$fmt_url_map" ]; then
+    stream_type='video/mp4'
+    stream_url=''
+    server_type='youtube'
+    protocol='http'
+    if echo "$fmt_url_map" | grep -qs ",url="; then
+    	#22 / HD720
+    	[ -n "$hdc" ] && stream_url=`echo $fmt_url_map | awk 'BEGIN{RS=",url="} /itag=22/{print $0}' | sed 's/;.*//'`
+    	#18 / MEDIUM (default)
+    	[ -z "$stream_url" ] && stream_url=`echo $fmt_url_map | awk 'BEGIN{RS=",url="} /itag=18/{print $0}' | sed 's/;.*//'`
+    else
+    	#22 / HD720
+    	[ -n "$hdc" ] && stream_url=`echo $fmt_url_map | awk '{match($0,/.*22\|([^,]+),?/,arr);print arr[1]}'`
+    	#18 / MEDIUM (default)
+    	[ -z "$stream_url" ] && stream_url=`echo $fmt_url_map | awk '{match($0,/.*18\|([^,]+),?/,arr);print arr[1]}'`
+    fi
+  fi
+  return $RC_OK
+fi
+return $RC_FAIL

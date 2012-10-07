@@ -1,0 +1,6 @@
+[mediaportal]
+	revision = 16
+	title = "Media portal"
+	role = rss
+	files="www/modules/mediaportal/"
+	size = 64

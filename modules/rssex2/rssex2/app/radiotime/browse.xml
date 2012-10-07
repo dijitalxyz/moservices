@@ -1,0 +1,591 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+<!--`cat "$INITSCRIPT"`-->
+
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+  
+  error_info  = "";
+  itemSize    = 0;
+  pageTitle   = "";
+
+  currentIndex  = 0;
+  currentLink   = "";
+  currentTitle  = "";
+  executeScript("sub_createOutlineLink");
+  
+  historyIndex  = null;
+  historyLink   = null;
+  historyOpml   = null;
+  historyTitle  = null;
+  
+  history = -1;
+  executeScript("sub_refreshList");
+</onEnter>
+
+<sub_createOutlineLink>
+  if(opmlType == "link")
+  {
+    currentLink = translate_base_url+"app,Link:"+urlEncode(opmlUrl)+",radiotime/outline";
+  }
+  else
+  if(opmlType == "")
+  {
+    if(opmlKey != "")
+    {
+      currentLink = translate_base_url+"app,Key:"+urlEncode(opmlKey)+";Link:"+urlEncode(opmlUrl)+",radiotime/outline";
+    }
+    else
+    if(opmlText != "")
+    {
+      currentLink = translate_base_url+"app,Text:"+urlEncode(opmlText)+";Link:"+urlEncode(opmlUrl)+",radiotime/outline";
+    }
+  }
+  currentTitle = opmlText;
+</sub_createOutlineLink>
+
+<sub_refreshList>
+  print("sub_refreshList start");
+
+    dlok = loadXMLFile(currentLink);
+    if (dlok != null)
+    {
+      opmlArrayKey = null;
+      opmlArrayText = null;
+      opmlArrayURL = null;
+      opmlArraySubtext = null;
+      opmlArrayType = null;
+      opmlArrayBitrate = null;
+      opmlArrayFormats = null;
+      opmlArrayImage = null;
+      
+      currentTitle = getXMLText("outline","title");
+      
+    	itemSize = getXMLElementCount("outline","outline");
+    	if(itemSize == 0)
+    	{
+        error_info = "Empty list!";
+        print(error_info);
+    	  postMessage("return");
+    	}
+    	print("itemSize = ", itemSize);
+    	
+    	count=0;
+    	while(itemSize != 0)
+    	{
+    	  opmlArrayKey = pushBackStringArray(opmlArrayKey, getXMLAttribute("outline","outline",count,"key"));
+    	  opmlArrayText = pushBackStringArray(opmlArrayText, getXMLAttribute("outline","outline",count,"text"));
+    	  opmlArrayURL = pushBackStringArray(opmlArrayURL, getXMLAttribute("outline","outline",count,"URL"));
+    	  opmlArraySubtext = pushBackStringArray(opmlArraySubtext, getXMLAttribute("outline","outline",count,"subtext"));
+    	  opmlArrayType = pushBackStringArray(opmlArrayType, getXMLAttribute("outline","outline",count,"type"));
+    	  opmlArrayBitrate = pushBackStringArray(opmlArrayBitrate, getXMLAttribute("outline","outline",count,"bitrate"));
+    	  opmlArrayFormats = pushBackStringArray(opmlArrayFormats, getXMLAttribute("outline","outline",count,"formats"));
+    	  opmlArrayImage = pushBackStringArray(opmlArrayImage, getXMLAttribute("outline","outline",count,"image"));
+    	  count += 1;
+    	  if (count == itemSize)
+    	  {
+    		  break;
+    	  }
+    	}
+
+    	print("text array =", opmlArrayText);
+    	print("url array =", opmlArrayURL);
+
+    	setFocusItemIndex(currentIndex);
+    	setItemFocus(currentIndex);
+
+      pageTitle = currentTitle;
+        
+    	redrawDisplay();
+    }
+    else
+    {
+      error_info = "Loading error!";
+      print(error_info);
+      postMessage("return");
+    }
+  print("sub_refreshList end");
+</sub_refreshList>
+
+<mediaDisplay name=onePartView
+
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+
+	itemImageXPC="15"
+	itemImageYPC="18"
+	itemXPC="15"
+	itemYPC="18"
+	itemHeightPC="14"
+	itemWidthPC="75"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemPerPage="5"
+  itemGap="2"
+	imageFocus=""
+	imageUnFocus=""
+	imageParentFocus=""
+
+	headerCapWidthPC="0"
+
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+
+  menuXPC=0
+  menuYPC=0
+  menuWidthPC=0
+  menuHeightPC=0
+
+	showHeader=no
+  selectMenuOnRight=no
+  forceFocusOnItem=yes
+  forceFocusOnMenu=no
+	showDefaultInfo=no
+	infoYPC=90
+>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+		
+    <text offsetXPC=5 offsetYPC=0 widthPC=60 heightPC=12 fontSize=28 backgroundColor=0:0:0 foregroundColor=200:200:200>
+      <script>pageTitle;</script>
+    </text>
+    <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>../etc/translate/rss/image/gradient_line.bmp</image>
+    <image offsetXPC=65 offsetYPC=3 widthPC=30 heightPC=6>
+      ../etc/translate/rss/image/radiotime.png
+      <widthPC>
+        <script>
+          185 / 32 * 6 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          95 - 185 / 32 * 6 * screenYp / screenXp;
+        </script>
+      </offsetXPC>
+    </image>
+
+    <onUserInput>
+    <script>
+    ret = "false";
+    userInput = currentUserInput();
+    if(userInput == "right" || userInput == "R")
+    {
+      ret = "true";
+    }
+    else if (userInput == "return" || userInput == "left" || userInput == "L" || userInput == "RET")
+    {
+      if(history &gt;= 0)
+      {
+        currentLink = getStringArrayAt(historyLink, history);
+        currentTitle = getStringArrayAt(historyTitle, history);
+        currentIndex = getStringArrayAt(historyIndex, history);
+        opmlUrl = getStringArrayAt(historyOpml, history);
+        
+        historyLink = deleteStringArrayAt(historyLink, history);
+        historyTitle = deleteStringArrayAt(historyTitle, history);
+        historyIndex = deleteStringArrayAt(historyIndex, history);
+        historyOpml = deleteStringArrayAt(historyOpml, history);
+        history -= 1;
+        print("from history: ",currentLink);
+        print("**************************** history: ",history,historyLink);
+        executeScript("sub_refreshList");
+        ret = "true";
+      }
+    }
+      else if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -5;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 5;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+    ret;
+    </script>
+    </onUserInput>
+    
+		<itemDisplay>
+		  <script>
+		    h = 75 * 15 * screenXp / screenYp / 14;
+		    if(h>100)
+		    {
+		      h = 100;
+		      w = h * 14 / 75 * screenYp / screenXp;
+		    }
+		    else
+		    {
+		      w = 15;
+		    }
+		  </script>
+      <image offsetXPC=0 offsetYPC=-20 widthPC=15 heightPC=140>
+				<script>
+					idx = getQueryItemIndex();
+					getStringArrayAt(opmlArrayImage, idx);
+				</script>
+			 <heightPC>
+			   <script>h;</script>
+			 </heightPC>
+			 <widthPC>
+			   <script>w;</script>
+			 </widthPC>
+			 <offsetYPC>
+			   <script>(100 - h)/2;</script>
+			 </offsetYPC>
+			 <offsetXPC>
+			   <script>(15 - w)/2;</script>
+			 </offsetXPC>
+      </image>
+			<text align="left" lines="1" offsetXPC=20 offsetYPC=0 widthPC=80 heightPC=50 fontSize=16>
+				<script>
+					idx = getQueryItemIndex();
+					getStringArrayAt(opmlArrayText, idx);
+				</script>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "150:150:150"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "0:0:0"; else "200:200:200";
+  				</script>
+			  </foregroundColor>
+			</text>
+			<text align="left" lines="1" offsetXPC=20 offsetYPC=50 widthPC=80 heightPC=50 fontSize=15>
+				<script>
+					idx = getQueryItemIndex();
+					getStringArrayAt(opmlArraySubtext, idx);
+				</script>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "150:150:150"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "0:0:0"; else "200:200:200";
+  				</script>
+			  </foregroundColor>
+			</text>
+			<text align="right" lines="1" offsetXPC=70 offsetYPC=50 widthPC=28 heightPC=50 fontSize=15>
+				<script>
+					idx = getQueryItemIndex();
+					bitrate = getStringArrayAt(opmlArrayBitrate, idx);
+					formats = getStringArrayAt(opmlArrayFormats, idx);
+					if(bitrate != "" &amp;&amp; formats != "")
+					  bitrate + " kbps / " + formats;
+					else
+					if(bitrate != "")  
+					  bitrate + " kbps";
+					else
+					if(formats != "")  
+					  formats;
+				</script>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "150:150:150"; else "0:0:0";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "0:0:0"; else "200:200:200";
+  				</script>
+			  </foregroundColor>
+			</text>
+		</itemDisplay>
+
+	</mediaDisplay>
+
+  <item_template>	
+    <onClick>
+			focus = getFocusItemIndex();
+			type = getStringArrayAt(opmlArrayType, focus);
+			text = getStringArrayAt(opmlArrayText, focus);
+			key = getStringArrayAt(opmlArrayKey, focus);
+			if(type == "audio")
+			{
+        showIdle();
+
+        request_title = text;
+        request_url = getStringArrayAt(opmlArrayURL, focus);
+        request_options = "Resolve-playlist:1";
+        request_image = getStringArrayAt(opmlArrayImage, focus);
+
+
+        stream_url = request_url;
+        stream_title = request_title;
+        stream_type = "";
+        stream_protocol = "";
+        stream_soft = "";
+        stream_class = "unknown";
+        stream_server = "";
+        stream_status_url = "";
+        stream_current_song = "";
+        stream_genre = "";
+        stream_bitrate = getStringArrayAt(opmlArrayBitrate, focus);
+        
+        url = translate_base_url + "stream,," + urlEncode(request_url);
+        
+        executeScript(stream_class+"Dispatcher");
+        
+        cancelIdle();
+      }
+      else
+      {
+        history += 1;
+        historyLink     = pushBackStringArray(historyLink, currentLink);
+        historyTitle    = pushBackStringArray(historyTitle, currentTitle);
+        historyIndex    = pushBackStringArray(historyIndex, getFocusItemIndex());
+        historyOpml     = pushBackStringArray(historyOpml, opmlUrl);
+        
+        print("********** history:",history,historyLink);
+
+        currentIndex = 0;
+        opmlType = getStringArrayAt(opmlArrayType, focus);
+        opmlKey = getStringArrayAt(opmlArrayKey, focus);
+        opmlText = getStringArrayAt(opmlArrayText, focus);
+        value = getStringArrayAt(opmlArrayURL, focus);
+        if(value != "")
+          opmlUrl = value;
+        executeScript("sub_createOutlineLink");
+        executeScript("sub_refreshList");
+      }
+    </onClick>
+  </item_template>	
+
+  <videoDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/videoRenderer.rss");
+  </videoDispatcher>
+  
+  <audioDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_status_url);
+    streamArray = pushBackStringArray(streamArray, stream_current_song);
+    streamArray = pushBackStringArray(streamArray, stream_genre);
+    streamArray = pushBackStringArray(streamArray, stream_bitrate);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, request_image); 
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/audioRenderer.rss");
+  </audioDispatcher>
+  
+  <playlistDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "playlist");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_playlist, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+  </playlistDispatcher>
+  
+  <rssDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/rss_mediaFeed.rss");
+  </rssDispatcher>
+
+  <unknownDispatcher>
+    info_url    = translate_base_url + "info," + request_options + "," + urlEncode(request_url);
+    error_info  = "";
+
+    res = loadXMLFile(info_url);
+    
+    if (res != null)
+    {
+      error = getXMLElementCount("info","error");
+      
+      if(error != 0)
+      {
+  	    value = getXMLText("info","error");
+  	    if(value != null)
+  	    {
+  	     error_info = value;
+  	    }
+      }
+      else
+      {
+  	    value = getXMLAttribute("info","stream","url");
+  	    if(value != null)
+  	     stream_url = value;
+  
+  	    value = getXMLAttribute("info","stream","type");
+  	    if(value != null)
+  	     stream_type = value;
+  	    
+  	    value = getXMLAttribute("info","stream","class");
+  	    if(value != null)
+  	     stream_class = value;
+  
+  	    value = getXMLAttribute("info","stream","protocol");
+  	    if(value != null)
+  	     stream_protocol = value;
+  
+  	    value = getXMLAttribute("info","stream","server");
+  	    if(value != null)
+  	     stream_soft = value;
+  
+        stream_status_url = "";
+        
+  	    value = getXMLAttribute("info","stream","server_url");
+  	    if(value != null)
+  	    {
+  	     stream_server_url = value;
+  	     if((stream_soft == "icecast" || stream_soft == "shoutcast") &amp;&amp; stream_server_url!="")
+  	     {
+    	      stream_status_url = translate_base_url+"status,"+urlEncode(stream_server_url)+","+urlEncode(stream_url);
+    	   }
+  	    }
+  	     
+        value = getXMLText("info","status","stream-title");
+  	    if(value != null)
+  	     stream_title = value;
+  
+        stream_current_song = "";
+  	    value = getXMLText("info","status","current-song");
+  	    if(value != null)
+    		  stream_current_song = value;
+    		  
+  	    value = getXMLText("info","status","stream-genre");
+  	    if(value != null)
+  	      stream_genre = value;
+        
+  	    value = getXMLText("info","status","stream-bitrate");
+  	    if(value != null)
+  	      stream_bitrate = value;
+  
+        options = "";
+        
+        if(stream_type != "")
+          options = "Content-type:"+stream_type;
+        
+        if(options == "")
+          options = stream_options;
+        else
+          options = options + ";" + stream_options;
+  
+  	    stream_translate_url = translate_base_url + "stream," + options + "," + urlEncode(stream_url);
+  	    
+  	    url = null;
+  	    
+  	    if(stream_class == "video" || stream_class == "audio")
+    	  {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+    	      url = stream_url;
+    	    else
+    	      url = stream_translate_url;
+    	  }
+    	  else
+    	  {
+  	      url = stream_url;
+    	  }
+    	     
+    	  if(url != null)
+    	  {
+          if(stream_class == "audio" || stream_class == "video" || stream_class == "playlist" || stream_class == "rss")
+          {
+            executeScript(stream_class+"Dispatcher");
+          }
+          else
+          {
+            error_info = "Unsupported media type: " + stream_type;
+          }
+  	    }
+  	    else
+  	    {
+          error_info = "Empty stream url!";
+  	    }
+      }
+    }
+    else
+    {
+      error_info = "CGI translate module failed!";
+    }
+    print("error_info=",error_info);
+  </unknownDispatcher>
+
+  <channel>
+    <itemSize>
+      <script>itemSize;</script>
+    </itemSize>
+  </channel>
+
+</rss>

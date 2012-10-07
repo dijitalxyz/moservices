@@ -1,0 +1,6 @@
+[curl]
+	revision = 2
+	title = "cUrl 7.20.1"
+	role = package
+	files="bin/curl"
+	size = 800

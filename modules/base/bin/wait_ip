@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# waiting valid IP address
+#
+i=60
+while [ $i -ne 0 ] ; do
+	a="$( netstat -r | sed -n 's/^default *\([^ \*]*\).*$/\1/p' )"
+	[ -n "$a" ] && break
+	sleep 5
+	let i-=1
+done
+[ -z "$a" ] && exit 0
+exit 1

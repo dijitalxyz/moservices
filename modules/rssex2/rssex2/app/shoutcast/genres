@@ -1,0 +1,61 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+local DATAPATH=$BASEPATH/app/shoutcast
+cd $DATAPATH
+
+. ./settings
+
+local TIMELIFE=1200
+
+get_opt "Id"
+local ID=`escapeXML "$opt"`
+[ -z "$ID" ] && ID=0
+
+local GENRESXML="$CACHEPATH/shoutcast.genres.$ID.cache"
+local GENRESTEMP=$TMPFILE.genres
+
+let tsttime=`date +%s`-$TIMELIFE
+
+local REFRESHCACHE=yes
+if [ -f "$GENRESXML" ]; then
+  if [ "`ls -s "$GENRESXML" | awk '{print $1}'`" != "0" ]; then
+    if [ `date +%s -r "$GENRESXML"` -gt $tsttime ]; then
+      REFRESHCACHE=
+    fi
+  fi
+fi
+
+
+if [ $REFRESHCACHE ]; then
+  local RESPONSE=
+  local COUNTER=25
+  local REQUEST_URL="${SHOUTCAST_G}genre/secondary${SHOUTCAST_K}&parentid=${ID}&f=xml"
+  [ "$ID" = "0" ] && REQUEST_URL="${SHOUTCAST_G}genre/primary${SHOUTCAST_K}&f=xml"
+  until [ "$RESPONSE" = "200" -o $COUNTER -eq 0 ];
+  do
+    $WGET -q -O "$GENRESXML" --header "User-Agent: $USERAGENT" "${REQUEST_URL}"
+    RESPONSE=`awk -f getxml.awk  -f checkresponse.awk "$GENRESXML"`
+    let COUNTER=$COUNTER-1
+  done
+fi
+
+if [ -f "$GENRESXML" ]; then
+  cat "$GENRESXML" | printContent "text/xml"
+fi

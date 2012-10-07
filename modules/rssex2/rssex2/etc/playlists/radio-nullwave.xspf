@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+   <title>Nullwave.ru</title>
+   <image>../etc/translate/rss/image/menu/nullwave.png</image>
+   <trackList>
+      <track>
+         <title>Club channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/club</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/club</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/club</meta>
+<meta rel="stream_genre">House, Trance, Other club music</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Trance channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/trance</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/trance</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/trance</meta>
+<meta rel="stream_genre">House, other club music</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>House channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/house</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/house</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/house</meta>
+<meta rel="stream_genre">House, other club music</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Drumnbass channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/drumnbass</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/drumnbass</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/drumnbass</meta>
+<meta rel="stream_genre">Drum and Bass music</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Breakbeat channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/breakbeat</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/breakbeat</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/breakbeat</meta>
+<meta rel="stream_genre">Breakbeat music</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Jazz channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/jazz</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/jazz</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/jazz</meta>
+<meta rel="stream_genre">Jazz, blues</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Light channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/light</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/light</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/light</meta>
+<meta rel="stream_genre">Pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Lounge channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/lounge</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/lounge</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/lounge</meta>
+<meta rel="stream_genre">Lounge</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Pop channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/pop</location>
+      
+</track>
+      <track>
+         <title>Russian pop channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/russian_pop</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/russian_pop</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/russian_pop</meta>
+<meta rel="stream_genre">Russian pop music</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>International pop channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/international_pop</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/international_pop</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/international_pop</meta>
+<meta rel="stream_genre">Pop music</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Eurodance channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/eurodance</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/eurodance</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/eurodance</meta>
+<meta rel="stream_genre">90th</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Hits of pop channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/hits_of_pop</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/hits_of_pop</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/hits_of_pop</meta>
+<meta rel="stream_genre">Disco, pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Rap channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/rap</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/rap</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/rap</meta>
+<meta rel="stream_genre">Rap</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Russian rap channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/russian_rap</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/russian_rap</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/russian_rap</meta>
+<meta rel="stream_genre">Rap</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Rock channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/rock</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/rock</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/rock</meta>
+<meta rel="stream_genre">Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Classic rock channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/classic_rock</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/classic_rock</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/classic_rock</meta>
+<meta rel="stream_genre">Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Modern rock channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/modern_rock</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/modern_rock</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/modern_rock</meta>
+<meta rel="stream_genre">Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Russian rock channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/russian_rock</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/russian_rock</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/russian_rock</meta>
+<meta rel="stream_genre">Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Dark channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/dark</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/dark</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/dark</meta>
+<meta rel="stream_genre">Dark scene</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Tin channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/tin</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/tin</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/tin</meta>
+<meta rel="stream_genre">Metal, gothic</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Fury channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/fury</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/fury</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/fury</meta>
+<meta rel="stream_genre">Fury music</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Metal channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/metal</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/metal</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/metal</meta>
+<meta rel="stream_genre">Metal music</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <title>Balkana channel</title>
+         <location>http://nsk-ru.l.nullwave.fm:8000/balkana</location>
+      
+<meta rel="stream_url">http://nsk-ru.l.nullwave.fm:8000/balkana</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">nullwave.ru/balkana</meta>
+<meta rel="stream_genre">Ethno</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+   </trackList>
+</playlist>

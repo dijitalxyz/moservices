@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <title>181.FM</title>
+  <trackList>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-oldschool&amp;style=mp3&amp;description=Old School HipHop/RnB</location>
+      <title>Old School HipHop/RnB</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8068/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Old School Hip Hop &amp; RNB</meta>
+<meta rel="stream_genre">Hip-Hop Oldies R&amp;B</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-smoothac&amp;style=mp3&amp;description=Smooth AC</location>
+      <title>Smooth AC</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8094/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Smooth AC</meta>
+<meta rel="stream_genre">Jazz Adult Contemporary</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-uktop40&amp;style=mp3&amp;description=UK top 40</location>
+      <title>UK top 40</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8070/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - **UK Top 40**</meta>
+<meta rel="stream_genre">Top40</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-beatles&amp;style=&amp;description=Beatles</location>
+      <title>Beatles</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8062/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - The Beatles Channel</meta>
+<meta rel="stream_genre">Oldies</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-70s&amp;style=mp3&amp;description=Super 70s</location>
+      <title>Super 70s</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8066/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - 70's</meta>
+<meta rel="stream_genre">70s</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-beatles&amp;style=&amp;description=Beatles</location>
+      <title>Beatles</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8062/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8062/ - 181.FM - The Beatles Channel</meta>
+<meta rel="stream_genre">Oldies</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-soul&amp;style=mp3&amp;description=Soul</location>
+      <title>Soul</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8058/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Soul</meta>
+<meta rel="stream_genre">Soul</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-mellow&amp;style=mp3&amp;description=Mellow Gold</location>
+      <title>Mellow Gold</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8060/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Mellow Gold</meta>
+<meta rel="stream_genre">Oldies</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-greatoldies&amp;style=&amp;description=Classic Hits 181</location>
+      <title>Classic Hits 181</title>
+    
+<meta rel="stream_url">http://sc-rly.181.fm:80/stream/1094</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">1094 -  181.FM - Classic Hits --- Home of The 60's and 70's</meta>
+<meta rel="stream_genre">Classic Hits  60's 70's</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-goodtime&amp;style=&amp;description=Good Time Oldies</location>
+      <title>Good Time Oldies</title>
+    
+<meta rel="stream_url">http://38.107.220.164:8046</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Good Time Oldies</meta>
+<meta rel="stream_genre">Oldies Pop 50 60 Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-70s&amp;style=mp3&amp;description=Super 70s</location>
+      <title>Super 70s</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8066/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8066/ - 181.FM - 70's</meta>
+<meta rel="stream_genre">70s</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-awesome80s&amp;style=&amp;description=Awesome 80's</location>
+      <title>Awesome 80's</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8000/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.fm - Awesome 80's</meta>
+<meta rel="stream_genre">80s Pop Rock Top 40</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-lite80s&amp;style=&amp;description=Lite 80's</location>
+      <title>Lite 80's</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8040/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Lite 80's</meta>
+<meta rel="stream_genre">80s Lite</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-star90s&amp;style=&amp;description=Star 90's</location>
+      <title>Star 90's</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8012/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Star 90's</meta>
+<meta rel="stream_genre">90s Top 40</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-90scountry&amp;style=&amp;description=90's Country</location>
+      <title>90's Country</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8050/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8050/ - 181.FM - 90's Country</meta>
+<meta rel="stream_genre">90s Country</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-lite90s&amp;style=&amp;description=Lite 90's</location>
+      <title>Lite 90's</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8048/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Lite 90's</meta>
+<meta rel="stream_genre">90s Top 40</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-90salt&amp;style=&amp;description=90's Alternative</location>
+      <title>90's Alternative</title>
+    
+<meta rel="stream_url">http://38.107.220.224:8052</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8052/ - 181.FM - 90's Alternative</meta>
+<meta rel="stream_genre">90s Alternative</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-power&amp;style=mp3&amp;description=Power 181 (Top 40)</location>
+      <title>Power 181 (Top 40)</title>
+    
+<meta rel="stream_url">http://sc-rly.181.fm:80/stream/1023</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">1023 -  181.FM - POWER 181 -=[: The Hitz Channel :]=- www.181.fm</meta>
+<meta rel="stream_genre">Pop Top 40</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-oldschool&amp;style=mp3&amp;description=Old School HipHop/RnB</location>
+      <title>Old School HipHop/RnB</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8068/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8068/ - 181.FM - Old School Hip Hop &amp; RNB</meta>
+<meta rel="stream_genre">Hip-Hop Oldies R&amp;B</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-uktop40&amp;style=mp3&amp;description=UK top 40</location>
+      <title>UK top 40</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8070/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8070/ - 181.FM - **UK Top 40**</meta>
+<meta rel="stream_genre">Top40</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-heart&amp;style=&amp;description=The Heart (Love Songs)</location>
+      <title>The Heart (Love Songs)</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8006/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.fm - The Heart (All Love Songs)</meta>
+<meta rel="stream_genre">Love Songs</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-smoothac&amp;style=mp3&amp;description=Smooth AC</location>
+      <title>Smooth AC</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8094/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8094/ - 181.FM - Smooth AC</meta>
+<meta rel="stream_genre">Jazz Adult Contemporary</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-office&amp;style=&amp;description=The Office</location>
+      <title>The Office</title>
+    
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-themix&amp;style=&amp;description=The Mix</location>
+      <title>The Mix</title>
+    
+<meta rel="stream_url">http://38.107.220.164:8032</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.fm - The Mix Channel (70s, 80s, 90s and Today's Best Music)</meta>
+<meta rel="stream_genre">Adult Top 40</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-thepoint&amp;style=&amp;description=The Point</location>
+      <title>The Point</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8010/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - The Point -=( Your Hit Music Alternative )=-</meta>
+<meta rel="stream_genre">Top 40 Pop Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-party&amp;style=&amp;description=Party 181</location>
+      <title>Party 181</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8036/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - PARTY 181 -=- Your Official Party Station!</meta>
+<meta rel="stream_genre">Top 40 Rhythmic RNB</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-buzz&amp;style=mp3&amp;description=The Buzz (Alt. Rock)</location>
+      <title>The Buzz (Alt. Rock)</title>
+    
+<meta rel="stream_url">http://sc-rly.181.fm:80/stream/1022</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">1022 -  181.FM - The Buzz (Your Alternative Station!)</meta>
+<meta rel="stream_genre">Alternative Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-classicbuzz&amp;style=&amp;description=Classic Buzz (Alt)</location>
+      <title>Classic Buzz (Alt)</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8038/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Classic Buzz -=- Classic Alternative Rock</meta>
+<meta rel="stream_genre">Alternative Classic Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-rock&amp;style=&amp;description=Rock 181</location>
+      <title>Rock 181</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8008/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_server">http://38.107.220.162:8008</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.fm - Rock 181 (Active Rock)</meta>
+<meta rel="stream_genre">Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-eagle&amp;style=&amp;description=The Eagle (Classic)</location>
+      <title>The Eagle (Classic)</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8030/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.fm - The Eagle (Your Home For REAL Classic Rock!)</meta>
+<meta rel="stream_genre">Classic Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-rock40&amp;style=&amp;description=Rock 40 (Rock &amp; Roll)</location>
+      <title>Rock 40 (Rock &amp; Roll)</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8028/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.fm - Rock 40</meta>
+<meta rel="stream_genre">Rock Top 40</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-thepoint&amp;style=&amp;description=The Point</location>
+      <title>The Point</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8010/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8010/ - 181.FM - The Point -=( Your Hit Music Alternative )=-</meta>
+<meta rel="stream_genre">Top 40 Pop Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-hairband&amp;style=&amp;description=80's Hairband</location>
+      <title>80's Hairband</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8014/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8014/ - 181.FM - 80's Hairband Channel</meta>
+<meta rel="stream_genre">80s Rock Hair</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-punk&amp;style=mp3&amp;description=Punk | Hardcore</location>
+      <title>Punk | Hardcore</title>
+    
+<meta rel="stream_url">http://205.188.215.227:8094</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">killedbydeath.org -- only the finest raw punk crap you've not heard of. if they're famous, they won't be here.</meta>
+<meta rel="stream_genre">Punk Alternative</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-kickincountry&amp;style=mp3&amp;description=Kickin' Country</location>
+      <title>Kickin' Country</title>
+    
+<meta rel="stream_url">http://sc-rly.181.fm:80/stream/1075</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">1075 -  181.FM - Kickin' Country - Today's BEST Country!</meta>
+<meta rel="stream_genre">Country, Rock, Pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-realcountry&amp;style=&amp;description=Real Country</location>
+      <title>Real Country</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8034/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.fm - Real Country</meta>
+<meta rel="stream_genre">Country</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-90scountry&amp;style=&amp;description=90's Country</location>
+      <title>90's Country</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8050/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8050/ - 181.FM - 90's Country</meta>
+<meta rel="stream_genre">90s Country</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-us181&amp;style=&amp;description=US 181</location>
+      <title>US 181</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8056/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - U-S 181 +++(Hot Country) +++</meta>
+<meta rel="stream_genre">Country</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-highway&amp;style=&amp;description=Highway 181</location>
+      <title>Highway 181</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8018/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Highway 181 (Classic Country)</meta>
+<meta rel="stream_genre">Country Classic Oldies</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-frontporch&amp;style=&amp;description=Front Porch (Bluegrass)</location>
+      <title>Front Porch (Bluegrass)</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8016/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - The FrontPorch * Bluegrass From The FrontPorch</meta>
+<meta rel="stream_genre">Country Bluegrass Americana</meta>
+<meta rel="stream_bitrate">64</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-beat&amp;style=&amp;description=The Beat (HipHop/R&amp;B)</location>
+      <title>The Beat (HipHop/R&amp;B)</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8054/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - The BEAT * #1 For HipHop and R&amp;B</meta>
+<meta rel="stream_genre">hip hop urban rap rnb</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-oldschool&amp;style=mp3&amp;description=Old School HipHop/RnB</location>
+      <title>Old School HipHop/RnB</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8068/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8068/ - 181.FM - Old School Hip Hop &amp; RNB</meta>
+<meta rel="stream_genre">Hip-Hop Oldies R&amp;B</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-rnb&amp;style=&amp;description=True R&amp;B</location>
+      <title>True R&amp;B</title>
+    
+<meta rel="stream_url">http://38.107.220.164:8022</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.fm - True R&amp;B</meta>
+<meta rel="stream_genre">R&amp;B Urban HipHop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-thebox&amp;style=&amp;description=The Box (Urban)</location>
+      <title>The Box (Urban)</title>
+    
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-jammin&amp;style=&amp;description=Jammin 181</location>
+      <title>Jammin 181</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8042/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Jammin 181</meta>
+<meta rel="stream_genre">R&amp;B Disco Funk</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-soul&amp;style=mp3&amp;description=Soul</location>
+      <title>Soul</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8058/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">http://uplink.181.fm:8058/ - 181.FM - Soul</meta>
+<meta rel="stream_genre">Soul</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-energy98&amp;style=mp3&amp;description=Energy 98</location>
+      <title>Energy 98</title>
+    
+<meta rel="stream_url">http://sc-rly.181.fm:80/stream/1093</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">1093 -  181.FM - Energy 98 - Dance Hits</meta>
+<meta rel="stream_genre">Dance Hits - Top 40</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-energy93&amp;style=&amp;description=Energy 93 (Euro Dance)</location>
+      <title>Energy 93 (Euro Dance)</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8044/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Energy 93 - Euro Dance</meta>
+<meta rel="stream_genre">Dance Trance House</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-chilled&amp;style=mp3&amp;description=Chilled Out</location>
+      <title>Chilled Out</title>
+    
+<meta rel="stream_url">http://sc-rly.181.fm:80/stream/1092</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">1092 -  181.FM - Chilled</meta>
+<meta rel="stream_genre">Chill Ambient Downtempo</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-breeze&amp;style=&amp;description=The Breeze</location>
+      <title>The Breeze</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8004/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.fm - The Breeze</meta>
+<meta rel="stream_genre">Smooth Jazz</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-classicalguitar&amp;style=&amp;description=Classical Guitar</location>
+      <title>Classical Guitar</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8020/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Classical Guitar</meta>
+<meta rel="stream_genre">Classical Guitar</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-comedy&amp;style=&amp;description=Comedy Club</location>
+      <title>Comedy Club</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8026/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Comedy Club (*Explicit Content*)</meta>
+<meta rel="stream_genre">Comedy</meta>
+<meta rel="stream_bitrate">64</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-businesstalk&amp;style=mp3&amp;description=Business Talk Radio</location>
+      <title>Business Talk Radio</title>
+    
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-lifestyletalk&amp;style=mp3&amp;description=Lifestyle Talk Radio</location>
+      <title>Lifestyle Talk Radio</title>
+    
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-xkkountry&amp;style=&amp;description=Christmas Kountry</location>
+      <title>Christmas Kountry</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8084/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Kristmas Kountry (Hot Country Christmas)</meta>
+<meta rel="stream_genre">Christmas Country</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-xpower&amp;style=&amp;description=Christmas Power</location>
+      <title>Christmas Power</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8086/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Christmas Power (Top 40 Christmas Hits)</meta>
+<meta rel="stream_genre">Christmas Top 40</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-xtrue&amp;style=&amp;description=Christmas R&amp;B</location>
+      <title>Christmas R&amp;B</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8088/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Christmas R&amp;B</meta>
+<meta rel="stream_genre">Christmas R&amp;B Soul</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-xrock&amp;style=&amp;description=Christmas Rock</location>
+      <title>Christmas Rock</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8090/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Christmas Rock</meta>
+<meta rel="stream_genre">Christmas Rock Alternative</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-xmix&amp;style=&amp;description=Christmas Mix</location>
+      <title>Christmas Mix</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8082/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Christmas Mix</meta>
+<meta rel="stream_genre">Christmas</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.181.fm/winamp.pls?station=181-xsmooth&amp;style=&amp;description=Christmas Smooth Jazz</location>
+      <title>Christmas Smooth Jazz</title>
+    
+<meta rel="stream_url">http://uplink.181.fm:8092/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">181.FM - Christmas Smooth Jazz</meta>
+<meta rel="stream_genre">Christmas Jazz</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+  </trackList>
+</playlist>

@@ -1,0 +1,178 @@
+﻿<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+  <!--`cat "$BASEPATH/app/include/media_onenter.script"`-->
+	playlist_autoplay = 0;
+</onEnter>
+
+<onExit>
+  setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+    setRefreshTime(-1);
+</onRefresh>
+
+<mediaDisplay name=onePartView
+	itemPerPage="4"
+	itemHeightPC="12"
+	itemWidthPC="60"
+	itemImageXPC="0"
+	itemImageYPC="0"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="20"
+	itemYPC="25"
+	itemBackgroundColor="0:0:0"
+
+	sideLeftWidthPC = 0
+	sideRightWidthPC = 0
+	sideColorRight="0:0:0"
+	sideColorLeft="0:0:0"
+	backgroundColor="0:0:0"
+	showHeader=no
+	showDefaultInfo=no
+	>
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=26 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>getPageInfo("pageTitle");</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=15 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image offsetXPC=65 offsetYPC=2 widthPC=30 heightPC=12>
+    ../etc/translate/rss/image/gettune.png
+    <widthPC>
+      <script>
+        123 / 42 * 12 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 123 / 42 * 12 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+  </image>
+  
+  <!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+
+	<itemDisplay>
+		<text align="center" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			<script>
+				idx = getQueryItemIndex();
+				getItemInfo(idx, "title");
+			</script>
+			<fontSize>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) "30"; else "20";
+				</script>
+			</fontSize>
+		  <backgroundColor>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+				</script>
+		  </backgroundColor>
+		  <foregroundColor>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) "255:255:255"; else "140:140:140";
+				</script>
+		  </foregroundColor>
+		</text>
+
+	</itemDisplay>
+</mediaDisplay>
+
+
+	<channel>
+		<title>Main page</title>
+
+		<item>
+			<title>Жанры</title>
+			<link><script>translate_base_url+"app/gettune/index,genrelist";</script></link>
+			<mediaDisplay name="photoView"/>
+		</item>
+
+		<item>
+			<title>По названию</title>
+			<link><script>translate_base_url+"app/gettune/index,abcd";</script></link>
+			<mediaDisplay name="photoView"/>
+		</item>
+
+		<item>
+			<title>Top 50</title>
+			<onClick>
+    		stream_url  = translate_base_url + "app/gettune/top";
+    		
+        streamArray = null;
+        streamArray = pushBackStringArray(streamArray, stream_url);
+        streamArray = pushBackStringArray(streamArray, "Top 50");
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, "playlist");
+        streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+        streamArray = pushBackStringArray(streamArray, "All");
+        writeStringToFile(storagePath_playlist, streamArray);
+        doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+        null;
+			</onClick>
+		</item>
+
+		<item>
+			<title>Поиск &gt;</title>
+			<onClick>
+        keyboard = null;
+        keyboard = pushBackStringArray(keyboard, "gettune");
+        keyboard = pushBackStringArray(keyboard, "../etc/translate/rss/image/gettune.png");
+        keyboard = pushBackStringArray(keyboard, "ru");
+        writeStringToFile(getStoragePath("key")+"keyboard.dat", keyboard);
+      	keyword = doModalRss("rss_file://../etc/translate/rss/key/keyboard.rss");
+      	
+      	if(keyword != "" &amp;&amp; keyword != null)
+      	{
+      		stream_url  = translate_base_url + "app/gettune/search," + urlEncode(keyword);
+      		
+          streamArray = null;
+          streamArray = pushBackStringArray(streamArray, stream_url);
+          streamArray = pushBackStringArray(streamArray, stream_url);
+          streamArray = pushBackStringArray(streamArray, "");
+          streamArray = pushBackStringArray(streamArray, "");
+          streamArray = pushBackStringArray(streamArray, "playlist");
+          streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+          streamArray = pushBackStringArray(streamArray, "All");
+          writeStringToFile(storagePath_playlist, streamArray);
+          doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+        }
+        null;
+			</onClick>
+		</item>
+
+	</channel>
+</rss>

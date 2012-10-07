@@ -1,0 +1,286 @@
+#!/usr/bin/awk -f
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+function createSubItem(thisFileName, thisGenre, thisDate, discArtist, discTitle, thisArtist, thisTitle, thisTrackIdx, thisStart, thisStop)
+{
+  location = path "/" thisFileName;
+  print "<track>"
+  print " <location><![CDATA[" location "]]></location>"
+  print " <creator><![CDATA[" thisArtist "]]></creator>"
+  print " <title><![CDATA[" thisTitle "]]></title>"
+  print " <trackNum>" thisTrackIdx "</trackNum>"
+  if(discArtist)
+  {
+    print " <album><![CDATA[" discTitle "]]></album>"
+  }
+  if(thisStop != "-0:00")
+  {
+    startTime = 0;
+    stopTime = 0;
+    
+    if (match(thisStart, /^([0-9]+):(.+)/, arr)) 
+    {
+      startMin = arr[1]+0;
+      startSec = arr[2]+0;
+      startTime = (startMin * 60 + startSec)*1000;
+    }
+    if (match(thisStop, /^([0-9]+):(.+)/, arr)) 
+    {
+      stopMin = arr[1]+0;
+      stopSec = arr[2]+0;
+      stopTime = (stopMin * 60 + stopSec)*1000;
+    }
+    
+    trackDuration = stopTime - startTime;
+    print " <duration>" trackDuration "</duration>"
+  }
+  print " <meta rel=\"flac_skip\">" thisStart "</meta>"
+  print " <meta rel=\"flac_until\">" thisStop "</meta>"
+
+  match(location, /.*\.([^.\/]+)$/, arr);
+  ext = tolower(arr[1]);
+  
+  if(ext != "")
+  {
+    print "<meta rel='ext'><![CDATA[" ext "]]></meta>"
+  }
+
+  match(location, /^(.+):\/\//, arr);
+  protocol = tolower(arr[1]);
+  
+  if(protocol == "")
+    protocol = "file";
+
+  print "<meta rel='protocol'><![CDATA[" protocol "]]></meta>"
+
+  print "</track>"
+}
+
+#REM GENRE Opera
+#REM DATE 1989
+#REM DISCID A50C7A0E
+#REM COMMENT "ExactAudioCopy v0.95b4"
+#CATALOG 0028942586529
+#PERFORMER "Riccardo Chailly - Teatro Comunale di Bologna; Pavarotti, Nucci, Anderson, Gh..."
+#TITLE "Giuseppe Verdi - Rigoletto CD 1"
+#FILE "Giuseppe Verdi - Rigoletto CD 1.flac" WAVE
+#  TRACK 01 AUDIO
+#    TITLE "ACT ONE - Preludio"
+#    PERFORMER "Riccardo Chailly - Teatro Comunale di Bologna; Pavarotti, Nucci, Anderson, Gh..."
+#    ISRC GBF078940401
+#    INDEX 00 00:00:00
+#    INDEX 01 00:00:33
+#    
+#<playlist version="1" xmlns="http://xspf.org/ns/0/">
+#  <title>Giuseppe Verdi - Rigoletto CD 1</title>
+#  <image>cover.png</image>
+#  <trackList>
+#  	<track>
+#  		<location>Giuseppe%20Verdi%20-%20Rigoletto%20CD%201.flac</location>
+#  		<meta rel="flac_skip">0:00.0</meta>
+#  		<meta rel="flac_until">2:14.17</meta>
+#  		<duration>134170</duration>
+#  		<title>ACT ONE - Preludio</title>
+#  		<album>Giuseppe Verdi - Rigoletto CD 1</album>
+#      <creator>Riccardo Chailly - Teatro Comunale di Bologna; Pavarotti, Nucci, Anderson, Gh...</creator>
+#      <trackNum>1</trackNum>
+#  	</track>
+#  </trackList>
+#</playlist>
+
+BEGIN {
+  thisGenre = "";
+  thisDate = "";
+  discArtist = "";
+  discTitle = "";
+  thisArtist = "";
+  thisTitle = "";
+  thisFileName = "";
+  thisTrackIdx = 0;
+  thisStart = "0:00";
+  thisStop = "-0:00";
+  trackDuration = 0;
+
+  fileType = "";
+
+  inTrackIdx = 0;
+  indexDone = 0;
+
+  oldGenre = "";
+  oldDate = "";
+  oldArtist = "";
+  oldTitle = "";
+  oldFileName = "";
+  oldTrackIdx = 0;
+  oldStart = "0:00";
+  oldStuff = 0;
+  
+  if(!cover)
+  {
+    cover = "cover.jpg";
+  }
+  
+  print "<?xml version='1.0' encoding='UTF-8'?>"
+  print "<playlist version='1' xmlns='http://xspf.org/ns/0/'>"
+  fTracklist = 0
+}
+
+/^REM +GENRE +/ {
+  if (match($0, /^REM +GENRE +([^ ]+)/, arr)) 
+  {
+    thisGenre = arr[1];
+  }
+}
+
+/^REM +DATE +/ {
+  if (match($0, /^REM +DATE +([^ ]+)/, arr)) 
+  {
+    thisDate = arr[1];
+  }
+}
+
+/^ *PERFORMER/ { 
+  if (match($0, /^ *PERFORMER +"(.+)"/, arr)) 
+  {
+    if (inTrackIdx < 1)
+    {
+      discArtist = arr[1];
+      thisArtist =arr[1];
+    } 
+    else 
+    {
+      thisArtist = arr[1];
+    }
+  }
+}
+
+/^ *TITLE +/ { 
+  if (match($0, /^ *TITLE +"(.+)"/, arr)) 
+  {
+    if (inTrackIdx < 1)
+    {
+      discTitle = arr[1];
+    } 
+    else 
+    {
+      thisTitle = arr[1];
+    }
+  }
+}
+
+/^ *FILE/ { 
+  if(fTracklist == 0)
+  {
+    print "<creator><![CDATA[" discArtist "]]></creator>"
+    print "<date>" thisDate "</date>"
+    print "<title><![CDATA[" discTitle "]]></title>"
+    print "<image><![CDATA[" path "/" cover "]]></image>"
+    fTracklist=1;
+    print "<trackList>"
+  }
+  if (indexDone > 0)
+  {
+    createSubItem(thisFileName, thisGenre, thisDate, discArtist, discTitle, thisArtist, thisTitle, thisTrackIdx, thisStart, thisStop);
+    indexDone = 0;
+    thisStart = "0:00";
+    thisStop = "-0:00";
+    inTrackIdx = 0;
+  }
+  if (match($0, /^ *FILE +"(.+)" +(.+)/, arr)) 
+  {
+    thisFileName = arr[1];
+    fileType = arr[2];
+  }
+}
+
+/^ *TRACK +([0-9]+) *AUDIO/ { 
+  if (match($0, /^ *TRACK +([0-9]+) *AUDIO/, arr)) 
+  {
+    thisTrackIdx = arr[1]+0;
+    if ((thisTrackIdx != inTrackIdx) && (inTrackIdx > 0)){
+       oldGenre = thisGenre;
+       oldDate = thisDate;
+       oldArtist = thisArtist;
+       oldTitle = thisTitle;
+       oldFileName = thisFileName;
+       oldTrackIdx = inTrackIdx;
+       oldStart = thisStart;
+       oldStuff = 1;
+    }
+    inTrackIdx = thisTrackIdx;
+    indexDone = 0;
+
+    inTrack = 1;
+  }
+}
+
+/^ *INDEX +([0-9]+) */ { 
+  if (match($0, /^ *INDEX +([0-9]+) *([0-9]+):([0-9]+):([0-9]+)/, arr)) 
+  {
+    tmpIdx = arr[1]+0;
+    tmpMin = arr[2]+0;
+    tmpSec = arr[3]+0;
+    tmpFrames = arr[4]+0;
+    
+    timeSec = int((tmpSec + tmpFrames/74)*100)/100;
+
+    tmpStamp = "";
+    if (timeSec < 10)
+    {
+      tmpStamp = sprintf("%s:0%s",  tmpMin, timeSec);
+    } 
+    else 
+    {
+      tmpStamp = sprintf("%s:%s",  tmpMin, timeSec);
+    }
+    
+    if (indexDone < 1)
+    {
+       if (oldStuff > 0)
+       {
+          createSubItem(oldFileName, oldGenre, oldDate, discArtist, discTitle, oldArtist, oldTitle, oldTrackIdx, oldStart, tmpStamp);
+          indexDone = 0;
+          thisStart = tmpStamp;
+          thisStop = "-0:00";
+
+          oldGenre = "";
+          oldDate = "";
+          oldArtist = "";
+          oldTitle = "";
+          oldFileName = "";
+          oldTrackIdx = 0;
+          oldStart = "";
+          oldStuff = 0;
+       } 
+       else 
+       {
+          indexDone = 1;
+       }
+    }
+  }
+}
+
+END {
+  createSubItem(thisFileName, thisGenre, thisDate, discArtist, discTitle, thisArtist, thisTitle, thisTrackIdx, thisStart, thisStop);
+  if(fTracklist == 1)
+  {
+    print "</trackList>"
+  }
+  print "</playlist>"
+}

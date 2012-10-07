@@ -1,0 +1,107 @@
+#!/usr/bin/awk -f
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+BEGIN {
+  IGNORECASE = 1
+  print "<?xml version='1.0' encoding='UTF-8'?>"
+  print "<playlist version='1' xmlns='http://xspf.org/ns/0/'>"
+  counter = 0
+}
+
+/^[ \t]*<asx/ { 
+  playlist_title = ""
+  playlist_author = ""
+  playlist_copyright = ""
+  entry = 0 
+}
+
+/^[ \t]*<entry/ { 
+  entry = 1
+  counter = counter + 1;
+}
+
+/^[ \t]*<\/entry/ { 
+  entry = 0
+}
+
+/^[ \t]*<title/ { 
+  if(match($0,/^.*>(.*)<\/.*$/, arr)) {
+    if(entry == 1)
+      title[counter] = arr[1];
+    else
+      playlist_title = arr[1];
+  }
+}
+
+/^[ \t]*<author/ { 
+  if(match($0,/^.*>(.*)<\/.*$/, arr)) {
+    if(entry == 1)
+      author[counter] = arr[1];
+    else
+      playlist_author = arr[1];
+  }
+}
+
+/^[ \t]*<copyright/ { 
+  if(match($0,/^.*>(.*)<\/.*$/, arr)) {
+    if(entry == 1)
+      copyright[counter] = arr[1];
+    else
+      playlist_copyright = arr[1];
+  }
+}
+
+/^[ \t]*<ref/ { 
+  if(match($0,/^.*"(.*)".*$/, arr)) {
+    ref[counter] = arr[1];
+  }
+}
+
+END {
+  if(playlist_title == "") {
+    playlist_title = name;
+  }
+  if( playlist_title != "" ) {
+    print "<title><![CDATA[" playlist_title "]]></title>"
+  }
+  if( playlist_author != "" ) {
+    print "<creator><![CDATA[" playlist_author "]]></creator>"
+  }
+  print "<trackList>"
+  for(i=1; i<=counter; i++)
+  {
+    print "<track>"
+    if(title[i] != "") {
+      print "<title><![CDATA[" title[i] "]]></title>"
+    }
+    if(author[i] != "") {
+      print "<creator><![CDATA[" author[i] "]]></creator>"
+    }
+    if(ref[i] != "") {
+      print "<location><![CDATA[" ref[i]"]]></location>"
+    }
+    match(ref[i], /^(.+):\/\//, arr);
+    protocol = tolower(arr[1]);
+    print "<meta rel=\"protocol\"><![CDATA[" protocol "]]></meta>"
+    print "</track>"
+  }
+  
+  print "</trackList>"
+  print "</playlist>"
+}

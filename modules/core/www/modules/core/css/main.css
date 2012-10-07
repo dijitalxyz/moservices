@@ -1,0 +1,321 @@
+body, iframe {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;		
+
+	background-color: white;
+
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	color:black;
+	font-size: 12px;
+
+	z-index: 80;
+}
+
+h1,h2,h3,h4,h5
+{
+	font-weight: bold;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	margin:4px 4px 6px;
+}
+
+pre
+{
+	margin:0px;
+}
+
+p
+{
+	margin:2pt;
+	text-align:justify;
+	text-indent:6px;
+}
+
+a
+{
+	color: black;
+	outline-style: none;
+	text-decoration: none;
+}
+
+a:hover
+{
+	color: #666;
+	text-decoration: none;
+}
+
+a:visited
+{
+	color: black;
+	text-decoration: none;
+}
+
+img
+{
+	border-width: 0px;	
+}
+
+/* ==================================== */
+
+#main_container
+{
+	display:block;
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+
+	z-index: 80;
+}
+
+#header
+{
+	display:block;
+	position: absolute;
+	left: 0px;
+	right:0px;
+	top: 0px;
+
+	height: 40px;
+	min-width:1024px;
+
+	background: no-repeat left top url(../images/mos_logo.png);
+
+	z-index: 90;
+}
+
+#content_container
+{
+	display:block;
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	top: 40px;
+	bottom: 10px;
+
+	overflow:hidden;
+
+	border:1px solid #ccc;
+	background-color:#eee;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+
+	z-index: 80;
+}
+
+.cont_frame, #container
+{
+	display:block;
+	position: absolute;
+	left: 0;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	padding:0;
+
+	border:0px;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+
+#container
+{
+	overflow:auto;
+	padding:8px;
+
+	z-index: 80;
+}
+
+/* === log ============================ */
+#log_container
+{
+	display:block;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom:auto;
+	max-height:98%;
+
+	overflow:auto;
+
+	margin:8px 4px;
+	padding:0;
+
+	background: white;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+
+	z-index: 95;
+}
+
+#log_container a
+{
+	z-index: 100;
+}
+
+#log_topic
+{
+	position: relative;
+	background: #D0D0D0 no-repeat right top url(../images/btn_hide.png) ;
+	padding:4px;
+	margin :0;
+	font-weight: bold;
+	border:0;
+}
+
+#log_list
+{
+	display:block;
+	position: relative;
+	padding:4px;
+	margin :0;
+}
+
+/* === navigation menu ================ */
+.navbarmenu
+{
+	margin: 0;
+	padding: 0;
+}
+
+.navbarmenu li
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	float: left;
+	font-size: 13px;
+}
+
+#header li
+{
+	padding: 8px 20px 0 0;
+	font-weight: bold;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 16px;
+}
+
+.navbarmenu li a
+{
+	display: block;
+	text-align: left;
+	text-decoration: none;
+}
+
+.navbarmenu li a.top_delim
+{
+	border-top:1px solid #ccc;
+}
+
+.navbarmenu li a:hover
+{
+	color: #f44;
+}
+
+.navbarmenu div.menu
+{
+	visibility: hidden;
+
+	position:absolute;
+	margin: 0;
+	padding: 0;
+
+	background-color: #F8F8F8;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+
+	line-height: 16px;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+
+	z-index: 100;
+}
+
+.navbarmenu div.menu a
+{
+	position: relative;
+	display: block;
+	margin: 2px;
+	padding: 4px 10px 4px 4px;
+	width: auto;
+	white-space: nowrap;
+	text-align: left;
+	text-decoration: none;
+	text-indent: 6px;
+	font-size: 12px;
+	font-weight: normal;
+	color: black;
+}
+
+.navbarmenu div.menu a:hover
+{
+	color: white;
+	background-color: #aaa;
+}
+
+/* === about ========================== */
+#about_container
+{
+	visibility: hidden;
+
+	position: fixed;
+	left: 25%;
+	right: auto;
+	top: 20%;
+	bottom: auto;
+
+	overflow:hidden;
+
+	width:50%;
+	height:auto;
+
+	max-height:50%;
+
+	margin:0;
+	padding:0;
+
+	background: white;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+
+	z-index:100;
+}
+
+#about_topic
+{
+	position: relative;
+	background: #D0D0D0 no-repeat right top url(../images/btn_close.png);
+	padding:4px;
+	margin :0;
+	font-weight: bold;
+	border:0;
+}
+
+#about_list
+{
+	display:block;
+	position: relative;
+	overflow:visible;
+	padding:10px 20px;
+	margin :0;
+}
+
+/* === free memory div ================ */
+div.memory
+{
+	position:absolute;
+	display:block;
+	top:8px;
+	right:8px;
+
+	padding:8px;
+	margin:0px;
+
+	background: white;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}

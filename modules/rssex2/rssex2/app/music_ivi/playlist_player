@@ -1,0 +1,75 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2011  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+local DATAPATH=$BASEPATH/app/music_ivi
+cd $DATAPATH
+
+local PAGEFILE=$CACHEPATH/music_ivi.page
+local CHANNELXML=$CACHEPATH/music_ivi.xml
+
+local URL=${arg_opt:-'http://music.ivi.ru/videos/date/day/all/all/all/all/all/'}
+local TYPE=$(echo $URL | awk '{match($0,/music\.ivi\.ru\/([^/]+)\//,arr);print arr[1];}')
+local LINK=$(echo $QUERY_STRING | awk -F, '{print $2}')
+
+[ "$TYPE" = "search" ] && URL=$(utf8toascii "$arg_opt")
+
+echo "<channel>" > $CHANNELXML
+echo "  <title>MUSIC.IVI.RU</title>"    >> $CHANNELXML
+echo "  <link>$LINK</link>"              >> $CHANNELXML
+echo "  <description></description>"    >> $CHANNELXML
+
+$MSDL -q -o "$PAGEFILE" -p http --useragent "$USERAGENT" "$URL"
+
+if [ -f "$PAGEFILE" ]; then
+  if [ "$(ls -s "$PAGEFILE" | awk '{print $1}')" != "0" ]; then
+    case $TYPE in
+      search)
+        if [ -x $JS ]; then 
+          sed -n '/var globalObj/p' $PAGEFILE | $JS -f - -f $BASEPATH/lib/common.js -f search_list.js 2>/dev/null >> $CHANNELXML
+          local nextQueries=$(sed -n '/var globalObj/p' $PAGEFILE | $JS -f - -e "var len=Math.min(parseInt(globalObj.modules[0].descriptor.resources.totalVideos/18+.5),3); for(var i=2; i<=len; i++) print('page='+i);" 2>/dev/null)
+          for nextUrl in $nextQueries
+          do
+            $MSDL -q -o "$PAGEFILE" -p http --useragent "$USERAGENT" "$URL&$nextUrl"
+            sed -n '/var globalObj/p' $PAGEFILE | $JS -f - -f $BASEPATH/lib/common.js -f search_list.js 2>/dev/null >> $CHANNELXML
+          done
+        fi
+      ;;
+      *)
+        [ -x $XSLTPROC ] && $XSLTPROC --encoding utf-8 --html --stringparam type "$TYPE" video_list.xslt "$PAGEFILE" 2>/dev/null | sed '1d' >> $CHANNELXML
+        if [ "$TYPE" = "artist" ]; then
+          if grep -qs 'id="showMoreVideos"' $PAGEFILE; then
+              local artist_id=$(awk '/id="subscribe"/{match($0,/data="([^"]+)"/,arr);print arr[1];exit;}' $PAGEFILE)
+              $MSDL -q -o - -p http --useragent "$USERAGENT" "http://music.ivi.ru/artist/showmore?artistId=${artist_id}" | sed -e '1i\<div class="artist-all-video">' -e '$a\</div>' > $PAGEFILE
+              [ -x $XSLTPROC ] && $XSLTPROC --encoding utf-8 --html --stringparam type "$TYPE" video_list.xslt $PAGEFILE 2>/dev/null | sed '1d' >> $CHANNELXML
+          fi
+        fi
+      ;;
+    esac
+  fi
+  rm -f "$PAGEFILE"
+fi
+
+echo "</channel>" >> $CHANNELXML
+
+(
+  export BASEPATH;
+  export CHANNELXML;
+  template2rss playlist_player.xml | printContent "application/rss+xml"
+  rm -f $CHANNELXML
+)

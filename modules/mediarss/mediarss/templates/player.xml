@@ -1,0 +1,307 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- player -->
+
+<script>
+	class = "<!--{TYPE}!-->";
+	elapsedTime = "";
+	loadingStatus = 0;
+	checkStatus = 1;
+	showLoading = 0;
+	input = "";
+	record = 0;
+	itemInfo = "...";
+	upCount = 7;
+</script>
+
+<onEnter>
+	info_streamTitle = "<!--{TITLE}!-->";
+	info_streamURL = "<!--{LINK}!-->";
+	info_URL = "http://127.0.0.1/cgi-bin/rss?info=<!--{LINK}!-->";
+	setRefreshTime(100);
+	startVideo = 1;
+	timeStamp = <!--{TIMESTAMP}!-->;
+	info_contentType = "...";
+	info_radioName = "...";
+	info_Bitrate = "...";
+	info_Genre = "...";
+	info_Server = "...";
+	info_radioURL = "...";
+	info_Description = "...";
+	info_Title = "...";
+</onEnter>
+
+<onExit>
+	playItemURL(-1, 1);
+	setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+
+	upCount += 1;	
+	if(upCount == 10)
+	{
+		upCount = 0;
+		dlok = loadXMLFile(info_URL);
+		if(dlok != null)
+		{
+			value = getXMLAttribute("info","stream","type");
+			if(value != null)
+				info_contentType = value;				
+			value = getXMLAttribute("info","stream","name");
+			if(value != null)
+				info_radioName = value;
+			value = getXMLAttribute("info","stream","bitrate");
+			if(value != null)
+				info_Bitrate = value;
+			value = getXMLAttribute("info","stream","genre");
+			if(value != null)
+				info_Genre = value;
+			value = getXMLAttribute("info","stream","server");
+			if(value != null)
+				info_Server = value;
+			value = getXMLAttribute("info","stream","url");
+			if(value != null)
+				info_radioURL = value;
+			value = getXMLAttribute("info","stream","description");
+			if(value != null)
+				info_Description = value;
+			value = getXMLAttribute("info","stream","title");
+			if(value != null)
+				info_Title = value;
+				
+			redrawDisplay();
+		}
+	}
+
+   vidProgress = getPlaybackStatus();
+   bufProgress = getCachedStreamDataSize(0, 262144);
+   playElapsed = getStringArrayAt(vidProgress, 0);
+   playStatus = getStringArrayAt(vidProgress, 3);
+   print("Media status =", vidProgress);
+   if(checkStatus != 0 &amp;&amp; loadingStatus == 0)
+   {
+		loadingStatus = 1;
+		checkStatus = 0;
+	}
+	loadingStatus = 0;
+	if (startVideo == 1)
+	{
+		setRefreshTime(1000);
+		showLoading = 1;
+		startVideo = 0;
+		if(record == 0)
+			playItemURL("<!--{URL}!-->", 0, "mediaDisplay", "previewWindow");
+		else
+		{
+			url_play = "<!--{REC_URL}!-->" + "&amp;" + timeStamp;
+			playItemURL(url_play, 0, "mediaDisplay", "previewWindow");
+		}
+		redrawDisplay();		
+		updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+	} else
+	{
+		if (playElapsed != 0)
+		{
+			x = Integer(playElapsed / 60);
+			h = Integer(playElapsed / 3600);
+			s = playElapsed - (x * 60);
+			m = x - (h * 60);
+			if(h &lt; 10)
+				elapsedTime = "0" + sprintf("%s:", h);
+			else
+				elapsedTime = sprintf("%s:", h);
+			if(m &lt; 10)  elapsedTime += "0";
+			elapsedTime += sprintf("%s:", m);
+			if(s &lt; 10)  elapsedTime += "0";
+			elapsedTime += sprintf("%s", s);
+			print("elapsedTime =", elapsedTime);
+			if (startVideo == 0)
+			{
+				updatePlaybackProgress("delete", "mediaDisplay", "progressBar");
+				startVideo = 2;
+				statusCounter = 0;
+				statusTimeout = 60;
+			}
+			else if(startVideo == 2 &amp;&amp; class != "video")
+			{
+				statusCounter += 1;
+				print("statusCounter =", statusCounter);
+				if (statusCounter &gt;= statusTimeout)
+				{
+					statusCounter = 0;
+					checkStatus = 1;
+				}
+			}
+			redrawDisplay();
+		}
+		else if (playStatus == 0)
+		{
+			print("Media quit, return!");
+			postMessage("return");
+		}
+		else
+		{
+			print("no playing yet, update buffer progress ", bufProgress);
+			updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+		}
+	}
+	
+</onRefresh>
+<mediaDisplay name="threePartsView"
+ showDefaultInfo="no"
+ sideLeftWidthPC="0"
+ sideRightWidthPC="0"
+ backgroundColor="-1:-1:-1">
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_06.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_07.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_08.png </idleImage>
+
+	<previewWindow windowColor="0:0:0" offsetXPC="0" offsetYPC="99" widthPC="100" heightPC="1"></previewWindow>
+	<text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" fontSize="22" backgroundColor="63:127:127" foregroundColor="255:255:255"></text>  
+	<text offsetXPC="5" offsetYPC="5" widthPC="90" heightPC="8" fontSize="22" backgroundColor="53:117:117" foregroundColor="255:255:255">
+		<script>info_streamTitle;</script>
+	</text>	
+	<text offsetXPC="5" offsetYPC="13" widthPC="90" heightPC="5" fontSize="14" backgroundColor="200:200:200" foregroundColor="63:100:127">
+		<script>info_streamURL;</script>
+	</text>
+	<text offsetXPC="5" offsetYPC="25" widthPC="20" heightPC="5" fontSize="14" backgroundColor="53:117:117" foregroundColor="255:255:255">Тип контента:</text>
+	<text offsetXPC="25" offsetYPC="25" widthPC="70" heightPC="5" fontSize="14" backgroundColor="53:117:117" foregroundColor="255:255:255">
+		<script>info_contentType;</script>
+	</text>
+	<text offsetXPC="5" offsetYPC="30" widthPC="20" heightPC="5" fontSize="14" backgroundColor="63:127:127" foregroundColor="255:255:255">Название:</text>
+	<text offsetXPC="25" offsetYPC="30" widthPC="70" heightPC="5" fontSize="14" backgroundColor="63:127:127" foregroundColor="255:255:255">
+		<script>info_radioName;</script>
+	</text>
+	<text offsetXPC="5" offsetYPC="35" widthPC="20" heightPC="5" fontSize="14" backgroundColor="53:117:117" foregroundColor="255:255:255">Описание:</text>
+	<text offsetXPC="25" offsetYPC="35" widthPC="70" heightPC="5" fontSize="14" backgroundColor="53:117:117" foregroundColor="255:255:255">
+		<script>info_Description;</script>
+	</text>
+	<text offsetXPC="5" offsetYPC="40" widthPC="20" heightPC="5" fontSize="14" backgroundColor="63:127:127" foregroundColor="255:255:255">Жанр:</text>
+	<text offsetXPC="25" offsetYPC="40" widthPC="70" heightPC="5" fontSize="14" backgroundColor="63:127:127" foregroundColor="255:255:255">
+		<script>info_Genre;</script>
+	</text>
+	<text offsetXPC="5" offsetYPC="45" widthPC="20" heightPC="5" fontSize="14" backgroundColor="53:117:117" foregroundColor="255:255:255">Битрейт:</text>
+	<text offsetXPC="25" offsetYPC="45" widthPC="70" heightPC="5" fontSize="14" backgroundColor="53:117:117" foregroundColor="255:255:255">
+		<script>info_Bitrate;</script>
+	</text>
+	<text offsetXPC="5" offsetYPC="50" widthPC="20" heightPC="5" fontSize="14" backgroundColor="63:127:127" foregroundColor="255:255:255">Web сайт:</text>
+	<text offsetXPC="25" offsetYPC="50" widthPC="70" heightPC="5" fontSize="14" backgroundColor="63:127:127" foregroundColor="255:255:255">
+		<script>info_radioURL;</script>
+	</text>
+	<text offsetXPC="5" offsetYPC="55" widthPC="20" heightPC="5" fontSize="14" backgroundColor="53:117:117" foregroundColor="255:255:255">Сервер:</text>
+	<text offsetXPC="25" offsetYPC="55" widthPC="70" heightPC="5" fontSize="14" backgroundColor="53:117:117" foregroundColor="255:255:255">
+		<script>info_Server;</script>
+	</text>
+	<text offsetXPC="5" offsetYPC="60" widthPC="20" heightPC="5" fontSize="14" backgroundColor="63:127:127" foregroundColor="255:255:255">Текущий трек:</text>
+	<text offsetXPC="25" offsetYPC="60" widthPC="70" heightPC="5" fontSize="14" backgroundColor="63:127:127" foregroundColor="255:255:255">
+		<script>info_Title;</script>
+	</text>
+	<image offsetXPC="5" offsetYPC="82" widthPC="5" heightPC="8">
+		<script>
+			if (record == 0)
+			{
+				"/usr/local/etc/sayler/play.png";
+			}
+			else
+			{
+				"/usr/local/etc/sayler/rec.png";
+			}
+		</script>
+	</image>
+	<text offsetXPC="9" offsetYPC="80" widthPC="30" heightPC="12" fontSize="28" backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+		<script>elapsedTime;</script>
+	</text>
+	<progressBar backgroundColor="63:127:127" offsetXPC="0" offsetYPC="70" widthPC="100" heightPC="12">
+		<bar offsetXPC="35" offsetYPC="48" widthPC="50" heightPC="6" barColor="255:255:255" progressColor="26:129:211" bufferColor="0:0:0"/>
+			<text offsetXPC="5" offsetYPC="40" widthPC="35" heightPC="30" fontSize="15" backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+				<script>
+					if (playStatus == 2)
+					{
+						showstr = "буферизация...";
+					}
+					else
+					{
+						showstr = "соединение...";
+					}
+					showstr;
+				</script>
+			</text>
+		<destructor offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" color="-1:-1:-1">
+		</destructor>
+	</progressBar>
+	<text offsetXPC="30" offsetYPC="90" widthPC="70" heightPC="4" fontSize="14" backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+		<script>
+			if (record == 0)
+			{
+				info_record = "Нажмите '<!--{REC_KEY}!-->' для записи";
+			}
+			else
+			{
+				info_record = "Идет запись... Нажмите '<!--{REC_KEY}!-->' - для остановки";
+			}
+			info_record;
+		</script>
+	</text>
+	<onUserInput>
+		input = currentUserInput();
+		redrawDisplay();
+		print("*************************",input);
+		ret = "false";
+		if (input == "setup" || input == "guide")
+		{
+			playItemURL(-1, 1);
+			setRefreshTime(-1);
+			postMessage("return");
+			if (input == "setup")
+				postMessage("setup");
+			else
+				postMessage("guide");
+			ret = "true";
+		}
+		else if (input == "display")
+		{
+		  statusCounter = statusTimeout;
+		  ret = "false";
+		}
+		else if (input == "<!--{REC_KEY}!-->")
+		{
+			if (record == 0)
+			{
+				record = 1;
+				info_record = "Идет запись... нажмите '<!--{REC_KEY}!-->' для остановки...";
+			}
+			else
+			{
+				record = 0;
+				info_record = "Нажмите '<!--{REC_KEY}!-->' чтобы начать запись...";
+			}
+			playItemURL(-1, 1);
+			setRefreshTime(-1);
+			elapsedTime = "";
+			loadingStatus = 0;
+			checkStatus = 1;
+			showLoading = 0;
+			setRefreshTime(100);
+			startVideo = 1;
+			ret = "true";
+		}
+		ret;
+	</onUserInput>
+</mediaDisplay>
+
+<script>
+</script>
+
+<channel>
+	<title><!--{TITLE}!--></title>
+	<link><!--{HOST_STRING}!--></link>	
+	
+</channel>
+</rss>;

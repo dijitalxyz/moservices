@@ -1,0 +1,304 @@
+#!/bin/sh
+
+#QUERY_STRING=scan
+
+TRANSLATE=${TRANSLATE:-/usr/local/etc/translate}
+
+printhdflag2conf()
+{
+  case $1 in
+    no|No|NO|0)
+      echo 0 >> $RSSCONF
+    ;;
+    yes|Yes|YES|1)
+      echo 1 >> $RSSCONF
+    ;;
+    *)
+      echo 2 >> $RSSCONF
+    ;;
+  esac
+}
+
+if [ -f $TRANSLATE/etc/translate.conf ]; then
+  . $TRANSLATE/etc/translate.conf
+fi
+
+RSSCONF=${RSSCONF:-/usr/local/etc/dvdplayer/translate.dat}
+TRANSLATE_CGI=${TRANSLATE_CGI:-"http://127.0.0.1/cgi-bin/translate?"}
+
+if [ ! -f $RSSCONF ]; then
+    echo $TRANSLATE_CGI > $RSSCONF
+    echo 4 >> $RSSCONF
+    echo 3 >> $RSSCONF
+    printhdflag2conf $YOUTUBE_HD
+    printhdflag2conf $VIMEO_HD
+    printhdflag2conf $TVIGLE_HD
+    printhdflag2conf $IVI_HD
+    printhdflag2conf $ZOOMBY_HD
+    printhdflag2conf $VK_HD
+    echo 1 >> $RSSCONF
+    echo 0 >> $RSSCONF
+fi
+
+BASEPATH=${BASEPATH:-$TRANSLATE}
+FLAC=${FLAC:-$BASEPATH/bin/flac}
+MSDL=${MSDL:-$BASEPATH/bin/msdl}
+TOUTF8=${TOUTF8:-$BASEPATH/bin/toutf8}
+XCODE=${XCODE:-$BASEPATH/bin/xcode}
+MD5=${MD5:-$BASEPATH/bin/md5}
+RTMPDUMP=${RTMPDUMP:-$BASEPATH/bin/flvstreamer}
+
+WGET=${WGET:-/usr/bin/wget}
+CURL=${CURL:-/usr/local/bin/curl}
+
+RC_OK=0
+RC_FAIL=1
+
+unitohtml()
+{
+  awk '
+  BEGIN{
+  	for(i = 0; i < 10; i++)
+  		hex[i] = i
+  	hex["A"] = hex["a"] = 10
+  	hex["B"] = hex["b"] = 11
+  	hex["C"] = hex["c"] = 12
+  	hex["D"] = hex["d"] = 13
+  	hex["E"] = hex["e"] = 14
+  	hex["F"] = hex["f"] = 15
+  }
+  {
+  	i = $0
+  	while(match(i, /\\u..../)){
+  		if(RSTART > 1)
+  			printf "%s", substr(i, 1, RSTART-1)
+  		printf "&#%u;", hex[substr(i, RSTART+2, 1)]*16*16*16 + hex[substr(i, RSTART+3, 1)]*16*16 + hex[substr(i, RSTART+4, 1)]*16 + hex[substr(i, RSTART+5, 1)]
+  		i = substr(i, RSTART+RLENGTH)
+  	}
+  	print i
+  }
+  '
+}
+
+unidecode()
+{
+  awk '
+  BEGIN{
+  	for(i = 0; i < 10; i++)
+  		hex[i] = i
+  	hex["A"] = hex["a"] = 10
+  	hex["B"] = hex["b"] = 11
+  	hex["C"] = hex["c"] = 12
+  	hex["D"] = hex["d"] = 13
+  	hex["E"] = hex["e"] = 14
+  	hex["F"] = hex["f"] = 15
+  }
+  {
+  	i = $0
+  	while(match(i, /\\u..../)){
+  		if(RSTART > 1)
+  			printf "%s", substr(i, 1, RSTART-1)
+  		printf "%c", hex[substr(i, RSTART+2, 1)]*16*16*16 + hex[substr(i, RSTART+3, 1)]*16*16 + hex[substr(i, RSTART+4, 1)]*16 + hex[substr(i, RSTART+5, 1)]
+  		i = substr(i, RSTART+RLENGTH)
+  	}
+  	print i
+  }
+  '
+}
+
+urldecode()
+{
+  awk '
+  BEGIN{
+  	for(i = 0; i < 10; i++)
+  		hex[i] = i
+  	hex["A"] = hex["a"] = 10
+  	hex["B"] = hex["b"] = 11
+  	hex["C"] = hex["c"] = 12
+  	hex["D"] = hex["d"] = 13
+  	hex["E"] = hex["e"] = 14
+  	hex["F"] = hex["f"] = 15
+  }
+  {
+  	gsub(/\+/, " ")
+  	i = $0
+  	while(match(i, /%../)){
+  		if(RSTART > 1)
+  			printf "%s", substr(i, 1, RSTART-1)
+  		printf "%c", hex[substr(i, RSTART+1, 1)] * 16 + hex[substr(i, RSTART+2, 1)]
+  		i = substr(i, RSTART+RLENGTH)
+  	}
+  	print i
+  }
+  '
+}
+
+urldecode_s()
+{
+  echo -n "$1" | urldecode
+#  httpd -d "$1"
+}
+
+urlencode_s()
+{
+  echo -n "$1" | sed -r 's/%/%25/g;s/#/%23/g;s/\$/%24/g;s/&/%26/g;s/\+/%2B/;s/,/%2C/g;s/:/%3A/g;s/;/%3B/g;s/=/%3D/g;s/\?/%3F/g;s/@/%40/g;s/ /%20/g'
+}
+
+get_opt()
+{
+  opt=`echo "${arg_opt}" | grep ";*$1:" | sed "s/^.*$1://;s/;.*//"`
+  return 0
+}
+
+from_translit()
+{
+  echo "$1" | awk '
+    function translit(s)
+    {
+      gsub(/shch/, "щ", s);
+      gsub(/je/, "е", s);
+      gsub(/ie/, "е", s);
+      gsub(/jo/, "ё", s);
+      gsub(/io/, "ё", s);
+      gsub(/zh/, "ж", s);
+      gsub(/kh/, "х", s);
+      gsub(/ch/, "ч", s);
+      gsub(/sh/, "ш", s);
+      gsub(/ju/, "ю", s);
+      gsub(/iu/, "ю", s);
+      gsub(/ja/, "я", s);
+      gsub(/ia/, "я", s);
+      gsub(/a/, "а", s);
+      gsub(/b/, "б", s);
+      gsub(/v/, "в", s);
+      gsub(/g/, "г", s);
+      gsub(/d/, "д", s);
+      gsub(/z/, "з", s);
+      gsub(/i/, "и", s);
+      gsub(/j/, "й", s);
+      gsub(/k/, "к", s);
+      gsub(/l/, "л", s);
+      gsub(/m/, "м", s);
+      gsub(/n/, "н", s);
+      gsub(/o/, "о", s);
+      gsub(/p/, "п", s);
+      gsub(/r/, "р", s);
+      gsub(/s/, "с", s);
+      gsub(/t/, "т", s);
+      gsub(/u/, "у", s);
+      gsub(/f/, "ф", s);
+      gsub(/c/, "ц", s);
+      gsub(/\x22/, "ъ", s);
+      gsub(/y/, "ы", s);
+      gsub(/\x27/, "ь", s);
+      gsub(/e/, "э", s);
+      return s;
+    }
+    {
+      for(i=1; i<=NF; i++) 
+      {
+        gap = (i == NF) ? "" : " ";
+        if($(i) ~ /^`/)
+        {
+          printf "%s%s", translit( substr( $(i), 2 ) ), gap;
+        }
+        else
+        {
+          printf "%s%s", $(i), gap;
+        }
+      }
+    }
+  '
+  return 0
+}
+ 
+template2rss()
+{
+  awk '
+    {
+        if(match($0, /(.*)<!--`(.*)`-->(.*)/, arr))
+        {
+          printf "%s", arr[1];
+          system(arr[2]);
+          print arr[3];
+        }
+        else
+        {
+          print;
+        }
+    }
+  ' "$1"
+  
+  return 0
+}
+
+escapeXML()
+{
+	if [ -z "$1" ]; then 
+		sed 's/&/&amp;/g;s/>/&gt;/g;s/</&lt;/g;s/"/&quot;/g;'
+	else
+	  echo -n "$1" | sed 's/&/&amp;/g;s/>/&gt;/g;s/</&lt;/g;s/"/&quot;/g;'
+	fi
+}
+
+unescapeXML()
+{
+	if [ -z "$1" ]; then 
+		sed 's/&gt;/>/g;s/&lt;/</g;s/&quot;/"/g;s/&amp;/\&/g;'
+	else
+  	echo -n "$1" | sed 's/&gt;/>/g;s/&lt;/</g;s/&quot;/"/g;s/&amp;/\&/g;'
+  fi
+}
+
+printContent()
+{
+  local OUTFILE="$2"
+  if [ -z "$OUTFILE" ]; then 
+    OUTFILE="$TMPFILE.content"
+    sed '' > $OUTFILE 
+  fi
+  echo "Content-Type: $1"
+  echo "Content-Length: `wc -c $OUTFILE | awk '{print $1}'`"
+  echo
+  cat $OUTFILE && rm -f $OUTFILE
+}
+
+get_xml_text()
+{
+  sed -n "/$1/p" $TMPFILE | sed -n '1p' | sed "s/.*<$1>\(.*\)<\/$1>.*/\1/" | sed 's/<!\[CDATA\[//g;s/\]\]>//g;'
+  return 0
+}
+
+find_plugin()
+{
+  eval local url=$1
+  local server=$(echo "$url" | sed 's/.*\/\///;s/.*www.//;s/\/.*//')
+  local plugin="$(ls -1 "$PLUGINS_DIR" | sed -n "/^${server}.plg\$/p")"
+  eval $2="'$plugin'"
+}
+
+find_protocol_plugin()
+{
+  eval local url=$1
+  local protocol=$(echo "$url" | sed 's/:\/\/.*//')
+  local plugin="$(ls -1 "$PLUGINS_DIR" | grep -iF "protocol.${protocol}.plg")"
+  eval $2="'$plugin'"
+}
+
+utf8toascii()
+{
+  local file=$TEMP/$$.conv
+  if [ -z "$1" ]; then
+    echo -n "<text>" > $file
+    cat >> $file
+    echo -n "</text>" >> $file
+  else
+    echo -n "<text>$1</text>" > $file
+  fi
+  if cat $file | $TOUTF8 -t; then
+    LC_ALL=C awk '{match($0,/<text>(.*)<\/text>/,arr);print arr[1]}' $file
+  else
+    $XSLTPROC $BASEPATH/lib/utf8toascii.xslt $file | $XCODE -l -s
+  fi
+  rm -f $file
+}

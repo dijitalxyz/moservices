@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# 
+
+
+# Translate CGI module
+# 'live-online-tv.com' plug-in
+#
+# version: 1.0 
+#
+# http://www.live-online-tv.com/tv/planeteinsolite.html
+#
+
+if echo "${arg_url}" | grep -q -s '\(www\.\)live-online-tv\.com/tv/.*\.html$'; then 
+
+  local host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>&1`
+  
+  if [ -f ${TMPFILE} ]; then
+    local obj=`grep 'var ep="' "$TMPFILE" | sed 's/.* ep="//;s/";eval.*//' | awk '{ s=$0; while(s!="") { printf "%c", strtonum("0x" substr(s,1,2));	s=substr(s,3); }}'`;
+    rm -f "$TMPFILE"
+    if echo $obj | grep -qs 'type="application/x-mplayer2"'; then
+      arg_url=`echo $obj | grep 'src="' | sed 's/.*src="//;s/".*//g'`
+      return $RC_FAIL
+    fi
+  fi
+  return $RC_OK
+fi
+
+return $RC_FAIL

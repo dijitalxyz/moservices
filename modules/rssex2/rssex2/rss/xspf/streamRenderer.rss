@@ -1,0 +1,402 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  renderer_cmd_file   = "/tmp/xspf_renderer.dat";
+  renderer_status_file= "/tmp/xspf_renderer.status";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_playlist    = storagePath + "playlist.dat";
+  storagePath_stream      = storagePath + "stream.dat";
+  
+  request_url         = "";
+  request_options     = "";
+  request_title       = "";
+  request_description = "";
+
+  error_info          = "";
+  
+  renderer_status     = "waiting";
+  renderer_url        = "";
+
+  setRefreshTime(250);
+</onEnter>
+
+<onExit>
+	playItemURL(-1, 1);
+	setRefreshTime(-1);
+	renderer_status = "not running";
+	renderer_url = "";
+  arr = null;
+  arr = pushBackStringArray(arr, renderer_status);
+  arr = pushBackStringArray(arr, renderer_url);
+  writeStringToFile(renderer_status_file, arr);
+</onExit>
+
+<onRefresh>
+  arr = readStringFromFile(renderer_cmd_file);
+  if(arr != null)
+  {
+    print("sub_Check");
+    arr_url     = getStringArrayAt(arr, 0);
+    arr_options = getStringArrayAt(arr, 1);
+    arr_title   = getStringArrayAt(arr, 2);
+    
+    if(arr_url == null)     arr_url = "";
+    if(arr_options == null) arr_options = "";
+    if(arr_title == null)   arr_title = "";
+    
+    writeStringToFile(renderer_cmd_file, "");
+    
+    if(arr_url == "{renderer-play}" &amp;&amp; request_url != "")
+    {
+  		executeScript("sub_Play");
+    }
+    else if(arr_url != "" &amp;&amp; arr_url != "{renderer-stop}" &amp;&amp; arr_url != "{renderer-pause}") 
+    {
+			request_url     = arr_url;
+			request_options = arr_options;
+			request_title   = arr_title;
+			executeScript("sub_Play");
+    }
+  }
+  arr = null;
+  arr = pushBackStringArray(arr, renderer_status);
+  arr = pushBackStringArray(arr, renderer_url);
+  writeStringToFile(renderer_status_file, arr);
+</onRefresh>
+
+<sub_Play>
+  print("sub_Play");
+  info_url = translate_base_url + "info," + request_options + "," + urlEncode(request_url);
+  
+  renderer_status = "checking";
+  renderer_url = request_url;
+  error_info          = "";
+
+  print("Info:",info_url);
+  
+  res = loadXMLFile(info_url);
+  
+  if (res != null)
+  {
+    error = getXMLElementCount("info","error");
+    
+    if(error != 0)
+    {
+	    value = getXMLText("info","error");
+	    if(value != null)
+	    {
+	     error_info = value;
+	    }
+	    setRefreshTime(250);
+    }
+    else
+    {
+	    value = getXMLAttribute("info","stream","url");
+	    if(value != null)
+	     stream_url = value;
+
+	    value = getXMLAttribute("info","stream","type");
+	    if(value != null)
+	     stream_type = value;
+	    
+	    value = getXMLAttribute("info","stream","class");
+	    if(value != null)
+	     stream_class = value;
+
+	    value = getXMLAttribute("info","stream","protocol");
+	    if(value != null)
+	     stream_protocol = value;
+
+	    value = getXMLAttribute("info","stream","server");
+	    if(value != null)
+	     stream_soft = value;
+
+      stream_status_url = "";
+      
+	    value = getXMLAttribute("info","stream","server_url");
+	    if(value != null)
+	    {
+	     stream_server_url = value;
+	     if((stream_soft == "icecast" || stream_soft == "shoutcast") &amp;&amp; stream_server_url!="")
+	     {
+  	      stream_status_url = translate_base_url+"status,"+stream_server_url+","+urlEncode(stream_url);
+  	   }
+	    }
+	     
+      value = getXMLText("info","status","stream-title");
+	    if(value != null)
+	     stream_title = value;
+
+      stream_current_song = "";
+	    value = getXMLText("info","status","current-song");
+	    if(value != null)
+  		  stream_current_song = value;
+  		  
+	    value = getXMLText("info","status","stream-genre");
+	    if(value != null)
+	      stream_genre = value;
+      
+	    value = getXMLText("info","status","stream-bitrate");
+	    if(value != null)
+	      stream_bitrate = value;
+
+      options = "";
+      
+      if(stream_type != "")
+        options = "Content-type:"+stream_type;
+      
+      if(options == "")
+        options = stream_options;
+      else
+        options = options + ";" + stream_options;
+
+	    stream_translate_url = translate_base_url + "stream," + options + "," + urlEncode(stream_url);
+	    
+	    url = null;
+	    
+	    if(stream_class == "video" || stream_class == "audio")
+  	  {
+        if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast" &amp;&amp; stream_soft != "_translate_"))
+  	      url = stream_url;
+  	    else
+  	      url = stream_translate_url;
+  	  }
+  	  else
+  	  {
+	      url = stream_url;
+  	  }
+  	     
+  	  if(url != null)
+  	  {
+	      renderer_status = "tuneing";
+        show_info = 0;
+        check_info = check_info_time;
+        play_state = 0;
+        stream_image = "";
+        if(stream_class == "audio" || stream_class == "video" || stream_class == "playlist" || stream_class == "rss")
+        {
+          executeScript("sub_Load_"+stream_class);
+          executeScript("sub_Stop");
+  	      renderer_status = "waiting";
+          setRefreshTime(250);
+        }
+        else
+        {
+          error_info = "Unsupported media type: " + stream_type;
+  	      renderer_status = "unsupported media";
+          setRefreshTime(250);
+        }
+	    }
+	    else
+	    {
+        error_info = "Empty stream url!";
+	      renderer_status = "no stream";
+        setRefreshTime(250);
+	    }
+    }
+  }
+  else
+  {
+    error_info = "CGI translate module failed!";
+    renderer_status = "failed";
+    setRefreshTime(250);
+  }
+  redrawDisplay();
+</sub_Play>
+
+<sub_Stop>
+  print("sub_Stop");
+  stream_url          = "";
+  stream_type         = "";
+  stream_class        = "";
+  stream_protocol     = "";
+  stream_soft         = "";
+  stream_title        = "";
+  stream_current_song = "";
+  stream_genre        = "";
+  stream_bitrate      = "";
+  stream_elapsed      = "";
+  stream_total        = "";
+  error_info          = "";
+  stream_image        = "";
+	redrawDisplay();
+</sub_Stop>
+
+<sub_Load_playlist>
+  streamArray = null;
+  streamArray = pushBackStringArray(streamArray, stream_url);
+  if(stream_title == "" || stream_title == null)
+    stream_title = stream_url;
+  streamArray = pushBackStringArray(streamArray, stream_title);
+  streamArray = pushBackStringArray(streamArray, "");
+  streamArray = pushBackStringArray(streamArray, "");
+  streamArray = pushBackStringArray(streamArray, "playlist");
+  streamArray = pushBackStringArray(streamArray, "1");
+  writeStringToFile(storagePath_playlist, streamArray);
+  doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+</sub_Load_playlist>
+
+<sub_Load_rss>
+  streamArray = null;
+  streamArray = pushBackStringArray(streamArray, stream_url);
+  streamArray = pushBackStringArray(streamArray, stream_url);
+  streamArray = pushBackStringArray(streamArray, "");
+  streamArray = pushBackStringArray(streamArray, "");
+  writeStringToFile(storagePath_stream, streamArray);
+  doModalRss("rss_file://../etc/translate/rss/xspf/rss_mediaFeed.rss");
+</sub_Load_rss>
+
+<sub_Load_video>
+  streamArray = null;
+  streamArray = pushBackStringArray(streamArray, request_url);
+  streamArray = pushBackStringArray(streamArray, request_options);
+  streamArray = pushBackStringArray(streamArray, stream_url);
+  streamArray = pushBackStringArray(streamArray, url);
+  streamArray = pushBackStringArray(streamArray, stream_type);
+  streamArray = pushBackStringArray(streamArray, stream_title);
+  writeStringToFile(storagePath_stream, streamArray);
+  doModalRss("rss_file://../etc/translate/rss/xspf/videoRenderer.rss");
+</sub_Load_video>
+
+<sub_Load_audio>
+  streamArray = null;
+  streamArray = pushBackStringArray(streamArray, request_url);
+  streamArray = pushBackStringArray(streamArray, request_options);
+  streamArray = pushBackStringArray(streamArray, stream_url);
+  streamArray = pushBackStringArray(streamArray, url);
+  streamArray = pushBackStringArray(streamArray, stream_type);
+  if(stream_status_url == "")
+    streamArray = pushBackStringArray(streamArray, "_empty_");
+  else
+    streamArray = pushBackStringArray(streamArray, stream_status_url);
+  streamArray = pushBackStringArray(streamArray, stream_current_song);
+  streamArray = pushBackStringArray(streamArray, stream_genre);
+  streamArray = pushBackStringArray(streamArray, stream_bitrate);
+  streamArray = pushBackStringArray(streamArray, stream_title);
+  streamArray = pushBackStringArray(streamArray, "../etc/translate/app/lastfm/empty.png");
+  writeStringToFile(storagePath_stream, streamArray);
+  doModalRss("rss_file://../etc/translate/rss/xspf/audioRenderer.rss");
+</sub_Load_audio>
+
+<mediaDisplay name="onePartView" 
+  showDefaultInfo="no" 
+  showHeader="no" 
+  sideLeftWidthPC="0" 
+  sideRightWidthPC="0" 
+  backgroundColor="0:0:0"
+	bottomYPC="65"
+  >
+
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> ../etc/translate/rss/image/POPUP_LOADING_01.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> ../etc/translate/rss/image/POPUP_LOADING_02.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> ../etc/translate/rss/image/POPUP_LOADING_03.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> ../etc/translate/rss/image/POPUP_LOADING_04.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> ../etc/translate/rss/image/POPUP_LOADING_05.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> ../etc/translate/rss/image/POPUP_LOADING_06.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> ../etc/translate/rss/image/POPUP_LOADING_07.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> ../etc/translate/rss/image/POPUP_LOADING_08.png </idleImage>
+
+	<text align="center" redraw="no" offsetXPC="0" offsetYPC="2" widthPC="100" heightPC="15" fontSize="34" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		Media Stream Renderer
+	</text>
+
+	<text lines="2" redraw="yes" offsetXPC="5" offsetYPC="80" widthPC="90" heightPC="10" fontSize="14" backgroundColor="-1:-1:-1" foregroundColor="200:80:80">
+		<script>error_info;</script>
+	</text>
+	
+	<text align="right" redraw="yes" offsetXPC="5" offsetYPC="90" widthPC="90" heightPC="5" fontSize="14" backgroundColor="-1:-1:-1" foregroundColor="155:155:155">
+		<script>request_url;</script>
+	</text>
+
+  <image redraw="yes" offsetXPC="35" offsetYPC="37" widthPC="30" heightPC="26">
+    ../etc/translate/rss/image/msr.png
+    <widthPC>
+      <script>
+        181 / 114 * 26 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        (100 - 181 / 114 * 26 * screenYp / screenXp)/2;
+      </script>
+    </offsetXPC>
+	</image>
+
+	<onUserInput>
+		input = currentUserInput();
+		print("**** input=",input);
+		ret = "false";
+    if (input == "enter" || userInput == "ENTR")
+		{
+		  if(arr_url != "" &amp;&amp; arr_url != null)
+		  {
+  			request_url     = arr_url;
+  			request_options = arr_options;
+  			request_title   = arr_title;
+  			executeScript("sub_Play");
+  	  }
+  	  else
+  	  {
+        error_info = "Empty stream url!";
+        redrawDisplay();
+  	  }
+      ret = "true";
+		}
+		else
+    if (input == "right" || userInput == "R")
+		{
+      ret = "true";
+		}
+		ret;
+	</onUserInput>
+
+	
+</mediaDisplay>
+
+
+<channel>
+	<title>Media Stream Renderer</title>
+</channel>
+
+</rss>

@@ -1,0 +1,420 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=threePartsView
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerWidthPC="0"
+	itemImageXPC="17"
+	itemImageYPC="18"
+	itemXPC="30"
+	itemYPC="18"
+	itemWidthPC="55"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	showHeader=no
+	showDefaultInfo=yes
+	infoYPC=90
+	fontSize=16
+>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image offsetXPC=80 offsetYPC=1 widthPC=15 heightPC=10>
+    <script>pageLogo;</script>
+    <widthPC>
+      <script>
+        20 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 20 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+	</image>
+
+    <text offsetXPC=10 offsetYPC=85 widthPC=10 heightPC=5 fontSize=20 backgroundColor=0:0:0 foregroundColor=100:100:100>
+      <script>elapsedTime;</script>
+    </text>
+    <text offsetXPC=20 offsetYPC=85 widthPC=70 heightPC=5 fontSize=14 backgroundColor=0:0:0 foregroundColor=100:100:100>
+      <script>playTitle;</script>
+    </text>
+	
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown" || userInput == "PD")
+        {
+          idx -= -5;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 5;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+      	setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      else if(majorContext == "items" &amp;&amp; (userInput == "right" || userInput == "R"))
+      {
+        idx = getFocusItemIndex();
+        url = feedUrl;
+        title = getStringArrayAt(titleArray, idx);
+        
+        arr = null;
+        arr = pushBackStringArray(arr, url);
+        arr = pushBackStringArray(arr, title);
+        arr = pushBackStringArray(arr, "");
+        arr = pushBackStringArray(arr, "");
+        arr = pushBackStringArray(arr, idx);
+        print("arr=",arr);
+        print("storagePath=",storagePath);
+        
+        writeStringToFile(storagePath, arr);
+
+        print("act = doModalRss('../etc/translate/rss/rss_mediaEntry.rss');");
+        print("********** doModalRss=",act);
+        ret = "true";
+      }
+      ret;
+    </script>
+  </onUserInput>
+  
+  <previewWindow windowColor=0:0:0 offsetXPC=98 offsetYPC=98 widthPC=2 heightPC=2></previewWindow>
+  
+</mediaDisplay>
+
+<onExit>
+  playItemURL(-1, 1);
+  setRefreshTime(-1);
+</onExit>
+
+<onEnter>
+  cachePath = getStoragePath("key");
+
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  storagePath = getStoragePath("tmp");
+  storagePath  = storagePath + "stream.dat";
+  arr = readStringFromFile(storagePath);
+  print("******* Initialize: "+arr);
+  feedUrl = getStringArrayAt(arr, 0);
+  pageTitle = getStringArrayAt(arr, 1);
+  print("feedUrl=",feedUrl);
+
+  mode = 1;
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  if(mode == 1)
+  {
+    setRefreshTime(-1);
+    
+    url = feedUrl;
+
+    print("Start to load feed:",url);
+    
+    dlok = loadXMLFile(url);
+    if (dlok != null)
+    {
+      titleArray = null;
+      thumbnailArray = null;
+      urlArray = null;
+      typeArray = null;
+      
+    	itemSize = getXMLElementCount("rss","channel","item");
+    	if(itemSize == 0)
+    	  postMessage("return");
+    	print("Item Size = ", itemSize);
+    	
+    	pageLogo = getXMLText("rss","channel","image","url");
+    	pageTitle = getXMLText("rss","channel","title");
+    
+    	count=0;
+    	while(itemSize != 0)
+    	{
+    	  title = getXMLText("rss","channel","item",count,"title");
+    	  url   = getXMLAttribute("rss","channel","item",count,"media:content","media:player","url");
+    	  type  = "";
+    	  if(url == null || url == "")
+    	  {
+    	    url   = getXMLAttribute("rss","channel","item",count,"enclosure","url");
+    	    type  = getXMLAttribute("rss","channel","item",count,"enclosure","type");
+    	    
+    	    if(type == "application/x-bittorrent" || url == null || url == "")
+    	    {
+        	  type  = "";
+    	      url = getXMLText("rss","channel","item",count,"link");
+    	    }
+    	  }
+    	  
+    	  thumbnail = getXMLAttribute("rss","channel","item",count,"media:thumbnail","url");
+    	  if(thumbnail == null || thumbnail == "")
+    	  {
+            thumbnail = getXMLAttribute("rss","channel","item",count,"media:content","media:thumbnail",0,"url");
+            if(thumbnail == null || thumbnail == "")
+            {
+                thumbnail = getXMLAttribute("rss","channel","item",count,"image","url");
+            }
+    	  }
+    	  
+    	  titleArray  = pushBackStringArray(titleArray, title);
+    	  urlArray    = pushBackStringArray(urlArray, url);
+    	  typeArray    = pushBackStringArray(typeArray, type);
+    	  thumbnailArray = pushBackStringArray(thumbnailArray, thumbnail);
+      
+    	  count += 1;
+    	  if (count == itemSize)
+    	  {
+    		  break;
+    	  }
+    	}
+    	print("title array =", titleArray);
+    	print("url array =", urlArray);
+    	print("thumbnail array =", thumbnailArray);
+    	setFocusItemIndex(0);
+    	redrawDisplay();
+    }
+  }
+  else if(mode == 0)
+  {
+    print("Wait for movie stop");
+    vidProgress = getPlaybackStatus();
+    playElapsed = getStringArrayAt(vidProgress, 0);
+    playStatus = getStringArrayAt(vidProgress, 3);
+
+    if (playStatus == 0) 
+    {
+       setRefreshTime(-1);
+       elapsedTime = "";
+       playTitle = "";
+    	 redrawDisplay();
+    }
+    else
+    {
+      if (playElapsed != 0) 
+      {
+        x = Integer(playElapsed / 60);
+        h = Integer(playElapsed / 3600);
+        s = playElapsed - (x * 60);
+        m = x - (h * 60);
+        elapsedTime = sprintf("%s:", h);
+        if(m &lt; 10)  elapsedTime += "0";
+        elapsedTime += sprintf("%s:", m);
+        if(s &lt; 10)  elapsedTime += "0";
+        elapsedTime += sprintf("%s", s);
+        print("elapsedTime =", elapsedTime);
+        
+      	redrawDisplay();
+      } 
+    }
+  }
+</onRefresh>
+
+  <item_template>
+   <displayTitle>
+      <script>
+	      getStringArrayAt(titleArray , -1);
+      </script>
+    </displayTitle>
+    
+    <media:thumbnail>
+      <script>
+	      getStringArrayAt(thumbnailArray , -1);
+			</script>
+    </media:thumbnail>
+        
+    <mediaDisplay name=threePartsView
+		    sideLeftWidthPC = 0
+		    sideRightWidthPC = 0
+        backgroundColor="0:0:0">
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+		</mediaDisplay>
+		<!--
+		<link>rss_file://../etc/translate/rss/xspf/streamPlayer.rss</link>
+		 -->
+		<onClick>
+		  playItemURL(-1, 1);
+      idx   = getFocusItemIndex();
+      url   = getStringArrayAt(urlArray, idx);
+      playTitle = url;
+      type  = getStringArrayAt(typeArray, idx);
+      meta  = "";
+      if(type != null &amp;&amp; type != "")
+        meta = "Content-type:"+type;
+      urlToPlay = translate_base_url+"info,"+meta+","+url;
+      dlok = loadXMLFile(urlToPlay);
+      if(dlok != null)
+      {
+        error = getXMLElementCount("info","error");
+        print("error=",error);
+        
+        if(error == 0)
+        {
+    	    value = getXMLAttribute("info","stream","type");
+    	    if(value != null)
+    	     type = value;
+    	    
+    	    value = getXMLAttribute("info","stream","url");
+    	    if(value != null)
+    	     url = value;
+  
+    	    value = getXMLAttribute("info","stream","class");
+    	    if(value != null)
+    	     class = value;
+  
+    	    value = getXMLAttribute("info","stream","server");
+    	    if(value != null)
+    	     soft = value;
+  
+    	    value = getXMLAttribute("info","stream","protocol");
+    	    if(value != null)
+    	     protocol = value;
+
+          value = getXMLText("info","status","stream-title");
+    	    if(value != null)
+    	     stream_title = value;
+    	     
+          meta  = "";
+          if(type != null &amp;&amp; type != "")
+            meta = "Content-type:"+type;
+          translateStreamURL = translate_base_url+"stream,"+meta+","+url;
+          
+          if(class == "video")
+          {
+            historyPath = getStoragePath("key")+"translate.history_video.m3u";
+            historydat = readStringFromFile(historyPath);
+            if(historydat == null)
+              historydat = pushBackStringArray(historydat, "#EXTM3U");
+            historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+getStringArrayAt(titleArray, idx));
+            historydat = pushBackStringArray(historydat, url);
+            writeStringToFile(historyPath, historydat);
+
+            if(protocol == "file" || (protocol == "http" &amp;&amp; soft != "_translate_"))
+              playItemURL(url, 0);
+            else
+              playItemURL(translateStreamURL, 0);
+          }
+          else if(class == "audio")
+          {
+            historyPath = getStoragePath("key")+"translate.history_audio.m3u";
+            historydat = readStringFromFile(historyPath);
+            if(historydat == null)
+              historydat = pushBackStringArray(historydat, "#EXTM3U");
+            historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+getStringArrayAt(titleArray, idx));
+            historydat = pushBackStringArray(historydat, url);
+            writeStringToFile(historyPath, historydat);
+
+            if(protocol == "file" || (protocol == "http" &amp;&amp; (soft != "shoutcast" || soft != "_translate_")))
+              playItemURL(url, 0, "mediaDisplay", "previewWindow");
+            else
+              playItemURL(translateStreamURL, 0, "mediaDisplay", "previewWindow");
+            mode = 0;
+            setRefreshTime(1000);
+          }
+          else if(class == "playlist")
+          {
+            streamArray = null;
+            streamArray = pushBackStringArray(streamArray, url);
+            if(stream_title == "" || stream_title == null)
+              stream_title = url;
+            streamArray = pushBackStringArray(streamArray, title);
+            streamArray = pushBackStringArray(streamArray, "");
+            streamArray = pushBackStringArray(streamArray, "");
+            streamArray = pushBackStringArray(streamArray, "playlist");
+            streamArray = pushBackStringArray(streamArray, "1");
+            writeStringToFile(getStoragePath("tmp")+"playlist.dat", streamArray);
+            doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+          }
+  		  }
+  		  else
+  		  {
+  		    null;
+  		  }
+      }
+		</onClick>
+  </item_template>
+
+<channel>
+	
+<itemSize>
+	<script>itemSize;</script>
+</itemSize>
+
+</channel>
+</rss>

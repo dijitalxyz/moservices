@@ -1,0 +1,47 @@
+#!/bin/sh
+#
+# description: Starts remote Date Time sync
+#
+mos=/usr/local/etc/mos
+
+case "$1" in
+  start)
+	echo "Date Time syncronization..."
+
+	tz='MSK-4'
+	src='time-a.nist.gov'
+	# read config
+	[ -f $mos/etc/rdate.conf ] && eval "$( cat $mos/etc/rdate.conf | sed '/^$/d' )"
+
+	#patching profile
+	if ! grep -q -e "^export TZ=\s*$tz" /usr/local/etc/profile ; then
+		echo 'patching profile...'
+		ttz=$( echo $tz | sed 's/\//\\\//' )
+		sed -i "s/^\(export TZ=\).*$/\1$ttz/" /usr/local/etc/profile
+	fi
+
+	export TZ=$tz
+	$mos/bin/rdate -s $src
+	if [ $? != 0 ] ; then
+	  echo "Fail"
+	  /sbin/hwclock -s
+	else
+	  echo "Done"
+	  /sbin/hwclock -w
+	fi
+	date
+	;;
+  enable)
+	;;
+  disable)
+	#unpatching profile
+	sed -i "s/^\(export TZ=\).*$/\1CST+0:00:00/" /usr/local/etc/profile
+	;;
+  stop | status)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

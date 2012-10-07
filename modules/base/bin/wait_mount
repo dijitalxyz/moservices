@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# waiting for mount disks
+#
+i=60
+while [ $i -ne 0 ] ; do
+	s=$( mount | grep /dev/scsi/host )
+	[ -n "$s" ] && break
+	sleep 5
+	let i-=1
+done
+[ -z "$s" ] && exit 0
+sleep 20
+exit 1

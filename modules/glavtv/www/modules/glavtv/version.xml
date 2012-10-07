@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package>
+    <name>GlavTV</name>
+    <version>Installer</version>
+    <copyright>GlavTV</copyright>
+    <license>CC BY-NC-ND 3.0</license>
+    <focusedIcon>glavtv-focused.png</focusedIcon>
+    <unfocusedIcon>glavtv-unfocused.png</unfocusedIcon>
+</package>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>Tvigle</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+
+  <trackList>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Start:first;File:etc/menu/tvigle-catalog.xspf,collection/simplemenu</link>
+      <title>Каталог</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/menu/tvigle-rss.xspf,collection/medialist</link>
+      <title>RSS-ленты</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+  </trackList>
+
+</playlist>

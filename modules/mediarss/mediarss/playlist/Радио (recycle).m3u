@@ -1,0 +1,179 @@
+#EXTM3U
+#EXTINF:0,Radio Metro
+http://195.182.132.18:8230
+#EXTINF:0,Record
+http://78.111.92.26:8000
+#EXTINF:0,Русское Радио
+http://92.243.64.178:8080/r64
+#EXTINF:0,Радио Юность
+http://217.10.44.211:8000/radioyunost128.mp3
+#EXTINF:0,Love Radio
+http://stream.loveradio.ru:8000/loveradio_high.mp3
+#EXTINF:0,Европа Плюс
+http://88.212.197.154:9000/europa64
+#EXTINF:0,NRJ
+mms://94.23.194.126/v1_1_128
+#EXTINF:0,Megapolis FM
+http://92.243.64.178:8000/mgps
+#EXTINF:0,Наше Радио
+http://83.234.144.42:80/nashe-128
+#EXTINF:0,D-FM
+mms://broadcast01.station.ru/dfm
+#EXTINF:0,Радио Монте-Карло
+mms://broadcast02.station.ru/montecarlo
+#EXTINF:0,Радио дача
+http://82.204.217.140:8000/radiodacha_high.mp3
+#EXTINF:0,Ultra
+http://83.234.144.42/ultra-192
+#EXTINF:0,Radio Roks
+http://213.159.71.19:8000/128.mp3
+#EXTINF:0,Best FM
+http://w02-sw01.akadostream.ru:8112/bestfm128.mp3
+#EXTINF:0,Эхо Москвы
+http://w02-sw01.akadostream.ru:8000/moscowecho128.mp3
+#EXTINF:0,Дорожное радио
+http://217.170.67.77/dorojnoe
+#EXTINF:0,Радио Шансон
+http://w02-sw01.akadostream.ru:8108/shanson128.mp3
+#EXTINF:0,Ретро FM
+mms://stream06.rambler.ru/retro_inside
+#EXTINF:0,Авторадио
+mms://94.103.92.245/c3_2_128
+#EXTINF:0,Радио Зенит
+http://stream.radiozenit.ru:8000/mp3
+#EXTINF:0,Гардарика FM
+http://195.182.132.18:8260
+#EXTINF:0,Радио Хит
+http://217.170.67.77/radiohit
+#EXTINF:0,Эльдорадо
+http://88.212.197.154:9000/eldoradio64
+#EXTINF:0,Радио ВАНЯ
+http://online.radiovanya.ru/radiovanya
+#EXTINF:0,Радио Орфей
+http://w02-sw01.akadostream.ru:8000/orfey128.mp3
+#EXTINF:0,L-Radio
+http://77.233.175.58:8000/lradio.stereo.96.mp3
+#EXTINF:0,Кекс FM
+http://88.212.197.154:9000/keks64
+#EXTINF:0,Радио Спорт
+http://w02-sw01.akadostream.ru:8108/radiosport128.mp3
+#EXTINF:0,Радио ЭРМИТАЖ
+http://91.190.117.131:8000/live
+#EXTINF:0,M-Radio
+http://82.204.217.140:8000/mradio_high.mp3
+#EXTINF:0,Серебряный Дождь
+http://w02-sw01.akadostream.ru:8000/silverrain128.mp3
+#EXTINF:0,Manhattan
+http://81.30.54.70:8000/manhattan
+#EXTINF:0,Радио Юнитон
+http://195.5.170.5:8000/R-UNITON128
+#EXTINF:0,Радио Сибирь
+http://radiosibir.ru:8090/HQ
+#EXTINF:0,Радио Алла
+http://77.88.207.254:8000/radioalla128
+#EXTINF:0,Радио Маяк
+http://217.10.44.211:8000/mayak128.mp3
+#EXTINF:0,OPP
+http://213.79.118.22:8000/orr-128
+#EXTINF:0,Радио Пилот
+http://82.193.141.171:8000/120
+#EXTINF:0,Говорит Москва
+http://213.79.118.22:8000/gm-fm-128
+#EXTINF:0,Интерволна
+http://online.intervolna.ru:8000/
+#EXTINF:0,ОКей-радио
+http://78.31.72.218:8000/OKradio128.mp3
+#EXTINF:0,Радио Борнео
+http://91.203.224.6:8888/64
+#EXTINF:0,Радио СК
+http://82.193.141.171:8000/118
+#EXTINF:0,УКРАИНСКИЕ РАДИОСТАНЦИИ
+http://img441.imageshack.us/img441/2682/ukrradio.png
+#EXTINF:0,DJ FM
+http://217.20.164.161:8000/djfm128
+#EXTINF:0,KISS FM
+http://91.202.72.22:8000/kiss-fm-128
+#EXTINF:0,Радио МИКС
+http://212.115.255.5:8000/RadioMIX
+#EXTINF:0,Европа Плюс
+http://live1.radiogroup.com.ua:8000/europaplus128
+#EXTINF:0,Gala Radio
+http://live.galaradio.com:8000/kiev
+#EXTINF:0,NRJ
+http://195.66.153.33:8010
+#EXTINF:0,Наше Радио
+http://www.nashe.ua:8000/
+#EXTINF:0,Люкс ФМ
+http://77.120.104.251:9000/
+#EXTINF:0,Джем FM
+http://212.40.43.227:8000/jamfm128
+#EXTINF:0,MFM
+http://212.26.146.117:8080/online128
+#EXTINF:0,РАДИО Перец
+http://212.26.146.117:8080/radio-perec
+#EXTINF:0,Хит ФМ
+http://91.202.72.22:8000/hit-fm-128
+#EXTINF:0,Ретро FM
+http://live1.radiogroup.com.ua:8000/retro128
+#EXTINF:0,Радио Мелодия
+http://212.26.146.117:8080/radio-melodia
+#EXTINF:0,Русское Радио Украина
+http://91.202.72.22:8000/rusradio-128
+#EXTINF:0,Ух РАДІО
+http://online1.uhradio.com.ua:8000/uhradio
+#EXTINF:0,Радіо Київ ФМ
+http://217.76.201.26:8000/
+#EXTINF:0,Радио Рокс
+http://195.95.206.11:8000/RadioROKS
+#EXTINF:0,Авторадио
+http://212.40.43.227:8000/avtoradio128
+#EXTINF:0,Взрослое Радио
+http://live2.radiogroup.com.ua:8000/106fm128
+#EXTINF:0,Народное радио
+http://62.80.190.247:8001/NRK128
+#EXTINF:0,Львівська хвиля
+http://ua.uar.net:8000/lwr
+#EXTINF:0,Великий луг
+http://radio.express.net.ua:12000/
+#EXTINF:0,Радио Шансон
+http://217.20.164.161:8000/shanson128
+#EXTINF:0,Premier
+http://91.193.68.87:8155
+#EXTINF:0,Бизнес FM
+http://217.20.164.161:8000/businessfm128
+#EXTINF:0,Просто Ради.О
+http://217.20.164.161:8000/prosto.mp3
+#EXTINF:0,ELECTRO РАДИОСТАНЦИИ
+http://img189.imageshack.us/img189/1350/electronicradio.png
+#EXTINF:0,Trance FM
+http://us-ir.trancefm.com/192mp3-1
+#EXTINF:0,Electro House
+http://scfire-ntc-aa03.stream.aol.com/stream/1025
+#EXTINF:0,Gabber
+http://205.188.215.226:8006
+#EXTINF:0,Hardcore
+http://scfire-ntc-aa04.stream.aol.com/stream/1004
+#EXTINF:0,Progressive
+http://scfire-ntc-aa03.stream.aol.com/stream/1026
+#EXTINF:0,Ambient
+http://205.188.215.228:8006/
+#EXTINF:0,Vocal Trance
+http://scfire-ntc-aa03.stream.aol.com/stream/1065
+#EXTINF:0,Drum and Base
+http://207.200.96.229:8030/
+#EXTINF:0,Breaks
+http://205.188.215.225:8002/
+#EXTINF:0,Euro Dance
+http://scfire-chi-aa02.stream.aol.com/stream/1009
+#EXTINF:0,House
+http://scfire-nyk-aa03.stream.aol.com/stream/1007
+#EXTINF:0,Techno
+http://208.122.59.30:7204/
+#EXTINF:0,JumpStyle
+http://www.jumpstation.fm/content/streamfiles/listen.asx
+#EXTINF:0,Hard Style
+http://72.51.40.90:8000/
+#EXTINF:0,Goa-Psy Trance
+http://scfire-ntc-aa03.stream.aol.com/stream/1008
+#EXTINF:0,Tribal House
+http://di-fm-01.quintex.com:8882/

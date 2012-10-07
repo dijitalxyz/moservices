@@ -1,0 +1,44 @@
+#edit_container
+{
+	display:block;
+	position: absolute;
+	left:0px;
+	right:0px;
+	top:36px;
+	bottom:0px;
+	overflow:none;
+
+	margin:8px;
+	padding:8px;
+
+	background:white;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+
+	z-index: 95;
+}
+
+textarea.edit_area
+{
+	display:block;
+/*
+	position: absolute;
+	left:4px;
+	right:4px;
+	top:4px;
+	bottom:4px;
+*/
+	position: relative;
+	width:100%;
+	height:100%;
+
+	outline:none;
+	overflow: auto;
+
+	resize:none;
+
+	background:white;
+
+	border:0px;
+}

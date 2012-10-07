@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+   <title>TV Estere</title>
+   <image>/usr/local/etc/playlist/tv_estere.jpg</image>
+   <trackList>
+      <track>
+         <title>ARD</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/ard_1_800,45494</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/ard_1_800,45494</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>ZDF</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/zdf_1_800,45509</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/zdf_1_800,45509</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>ZDF Neo</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/zdfneo_1_800,44504</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/zdfneo_1_800,44504</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>SF 1</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/sf1_1_800,43046</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/sf1_1_800,43046</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>SF 2</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/sf2_1_800,43048</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/sf2_1_800,43048</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>SF Info</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/sfinfo_1_800,45505</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/sfinfo_1_800,45505</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>ORF 1</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/orf1_1_800,43059</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/orf1_1_800,43059</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>ORF 2</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/orf2_1_800,45502</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/orf2_1_800,45502</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>3 SAT</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/3sat_1_800,45493</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/3sat_1_800,45493</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>ARTE</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/arte_1_800,45495</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/arte_1_800,45495</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>ARTE francais</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/arte_fr_1_800,45512</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/arte_fr_1_800,45512</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>KIKA</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/kika_1_800,45500</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/kika_1_800,45500</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>PRO 7</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/pro7_1_800,43051</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/pro7_1_800,43051</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>RTL 1</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/rtl_1_800,43050</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/rtl_1_800,43050</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>RTL 2</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/rtl2_1_800,43053</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/rtl2_1_800,43053</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>RTL 9</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/rtl9_1_800,45503</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/rtl9_1_800,45503</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>SUPER RTL</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/superrtl_1_800,44489</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/superrtl_1_800,44489</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>SAT 1</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/sat1_1_800,44490</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/sat1_1_800,44490</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>VOX</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/vox_1_800,43052</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/vox_1_800,43052</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>KABEL 1</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/kabel1_1_800,43055</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhof.live1-f.akamaihd.net/kabel1_1_800,43055</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>DAS VIERTE</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/dasvierte_1_800,45510</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/dasvierte_1_800,45510</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>SIXX</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/sixx_1_800,45516</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/sixx_1_800,45516</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>DMAX</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/dmax_1_800,45498</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/dmax_1_800,45498</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>N-TV</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/ntv_1_800,45520</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/ntv_1_800,45520</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>NICK / Comedy Central</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/nick_cc_1_800,45519</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/nick_cc_1_800,45519</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>NICK / VIVA</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/nick_viva_1_800,45507</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/nick_viva_1_800,45507</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>SPORT 1</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/sport1_1_800,45517</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/sport1_1_800,45517</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>STAR TV</title>
+         <meta rel="translate">Content-type:video/x-msvideo</meta>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/startv_1_800,45526</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/startv_1_800,45526</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>TELE ZURI</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/telezueri_1_800,44503</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/telezueri_1_800,44503</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>EUROSPORT</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/eurosport_1_800,45515</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/eurosport_1_800,45515</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>FRANCE 2</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/france2_1_800,45496</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/france2_1_800,45496</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>FRANCE 3</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/france3_1_800,45499</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/france3_1_800,45499</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>FRANCE 5</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/france5_1_800,45501</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/france5_1_800,45501</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>TSR 1</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/tsr1_1_800,45522</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/tsr1_1_800,45522</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>TSR 2</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/tsr2_1_800,45523</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/tsr2_1_800,45523</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>TV 5 MONDE</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/tv5monde_1_800,45511</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/tv5monde_1_800,45511</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>TF 1</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/tf1_1_800,45504</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/tf1_1_800,45504</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>M6</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/m6_1_800,45506</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/m6_1_800,45506</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>RSI LA 1</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/rsila1_1_800,45513</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/rsila1_1_800,45513</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>RSI LA 2</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/rsila2_1_800,45514</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive5-f.akamaihd.net/rsila2_1_800,45514</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>RAI UNO</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/rai1_1_800,44470</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive2-f.akamaihd.net/rai1_1_800,44470</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>EURONEWS</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/euronews_1_800,45525</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/euronews_1_800,45525</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>BBC WORLD NEWS</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/bbcworld_1_800,45508</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive4-f.akamaihd.net/bbcworld_1_800,45508</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>CNN</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/cnn_1_800,45497</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive3-f.akamaihd.net/cnn_1_800,45497</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <title>RUSSIA TODAY</title>
+         <meta rel="translate">Content-type:video/x-flv</meta>
+         <meta rel="protocol">http</meta>
+         <location>http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/rusiya_1_800,45521</location>
+
+
+
+
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/stream/tv_estere,http://gartenhoflive6-f.akamaihd.net/rusiya_1_800,45521</meta>
+<meta rel="stream_class">video</meta>
+<meta rel="stream_type">video/x-flv</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+   </trackList>
+</playlist>

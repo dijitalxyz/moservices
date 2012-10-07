@@ -1,0 +1,67 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010-2011  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+
+local DATAPATH=$BASEPATH/app/zoomby
+
+local PAGEFILE=$CACHEPATH/zoomby.page
+local PAGEXML=$CACHEPATH/zoomby.xml
+
+$MSDL -q -o "$PAGEFILE" -p http "$arg_opt"
+
+if [ -f "$PAGEFILE" ]; then
+   local pages=`grep 'class="navi__a".*onClick="window.location.href=' $PAGEFILE | sed -r 's/^.*>([0-9]*)<\/a><\/li>.*/\1/'`
+
+echo $pages > /tmp/cached/zoomby.txt
+
+   if [ "$pages" = "" ]; then
+    pages=1
+   fi
+
+cat > $PAGEXML <<EOF
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+ <channel>
+  <title>ZOOMBY.RU</title>
+  <link>http://zoomby.ru</link>
+  <description>ZOOMBY.RU</description>
+  <language>ru</language>
+EOF
+echo -n "  <pages>"$pages >>$PAGEXML
+echo "</pages>" >>$PAGEXML
+
+   if [ -x $XSLTPROC ]; then
+    local page_type=artists
+    if echo $arg_opt | grep -qs "collections" ; then
+      page_type=music_videos
+    fi
+    $XSLTPROC --encoding utf-8 --html $DATAPATH/${page_type}.xslt $PAGEFILE 2>/dev/null | sed '1d' | sed -r 's/(.*)\/.*<\/link>/\1<\/link>/g' >> $PAGEXML
+   fi
+
+cat >> $PAGEXML <<EOF
+ </channel>
+</rss>
+EOF
+
+#   rm -f $PAGEFILE
+fi
+
+[ -f "$PAGEXML" ] && printContent "text/xml" $PAGEXML
+

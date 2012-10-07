@@ -1,0 +1,412 @@
+<?xml version='1.0' ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+  <!--`cat "$BASEPATH/app/include/media_onenter.script"`-->
+	playlist_autoplay = 0;
+</onEnter>
+
+	<mediaDisplay name=photoView 
+	  columnCount=9 
+	  rowCount=7
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+		itemImageXPC="10"
+		backgroundColor="0:0:0"
+		imageBorderColor="15:20:230"
+		imageBorderPC="0"
+		itemBackgroundColor="0:0:0"
+		centerHeightPC=70
+		centerXPC=10
+		centerYPC=18
+		itemGapXPC=1
+		itemGapYPC=1
+		sideTopHeightPC=15
+		bottomYPC=90
+
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=no
+		>
+
+    <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=26 backgroundColor=0:0:0 foregroundColor=200:200:200>
+      <script>getPageInfo("pageTitle");</script>
+    </text>
+    <image offsetXPC=0 offsetYPC=15 widthPC=100 heightPC=1>
+  		../etc/translate/rss/image/gradient_line.bmp
+  	</image>
+    <image offsetXPC=65 offsetYPC=2 widthPC=30 heightPC=12>
+      ../etc/translate/rss/image/gettune.png
+      <widthPC>
+        <script>
+          123 / 42 * 12 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          95 - 123 / 42 * 12 * screenYp / screenXp;
+        </script>
+      </offsetXPC>
+    </image>
+
+  <!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+		
+    <onUserInput>
+    <script>
+    ret = "false";
+    userInput = currentUserInput();
+    
+    if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+    {
+      itemSize = getPageInfo("itemCount");
+      idx = Integer(getFocusItemIndex());
+      if (userInput == "pagedown" || userInput == "PD")
+      {
+        idx -= -40;
+        if(idx &gt;= itemSize)
+          idx = itemSize-1;
+      }
+      else
+      {
+        idx -= 40;
+        if(idx &lt; 0)
+          idx = 0;
+      }
+      
+      print("new idx: "+idx);
+      setFocusItemIndex(idx);
+    	setItemFocus(0);
+      redrawDisplay();
+      ret = "true";
+    }
+    ret;
+    </script>
+    </onUserInput>
+    
+		<itemDisplay>
+			<text align="center" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 fontSize=16>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "150:150:150"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "0:0:0"; else "200:200:200";
+  				</script>
+			  </foregroundColor>
+			</text>
+		</itemDisplay>
+	</mediaDisplay>
+	
+	<item_template>
+    <mediaDisplay name="threePartsView">
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+    </mediaDisplay>
+    <onClick>
+      <script>
+         focus = getFocusItemIndex();
+         letter = getItemInfo(focus, "letter");
+         stream_url  = translate_base_url + "app/gettune/nav,"+letter;
+          
+          streamArray = null;
+          streamArray = pushBackStringArray(streamArray, stream_url);
+          streamArray = pushBackStringArray(streamArray, style);
+          streamArray = pushBackStringArray(streamArray, "");
+          streamArray = pushBackStringArray(streamArray, "");
+          streamArray = pushBackStringArray(streamArray, "playlist");
+          streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+          streamArray = pushBackStringArray(streamArray, "All");
+          writeStringToFile(storagePath_playlist, streamArray);
+          doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+          null;
+      </script>
+    </onClick>	
+	</item_template>
+	
+<channel>
+  <title>По названию</title>
+  <item>
+    <title>A</title>
+    <letter>A</letter>
+  </item>
+  <item>
+    <title>B</title>
+    <letter>B</letter>
+  </item>
+  <item>
+    <title>C</title>
+    <letter>C</letter>
+  </item>
+  <item>
+    <title>D</title>
+    <letter>D</letter>
+  </item>
+  <item>
+    <title>E</title>
+    <letter>E</letter>
+  </item>
+  <item>
+    <title>F</title>
+    <letter>F</letter>
+  </item>
+  <item>
+    <title>G</title>
+    <letter>G</letter>
+  </item>
+  <item>
+    <title>H</title>
+    <letter>H</letter>
+  </item>
+  <item>
+    <title>I</title>
+    <letter>I</letter>
+  </item>
+  <item>
+    <title>K</title>
+    <letter>K</letter>
+  </item>
+  <item>
+    <title>L</title>
+    <letter>L</letter>
+  </item>
+  <item>
+    <title>M</title>
+    <letter>M</letter>
+  </item>
+  <item>
+    <title>N</title>
+    <letter>N</letter>
+  </item>
+  <item>
+    <title>O</title>
+    <letter>O</letter>
+  </item>
+  <item>
+    <title>P</title>
+    <letter>P</letter>
+  </item>
+  <item>
+    <title>R</title>
+    <letter>R</letter>
+  </item>
+  <item>
+    <title>S</title>
+    <letter>S</letter>
+  </item>
+  <item>
+    <title>T</title>
+    <letter>T</letter>
+  </item>
+  <item>
+    <title>U</title>
+    <letter>U</letter>
+  </item>
+  <item>
+    <title>V</title>
+    <letter>V</letter>
+  </item>
+  <item>
+    <title>W</title>
+    <letter>W</letter>
+  </item>
+  <item>
+    <title>X</title>
+    <letter>X</letter>
+  </item>
+  <item>
+    <title>Y</title>
+    <letter>Y</letter>
+  </item>
+  <item>
+    <title>Z</title>
+    <letter>Z</letter>
+  </item>
+  <item>
+    <title>0</title>
+    <letter>0</letter>
+  </item>
+  <item>
+    <title>1</title>
+    <letter>1</letter>
+  </item>
+  <item>
+    <title>2</title>
+    <letter>2</letter>
+  </item>
+  <item>
+    <title>3</title>
+    <letter>3</letter>
+  </item>
+  <item>
+    <title>4</title>
+    <letter>4</letter>
+  </item>
+  <item>
+    <title>5</title>
+    <letter>5</letter>
+  </item>
+  <item>
+    <title>6</title>
+    <letter>6</letter>
+  </item>
+  <item>
+    <title>7</title>
+    <letter>7</letter>
+  </item>
+  <item>
+    <title>8</title>
+    <letter>8</letter>
+  </item>
+  <item>
+    <title>9</title>
+    <letter>9</letter>
+  </item>
+  <item>
+    <title>А</title>
+    <letter>%C0</letter>
+  </item>
+  <item>
+    <title>Б</title>
+    <letter>%C1</letter>
+  </item>
+  <item>
+    <title>В</title>
+    <letter>%C2</letter>
+  </item>
+  <item>
+    <title>Г</title>
+    <letter>%C3</letter>
+  </item>
+  <item>
+    <title>Д</title>
+    <letter>%C4</letter>
+  </item>
+  <item>
+    <title>Е</title>
+    <letter>%C5</letter>
+  </item>
+  <item>
+    <title>Ж</title>
+    <letter>%C6</letter>
+  </item>
+  <item>
+    <title>З</title>
+    <letter>%C7</letter>
+  </item>
+  <item>
+    <title>И</title>
+    <letter>%C8</letter>
+  </item>
+  <item>
+    <title>Й</title>
+    <letter>%C9</letter>
+  </item>
+  <item>
+    <title>К</title>
+    <letter>%CA</letter>
+  </item>
+  <item>
+    <title>Л</title>
+    <letter>%CB</letter>
+  </item>
+  <item>
+    <title>М</title>
+    <letter>%CC</letter>
+  </item>
+  <item>
+    <title>Н</title>
+    <letter>%CD</letter>
+  </item>
+  <item>
+    <title>О</title>
+    <letter>%CE</letter>
+  </item>
+  <item>
+    <title>П</title>
+    <letter>%CF</letter>
+  </item>
+  <item>
+    <title>Р</title>
+    <letter>%D0</letter>
+  </item>
+  <item>
+    <title>С</title>
+    <letter>%D1</letter>
+  </item>
+  <item>
+    <title>Т</title>
+    <letter>%D2</letter>
+  </item>
+  <item>
+    <title>У</title>
+    <letter>%D3</letter>
+  </item>
+  <item>
+    <title>Ф</title>
+    <letter>%D4</letter>
+  </item>
+  <item>
+    <title>Х</title>
+    <letter>%D5</letter>
+  </item>
+  <item>
+    <title>Ц</title>
+    <letter>%D6</letter>
+  </item>
+  <item>
+    <title>Ч</title>
+    <letter>%D7</letter>
+  </item>
+  <item>
+    <title>Ш</title>
+    <letter>%D8</letter>
+  </item>
+  <item>
+    <title>Э</title>
+    <letter>%DD</letter>
+  </item>
+  <item>
+    <title>Ю</title>
+    <letter>%DE</letter>
+  </item>
+  <item>
+    <title>Я</title>
+    <letter>%DF</letter>
+  </item>
+</channel>
+
+</rss>

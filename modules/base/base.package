@@ -1,0 +1,8 @@
+[base]
+	revision = 13
+	title = "moServices base"
+	role = package
+	init = S00base
+	files="services bin/mos_remove bin/pm bin/wait_ip bin/wait_mount bin/wget etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop base.noinit.patch"
+	require="libgcc_s busybox web core"
+	size = 404

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+<onEnter>
+    executeScript("platformInit");
+</onEnter>
+
+<mediaDisplay name="threePartsView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    drawItemText="no"
+    slidingItemText="no"
+
+    itemImageXPC="1.6"
+    itemImageYPC="67"
+    itemImageWidthPC="0"
+    itemImageHeightPC="0"
+
+    itemXPC="1.6"
+    itemYPC="67"
+    itemWidthPC="31.8"
+    itemHeightPC="6.1"
+
+    itemGap="0"
+    itemPerPage="3"
+
+    itemBorderColor="{$config->get(bgNormal)}"
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    focusBorderColor="{$config->get(focusBorderColor)}"
+    unFocusBorderColor="{$config->get(unFocusBorderColor)}"
+    >
+
+    <!-- header -->
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+
+    <text redraw="yes" align="center" offsetXPC="2.2"  offsetYPC="87" widthPC="8" heightPC="13"
+        foregroundColor="255:255:255" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <script>getPageInfo("focusItemIndex") + "/" + getPageInfo("itemCount");</script>
+    </text>
+
+    <text redraw="yes" offsetXPC="10.2" offsetYPC="87" widthPC="89.8" heightPC="13"
+        foregroundColor="130:130:130" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <script>getItemInfo("title") + " - " + getItemInfo("description");</script>
+    </text>
+
+    <!-- detailed info -->
+    {$infoBorderColor = "130:130:130"}
+    {$infoBgColor  = "60:60:60"}
+    {$labelFgColor = "255:255:255"}
+    {$valueFgColor = "160:160:160"}
+    {$diffY = 5}
+    {$offY = 12}
+
+    <text offsetXPC="1.6"  offsetYPC="10.9" widthPC="31.8" heightPC="54.5" backgroundColor="{$infoBorderColor}" />
+    <text offsetXPC="1.8"  offsetYPC="11.1" widthPC="31.4" heightPC="54.1" backgroundColor="{$infoBgColor}" />
+
+    <text offsetXPC="34.9" offsetYPC="10.9" widthPC="63.5" heightPC="73.5" backgroundColor="{$infoBorderColor}" />
+    <text offsetXPC="35.1" offsetYPC="11.1" widthPC="63.1" heightPC="73.1" backgroundColor="{$infoBgColor}" />
+
+    <text  offsetXPC="7.9" offsetYPC="12.9" widthPC="20.2" heightPC="50.2" backgroundColor="{$infoBorderColor}" />
+    <image offsetXPC="8.1" offsetYPC="13.1" widthPC="19.8" heightPC="49.8">
+        <script>"{$mediaObj->getParam(thumbnail)}";</script>
+    </image>
+
+    <!-- dynamic params two columns, displayed always -->
+    {$offX = 37}
+    {assign var='params' value = array('rating','year','length','country')}
+    {foreach $params as $param}
+        {$val = $mediaObj->getParam("$param")}
+
+    <text offsetXPC="{$offX}" offsetYPC="{$offY}" widthPC="11" heightPC="{$diffY}" fontSize="15"
+        backgroundColor="{$infoBgColor}" foregroundColor="{$labelFgColor}">
+        <script>"{$locale->msg($param)}:";</script>
+    </text>
+    <text offsetXPC="{$offX + 11}" offsetYPC="{$offY}" widthPC="19" heightPC="{$diffY}" fontSize="15"
+        backgroundColor="{$infoBgColor}">
+        <foregroundColor>
+            <script>
+            {if $param == "rating"}
+                ratingVal = {$mediaObj->getParam(midRating)};
+                {call calculateRatingColors}
+                ratingColor;
+            {else}
+                "{$valueFgColor}";
+            {/if}
+            </script>
+        </foregroundColor>
+        <script>"{$val}";</script>
+    </text>
+        {if $offX != 37}
+            {$offX = 37}
+            {$offY = $offY + $diffY}
+        {else}
+            {$offX = 68}
+        {/if}
+    {/foreach}
+    {$offY = $offY + 2}
+
+    <!-- dynamic params one column, displayed if defined -->
+    {assign var='params' value = array('budget','genre','studio','awards','director','scenario','actors','images')}
+    {foreach $params as $param}
+        {$val = $mediaObj->getParam("$param")}
+        {if isset($val) and $val != "" and $val != "0"}
+
+    <text offsetXPC="{$offX}" offsetYPC="{$offY}" widthPC="11" heightPC="{$diffY}" fontSize="15"
+        backgroundColor="{$infoBgColor}" foregroundColor="{$labelFgColor}">
+        <script>"{$locale->msg($param)}:";</script>
+    </text>
+    {if $param == "actors"}
+        {$height = $diffY * 2 - 1}
+        {$valParams = "heightPC=\"$height\" lines=\"2\""}
+    {else}
+        {$height = $diffY}
+        {$valParams = "heightPC=\"$height\""}
+    {/if}
+
+    <text offsetXPC="{$offX + 10}" offsetYPC="{$offY}" widthPC="51" {$valParams} fontSize="15"
+        backgroundColor="{$infoBgColor}" foregroundColor="{$valueFgColor}">
+        <script>"{$val}";</script>
+    </text>
+            {$offY = $offY + $height}
+        {/if}
+    {/foreach}
+
+    {$offY   = $offY + 2}
+    {$height = 83 - $offY}
+    {$lines  = $height / $diffY + 1}
+
+    <text align="justify" offsetXPC="35.1" offsetYPC="{$offY}" widthPC="63.1" heightPC="{$height}" fontSize="15"
+        backgroundColor="{$infoBgColor}" foregroundColor="{$valueFgColor}" lines="{$lines}">
+        <script>"{$mediaObj->getParam(descr)}";</script>
+    </text>
+
+
+    <itemDisplay>
+        <script>
+        	{call calculateItemColors}
+        </script>
+
+        <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" fontSize="16">
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+            <script>"";</script>
+        </text>
+        <text offsetXPC="2" offsetYPC="0" widthPC="53" heightPC="100" fontSize="16">
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <script>getItemInfo("title");</script>
+        </text>
+        <text align="right" offsetXPC="55" offsetYPC="0" widthPC="42" heightPC="100" fontSize="16">
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <script>getItemInfo("description");</script>
+        </text>
+    </itemDisplay>
+{call getIdleImages}
+</mediaDisplay>
+
+{call getRssLink}
+
+<channel>
+{foreach $mediaObj->getChildren() as $child}
+{$link = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
+    <item>
+        <title>{$child->title}</title>
+        <description>{$child->getParam(descr)}</description>
+{if $child->type == "STREAM_URL"}
+        <enclosure url="{$link}&amp;mode=redirect" type="video/mp4" />
+{else}
+        <link>{$link}</link>
+{/if}
+    </item>
+{/foreach}
+</channel>
+</rss>

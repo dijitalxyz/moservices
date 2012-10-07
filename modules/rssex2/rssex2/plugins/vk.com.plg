@@ -1,0 +1,84 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2011  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'vk.com' plug-in
+#
+# version: 1.0 25.07.2011 16:01:07
+#
+# http://vk.com/video_ext.php?oid=92898632&id=160253092&hash=37757274d849df4a&hd=1
+# http://vkontakte.ru/video_ext.php?oid=8386018&id=158808447&hash=50976b98544a296c&hd=1
+#
+# options:
+#   HD:[0|1|2]
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -qs '\(vk\.com\|vkontakte\.ru\)/video_ext\.php?.*$'; then 
+
+  get_opt "HD"
+  [ -z "$opt" ] && opt=`sed -n '9p' $RSSCONF 2>/dev/null`
+  [ -z "$opt" ] && opt=$VK_HD
+  case $opt in
+    yes|Yes|YES|1)
+      hdc=720
+    ;;
+    no|No|NO|0)
+      hdc=360
+    ;;
+    *)
+      hdc=480
+    ;;
+  esac
+  
+  $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>&1
+  
+  if [ -f ${TMPFILE} ]; then
+
+#var video_host = 'http://cs13229.vk.com/';
+#var video_uid = '92898632';
+#var video_vtag = '390630e624';
+#var video_no_flv = 1;
+#var video_max_hd = '3';
+#var video_title = '%26%234313%3B%26%234314%3B%26%234312%3B%26%234318%3B%26%234312%3B+1+%282011%2FHD%29+www.hdkinomir.com';
+
+#http://cs13229.vk.com/u92898632/video/390630e624.360.mp4
+#360 480 720
+
+    local video_host=`grep -i "video_host" ${TMPFILE} | sed "s/[^']*'//;s/'.*//"`
+    local video_uid=`grep -i "video_uid" ${TMPFILE} | sed "s/[^']*'//;s/'.*//"`
+    local video_vtag=`grep -i "video_vtag" ${TMPFILE} | sed "s/[^']*'//;s/'.*//"`
+    local video_max_hd=`grep -i "video_max_hd" ${TMPFILE} | sed "s/[^']*'//;s/'.*//"`
+    
+    if [ $video_max_hd = "1" -a $hdc -gt 360 ]; then
+    	hdc=360
+    elif [ $video_max_hd = "2" -a $hdc -gt 480 ]; then
+    	hdc=480
+   	fi
+
+    icy_name=`grep -i "video_title" ${TMPFILE} | sed "s/[^']*'//;s/'.*//" | urldecode | $XCODE -s -l | $TOUTF8`
+    stream_type='video/mp4'
+    stream_url="${video_host}u${video_uid}/video/${video_vtag}.${hdc}.mp4"
+    protocol='http'
+    rm -f $TMPFILE
+  fi  
+  return $RC_OK
+fi
+
+return $RC_FAIL

@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# remount plugged drives as read/write
+#
+case "$1" in
+  start)
+	#
+	# waiting for mount disks
+	#
+	/usr/local/etc/mos/bin/wait_mount && exit 1
+
+	cIFS=$IFS
+	IFS="
+"
+	for s in $( cat /proc/mounts ) ; do
+
+		IFS=$cIFS
+
+		echo $s | grep -q '^/dev/scsi/host' || continue
+
+		mt=$( echo $s | cut -d ' ' -f 2 )
+		fs=$( echo $s | cut -d ' ' -f 3 )
+
+		op=''
+		[ "$fs" = 'ufsd' ] && op=' -o nls=utf8'
+		echo "mount $mt -o remount,rw $op"
+		mount $mt -o remount,rw $op
+	done
+	;;
+  stop|status|enable|disable)
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

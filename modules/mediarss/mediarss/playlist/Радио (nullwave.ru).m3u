@@ -1,0 +1,49 @@
+#EXTM3U
+#EXTINF:0,Club channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/club
+#EXTINF:0,Trance channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/trance
+#EXTINF:0,House channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/house
+#EXTINF:0,Drumnbass channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/drumnbass
+#EXTINF:0,Breakbeat channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/breakbeat
+#EXTINF:0,Jazz channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/jazz
+#EXTINF:0,Light channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/light
+#EXTINF:0,Lounge channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/lounge
+#EXTINF:0,Pop channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/pop
+#EXTINF:0,Russian pop channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/russian_pop
+#EXTINF:0,International pop channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/international_pop
+#EXTINF:0,Eurodance channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/eurodance
+#EXTINF:0,Hits of pop channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/hits_of_pop
+#EXTINF:0,Rap channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/rap
+#EXTINF:0,RUS Rap channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/russian_rap
+#EXTINF:0,Rock channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/rock
+#EXTINF:0,Classic rock channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/classic_rock
+#EXTINF:0,Modern rock channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/modern_rock
+#EXTINF:0,Russian rock channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/russian_rock
+#EXTINF:0,Dark channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/dark
+#EXTINF:0,Tin channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/tin
+#EXTINF:0,Fury channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/fury
+#EXTINF:0,Metal channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/metal
+#EXTINF:0,Balkana channel (NULLWAVE.RU)
+http://nsk-ru.l.nullwave.fm:8000/balkana

@@ -1,0 +1,623 @@
+<?xml version='1.0' encoding='utf-8'?>
+<playlist version='1' xmlns='http://xspf.org/ns/0/'>
+ <title>Radio RSS</title>
+ <image>http://rssradio.ru/img/logo.png</image>
+ <trackList>
+  <track>
+   <title>Cnews</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,cnews</location>
+   <image>http://rssradio.ru./img/channels/cnews.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,cnews</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Хабрахабр</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,habrahabr</location>
+   <image>http://rssradio.ru./img/channels/habrahabr.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,habrahabr</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>iphones.ru</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,iphonesru</location>
+   <image>http://rssradio.ru./img/channels/iphonesru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,iphonesru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>ithappens.ru</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,ithappens</location>
+   <image>http://rssradio.ru./img/channels/ithappens.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,ithappens</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>ixbt.ru</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,ixbt</location>
+   <image>http://rssradio.ru./img/channels/ixbt.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,ixbt</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Mobilereview</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,mobilereview</location>
+   <image>http://rssradio.ru./img/channels/mobilereview.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,mobilereview</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>omgadget.ru</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,omgadget</location>
+   <image>http://rssradio.ru./img/channels/omgadget.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,omgadget</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>overclockers</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,overclockers</location>
+   <image>http://rssradio.ru./img/channels/overclockers.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,overclockers</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Сотовик</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sotovik</location>
+   <image>http://rssradio.ru./img/channels/sotovik.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sotovik</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>3Dnews</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,_3dnews</location>
+   <image>http://rssradio.ru./img/channels/_3dnews.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,_3dnews</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>4pda</title>
+   <annotation>Технологии</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,_4pda</location>
+   <image>http://rssradio.ru./img/channels/_4pda.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,_4pda</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Большой город</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,bgru</location>
+   <image>http://rssradio.ru./img/channels/bgru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,bgru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Dirty</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,dirtyru</location>
+   <image>http://rssradio.ru./img/channels/dirtyru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,dirtyru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Etoday</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,etoday</location>
+   <image>http://rssradio.ru./img/channels/etoday.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,etoday</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>F5</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,f5ru</location>
+   <image>http://rssradio.ru./img/channels/f5ru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,f5ru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Look at me</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,lookatme</location>
+   <image>http://rssradio.ru./img/channels/lookatme.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,lookatme</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>OpenSpace</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,openspace</location>
+   <image>http://rssradio.ru./img/channels/openspace.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,openspace</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Russia.ru</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,russiaru</location>
+   <image>http://rssradio.ru./img/channels/russiaru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,russiaru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Слон</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,slon</location>
+   <image>http://rssradio.ru./img/channels/slon.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,slon</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Сноб</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,snob</location>
+   <image>http://rssradio.ru./img/channels/snob.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,snob</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Теории и практики</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,theoryandpractice</location>
+   <image>http://rssradio.ru./img/channels/theoryandpractice.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,theoryandpractice</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Звуки</title>
+   <annotation>Медиа</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,zvukiru</location>
+   <image>http://rssradio.ru./img/channels/zvukiru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,zvukiru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Дни</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,dniru</location>
+   <image>http://rssradio.ru./img/channels/dniru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,dniru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Фонтанка.ру</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,fontanka</location>
+   <image>http://rssradio.ru./img/channels/fontanka.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,fontanka</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Комсомольская правда</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,kpravda</location>
+   <image>http://rssradio.ru./img/channels/kpravda.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,kpravda</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Лента</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,lentaru</location>
+   <image>http://rssradio.ru./img/channels/lentaru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,lentaru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Life</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,lifenews</location>
+   <image>http://rssradio.ru./img/channels/lifenews.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,lifenews</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Newsru</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,newsru</location>
+   <image>http://rssradio.ru./img/channels/newsru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,newsru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Regnum</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,regnum</location>
+   <image>http://rssradio.ru./img/channels/regnum.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,regnum</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>РИА Новости</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,ria</location>
+   <image>http://rssradio.ru./img/channels/ria.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,ria</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Русновости</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,rusnovosti</location>
+   <image>http://rssradio.ru./img/channels/rusnovosti.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,rusnovosti</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Утро</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,utroru</location>
+   <image>http://rssradio.ru./img/channels/utroru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,utroru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Яндекс.Новости</title>
+   <annotation>Новости</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,yandex</location>
+   <image>http://rssradio.ru./img/channels/yandex.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,yandex</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>BFM.ru</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,bfm</location>
+   <image>http://rssradio.ru./img/channels/bfm.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,bfm</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Эхо Москвы</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,echomsk</location>
+   <image>http://rssradio.ru./img/channels/echomsk.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,echomsk</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Финам</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,finam</location>
+   <image>http://rssradio.ru./img/channels/finam.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,finam</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Forbes</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,forbes</location>
+   <image>http://rssradio.ru./img/channels/forbes.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,forbes</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Infox</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,infox</location>
+   <image>http://rssradio.ru./img/channels/infox.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,infox</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Коммерсант</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,kommersant</location>
+   <image>http://rssradio.ru./img/channels/kommersant.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,kommersant</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Независимая газета</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,ngru</location>
+   <image>http://rssradio.ru./img/channels/ngru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,ngru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Полит.ру</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,politru</location>
+   <image>http://rssradio.ru./img/channels/politru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,politru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>РБК</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,rbc</location>
+   <image>http://rssradio.ru./img/channels/rbc.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,rbc</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Российская газета</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,rgru</location>
+   <image>http://rssradio.ru./img/channels/rgru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,rgru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Ведомости</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,vedomosti</location>
+   <image>http://rssradio.ru./img/channels/vedomosti.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,vedomosti</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Вести</title>
+   <annotation>Политика</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,vestiru</location>
+   <image>http://rssradio.ru./img/channels/vestiru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,vestiru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Чемпионат</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,championat</location>
+   <image>http://rssradio.ru./img/channels/championat.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,championat</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Еврофутбол</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,eurofootball</location>
+   <image>http://rssradio.ru./img/channels/eurofootball.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,eurofootball</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Евроспорт</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,eurosport</location>
+   <image>http://rssradio.ru./img/channels/eurosport.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,eurosport</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Газета.ру</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,gazetaru</location>
+   <image>http://rssradio.ru./img/channels/gazetaru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,gazetaru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Совспорт</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sovsport</location>
+   <image>http://rssradio.ru./img/channels/sovsport.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sovsport</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Спартак</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,spartak</location>
+   <image>http://rssradio.ru./img/channels/spartak.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,spartak</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Спортбокс</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sportbox</location>
+   <image>http://rssradio.ru./img/channels/sportbox.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sportbox</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Спортэкспресс</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sportexpress</location>
+   <image>http://rssradio.ru./img/channels/sportexpress.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sportexpress</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Sports.ru</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sportsru</location>
+   <image>http://rssradio.ru./img/channels/sportsru.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sportsru</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Sports.ua</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sportsua</location>
+   <image>http://rssradio.ru./img/channels/sportsua.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,sportsua</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+  <track>
+   <title>Зенит</title>
+   <annotation>Спорт</annotation>
+   <location>http://127.0.0.1/cgi-bin/translate?app/radiorss/news,zenit</location>
+   <image>http://rssradio.ru./img/channels/zenit.png</image>
+   <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/radiorss/news,zenit</meta>
+   <meta rel="stream_class">playlist</meta>
+   <meta rel="stream_type">application/xspf+xml</meta>
+   <meta rel="stream_protocol">http</meta>
+   <meta rel="repeat">All</meta>
+  </track>
+ </trackList>
+</playlist>

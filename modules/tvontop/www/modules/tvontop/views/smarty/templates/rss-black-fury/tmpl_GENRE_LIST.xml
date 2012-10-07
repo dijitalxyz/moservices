@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+<onEnter>
+    executeScript("platformInit");
+
+    {$cols = (int)(($mediaObj->getChildren()|@count - 1) / 10) + 1}
+    {if $cols >= 4}
+        {$cols = 4}
+        {$offX = 3}
+        {$colW = 23}
+    {else if $cols == 3}
+        {$offX = 12}
+        {$colW = 25}
+    {else if $cols == 2}
+        {$offX = 14.5}
+        {$colW = 35}
+    {else}
+        {$cols = 1}
+        {$offX = 25}
+        {$colW = 50}
+    {/if}
+</onEnter>
+
+<mediaDisplay name="photoView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    drawItemText="no"
+    slidingItemText="no"
+
+    rowCount="10"
+    columnCount="{$cols}"
+    itemOffsetXPC="{$offX}"
+    itemOffsetYPC="15"
+    itemWidthPC="{$colW}"
+    itemHeightPC="6.1"
+
+    itemGapXPC="0.5"
+    itemGapYPC="0.5"
+
+    itemBorderColor="{$config->get(bgNormal)}"
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    focusBorderColor="{$config->get(focusBorderColor)}"
+    unFocusBorderColor="{$config->get(unFocusBorderColor)}"
+    >
+
+    <!-- header -->
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+
+    <itemDisplay>
+        <script>
+        	{call calculateItemColors}
+        </script>
+
+        <text offsetXPC="15" offsetYPC="0" widthPC="10" heightPC="100" fontSize="16">
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+            <script>"";</script>
+        </text>
+        <text align="right" offsetXPC="0" offsetYPC="0" widthPC="20" heightPC="100" fontSize="16" cornerRounding="10">
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+            <script>getPageInfo("focusItemIndex") + ". ";</script>
+        </text>
+        <text offsetXPC="20" offsetYPC="0" widthPC="80" heightPC="100" fontSize="16" cornerRounding="10">
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+            <script>getItemInfo("title");</script>
+        </text>
+    </itemDisplay>
+{call getIdleImages}
+</mediaDisplay>
+
+<channel>
+{foreach $mediaObj->getChildren() as $child}
+{$link = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
+    <item>
+        <title>{$child->title}</title>
+        <type>{$child->type}</type>
+        <media:thumbnail>{$child->getParam(thumbnail)}</media:thumbnail>
+        <link>{$link}</link>
+    </item>
+{/foreach}
+</channel>
+</rss>

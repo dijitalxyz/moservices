@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+local DATAPATH=$BASEPATH/app/radiotime
+cd $DATAPATH
+
+. ./settings
+
+local OPML=$TMPFILE.opml
+
+get_opt "Link"
+local LINK="$opt"
+
+get_opt "Key"
+local KEY="$opt"
+
+get_opt "Text"
+local TEXT="$opt"
+
+
+$WGET -q -O "$OPML" "$LINK"
+
+if [ -f "$OPML" ]; then
+  if [ -x "$XSLTPROC" ]; then
+    $XSLTPROC --stringparam key "$KEY" --stringparam text "$TEXT" outline.xslt "$OPML" | printContent "text/xml"
+  else
+    awk -v optKEY="$KEY" -v optTEXT="`escapeXML \"$TEXT\"`" -f getxml.awk -f outline.awk "$OPML" | printContent "text/xml"
+  fi
+  rm -f "$OPML"
+fi

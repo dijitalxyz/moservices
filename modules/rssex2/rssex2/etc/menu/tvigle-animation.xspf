@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Анимация</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2175,tvigle/multi</link>
+  <title>Три богатыря</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2175/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2202,tvigle/multi</link>
+  <title>Маша и медведь</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2202/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2214,tvigle/multi</link>
+  <title>Куми-Куми</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2214/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2152,tvigle/multi</link>
+  <title>Мультфильмы Disney Classics</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2152/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2159,tvigle/multi</link>
+  <title>Лунтик</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2159/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:47,tvigle/multi</link>
+  <title>Сказки</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/47/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2111,tvigle/multi</link>
+  <title>Любимые мультики нашего детства</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2111/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1405,tvigle/multi</link>
+  <title>VERSUS. Хруст без правил</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1405/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2185,tvigle/multi</link>
+  <title>Приключения Алисы</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2185/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2154,tvigle/multi</link>
+  <title>Спорт. Спорт. Спорт.</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2154/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2097,tvigle/multi</link>
+  <title>Фильмы Юрия Норштейна</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2097/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2114,tvigle/multi</link>
+  <title>Весёлая карусель</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2114/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2187,tvigle/multi</link>
+  <title>Приключения капитана Врунгеля</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2187/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2098,tvigle/multi</link>
+  <title>38 попугаев</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2098/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2188,tvigle/multi</link>
+  <title>Доктор Айболит</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2188/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2086,tvigle/multi</link>
+  <title>Крок   Мир детства</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2086/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2099,tvigle/multi</link>
+  <title>Ну, погоди!</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2099/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2016,tvigle/multi</link>
+  <title>Tex Avery</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2016/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2100,tvigle/multi</link>
+  <title>Трое из Простоквашино</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2100/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2101,tvigle/multi</link>
+  <title>Винни-Пух</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2101/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2102,tvigle/multi</link>
+  <title>Крокодил Гена и Чебурашка</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2102/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1889,tvigle/multi</link>
+  <title>Монстры</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1889/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2117,tvigle/multi</link>
+  <title>Маугли</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2117/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2115,tvigle/multi</link>
+  <title>Возвращение блудного попугая</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2115/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1785,tvigle/multi</link>
+  <title>UmaNetto</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1785/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2155,tvigle/multi</link>
+  <title>Пельмени LIVE</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2155/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:43,tvigle/multi</link>
+  <title>Белка и Стрелка</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/43/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2047,tvigle/multi</link>
+  <title>Не все дома</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2047/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:663,tvigle/multi</link>
+  <title>Три брата акробата</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/663/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1789,tvigle/multi</link>
+  <title>Х [Икс]</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1789/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1791,tvigle/multi</link>
+  <title>Смирительная рубашка</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1791/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:49,tvigle/multi</link>
+  <title>Снежики</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/49/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2093,tvigle/multi</link>
+  <title>Flash-игра Охрустенный квест</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2093/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:46,tvigle/multi</link>
+  <title>Мульти ТВ</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/46/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:52,tvigle/multi</link>
+  <title>Утконавты</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/52/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2225,tvigle/multi</link>
+  <title>Звездные войны: Война клонов</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2225/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:51,tvigle/multi</link>
+  <title>Трэш</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/51/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1445,tvigle/multi</link>
+  <title>Футбол по-украински</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1445/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:45,tvigle/multi</link>
+  <title>Музыкальные</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/45/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2025,tvigle/multi</link>
+  <title>Классические анекдоты</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2025/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1865,tvigle/multi</link>
+  <title>Shiftoмания</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1865/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:48,tvigle/multi</link>
+  <title>Для взрослых</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/48/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:44,tvigle/multi</link>
+  <title>Рома Олимпийский</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/44/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:50,tvigle/multi</link>
+  <title>Философские</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/50/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:54,tvigle/multi</link>
+  <title>ToonGuru</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/54/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1272,tvigle/multi</link>
+  <title>Klootz</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1272/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:53,tvigle/multi</link>
+  <title>hipov</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/53/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

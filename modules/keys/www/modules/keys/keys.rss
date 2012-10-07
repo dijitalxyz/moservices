@@ -1,0 +1,52 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<onEnter>
+    pressesLeft = 10;
+    debugtext = "Press the key";
+</onEnter>
+
+<mediaDisplay name="onePartView"
+ sideLeftWidthPC="0"
+ sideRightWidthPC="0"
+
+ itemImageHeightPC="0"
+ itemImageWidthPC="0"
+
+ bottomYPC="90"
+ infoYPC="90"
+ infoXPC="90"
+ backgroundColor="0:0:0"
+
+ showHeader="no"
+ showDefaultInfo="no"
+ sliding="no"
+>
+
+<text redraw="yes" align="center" offsetXPC="0" offsetYPC="10" widthPC="100" heightPC="30"
+      fontSize="20" backgroundColor="0:0:0" foregroundColor="130:130:130">
+      <script>if (pressesLeft &gt; 0) "Obligatory presses left: " + pressesLeft; else "";</script>
+</text>
+<text redraw="yes" align="center" offsetXPC="0" offsetYPC="40" widthPC="100" heightPC="40"
+      fontSize="24" backgroundColor="0:0:0" foregroundColor="255:255:255">
+      <script>debugtext;</script>
+</text>
+
+<onUserInput>
+   debugtext = currentUserInput();
+   redrawDisplay();
+   if (pressesLeft &gt; 0) {
+       pressesLeft = Minus(pressesLeft, 1);
+       "true";
+   } else {
+       "false";
+   }
+</onUserInput>
+
+</mediaDisplay>
+
+<channel>
+    <title>Key debug example</title>
+    <itemSize><script>0;</script></itemSize>
+</channel>
+</rss>

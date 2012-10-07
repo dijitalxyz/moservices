@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>Мосфильм - онлайн</title>
+  <image>../etc/translate/rss/image/mosfilm.png</image>
+
+  <trackList>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/mosfilm/abc</link>
+      <title>По алфавиту</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/mosfilm.jpg</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/mosfilm/mainframe</link>
+      <title>Все фильмы</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/mosfilm.jpg</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/mosfilm/random</link>
+      <title>Случайный выбор</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/mosfilm.jpg</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+  </trackList>
+
+</playlist>

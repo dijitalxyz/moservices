@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>Favorites</name>
+    <description>
+        Список избранных страниц всех сервисов.
+        Практически любая понравившаяся Вам страница может быть
+        добавлена в этот список с целью ускорения доступа к ней.
+    </description>
+    <type>Internal service</type>
+    <version>1.0</version>
+    <author>GlavTV</author>
+</service>

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <title>Radiogrom.com - ua_fm</title>
+  <trackList>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_retro_fm_kiev_online.html</location>
+      <title>- 92.4 FM - Радио Ретро FM Киев 92.4 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://77.88.252.125:8000/retro</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_europa_plus_kiev_online.html</location>
+      <title>- 92.8 FM - Радио Европа Плюс Киев 92.8 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://77.88.252.125:8000/europaplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_biznes_radio_kiev_online.html</location>
+      <title>- 93.8 FM - Бізнес Радіо Киев 93.8 FM слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_kontinent_kiev_online.html</location>
+      <title>- 94.2 FM - Радио Континент Киев 94.2 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://217.20.164.163:8014/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Jazz</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_lradio_kiev_online.html</location>
+      <title>- 95.2 FM - Радио L'Radio 95.2 FM слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_jem_kiev_online.html</location>
+      <title>- 95.6 FM - Радио Джем FM 95.6 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://77.88.252.125:8000/jamfm</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_era_kiev_online.html</location>
+      <title>- 96.0 FM - Радио Радіо Ерa-FM 96.0 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://212.26.129.2:8000/era96</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">96</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/hitfm_fm_radio_online.html</location>
+      <title>- 96.4 FM - Радио ХIT FM 96.4 FM слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_dj_fm_kiev_online.html</location>
+      <title>- 96.8 FM - Радио DJ FM 96.8 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://217.20.164.163:8010/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_kiev_online.html</location>
+      <title>- 98.0 FM - Радио Радіо Київ 98.0 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://217.76.201.26:8000</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Kiev news &amp; Ukraine songs</meta>
+<meta rel="stream_bitrate">96</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_russkoe_kiev_online.html</location>
+      <title>- 98.5 FM - Русское Радио 98.5 FM слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_Nostalgie_kiev_online.html</location>
+      <title>- 99.0 FM - Радио Nostalgie 99.0 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://62.244.0.9:8010</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Nostalgie</meta>
+<meta rel="stream_bitrate">96</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_Alla_kiev_online.html</location>
+      <title>- 99.4 FM - Радио Алла 99.4 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://77.88.252.125:8000/radioalla</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/gala_radio_online.html</location>
+      <title>- 100.0 FM - Гала Радио 100.0 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://live.galaradio.com:8000/kiev</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Live</meta>
+<meta rel="stream_bitrate">64</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_narodnoe_kiev_online.html</location>
+      <title>- 100.5 FM - Народное Радио 100.5 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://62.80.190.247:8001/NaRadiO128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_melodiya_kiev_online.html</location>
+      <title>- 101.1 FM - Радіо Мелодія 101.1 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://radio.melodiya.ua:8080/radio-melodia</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_music_kiev_online.html</location>
+      <title>- 101.5 FM - Music Радіо 101.5 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://play.musicradio.kiev.ua:8080/listen128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Pop Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_chanson_kiev_online.html</location>
+      <title>- 101.9 FM - Радио Шансон 101.9 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://217.20.164.163:8002/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/prosto_radio_kiev_online.html</location>
+      <title>- 102.5 FM - Радио Просто Ради.О 102.5 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://62.80.190.246:8000/PRK128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Prosto Radio</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/lux_fm_radio_online.html</location>
+      <title>- 103.1 FM - Радио Люкс FM 103.1 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://stream1.lux.fm:8088</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Pop</meta>
+<meta rel="stream_bitrate">96</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_roks_kiev_online.html</location>
+      <title> - 103.6 FM - Радіо Рокс 103.6 FM слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_sharmanka_kiev_online.html</location>
+      <title> - 104.0 FM - Радио Шарманка 104.0 FM слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_energy_kiev_online.html</location>
+      <title> - 104.6 FM - Радио NRJ 104.6 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://77.88.252.125:8000/nrj</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_nrku_kiev_online.html</location>
+      <title> - 105.0 FM - Радио НРКУ 2 - Радіо Промінь 105.0 FM слушать онлайн</title>
+    
+<meta rel="stream_url">mmsh://89.187.1.165/NRCU2?MSWMExt=.asf</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_stilnoe_kiev_online.html</location>
+      <title> - 105.5 FM - Стильное радио Перец FM 105.5 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://radio.stilnoe.fm:8080/radio-stilnoe</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_dinamo_kiev_online.html</location>
+      <title> - 106.0 FM - Радио Динамо 106.0 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://77.88.252.125:8000/106fm</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Rock</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/kiss_fm_radio_online.html</location>
+      <title> - 106.5 FM - Радио Kiss FM 106.5 FM слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_evropa_107_fm_kiev_online.html</location>
+      <title> - 107.0 FM - Радио Европа FM 107.0 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://212.26.129.197:8080/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_avtoradio_fm_kiev_online.html</location>
+      <title> - 107.4 FM - Авторадио 107.4 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://77.88.252.125:8000/avtoradio</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">80s</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/radio_nashe_fm_kiev_online.html</location>
+      <title> - 107.9 FM - Наше Радіо 107.9 FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://77.88.252.125:8000/nashe</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/visokiy_val_online.html</location>
+      <title>- Радио Высокий Вал слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/prosto_radio_odessa_online.html</location>
+      <title>- Просто Радио Одесса слушать онлайн</title>
+    
+<meta rel="stream_url">http://62.80.190.246:8000/ProstoRadiO128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Prosto Radio</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/ua_fm/mfm_fm_radio_online.html</location>
+      <title>- Радио MFM слушать онлайн</title>
+    
+<meta rel="stream_url">http://radio.mfm.ua:8080/online128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Dance</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+  </trackList>
+</playlist>

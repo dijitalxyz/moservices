@@ -1,0 +1,1176 @@
+﻿<?xml version='1.0' encoding="UTF8" ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+    translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+    storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+  
+  error_info          = "";
+
+  startitem = "middle";
+  
+
+  testStream = 0;
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 10);
+    if(value != null &amp;&amp; value != "")
+      testStream = Integer(value);
+  }
+
+    startitem = "";
+		
+  columnCount=5;
+</onEnter>
+
+<script>
+  setRefreshTime(1);
+</script>
+
+<onRefresh>
+    setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+  middleItem = Integer(itemCount / 2);
+  if(startitem == "middle")
+    setFocusItemIndex(middleItem);
+  else
+  if(startitem == "last")
+    setFocusItemIndex(itemCount);
+  else
+  if(startitem &gt; 0 &amp;&amp; startitem &lt;= itemCount)
+    setFocusItemIndex(startitem-1);
+  redrawDisplay();
+
+</onRefresh>
+
+	<mediaDisplay name=photoView 
+	  centerXPC=7 
+		centerYPC=25
+		centerHeightPC=40
+    columnCount=5
+		
+	  rowCount=1
+		menuBorderColor="55:55:55"
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+	  backgroundColor="0:0:0"
+		imageBorderColor="0:0:0"
+		itemBackgroundColor="0:0:0"
+		itemGapXPC=0
+		itemGapYPC=1
+		sideTopHeightPC=22
+		bottomYPC=85
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=no
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+		>
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+		<image offsetXPC=5 offsetYPC=2 widthPC=21 heightPC=16>
+		  <script>channelImage;</script>
+      <widthPC>
+        <script>
+          21 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          5 + 21 * (1 - screenYp / screenXp) / 2;
+        </script>
+      </offsetXPC>
+		</image>
+
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+
+		<!--  lines="5" fontSize=15 -->
+		<text align="center" redraw="yes" 
+      lines=3 fontSize=18
+		
+		      offsetXPC=10 offsetYPC=70 widthPC=80 heightPC=15
+		      backgroundColor=0:0:0 foregroundColor=120:120:120>
+			<script>print(annotation); annotation;</script>
+		</text>
+		
+		<text align="center" redraw="yes" offsetXPC=10 offsetYPC=85 widthPC=80 heightPC=10 fontSize=15 backgroundColor=0:0:0 foregroundColor=75:75:75>
+			<script>print(location); location;</script>
+		</text>
+
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+
+		<itemDisplay>
+      <script>
+				imageW = 90/columnCount;
+				imageH = imageW * screenXp / screenYp * 100 / 40;
+				if(imageH > 84)
+				{
+				  imageH = 84;
+				  imageW = imageH * screenYp / screenXp * 40 / imageW;
+				}
+			  else
+			  {
+			    imageW = 100;
+        }
+      </script>
+  		<image offsetXPC=0 offsetYPC=95 widthPC=100 heightPC=5>
+  		  <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+  		      "../etc/translate/rss/image/gradient_line.bmp";
+  		    else
+  		      "";
+  		  </script>
+  		</image>
+			<image>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  if(annotation == "" || annotation == null)
+					    annotation = getItemInfo(idx, "stream_genre");
+					}
+					getItemInfo(idx, "image");
+				</script>
+			 <widthPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageW; else imageW * 3 / 4;
+			   </script>
+			 </widthPC>
+			 <heightPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageH; else imageH * 3 / 4;
+			   </script>
+			 </heightPC>
+			 <offsetXPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 50 - imageW/2; else 50 - imageW * 3 / 8;
+			   </script>
+			 </offsetXPC>
+			 <offsetYPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 0; else imageH / 8;
+			   </script>
+			 </offsetYPC>
+			</image>
+			
+			<text align="center" lines="5" fontSize="14" offsetXPC=0 offsetYPC=50 widthPC=100 heightPC=50 backgroundColor=-1:-1:-1>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+        <lines>
+          <script>Integer((95 - imageH - 2) / 9);</script>
+        </lines>
+        <offsetYPC>
+          <script>imageH + 2;</script>
+        </offsetYPC>
+        <heightPC>
+          <script>95 - imageH - 2;</script>
+        </heightPC>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "75:75:75";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+    <onUserInput>
+      <script>		
+      ret = "false";
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      if(userInput == "enter" || userInput == "ENTR")
+      {
+        showIdle();
+        focus = getFocusItemIndex();
+
+        request_title = getItemInfo(focus, "title");
+        request_url = getItemInfo(focus, "location");
+        request_options = getItemInfo(focus, "options");
+        request_image = getItemInfo(focus, "image");
+
+        stream_url = getItemInfo(focus, "stream_url");
+        stream_title = getItemInfo(focus, "stream_title");
+        stream_type = getItemInfo(focus, "stream_type");
+        stream_protocol = getItemInfo(focus, "stream_protocol");
+        stream_soft = getItemInfo(focus, "stream_soft");
+        stream_class = getItemInfo(focus, "stream_class");
+        stream_server = getItemInfo(focus, "stream_server");
+        stream_status_url = "";
+        stream_current_song = "";
+        stream_genre = getItemInfo(focus, "stream_genre");
+        stream_bitrate = getItemInfo(focus, "stream_bitrate");
+        playlist_autoplay = getItemInfo(focus, "autoplay");
+        playlist_repeat = getItemInfo(focus, "repeat");
+
+        if(playlist_repeat == "" || playlist_repeat == null)
+          playlist_repeat = "None";
+
+        if(playlist_autoplay == "" || playlist_autoplay == null)
+          playlist_autoplay = 1;
+        
+        if(stream_class == "" || stream_class == null || testStream == 1)
+          stream_class = "unknown";
+
+        if(stream_url == "" || stream_url == null)
+          stream_url = request_url;
+
+        if(stream_server != "" &amp;&amp; stream_server != null)
+          stream_status_url = translate_base_url + "status," + urlEncode(stream_server) + "," + urlEncode(stream_url);
+
+        if(stream_title == "" || stream_title == null)
+          stream_title = request_title;
+
+        if(stream_url != "" &amp;&amp; stream_url != null)
+        {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+          {
+            url = stream_url;
+          }
+          else
+          {
+            if(stream_type != null &amp;&amp; stream_type != "")
+            {
+              request_options = "Content-type:"+stream_type+";"+request_options;
+            }
+            url = translate_base_url + "stream," + request_options + "," + urlEncode(stream_url);
+          }
+        
+          executeScript(stream_class+"Dispatcher");
+        }
+        
+        cancelIdle();
+        ret = "true";
+      }
+      else if(userInput == "one" || userInput == "1")
+      {
+        if(itemCount &gt;= 1)
+        {
+          setFocusItemIndex(0);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "two" || userInput == "2")
+      {
+        if(itemCount &gt;= 2)
+        {
+          setFocusItemIndex(1);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "three" || userInput == "3")
+      {
+        if(itemCount &gt;= 3)
+        {
+          setFocusItemIndex(2);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "four" || userInput == "4")
+      {
+        if(itemCount &gt;= 4)
+        {
+          setFocusItemIndex(3);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "five" || userInput == "5")
+      {
+        if(itemCount &gt;= 5)
+        {
+          setFocusItemIndex(4);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "six" || userInput == "6")
+      {
+        if(itemCount &gt;= 6)
+        {
+          setFocusItemIndex(5);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "seven" || userInput == "7")
+      {
+        if(itemCount &gt;= 7)
+        {
+          setFocusItemIndex(6);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "eight" || userInput == "8")
+      {
+        if(itemCount &gt;= 8)
+        {
+          setFocusItemIndex(7);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "nine" || userInput == "9")
+      {
+        if(itemCount &gt;= 9)
+        {
+          setFocusItemIndex(8);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "display" || userInput == "DISPLAY")
+      {
+        ret = "true";
+      }
+      else if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -columnCount;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= columnCount;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+
+      ret;
+
+      </script>		
+    </onUserInput>
+		
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView">
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+		</mediaDisplay>
+	</item_template>
+
+  <videoDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/videoRenderer.rss");
+  </videoDispatcher>
+  
+  <audioDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_status_url);
+    streamArray = pushBackStringArray(streamArray, stream_current_song);
+    streamArray = pushBackStringArray(streamArray, stream_genre);
+    streamArray = pushBackStringArray(streamArray, stream_bitrate);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, request_image);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/audioRenderer.rss");
+  </audioDispatcher>
+  
+  <playlistDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "playlist");
+    streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+    streamArray = pushBackStringArray(streamArray, playlist_repeat);
+    writeStringToFile(storagePath_playlist, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+  </playlistDispatcher>
+  
+  <rssDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/rss_mediaFeed.rss");
+  </rssDispatcher>
+
+  <unknownDispatcher>
+    info_url    = translate_base_url + "info," + request_options + "," + urlEncode(request_url);
+    error_info  = "";
+
+    res = loadXMLFile(info_url);
+    
+    if (res != null)
+    {
+      error = getXMLElementCount("info","error");
+      
+      if(error != 0)
+      {
+  	    value = getXMLText("info","error");
+  	    if(value != null)
+  	    {
+  	     error_info = value;
+  	    }
+      }
+      else
+      {
+  	    value = getXMLAttribute("info","stream","url");
+  	    if(value != null)
+  	     stream_url = value;
+  
+  	    value = getXMLAttribute("info","stream","type");
+  	    if(value != null)
+  	     stream_type = value;
+  	    
+  	    value = getXMLAttribute("info","stream","class");
+  	    if(value != null)
+  	     stream_class = value;
+  
+  	    value = getXMLAttribute("info","stream","protocol");
+  	    if(value != null)
+  	     stream_protocol = value;
+  
+  	    value = getXMLAttribute("info","stream","server");
+  	    if(value != null)
+  	     stream_soft = value;
+  
+        stream_status_url = "";
+        
+  	    value = getXMLAttribute("info","stream","server_url");
+  	    if(value != null)
+  	    {
+  	     stream_server_url = value;
+  	     if((stream_soft == "icecast" || stream_soft == "shoutcast") &amp;&amp; stream_server_url!="")
+  	     {
+    	      stream_status_url = translate_base_url+"status,"+urlEncode(stream_server_url)+","+urlEncode(stream_url);
+    	   }
+  	    }
+  	     
+        value = getXMLText("info","status","stream-title");
+  	    if(value != null)
+  	     stream_title = value;
+  
+        stream_current_song = "";
+  	    value = getXMLText("info","status","current-song");
+  	    if(value != null)
+    		  stream_current_song = value;
+    		  
+  	    value = getXMLText("info","status","stream-genre");
+  	    if(value != null)
+  	      stream_genre = value;
+        
+  	    value = getXMLText("info","status","stream-bitrate");
+  	    if(value != null)
+  	      stream_bitrate = value;
+  
+        options = "";
+        
+        if(stream_type != "")
+          options = "Content-type:"+stream_type;
+        
+        if(options == "")
+          options = stream_options;
+        else
+          options = options + ";" + stream_options;
+  
+  	    stream_translate_url = translate_base_url + "stream," + options + "," + urlEncode(stream_url);
+  	    
+  	    url = null;
+  	    
+  	    if(stream_class == "video" || stream_class == "audio")
+    	  {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+    	      url = stream_url;
+    	    else
+    	      url = stream_translate_url;
+    	  }
+    	  else
+    	  {
+  	      url = stream_url;
+    	  }
+    	     
+    	  if(url != null)
+    	  {
+          if(stream_class == "audio" || stream_class == "video" || stream_class == "playlist" || stream_class == "rss")
+          {
+            executeScript(stream_class+"Dispatcher");
+          }
+          else
+          {
+            error_info = "Unsupported media type: " + stream_type;
+          }
+  	    }
+  	    else
+  	    {
+          error_info = "Empty stream url!";
+  	    }
+      }
+    }
+    else
+    {
+      error_info = "CGI translate module failed!";
+    }
+    print("error_info=",error_info);
+  </unknownDispatcher>
+
+	
+<script>
+    channelImage = "";
+  </script><channel>
+  <title>radioio</title>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1273712</location>
+    <title>Ambient</title>
+    <annotation>No syrupy new age or head-banging techno here - just sets of audio art for the mind. Exotic, refreshing, hypnotic electronica, from artists and producers who do it best.</annotation>
+    <image>../etc/translate/rss/image/radioio/ambient_thumb.jpg</image>
+    <stream_url>http://76.76.18.103:8870</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Ambient</stream_title>
+    <stream_genre>Ambient</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1276970</location>
+    <title>70s Rock</title>
+    <annotation>Mix of 70s rock hits, popular album tracks, b-sides, and forgotten gems to bring back the sense of discovery and eclectic sound of early FM radio.</annotation>
+    <image>../etc/translate/rss/image/radioio/70s_rock_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1276885</location>
+    <title>Accoustic Cafe</title>
+    <annotation>A lighter version of adult album alternative music, focusing on the acoustic songs by renowned contemporary singer-songwriters, and some that may be new to you, along with acoustic versions of favorite songs.</annotation>
+    <image>../etc/translate/rss/image/radioio/acoustic_cafe_thumb.jpg</image>
+    <stream_url>http://76.76.18.109:8880</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Accoustic Cafe</stream_title>
+    <stream_genre>Accoustic Cafe</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1278494</location>
+    <title>Blues</title>
+    <annotation>Blues music that started in the 20s and that keeps making an impact today. It's a musical and geographic journey, from the Mississippi Delta, to Chicago, Texas and beyond.</annotation>
+    <image>../etc/translate/rss/image/radioio/blues_thumb.jpg</image>
+    <stream_url>http://76.76.15.147:9008</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Blues</stream_title>
+    <stream_genre>Blues</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1280100</location>
+    <title>Soundtracks</title>
+    <annotation>Our classic soundtracks collection features the inspired music created specifically for your favorite movies: drama, mystery, fantasy, adventure, romance and more.</annotation>
+    <image>../etc/translate/rss/image/radioio/soundtracks_thumb.jpg</image>
+    <stream_url>http://76.76.18.103:8322</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Soundtracks</stream_title>
+    <stream_genre>Soundtracks</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1275841</location>
+    <title>70s Pop</title>
+    <annotation>Pure retro-pop, with all the 70s hits, one hit wonders, and forgotten guilty pleasures - all the music that used to make listening to the radio really fun and exciting.</annotation>
+    <image>../etc/translate/rss/image/radioio/70s_pop_thumb.jpg</image>
+    <stream_url>http://76.76.15.147:9018</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : 70s Pop</stream_title>
+    <stream_genre>70s Pop</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1269943</location>
+    <title>80s New Wave</title>
+    <annotation>Enjoy the post-punk and electronic sounds from the decade that made synthesizers as popular as guitars, with bands that inspired a new form of fashion and hairdos.</annotation>
+    <image>../etc/translate/rss/image/radioio/80s_new_wave_thumb.jpg</image>
+    <stream_url>http://76.76.18.109:8658</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : 80s New Wave</stream_title>
+    <stream_genre>80s New Wave</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1279433</location>
+    <title>Love Songs</title>
+    <annotation>This selection of feel-good love songs and easy, heartfelt favorites from the 70s to the present is not just relaxing, it's mood enhancing - and great for romancing.</annotation>
+    <image>../etc/translate/rss/image/radioio/lovesongs_thumb.jpg</image>
+    <stream_url>http://76.76.15.147:9038</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Love Songs</stream_title>
+    <stream_genre>Love Songs</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=8021</location>
+    <title>Classic Rock</title>
+    <annotation>Hard-rockin' favorites from the golden age of guitar rock - the songs and artists from the 60s and 70s that define classic ROCK (not pop).</annotation>
+    <image>../etc/translate/rss/image/radioio/classic_rock_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=526477</location>
+    <title>Classic Acoustic Rock</title>
+    <annotation>Mellow mix of '60s and '70s acoustic rock classics and deep tracks that's always easy on the ears but never dull, by the era's and genre's most important artists.</annotation>
+    <image>../etc/translate/rss/image/radioio/classic_acoustic_rock_thumb.jpg</image>
+    <stream_url>http://76.76.18.101:8058</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Classic Acoustic Rock</stream_title>
+    <stream_genre>Classic Acoustic Rock</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1279768</location>
+    <title>Classic Country</title>
+    <annotation>The most memorable and well-loved songs from country music's most popular artists, encompassing pioneers, renegades and the timeless songs and sounds of classic country.</annotation>
+    <image>../etc/translate/rss/image/radioio/classic_country_thumb.jpg</image>
+    <stream_url>http://76.76.18.109:8666</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Classic Country</stream_title>
+    <stream_genre>Classic Country</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1272477</location>
+    <title>Vocal Jazz</title>
+    <annotation>Standards and contemporary favorites and interpretations, featuring the biggest names, the most beloved voices, and some of the best songs ever performed and recorded.</annotation>
+    <image>../etc/translate/rss/image/radioio/vocal_jazz_thumb.jpg</image>
+    <stream_url>http://76.76.18.101:8010</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Vocal Jazz</stream_title>
+    <stream_genre>Vocal Jazz</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=2781</location>
+    <title>Classical Favorites</title>
+    <annotation>The best-loved classical music selections from composers of the Romantic, Classical, Baroque, and Early musical periods, alongside favorite current classical performing artists.</annotation>
+    <image>../etc/translate/rss/image/radioio/classical_favorites_thumb.jpg</image>
+    <stream_url>http://76.76.18.107:8442</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Classical Favorites</stream_title>
+    <stream_genre>Classical Favorites</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1273127</location>
+    <title>Standards</title>
+    <annotation>Pure jazz sounds, from the cool jazz and bebop eras through the 70s, to some of today’s interpretations of the standards, exposing artists who took the art form to new levels.</annotation>
+    <image>../etc/translate/rss/image/radioio/jazz_standards_thumb.jpg</image>
+    <stream_url>http://76.76.18.107:8458</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Standards</stream_title>
+    <stream_genre>Standards</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1271569</location>
+    <title>Eclectic</title>
+    <annotation>Always familiar and friendly, but never mainstream, Eclectic features artists who feel like old friends, played alongside the newest adult alternative artists and bands.</annotation>
+    <image>../etc/translate/rss/image/radioio/eclectic_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1276074</location>
+    <title>Real Jazz</title>
+    <annotation>A balanced blend of the artists and styles that comprise contemporary jazz today: bop, standards, fusion and swing, along with some classics from the past.</annotation>
+    <image>../etc/translate/rss/image/radioio/real_jazz_thumb.jpg</image>
+    <stream_url>http://76.76.18.109:8886</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Real Jazz</stream_title>
+    <stream_genre>Real Jazz</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1271468</location>
+    <title>Smooth Jazz</title>
+    <annotation>The smooth jazz instrumentals and vocals you enjoy and use to enhance the atmosphere at work, at home or at leisure, featuring all the shining stars of the smooth jazz world.</annotation>
+    <image>../etc/translate/rss/image/radioio/smooth_jazz_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1267130</location>
+    <title>90s Pop</title>
+    <annotation>All the chart-topping hits of the 90s - from the sultry sounds of mainstream RnB to the toe-tapping tunes of the most popular boy bands and female pop icons.</annotation>
+    <image>../etc/translate/rss/image/radioio/90s_pop_thumb.jpg</image>
+    <stream_url>http://76.76.18.101:8074</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : 90s Pop</stream_title>
+    <stream_genre>90s Pop</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1280405</location>
+    <title>Classic RnB</title>
+    <annotation>Classic RnB from the 50s, 60s, 70s and early 80s - the heart &amp; soul of the best music America has ever produced. Motown, Stax, Philly Soul, Chicago Soul, doo wop, funk and more.</annotation>
+    <image>../etc/translate/rss/image/radioio/classic_rnb_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1274888</location>
+    <title>Dead</title>
+    <annotation>We dig deeply into personal collections, various hidden stashes, and official releases to create a station that makes any Deadhead's dream come true and keeps it alive.</annotation>
+    <image>../etc/translate/rss/image/radioio/dead_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=22661</location>
+    <title>Alt Rock</title>
+    <annotation>Go "left of the dial" for college rock and modern rock from the late 70s to the 90s, where you can re-live or discover classic tracks by groundbreaking artists.</annotation>
+    <image>../etc/translate/rss/image/radioio/alt_rock_classics_thumb.jpg</image>
+    <stream_url>http://76.76.18.109:8898</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Alt Rock</stream_title>
+    <stream_genre>Alt Rock</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=535</location>
+    <title>Classical</title>
+    <annotation>Full, significant compositions by today's most respected conductors, artists and organizations. Symphonic/orchestral works, chamber music, vocal music, instrumentals and opera.</annotation>
+    <image>../etc/translate/rss/image/radioio/classical_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1275328</location>
+    <title>Grunge</title>
+    <annotation>The angst-guitar-rock rebellion that roared out of the Pacific Northwest in the early '90s, represented here by its originators and best-known practitioners.</annotation>
+    <image>../etc/translate/rss/image/radioio/grunge_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1267760</location>
+    <title>Todays Pop</title>
+    <annotation>A fresh blend of the best releases from pop, top 40, adult contemporary, dance, RnB, hip-hop, and adult top 40, with no hard rap or hard rock.</annotation>
+    <image>../etc/translate/rss/image/radioio/todays_pop_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1279644</location>
+    <title>Indie Rock</title>
+    <annotation>For discovering brand-new independent music and hearing stuff you may have missed, by emerging and established college and indie rock artists that don't fit into the mainstream.</annotation>
+    <image>../etc/translate/rss/image/radioio/indie_rock_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1272807</location>
+    <title>80s Pop</title>
+    <annotation>80s pop hits from the musically transitional decade, which saw synthesizers, funk and the influence of music television creating a whole new pop era.</annotation>
+    <image>../etc/translate/rss/image/radioio/80s_pop_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1280589</location>
+    <title>80s Rock</title>
+    <annotation>Mix of hitmakers and trendsetters whose sound and influence carried us from the 70s and solidified in the 80s, leading to a decade of powerful FM hits.</annotation>
+    <image>../etc/translate/rss/image/radioio/80s_rock_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1267510</location>
+    <title>Progressive Rock</title>
+    <annotation>Extraordinary, experimental 60s and 70s rock that blends instrumental epics, art rock, jazz-rock fusion and psychedelia, from well-known artists as well as underground icons.</annotation>
+    <image>../etc/translate/rss/image/radioio/progressive_rock_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1278130</location>
+    <title>50s 60s Rock</title>
+    <annotation>The birth of rock and roll in the 50s and its evolution during the 60s, as demonstrated by the legendary artists that changed our culture and the world.</annotation>
+    <image>../etc/translate/rss/image/radioio/50s_60s_rock_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1272635</location>
+    <title>Todays Rock</title>
+    <annotation>All the best rock, all the time. Rock out to the pure, high-powered sounds of today's masters of rock, and discover the next generation of rock gods.</annotation>
+    <image>../etc/translate/rss/image/radioio/todays_rock_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1273016</location>
+    <title>Todays Country</title>
+    <annotation>A complete selection of today's biggest and brightest country music stars, and all the great hits that make up the current country music landscape.</annotation>
+    <image>../etc/translate/rss/image/radioio/todays_country_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1268190</location>
+    <title>90s Rock</title>
+    <annotation>Exciting mix of mainstream and modern rock hits, showcasing the diverse landscape of rock during the 90s - including emo, grunge, alternative, rap-rock, electronic and more.</annotation>
+    <image>../etc/translate/rss/image/radioio/90s_rock_thumb.jpg</image>
+    <stream_url>http://76.76.18.109:8722</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : 90s Rock</stream_title>
+    <stream_genre>90s Rock</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1271762</location>
+    <title>Bluegrass</title>
+    <annotation>A comprehensive listening experience that covers the world of bluegrass from its birth up to today's best bluegrass instrumentalists and vocalists.</annotation>
+    <image>../etc/translate/rss/image/radioio/bluegrass_thumb.jpg</image>
+    <stream_url>http://76.76.18.107:8522</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Bluegrass</stream_title>
+    <stream_genre>Bluegrass</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1272772</location>
+    <title>Alt Rock Classics</title>
+    <annotation>Go "left of the dial" for college rock and modern rock from the late 70s to the 90s, where you can re-live or discover classic tracks by groundbreaking artists.</annotation>
+    <image>../etc/translate/rss/image/radioio/alt_rock_classics_thumb.jpg</image>
+    <stream_url>http://76.76.18.103:8306</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Alt Rock Classics</stream_title>
+    <stream_genre>Alt Rock Classics</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1266618</location>
+    <title>Rock Mix</title>
+    <annotation>Your favorite rock hits from the 70s, 80s and 90s: From the rockers through early alternative to today's bands. It's by far the best rock mix since, well, ever.</annotation>
+    <image>../etc/translate/rss/image/radioio/rock_mix_thumb.jpg</image>
+    <stream_url>http://76.76.18.109:8890</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Rock Mix</stream_title>
+    <stream_genre>Rock Mix</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1279770</location>
+    <title>RnB Mix</title>
+    <annotation>Continuous RnB mix featuring music from the early 1980s to today, and all the hit-making RnB artists and songs from then and now. Perfect for listening to at work or at home.</annotation>
+    <image>../etc/translate/rss/image/radioio/rnb_mix_thumb.jpg</image>
+    <stream_url>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1279770</stream_url>
+    <stream_server>_empty_</stream_server>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1268635</location>
+    <title>Country Mix</title>
+    <annotation>The ultimate country music radio station, covering the best from the 70s right up to today. Classics, career-spanning hits, and current favorites from top country artists.</annotation>
+    <image>../etc/translate/rss/image/radioio/country_mix_thumb.jpg</image>
+    <stream_url>http://76.76.18.101:8082</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Country Mix</stream_title>
+    <stream_genre>Country Mix</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1269983</location>
+    <title>Alt Country</title>
+    <annotation>Left-of-mainstream country and heartfelt roots music provides a great selection of Americana from singers-songwriters and musicians you know and love.</annotation>
+    <image>../etc/translate/rss/image/radioio/alt_country_thumb.jpg</image>
+    <stream_url>http://76.76.18.103:8282</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Alt Country</stream_title>
+    <stream_genre>Alt Country</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1272707</location>
+    <title>Chill</title>
+    <annotation>Unique and soothing mix of down-tempo electronica, lazy trip-hop, smooth vocals and deep grooves produces the ultimate chillout.</annotation>
+    <image>../etc/translate/rss/image/radioio/chill_thumb.jpg</image>
+    <stream_url>http://76.76.18.103:8258</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Chill</stream_title>
+    <stream_genre>Chill</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1275916</location>
+    <title>Classic Hip-Hop</title>
+    <annotation>Historical survey of the funky roots and evolution of hip hop from its emergence in the 70s through its growing influence on RnB in the 80s to the pre-gangsta rap of the 90s.</annotation>
+    <image>../etc/translate/rss/image/radioio/classic_hip_hop_thumb.jpg</image>
+    <stream_url>http://76.76.18.101:8050</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Classic Hip-Hop</stream_title>
+    <stream_genre>Classic Hip-Hop</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1274633</location>
+    <title>Hair Bands</title>
+    <annotation>Remember getting 'dressed up to get messed up?' Re-live the fun and excitement from an era when metal-pop music was just as flashy and slick as its artists.</annotation>
+    <image>../etc/translate/rss/image/radioio/hairbands_thumb.jpg</image>
+    <stream_url>http://76.76.18.103:8290</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Hair Bands</stream_title>
+    <stream_genre>Hair Bands</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1279468</location>
+    <title>Disco Hits</title>
+    <annotation>All the top 40 disco hits along with the nightclub anthems you love from the mid-70s and early '80s, with no need to stay up or dress up. Put on the party mood any time!</annotation>
+    <image>../etc/translate/rss/image/radioio/disco_hits_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1275583</location>
+    <title>Guitar Heroes</title>
+    <annotation>This innovative station plays songs featured in popular rock music video games. Tune in and turn into a guitar hero, or even a rock band!</annotation>
+    <image>../etc/translate/rss/image/radioio/guitar_heroes_thumb.jpg</image>
+    <stream_url>http://76.76.18.101:8066</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Guitar Heroes</stream_title>
+    <stream_genre>Guitar Heroes</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1268815</location>
+    <title>Big Band</title>
+    <annotation>Enjoy the full band sound, beginning with big band's birth through the big bands of the 70s and 80s, along with the best of today's big bands and jazz orchestras.</annotation>
+    <image>../etc/translate/rss/image/radioio/big_band_thumb.jpg</image>
+    <stream_url>http://76.76.18.101:8026</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Big Band</stream_title>
+    <stream_genre>Big Band</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1278490</location>
+    <title>Jam Bands</title>
+    <annotation>Here are all the best bands and jams you love, from the artists and music that can take you to a whole 'nother level. Dig the foundations next to the new grooves, and jam 24/7.</annotation>
+    <image>../etc/translate/rss/image/radioio/jam_bands_thumb.jpg</image>
+    <stream_url>http://76.76.18.107:8514</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Jam Bands</stream_title>
+    <stream_genre>Jam Bands</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1274886</location>
+    <title>Pop Mix</title>
+    <annotation>The ultimate pop radio station plays the best pop music from the 70s right up to this week's chart-toppers, spanning the decades and spinning the best pop artists.</annotation>
+    <image>../etc/translate/rss/image/radioio/pop_mix_thumb.jpg</image>
+    <stream_url>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1274886</stream_url>
+    <stream_server>_empty_</stream_server>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1266278</location>
+    <title>Todays RnB &amp; Hip Hop</title>
+    <annotation>Complete selection of the most popular, current RnB and hip-hop artists and tracks, coming from today’s hottest producers and beat makers.</annotation>
+    <image>../etc/translate/rss/image/radioio/todays_rnb_thumb.jpg</image>
+    <stream_url>http://76.76.18.107:8490</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Todays RnB</stream_title>
+    <stream_genre>Todays RnB</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1269766</location>
+    <title>Praise &amp; Worship</title>
+    <annotation>Today's top charting adult Contemporary Christian artists and popular songs from artists who have been re-forming the sounds of Praise and Worship during the past ten years.</annotation>
+    <image>../etc/translate/rss/image/radioio/praise_worship_thumb.jpg</image>
+    <stream_url>http://76.76.18.101:8098</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : Praise and Worship</stream_title>
+    <stream_genre>Praise and Worship</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=803816</location>
+    <title>Dance Hits</title>
+    <annotation>The best dance hits, club hits, and the hottest pop crossovers and remixes. Get the party started and keep the beat going with all these dance favorites.</annotation>
+    <image>../etc/translate/rss/image/radioio/dance_hits_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1275815</location>
+    <title>60s Pop</title>
+    <annotation>An exciting mix of pop music from the 60s, the decade of change: Beatles and Brits, surf sounds, the top singers and songs, hot soul and great harmonies.</annotation>
+    <image>../etc/translate/rss/image/radioio/60s_pop_thumb.jpg</image>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1274835</location>
+    <title>NuSoul</title>
+    <annotation>A blend of neo soul, black rock, conscious hip-hop, and southern soul and funk, with the sound/feel of what soul music was in the past, produced for today's audiences.</annotation>
+    <image>../etc/translate/rss/image/radioio/nusoul_thumb.jpg</image>
+    <stream_url>http://76.76.18.103:8298</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>radioio.com : NuSoul</stream_title>
+    <stream_genre>NuSoul</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://yp.shoutcast.com/sbin/tunein-station.pls?id=1275544</location>
+    <title>Idols</title>
+    <annotation>A showcase of new talent and captivating vocals from hot TV music competitions from around the world, taking on classic songs, chart hits and their own original tunes.</annotation>
+    <image>../etc/translate/rss/image/radioio/idols_thumb.jpg</image>
+  </item>
+</channel>
+
+
+</rss>

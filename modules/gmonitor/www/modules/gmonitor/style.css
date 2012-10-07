@@ -1,0 +1,57 @@
+/* main */
+body, iframe {
+	margin: 8px;
+	padding: 0px;
+
+	background-color:#eee;
+
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	color:black;
+	font-size: 12px;
+}
+h1,h2,h3,h4,h5
+{
+	font-weight: bold;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	margin:4px 4px 6px;
+}
+
+/* info */
+
+div.info_frame
+{
+	padding:0;
+	margin :4;
+
+	width:560px;
+
+	background: white;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+div.info_topic
+{
+	position: relative;
+	background: #D0D0D0;
+	padding:4px;
+	margin :0;
+	font-weight: bold;
+	border:0;
+}
+
+div.info_list
+{
+	position: relative;
+	padding:4px;
+	margin :0;
+}
+
+div.info_input
+{
+	position: relative;
+	padding:0;
+	margin :4px;
+	font-weight: bold;
+}

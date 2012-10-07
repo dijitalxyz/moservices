@@ -1,0 +1,50 @@
+#!/bin/sh
+#arg_url='http://www.24video.net/video/filter?time=0&sort=1&theme=0'
+PAGEXML="$TMPFILE.xml"
+PAGEFILE=$TMPFILE
+DATAPATH='/usr/local/etc/translate/app/24video/'
+#XSLTPROC='xsltproc'
+
+if echo $arg_url | grep -qs "theme=1172"; then
+ $CURL -c /tmp/24video.cookie -s -o /dev/null http://www.24video.net/jsecUser/confirmAdult/0 2>/dev/null
+fi
+
+$CURL -b /tmp/24video.cookie -s -o $PAGEFILE "$arg_url" 2>/dev/null
+if [ -f "$PAGEFILE" ]; then
+  pages=`cat $PAGEFILE | grep 'src="/images/arrow_right.gif"/></a></div>' | sed '1d' | sed -r 's/<[^>]*>/~/g;s/~*$//;s/^.*~([0-9]*)$/\1/'`
+
+  if [ "$pages" = "" ]; then
+    pages=1
+  fi
+
+  page_title=`cat $PAGEFILE | grep '<title>' | sed 's/<title>//;s/<\/title>//'`
+
+  cat > $PAGEXML <<EOF
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+<channel>
+<title> $page_title </title>
+<link>$arg_url</link>
+<description> 24video.net </description>
+<language>ru</language>
+<pages>$pages</pages>
+EOF
+
+if [ -x $XSLTPROC ]; then
+  $XSLTPROC --encoding utf-8 --html $DATAPATH/videos.xslt $PAGEFILE 2>/dev/null | sed '1d' >> $PAGEXML
+fi
+
+  cat >> $PAGEXML <<EOF
+</channel>
+</rss>
+EOF
+
+  rm -f $PAGEFILE
+fi
+
+if [ -f "$PAGEXML" ]; then
+  echo "Content-type: text/xml"
+  echo
+  cat $PAGEXML
+  rm -f $PAGEXML
+fi

@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# description: Starts and stops the vsftpd daemon
+#
+etc=/usr/local/etc
+mos=$etc/mos
+
+case "$1" in
+  start)
+	echo "Starting vsftpd service..."
+	grep -q 'root:/:/bin/sh' $etc/passwd || sed -i 's/root::\/bin/root:\/:\/bin/' $etc/passwd
+	grep -q 'ftp::1001:1001:ftp' $etc/passwd || echo "ftp::1001:1001:ftp:/tmp/usbmounts:/dev/null" >> $etc/passwd
+	$mos/bin/vsftpd $mos/etc/vsftpd.conf >/dev/null 2>&1 &
+	;;
+
+  stop)
+	echo "Shutting down vsftpd services..."
+	grep -q 'root:/:/bin/sh' $etc/passwd && sed -i 's/root:\/:\/bin/root::\/bin/' $etc/passwd
+	grep -q 'ftp::1001:1001:ftp' $etc/passwd  && sed -i '/ftp::1001:1001:ftp:/d' $etc/passwd
+	killall -9 vsftpd
+	;;
+
+  status)
+	if ps | grep -v 'S15vsftpd' | grep -q '[v]sftpd'
+	then echo "vsftpd running"
+	else echo "vsftpd stopped"
+	fi
+	;;
+
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

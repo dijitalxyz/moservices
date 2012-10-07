@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>Kartina.TV</name>
+    <shortName>ktv</shortName>
+    <displayName>Картина.ТВ</displayName>
+    <description>
+        Русскоязычное Интернет Телевидение.
+        Сегодня сетку вещания KARTINA.TV составляют более
+        100 телевизионных каналов. В пакет входят центральные
+        российские телеканалы, популярные, развлекательные и
+        музыкальные программы, а также несколько детских,
+        документальных и интернациональных каналов из стран СНГ.
+    </description>
+    <keys>
+        <key name="keyUser1" params="?pl=ktv&amp;amp;type=CHANGE_AUTH">Change account</key>
+    </keys>
+	<provider class="CacheProvider">
+	    <provider class="ImgCacheProvider" >
+		    <provider class="TimeSyncProvider">
+		        <provider class="KtvProvider" />
+		    </provider>
+		</provider>
+    </provider>
+    <version>1.0.1</version>
+    <author>http://TVonTop.com</author>
+</service>

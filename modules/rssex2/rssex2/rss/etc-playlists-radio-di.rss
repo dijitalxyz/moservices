@@ -1,0 +1,1212 @@
+﻿<?xml version='1.0' encoding="UTF8" ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+    translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+    storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+  
+  error_info          = "";
+
+  startitem = "middle";
+  
+
+  testStream = 0;
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 10);
+    if(value != null &amp;&amp; value != "")
+      testStream = Integer(value);
+  }
+
+    startitem = "";
+		
+  columnCount=5;
+</onEnter>
+
+<script>
+  setRefreshTime(1);
+</script>
+
+<onRefresh>
+    setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+  middleItem = Integer(itemCount / 2);
+  if(startitem == "middle")
+    setFocusItemIndex(middleItem);
+  else
+  if(startitem == "last")
+    setFocusItemIndex(itemCount);
+  else
+  if(startitem &gt; 0 &amp;&amp; startitem &lt;= itemCount)
+    setFocusItemIndex(startitem-1);
+  redrawDisplay();
+
+</onRefresh>
+
+	<mediaDisplay name=photoView 
+	  centerXPC=7 
+		centerYPC=25
+		centerHeightPC=40
+    columnCount=5
+		
+	  rowCount=1
+		menuBorderColor="55:55:55"
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+	  backgroundColor="0:0:0"
+		imageBorderColor="0:0:0"
+		itemBackgroundColor="0:0:0"
+		itemGapXPC=0
+		itemGapYPC=1
+		sideTopHeightPC=22
+		bottomYPC=85
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=no
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+		>
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+		<image offsetXPC=5 offsetYPC=2 widthPC=21 heightPC=16>
+		  <script>channelImage;</script>
+      <widthPC>
+        <script>
+          21 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          5 + 21 * (1 - screenYp / screenXp) / 2;
+        </script>
+      </offsetXPC>
+		</image>
+
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+
+		<!--  lines="5" fontSize=15 -->
+		<text align="center" redraw="yes" 
+      lines=3 fontSize=18
+		
+		      offsetXPC=10 offsetYPC=70 widthPC=80 heightPC=15
+		      backgroundColor=0:0:0 foregroundColor=120:120:120>
+			<script>print(annotation); annotation;</script>
+		</text>
+		
+		<text align="center" redraw="yes" offsetXPC=10 offsetYPC=85 widthPC=80 heightPC=10 fontSize=15 backgroundColor=0:0:0 foregroundColor=75:75:75>
+			<script>print(location); location;</script>
+		</text>
+
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+
+		<itemDisplay>
+      <script>
+				imageW = 90/columnCount;
+				imageH = imageW * screenXp / screenYp * 100 / 40;
+				if(imageH > 84)
+				{
+				  imageH = 84;
+				  imageW = imageH * screenYp / screenXp * 40 / imageW;
+				}
+			  else
+			  {
+			    imageW = 100;
+        }
+      </script>
+  		<image offsetXPC=0 offsetYPC=95 widthPC=100 heightPC=5>
+  		  <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+  		      "../etc/translate/rss/image/gradient_line.bmp";
+  		    else
+  		      "";
+  		  </script>
+  		</image>
+			<image>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  if(annotation == "" || annotation == null)
+					    annotation = getItemInfo(idx, "stream_genre");
+					}
+					getItemInfo(idx, "image");
+				</script>
+			 <widthPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageW; else imageW * 3 / 4;
+			   </script>
+			 </widthPC>
+			 <heightPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageH; else imageH * 3 / 4;
+			   </script>
+			 </heightPC>
+			 <offsetXPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 50 - imageW/2; else 50 - imageW * 3 / 8;
+			   </script>
+			 </offsetXPC>
+			 <offsetYPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 0; else imageH / 8;
+			   </script>
+			 </offsetYPC>
+			</image>
+			
+			<text align="center" lines="5" fontSize="14" offsetXPC=0 offsetYPC=50 widthPC=100 heightPC=50 backgroundColor=-1:-1:-1>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+        <lines>
+          <script>Integer((95 - imageH - 2) / 9);</script>
+        </lines>
+        <offsetYPC>
+          <script>imageH + 2;</script>
+        </offsetYPC>
+        <heightPC>
+          <script>95 - imageH - 2;</script>
+        </heightPC>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "75:75:75";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+    <onUserInput>
+      <script>		
+      ret = "false";
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      if(userInput == "enter" || userInput == "ENTR")
+      {
+        showIdle();
+        focus = getFocusItemIndex();
+
+        request_title = getItemInfo(focus, "title");
+        request_url = getItemInfo(focus, "location");
+        request_options = getItemInfo(focus, "options");
+        request_image = getItemInfo(focus, "image");
+
+        stream_url = getItemInfo(focus, "stream_url");
+        stream_title = getItemInfo(focus, "stream_title");
+        stream_type = getItemInfo(focus, "stream_type");
+        stream_protocol = getItemInfo(focus, "stream_protocol");
+        stream_soft = getItemInfo(focus, "stream_soft");
+        stream_class = getItemInfo(focus, "stream_class");
+        stream_server = getItemInfo(focus, "stream_server");
+        stream_status_url = "";
+        stream_current_song = "";
+        stream_genre = getItemInfo(focus, "stream_genre");
+        stream_bitrate = getItemInfo(focus, "stream_bitrate");
+        playlist_autoplay = getItemInfo(focus, "autoplay");
+        playlist_repeat = getItemInfo(focus, "repeat");
+
+        if(playlist_repeat == "" || playlist_repeat == null)
+          playlist_repeat = "None";
+
+        if(playlist_autoplay == "" || playlist_autoplay == null)
+          playlist_autoplay = 1;
+        
+        if(stream_class == "" || stream_class == null || testStream == 1)
+          stream_class = "unknown";
+
+        if(stream_url == "" || stream_url == null)
+          stream_url = request_url;
+
+        if(stream_server != "" &amp;&amp; stream_server != null)
+          stream_status_url = translate_base_url + "status," + urlEncode(stream_server) + "," + urlEncode(stream_url);
+
+        if(stream_title == "" || stream_title == null)
+          stream_title = request_title;
+
+        if(stream_url != "" &amp;&amp; stream_url != null)
+        {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+          {
+            url = stream_url;
+          }
+          else
+          {
+            if(stream_type != null &amp;&amp; stream_type != "")
+            {
+              request_options = "Content-type:"+stream_type+";"+request_options;
+            }
+            url = translate_base_url + "stream," + request_options + "," + urlEncode(stream_url);
+          }
+        
+          executeScript(stream_class+"Dispatcher");
+        }
+        
+        cancelIdle();
+        ret = "true";
+      }
+      else if(userInput == "one" || userInput == "1")
+      {
+        if(itemCount &gt;= 1)
+        {
+          setFocusItemIndex(0);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "two" || userInput == "2")
+      {
+        if(itemCount &gt;= 2)
+        {
+          setFocusItemIndex(1);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "three" || userInput == "3")
+      {
+        if(itemCount &gt;= 3)
+        {
+          setFocusItemIndex(2);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "four" || userInput == "4")
+      {
+        if(itemCount &gt;= 4)
+        {
+          setFocusItemIndex(3);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "five" || userInput == "5")
+      {
+        if(itemCount &gt;= 5)
+        {
+          setFocusItemIndex(4);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "six" || userInput == "6")
+      {
+        if(itemCount &gt;= 6)
+        {
+          setFocusItemIndex(5);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "seven" || userInput == "7")
+      {
+        if(itemCount &gt;= 7)
+        {
+          setFocusItemIndex(6);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "eight" || userInput == "8")
+      {
+        if(itemCount &gt;= 8)
+        {
+          setFocusItemIndex(7);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "nine" || userInput == "9")
+      {
+        if(itemCount &gt;= 9)
+        {
+          setFocusItemIndex(8);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "display" || userInput == "DISPLAY")
+      {
+        ret = "true";
+      }
+      else if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -columnCount;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= columnCount;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+
+      ret;
+
+      </script>		
+    </onUserInput>
+		
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView">
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+		</mediaDisplay>
+	</item_template>
+
+  <videoDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/videoRenderer.rss");
+  </videoDispatcher>
+  
+  <audioDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_status_url);
+    streamArray = pushBackStringArray(streamArray, stream_current_song);
+    streamArray = pushBackStringArray(streamArray, stream_genre);
+    streamArray = pushBackStringArray(streamArray, stream_bitrate);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, request_image);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/audioRenderer.rss");
+  </audioDispatcher>
+  
+  <playlistDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "playlist");
+    streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+    streamArray = pushBackStringArray(streamArray, playlist_repeat);
+    writeStringToFile(storagePath_playlist, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+  </playlistDispatcher>
+  
+  <rssDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/rss_mediaFeed.rss");
+  </rssDispatcher>
+
+  <unknownDispatcher>
+    info_url    = translate_base_url + "info," + request_options + "," + urlEncode(request_url);
+    error_info  = "";
+
+    res = loadXMLFile(info_url);
+    
+    if (res != null)
+    {
+      error = getXMLElementCount("info","error");
+      
+      if(error != 0)
+      {
+  	    value = getXMLText("info","error");
+  	    if(value != null)
+  	    {
+  	     error_info = value;
+  	    }
+      }
+      else
+      {
+  	    value = getXMLAttribute("info","stream","url");
+  	    if(value != null)
+  	     stream_url = value;
+  
+  	    value = getXMLAttribute("info","stream","type");
+  	    if(value != null)
+  	     stream_type = value;
+  	    
+  	    value = getXMLAttribute("info","stream","class");
+  	    if(value != null)
+  	     stream_class = value;
+  
+  	    value = getXMLAttribute("info","stream","protocol");
+  	    if(value != null)
+  	     stream_protocol = value;
+  
+  	    value = getXMLAttribute("info","stream","server");
+  	    if(value != null)
+  	     stream_soft = value;
+  
+        stream_status_url = "";
+        
+  	    value = getXMLAttribute("info","stream","server_url");
+  	    if(value != null)
+  	    {
+  	     stream_server_url = value;
+  	     if((stream_soft == "icecast" || stream_soft == "shoutcast") &amp;&amp; stream_server_url!="")
+  	     {
+    	      stream_status_url = translate_base_url+"status,"+urlEncode(stream_server_url)+","+urlEncode(stream_url);
+    	   }
+  	    }
+  	     
+        value = getXMLText("info","status","stream-title");
+  	    if(value != null)
+  	     stream_title = value;
+  
+        stream_current_song = "";
+  	    value = getXMLText("info","status","current-song");
+  	    if(value != null)
+    		  stream_current_song = value;
+    		  
+  	    value = getXMLText("info","status","stream-genre");
+  	    if(value != null)
+  	      stream_genre = value;
+        
+  	    value = getXMLText("info","status","stream-bitrate");
+  	    if(value != null)
+  	      stream_bitrate = value;
+  
+        options = "";
+        
+        if(stream_type != "")
+          options = "Content-type:"+stream_type;
+        
+        if(options == "")
+          options = stream_options;
+        else
+          options = options + ";" + stream_options;
+  
+  	    stream_translate_url = translate_base_url + "stream," + options + "," + urlEncode(stream_url);
+  	    
+  	    url = null;
+  	    
+  	    if(stream_class == "video" || stream_class == "audio")
+    	  {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+    	      url = stream_url;
+    	    else
+    	      url = stream_translate_url;
+    	  }
+    	  else
+    	  {
+  	      url = stream_url;
+    	  }
+    	     
+    	  if(url != null)
+    	  {
+          if(stream_class == "audio" || stream_class == "video" || stream_class == "playlist" || stream_class == "rss")
+          {
+            executeScript(stream_class+"Dispatcher");
+          }
+          else
+          {
+            error_info = "Unsupported media type: " + stream_type;
+          }
+  	    }
+  	    else
+  	    {
+          error_info = "Empty stream url!";
+  	    }
+      }
+    }
+    else
+    {
+      error_info = "CGI translate module failed!";
+    }
+    print("error_info=",error_info);
+  </unknownDispatcher>
+
+	
+<script>
+    channelImage = "";
+  </script><channel>
+  <title>Digitally Imported</title>
+  <item>
+    <location>http://listen.di.fm/public2/chillout.pls</location>
+    <title>Chillout</title>
+    <annotation>Ambient psy chillout, check out our trippy flavors!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic Chillout Ambient</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17b.di.fm:80/di_chillout_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Chillout - D I G I T A L L Y - I M P O R T E D - ambient psy chillout, check out our trippy flavors!</stream_title>
+    <stream_genre>Electronic Chillout Ambient</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/futuresynthpop.pls</location>
+    <title>Future Synthpop</title>
+    <annotation>Finest selection of futurepop and synthpop!!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm/futuresynthpop/</url>
+    <stream_url>http://u17.di.fm:80/di_futuresynthpop_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Future Synthpop - D I G I T A L L Y - I M P O R T E D - Finest selection of futurepop and synthpop!!</stream_title>
+    <stream_genre>Electronic Industrial Synthpop</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/liquiddnb.pls</location>
+    <title>Liquid DnB</title>
+    <annotation>Flowing with the freshest Liquid DnB!!</annotation>
+    <image>../etc/translate/rss/image/di/liquiddnb.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_liquiddnb_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Liquid DnB  - D I G I T A L L Y - I M P O R T E D - Flowing with the freshest Liquid DnB!!</stream_title>
+    <stream_genre>Electronic Liquid Drum N Bass</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/oldschoolhouse.pls</location>
+    <title>Oldschool House</title>
+    <annotation>The sounds of old school house music!</annotation>
+    <image>../etc/translate/rss/image/di/oldschoolhouse.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_oldschoolhouse_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Oldschool House - D I G I T A L L Y - I M P O R T E D - The sounds of old school house music!</stream_title>
+    <stream_genre>Electronic House Old</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/chiptunes.pls</location>
+    <title>Chiptunes</title>
+    <annotation>Playing the best chiptunes and video game music.</annotation>
+    <image>../etc/translate/rss/image/di/chiptunes.gif</image>
+    <genre>Chiptunes Video Game</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_chiptunes_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Chiptunes - D I G I T A L L Y - I M P O R T E D - Playing the best chiptunes and video game music.</stream_title>
+    <stream_genre>Chiptunes Video Game</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/trance.pls</location>
+    <title>Trance Channel</title>
+    <annotation>We can't define it!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_trance_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Trance Channel - D I G I T A L L Y - I M P O R T E D - we can't define it!</stream_title>
+    <stream_genre>Electronic Trance Techno</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/vocaltrance.pls</location>
+    <title>Vocal Trance</title>
+    <annotation>A fusion of trance, dance, and chilling vocals together!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17b.di.fm:80/di_vocaltrance_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Vocal Trance - D I G I T A L L Y - I M P O R T E D - a fusion of trance, dance, and chilling vocals together!</stream_title>
+    <stream_genre>Electronic Trance Pop</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/classictrance.pls</location>
+    <title>Classic Trance</title>
+    <annotation>Relive the classic trance hits!!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_classictrance_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Classic Trance - D I G I T A L L Y - I M P O R T E D - relive the classic trance hits!!</stream_title>
+    <stream_genre>Electronic Trance Techno</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/techhouse.pls</location>
+    <title>Tech House</title>
+    <annotation>A fusion of minimal techno and soulful house music.</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17b.di.fm:80/di_techhouse_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Tech House - D I G I T A L L Y - I M P O R T E D - a fusion of minimal techno and soulful house music.</stream_title>
+    <stream_genre>Electronic Tech House</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/psychill.pls</location>
+    <title>PsyChill</title>
+    <annotation>Downtempo psychedelic dub grooves, goa ambient, and world beats.</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_psychill_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>PsyChill - D I G I T A L L Y - I M P O R T E D - downtempo psychedelic dub grooves, goa ambient, and world beats.</stream_title>
+    <stream_genre>Electronic Chillout Psy</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/chilloutdreams.pls</location>
+    <title>Chillout Dreams</title>
+    <annotation>Relax to the sounds of dream and ibiza style chillout</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_chilloutdreams_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Chillout Dreams - D I G I T A L L Y - I M P O R T E D - relax to the sounds of dream and ibiza style chillout</stream_title>
+    <stream_genre>Electronic Chillout Dream</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/eurodance.pls</location>
+    <title>EuroDance</title>
+    <annotation>The newest and best of Eurodance hits.</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_eurodance_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>EuroDance - D I G I T A L L Y - I M P O R T E D - the newest and best of Eurodance hits</stream_title>
+    <stream_genre>Electronic Eurodance HiNRG Italo</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/club.pls</location>
+    <title>Club Sounds</title>
+    <annotation>The hottest club and dance tunes 24/7.</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_clubsounds_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Club Sounds - D I G I T A L L Y - I M P O R T E D - the hottest club and dance tunes 24/7</stream_title>
+    <stream_genre>Electronic Club Dance</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/discohouse.pls</location>
+    <title>Disco House</title>
+    <annotation>Grooviest Disco House hits on the planet!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_discohouse_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Disco House - D I G I T A L L Y - I M P O R T E D - Grooviest Disco House hits on the planet!</stream_title>
+    <stream_genre>Electronic Disco House</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/dubstep.pls</location>
+    <title>Dubstep</title>
+    <annotation>Dubstep hits and mixes!!!!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17b.di.fm:80/di_dubstep_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Dubstep - D I G I T A L L Y - I M P O R T E D - Dubstep hits and mixes!!!!</stream_title>
+    <stream_genre>Electronic Dubstep Garage</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/electro.pls</location>
+    <title>Electro House</title>
+    <annotation>An eclectic mix of electro and dirty house.</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm/electro</url>
+    <stream_url>http://u17b.di.fm:80/di_electrohouse_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Electro House - D I G I T A L L Y - I M P O R T E D - an eclectic mix of electro and dirty house</stream_title>
+    <stream_genre>Electronic Electro House</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/classiceurodance.pls</location>
+    <title>Classic EuroDance</title>
+    <annotation>Finest imported cheese on the net!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_classiceurodance_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Classic EuroDance - D I G I T A L L Y - I M P O R T E D - Finest imported cheese on the net!</stream_title>
+    <stream_genre>Electronic Eurodance HiNRG Italo</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/house.pls</location>
+    <title>House</title>
+    <annotation>Silky sexy deep house music direct from New York city!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u16.di.fm:80/di_house_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>House - D I G I T A L L Y - I M P O R T E D - silky sexy deep house music direct from New York city!</stream_title>
+    <stream_genre>Electronic House Deep</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/soulfulhouse.pls</location>
+    <title>Soulful House</title>
+    <annotation>House music selected from Paris with love!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_soulfulhouse_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Soulful House - D I G I T A L L Y - I M P O R T E D - house music selected from Paris with love!</stream_title>
+    <stream_genre>Electronic Soulful House Deep</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/funkyhouse.pls</location>
+    <title>Funky House</title>
+    <annotation>A fine selection of funky house music!!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm/funkyhouse/</url>
+    <stream_url>http://u17.di.fm:80/di_funkyhouse_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Funky House - D I G I T A L L Y - I M P O R T E D - A fine selection of funky house music!!</stream_title>
+    <stream_genre>Electronic House Disco</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/tribalhouse.pls</location>
+    <title>Tribal House</title>
+    <annotation>Finest selection of tribal and tech house!!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm/tribalhouse/</url>
+    <stream_url>http://u17.di.fm:80/di_tribalhouse_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Tribal House - D I G I T A L L Y - I M P O R T E D - Finest selection of tribal and tech house!!</stream_title>
+    <stream_genre>Electronic Tribal House</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/harddance.pls</location>
+    <title>Hard Dance</title>
+    <annotation>Are you ready for this?!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_harddance_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Hard Dance - D I G I T A L L Y - I M P O R T E D - are you ready for this!</stream_title>
+    <stream_genre>Electronic Trance Techno</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/minimal.pls</location>
+    <title>Minimal</title>
+    <annotation>Finest selection of Minimal Techno &amp; House!!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm/minimal</url>
+    <stream_url>http://u17.di.fm:80/di_minimal_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Minimal - D I G I T A L L Y - I M P O R T E D - Finest selection of Minimal Techno &amp; House!!</stream_title>
+    <stream_genre>Electronic Minimal Techno</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/techno.pls</location>
+    <title>Techno</title>
+    <annotation>From Minimal to Detroit to Schranz &amp; all in between!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_techno_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Techno - D I G I T A L L Y - I M P O R T E D - From Minimal to Detroit to Schranz &amp; all in between!</stream_title>
+    <stream_genre>Electronic Techno EDM</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/progressive.pls</location>
+    <title>Progressive</title>
+    <annotation>House, techno, and trance beats for your mind!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17b.di.fm:80/di_progressive_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Progressive - D I G I T A L L Y - I M P O R T E D - house, techno, and trance beats for your mind!</stream_title>
+    <stream_genre>Electronic Progressive House Trance</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/goapsy.pls</location>
+    <title>Goa &amp; Psychedelic Trance</title>
+    <annotation>A voyage out of this world!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_goapsy_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Goa &amp; Psychedelic Trance - D I G I T A L L Y - I M P O R T E D - a voyage out of this world!</stream_title>
+    <stream_genre>Electronic Psychedelic Goa Trance</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/hardstyle.pls</location>
+    <title>Hardstyle</title>
+    <annotation>Banging Hardstyle for your ears!!!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm/hardstyle</url>
+    <stream_url>http://u16.di.fm:80/di_hardstyle_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Hardstyle - D I G I T A L L Y - I M P O R T E D - Banging Hardstyle for your ears!!!</stream_title>
+    <stream_genre>Electronic Hardstyle Hard Bass</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/hardcore.pls</location>
+    <title>Hardcore</title>
+    <annotation>HappyHardcore.com - DJ mixes, hard dance and NuNRG!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_hardcore_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Hardcore - D I G I T A L L Y - I M P O R T E D &amp; HappyHardcore.com - DJ mixes, hard dance and NuNRG!</stream_title>
+    <stream_genre>Electronic Hardcore Trance</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/lounge.pls</location>
+    <title>Lounge</title>
+    <annotation>Sit back and enjoy the lounge grooves!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17b.di.fm:80/di_lounge_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Lounge - D I G I T A L L Y - I M P O R T E D - sit back and enjoy the lounge grooves!</stream_title>
+    <stream_genre>Electronic Lounge Downtempo</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/exposurenyc.pls</location>
+    <title>Exposure NYC</title>
+    <annotation>A fine selection of New York City sounds!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm/exposurenyc/</url>
+    <stream_url>http://u17.di.fm:80/di_exposurenyc_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Exposure NYC - D I G I T A L L Y - I M P O R T E D - A fine selection of New York City sounds!</stream_title>
+    <stream_genre>Electronic House Progressive</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/djmixes.pls</location>
+    <title>DJ MIXES</title>
+    <annotation>Non-stop DJ sets featuring various forms of techno &amp; trance!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_djmixes_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>DJ MIXES - D I G I T A L L Y - I M P O R T E D - non-stop DJ sets featuring various forms of techno &amp; trance!</stream_title>
+    <stream_genre>Electronic Trance Techno</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/drumandbass.pls</location>
+    <title>Drum and Bass</title>
+    <annotation>Tasty assortment to satisfy your drum and bass fix!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17b.di.fm:80/di_drumandbass_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Drum and Bass - D I G I T A L L Y - I M P O R T E D - tasty assortment to satisfy your drum and bass fix!</stream_title>
+    <stream_genre>Electronic Drum and Bass Jungle</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/classictechno.pls</location>
+    <title>Classic Electronica</title>
+    <annotation>Old school techno, trance &amp; rave!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_oldschoolelectronica_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Classic Electronica - D I G I T A L L Y - I M P O R T E D - old school techno, trance &amp; rave!</stream_title>
+    <stream_genre>Electronic Techno Trance</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/breaks.pls</location>
+    <title>Breaks</title>
+    <annotation>A fine assortment of trance and house breaks</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17b.di.fm:80/di_breaks_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Breaks - D I G I T A L L Y - I M P O R T E D - a fine assortment of trance and house breaks</stream_title>
+    <stream_genre>Electronic Breaks Trance</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/ambient.pls</location>
+    <title>Ambient</title>
+    <annotation>A blend of ambient, downtempo, and chillout.</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17b.di.fm:80/di_ambient_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Ambient - D I G I T A L L Y - I M P O R T E D - a blend of ambient, downtempo, and chillout</stream_title>
+    <stream_genre>Electronic Ambient Downtempo</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/spacemusic.pls</location>
+    <title>Space Music</title>
+    <annotation>Ambient space music for expanding minds.</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm/spacemusic/</url>
+    <stream_url>http://u17.di.fm:80/di_spacemusic_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Space Dreams - D I G I T A L L Y - I M P O R T E D - ambient space music for expanding minds</stream_title>
+    <stream_genre>Electronic Space Music Ambient</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+  <item>
+    <location>http://listen.di.fm/public2/gabber.pls</location>
+    <title>Gabber</title>
+    <annotation>Best sounds of this stuff right here for your ears!</annotation>
+    <image>../etc/translate/rss/image/di/radio_di.gif</image>
+    <genre>Electronic</genre>
+    <url>http://www.di.fm</url>
+    <stream_url>http://u17.di.fm:80/di_gabber_aacplus</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Gabber - D I G I T A L L Y - I M P O R T E D - best sounds of this stuff right here for your ears!</stream_title>
+    <stream_genre>Electronic Gabber Hardcore</stream_genre>
+    <stream_bitrate>40</stream_bitrate>
+  </item>
+</channel>
+
+
+</rss>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Другое</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2215,tvigle/multi</link>
+  <title>TviglePad   первый отечественный планшетный компьютер!</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2215/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2161,tvigle/multi</link>
+  <title> Brand Online   All about the money  2010</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2161/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2084,tvigle/multi</link>
+  <title>Спецпроекты Tvigle.ru</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2084/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:735,tvigle/multi</link>
+  <title>Tvigle.ru 1 год!</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/735/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1367,tvigle/multi</link>
+  <title>Видеохроника</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1367/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1481,tvigle/multi</link>
+  <title>Zомби ТВ</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1481/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

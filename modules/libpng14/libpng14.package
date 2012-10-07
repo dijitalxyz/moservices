@@ -1,0 +1,7 @@
+[libpng14]
+	revision= 1
+	title = "Lib Png v14.1.0"
+	role = package
+	check = lib
+	files="lib/libpng14.so.14 lib/libpng14.so.14.1.0"
+	size = 400

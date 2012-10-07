@@ -1,0 +1,6 @@
+{foreach $mediaObj->getParam(history) as $line}
+{$line|spacify:","}
+{if ! $line@last}
+--- separator ---
+{/if}
+{/foreach}

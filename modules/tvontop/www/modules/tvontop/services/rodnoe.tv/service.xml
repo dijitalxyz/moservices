@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<provider>
+    <name>Rodnoe.TV</name>
+    <shortName>rtv</shortName>
+    <displayName>Родное.ТВ</displayName>
+    <description>
+        Русскоязычное Интернет Телевидение.
+        Благодаря нашему сервису у Вас появится уникальная
+        возможность просматривать свыше 100 русских, украинских
+        и других ТВ каналов на любой вкус
+        (ОРТ, РТР, НТВ, ТНТ, Рен ТВ, СТС и другие).
+    </description>
+    <keys>
+        <key name="keyUser1" params="?pl=rtv&amp;amp;type=CHANGE_AUTH">Change account</key>
+    </keys>
+    <provider class="CacheProvider">
+	    <provider class="ImgCacheProvider" >
+	        <provider class="TimeSyncProvider">
+	            <provider class="RtvProvider" />
+	        </provider>
+	    </provider>
+	</provider>
+    <version>1.0.1</version>
+    <author>http://TVonTop.com</author>
+</provider>

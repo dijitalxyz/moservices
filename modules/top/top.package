@@ -1,0 +1,6 @@
+[top]
+	revision = 1
+	title ="Top 3.6"
+	role = package
+	files="bin/top"
+	size = 188

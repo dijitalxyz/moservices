@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=onePartView
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerWidthPC="0"
+	itemXPC="30"
+	itemYPC="20"
+	itemWidthPC="40"
+	backgroundColor="0:0:0"
+	showHeader=no
+	showDefaultInfo=yes
+	infoYPC=90
+	fontSize=18
+	imageFocus=""
+	imageUnFocus=""
+	imageParentFocus=""
+>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1 backgroundColor=255:255:255 >
+		../etc/translate/rss/image/gradient_line.bmp
+  </image>
+  <image offsetXPC=80 offsetYPC=3 widthPC=15 heightPC=6>
+    <script>pageLogo;</script>
+    <widthPC>
+      <script>
+        205 * 6 / 26 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 205 * 6 / 26 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+  </image>
+
+	<itemDisplay>
+		<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" fontSize="20" backgroundColor="0:0:0" foregroundColor="250:250:250">
+			<script>
+			  idx = getQueryItemIndex();
+			  focus = getFocusItemIndex();
+		    getItemInfo(idx, "title");
+			</script>
+		  <foregroundColor>
+  			<script>
+  			  idx = getQueryItemIndex();
+  			  focus = getFocusItemIndex();
+  		    if(idx==focus) "255:255:255"; else "150:150:150";
+  			</script>
+		  </foregroundColor>
+		  <backgroundColor>
+  			<script>
+  			  idx = getQueryItemIndex();
+  			  focus = getFocusItemIndex();
+  		    if(idx==focus) "200:0:63"; else "0:0:0";
+  			</script>
+		  </backgroundColor>
+		</text>
+	</itemDisplay>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      ret;
+    </script>
+  </onUserInput>
+
+</mediaDisplay>
+
+<onEnter>
+  print("music_ivi_ru_index::onEnter start");
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  pageLogo = "../etc/translate/rss/image/ivi-music.png";
+  pageTitle = "MUSIC.IVI.RU";
+
+  storagePath = getStoragePath("tmp");
+  storagePath_ivi  = storagePath + "music_ivi.dat";
+</onEnter>
+
+  <item_template>
+    <mediaDisplay name=threePartsView
+		    sideLeftWidthPC = 0
+		    sideRightWidthPC = 0
+		    backgroundColor="0:0:0">
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    </mediaDisplay>
+  </item_template>
+
+<search>
+ <mediaDisplay name=photoView />
+</search>
+
+<channel>
+  <title>MUSIC.IVI.RU</title>
+  <item>
+   <title>Новинки</title>
+   <link>
+    <script>
+      url = translate_base_url + "app/music_ivi/playlist_player"; 
+      arr = null;
+      arr = pushBackStringArray(arr, "Новинки");
+      arr = pushBackStringArray(arr, url);
+      writeStringToFile(storagePath_ivi, arr);
+      url;
+    </script>
+  </link>
+  </item>
+  <item>
+   <title>Клипы</title>
+   <link>rss_file://../etc/translate/rss/music_ivi/videos.rss</link>
+  </item>
+  <item>
+   <title>Исполнители</title>
+   <link>rss_file://../etc/translate/rss/music_ivi/artists.rss</link>
+  </item>
+  <item>
+   <title>Плейлисты</title>
+   <link>rss_file://../etc/translate/rss/music_ivi/playlists.rss</link>
+  </item>
+	<item>
+		<title>Поиск &gt;</title>
+		<onClick>
+      keyboard = null;
+      keyboard = pushBackStringArray(keyboard, "music_ivi");
+      keyboard = pushBackStringArray(keyboard, "../etc/translate/rss/image/ivi-music-key.png");
+      keyboard = pushBackStringArray(keyboard, "ru");
+      writeStringToFile(getStoragePath("key")+"keyboard.dat", keyboard);
+    	keyword = doModalRss("rss_file://../etc/translate/rss/key/keyboard.rss","mediaDisplay","search",0);
+    	
+    	if(keyword != "" &amp;&amp; keyword != null)
+    	{
+        url = translate_base_url + "app/music_ivi/playlist_player,http://music.ivi.ru/search/?q="+urlEncode(keyword); 
+        arr = null;
+        arr = pushBackStringArray(arr, "Поиск - " + keyword);
+        arr = pushBackStringArray(arr, url);
+        writeStringToFile(storagePath_ivi, arr);
+        
+        showIdle();  
+        doModalRss(url);
+      }
+      null;
+		</onClick>
+	</item>
+</channel>
+</rss>

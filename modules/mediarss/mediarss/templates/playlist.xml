@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- playlist -->
+
+<mediaDisplay name="onePartView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"	
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="10"
+	itemYPC="20"
+	itemWidthPC="80"
+	itemHeightPC="7"
+	capXPC="10"
+	capYPC="13"
+	capWidthPC="80"
+	capHeightPC="7"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="9"
+	itemGap="0"
+	bottomYPC="90"
+	infoYPC="90"
+	infoXPC="90"
+	backgroundColor="0:0:0"
+	showHeader="yes"
+	showDefaultInfo="yes"
+	imageFocus=""
+	sliding="no">
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_06.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_07.png </idleImage>
+	<idleImage idleImageWidthPC="10" idleImageHeightPC="10"> image/POPUP_LOADING_08.png </idleImage>
+	<backgroundDisplay>
+		<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>/usr/local/etc/sayler/images/backgd.jpg</image>
+	</backgroundDisplay>
+	<image offsetXPC=0 offsetYPC=2.8 widthPC=100 heightPC=15.6>/usr/local/etc/sayler/images/mediarss_title.jpg</image>
+
+	<text offsetXPC=19.2 offsetYPC=8 widthPC=70 heightPC=10 fontSize=20 backgroundColor=-1:-1:-1 foregroundColor=255:255:255><!--{TITLE}!--></text>
+
+	<itemDisplay>
+		<image offsetXPC="0" offsetYPC="10" widthPC="100" heightPC="80">
+			<script>
+				idx1 = getFocusItemIndex();
+				idx2 = getQueryItemIndex();
+				if (idx1 == idx2)
+				{
+					"/usr/local/etc/sayler/over.png";
+				}
+				else
+				{
+					"/usr/local/etc/sayler/images/unfocus.bmp";
+				}
+			</script>
+		</image>
+		<text offsetXPC="0" offsetYPC="25" widthPC="100" heightPC="50" fontSize="15" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+			<script>
+				getStringArrayAt(itemTitleArray , -1);
+			</script>
+		</text>
+	</itemDisplay>
+</mediaDisplay>
+
+<script>
+	titleArray = null;
+	itemTitleArray = null;
+	input = "";
+	dlok = loadXMLFile("<!--{TEMP_FILE}!-->");
+	if (dlok != null)
+	{
+		itemSize = getXMLElementCount("rss", "channel", "item");
+		print("itemSize = ", itemSize);
+
+		if(itemSize &gt; 0)
+		{
+			itemCount = 0;		
+			while(1)
+			{
+				itemTitle  = getXMLText("rss", "channel", "item", itemCount, "title");
+				print("itemTitle = ", itemTitle);
+				itemTitleArray  = pushBackStringArray(itemTitleArray, itemTitle);		
+				itemCount += 1;
+				if(itemCount == itemSize)
+				{
+					break;
+				}
+			}
+			setFocusItemIndex(0);
+			setItemFocus(0);
+			redrawDisplay();
+		}
+	}
+</script>
+
+<channel>
+	<title><!--{TITLE}!--></title>
+	<link><!--{HOST_STRING}!--></link>
+	<!-- <mediaDisplay name="onePartView" /> -->
+	
+<!--{ITEMS}!-->
+	
+</channel>
+</rss>

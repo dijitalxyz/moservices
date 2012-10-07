@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=threePartsView
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemImageXPC="32"
+	itemImageYPC="18"
+	itemXPC="39"
+	itemYPC="18"
+	itemHeightPC="0"
+	itemWidthPC="0"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	capXPC="88"
+	capYPC="17"
+	capHeightPC="10"
+	headerCapXPC="90"
+	headerCapYPC="10"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+  menuXPC=10
+  menuYPC=25
+  menuWidthPC=16
+  menuHeightPC=8
+	showHeader=no
+  selectMenuOnRight=no
+  forceFocusOnItem=yes
+  forceFocusOnMenu=no
+	showDefaultInfo=no
+>
+
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image offsetXPC=80 offsetYPC=1 widthPC=15 heightPC=10>
+    <script>pageLogo;</script>
+    <widthPC>
+      <script>
+        10 * 4 / 3 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 10 * 4 / 3 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+	</image>
+
+  <image offsetXPC=30 offsetYPC=18 widthPC=25 heightPC=25>
+    <script>thumbnail;</script>
+    <widthPC>
+      <script>
+        4 / 3 * 25 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        30 + 25 * (1 - 4 / 3 * screenYp / screenXp) / 2;
+      </script>
+    </offsetXPC>
+	</image>
+
+  <text offsetXPC=58 offsetYPC=17 widthPC=15 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=100:200:200>
+    Добавлено:
+  </text>
+  <text offsetXPC=72 offsetYPC=17 widthPC=23 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>date;</script>
+  </text>
+  <text offsetXPC=58 offsetYPC=24 widthPC=15 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=100:200:200>
+    Категории:
+  </text>
+  <text offsetXPC=72 offsetYPC=24 widthPC=23 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>category;</script>
+  </text>
+  <text offsetXPC=58 offsetYPC=31 widthPC=15 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=100:200:200>
+    Жанры:
+  </text>
+  <text offsetXPC=72 offsetYPC=31 widthPC=23 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>genre;</script>
+  </text>
+  <text offsetXPC=58 offsetYPC=38 widthPC=15 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=100:200:200>
+    Время:
+  </text>
+  <text offsetXPC=72 offsetYPC=38 widthPC=23 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>duration;</script>
+  </text>
+
+
+  <text lines="9" offsetXPC=28 offsetYPC=45 widthPC=67 heightPC=45 fontSize=16 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>description;</script>
+  </text>
+
+</mediaDisplay>
+
+<onExit>
+    playItemURL(-1, 1);
+    setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+  setRefreshTime(-1);
+  
+  dlok = loadXMLFile(translate_base_url+"app/ivi/entry,"+storagePath+"entry.htm");
+  if (dlok != null)
+  {
+	  description  = getXMLText("entry","content");
+	  date         = getXMLText("entry","date");
+	  category     = getXMLText("entry","category");
+	  genre        = getXMLText("entry","genre");
+	  duration     = getXMLText("entry","duration");
+	  tags         = getXMLText("entry","tags");
+	  id           = getXMLText("entry","id");
+	  title        = getXMLText("entry","title");
+
+  	redrawDisplay();
+  }
+</onRefresh>
+
+<onEnter>
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+
+  cachePath = getStoragePath("key");
+  
+  storagePath = getStoragePath("tmp");
+  arr = readStringFromFile(storagePath + "entry.dat");
+  url = getStringArrayAt(arr, 0);
+  title = getStringArrayAt(arr, 1);
+  thumbnail = getStringArrayAt(arr, 2);
+  setReturnString("");
+  
+  pageTitle = title;
+  pageLogo = "../etc/translate/rss/image/menu/ivi.png";
+
+  setRefreshTime(1);
+</onEnter>
+
+<submenu>
+  <title>Проиграть</title>
+  <onClick>
+	  playItemURL(-1, 1);
+    urlToPlay = translate_base_url+"stream,,"+urlEncode(url);
+<!--`cat "$BASEPATH/app/include/add.history_video.script" | sed 's/getStringArrayAt(titleArray, idx)/pageTitle/'`-->
+    showIdle();
+    playItemURL(urlToPlay, 0);
+    cancelIdle();
+    null;
+  </onClick>
+</submenu>
+
+
+<channel></channel>
+</rss>

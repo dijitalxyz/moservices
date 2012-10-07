@@ -1,0 +1,7 @@
+[libiconv]
+	revision= 1
+	title = "Lib iConv v2.5.0"
+	role = package
+	check = "lib libiconv.so.2"
+	files="lib/libiconv.so.2 lib/libiconv.so.2.5.0"
+	size = 948

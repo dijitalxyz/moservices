@@ -1,0 +1,41 @@
+a.buttons, button.buttons
+{
+	position:static;
+	float:right;
+	display:block;
+	line-height:130%;
+	text-decoration:none;
+	font-weight:normal;
+	cursor:pointer;
+	padding:3px 6px 3px 6px; /* Links */
+	margin: 2px;
+
+	background-color:#ddd;
+	border:#ccc 1px solid;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+
+button.buttons
+{
+	width:auto;
+	overflow:visible;
+	padding:3px 2px 2px 2px; /* IE6 */
+}
+
+button.buttons[type]
+{
+	padding:2px 4px 3px 4px; /* Firefox */
+	line-height:18px; /* Safari */
+}
+
+*:first-child+html button.buttons[type]
+{
+	padding:1px 6px 0px 6px; /* IE7 */
+}
+
+button.buttons:hover, a.buttons:hover, a.buttons:active
+{
+	color: black;
+	background-color:#fff;
+	border:1px solid #aaa;
+}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Компьютерные игры</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2094,tvigle/multi</link>
+  <title>Flash-игра Охрустенный квест</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2094/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1590,tvigle/multi</link>
+  <title>ОтжЫг</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1590/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1510,tvigle/multi</link>
+  <title>Игротека</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1510/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1593,tvigle/multi</link>
+  <title>Скороходы</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1593/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1507,tvigle/multi</link>
+  <title>Без винта</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1507/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1509,tvigle/multi</link>
+  <title>Проходняк</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1509/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1598,tvigle/multi</link>
+  <title>Техно</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1598/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1508,tvigle/multi</link>
+  <title>1й уровень</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1508/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1600,tvigle/multi</link>
+  <title>В фокусе</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1600/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1591,tvigle/multi</link>
+  <title>Темы</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1591/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1512,tvigle/multi</link>
+  <title>Игровой невод</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1512/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

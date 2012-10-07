@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# description: Starts and stops the RSS Ex
+#
+etc=/usr/local/etc
+mos=$etc/mos/rssex2
+bin=$etc/mos/bin
+
+case "$1" in
+  start)
+	echo "Starting RSS Ex..."
+	cp -Rfp $mos/www/* /tmp/www/
+
+#	rm -f $etc/dvdplayer/translate.dat
+
+	[ -f $bin/awk ] && [ ! -f $mos/bin/awk ] && ln -s $bin/awk $mos/bin/awk
+
+	[ ! -e $etc/translate ] && ln -s $mos/ $etc/translate
+	;;
+  stop)
+	echo "Stopping RSS Ex..."
+	rm -f /usr/local/etc/translate
+	;;
+
+  status)
+	if [ -e /usr/local/etc/translate ] ; then
+	  echo "RSS Ex is running"
+	else
+	  echo "RSS Ex is stopped"
+	fi
+	;;
+
+  enable | disable)
+	;;
+
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

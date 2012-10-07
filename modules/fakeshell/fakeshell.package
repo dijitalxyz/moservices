@@ -1,0 +1,8 @@
+[fakeshell]
+	revision= 2
+	title = "Fake Shell 1.0.5.2"
+	role = web
+	navy_title = "Fake Shell"
+	navy_frame = "modules/fakeshell/fakeshell.php"
+	files="www/modules/fakeshell/"
+	size = 52

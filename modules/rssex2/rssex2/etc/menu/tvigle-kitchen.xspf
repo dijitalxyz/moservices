@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Еда</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1393,tvigle/multi</link>
+  <title>Вкусно и быстро</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1393/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1381,tvigle/multi</link>
+  <title>Горячие блюда</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1381/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1378,tvigle/multi</link>
+  <title>Закуски</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1378/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1382,tvigle/multi</link>
+  <title>Десерты</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1382/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1379,tvigle/multi</link>
+  <title>Салаты</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1379/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1380,tvigle/multi</link>
+  <title>Супы</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1380/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1435,tvigle/multi</link>
+  <title>От шеф-повара</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1435/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1387,tvigle/multi</link>
+  <title>Рецепты на каждый день</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1387/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1431,tvigle/multi</link>
+  <title>Ярмарка на Tvigle.ru</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1431/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1389,tvigle/multi</link>
+  <title>Шейкер Шоу</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1389/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1583,tvigle/multi</link>
+  <title>Кулинарный блог Михаила Марчука</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1583/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

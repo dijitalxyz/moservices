@@ -1,0 +1,9 @@
+    <text offsetXPC="3"    offsetYPC="3" widthPC="41" heightPC="4" fontSize="14" foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}">{$locale->msg($mediaObj->title)}{if isset($titleExtra)}{$titleExtra}{/if}</text>
+    <text offsetXPC="46"   offsetYPC="3" widthPC="10" heightPC="4" fontSize="14" foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}">TVonTop</text>
+    <text offsetXPC="55"   offsetYPC="3" widthPC="15" heightPC="4" fontSize="14" foregroundColor="255:0:0"     backgroundColor="{$config->get(bgNormal)}">{$config->get(version,Runtime)}</text>
+    <text offsetXPC="81.5" offsetYPC="3" widthPC="15" heightPC="4" fontSize="14" foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}" redraw="yes" align="right">
+        <script>executeScript("getTimeStr");
+        timeStr + " ";</script>
+    </text>
+    <image offsetXP="0" offsetYPC="9" widthPC="1" heightPC="0.5" >http://openstat.net/cnt?cid=2189590</image>
+    <text offsetXPC="0" offsetYPC="9" widthPC="100" heightPC="0.5" backgroundColor="200:200:200" />

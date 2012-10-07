@@ -1,0 +1,109 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'live.1hd.ro' plug-in
+#
+# version: 1.2 31.01.2011 0:13
+#
+# http://live.1hd.ro/playlist.php
+#
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -q -s 'live\.*\(1hd\|prahovahd\)\.ro/playlist.*\.php$'; then 
+
+  local PLAYLISTFILE=$CACHEPATH/temp.xspf
+  rm -f $PLAYLISTFILE
+
+  local PHPSESSID=`$MSDL --debug -o /dev/null -p http --useragent "${USERAGENT}" "http://live.1hd.ro/" 2>&1 | awk '/Set-Cookie/ {match($0, /PHPSESSID=([^; ]+)[; ]/, arr); print arr[1]}'`
+  $WGET -q --header "User-Agent: ${USERAGENT}" --header "Cookie: PHPSESSID=${PHPSESSID}" -O $PLAYLISTFILE "${arg_url}" 2>/dev/null
+  
+  if [ -f $PLAYLISTFILE ]; then
+    awk '
+      BEGIN {
+        counter = 2000;
+      }
+      /<playlist/ {
+        print
+        print "<title>OneHD</title>"
+        next
+      }
+      /<track>/ {
+        location = ""
+        streamer = ""
+        title = ""
+        next
+      }
+      /<title>/ {
+        gsub(/&/, "&amp;")
+        match($0, /<title>([^<]+)<\/title>/, arr)
+        title = arr[1]
+        next
+      }
+      /<location>/ {
+        match($0, /<location>([^<]+)<\/location>/, arr)
+        location = arr[1]
+        next
+      }
+      /<meta rel="streamer">/ {
+        match($0, /<meta[^>]+>([^<]+)<\/meta>/, arr)
+        streamer = arr[1]
+        next
+      }
+      /<meta rel=/ {
+        next
+      }
+      /<\/track>/ {
+        url = streamer location;
+        if(!(url in cache))
+        {
+          counter--;
+          if(counter <= 0)
+          {
+            print "</trackList>"
+            print "</playlist>"
+            exit
+          }
+          cache[url] = title;
+          print "<track>";
+          print "  <location>" location "</location>"
+          print "  <title>" title "</title>"
+          print "  <meta rel=\"streamer\">" streamer "</meta>"
+          print "  <meta rel=\"translate\">Rtmp-options:-v</meta>"
+          print "</track>";
+        }
+        next
+      }
+      { 
+        gsub(/&/, "&amp;")
+        print 
+      }
+    ' $PLAYLISTFILE > $PLAYLISTFILE.tmp
+    mv -f $PLAYLISTFILE.tmp $PLAYLISTFILE
+
+    stream_type='application/xspf+xml'
+    stream_url=$PLAYLISTFILE
+    protocol='file'
+    arg_opt='Resolve-playlist:0'
+  fi
+  return $RC_OK
+fi
+
+return $RC_FAIL

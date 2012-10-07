@@ -1,0 +1,175 @@
+﻿<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+
+  pageTitle = "Free Internet Radio Stations";
+</onEnter>
+
+<mediaDisplay name=onePartView
+	sideLeftWidthPC = 0
+	sideRightWidthPC = 0
+
+	sideColorRight="0:0:0"
+	sideColorLeft="0:0:0"
+	headerImageWidthPC="0"
+	selectMenuOnRight=no
+	autoSelectMenu=no
+	autoSelectItem=no
+	headerImageXPC="10"
+	headerXPC="10"
+	itemImageXPC="0"
+	itemImageYPC="0"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="20"
+	itemYPC="25"
+	capXPC="0"
+	capYPC="0"
+	capWidthPC="0"
+	capHeightPC="0"
+	itemBackgroundColor="0:0:0"
+	itemHeightPC="15"
+	itemWidthPC="60"
+	itemPerPage="4"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader=no
+	showDefaultInfo=no
+	>
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=26 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=15 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image offsetXPC=65 offsetYPC=2 widthPC=30 heightPC=12>
+    ../etc/translate/rss/image/shoutcast.gif
+    <widthPC>
+      <script>
+        546 / 154 * 12 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 546 / 154 * 12 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+  </image>
+
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+		<itemDisplay>
+			<text align="center" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  annotation = getItemInfo(idx, "annotation");
+					  if(annotation == "" || annotation == null)
+					    annotation = getItemInfo(idx, "stream_genre");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "24"; else "20";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+</mediaDisplay>
+
+	<searchLink>
+	  <link>
+	    <script>translate_base_url + "app," + urlEncode(keyword) + ",shoutcast/search";</script>
+	  </link>
+	</searchLink>
+
+	<channel>
+		<title>SHOUTcast Radio</title>
+
+		<item>
+			<title>Радиостанции по жанрам</title>
+			<link>
+			 <script>translate_base_url+"app,,shoutcast/browse";</script></link>
+			 <mediaDisplay name="onePartView"/>
+		</item>
+
+		<item>
+			<title>Все жанры</title>
+			<link>
+			 <script>translate_base_url+"app,,shoutcast/genrelist";</script></link>
+			 <mediaDisplay name="photoView"/>
+		</item>
+
+		<item>
+			<title>Top100 радиостанций</title>
+			<link><script>translate_base_url+"app,100,shoutcast/top500";</script></link>
+		</item>
+
+		<item>
+			<title>Поиск радиостанций ></title>
+			<onClick>
+    	  keyboard = null;
+    	  keyboard = pushBackStringArray(keyboard, "shoutcast");
+    	  keyboard = pushBackStringArray(keyboard, "../etc/translate/rss/image/shoutcast.gif");
+    	  keyboard = pushBackStringArray(keyboard, "en");
+        writeStringToFile(getStoragePath("key")+"keyboard.dat", keyboard);
+    		keyword = doModalRss("rss_file://../etc/translate/rss/key/keyboard.rss");
+				if (keyword != null &amp;&amp; keyword != "")
+				{
+	       jumpToLink("searchLink");
+				}
+			</onClick>
+		</item>
+
+	</channel>
+</rss>

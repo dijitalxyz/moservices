@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# description: Enable and disable zSwap
+#
+etc=/usr/local/etc
+mos=$etc/mos/zswap
+rc=$etc/rcS
+
+case "$1" in
+  start|stop|status)
+	;;
+
+  enable)
+	echo "Enabling zSwap..."
+	sed -i '/#zswap patch/{N;N;N;N;d}' /usr/local/etc/rcS
+	sed -i '
+/ln -s \/dev\/cdroms\/cdrom0 \/dev\/cdrom0/i\
+#zswap patch\
+/sbin/insmod '$mos'/ramzswap.ko num_devices=1 disksize_kb=10260\
+mknod /dev/ramzswap0 b `cat /proc/devices | grep ramzswap | cut -d" " -f1` 0\
+swapon /dev/ramzswap0\
+#
+' /usr/local/etc/rcS
+	echo "Please, reboot device!"
+	;;
+
+  disable)
+	echo "Disabling zSwap..."
+	sed -i '/#zswap patch/{N;N;N;N;d}' /usr/local/etc/rcS
+	echo "Please, reboot device!"
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>Other Internet TV Lists</title>
+
+  <trackList>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/sovoktv/mainframe</link>
+      <title>Совок ТВ</title>
+      <annotation>Всем кто любит русское телевидение! Только здесь множество каналов на русском языке совершенно бесплатно!</annotation>
+      <image>../etc/translate/rss/image/menu/internettv.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/tv-mozhay.xspf,collection/medialist</link>
+      <title>Можай ТВ</title>
+      <annotation>Открытые каналы онлайн телевидения с портала Можай! (www.mozhay.net)</annotation>
+      <image>../etc/translate/rss/image/menu/internettv.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+<!--    
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/tv-ras_list.xspf,collection/medialist</link>
+      <title>ras playlist</title>
+      <annotation>Небольшой список в основном с российскими интернет-телевизионными каналами от пользователя ras@forum.iconbit.ru</annotation>
+      <image>../etc/translate/rss/image/menu/internettv.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+-->    
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/tv-estere.xspf,collection/medialist</link>
+      <title>tv estere</title>
+      <annotation>Зарубежное телевидение</annotation>
+      <image>../etc/translate/rss/image/menu/internettv.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/video-prahovahd_sd.xspf,collection/medialist</link>
+      <title>OneHD / SD</title>
+      <annotation>ONE HD - Online Network Entertainment - Romania. Prima televiziune online HD. Качественные концертные записи на любой вкус. (SD качество, min 0.5Mbit/sec)</annotation>
+      <image>http://www.1hd.ro/images/sd.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+<!--    
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/video-prahovahd.xspf,collection/medialist</link>
+      <title>OneHD</title>
+      <annotation>ONE HD - Online Network Entertainment - Romania. Prima televiziune online HD. Качественные концертные записи на любой вкус. (HD качество, min 2Mbit/sec)</annotation>
+      <image>http://www.1hd.ro/images/hd.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+-->    
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/video-rss_collections.xspf,collection/medialist</link>
+      <title>RSS Media Feeds</title>
+      <annotation>RSS-ленты - ivi.ru, tvigle.ru, mults.spb.ru, vimeo.com, трансляции rutube.ru, ...</annotation>
+      <image>../etc/translate/rss/image/menu/rss.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+<!--    
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/tv-my_favorites.xspf,collection/medialist</link>
+      <title>my favorites</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/menu/internettv.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+-->    
+  </trackList>
+
+</playlist>

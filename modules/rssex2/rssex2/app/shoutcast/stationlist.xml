@@ -1,0 +1,207 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+<onEnter>
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+  cancelIdle();
+</onEnter>
+
+<onExit>
+  showIdle();
+</onExit>  
+
+	<mediaDisplay name=onePartView
+		sideLeftWidthPC = 0
+		sideRightWidthPC = 0
+
+		sideColorRight="0:0:0"
+		sideColorLeft="0:0:0"
+		itemImageHeightPC="0"
+		itemImageWidthPC="0"
+		itemBackgroundColor="0:0:0"
+
+		itemXPC="5"
+		itemYPC="20"
+		itemHeightPC="8"
+		itemWidthPC="90"
+		itemPerPage="9"
+    itemGap="0"
+
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+
+  	capXPC="5"
+  	capYPC="20"
+  	capWidthPC="90"
+  	capHeightPC="9"
+
+  	bottomYPC="90"
+  	infoYPC="90"
+  	infoXPC="90"
+
+		backgroundColor="0:0:0"
+		showHeader=no
+		>
+		
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="10" fontSize="24" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+		<text offsetXPC=5 offsetYPC=11 widthPC=67 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      STATION
+		</text>
+		<text offsetXPC=72 offsetYPC=11 widthPC=9 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      LISTENERS
+		</text>
+		<text offsetXPC=81 offsetYPC=11 widthPC=8 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      BITRATE
+		</text>
+		<text offsetXPC=89 offsetYPC=11 widthPC=6 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      TYPE
+		</text>
+
+		<itemDisplay>
+			<text offsetXPC=0 offsetYPC=0 widthPC=79 heightPC=100 fontSize=15>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "name");
+				</script>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "150:150:150"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "0:0:0"; else "200:200:200";
+  				</script>
+			  </foregroundColor>
+			</text>
+			<text offsetXPC=79 offsetYPC=0 widthPC=9 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+				<script>
+					idx = getQueryItemIndex();
+				  getItemInfo(idx, "lc");
+				</script>
+			</text>
+			<text offsetXPC=86 offsetYPC=0 widthPC=7 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+				<script>
+					idx = getQueryItemIndex();
+				  getItemInfo(idx, "br");
+				</script>
+			</text>
+			<text offsetXPC=93 offsetYPC=0 widthPC=7 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+				<script>
+					idx = getQueryItemIndex();
+				  mt = getItemInfo(idx, "mt");
+				  if(mt == "audio/mpeg")
+				    "MP3";
+				  else
+				  if(mt == "audio/aacp")
+				    "AAC+";
+				  else
+				    "";
+				</script>
+			</text>
+		</itemDisplay>
+
+    <onUserInput>
+    <script>
+    ret = "false";
+    majorContext = getPageInfo("majorContext");
+    minorContext = getPageInfo("minorContext");
+    userInput = currentUserInput();
+    
+    if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+    {
+      itemSize = getPageInfo("itemCount");
+      idx = Integer(getFocusItemIndex());
+      if (userInput == "pagedown" || userInput == "PD")
+      {
+        idx -= -9;
+        if(idx &gt;= itemSize)
+          idx = itemSize-1;
+      }
+      else
+      {
+        idx -= 9;
+        if(idx &lt; 0)
+          idx = 0;
+      }
+      setFocusItemIndex(idx);
+    	setItemFocus(idx);
+      redrawDisplay();
+      ret = "true";
+    }
+    else if (userInput == "enter" || userInput == "ENTR") {
+      idx = getFocusItemIndex();
+      station_id = getItemInfo(idx, "id");
+      executeScript("sub_Play");
+      ret = "true";
+    } 
+    ret;
+    </script>
+    </onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>	
+    <mediaDisplay name=threePartsView>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+		</mediaDisplay>
+	</item_template>
+
+<sub_Play>
+  station_id = getItemInfo(idx,"id");
+  station_name = getItemInfo(idx,"name");
+  station_mt = getItemInfo(idx,"mt");
+  station_br = getItemInfo(idx,"br");
+  station_genre = getItemInfo(idx,"genre");
+  url = translate_base_url + "app,"+urlEncode("Station-id:"+station_id+";Station-name:"+station_name+";Station-br:"+station_br+";Station-mt:"+station_mt+";Station-genre:"+station_genre+";")+",shoutcast/station";
+  
+  showIdle();
+  doModalRss(url);
+</sub_Play>
+
+<!--`cat "$CHANNELFILE"`-->
+
+</rss>

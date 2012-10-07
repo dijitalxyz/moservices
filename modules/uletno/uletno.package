@@ -1,0 +1,7 @@
+[uletno]
+	revision = 7
+	title = "Uletno.info"
+	role = rss
+	files="www/modules/uletno/"
+	require="curl"
+	size = 96

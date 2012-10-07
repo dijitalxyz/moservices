@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<provider>
+    <name>HDout.TV</name>
+    <shortName>hdo</shortName>
+    <displayName>HDout.TV</displayName>
+    <description>
+        Библиотека сериалов. Преимущественно американских и английских.
+        В том числе: Симпсоны, Доктор Хаус, Декстер,
+        Теория Большого Взрыва, Теория Лжи и другие.
+    </description>
+	<keys>
+		<key name="keyUser1" params="?pl=hdo&amp;amp;op=get&amp;amp;type=CHANGE_AUTH" >Change account</key>
+		<key name="keyUser2" params="?pl=hdo&amp;amp;op=get&amp;amp;select=favorites" >Favorites</key>
+		<key name="keyUser3" params="?pl=hdo&amp;amp;op=get&amp;amp;select=new" >Last added</key>
+	</keys>
+    	<provider class="ImgCacheProvider">
+        	<provider class="HdoProvider" />
+    	</provider>
+    <version>0.1</version>
+    <author>http://TVonTop.com</author>
+</provider>

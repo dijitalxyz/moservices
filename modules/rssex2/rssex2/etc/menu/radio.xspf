@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>Internet Radio</title>
+
+  <trackList>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/shoutcast/index</link>
+      <title>SHOUTcast Radio Directory</title>
+      <annotation>Listing thousands of radio channels worldwide...</annotation>
+      <image>../etc/translate/rss/image/menu/shoutcast.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Font:13;Lines:5;Size:3;File:etc/playlists/radio-bluemars.xspf,collection/media</link>
+      <title>Bluemars</title>
+      <annotation>Welcome to Bluemars, we will shortly transition into synchronous orbit around Phobos where you will be able to board a shuttle down the inertial tether.
+Upon arrival, please consult the display in the hall for transportation to one of the three continents on the planet.
+Thank you for travelling with Bluemars Spaceways.</annotation>
+      <image>../etc/translate/rss/image/menu/bluemars.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:5;File:etc/playlists/radio-di.xspf,collection/media</link>
+      <title>Digitally Imported</title>
+      <annotation>Electronic &amp; Dance Music Radio 24/7</annotation>
+      <image>../etc/translate/rss/image/menu/di.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/moskva_fm.xspf,moskvafm/stations</link>
+      <title>Moskva.FM</title>
+      <annotation>Московские радиостанции FM диапазона</annotation>
+      <image>../etc/translate/rss/image/menu/moskvafm.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/radiotime/index</link>
+      <title>RadioTime</title>
+      <annotation>RadioTime, a privately held Dallas-based company, focuses on providing complete radio content and tools to help listeners quickly and easily find their favorite radio stations and personalities plus discover new ones.</annotation>
+      <image>../etc/translate/rss/image/menu/radiotime.png</image>
+      <meta rel="mediaDisplay">threePartsView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:5;File:etc/playlists/radio-stationru.xspf,collection/media</link>
+      <title>Station.ru</title>
+      <annotation>Интернет-станции на Station.ru</annotation>
+      <image>../etc/translate/rss/image/menu/stationru.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:5;File:etc/playlists/radio-skyfm.xspf,collection/media</link>
+      <title>SKY.fm</title>
+      <annotation>Now Serving the Best Free Internet Radio to 33,823 Fans</annotation>
+      <image>../etc/translate/rss/image/menu/skyfm.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:5;File:etc/playlists/radio-somafm.xspf,collection/media</link>
+      <title>SomaFM</title>
+      <annotation>SomaFM is 20 unique channels of listener-supported, commercial-free, underground/alternative radio broadcasting from San Francisco. All music hand-picked by SomaFM's award-winning DJs and music directors.</annotation>
+      <image>../etc/translate/rss/image/menu/somafm.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:5;File:etc/playlists/radio-radioio.xspf,collection/media</link>
+      <title>RadioIO</title>
+      <annotation>It's all about the music</annotation>
+      <image>../etc/translate/rss/image/menu/radioio.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:5;File:etc/playlists/radio-jazzradio.xspf,collection/media</link>
+      <title>JAZZRADIO</title>
+      <annotation>Enjoy great jazz music</annotation>
+      <image>../etc/translate/rss/image/menu/jazzradio.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/poiskm/index</link>
+      <title>Poiskm.ru</title>
+      <annotation>Poiskm.ru - это поисковая система, которая ищет mp3 файлы в открытом доступе в интернете и позволяет слушать их онлайн.</annotation>
+      <image>../etc/translate/rss/image/menu/poiskm.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/gettune/index</link>
+      <title>get-tune.net</title>
+      <annotation>get-tune.net - Самый крупный музыкальный архив. Слушайте любую музыку онлайн абсолютно бесплатно!</annotation>
+      <image>../etc/translate/rss/image/menu/gettune.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/menu/radio-other.xspf,collection/menulist</link>
+      <title>Other</title>
+      <annotation>Разные списки интернет-радиостанций</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+  </trackList>
+
+</playlist>

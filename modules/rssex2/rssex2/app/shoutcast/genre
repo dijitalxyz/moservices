@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+DATAPATH=$BASEPATH/app/shoutcast
+cd $DATAPATH
+
+. ./settings
+
+GENRE="$arg_opt"
+
+CHANNELFILE="$CACHEPATH/shoutcast.`echo -n \"$GENRE\" | sed 's/\//_/g'`.cache"
+TEMPDL=$TMPFILE.dl
+
+TIMELIFE=3600
+
+let tsttime=`date +%s`-$TIMELIFE
+
+REFRESHCACHE=yes
+if [ -f "$CHANNELFILE" ]; then
+  if [ "`ls -s "$CHANNELFILE" | awk '{print $1}'`" != "0" ]; then
+    if [ `date +%s -r "$CHANNELFILE"` -gt $tsttime ]; then
+      REFRESHCACHE=
+    fi
+  fi
+fi
+
+if [ $REFRESHCACHE ]; then
+  $WGET -q -O "$TEMPDL" --header "User-Agent: $USERAGENT" "${SHOUTCAST_U}genresearch${SHOUTCAST_K}&genre=`urlencode_s "$GENRE"`"
+  if [ -f "$TEMPDL" ]; then
+    if [ "`ls -s "$TEMPDL" | awk '{print $1}'`" != "0" ]; then
+      TITLE="Shoutcast Radio - $GENRE"
+      if [ -x "$XSLTPROC" ]; then
+        $XSLTPROC --stringparam title "$TITLE" stationlist.xslt "$TEMPDL" | sed '1d' > $CHANNELFILE
+      else
+        awk -v title="`escapeXML \"$TITLE\"`" -f getxml.awk -f stationlist.awk "$TEMPDL" > $CHANNELFILE
+      fi
+    fi
+    rm -f "$TEMPDL"
+  fi
+fi
+
+if [ -f "$CHANNELFILE" ]; then
+  (
+    export BASEPATH;
+    export CHANNELFILE; 
+    template2rss stationlist.xml | printContent "application/rss+xml"
+  )
+fi

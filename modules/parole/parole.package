@@ -1,0 +1,7 @@
+[parole]
+	revision = 2
+	title = "Authorization"
+	role = patch
+	files="www/modules/parole/"
+	require="busybox"
+	size = 64

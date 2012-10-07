@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+	<name>History</name>
+	<shortName>hst</shortName>
+	<displayName>История ввода</displayName>
+	<description>
+		История клавиатурного ввода
+	</description>
+	<hidden>true</hidden>
+	<provider class="HistoryProvider" />
+	<version>1.0</version>
+	<author>http://TVonTop.com</author>
+</service>

@@ -1,0 +1,7 @@
+[mosondrive]
+	revision = 1
+	title = "moServices on drive"
+	role = patch
+	init = S47mosondrive
+	files="etc/services_drive etc/init/S47mosondrive"
+	size = 44

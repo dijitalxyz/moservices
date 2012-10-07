@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+#
+# Translate CGI module
+# '101.ru' plug-in
+#
+# version: 1.0 27.12.2011 10:24:33
+#
+# http://www.101.ru/new101.php?bit=2&uid=60&serv=
+#
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -q -s '\(www\.\)*101\.ru/new101\.php?.*$'; then 
+
+  get_opt "Resolve-playlist"
+  local resolve=$opt
+  
+  if [ "$resolve" == "1" ]; then
+    local playlist_file="$TEMP/temp.track"
+    arg_url=$stream_url
+    command_playlist | sed '1,2d;s/<track>/\n<track>/g;s/></>\n</g' > $playlist_file
+    local count=`sed -n '/<track>/p' $playlist_file | sed -n '$='`
+    local buf=`awk -f getxml.awk -v position=2 -f getfirstitem.awk "$playlist_file" | sed '/^$/d'`
+    local location=`echo "$buf" | sed -n '1p'`
+    local title=`echo "$buf" | sed -n '2p'`
+    local creator=`echo "$buf" | sed -n '3p'`
+    if [ "$location" != "$stream_url" ]; then
+      stream_url=''
+      stream_type=''
+      arg_url=$location
+      check_stream
+      icy_name=${icy_name:-"$title"}
+      [ -n "$creator" ] && icy_name="$creator - $icy_name"
+      ms_title=${ms_title:-"$title"}
+      ms_author=${ms_author:-"$creator"}
+    fi
+    rm -f $playlist_file
+  else
+    stream_url=$arg_url
+    stream_type='audio/x-ms-asf'
+    stream_class='playlist'
+    protocol='http'
+  fi
+  
+  return $RC_OK
+fi
+
+return $RC_FAIL

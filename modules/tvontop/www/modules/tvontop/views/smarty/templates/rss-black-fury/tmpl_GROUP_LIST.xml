@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+<onEnter>
+       setRefreshTime(10000);
+</onEnter>
+<onRefresh>
+	/*update time*/
+    redrawDisplay();
+</onRefresh>
+
+<mediaDisplay name="photoView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+    
+    rowCount="3"
+    columnCount="4"
+
+    itemOffsetXPC="0.1"
+    itemOffsetYPC="10"
+    itemWidthPC="23.6"
+    itemHeightPC="24"
+    
+    itemBorderColor="{$config->get(bgNormal)}"
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    
+    drawItemText="no"
+    
+    focusBorderColor="{$config->get(focusBorderColor)}"
+	unFocusBorderColor="{$config->get(unFocusBorderColor)}"
+    
+    >
+  <!-- header -->
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+
+    <text redraw="yes" offsetXPC="9" offsetYPC="89" widthPC="40" heightPC="9" fontSize="15" foregroundColor="255:255:255" backgroundColor="{$config->get(bgNormal)}">
+        <script>
+            getPageInfo("focusItemIndex") + "/" + getPageInfo("itemCount");
+        </script>
+    </text>
+
+    <itemDisplay>
+        <script>
+            bgNormal  = "0:0:0";
+            bgFocus   = "255:170:0";
+            fgNormal  = "200:200:200";
+            fgFocus   = "255:255:255";
+
+            if (getFocusItemIndex() == getQueryItemIndex()) {
+                itemBg = bgFocus;
+                itemFg = fgFocus;
+                image = getItemInfo("altThumb");
+            } else {
+                itemBg = bgNormal;
+                itemFg = fgNormal;
+                image = getItemInfo("thumbnail");
+            }
+        </script>
+
+        <text offsetXPC="8" offsetYPC="0" widthPC="90" heightPC="100" cornerRounding="15">
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+        </text>
+        <image redraw="yes" offsetXPC="28" offsetYPC="0" widthPC="50" heightPC="80">
+            <script>image;</script>
+        </image>
+        <text align="center" redraw="yes" fontSize="15"
+            offsetXPC="0" offsetYPC="80" widthPC="100" heightPC="20"
+            backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+            <script>getItemInfo("title");</script>
+        </text>
+    </itemDisplay>
+{call getIdleImages}
+</mediaDisplay>
+<channel>
+{foreach $mediaObj->getChildren() as $child}
+    <item>
+        <title>{$child->title}</title>
+        <link>{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}</link>
+{$icon="{$config->get(cfg_resources_home,Runtime)}img/category/{$child->getParam(icon)}.png"}  
+{if !file_exists($icon)}
+    {$icon="{$config->get(cfg_resources_home,Runtime)}img/category/unknown.png"}
+{/if}
+        <media:thumbnail url="{$icon}" />
+        <altThumb>{$icon}</altThumb>
+        <itemCount>{$child->getChildCount()}</itemCount>
+    </item>
+
+{/foreach}
+</channel>
+</rss>

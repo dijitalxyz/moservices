@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# Check for install:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+#
+busybox --help | grep -q 'v1\.18\.' && exit 2
+exit 0

@@ -1,0 +1,352 @@
+#!/bin/sh
+#----------------------------------------------------------
+# 2012/10/07 by farVoice@gmail.com
+#
+
+# -------------------------------------
+# $1 - source
+# $2 - project
+# $3 - repository
+#
+setValues()
+{
+	src=$PWD
+	[ -n "$1" ] && src=$1
+
+	proj=$PWD
+	[ -n "$2" ] && proj=$2
+
+	dst='repository'
+	[ -n "$3" ] && dst=$3
+	dst=$( realpath $dst )
+	[ -d $dst ] || mkdir -p $dst
+
+	# packages
+	packages=$proj/packages
+
+	pm=$packages/etc/pm
+	[ -d $pm ] || mkdir -p $pm
+
+	about=$packages/about
+	[ -d $about ] || mkdir -p $about
+
+	check=$pm/check
+	[ -d $check ] || mkdir -p $check
+
+	touch $pm/packages
+
+	# modules
+	proj=$proj/modules
+	[ -d $proj ] || mkdir -p $proj
+}
+
+# -------------------------------------
+# $1 - package name
+# $2 - parameter name
+#
+getParameterFromList()
+{
+	sed -rn 's/^[ \t]*'$2'[ \t]*=[ \t]*"?([^"]*).*$/\1/p' $proj/$1/$1.package
+}
+
+# -------------------------------------
+# $1 - list file
+# $2 - package name
+#
+removePackageFromList()
+{
+	sed -ni '/\['$2'\]/{:a;n;/\[.*\]/bb;ba;:b;};p' $1
+}
+
+#--------------------------------------
+# $1 - directory
+# $2 - archive name
+#
+makeTarFromDir()
+{
+local p
+	p=$PWD
+	cd $1
+	tar cjf $2.tar.bz2 *
+	cd $p
+}
+
+# =====================================
+# make packages.tar.bz2
+#
+makePackages()
+{
+	echo "Making packages list..."
+	makeTarFromDir $packages $dst/packages
+}
+
+
+# -------------------------------------
+# $1 package name
+# $2 parameter name
+# $3 path name
+#
+mkFileFromParameter()
+{
+local i
+local h
+
+	if [ -f $proj/$1/etc/pm/$3/$1 ] ; then
+		h="$( echo $( cat $proj/$1/etc/pm/$3/$1 ) )"
+		sed -i '/'$2' *=/d' $proj/$1/$1.package
+		echo '	'$2'="'$h'"' >> $proj/$1/$1.package
+	else
+		h=$( getParameterFromList $1 $2 )
+		if [ -n "$h" ] ; then
+			mkdir -p $proj/$1/etc/pm/$3
+			for i in $h ; do
+				echo $i >> $proj/$1/etc/pm/$3/$1
+			done
+		fi
+	fi
+}
+
+# =====================================
+# $1 - package name
+# -------------------------------------
+makePack()
+{
+	if [ -d $proj/$1 ] ; then
+		echo "Make package $1..."
+
+		# files, required
+		mkFileFromParameter $1 files files
+		mkFileFromParameter $1 require required
+
+		# get size of module
+		s=$( du -sc $proj/$1 | tail -n1 | cut -f1 )
+
+		sed -i '/size *=/d' $proj/$1/$1.package
+		echo '	size = '$s >> $proj/$1/$1.package
+
+		makeTarFromDir $proj/$1 $dst/$1
+
+		# remove files, required
+		rm -Rf $proj/$1/etc/pm/files
+		rm -Rf $proj/$1/etc/pm/required
+		[ -z "$( ls $proj/$1/etc/pm )" ] && rm -Rf $proj/$1/etc/pm
+
+		# change packages
+		removePackageFromList $pm/packages $1
+		cat $proj/$1/$1.package >> $pm/packages
+		echo >> $pm/packages
+
+		# change check, about
+		[ -d $proj/$1/etc/about ] && cp -a $proj/$1/etc/about/* $about/
+		[ -d $proj/$1/etc/pm/check ] && cp -a $proj/$1/etc/pm/check/* $check/
+	else
+		echo "Error: package $1 not present"
+	fi
+}
+
+# -------------------------------------
+# make packages from project
+# -------------------------------------
+# $1 - package names
+#
+makePacks()
+{
+local m
+local mods
+
+	mods=$1
+	[ "$1" == 'all' ] && mods='*'
+
+	for m in $proj/$mods ; do
+		[ -d $m ] || continue
+		makePack $( basename $m )
+	done
+
+	makePackages
+}
+
+# =====================================
+# $1 - package name
+#
+extractPack()
+{
+	echo "Extract $1..."
+
+	# check archive
+	tar -tjf $src/$1.tar.bz2 >/dev/null 2>&1
+	if [ $? -ne 0 ] ; then
+		echo "  Archive $src/$1.tar.bz2 is corrupt"
+		return 1
+	fi
+
+	# remove old package
+	if [ -d $proj/$1 ] ; then
+		rm -Rf $proj/$1
+		removePackageFromList $pm/packages $1
+	else
+		echo "  Nothing remove"
+	fi
+	# extract new package
+	mkdir -p $proj/$1
+	tar -xjf $src/$1.tar.bz2 -C $proj/$1/
+
+	# files, required
+
+
+
+
+	# change packages
+	cat $proj/$1/$1.package >> $pm/packages
+	echo >> $pm/packages
+
+	# change check, about
+	[ -d $proj/$1/etc/about ] && cp -a $proj/$1/etc/about/* $about/
+	[ -d $proj/$1/etc/pm/check ] && cp -a $proj/$1/etc/pm/check/* $check/
+
+}
+
+# -------------------------------------
+# extract packages from archives
+# -------------------------------------
+# $1 - package names
+#
+extractPacks()
+{
+local a
+local m
+local mods
+
+	mods=$1
+	[ "$1" == 'all' ] && mods='*'
+
+	for a in $src/$mods.tar.bz2 ; do
+		[ ! -f $a ] && continue
+
+		m=$( basename $a | cut -d'.' -f1 )
+		[ "$m" == "packages" ] && continue
+		extractPack $m
+
+	#	rm -f $a
+	done
+
+	makePackages
+}
+
+# =====================================
+# remake packages from installed moS
+# -------------------------------------
+# $1 - package name(s)
+#
+remakePacks()
+{
+	pm make $1 $src
+	extractPacks $1
+	makePacks $1
+}
+
+# =====================================
+# update packages from archives
+# -------------------------------------
+# $1 - package name(s)
+#
+updatePacks()
+{
+local a
+local m
+	mods=$1
+	[ "$1" == 'all' ] && mods='*'
+
+	for a in $src/$mods.tar.bz2 ; do
+		m=$( basename $a | cut -d'.' -f1 )
+		extractPack $m
+		rm -f $a
+		makePack $m
+	done
+
+	makePackages
+}
+
+# =====================================
+# remove packages from project
+# -------------------------------------
+# $1 - package name(s)
+#
+removePacks()
+{
+local m
+local mods
+
+	mods=$1
+	[ "$1" == 'all' ] && mods='*'
+
+	for m in $proj/$mods ; do
+		[ -d $m ] || continue
+
+		m=$( basename $m )
+		# remove package from project
+		rm -Rf $proj/$m
+		removePackageFromList $pm/packages $m
+		# remove from repository
+		rm -f $dst/$m.tar.bz2
+	done
+
+	makePackages
+}
+# =====================================
+# $1 - source
+# $2 - project
+# $3 - repository
+
+case "$1" in
+  make|c)
+	setValues $PWD $3 $4
+	makePacks $2
+	;;
+  extract|x)
+	setValues $3 $4
+	extractPacks $2
+	;;
+  remake|r)
+	setValues $PWD $3 $4
+	remakePacks $2
+	;;
+
+  update|u)
+	setValues $3 $4 $5
+	updatePacks $2
+	;;
+
+  remove|d)
+	setValues $PWD $3 $4
+	removePacks $2
+	;;
+  packages|p)
+	setValues $PWD $2 $3
+	makePackages
+	;;
+  list)
+	setValues $PWD $2
+	sed -nr 's/\[(.*)\]/\1/p' $pm/packages
+	;;
+
+  *)
+	echo 'moServices repository Manager rev1 (http://www.moservices.org)
+Usage: repo <action> ...
+Avaiable:
+	make|c    <package>|all	[project] [repository]
+	extract|x <package>|all	[source]  [project]
+	remake|r  <package>	[project] [repository]
+	update|u  <package>	[source]  [project] [repository]
+	remove|d  <package>	[project] [repository]
+	packages|p		[project] [repository]
+	list			[project]
+
+default paths:
+source      $PWD
+project     $PWD
+repository  $PWD/repository
+'
+	;;
+esac
+
+exit $?

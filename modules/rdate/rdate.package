@@ -1,0 +1,10 @@
+[rdate]
+	revision = 2
+	title = "Remote date and time sync"
+	role = patch
+	init = S11rdate
+	backup = "etc/rdate.conf"
+	actions = "restart"
+	config_edit = "etc/rdate.conf"
+	files="bin/rdate etc/rdate.conf etc/init/S11rdate"
+	size = 52

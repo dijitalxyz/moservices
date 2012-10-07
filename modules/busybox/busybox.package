@@ -1,0 +1,6 @@
+[busybox]
+	revision= 3
+	title = "BusyBox v1.18.4"
+	role = package
+	files="bin/busybox.1.18.4 bin/bzip2 bin/httpd bin/passwd bin/tar bin/telnetd bin/gunzip"
+	size = 1548

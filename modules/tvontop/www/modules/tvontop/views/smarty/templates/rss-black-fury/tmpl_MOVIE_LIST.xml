@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+
+<!-- Hot keys definition -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/hotKeys.tpl"}
+{$child = $mediaObj->getFirstChild()}
+{if $child != null and $child->getType() == $mediaObj->getType()}
+    {$hotKeys[0]["title"] = $child->getTitle()}
+    {$hotKeys[0]["url"]   = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
+{/if}
+
+{$hotKeys[1]["title"] = "{$locale->msg('Genres')}"}
+{$hotKeys[1]["url"]   = "{$config->get(cfg_processing_url,Runtime)}&amp;type=GENRE_LIST"}
+{$hotKeys[2]["title"] = "{$locale->msg('Search')}"}
+
+{$child = $mediaObj->getLastChild()}
+{if $child != null and $child->getType() == $mediaObj->getType()}
+    {$hotKeys[3]["title"] = $child->getTitle()}
+    {$hotKeys[3]["url"]   = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
+{/if}
+
+<onEnter>
+    executeScript("platformInit");
+</onEnter>
+
+<mediaDisplay name="photoView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    drawItemText="no"
+    rowCount="3"
+    columnCount="10"
+    itemOffsetXPC="1"
+    itemOffsetYPC="10"
+    itemWidthPC="8.85"
+    itemHeightPC="21.5"
+
+    itemBorderColor="{$config->get(bgFocus)}"
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    focusBorderColor="{$config->get(focusBorderColor)}"
+    unFocusBorderColor="{$config->get(unFocusBorderColor)}"
+    >
+    <onUserInput>
+        key = currentUserInput();
+        res = "false";
+
+        if ( key == keyUser3 ) {
+ 			url = "{$config->get(cfg_root_url,Runtime)}?pl=sys&amp;type=KEYBOARD&amp;nostat";
+			ret = doModalRss(url);
+            if (null != ret &amp;&amp; "" != ret) {
+                ret  = urlEncode(ret);
+                url  = "{$config->get(cfg_processing_url, Runtime)}";
+                url += "&amp;type=SEARCH&amp;search=" + ret;
+                jumpToLink("rssLink");
+                res = "true";
+            }
+        }
+        {call onHotKeyPress}
+
+        if ("true" == res) {
+            redrawDisplay();
+        }
+        res;
+    </onUserInput>
+
+    <!-- header -->
+{if $mediaObj->getParam(total) > $mediaObj->getParam(perPage)}
+    {$titleExtra = " - {$locale->msg('Page')} {$mediaObj->getParam(page)}"}
+{/if}
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+    <text redraw="yes" align="center" offsetXPC="0" offsetYPC="80" widthPC="100" heightPC="5"
+        foregroundColor="255:255:255" backgroundColor="60:60:60" fontSize="16">
+        <script>
+            year = getItemInfo("year");
+            if (null != year) {
+                getItemInfo("title") + " - " + year;
+            } else {
+                getItemInfo("title");
+            }
+        </script>
+    </text>
+
+    <text redraw="yes" align="center" offsetXPC="2.2"  offsetYPC="87" widthPC="7.8" heightPC="8.6"
+        foregroundColor="255:255:255" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <script>
+            if (getItemInfo("type") == "MOVIE") {
+                {$offset = ($mediaObj->getParam(page) - 1) * $mediaObj->getParam(perPage)}
+
+                /* starting from second page there is an arrow with link to previous page */
+                {if $mediaObj->getParam(page) > 1}
+                    {$offset = $offset - 1}
+                {/if}
+
+                Add({$offset}, getPageInfo("focusItemIndex")) + "/{$mediaObj->getParam(total)}";
+            } else {
+                "";
+            }
+        </script>
+    </text>
+
+    <text redraw="yes" offsetXPC="10.2" offsetYPC="87" widthPC="72.8" heightPC="4.3"
+        foregroundColor="200:200:200" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <script>
+            genre = getItemInfo("genre");
+            if (null != genre) {
+                getItemInfo("country") + " - " + genre;
+            } else {
+                getItemInfo("country");
+            }
+        </script>
+    </text>
+    <text redraw="yes" offsetXPC="83" offsetYPC="87" widthPC="16" heightPC="4.3"
+        align="right" foregroundColor="200:200:200" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <foregroundColor>
+            <script>
+                ratingVal = getItemInfo("midRating");
+                {call calculateRatingColors defColor='200:200:200'}
+                ratingColor;
+            </script>
+        </foregroundColor>
+        <script>getItemInfo("rating") + "  ";</script>
+    </text>
+    <text redraw="yes" offsetXPC="10.2" offsetYPC="91.3" widthPC="88.8" heightPC="4.3"
+        foregroundColor="130:130:130" backgroundColor="{$config->get(bgNormal)}" fontSize="15" lines="1">
+        <script>getItemInfo("description");</script>
+    </text>
+    <!-- hot keys -->
+    {call displayHotKeys}
+
+
+{call getIdleImages}
+</mediaDisplay>
+
+{call getRssLink}
+
+<channel>
+{foreach $mediaObj->getChildren() as $child}
+{$link = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
+    <item>
+        <title>{$child->title}</title>
+        <type>{$child->type}</type>
+        <media:thumbnail>{$child->getParam(thumbnail)}</media:thumbnail>
+{if $child->type == "STREAM_URL"}
+        <enclosure url="{$link}&amp;mode=redirect" type="video/mp4" />
+{elseif $child->type == "SEARCH"}
+        <link>{$link}&amp;search={$child->getParam(search)}</link>
+{else}
+        <link>{$link}</link>
+{/if}
+        <year>{$child->getParam(year)}</year>
+        <genre>{$child->getParam(genre)}</genre>
+        <country>{$child->getParam(country)}</country>
+        <rating>{$child->getParam(rating)}</rating>
+        <midRating>{$child->getParam(midRating)}</midRating>
+        <description>{$child->getParam(descr)}</description>
+    </item>
+{/foreach}
+</channel>
+</rss>

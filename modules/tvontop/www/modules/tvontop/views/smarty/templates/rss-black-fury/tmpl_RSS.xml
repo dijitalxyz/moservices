@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+<onEnter>
+</onEnter>
+<mediaDisplay name="threePartsView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    capWidthPC="0"
+
+    focusBorderColor="{$config->get(focusBorderColor)}"
+    unFocusBorderColor="{$config->get(unFocusBorderColor)}"
+
+    drawItemText="no"
+    slidingItemText="no"
+    sliding="no"
+
+    itemImageXPC="4"
+    itemImageYPC="10"
+    itemImageWidthPC="5"
+    itemImageHeightPC="7.5"
+
+    itemXPC="10"
+    itemYPC="10"
+    itemWidthPC="88"
+    itemHeightPC="7.5"
+
+    itemGap="0"
+    itemPerPage="10"
+
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    fontSize="13"
+    >
+    <!-- header -->
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+
+    <text redraw="yes" align="center" offsetXPC="2.2"  offsetYPC="87" widthPC="8" heightPC="13"
+        foregroundColor="255:255:255" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <script>getPageInfo("focusItemIndex") + "/" + getPageInfo("itemCount");</script>
+    </text>
+
+    <text redraw="yes" offsetXPC="10.2" offsetYPC="87" widthPC="89" heightPC="13"
+        foregroundColor="130:130:130" backgroundColor="{$config->get(bgNormal)}" fontSize="14" lines="3">
+        <script>getItemInfo("description");</script>
+    </text>
+
+    <itemDisplay>
+        <script>
+        	{call calculateItemColors}
+        </script>
+
+        <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" fontSize="16" cornerRounding="10">
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+            <script>getItemInfo("title");</script>
+        </text>
+    </itemDisplay>
+{call getIdleImages}
+</mediaDisplay>
+
+{call getRssLink tag=setup_link}
+
+<channel>
+{foreach $mediaObj->getChildren() as $child}
+    <item>
+        <title>{$child->title}</title>
+        <media:thumbnail>{$child->getParam(thumbnail)}</media:thumbnail>
+        <description>{$child->getParam(description)}</description>
+{if $child->getParam(enclosure_type) == "text/xml"}
+        <link>{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}</link>
+{else}
+        <enclosure url="{urldecode($child->id)}" type="{$child->getParam(enclosure_type)}" />
+{/if}
+{if "" != $child->getParam(thumbnail_ratio)}
+        <thumbnail_ratio>{$child->getParam(thumbnail_ratio)}</thumbnail_ratio>
+{/if}
+{if "" != $child->getParam(image)}
+        <image>{$child->getParam(image)}</image>
+{/if}
+    </item>
+{/foreach}
+</channel>
+</rss>

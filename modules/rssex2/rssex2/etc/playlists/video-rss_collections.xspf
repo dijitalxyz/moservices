@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+   <title>RSS Media Feeds</title>
+   <image>../etc/translate/rss/image/menu/rss.png</image>
+   <trackList>
+      <track>
+         <annotation>На этом сайте вы можете абсолютно бесплатно загрузить мультфильмы для вас и ваших детей. На сайте собрана коллекция мультфильмов советских времен и не только. Самые лучшие мультики из вашего детства! Коллекция постоянно пополняется новыми мультфильмами.</annotation>
+         <title>Мультики от mults.spb.ru</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/mults.spb.ru,http://mults.spb.ru/rss.php</location>
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/mults.spb.ru,http://mults.spb.ru/rss.php</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/rss</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Все видео: бесплатно смотреть кино, сериалы, программы, мультфильмы и клипы в хорошем качестве без регистрации: Новое видео</annotation>
+         <title>Новое видео от ivi.ru</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://www.ivi.ru/rss/new</location>
+      
+<meta rel="stream_url">http://www.ivi.ru/rss/new</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Смотрите онлайн новые видеоклипы популярных российских и зарубежных исполнителей бесплатно и без регистрации. Все музыкальные новинки на music.ivi.ru!</annotation>
+         <title>music.ivi.ru - Лидеры дня</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/music.ivi.ru,http://music.ivi.ru/static/rss/lead.xml</location>
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/music.ivi.ru,http://music.ivi.ru/static/rss/lead.xml</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Смотрите онлайн новые видеоклипы популярных российских и зарубежных исполнителей бесплатно и без регистрации. Все музыкальные новинки на music.ivi.ru!</annotation>
+         <title>music.ivi.ru - Новинки</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/music.ivi.ru,http://music.ivi.ru/static/rss/novetly.xml</location>
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/music.ivi.ru,http://music.ivi.ru/static/rss/novetly.xml</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Все видео: бесплатно смотреть кино, сериалы, программы, мультфильмы и клипы в хорошем качестве без регистрации: Популярное видео</annotation>
+         <title>Самое популярное видео от ivi.ru</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://www.ivi.ru/rss/best</location>
+      
+<meta rel="stream_url">http://www.ivi.ru/rss/best</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Все видео: бесплатно смотреть кино, сериалы, программы, мультфильмы и клипы в хорошем качестве без регистрации: Рекомендуемое видео</annotation>
+         <title>Рекомендованное видео от ivi.ru</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://www.ivi.ru/rss/recommend</location>
+<meta rel="stream_url">http://www.ivi.ru/rss/recommend</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>RSS-лента Tvigle Media</annotation>
+         <title>Tvigle Media</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/</location>
+      
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/rss</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Welcome to the Vimeo HD Channel, home to the web's most creative and inspiring HD videos.  Here we feature HD videos that  are super awesome. Sit back and enjoy! This channel is moderated by the staff of Vimeo. If you want your HD video added to this channel, put a link in the shoutbox and we'll check it out.</annotation>
+         <title>Vimeo / The Vimeo HD Channel</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://vimeo.com/channels/hd/videos/rss</location>
+<meta rel="stream_url">http://vimeo.com/channels/hd/videos/rss</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>We are the Staff. These are the videos we like the bestest. Check em out!</annotation>
+         <title>Vimeo / Vimeo Staff Picks</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://vimeo.com/channels/staffpicks/videos/rss</location>
+<meta rel="stream_url">http://vimeo.com/channels/staffpicks/videos/rss</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+<!--
+      <track>
+    <annotation>Телеканалы на RuTube - В эфире</annotation>
+    <title>Телеканалы на RuTube</title>
+    <image>../etc/translate/rss/image/menu/rss.png</image>
+    <location>http://127.0.0.1/cgi-bin/translate?app/rss/channels.rutube.ru</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/channels.rutube.ru</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+-->
+      <track>
+         <annotation>Смотреть фильмы онлайн, фильмы онлайн без регистрации, хорошие фильмы онлайн (бесплатно) - LineCinema.ru</annotation>
+         <title>LineCinema.ru</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/mediafeed,http://www.linecinema.org/rss.xml</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/mediafeed,http://www.linecinema.org/rss.xml</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Все сериалы мира онлайн! - Kino-Dom.tv</annotation>
+         <title>Kino-Dom.tv</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/mediafeed,http://kino-dom.tv/rss.xml</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/mediafeed,http://kino-dom.tv/rss.xml</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Смотреть аниме онлайн, мультфильмы онлайн, смотреть бесплатно - AniMult.tv</annotation>
+         <title>AniMult.tv</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/mediafeed,http://animult.tv/rss.xml</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/mediafeed,http://animult.tv/rss.xml</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Фильмы онлайн | Filmix</annotation>
+         <title>Filmix.net</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/mediafeed,http://filmix.net/rss.xml</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/mediafeed,http://filmix.net/rss.xml</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Фильмы онлайн | HD Kinomir</annotation>
+         <title>HD KINOMIR</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/hdkinomir.com,http://hdkinomir.com/rss.xml</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/hdkinomir.com,http://hdkinomir.com/rss.xml</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Rock Television - Cult&amp;Rare: Recent Video</annotation>
+         <title>Rock Television - Recent Video</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/cultandrare.rocktelevision.com,http://cultandrare.rocktelevision.com/DesktopModules/UltraVideoGallery/feed.aspx?type=RecentVideos</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/cultandrare.rocktelevision.com,http://cultandrare.rocktelevision.com/DesktopModules/UltraVideoGallery/feed.aspx?type=RecentVideos</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Rock Television - Cult&amp;Rare: Most Viewed</annotation>
+         <title>Rock Television - Most Viewed</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/cultandrare.rocktelevision.com,http://cultandrare.rocktelevision.com/DesktopModules/UltraVideoGallery/feed.aspx?type=MostViewed</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/cultandrare.rocktelevision.com,http://cultandrare.rocktelevision.com/DesktopModules/UltraVideoGallery/feed.aspx?type=MostViewed</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>Rock Television - Cult&amp;Rare: SuperUser Account</annotation>
+         <title>Rock Television - SuperUser Account</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/cultandrare.rocktelevision.com,http://cultandrare.rocktelevision.com/DesktopModules/UltraVideoGallery/Feed.aspx?UserId=1</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/cultandrare.rocktelevision.com,http://cultandrare.rocktelevision.com/DesktopModules/UltraVideoGallery/Feed.aspx?UserId=1</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>YouRock by RockTelevision - The first large comunity of the independent rock videos: Recent Video</annotation>
+         <title>YouRock by RockTelevision - Recent Video</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/cultandrare.rocktelevision.com,http://yourock.rocktelevision.com/DesktopModules/UltraVideoGallery/feed.aspx?type=RecentVideos</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/cultandrare.rocktelevision.com,http://yourock.rocktelevision.com/DesktopModules/UltraVideoGallery/feed.aspx?type=RecentVideos</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+      <track>
+         <annotation>YouRock by RockTelevision - The first large comunity of the independent rock videos: Most Viewed</annotation>
+         <title>YouRock by RockTelevision - Most Viewed</title>
+         <image>../etc/translate/rss/image/menu/rss.png</image>
+         <location>http://127.0.0.1/cgi-bin/translate?app/rss/cultandrare.rocktelevision.com,http://yourock.rocktelevision.com/DesktopModules/UltraVideoGallery/feed.aspx?type=MostViewed</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/cultandrare.rocktelevision.com,http://yourock.rocktelevision.com/DesktopModules/UltraVideoGallery/feed.aspx?type=MostViewed</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+
+<track>
+   <annotation>kiwi.kz</annotation>
+   <title>kiwi.kz | Популярное видео</title>
+   <location>http://127.0.0.1/cgi-bin/translate?app/rss/kiwi.kz,http://kiwi.kz/rss/popular/</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/kiwi.kz,http://kiwi.kz/rss/popular/</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+<track>
+   <annotation>kiwi.kz</annotation>
+   <title>kiwi.kz | Новости</title>
+   <location>http://127.0.0.1/cgi-bin/translate?app/rss/kiwi.kz,http://kiwi.kz/rss/news/</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/kiwi.kz,http://kiwi.kz/rss/news/</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+<track>
+   <annotation>kiwi.kz</annotation>
+   <title>kiwi.kz Видео | Категория "Все"</title>
+   <location>http://127.0.0.1/cgi-bin/translate?app/rss/kiwi.kz,http://kiwi.kz/rss/tracks/</location>
+<meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/kiwi.kz,http://kiwi.kz/rss/tracks/</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+<track>
+   <annotation>TEDGlobal - ideas worth spreading. New ideas every weekday TED.com</annotation>
+   <title>TED Talks Video</title>
+   <location>http://feeds.feedburner.com/tedtalks_video</location>
+<meta rel="stream_url">http://feeds.feedburner.com/tedtalks_video</meta>
+<meta rel="stream_class">rss</meta>
+<meta rel="stream_type">application/xml</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+  </trackList>
+</playlist>
+

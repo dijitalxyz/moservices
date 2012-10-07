@@ -1,0 +1,92 @@
+#!/bin/sh
+#
+# description: Starts and stops the base of moServices: lighttp daemon
+#
+etc=/usr/local/etc
+mos=$etc/mos
+rc=$mos/etc/rc.init
+
+case "$1" in
+  start | stop | status)
+	;;
+
+  enable)
+	#rc.* functionality
+	cp -a $mos/etc/rc.start $etc/
+	cp -a $mos/etc/rc.stop $etc/
+
+	# rc.wakeup patch
+	if [ -f $etc/rc.wakeup ] ; then
+		echo -e "#!/bin/sh\nreboot" > $etc/rc.wakeup
+		chmod +x $etc/rc.wakeup
+	fi
+	# rc.suspend patch
+	if [ -f $etc/rc.suspend ] ; then
+		echo -e "#!/bin/sh\n$etc/rc.stop" > $etc/rc.suspend
+		chmod +x $etc/rc.suspend
+	fi
+
+	mkdir -p $etc/rc.init
+
+	# start moServices foreground
+	[ -f $etc/rc.init/S10moServices ] && rm -f $etc/rc.init/S10moServices
+	cp -a $rc/S10moServices.sh $etc/rc.init/
+
+	# start S01Power foreground
+	[ -f $etc/rc.init/S01Power ] && mv $etc/rc.init/S01Power $etc/rc.init/S01Power.sh
+
+	# patching rcS
+
+	rcs=$etc/autorun.sh
+	[ -f $etc/rcS ] && rcs=$etc/rcS
+
+	sed -i '
+/\/usr\/local\/etc\/mos\/services/d
+/\/usr\/local\/etc\/rc\.wakeup/d
+/\/usr\/local\/etc\/rc\.start/d' $rcs
+
+	# patch rcS
+	if grep -q '# moServices .* root' $rcs ; then
+		sed -i '/# moServices /{N;N;N;d}' $rcs
+		cp -a $rc/S03mosOnRoot.sh $etc/rc.init/
+	fi
+
+	sed -i '/# rc.init patch/{N;d}' $rcs
+
+	if grep -q 'swapon /mnt/rd/swap.img' $rcs ; then
+		sed -i '
+/swapon \/mnt\/rd\/swap.img/a\
+# rc.init patch\
+/usr/local/etc/rc.start\
+#
+' $rcs
+	else
+		echo "$etc/rc.start" >> $rcs
+	fi
+
+	# add path to profile
+	if [ -f $etc/profile ] ; then
+		sed -i '/# mos3 section/{N;N;N;d}' $etc/profile
+		sed -i '
+/#export PATH /i\
+# mos3 section\
+pathmunge /usr/local/etc/mos/bin\
+export LD_LIBRARY_PATH=/usr/local/etc/mos/lib:/lib\
+#
+' $etc/profile
+	fi
+	;;
+
+  disable)
+	# remove from profile
+	sed -i '/# mos3 section/{N;N;N;d}' $etc/profile
+
+	# remove from rc.init
+	rm -f $etc/rc.init/S10moServices.sh
+	;;
+  *)
+	echo "Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

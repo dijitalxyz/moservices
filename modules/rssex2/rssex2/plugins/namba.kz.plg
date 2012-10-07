@@ -1,0 +1,69 @@
+#!/bin/sh
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# Translate CGI module
+# 'namba.kz' plug-in
+#
+# version: 1.0 23.08.2011 21:20
+#
+#arg_url="http://video.namba.kz/watch.php?id=1217813"
+#arg_url="http://movie.namba.kz/watch.php?id=1412"
+
+unset RESOLVE_CACHE_ENABLED
+
+icy_name=""
+
+if echo "${arg_url}" | grep -qs 'namba\.kz\/watch\.php?id=[0-9]*'; then
+
+ $WGET -q -O $TMPFILE "$arg_url"
+
+ if [ -f $TMPFILE ] ; then
+
+  if echo $arg_url | grep -qs 'movie\.namba\.kz/watch\.php?id=[0-9]*'; then
+   icy_name=`cat $TMPFILE | grep 'Название:</strong>' | sed 's/.*Название:<\/strong>//;s/<.*//'`
+   local cfg_url=`cat $TMPFILE | grep 'value="config=' | sed 's/.*value="config=//;s/".*//'`
+  elif echo $arg_url | grep -qs 'video\.namba\.kz/watch\.php?id=[0-9]*'; then
+   local cfg_url=`cat $TMPFILE | grep 'value="config=' | sed 1d | sed 's/.*value="config=//;s/".*//'`
+   icy_name=`cat $TMPFILE | grep '<h2 style=' | sed 's/<\/h2>.*//;s/.*>//'`
+  else
+   return $RC_FAIL
+  fi
+
+  $WGET -q -O $TMPFILE  "$cfg_url" 2>&1
+
+  if [ -f $TMPFILE ] ; then
+
+   local timestamp=`cat $TMPFILE | grep 'timestamp' | sed 's/.*: "//;s/".*//'`
+
+   local url=`cat $TMPFILE | grep flv | sed 's/.*:"//;s/".*//'`
+   local url1=`echo $url | sed -r 's/(.*)\/files.*/\1\/files/'`
+   local url2=`echo $url | sed -r 's/.*\/files\///;'`
+
+   local token="uno"
+   local url3=`echo -n $token/$url2$timestamp | $BASEPATH/bin/md5`
+   stream_url="$url1/$url3/$timestamp/$url2?flv_seek=0"
+   stream_type='video/x-flv'
+   server_type='namba'
+   protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+
+   rm -f $TMPFILE
+   return $RC_OK
+  fi
+ fi
+fi
+return $RC_FAIL

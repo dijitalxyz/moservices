@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# description: add gunzip link
+#
+bin=/usr/local/etc/mos/bin
+
+busybox | grep -q 'gunzip' && exit 0
+[ -f $bin/busybox.1.18.4 ] && [ ! -e $bin/gunzip ] && ln -s $bin/busybox.1.18.4 $bin/gunzip

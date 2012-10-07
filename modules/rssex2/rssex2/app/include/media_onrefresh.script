@@ -1,0 +1,12 @@
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+  middleItem = Integer(itemCount / 2);
+  if(startitem == "middle")
+    setFocusItemIndex(middleItem);
+  else
+  if(startitem == "last")
+    setFocusItemIndex(itemCount);
+  else
+  if(startitem &gt; 0 &amp;&amp; startitem &lt;= itemCount)
+    setFocusItemIndex(startitem-1);
+  redrawDisplay();

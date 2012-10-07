@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Сборники</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2197,tvigle/multi</link>
+  <title>Военное кино</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2197/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1689,tvigle/multi</link>
+  <title>Кино про любовь</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1689/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2061,tvigle/multi</link>
+  <title>Лучшее в коллекции Tvigle</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2061/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1451,tvigle/multi</link>
+  <title>Лучшее короткометражное кино</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1451/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2036,tvigle/multi</link>
+  <title>Шерлок Холмс и доктор Ватсон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2036/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2239,tvigle/multi</link>
+  <title>Фильмы Алексея Балабанова</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2239/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2231,tvigle/multi</link>
+  <title>Три богатыря</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2231/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:508645,tvigle/multi</link>
+  <title>Д'Артаньян и три мушкетера</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/508645/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2049,tvigle/multi</link>
+  <title>Собачье сердце</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2049/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1701,tvigle/multi</link>
+  <title>Фильмы ужасов. Избранное</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1701/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1602,tvigle/multi</link>
+  <title>The New Russians</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1602/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:89,tvigle/multi</link>
+  <title>Авторское кино</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/89/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

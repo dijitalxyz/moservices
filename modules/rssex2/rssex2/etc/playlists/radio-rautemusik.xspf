@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+    <title>RauteMisik.FM</title>
+  <trackList>
+    <track>
+      <location>http://main-aacp.rautemusik.fm/listen.pls</location>
+      <title>Main</title>
+      <annotation>80s, Pop, Rock, Charts und mehr neue Hits  </annotation>
+    
+<meta rel="stream_url">http://91.121.77.64:8100</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">#MUSIK.MAIN - WWW.RAUTEMUSIK.FM - 24H TOP 40 POP HITS 80S 90S DANCE HOUSE ROCK RNB AND MORE!</meta>
+<meta rel="stream_genre">80S POP ROCK TOP 40 WORLD</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+    <track>
+      <location>http://club-aacp.rautemusik.fm/listen.pls</location>
+      <title>Club</title>
+      <annotation>Dance, HandsUp, Techno und Trance</annotation>
+    
+<meta rel="stream_url">http://91.121.77.64:9100</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">#MUSIK.CLUB - WWW.RAUTEMUSIK.FM - 24H MIXED HANDS UP TRANCE DANCE TECHNO HARDSTYLE HOUSE AND MORE!</meta>
+<meta rel="stream_genre">TECHNO DANCE TRANCE HOUSE</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+    <track>
+      <location>http://extreme-aacp.rautemusik.fm/listen.pls</location>
+      <title>eXTreMe</title>
+      <annotation>Rock, Metal, Punk, Ska, Alternative</annotation>
+    
+<meta rel="stream_url">http://80.237.157.12:7100</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">#MUSIK.EXTREME - WWW.RAUTEMUSIK.FM - 24H ROCK METAL PUNK SKA ALTERNATIVE AND MORE!</meta>
+<meta rel="stream_genre">ROCK METAL ALTERNATIVE</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+    <track>
+      <location>http://jam-aacp.rautemusik.fm/listen.pls</location>
+      <title>JaM</title>
+      <annotation>HipHop, R.n.B, Rap, Soul, Reggae, Dancehall</annotation>
+    
+<meta rel="stream_url">http://80.237.157.30:7300</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">#MUSIK.JAM - WWW.RAUTEMUSIK.FM - 24H HIPHOP RNB RAP SOUL REGGAE DANCEHALL URBAN AND MORE!</meta>
+<meta rel="stream_genre">HIP HOP RNB RAP URBAN POP</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+    <track>
+      <location>http://funky-aacp.rautemusik.fm/listen.pls</location>
+      <title>FunkY</title>
+      <annotation>House, Dance, Funk, Electro</annotation>
+    
+<meta rel="stream_url">http://80.237.157.15:14000</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">#MUSIK.HOUSE - WWW.RAUTEMUSIK.FM - HOUSE DANCE</meta>
+<meta rel="stream_genre">HOUSE DANCE</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+    <track>
+      <location>http://lounge-aacp.rautemusik.fm/listen.pls</location>
+      <title>Lounge</title>
+      <annotation> Ambient, (Nu)Jazz, Downtempo, Latin, Chillout &amp; Music for Lounge-Lovers</annotation>
+    
+<meta rel="stream_url">http://91.121.77.64:14100</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">#MUSIK.LOUNGE - WWW.RAUTEMUSIK.FM - 24H CHILLOUT AMBIENT SMOOTH JAZZ DOWNTEMPO LATIN SOUL AND MORE!</meta>
+<meta rel="stream_genre">AMBIENT JAZZ FUNK HOUSE</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+    <track>
+      <location>http://goldies-aacp.rautemusik.fm/listen.pls</location>
+      <title>Goldies</title>
+      <annotation>60s, 70s, 80s, Oldies</annotation>
+    
+<meta rel="stream_url">http://91.121.77.64:11100</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">#MUSIK.GOLDIES - WWW.RAUTEMUSIK.FM - 24H OLDIES CLASSIC ROCK 60S 70S 80S POP AND MORE!</meta>
+<meta rel="stream_genre">60S 70S 80S OLDIES POP</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+    <track>
+      <location>http://harder-aacp.rautemusik.fm/listen.pls</location>
+      <title>HardeR</title>
+      <annotation>Hardstyle, Hardcore, Techno, Schranz</annotation>
+    
+<meta rel="stream_url">http://178.77.93.185:10000</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">#MUSIK.HARDER - WWW.RAUTEMUSIK.FM - 24 MIXED HARDSTYLE HARDCORE JUMPSTYLE SCHRANZ GABBA AND MORE!</meta>
+<meta rel="stream_genre">Techno Electronic Dance</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+    <track>
+      <location>http://oriental-aacp.rautemusik.fm/listen.pls</location>
+      <title>Oriental</title>
+      <annotation>Arabische Musik</annotation>
+    
+<meta rel="stream_url">http://80.237.157.30:10000</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">#MUSIK.ORIENTAL - WWW.RAUTEMUSIK.FM - 24H ORIENTAL AND ARABIC POP MUSIC AND MORE!</meta>
+<meta rel="stream_genre">Ariabic International R&amp;B</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+    <track>
+      <location>http://bcb-aacp.rautemusik.fm/listen.pls</location>
+      <title>BigCityBeats</title>
+      <annotation>Electronic, House, Dance</annotation>
+    
+<meta rel="stream_url">http://91.121.77.64:16100</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">#MUSIK.BIGCITYBEATS - BY BIGCITYBEATS.DE &amp; RAUTEMUSIK.FM - 24H MIXED ELECTRONIC AND HOUSE MUSIC!</meta>
+<meta rel="stream_genre">Electronic House Dance</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+  </trackList>
+</playlist>

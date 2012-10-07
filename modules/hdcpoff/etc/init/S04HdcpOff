@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# kill HDCP
+#
+case "$1" in
+  start)
+   #
+   # waiting for dmesg hdcp error
+   #
+   i=60
+   while [ $i -ne 0 ] ; do
+      s=$( dmesg | grep -e 'Xfer fail.*Reason=0001' )
+      [ -n "$s" ] && break
+      sleep 10
+      let i-=1
+   done
+   [ -z "$s" ] && exit
+   #
+   # waiting IpodCGI and send command
+   #
+   i=60
+   while [ $i -ne 0 ] ; do
+      if [ -f /tmp/www/cgi-bin/IpodCGI.cgi ] ; then
+         wget -q 'http://127.0.0.1/cgi-bin/IpodCGI.cgi?id=0&command=hdcp_on' -O - >/dev/null 2>&1
+         [ $? -eq 0 ] && break
+      fi
+      sleep 2
+      let i-=1
+   done
+   ;;
+  stop|status|enable|disable)
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

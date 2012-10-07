@@ -1,0 +1,6 @@
+[keys]
+	revision = 2
+	title = "RSS Keys"
+	role = rss
+	files="www/modules/keys/"
+	size = 92

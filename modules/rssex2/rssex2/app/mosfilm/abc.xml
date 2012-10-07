@@ -1,0 +1,226 @@
+﻿<?xml version='1.0' encoding="UTF8" ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+
+  startitem = "first";
+  columnCount=6;
+  print(getFocusItemIndex());
+</onEnter>
+
+<script>
+  setRefreshTime(1);
+</script>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+  middleItem = Integer(itemCount / 2);
+  if(startitem == "middle")
+    setFocusItemIndex(middleItem);
+  else
+  if(startitem == "last")
+    setFocusItemIndex(itemCount);
+  else
+  if(startitem &gt; 0 &amp;&amp; startitem &lt;= itemCount)
+    setFocusItemIndex(startitem-1);
+  redrawDisplay();
+</onRefresh>
+
+	<mediaDisplay name=photoView 
+	  centerXPC=7 
+		centerYPC=25
+		centerHeightPC=65
+    columnCount=6
+	  rowCount=5
+		menuBorderColor="55:55:55"
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+	  backgroundColor="0:0:0"
+		imageBorderColor="0:0:0"
+		itemBackgroundColor="0:0:0"
+		itemGapXPC=0
+		itemGapYPC=1
+		sideTopHeightPC=22
+		bottomYPC=90
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=no
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+		>
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+		<image offsetXPC=5 offsetYPC=2 widthPC=21 heightPC=16>
+		  ../etc/translate/rss/image/mosfilm.png
+      <widthPC>
+        <script>
+          21 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          5 + 21 * (1 - screenYp / screenXp) / 2;
+        </script>
+      </offsetXPC>
+		</image>
+
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+
+		<itemDisplay>
+			<text align="center" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 backgroundColor=-1:-1:-1>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "48"; else "20";
+  				</script>
+				</fontSize>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "75:75:75";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+		
+  <onUserInput>
+    <script>
+      ret = "false";
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      if(userInput == "one" || userInput == "1")
+      {
+        if(itemCount &gt;= 1)
+        {
+          setFocusItemIndex(0);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "two" || userInput == "2")
+      {
+        if(itemCount &gt;= 2)
+        {
+          setFocusItemIndex(1);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "three" || userInput == "3")
+      {
+        if(itemCount &gt;= 3)
+        {
+          setFocusItemIndex(2);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "four" || userInput == "4")
+      {
+        if(itemCount &gt;= 4)
+        {
+          setFocusItemIndex(3);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "five" || userInput == "5")
+      {
+        if(itemCount &gt;= 5)
+        {
+          setFocusItemIndex(4);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "six" || userInput == "6")
+      {
+        if(itemCount &gt;= 6)
+        {
+          setFocusItemIndex(5);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "seven" || userInput == "7")
+      {
+        if(itemCount &gt;= 7)
+        {
+          setFocusItemIndex(6);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "eight" || userInput == "8")
+      {
+        if(itemCount &gt;= 8)
+        {
+          setFocusItemIndex(7);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "nine" || userInput == "9")
+      {
+        if(itemCount &gt;= 9)
+        {
+          setFocusItemIndex(8);
+          redrawDisplay();
+        }
+      }
+      else if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        ret = "true";
+      }
+      ret;
+    </script>
+  </onUserInput>
+		
+	</mediaDisplay>
+	
+	<item_template>
+		<link>
+		  <script>translate_base_url+"app/mosfilm/letter,"+getItemInfo(getQueryItemIndex(), "location");</script>
+		</link>
+		<onClick>
+      showIdle();
+		</onClick>
+	</item_template>
+
+
+<!--`cat "$CHANNELFILE"`-->
+
+</rss>

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Музыка</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2123,tvigle/multi</link>
+  <title>Остров 312</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2123/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1406,tvigle/multi</link>
+  <title>Би-2</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1406/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1885,tvigle/multi</link>
+  <title>Каста</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1885/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1153,tvigle/multi</link>
+  <title>Смысловые Галлюцинации</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1153/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:511972,tvigle/multi</link>
+  <title>Ландыши</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/511972/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2210,tvigle/multi</link>
+  <title>Ария</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2210/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1829,tvigle/multi</link>
+  <title>Кто здесь?</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1829/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2216,tvigle/multi</link>
+  <title>ROTOFF</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2216/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2212,tvigle/multi</link>
+  <title>Кипелов V лет</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2212/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1884,tvigle/multi</link>
+  <title>AMATORY</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1884/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1984,tvigle/multi</link>
+  <title>Noize MC</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1984/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1522,tvigle/multi</link>
+  <title>СЛОТ</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1522/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2245,tvigle/multi</link>
+  <title>Алена Винницкая</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2245/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1846,tvigle/multi</link>
+  <title>Делаем группу!</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1846/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1111,tvigle/multi</link>
+  <title>Ночные Снайперы</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1111/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1887,tvigle/multi</link>
+  <title>Ляпис Трубецкой</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1887/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1108,tvigle/multi</link>
+  <title>Тараканы</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1108/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509676,tvigle/multi</link>
+  <title>InWhite</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509676/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1769,tvigle/multi</link>
+  <title>Ранетки</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1769/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1888,tvigle/multi</link>
+  <title>Звездный Live</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1888/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1326,tvigle/multi</link>
+  <title>Сурганова и Оркестр</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1326/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1969,tvigle/multi</link>
+  <title>Amber Music</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1969/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:807,tvigle/multi</link>
+  <title>СиЛя</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/807/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1158,tvigle/multi</link>
+  <title>Танцы Минус</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1158/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2157,tvigle/multi</link>
+  <title>Нежный возраст</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2157/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1823,tvigle/multi</link>
+  <title>BUNNY</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1823/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:816,tvigle/multi</link>
+  <title>DJ Smash</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/816/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1655,tvigle/multi</link>
+  <title>Разыскиваются</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1655/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:679,tvigle/multi</link>
+  <title>ВИАГРА</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/679/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1794,tvigle/multi</link>
+  <title>Кристина Орбакайте</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1794/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:677,tvigle/multi</link>
+  <title>Линда</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/677/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1687,tvigle/multi</link>
+  <title>Песни про любовь</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1687/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:320,tvigle/multi</link>
+  <title>Валерия</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/320/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1978,tvigle/multi</link>
+  <title>Михаил Круг</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1978/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1981,tvigle/multi</link>
+  <title>Кукрыниксы</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1981/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1803,tvigle/multi</link>
+  <title>Ботаника</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1803/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:722,tvigle/multi</link>
+  <title>Дельфин</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/722/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1886,tvigle/multi</link>
+  <title>Юля Чичерина</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1886/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:655,tvigle/multi</link>
+  <title>Сергей Кот</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/655/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509653,tvigle/multi</link>
+  <title>Кубана 2011</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509653/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1541,tvigle/multi</link>
+  <title>BIOPSYHOZ</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1541/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1982,tvigle/multi</link>
+  <title>Бутырка</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1982/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1983,tvigle/multi</link>
+  <title>Тутси</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1983/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1847,tvigle/multi</link>
+  <title>PODIUM</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1847/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:38,tvigle/multi</link>
+  <title>Muzinst</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/38/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1282,tvigle/multi</link>
+  <title>Kondor</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1282/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:806,tvigle/multi</link>
+  <title>World music</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/806/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:810,tvigle/multi</link>
+  <title>Hoba live</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/810/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1147,tvigle/multi</link>
+  <title>Слайд</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1147/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1986,tvigle/multi</link>
+  <title>Наташа Королева</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1986/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1312,tvigle/multi</link>
+  <title>ZNAKI</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1312/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1985,tvigle/multi</link>
+  <title>Александр Новиков</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1985/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1332,tvigle/multi</link>
+  <title>Тихий Джа</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1332/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1368,tvigle/multi</link>
+  <title>Soloway</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1368/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1306,tvigle/multi</link>
+  <title>Notstar</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1306/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

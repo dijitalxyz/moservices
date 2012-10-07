@@ -1,0 +1,498 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=threePartsView
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemImageXPC="27"
+	itemImageYPC="18"
+	itemXPC="40"
+	itemYPC="18"
+	itemWidthPC="54"
+	capXPC="94"
+	capYPC="17"
+	capHeightPC="10"
+	headerCapXPC="90"
+	headerCapYPC="10"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	showHeader=no
+menuXPC=10
+menuYPC=15
+menuWidthPC=15
+menuHeightPC=5
+menuPerPage=14
+    selectMenuOnRight=no
+    forceFocusOnItem=yes
+    forceFocusOnMenu=no
+	showDefaultInfo=yes
+	infoYPC=90
+	fontSize=16
+>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=90 heightPC=15 fontSize=20 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image offsetXPC=80 offsetYPC=1 widthPC=15 heightPC=10 backgroundColor=255:255:255 >
+    <script>pageLogo;</script>
+    <widthPC>
+      <script>
+        20 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 20 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+  </image>
+
+    <text offsetXPC=10 offsetYPC=85 widthPC=10 heightPC=5 fontSize=20 backgroundColor=0:0:0 foregroundColor=100:100:100>
+      <script>elapsedTime;</script>
+    </text>
+
+<!--
+    <text redraw="yes" offsetXPC=30 offsetYPC=85 widthPC=70 heightPC=5 fontSize=14 backgroundColor=0:0:0 foregroundColor=100:100:100>
+      <script>playTitle = getStringArrayAt(urlArray, -1); playTitle;</script>
+    </text>
+-->
+
+    <text redraw="yes" offsetXPC=5 offsetYPC=90 widthPC=20 heightPC=5 fontSize=14 backgroundColor=0:0:0 foregroundColor=100:100:100>
+      <script>str_num = "Стр. " + page + "/" + numberOfPages; str_num;</script>
+    </text>
+
+    <text redraw="yes" offsetXPC=40 offsetYPC=90 widthPC=35 heightPC=5 fontSize=14 backgroundColor=0:0:0 foregroundColor=100:100:100>
+      Для выбора категории нажмите Info
+    </text>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+      {
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown" || userInput == "PD")
+        {
+          idx -= -5;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 5;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      else if(majorContext == "items" &amp;&amp; (userInput == "right" || userInput == "R"))
+      {
+/*
+        idx = getFocusItemIndex();
+
+        arr = null;
+        arr = pushBackStringArray(arr, feedUrl);
+        arr = pushBackStringArray(arr, pageTitle);
+        arr = pushBackStringArray(arr, rt_page);
+        arr = pushBackStringArray(arr, sort_by);
+        arr = pushBackStringArray(arr, rt_term);
+        arr = pushBackStringArray(arr, rt_count);
+        arr = pushBackStringArray(arr, getStringArrayAt(idArray, idx));
+        print("arr=",arr);
+        print("storagePath=",storagePath);
+
+        writeStringToFile(storagePath, arr);
+*/
+
+/*
+        print("act = doModalRss('../etc/translate/rss/rutube/rutube_entry.rss');");
+        print("********** doModalRss=",act);
+*/
+
+/*
+        act = doModalRss("rss_file://../etc/translate/rss/rutube/rutube_entry.rss");
+        if(act != null &amp;&amp; act == "related")
+        {
+         print("related");
+         executeScript("onEnter");
+        }
+*/
+        ret = "true";
+      }
+      else if( userInput == "display" || userInput == "DISPLAY" )
+      {
+        act = doModalRss("rss_file://../etc/translate/rss/24video/category.rss");
+        if(( act != null )&amp;&amp;( act != "" ))
+        {
+          theme = act;
+          setRefreshTime(1);
+        }
+
+        ret = "true";
+      }
+      ret;
+    </script>
+  </onUserInput>
+
+</mediaDisplay>
+
+<onExit>
+  playItemURL(-1, 1);
+  setRefreshTime(-1);
+</onExit>
+
+<onEnter>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  storagePath = getStoragePath("tmp");
+  storagePath  = storagePath + "24video.dat";
+/*
+  arr = readStringFromFile(storagePath);
+  print("******* Initialize: "+arr);
+  feedUrl = getStringArrayAt(arr, 0);
+  pageTitle = getStringArrayAt(arr, 1);
+  rt_page = getStringArrayAt(arr, 2);
+  sort_by = getStringArrayAt(arr, 3);
+  rt_term = getStringArrayAt(arr, 4);
+  rt_count = getStringArrayAt(arr, 5);
+*/
+
+/*
+  pageLogo = "http://rutube.ru/i/logo.png";
+*/
+  pageLogo = "../etc/translate/rss/image/24video.png";
+
+/*
+  feedUrl = translate_base_url + "app/rss/rutube.ru," + "http://rutube.ru/cgi-bin/xmlapi.cgi?rt_mode=categories";
+  feedUrl = translate_base_url + "app/rss/rutube.ru," + "http://rutube.ru/cgi-bin/xmlapi.cgi?utf=1&amp;rt_mode=movies&amp;rt_category=" + category + "&amp;rt_page=" + rt_page;
+*/
+  theme=0;
+  sort=0;
+  time=0;
+  page=1;
+  searchtext="";
+
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+    setRefreshTime(-1);
+    
+    url = translate_base_url+ "app/24video/getpage,,http://www.24video.net/video/filter?theme=" + theme +"&amp;sort=" + sort + "&amp;time=" + time + "&amp;page=" + page + searchtext;
+    
+    print("Start to load feed:",url);
+    
+    dlok = loadXMLFile(url);
+    if (dlok != null)
+    {
+      titleArray = null;
+      thumbnailArray = null;
+      urlArray = null;
+      idArray = null;
+    
+      numberOfPages = getXMLText("rss","channel","pages");
+    
+    title = getXMLText("rss","channel","title");
+        if (title != null &amp;&amp; title != "")
+        {
+         pageTitle = title;
+        }
+    
+    itemSize = getXMLElementCount("rss","channel","item");
+    if(itemSize == 0)
+      postMessage("return");
+    print("Item Size = ", itemSize);
+    
+    count=0;
+    while(itemSize != 0)
+    {
+      title = getXMLText("rss","channel","item",count,"title");
+      url = getXMLText("rss","channel","item",count,"link");
+      thumbnail = getXMLAttribute("rss","channel","item",count,"image","url");
+    	  titleArray  = pushBackStringArray(titleArray, title);
+    	  urlArray    = pushBackStringArray(urlArray, url);
+    	  thumbnailArray = pushBackStringArray(thumbnailArray, thumbnail);
+    
+    	  count += 1;
+    	  if (count == itemSize)
+    	  {
+    	     break;
+    	  }
+    	}
+    	print("title array =", titleArray);
+    	print("url array =", urlArray);
+    	print("thumbnail array=", thumbnailArray);
+    
+    	setFocusItemIndex(0);
+    	redrawDisplay();
+    }
+</onRefresh>
+
+  <item_template>
+   <displayTitle>
+      <script>
+       getStringArrayAt(titleArray , -1);
+      </script>
+    </displayTitle>
+
+    <media:thumbnail>
+     <script>
+       getStringArrayAt(thumbnailArray , -1);
+     </script>
+    </media:thumbnail>
+
+    <mediaDisplay name=threePartsView
+	sideLeftWidthPC = 0
+	sideRightWidthPC = 0
+        backgroundColor="0:0:0">
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    </mediaDisplay>
+		<!--
+		<link>rss_file://../etc/translate/rss/xspf/streamPlayer.rss</link>
+		 -->
+    <onClick>
+        playItemURL(-1, 1);
+        idx   = getFocusItemIndex();
+        url   = getStringArrayAt(urlArray, idx);
+        playTitle = url;
+        urlToPlay = translate_base_url+"stream,,"+urlEncode(url);
+        historyPath = getStoragePath("key")+"translate.history_video.m3u";
+        historydat = readStringFromFile(historyPath);
+        if(historydat == null)
+        historydat = pushBackStringArray(historydat, "#EXTM3U");
+        historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+getStringArrayAt(titleArray, idx));
+        historydat = pushBackStringArray(historydat, url);
+        writeStringToFile(historyPath, historydat);
+        
+        showIdle();
+        playItemURL(urlToPlay, 0);
+        cancelIdle();
+        null;
+	</onClick>
+  </item_template>
+
+<submenu>
+ <title>Вперед</title>
+ <onClick>
+   if( page &lt; numberOfPages )
+   {
+    page = page - (-1);
+    setRefreshTime(1);
+   }
+   null;
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>Назад</title>
+ <onClick>
+   if( page &gt; 0 )
+   {
+    page -= 1;
+    setRefreshTime(1);
+   }
+   null;
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>На страницу</title>
+ <onClick>
+  get_input="";
+  get_input = getInput();
+  if( get_input != null &amp;&amp; get_input != "" &amp;&amp; get_input != " " )
+  {
+   page_get = get_input;
+   if( page_get &lt;= numberOfPages )
+   {
+    page = page_get;
+    if( page &gt; 0 )
+    {
+     page -= 1;
+     setRefreshTime(1);
+    }
+   }
+  }
+  get_input = null;
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>Новые</title>
+ <onClick>
+    sort = 4;
+    setRefreshTime(1);
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>Просмотры</title>
+ <onClick>
+    sort = 0;
+    setRefreshTime(1);
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>Рейтинг</title>
+ <onClick>
+   sort = 1;
+   setRefreshTime(1);
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>Комментарии</title>
+ <onClick>
+   sort = 2;
+   setRefreshTime(1);
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>Худшие</title>
+ <onClick>
+   sort = 3;
+   setRefreshTime(1);
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>За сегодня</title>
+ <onClick>
+   time = 1;
+   setRefreshTime(1);
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>За неделю</title>
+ <onClick>
+   time = 2;
+   setRefreshTime(1);
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>За месяц</title>
+ <onClick>
+   time = 3;
+   setRefreshTime(1);
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>За все время</title>
+ <onClick>
+   time = 0;
+   setRefreshTime(1);
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>Поиск</title>
+ <onClick>
+    keyboard = null;
+    keyboard = pushBackStringArray(keyboard, "24video");
+    keyboard = pushBackStringArray(keyboard, pageLogo);
+    keyboard = pushBackStringArray(keyboard, "ru");
+    writeStringToFile(getStoragePath("key")+"keyboard.dat", keyboard);
+    
+    search_text = doModalRss("rss_file://../etc/translate/rss/key/keyboard.rss","mediaDisplay","search",0);
+
+   if (search_text != null &amp;&amp; search_text != "")
+   {
+    searchtext="&amp;searchText="+urlEncode(search_text);
+   }
+   else
+   {
+    searchtext="";
+   }
+   setRefreshTime(1);
+ </onClick>
+</submenu>
+
+<search>
+ <mediaDisplay name=photoView />
+</search>
+
+<channel>
+
+<itemSize>
+	<script>itemSize;</script>
+</itemSize>
+
+</channel>
+</rss>

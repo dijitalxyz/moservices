@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Видеоуроки</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2096,tvigle/multi</link>
+  <title>Фотошкола Lumix G</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2096/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2191,tvigle/multi</link>
+  <title>Уроки декора</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2191/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1864,tvigle/multi</link>
+  <title>Учимся вязать спицами</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1864/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2195,tvigle/multi</link>
+  <title>Ремонт велосипеда</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2195/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2211,tvigle/multi</link>
+  <title>Садоводство. Вопросы и ответы</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2211/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:72,tvigle/multi</link>
+  <title>PROделки</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/72/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1872,tvigle/multi</link>
+  <title>Техника йоги</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1872/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1656,tvigle/multi</link>
+  <title>MAD Sports TV</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1656/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1248,tvigle/multi</link>
+  <title>Volnorez</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1248/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

@@ -1,0 +1,76 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'tvzavr.ru' plug-in
+#
+# version: 1.02 06.12.2011 14:25
+#
+# was     http://videomore.ru/video/tracks/8569?auto=true
+# current http://videomore.ru/tracks/inostrannaia_kuhnia/40-seriya?auto=true
+#
+
+unset RESOLVE_CACHE_ENABLED
+
+#arg_url='http://videomore.ru/video/tracks/8569'
+#CURL='curl'
+#TMPFILE='./file.tmp'
+#arg_cmd='stream'
+
+icy_name=""
+
+if echo $arg_url | grep -qs 'videomore\.ru/tracks/.*' ;  then
+
+ $CURL -s -o $TMPFILE $arg_url 2>&1
+
+ if [ -f ${TMPFILE} ]; then
+
+  clip=`cat $TMPFILE | grep 'property="og:url"' | sed 's/" property=.*$//;s/.*"//' `
+
+  icy_name=`cat $TMPFILE | grep '<title>' | sed 's/ :: Videomore<\/title>.*$//;s/.*<title>//'`
+
+  case $arg_cmd in
+   info)
+        stream_url=$arg_url
+        stream_type=
+        server_type='_translate_'
+        stream_class='video'
+        protocol='http'
+        ;;
+      *)
+        stream_type='video/mp4'
+        server_type=
+        rm -f $TMPFILE
+        $CURL -s -o $TMPFILE $clip.json 2>&1
+        if [ -f $TMPFILE ]; then
+         stream_url=`cat $TMPFILE | sed 's/.*"q3":"//;s/".*$//'`
+        else
+         return $RC_FAIL
+        fi
+        protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+        arg_opt="Protocol:$protocol;User-agent:iPad;"$arg_opt
+        ;;
+  esac
+
+  rm -f $TMPFILE
+  return $RC_OK
+ fi
+fi
+return $RC_FAIL

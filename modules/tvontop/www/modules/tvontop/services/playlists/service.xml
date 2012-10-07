@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+	<name>M3uList</name>
+	<shortName>m3u</shortName>
+	<displayName>Плейлисты</displayName>
+	<description>
+		Поддержка плейлистов m3u формата.
+	</description>
+	<provider class="M3uProvider" />
+	<version>1.0</version>
+	<author>http://TVonTop.com</author>
+</service>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+<onEnter>
+    userName = "{$mediaObj->getParam(username)}";
+    passWord = "{$mediaObj->getParam(password)}";
+    titleString = "{$config->get(displayName, Service)} Логин";
+</onEnter>
+<mediaDisplay name="onePartView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    drawItemText="no"
+    slidingItemText="no"
+    sliding="no"
+
+    itemPerPage="3"
+
+    itemXPC="55"
+    itemYPC="35"
+    itemWidthPC="20"
+    itemHeightPC="10"
+    itemGap="0"
+
+    itemBackgroundColor="34:34:34"
+    itemImageXPC="34.6"
+    itemImageWidthPC="0"
+    itemImageHeightPC="0"
+
+    >
+    <backgroundDisplay>
+    <!-- WINDOW -->
+    <text offsetXPC="15"   offsetYPC="25"   widthPC="70"   heightPC="50"   backgroundColor="64:64:64" cornerRounding="15" />
+    <text offsetXPC="15.8" offsetYPC="26.5" widthPC="68.4" heightPC="47.4" backgroundColor="34:34:34" cornerRounding="14" />
+    <image offsetXPC="17"   offsetYPC="35"   widthPC="15"   heightPC="25" >http://iptv.kartina.tv/img/keys.png</image>
+    </backgroundDisplay>
+    <!-- USERNAME -->
+    <text offsetXPC="35" offsetYPC="35" widthPC="20" heightPC="8" fontSize="14">Абонемент</text>
+
+    <!-- PASSWORD -->
+    <text offsetXPC="35" offsetYPC="45" widthPC="20" heightPC="8" fontSize="14">Пароль</text>
+
+    <!-- Title -->
+    <text align="center" offsetXPC="20" offsetYPC="10" widthPC="60" heightPC="10" fontSize=14 >
+        <script>titleString;</script>
+    </text>
+
+    <!-- Message -->
+    <text align="center" offsetXPC="10" offsetYPC="80" widthPC="80" heightPC="10" fontSize=14 foregroundColor="250:0:0" lines="2" >
+         {$mediaObj->getParam(message)}
+    </text>
+
+    <itemDisplay>
+        <text redraw="yes" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" backgroundColor="34:34:34"></text>
+        <text redraw="yes" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="80" fontSize="14"
+                cornerRounding="5"><script>getItemInfo("title");</script>
+            <backgroundColor>
+                <script>
+                    if (getFocusItemIndex() == getQueryItemIndex()) "255:170:0"; else "96:96:96";
+                </script>
+            </backgroundColor>
+        </text>
+    </itemDisplay>
+    {call getIdleImages}
+</mediaDisplay>
+{call getRssLink tag=login}
+
+<channel>
+    <title><script>titleString;</script></title>
+    <item>
+        <title>
+            <script>
+                displayName = "Абонемент?";
+                if (null != userName) {
+                    displayName = userName;
+                }
+                displayName;
+            </script>
+        </title>
+        <onClick>
+            inputUser = getInput("userName", "doModal");
+            if (null != inputUser) {
+                userName = inputUser;
+            }
+            redrawDisplay();
+        </onClick>
+        </item>
+    <item>
+       <title>
+          <script>
+             displayTitle = "Пароль?";
+             if (passWord != null) {
+                displayTitle = "******";
+             }
+             displayTitle;
+          </script>
+       </title>
+        <onClick>
+            inputPass = getInput("passWord", "doModal");
+            if (null != inputPass) {
+                passWord = inputPass;
+            }
+            redrawDisplay();
+        </onClick>
+    </item>
+    <item>
+        <title>Вход</title>
+        <onClick>
+        if (passWord == null || userName == null) {
+            titleString = "Абонемент или Паhоль неправильный";
+        } else {
+            /*save auth*/
+            url="{$config->get(cfg_root_url,Runtime,Runtime)}?pl=cfg&amp;op=set&amp;id=auth.ini/{$config->get(name,Service)}&amp;type=INI_SECTION&amp;username=" + userName + "&amp;password=" + passWord;
+            getUrl(url);
+            /*jump to start*/
+            url="{$config->get(cfg_processing_url,Runtime)}";
+            jumpToLink("login");
+        }
+        redrawDisplay();
+    </onClick>
+</item>
+</channel>
+</rss>

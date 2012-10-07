@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# run rc.init scripts with stop
+#
+init=/usr/local/etc/rc.init
+# reverse order
+list=$( ls $init/S* | sed -n '1!G;h;$p' )
+for i in $list ; do
+	[ ! -f $i ] && continue
+	[ ! -x $i ] && continue
+
+	$i stop
+done

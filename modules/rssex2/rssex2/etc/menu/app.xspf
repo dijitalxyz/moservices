@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>Applications</title>
+
+  <trackList>
+    <track>
+      <link>rss_file://../etc/translate/rss/xspf/streamRenderer.rss</link>
+      <title>Media Stream Renderer</title>
+      <annotation>Play content recieved from a computer, which will find content from an internet browser.</annotation>
+      <image>../etc/translate/rss/image/menu/msr.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>rss_file://../etc/translate/rss/xspf/xspfBrowser.rss</link>
+      <title>XSPF Browser</title>
+      <annotation>Browse and play multimedia content and playlists from a local and network storage.</annotation>
+      <image>../etc/translate/rss/image/menu/xspfbrowser.png</image>
+      <meta rel="mediaDisplay">threePartsView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Start:1;File:etc/menu/recent-index.xspf,collection/simplemenu</link>
+      <title>Most Recent Links</title>
+      <annotation>Наиболее часто используемые ссылки</annotation>
+      <image>../etc/translate/rss/image/menu/recent.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>rss_file://../etc/translate/rss/xspf/settings.rss</link>
+      <title>Settings</title>
+      <annotation>RSS Ex Settings</annotation>
+      <image>../etc/translate/rss/image/menu/settings.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+  </trackList>
+
+</playlist>

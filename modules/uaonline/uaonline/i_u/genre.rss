@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<mediaDisplay name="threePartsView" 
+	itemBackgroundColor="0:0:0"
+	backgroundColor="0:0:0"
+sliding="yes" 
+showDefaultInfo="no" 
+bottomYPC="0" 
+itemGap="1" 
+itemPerPage="10" 
+showHeader="no" 
+sideLeftWidthPC="0" 
+itemImageXPC="0" 
+itemImageHeightPC="0" 
+itemImageWidthPC="0" 
+itemXPC="10" 
+itemYPC="20" 
+itemWidthPC="60" 
+itemHeightPC="6.5" 
+capWidthPC="60" 
+unFocusFontColor="101:101:101" 
+focusFontColor="255:255:255" >
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+		<backgroundDisplay>
+			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			/tmp/www/cgi-bin/scripts/exua/image/backgd.jpg
+			</image>
+		</backgroundDisplay>
+		<image  offsetXPC=0 offsetYPC=2.8 widthPC=100 heightPC=15.6>
+		/tmp/www/cgi-bin/scripts/exua/image/rss_title.jpg
+		</image>
+		<text  offsetXPC=40 offsetYPC=8 widthPC=35 heightPC=10 fontSize=20 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+		uletno - Поиск по жанру
+		</text>
+</mediaDisplay>
+
+		
+    <channel>
+        <title>По жанрам</title>
+		
+			<item>
+            <title>Аниме</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%90%D0%BD%D0%B8%D0%BC%D0%B5</link>
+            </item>
+			
+			<item>
+            <title>Биография</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%91%D0%B8%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F</link>
+            </item>
+			
+            <item>
+            <title>Боевик</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%91%D0%BE%D0%B5%D0%B2%D0%B8%D0%BA</link>
+            </item>
+			
+			<item>
+            <title>Вестерн</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%92%D0%B5%D1%81%D1%82%D0%B5%D1%80%D0%BD</link>
+            </item>
+			
+			
+			<item>
+            <title>Военный</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%92%D0%BE%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9</link>
+            </item>
+			
+			<item>
+            <title>Детектив</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%94%D0%B5%D1%82%D0%B5%D0%BA%D1%82%D0%B8%D0%B2</link>
+            </item>
+			
+			<item>
+            <title>Документальный</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9</link>
+            </item>
+			
+			<item>
+            <title>Драма</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%94%D1%80%D0%B0%D0%BC%D0%B0</link>
+            </item>
+			
+			<item>
+            <title>История</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%98%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F</link>
+            </item>
+			
+			<item>
+            <title>Комедия</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%9A%D0%BE%D0%BC%D0%B5%D0%B4%D0%B8%D1%8F</link>
+            </item>
+			
+			<item>
+            <title>Криминал</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%9A%D1%80%D0%B8%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB</link>
+            </item>
+			
+			<item>
+            <title>Мелодрама</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%9C%D0%B5%D0%BB%D0%BE%D0%B4%D1%80%D0%B0%D0%BC%D0%B0</link>
+            </item>
+			
+			<item>
+            <title>Музыка</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%9C%D1%83%D0%B7%D1%8B%D0%BA%D0%B0</link>
+            </item>
+			
+			<item>
+            <title>Мультфильм</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%9C%D1%83%D0%BB%D1%8C%D1%82%D1%84%D0%B8%D0%BB%D1%8C%D0%BC</link>
+            </item>
+			
+			<item>
+            <title>Мюзикл</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%9C%D1%8E%D0%B7%D0%B8%D0%BA%D0%BB</link>
+            </item>
+			
+			<item>
+            <title>Приключения</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%9F%D1%80%D0%B8%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D1%8F</link>
+            </item>
+			
+			<item>
+            <title>ТВ-передачи</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%A2%D0%92-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87%D0%B8</link>
+            </item>
+			
+			<item>
+            <title>Семейный</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%A1%D0%B5%D0%BC%D0%B5%D0%B9%D0%BD%D1%8B%D0%B9</link>
+            </item>
+			
+			<item>
+            <title>Спорт</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%A1%D0%BF%D0%BE%D1%80%D1%82</link>
+            </item>
+			
+			<item>
+            <title>Триллер</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%A2%D1%80%D0%B8%D0%BB%D0%BB%D0%B5%D1%80</link>
+            </item>
+			
+			<item>
+            <title>Ужасы</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%A3%D0%B6%D0%B0%D1%81%D1%8B</link>
+            </item>
+			
+			<item>
+            <title>Фэнтези</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%A4%D1%8D%D0%BD%D1%82%D0%B5%D0%B7%D0%B8</link>
+            </item>
+			
+			<item>
+            <title>Фантастика</title>
+            <link>http://freetv.germet.net/uletno.php?cat=%D0%A4%D0%B0%D0%BD%D1%82%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%B0</link>
+            </item>
+
+</channel>
+</rss>

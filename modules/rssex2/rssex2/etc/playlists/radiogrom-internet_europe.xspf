@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <title>Radiogrom.com - internet_europe</title>
+  <trackList>
+    <track>
+      <location>http://www.radiogrom.com/online/internet_europe/radio_ru_fm_online.html</location>
+      <title>- Радио RU-fm слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/internet_europe/star_fm_bulgaria_online.html</location>
+      <title>- Радио Star FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://inforadio.atlantis.bg:8000/inforadio.ogg</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_server">http://193.108.24.6:8000</meta>
+<meta rel="stream_type">application/ogg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">ROCK</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/internet_europe/ministry_of_sound_online.html</location>
+      <title>- Радио Ministry Of Sound Radio слушать онлайн</title>
+    
+<meta rel="stream_url">mmsh://wms.ministryofsound.com/MinistryLive?.wma</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/internet_europe/russkoe_berlin_online.html</location>
+      <title>- Русское Радио Берлин. Russkoe Radio Berlin слушать онлайн</title>
+    
+</track>
+  </trackList>
+</playlist>

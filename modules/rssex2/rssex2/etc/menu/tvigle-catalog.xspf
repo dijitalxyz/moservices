@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>Tvigle</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+
+  <trackList>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:6;File:etc/menu/tvigle-films.xspf,collection/simplemenu</link>
+      <title>Фильмы</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-cinema.xspf,collection/menu</link>
+      <title>Сборники</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-animation.xspf,collection/menu</link>
+      <title>Мультики</title>
+      <annotation></annotation> 
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-babies.xspf,collection/menu</link>
+      <title>Для детей</title>
+      <annotation></annotation> 
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-serials.xspf,collection/menu</link>
+      <title>Сериалы</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-seemovie.xspf,collection/menu</link>
+      <title>Смотрите в кино</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-comedy.xspf,collection/menu</link>
+      <title>Юмор</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-music.xspf,collection/menu</link>
+      <title>Музыка</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-Stars.xspf,collection/menu</link>
+      <title>Звезды</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-formen.xspf,collection/menu</link>
+      <title>Для мужчин</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-auto.xspf,collection/menu</link>
+      <title>Авто / Мото</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-extrim.xspf,collection/menu</link>
+      <title>Спорт</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-travel.xspf,collection/menu</link>
+      <title>Путешествия</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-games.xspf,collection/menu</link>
+      <title>Компьютерные игры</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-kitchen.xspf,collection/menu</link>
+      <title>Еда</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-lifestyle.xspf,collection/menu</link>
+      <title>Lifestyle</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-videolessons.xspf,collection/menu</link>
+      <title>Видеоуроки</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-videoblog.xspf,collection/menu</link>
+      <title>Персоны, блоги</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-spec-project.xspf,collection/menu</link>
+      <title>Другое</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;File:etc/menu/tvigle-autors.xspf,collection/menu</link>
+      <title>Авторское видео</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/tvigle.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+  </trackList>
+
+</playlist>

@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# Check for install:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+#
+cat /etc/system_svn_version | grep -q -e '^324002_r6$' && exit 0
+exit 1

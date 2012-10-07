@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>Other Internet Radio Lists</title>
+
+  <trackList>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Font:22;Lines:1;Start:middle;Size:7;File:etc/playlists/radio-radiorss.xspf,collection/media</link>
+      <title>Radio RSS</title>
+      <annotation>Все новости главных российских порталов, озвученные синтезом речи Центра речевых технологий.</annotation>
+      <image>http://rssradio.ru/img/logo.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/menu/radio-bbc-index.xspf,collection/menulist</link>
+      <title>BBC Radio</title>
+      <annotation>BBC Radio Online</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/menu/radio-cbc-index.xspf,collection/menulist</link>
+      <title>CBC Radio</title>
+      <annotation>CBC Radio Online - Канадская радиовещательная корпорация</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radio-1fm.xspf,collection/medialist</link>
+      <title>1.FM</title>
+      <annotation>1.FM is owned and operated by Energy Group Networks. All Rights Reserved.</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radio-181fm.xspf,collection/medialist</link>
+      <title>181.FM</title>
+      <annotation>181.FM - Your Lifestyle... Your Music! ~ Free Internet Radio ~ </annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radio-rautemusik.xspf,collection/medialist</link>
+      <title>RauteMusik</title>
+      <annotation>RauteMusik (также RM или # Musik ) — интернет-радиостанция, расположенная в Германии. RauteMusik был впервые показан в 2003 году - 04-20 с помощью только одного основного потока. В ближайшие четыре года, RauteMusik зарекомендовал себя как один из крупнейших Европе интернет-радиостанций.</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radio-nullwave.xspf,collection/medialist</link>
+      <title>Nullwave.ru</title>
+      <annotation>Nullwave.ru единственное в своем роде радио в Новосибирске. Тут есть, что послушать.</annotation>
+      <image>../etc/translate/rss/image/menu/nulwave.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Font:14;Lines:5;Start:left;Size:5;File:etc/playlists/radio-sampo.xspf,collection/media</link>
+      <title>Sampo.ru</title>
+      <annotation>Городская компьютерная сеть «Сампо.ру» - Петрозаводск.</annotation>
+      <image>../etc/translate/rss/image/menu/sampo.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/menu/radiogrom-index.xspf,collection/menulist</link>
+      <title>Radiogrom.com</title>
+      <annotation>Radiogrom - о РАДИО ГРОМко! Сборник ссылок на онлайн радиостанции от radiogrom.com</annotation>
+      <image>../etc/translate/rss/image/menu/radiogrom.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radio-profm.xspf,collection/medialist</link>
+      <title>ProFM</title>
+      <annotation>http://www.profm.ro/ - Online Radio - Romania</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/audio-kazki-unicef-by.xspf,collection/medialist</link>
+      <title>Народныя казкі для дзетак</title>
+      <annotation>Праект «Народныя казкі для дзетак» — ініцыятыва ЮНІСЕФ у Беларусі. (http://kazki.unicef.by/)</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radio-my_favorites.xspf,collection/medialist</link>
+      <title>Избранное</title>
+      <annotation>Мой список радиостанций</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+  </trackList>
+
+</playlist>

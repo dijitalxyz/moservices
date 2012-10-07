@@ -1,0 +1,49 @@
+#EXTM3U
+#EXTINF:0,Telenyanya TV
+http://10.20.144.54:10014/Telenyanya.mkv
+#EXTINF:0,CTC TV
+http://10.20.144.54:10005/CTC.mkv
+#EXTINF:0,DomKino TV
+http://10.20.144.54:10012/DomKino.mkv
+#EXTINF:0,Muzika TV
+http://10.20.144.54:10015/Muzika.mkv
+#EXTINF:0,Telecafe TV
+http://10.20.144.54:10021/Telecafe.mkv
+#EXTINF:0,Muz TV
+http://10.20.144.54:10004/MuzTV.mkv
+#EXTINF:0,Domashniy TV
+http://10.20.144.54:10009/DOM.mkv
+#EXTINF:0,Russia 24 TV
+http://10.20.144.54:10020/Vesti.mkv
+#EXTINF:0,A-One TV
+http://tv.sarbest.ru:9003
+#EXTINF:0,Bridge TV
+http://tv.sarbest.ru:9002
+#EXTINF:0,TBC TV
+http://10.20.144.54:10007/TVC.mkv
+#EXTINF:0,TBC Ural TV
+http://10.20.144.54:10019/TVC_Ural.mkv
+#EXTINF:0,5 Piter TV
+http://10.20.144.54:10008/5.mkv
+#EXTINF:0,5 Piter (+3h) TV
+http://10.20.144.54:10016/5Kanal(+3h).mkv
+#EXTINF:0,Vremya TV
+http://10.20.144.54:10013/Vremya.mkv
+#EXTINF:0,Mir TV
+http://10.20.144.54:10022/Mir.mkv
+#EXTINF:0,THT TV
+http://10.20.144.54:10006/THT.mkv
+#EXTINF:0,THB Tatarstan TV
+http://10.20.144.54:10010/TNV.mkv
+#EXTINF:0,1 OPT TV
+http://10.20.144.54:10001/1.mkv
+#EXTINF:0,1 OPT (+2h) TV
+http://10.20.144.54:10018/1(+2h).mkv
+#EXTINF:0,Russia 1 TV
+http://10.20.144.54:10002/PTP.mkv
+#EXTINF:0,Russia 1 (+2h) TV
+http://10.20.144.54:10017/PTP(+2h).mkv
+#EXTINF:0,Russia sport TV
+http://10.20.144.54:10003/PTP-CnopT.mkv
+#EXTINF:0,Kultura TV
+http://10.20.144.54:10011/Kultura.mkv

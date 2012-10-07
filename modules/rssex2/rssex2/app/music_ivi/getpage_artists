@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+local debugfile=/tmp/nnb.log
+
+local DATAPATH=$BASEPATH/app/music_ivi
+
+local PAGEFILE=$CACHEPATH/music_ivi.page
+local PAGEXML=$CACHEPATH/music_ivi.xml
+#echo $DATAPATH >$debugfile
+#echo $PAGEFILE >>$debugfile
+#echo $PAGEXML >>$debugfile
+#echo $arg_opt >>$debugfile
+
+$MSDL -q -o "$PAGEFILE" -p http --useragent "$USERAGENT" "$arg_opt"
+  if [ -f "$PAGEFILE" ]; then
+
+#echo pages=$pages >>$debugfile
+
+cat > $PAGEXML <<EOF
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+        <channel>
+            <title> MISUC.IVI.RU - ИСПОЛНИТЕЛИ </title>
+            <link>http://music.ivi.ru/artists</link>
+            <description> MISUC.IVI.RU - ИСПОЛНИТЕЛИ </description>
+            <language>ru</language>
+EOF
+
+   if [ -x $XSLTPROC ]; then
+     $XSLTPROC --encoding utf-8 --html $DATAPATH/artists.xslt $PAGEFILE 2>/dev/null | sed '1d' >> $PAGEXML
+   fi
+
+cat >> $PAGEXML <<EOF
+        </channel>
+</rss>
+EOF
+
+    rm -f $PAGEFILE
+  fi
+
+if [ -f "$PAGEXML" ]; then
+ echo "Content-type: text/xml"
+ echo
+ cat $PAGEXML
+ rm -f $PAGEXML
+fi
+

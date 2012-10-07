@@ -1,0 +1,75 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'jamendo.com' plug-in
+#
+# version: 1.0 23.01.2012 13:33:16
+#
+# http://www.jamendo.com/ru/album/91153
+# http://www.jamendo.com/ru/playlist/219592
+# http://www.jamendo.com/ru/track/886818
+# http://www.jamendo.com/ru/top
+#
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -qs '\(www\.\)*jamendo\.com/.*/\(album\|track\|playlist\|top\).*$'; then 
+
+  local type=$(echo $arg_url | awk '{match($0,/jamendo\.com\/.*\/(.*)\//,arr);print arr[1];}')
+  local id=$(echo $arg_url | awk '{match($0,/jamendo\.com\/.*\/([0-9]+)/,arr);print arr[1];}')
+  
+  if [ "$type" = "track" -a -n "$id" -a "$arg_cmd" != "playlist" ]; then
+    stream_type='audio/mpeg'
+    protocol='http'
+    stream_url="http://api.jamendo.com/get2/stream/track/redirect/?id=${id}&streamencoding=mp31"
+    return $RC_OK
+  else
+  
+    stream_type='application/xspf+xml'
+    protocol='http'
+    arg_opt='Resolve-playlist:0'
+
+    if [ "$arg_cmd" = "playlist" ]; then
+  
+      local PLAYLISTFILE=$CACHEPATH/temp.xspf
+      rm -f $PLAYLISTFILE
+      
+      local replacetitle
+      local url
+      if [ -z "$type" ]; then
+        url="http://api.jamendo.com/en/get2/stream/track/xspf/?n=100&order=ratingweek_desc"
+        replacetitle='s/Jamendo playlist/Jamendo playlist - Top 100/'
+      else    
+        url="http://api.jamendo.com/get2/stream/track/xspf/?${type}_id=${id}"
+        replacetitle=''
+      fi
+    
+      $MSDL -q -o $PLAYLISTFILE -p http --useragent "${USERAGENT}" "$url" 2>/dev/null
+      
+      if [ -f $PLAYLISTFILE ] ; then
+        sed -e 's/></>\n</g' $PLAYLISTFILE | sed -e '/<location>.*format=mp3/a\<meta rel="stream_protocol">http<\/meta><meta rel="stream_class">audio<\/meta><meta rel="stream_type">audio\/mpeg<\/meta>' -e '/<location>.*format=ogg/a\<meta rel="stream_protocol">http<\/meta><meta rel="stream_class">audio<\/meta><meta rel="stream_type">application\/ogg<\/meta>' | sed -e "$replacetitle"
+      fi
+    fi
+    
+    return $RC_OK
+  fi
+fi
+
+return $RC_FAIL

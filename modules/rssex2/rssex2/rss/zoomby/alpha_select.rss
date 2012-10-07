@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<mediaDisplay name=photoView
+  rowCount=3
+  columnCount=9
+  drawItemText="yes"
+  menuBorderColor="0:0:0"
+  sideColorBottom="0:0:0"
+  sideColorTop="0:0:0"
+  fontSize=22
+  sideTopHeightPC=0
+  itemImageXPC="10"
+  itemOffsetXPC="12"
+  itemOffsetYPC="30"
+  itemWidthPC="8"
+  itemHeightPC="10"
+  backgroundColor="0:0:0"
+  sliding="no"
+  showHeader="no"
+  showDefaultInfo=no
+  rollItems=no
+  idleImageXPC=45
+  idleImageYPC=42
+  idleImageWidthPC=10
+  idleImageHeightPC=16
+>
+	<idleImage idleImageWidthPC=10 idleImageHeightPC=10> ../etc/translate/rss/image/POPUP_LOADING_01.png </idleImage>
+	<idleImage idleImageWidthPC=10 idleImageHeightPC=10> ../etc/translate/rss/image/POPUP_LOADING_02.png </idleImage>
+	<idleImage idleImageWidthPC=10 idleImageHeightPC=10> ../etc/translate/rss/image/POPUP_LOADING_03.png </idleImage>
+	<idleImage idleImageWidthPC=10 idleImageHeightPC=10> ../etc/translate/rss/image/POPUP_LOADING_04.png </idleImage>
+	<idleImage idleImageWidthPC=10 idleImageHeightPC=10> ../etc/translate/rss/image/POPUP_LOADING_05.png </idleImage>
+	<idleImage idleImageWidthPC=10 idleImageHeightPC=10> ../etc/translate/rss/image/POPUP_LOADING_06.png </idleImage>
+	<idleImage idleImageWidthPC=10 idleImageHeightPC=10> ../etc/translate/rss/image/POPUP_LOADING_07.png </idleImage>
+	<idleImage idleImageWidthPC=10 idleImageHeightPC=10> ../etc/translate/rss/image/POPUP_LOADING_08.png </idleImage>
+
+	<text redraw="no" align="left" offsetXPC="5" offsetYPC="0" widthPC="90" heightPC="15" fontSize="24" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+		<script>getPageInfo("pageTitle");</script>
+	</text>
+  <image offsetXPC=80 offsetYPC=3 widthPC=15 heightPC=6>
+     ../etc/translate/rss/image/zoomby.jpg
+       <widthPC>
+         <script>
+           185 * 6 / 24 * screenYp / screenXp;
+         </script>
+       </widthPC>
+       <offsetXPC>
+         <script>
+           95 - 185 * 6 / 24 * screenYp / screenXp;
+         </script>
+       </offsetXPC>
+  </image>
+
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+   ../etc/translate/rss/image/gradient_line.bmp
+  </image>
+
+	<itemDisplay>
+		<text align="center" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 fontSize=22 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+			<script>
+			  idx = getQueryItemIndex();
+				getItemInfo(idx, "title");
+			</script>
+		</text>
+	</itemDisplay>
+</mediaDisplay>
+
+<onEnter>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+  storagePath = getStoragePath("tmp");
+  storagePath  = storagePath + "zoomby.dat";
+</onEnter>
+
+<item_template>
+	<onClick>
+	idx   = getFocusItemIndex();
+	title = getItemInfo(idx,"title");
+	url   = getItemInfo(idx,"location");
+	arr = null;
+	arr = pushBackStringArray(arr, title);
+	arr = pushBackStringArray(arr, url);
+	writeStringToFile(storagePath, arr);
+	postMessage("return");
+	</onClick>
+</item_template>
+
+<channel>
+  <title>Выберите букву!</title>
+
+  <item>
+   <title> A </title>
+   <location>http://www.zoomby.ru/music/alphabet/a</location>
+  </item>
+  <item>
+   <title> B </title>
+   <location>http://www.zoomby.ru/music/alphabet/b</location>
+  </item>
+  <item>
+   <title> C </title>
+   <location>http://www.zoomby.ru/music/alphabet/c</location>
+  </item>
+  <item>
+   <title> D </title>
+   <location>http://www.zoomby.ru/music/alphabet/d</location>
+  </item>
+  <item>
+   <title> E </title>
+   <location>http://www.zoomby.ru/music/alphabet/e</location>
+  </item>
+  <item>
+   <title> F </title>
+   <location>http://www.zoomby.ru/music/alphabet/f</location>
+  </item>
+  <item>
+   <title> G </title>
+   <location>http://www.zoomby.ru/music/alphabet/g</location>
+  </item>
+  <item>
+   <title> H </title>
+   <location>http://www.zoomby.ru/music/alphabet/h</location>
+  </item>
+  <item>
+   <title> I </title>
+   <location>http://www.zoomby.ru/music/alphabet/i</location>
+  </item>
+  <item>
+   <title> J </title>
+   <location>http://www.zoomby.ru/music/alphabet/j</location>
+  </item>
+  <item>
+   <title> K </title>
+   <location>http://www.zoomby.ru/music/alphabet/k</location>
+  </item>
+  <item>
+   <title> L </title>
+   <location>http://www.zoomby.ru/music/alphabet/l</location>
+  </item>
+  <item>
+   <title> M </title>
+   <location>http://www.zoomby.ru/music/alphabet/m</location>
+  </item>
+  <item>
+   <title> N </title>
+   <location>http://www.zoomby.ru/music/alphabet/n</location>
+  </item>
+  <item>
+   <title> O </title>
+   <location>http://www.zoomby.ru/music/alphabet/o</location>
+  </item>
+  <item>
+   <title> P </title>
+   <location>http://www.zoomby.ru/music/alphabet/p</location>
+  </item>
+  <item>
+   <title> Q </title>
+   <location>http://www.zoomby.ru/music/alphabet/q</location>
+  </item>
+  <item>
+   <title> R </title>
+   <location>http://www.zoomby.ru/music/alphabet/r</location>
+  </item>
+  <item>
+   <title> S </title>
+   <location>http://www.zoomby.ru/music/alphabet/s</location>
+  </item>
+  <item>
+   <title> T </title>
+   <location>http://www.zoomby.ru/music/alphabet/t</location>
+  </item>
+  <item>
+   <title> U </title>
+   <location>http://www.zoomby.ru/music/alphabet/u</location>
+  </item>
+  <item>
+   <title> V </title>
+   <location>http://www.zoomby.ru/music/alphabet/v</location>
+  </item>
+  <item>
+   <title> W </title>
+   <location>http://www.zoomby.ru/music/alphabet/w</location>
+  </item>
+  <item>
+   <title> X </title>
+   <location>http://www.zoomby.ru/music/alphabet/x</location>
+  </item>
+  <item>
+   <title> Y </title>
+   <location>http://www.zoomby.ru/music/alphabet/y</location>
+  </item>
+  <item>
+   <title> Z </title>
+   <location>http://www.zoomby.ru/music/alphabet/z</location>
+  </item>
+  <item>
+   <title>0-9</title>
+   <location>http://www.zoomby.ru/music/alphabet/0-9</location>
+  </item>
+
+</channel>
+
+</rss>

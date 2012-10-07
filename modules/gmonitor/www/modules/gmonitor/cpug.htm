@@ -1,0 +1,88 @@
+<head><title>Web Manager</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="style.css" media="screen">
+
+<script type="text/javascript" src="overlib.js"></script>
+<script type="text/javascript" src="general.js"></script>
+
+<script type="text/javascript">
+
+var gr1_ifname="eth0";
+var gr2_ifname="wlan0";
+
+function interval_change(value)
+{
+document.getElementById("cpu_graph").src="graph_cpu.php?#"+value;
+
+if (gr1_ifname != "")
+document.getElementById("gr1_graph").src="graph_if.php?"+gr1_ifname+"#"+value;
+
+if (gr2_ifname != "")
+document.getElementById("gr2_graph").src="graph_if.php?"+gr2_ifname+"#"+value;
+}
+
+function process_element(elementId, value)
+{
+if (value != "") {
+document.getElementById(elementId+"_ifname").innerHTML=value;
+} else {
+document.getElementById(elementId+"_data").style.display="none";
+}
+}
+function generate_page()
+{
+load_body();
+if (gr1_ifname != "")
+ process_element("gr1", gr1_ifname);
+if (gr2_ifname != "")
+ process_element("gr2", gr2_ifname);
+interval_change(1);
+}
+</script>
+
+</head>
+<body onLoad="generate_page();" onunLoad="return unload_body();">
+<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+
+<h3> System monitoring</h3>
+
+<form method="GET" name="form" action="apply.cgi">
+ <input type="hidden" name="current_page" value="cpug.htm">
+ <input type="hidden" name="next_page" value="cpug.htm">
+ <input type="hidden" name="next_host" value="">
+ <input type="hidden" name="sid_list" value="Utilization;">
+ <input type="hidden" name="group_id" value="">
+ <input type="hidden" name="modified" value="0">
+ <input type="hidden" name="action_mode" value="">
+ <input type="hidden" name="first_time" value="">
+ <input type="hidden" name="action_script" value="">
+
+<div class="info_input">
+Refresh Rate&nbsp;&nbsp;
+ <select name="refresh" class="content_input_td" onchange="interval_change(this.value);">
+  <option value="1">1 second</option><option value="2">2 seconds</option>
+  <option value="5">5 seconds</option><option value="10">10 seconds</option>
+  <option value="30">30 seconds</option><option value="60">1 minute</option>
+ </select>
+</div>
+
+<div class="info_frame">
+ <div class="info_topic">CPU</div>
+ <div class="info_list">
+  <iframe id="cpu_graph" type="image/svg+xml" width="530" height="250" frameborder="0" src=""></iframe>
+ </div></div>
+
+<div class="info_frame">
+ <div class="info_topic"><span id="gr1_ifname"></span></div>
+ <div class="info_list">
+  <iframe id="gr1_graph" type="image/svg+xml" width="530" height="250" frameborder="0" src=""></iframe>
+ </div></div>
+
+<div class="info_frame">
+ <div class="info_topic"><span id="gr2_ifname"></span></div>
+ <div class="info_list">
+  <iframe id="gr2_graph" type="image/svg+xml" width="530" height="250" frameborder="0" src=""></iframe>
+ </div></div>
+
+</form>
+</body>

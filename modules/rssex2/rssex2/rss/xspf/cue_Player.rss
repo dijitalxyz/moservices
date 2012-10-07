@@ -1,0 +1,647 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://purl.org/media/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name="threePartsView"
+	itemPerPage="10"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+	sideColorRight="0:0:0"
+	sideColorLeft="0:0:0"
+
+	headerImageXPC="10"
+	headerXPC="10"
+	headerImageWidthPC="0"
+	
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	
+	itemXPC="8"
+	itemYPC="15"
+	itemHeightPC="7"
+	itemWidthPC="62"
+	itemBackgroundColor="0:0:0"
+
+	capXPC="8"
+	capYPC="15"
+	capWidthPC="62"
+	capHeightPC="7"
+
+  itemGap="0"
+	
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	
+	showHeader="no"
+	showDefaultInfo="no"
+>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+  <text redraw="no" offsetXPC="5" offsetYPC="0" widthPC="80" heightPC="15" fontSize="20" backgroundColor="8:8:16" foregroundColor="200:200:200">
+    <script>pageTitle;</script>
+  </text>
+  <text redraw="no" offsetXPC="85" offsetYPC="0" widthPC="10" heightPC="10" fontSize="20" backgroundColor="8:8:16" foregroundColor="200:200:200">
+    <script>pageDate;</script>
+  </text>
+  <image redraw="no" offsetXPC="0" offsetYPC="12" widthPC="100" heightPC="1">
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+
+  <image redraw="no" offsetXPC="72" offsetYPC="15" widthPC="23" heightPC="30">
+		<script>pageLogo;</script>
+    <widthPC>
+      <script>
+        30 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 30 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+	</image>
+  <text redraw="no" offsetXPC="71" offsetYPC="47" widthPC="24" heightPC="35" fontSize="14" lines="7" backgroundColor="8:8:16" foregroundColor="200:200:200">
+    <script>pageCreator;</script>
+  </text>
+
+    <text redraw="yes" offsetXPC="10" offsetYPC="85" widthPC="10" heightPC="5" fontSize="20" backgroundColor="8:8:8" foregroundColor="100:100:100">
+      <script>elapsedTime;</script>
+    </text>
+    <text redraw="yes" offsetXPC="20" offsetYPC="85" widthPC="70" heightPC="5" fontSize="14" backgroundColor="8:8:8" foregroundColor="100:100:100">
+      <script>playTitle;</script>
+    </text>
+
+    <text redraw="no" offsetXPC=70 offsetYPC=90 widthPC=10 heightPC=5 fontSize=16 backgroundColor=8:8:8 foregroundColor=40:200:200>Repeat:</text>
+    <text redraw="yes" offsetXPC=80 offsetYPC=90 widthPC=15 heightPC=5 fontSize=16 backgroundColor=8:8:8 foregroundColor=200:200:200>
+      <script>repeat;</script>
+    </text>
+	
+		<itemDisplay>
+  		<script>
+  		    him = 62 * 5 * screenXp / screenYp / 7;
+  		    if(him>100)
+  		    {
+  		      him = 100;
+  		      wim = him * 7 / 62 * screenYp / screenXp;
+  		    }
+  		    else
+  		    {
+  		      wim = 5;
+  		    }
+  		</script>
+			<image offsetXPC=0 offsetYPC=20 widthPC=5 heightPC=50>
+				<script>
+					idx1 = currentIndex;
+					idx2 = getQueryItemIndex();
+					if (idx1 == idx2)
+					{
+						"../etc/translate/rss/image/Play-1-Pressed-256x256.png";
+					}
+					else
+					{
+						"";
+					}
+				</script>
+  		 <heightPC>
+  		   <script>him;</script>
+  		 </heightPC>
+  		 <widthPC>
+  		   <script>wim;</script>
+  		 </widthPC>
+  		 <offsetYPC>
+  		   <script>(100 - him)/2;</script>
+  		 </offsetYPC>
+  		 <offsetXPC>
+  		   <script>(5 - wim)/2;</script>
+  		 </offsetXPC>
+			</image>
+			<text offsetXPC=5 offsetYPC=0 widthPC=7 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=160:160:160>
+				<script>
+				  (getQueryItemIndex()-(-1)) + ".";
+				</script>
+			</text>
+			<text offsetXPC=9 offsetYPC=0 widthPC=83 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=160:160:160>
+				<script>
+				  getStringArrayAt(titleArray , -1);
+				</script>
+			</text>
+			<text offsetXPC=90 offsetYPC=0 widthPC=10 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=160:160:160>
+        <script>
+          getStringArrayAt(durationStringArray , -1);
+        </script>
+			</text>
+		</itemDisplay>
+		
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+      {
+        if(status == 1 || currentIndex != -1)
+        {
+          idx   = currentIndex;
+          if(userInput == "pagedown" || userInput == "PD")
+          {
+            
+            idx -= -1;
+            if(idx &gt;= itemSize)
+            {
+              idx = itemSize - 1;
+            }
+          }
+          else
+          {
+            idx -= 1;
+            if(idx &lt; 0)
+            {
+              idx = 0;
+            }
+          }
+          
+          if(idx != currentIndex)
+          {
+            setRefreshTime(-1);
+      		  playItemURL(-1, 1);
+            
+            startIndex = idx;
+            currentIndex = idx;
+            currentTrackTimestamp = 0;
+            nextTrackTimestamp = getStringArrayAt(durationArray, idx);
+            if(nextTrackTimestamp == "")
+              nextTrackTimestamp = null;
+      
+            url   = getStringArrayAt(urlArray, idx);
+            playTitle = sprintf("%s",(idx-(-1))) + ".  " + getStringArrayAt(titleArray, idx);
+            flac_skip  = getStringArrayAt(skipArray, idx);
+            flac_until  = "-0:00";
+            if(repeat == "One")
+              flac_until = getStringArrayAt(untilArray, idx);
+            meta = "Flac-skip:"+flac_skip+";Flac-until:"+flac_until;
+            urlToPlay = translate_base_url+"flac,"+meta+","+urlEncode(url);
+            mode = 2;
+            setRefreshTime(100);
+            redrawDisplay();
+          }
+        }
+        else
+        {
+          if(userInput == "pagedown")
+          {
+            postMessage("down");
+          }
+          else if(userInput == "PD")
+          {
+            postMessage("D");
+          }
+          else if(userInput == "PG")
+          {
+            postMessage("U");
+          }
+          else
+          {
+            postMessage("up");
+          }
+        }
+        ret = "true";
+      }
+      else if(majorContext == "items" &amp;&amp; (userInput == "right" || userInput == "R"))
+      {
+        ret = "true";
+      }
+      else if (userInput == "video_repeat")
+      {
+        ret = "true";
+        if(repeat == "None")
+        {
+          repeat = "One";
+        }
+        else if(repeat == "One")
+        {
+          repeat = "All";
+        }
+        else if(repeat == "All")
+        {
+          repeat = "Random";
+        }
+        else
+        {
+          repeat = "None";
+        }
+        print(repeat);
+      }
+      else if (userInput == "video_stop")
+      {
+  		  status = 0;
+      }
+      ret;
+    </script>
+  </onUserInput>
+  
+  <previewWindow windowColor="8:8:8" offsetXPC="98" offsetYPC="98" widthPC="2" heightPC="2"></previewWindow>
+  
+</mediaDisplay>
+
+<onExit>
+  playItemURL(-1, 1);
+  setRefreshTime(-1);
+</onExit>
+
+<onEnter>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  storagePath = getStoragePath("tmp");
+  storagePath  = storagePath + "stream.dat";
+  arr = readStringFromFile(storagePath);
+  print("******* Initialize: "+arr);
+  feedUrl = translate_base_url + "playlist,," + urlEncode(getStringArrayAt(arr, 0));
+  pageTitle = getStringArrayAt(arr, 1);
+  print("feedUrl=",feedUrl);
+  
+  repeat = "None";
+
+  startIndex = 0;
+  currentIndex = -1;
+  nextTrackTimestamp = null;
+  
+  randomIndex = -1;
+  randomArray = null;
+  
+  status = 0;
+  
+  mode = 1;
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  if(mode == 2)
+  {
+    setRefreshTime(1000);
+    mode = 0;
+    playItemURL(urlToPlay, 0, "mediaDisplay", "previewWindow");
+    startPlaying = 0;
+  }
+  else if(mode == 1)
+  {
+    setRefreshTime(-1);
+    
+    url = feedUrl;
+
+    print("Start to load cue:",url);
+    
+    dlok = loadXMLFile(url);
+    if (dlok != null)
+    {
+      titleArray = null;
+      thumbnailArray = null;
+      urlArray = null;
+      skipArray = null;
+      untilArray = null;
+      durationArray = null;
+      durationStringArray = null;
+      
+    	itemSize = getXMLElementCount("playlist","trackList","track");
+    	if(itemSize == 0)
+    	  postMessage("return");
+    	print("Item Size = ", itemSize);
+    	
+    	pageLogo = getXMLText("playlist","image");
+    	pageTitle = getXMLText("playlist","title");
+    	pageDate = getXMLText("playlist","date");
+    	pageCreator = getXMLText("playlist","creator");
+    
+    	count=0;
+    	while(itemSize != 0)
+    	{
+    	  title = getXMLText("playlist","trackList","track",count,"title");
+    	  url = getXMLText("playlist","trackList","track",count,"location");
+    	  duration = getXMLText("playlist","trackList","track",count,"duration");
+    	  if(duration != null)
+    	  {
+    	    duration = Integer(duration /1000);
+    	  }
+    	  else
+    	  {
+    	    duration = "";
+    	  }
+
+    		image = getXMLText("playlist","trackList","track",count,"image");
+    		flac_skip = "";
+    		flac_until = "";
+
+        metaCounter = getXMLElementCount("playlist","trackList","track",count,"meta");
+    	  while(metaCounter &gt; 0)
+    	  {
+    	    metaIndex = metaCounter-1;
+    	    metaRel = getXMLAttribute("playlist","trackList","track",count,"meta",metaIndex,"rel");
+    	    if(metaRel == "flac_skip")
+    	    {
+    	      flac_skip = getXMLText("playlist","trackList","track",count,"meta",metaIndex);
+    	    }
+    	    else if(metaRel == "flac_until")
+    	    {
+    	      flac_until = getXMLText("playlist","trackList","track",count,"meta",metaIndex);
+    	    }
+    	    metaCounter -= 1;
+    	  }
+    	  
+    	  titleArray  = pushBackStringArray(titleArray, title);
+    	  urlArray    = pushBackStringArray(urlArray, url);
+    	  skipArray    = pushBackStringArray(skipArray, flac_skip);
+    	  untilArray    = pushBackStringArray(untilArray, flac_until);
+    	  thumbnailArray = pushBackStringArray(thumbnailArray, image);
+    	  durationArray    = pushBackStringArray(durationArray, duration);
+    	  
+        if(duration != "")
+        {
+            m = Integer(duration / 60);
+            s = duration - (m * 60);
+            duration = sprintf("%s:", m);
+            if(s &lt; 10)  duration += "0";
+            duration += sprintf("%s", s);
+        }
+        else
+        {
+          duration = "";
+        }
+        
+    	  durationStringArray    = pushBackStringArray(durationStringArray, duration);
+    	  
+
+    	  count += 1;
+    	  if (count == itemSize)
+    	  {
+    		  break;
+    	  }
+    	}
+    	print("title array =", titleArray);
+    	print("url array =", urlArray);
+    	print("skip array =", skipArray);
+    	print("until array =", untilArray);
+    	print("duration array =", durationArray);
+    	setFocusItemIndex(0);
+    	redrawDisplay();
+    }
+  }
+  else if(mode == 0)
+  {
+    print("Wait for movie stop");
+    vidProgress = getPlaybackStatus();
+    playElapsed = getStringArrayAt(vidProgress, 0);
+    playStatus = getStringArrayAt(vidProgress, 3);
+
+    if (playStatus == 0) 
+    {
+      setRefreshTime(-1);
+      elapsedTime = "";
+      playTitle = "";
+      
+      if(repeat == "Random")
+      {
+        if(randomArray != null &amp;&amp; currentIndex == getStringArrayAt(randomArray, randomIndex))
+        {
+          randomIndex -= -1;
+          if(randomIndex &gt;= itemSize)
+          {
+            randomArray = null;
+          }
+        }
+        if(randomArray == null)
+        {
+          dlok = loadXMLFile(translate_base_url+"random,"+itemSize+","+currentIndex);
+          if (dlok != null)
+          {
+            randomArray = null;
+          	count=0;
+          	while(itemSize != 0)
+          	{
+          		num = getXMLText("randomList","item",count);
+        	  	randomArray  = pushBackStringArray(randomArray, num);
+        	  	count += 1;
+        	  	if (count == itemSize)
+          		{
+        			  break;
+        	  	}
+          	}
+          }
+          randomIndex = 1;
+        }
+        currentIndex = getStringArrayAt(randomArray, randomIndex);
+        print("randomArray=",randomArray);
+        print("randomIndex=",randomIndex);
+      }
+      else if(repeat != "One")
+      {
+        currentIndex -= -1;
+        if(currentIndex &gt;= itemSize)
+        {
+          currentIndex = 0;
+        }
+      }
+
+      if(startPlaying == 1 &amp;&amp; status==1 &amp;&amp; (repeat != "None" || currentIndex != 0))
+      {
+        idx = currentIndex;
+        startIndex = idx;
+        currentTrackTimestamp = 0;
+        nextTrackTimestamp = getStringArrayAt(durationArray, idx);
+        if(nextTrackTimestamp == "")
+          nextTrackTimestamp = null;
+      
+        url   = getStringArrayAt(urlArray, idx);
+        playTitle = sprintf("%s",(idx-(-1))) + ".  " + getStringArrayAt(titleArray, idx);
+        flac_skip  = getStringArrayAt(skipArray, idx);
+        flac_until  = "-0:00";
+        if(repeat == "One" || repeat == "Random")
+          flac_until = getStringArrayAt(untilArray, idx);
+        meta = "Flac-skip:"+flac_skip+";Flac-until:"+flac_until;
+        urlToPlay = translate_base_url+"flac,"+meta+","+urlEncode(url);
+        playItemURL(urlToPlay, 0, "mediaDisplay", "previewWindow");
+        startPlaying = 0;
+        mode = 0;
+        setRefreshTime(1000);
+      }
+      else
+      {
+        currentIndex = -1;
+      }
+      redrawDisplay();
+    }
+    else
+    {
+      if (playElapsed != 0) 
+      {
+        startPlaying = 1;
+        
+        print("startIndex=",startIndex);
+        print("currentIndex=",currentIndex);
+        print("randomIndex=",randomIndex);
+        print("nextTrackTimestamp=",nextTrackTimestamp);
+        
+        if(nextTrackTimestamp != null)
+        {
+          if(playElapsed &gt;= nextTrackTimestamp)
+          {
+            print("next track!!!!");
+            currentTrackTimestamp = nextTrackTimestamp;
+            
+            if(repeat == "None" || repeat =="All")
+            {
+              currentIndex -= -1;
+              if(currentIndex &lt; itemSize)
+              {
+                playTitle = sprintf("%s",(currentIndex-(-1))) + ".  " + getStringArrayAt(titleArray, currentIndex);
+                duration = getStringArrayAt(durationArray , currentIndex); 
+                if(duration != "")
+                {
+                  nextTrackTimestamp -= -duration;
+                }
+                else
+                {
+                  nextTrackTimestamp == null;
+                }
+                redrawDisplay();
+              }
+            }
+            else if(repeat == "One" || repeat == "Random")
+            {
+              playItemURL(-1, 1);
+              setRefreshTime(100);
+            }
+          }
+        }
+        
+        t = playElapsed - currentTrackTimestamp;
+        x = Integer(t / 60);
+        h = Integer(t / 3600);
+        s = t - (x * 60);
+        m = x - (h * 60);
+        elapsedTime = sprintf("%s:", h);
+        if(m &lt; 10)  elapsedTime += "0";
+        elapsedTime += sprintf("%s:", m);
+        if(s &lt; 10)  elapsedTime += "0";
+        elapsedTime += sprintf("%s", s);
+        print("elapsedTime =", elapsedTime);
+        
+      } 
+    }
+  }
+</onRefresh>
+
+  <item_template>
+<!--
+  item template
+-->
+		<onClick>
+      idx   = getFocusItemIndex();
+		  if(status == 0 || idx != currentIndex)
+		  {
+		    if(repeat == "Random")
+		    {
+          dlok = loadXMLFile(translate_base_url+"random,"+itemSize+","+idx);
+          if (dlok != null)
+          {
+            randomArray = null;
+          	count=0;
+          	while(itemSize != 0)
+          	{
+          		num = getXMLText("randomList","item",count);
+        	  	randomArray  = pushBackStringArray(randomArray, num);
+        	  	count += 1;
+        	  	if (count == itemSize)
+          		{
+        			  break;
+        	  	}
+          	}
+          }
+          randomIndex = 0;
+        }
+
+  		  status = 1;
+  		  playItemURL(-1, 1);
+        
+        startIndex = idx;
+        currentIndex = idx;
+        currentTrackTimestamp = 0;
+        nextTrackTimestamp = getStringArrayAt(durationArray, idx);
+        if(nextTrackTimestamp == "")
+          nextTrackTimestamp = null;
+  
+        url   = getStringArrayAt(urlArray, idx);
+        playTitle = sprintf("%s",(idx-(-1))) + ".  " + getStringArrayAt(titleArray, idx);
+        flac_skip  = getStringArrayAt(skipArray, idx);
+        flac_until  = "-0:00";
+        if(repeat == "One" || repeat == "Random")
+          flac_until = getStringArrayAt(untilArray, idx);
+        meta = "Flac-skip:"+flac_skip+";Flac-until:"+flac_until;
+        urlToPlay = translate_base_url+"flac,"+meta+","+urlEncode(url);
+        playItemURL(urlToPlay, 0, "mediaDisplay", "previewWindow");
+        startPlaying = 0;
+        mode = 0;
+        setRefreshTime(1000);
+      }
+      else
+      {
+        null;
+      }
+		</onClick>
+  </item_template>
+
+<channel>
+	
+<itemSize>
+	<script>itemSize;</script>
+</itemSize>
+
+</channel>
+</rss>

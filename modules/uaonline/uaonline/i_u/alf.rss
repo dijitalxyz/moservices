@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<mediaDisplay name="threePartsView" 
+	itemBackgroundColor="0:0:0"
+	backgroundColor="0:0:0"
+sliding="yes" 
+showDefaultInfo="no" 
+bottomYPC="0" 
+itemGap="1" 
+itemPerPage="10" 
+showHeader="no" 
+sideLeftWidthPC="0" 
+itemImageXPC="0" 
+itemImageHeightPC="0" 
+itemImageWidthPC="0" 
+itemXPC="10" 
+itemYPC="20" 
+itemWidthPC="60" 
+itemHeightPC="6.5" 
+capWidthPC="60" 
+unFocusFontColor="101:101:101" 
+focusFontColor="255:255:255" >
+
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">/tmp/www/cgi-bin/scripts/exua/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+		<backgroundDisplay>
+			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			/tmp/www/cgi-bin/scripts/exua/image/backgd.jpg
+			</image>
+		</backgroundDisplay>
+		<image  offsetXPC=0 offsetYPC=2.8 widthPC=100 heightPC=15.6>
+		/tmp/www/cgi-bin/scripts/exua/image/rss_title.jpg
+		</image>
+		<text  offsetXPC=40 offsetYPC=8 widthPC=35 heightPC=10 fontSize=20 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+		uletno - поиск по алфавиту
+		</text>
+
+</mediaDisplay>
+
+<channel>
+<title>поиск по алфавиту</title>
+<item><title>А</title><link>http://freetv.germet.net/uletno.php?alf=%D0%90</link></item><item><title>Б</title><link>http://freetv.germet.net/uletno.php?alf=%D0%91</link></item><item><title>В</title><link>http://freetv.germet.net/uletno.php?alf=%D0%92</link></item><item><title>Г</title><link>http://freetv.germet.net/uletno.php?alf=%D0%93</link></item><item><title>Д</title><link>http://freetv.germet.net/uletno.php?alf=%D0%94</link></item><item><title>Е</title><link>http://freetv.germet.net/uletno.php?alf=%D0%95</link></item><item><title>Ж</title><link>http://freetv.germet.net/uletno.php?alf=%D0%96</link></item><item><title>З</title><link>http://freetv.germet.net/uletno.php?alf=%D0%97</link></item><item><title>И</title><link>http://freetv.germet.net/uletno.php?alf=%D0%98</link></item><item><title>Й</title><link>http://freetv.germet.net/uletno.php?alf=%D0%99</link></item><item><title>К</title><link>http://freetv.germet.net/uletno.php?alf=%D0%9a</link></item><item><title>Л</title><link>http://freetv.germet.net/uletno.php?alf=%D0%9b</link></item><item><title>М</title><link>http://freetv.germet.net/uletno.php?alf=%D0%9c</link></item><item><title>Н</title><link>http://freetv.germet.net/uletno.php?alf=%D0%9d</link></item><item><title>О</title><link>http://freetv.germet.net/uletno.php?alf=%D0%9e</link></item><item><title>П</title><link>http://freetv.germet.net/uletno.php?alf=%D0%9f</link></item><item><title>П</title><link>http://freetv.germet.net/uletno.php?alf=%D0%9f&amp;offs=100</link></item><item><title>Р</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a0</link></item><item><title>С</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a1</link></item><item><title>С</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a1&amp;offs=100</link></item><item><title>Т</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a2</link></item><item><title>У</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a3</link></item><item><title>Ф</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a4</link></item><item><title>Х</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a5</link></item><item><title>Ц</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a6</link></item><item><title>Ч</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a7</link></item><item><title>Ш</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a8</link></item><item><title>Щ</title><link>http://freetv.germet.net/uletno.php?alf=%D0%a9</link></item><item><title>Ъ</title><link>http://freetv.germet.net/uletno.php?alf=%D0%aa</link></item><item><title>Ы</title><link>http://freetv.germet.net/uletno.php?alf=%D0%ab</link></item><item><title>Ь</title><link>http://freetv.germet.net/uletno.php?alf=%D0%ac</link></item><item><title>Э</title><link>http://freetv.germet.net/uletno.php?alf=%D0%ad</link></item><item><title>Ю</title><link>http://freetv.germet.net/uletno.php?alf=%D0%ae</link></item><item><title>Я</title><link>http://freetv.germet.net/uletno.php?alf=%D0%af</link></item></channel>
+</rss>
+

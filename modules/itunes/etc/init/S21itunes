@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# description: Starts and stops the itunes server daemon
+#
+mos=/usr/local/etc/mos/itunes
+
+case "$1" in
+  start)
+	echo "Starting itunes service..."
+	$mos/mt-daapd -c $mos/mt-daapd.conf
+	;;
+
+  stop)
+	echo "Shutting down itunes services..."
+	killall -9 mt-daapd
+	while ps | grep -q '[mt]-daapd' ; do
+		sleep 1
+	done
+	;;
+
+  status)
+	if ps | grep -q '[mt]-daapd' ; then
+		echo "itunes is running"
+	else
+		echo "itunes is stopped"
+	fi
+	;;
+
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

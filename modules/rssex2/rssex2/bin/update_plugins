@@ -1,0 +1,11 @@
+#!/bin/sh
+
+ARCHIVE_NAME=rss_ex_plugins.tar.bz2
+DOWNLOAD_URL="http://media-translate.googlecode.com/files/$ARCHIVE_NAME"
+DOWNLOAD_PATH=/tmp
+rm -f $DOWNLOAD_PATH/$ARCHIVE_NAME
+wget -P $DOWNLOAD_PATH $DOWNLOAD_URL 
+if [ -f "$DOWNLOAD_PATH/$ARCHIVE_NAME" ]; then
+    tar -xj -C ../plugins -f $DOWNLOAD_PATH/$ARCHIVE_NAME
+    rm -f $DOWNLOAD_PATH/$ARCHIVE_NAME
+fi

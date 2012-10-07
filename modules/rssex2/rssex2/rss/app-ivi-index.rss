@@ -1,0 +1,887 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name="onePartView"
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemXPC="30"
+	itemYPC="25"
+	itemWidthPC="40"
+	itemHeightPC="7"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="9"
+  itemGap="0"
+	bottomYPC="90"
+	showHeader="no"
+	showDefaultInfo="no"
+	sliding="yes"
+	imageFocus=""
+	imageUnFocus=""
+	imageParentFocus=""
+>
+
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  ivi.ru
+		</text>
+
+		<image offsetXPC=5 offsetYPC=2 widthPC=21 heightPC=16>
+		  ../etc/translate/rss/image/menu/ivi.png
+      <widthPC>
+        <script>
+          21 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          5 + 21 * (1 - screenYp / screenXp) / 2;
+        </script>
+      </offsetXPC>
+		</image>
+
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+	
+	<itemDisplay>
+		<text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" fontSize="17" backgroundColor="0:0:0" foregroundColor="250:250:250">
+			<script>
+			  idx = getQueryItemIndex();
+			  focus = getFocusItemIndex();
+		    getItemInfo(idx, "title");
+			</script>
+		  <foregroundColor>
+  			<script>
+  			  idx = getQueryItemIndex();
+  			  focus = getFocusItemIndex();
+  		    if(idx==focus) "255:255:255"; else "150:150:150";
+  			</script>
+		  </foregroundColor>
+		  <backgroundColor>
+  			<script>
+  			  idx = getQueryItemIndex();
+  			  focus = getFocusItemIndex();
+  		    if(idx==focus) "200:0:63"; else "0:0:0";
+  			</script>
+		  </backgroundColor>
+		  <offsetXPC>
+		    <script>
+		      idx = getQueryItemIndex();
+		      value = getItemInfo(idx, "feedIndent");  
+		      if(value == "" || value == null)
+		        value = 0;
+		      value;
+		    </script>
+		  </offsetXPC>
+		  <widthPC>
+		    <script>
+		      100 - value;
+		    </script>
+		  </widthPC>
+		</text>
+	</itemDisplay>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown" || userInput == "PD")
+        {
+          idx -= -9;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 9;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+      	setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      ret;
+    </script>
+  </onUserInput>
+
+</mediaDisplay>
+
+<item_template>
+	<mediaDisplay name="threePartsView">
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+	</mediaDisplay>
+	<onClick>
+	  <script>
+	     focus = getFocusItemIndex();
+       arr = null;
+       arr = pushBackStringArray(arr, getItemInfo(focus, "feedTitle"));
+       arr = pushBackStringArray(arr, getItemInfo(focus, "new"));
+       arr = pushBackStringArray(arr, getItemInfo(focus, "best"));
+       writeStringToFile(storagePath + "stream.dat", arr);
+	     focus = getFocusItemIndex();
+	     linkurl = translate_base_url + "app/ivi/index," + getItemInfo(focus, "type");
+       doModalRss(linkurl);
+	  </script>
+	</onClick> 
+</item_template>
+
+<onExit>
+</onExit>
+
+<onEnter>
+  itemCount = getPageInfo("itemCount");
+
+    translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  
+  storagePath = getStoragePath("tmp");
+</onEnter>
+
+<channel>
+  <title>ivi.ru</title>
+  <item>
+    <location>http://www.ivi.ru/rss/best</location>
+    <title>Главная</title>
+    <rssLink>ivi.ru</rssLink>
+    <feedTitle>ivi.ru</feedTitle>
+    <type>feed_main</type>
+    <best>http://www.ivi.ru/rss/best</best>
+    <new>http://www.ivi.ru/rss/best</new>
+    <feedIndent>0</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/</location>
+    <title>Кино</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/</best>
+    <new>http://www.ivi.ru/rss/new/-/14/</new>
+    <feedIndent>0</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/161</location>
+    <title>Артхаус</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Артхаус</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/161</best>
+    <new>http://www.ivi.ru/rss/new/-/14/161</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/94</location>
+    <title>Боевики</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Боевики</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/94</best>
+    <new>http://www.ivi.ru/rss/new/-/14/94</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/103</location>
+    <title>Военные</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Военные</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/103</best>
+    <new>http://www.ivi.ru/rss/new/-/14/103</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/97</location>
+    <title>Детективы</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Детективы</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/97</best>
+    <new>http://www.ivi.ru/rss/new/-/14/97</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/160</location>
+    <title>Для детей</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Для детей</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/160</best>
+    <new>http://www.ivi.ru/rss/new/-/14/160</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/109</location>
+    <title>Документальные</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Документальные</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/109</best>
+    <new>http://www.ivi.ru/rss/new/-/14/109</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/105</location>
+    <title>Драмы</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Драмы</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/105</best>
+    <new>http://www.ivi.ru/rss/new/-/14/105</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/95</location>
+    <title>Комедии</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Комедии</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/95</best>
+    <new>http://www.ivi.ru/rss/new/-/14/95</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/167</location>
+    <title>Короткометражки</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Короткометражки</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/167</best>
+    <new>http://www.ivi.ru/rss/new/-/14/167</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/107</location>
+    <title>Мелодрамы</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Мелодрамы</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/107</best>
+    <new>http://www.ivi.ru/rss/new/-/14/107</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/163</location>
+    <title>Мировая классика</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Мировая классика</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/163</best>
+    <new>http://www.ivi.ru/rss/new/-/14/163</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/101</location>
+    <title>Приключения</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Приключения</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/101</best>
+    <new>http://www.ivi.ru/rss/new/-/14/101</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/168</location>
+    <title>Советское кино</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Советское кино</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/168</best>
+    <new>http://www.ivi.ru/rss/new/-/14/168</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/127</location>
+    <title>Триллеры</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Триллеры</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/127</best>
+    <new>http://www.ivi.ru/rss/new/-/14/127</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/99</location>
+    <title>Ужасы</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Ужасы</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/99</best>
+    <new>http://www.ivi.ru/rss/new/-/14/99</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/166</location>
+    <title>Фантастика</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Фантастика</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/166</best>
+    <new>http://www.ivi.ru/rss/new/-/14/166</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/14/169</location>
+    <title>Эротика</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Кино / Эротика</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/14/169</best>
+    <new>http://www.ivi.ru/rss/new/-/14/169</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/15/</location>
+    <title>Сериалы</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Сериалы</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/15/</best>
+    <new>http://www.ivi.ru/rss/new/-/15/</new>
+    <feedIndent>0</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/15/93</location>
+    <title>Боевики</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Сериалы / Боевики</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/15/93</best>
+    <new>http://www.ivi.ru/rss/new/-/15/93</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/15/102</location>
+    <title>Военные</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Сериалы / Военные</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/15/102</best>
+    <new>http://www.ivi.ru/rss/new/-/15/102</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/15/96</location>
+    <title>Детективы</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Сериалы / Детективы</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/15/96</best>
+    <new>http://www.ivi.ru/rss/new/-/15/96</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/15/108</location>
+    <title>Документальные</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Сериалы / Документальные</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/15/108</best>
+    <new>http://www.ivi.ru/rss/new/-/15/108</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/15/110</location>
+    <title>Комедийные</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Сериалы / Комедийные</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/15/110</best>
+    <new>http://www.ivi.ru/rss/new/-/15/110</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/15/100</location>
+    <title>Приключения</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Сериалы / Приключения</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/15/100</best>
+    <new>http://www.ivi.ru/rss/new/-/15/100</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/15/106</location>
+    <title>Романтические</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Сериалы / Романтические</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/15/106</best>
+    <new>http://www.ivi.ru/rss/new/-/15/106</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/15/128</location>
+    <title>Триллеры</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Сериалы / Триллеры</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/15/128</best>
+    <new>http://www.ivi.ru/rss/new/-/15/128</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/17/</location>
+    <title>Мультфильмы</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Мультфильмы</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/17/</best>
+    <new>http://www.ivi.ru/rss/new/-/17/</new>
+    <feedIndent>0</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/17/125</location>
+    <title>Аниме</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Мультфильмы / Аниме</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/17/125</best>
+    <new>http://www.ivi.ru/rss/new/-/17/125</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/17/124</location>
+    <title>Для взрослых</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Мультфильмы / Для взрослых</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/17/124</best>
+    <new>http://www.ivi.ru/rss/new/-/17/124</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/17/123</location>
+    <title>Для детей</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Мультфильмы / Для детей</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/17/123</best>
+    <new>http://www.ivi.ru/rss/new/-/17/123</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/17/170</location>
+    <title>Полнометражные</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Мультфильмы / Полнометражные</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/17/170</best>
+    <new>http://www.ivi.ru/rss/new/-/17/170</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/17/172</location>
+    <title>Советские</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Мультфильмы / Советские</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/17/172</best>
+    <new>http://www.ivi.ru/rss/new/-/17/172</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/</location>
+    <title>Программы</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/</best>
+    <new>http://www.ivi.ru/rss/new/-/16/</new>
+    <feedIndent>0</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/113</location>
+    <title>Авто-мото</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Авто-мото</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/113</best>
+    <new>http://www.ivi.ru/rss/new/-/16/113</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/117</location>
+    <title>Вокруг света</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Вокруг света</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/117</best>
+    <new>http://www.ivi.ru/rss/new/-/16/117</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/126</location>
+    <title>Воспитание детей</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Воспитание детей</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/126</best>
+    <new>http://www.ivi.ru/rss/new/-/16/126</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/112</location>
+    <title>Гламур</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Гламур</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/112</best>
+    <new>http://www.ivi.ru/rss/new/-/16/112</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/116</location>
+    <title>Дом и сад</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Дом и сад</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/116</best>
+    <new>http://www.ivi.ru/rss/new/-/16/116</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/120</location>
+    <title>Красота и здоровье</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Красота и здоровье</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/120</best>
+    <new>http://www.ivi.ru/rss/new/-/16/120</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/130</location>
+    <title>Кулинария</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Кулинария</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/130</best>
+    <new>http://www.ivi.ru/rss/new/-/16/130</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/118</location>
+    <title>Охота и рыбалка</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Охота и рыбалка</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/118</best>
+    <new>http://www.ivi.ru/rss/new/-/16/118</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/119</location>
+    <title>Познавательные</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Познавательные</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/119</best>
+    <new>http://www.ivi.ru/rss/new/-/16/119</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/114</location>
+    <title>Психология и гороскопы</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Психология и гороскопы</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/114</best>
+    <new>http://www.ivi.ru/rss/new/-/16/114</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://www.ivi.ru/rss/best/-/16/111</location>
+    <title>Юмористические</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Программы / Юмористические</feedTitle>
+    <type>feed</type>
+    <best>http://www.ivi.ru/rss/best/-/16/111</best>
+    <new>http://www.ivi.ru/rss/new/-/16/111</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/lead.xml</location>
+    <title>Музыка</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/lead.xml</best>
+    <new>http://music.ivi.ru/static/rss/movetly.xml</new>
+    <feedIndent>0</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Alternative_popular.xml</location>
+    <title>Альтернативная музыка</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Альтернативная музыка</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Alternative_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Alternative.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Blues_popular.xml</location>
+    <title>Блюз</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Блюз</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Blues_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Blues.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Kids_popular.xml</location>
+    <title>Детская музыка</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Детская музыка</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Kids_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Kids.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Jazz_popular.xml</location>
+    <title>Джаз</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Джаз</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Jazz_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Jazz.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Classic_popular.xml</location>
+    <title>Классическая музыка</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Классическая музыка</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Classic_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Classic.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Club_popular.xml</location>
+    <title>Клубная музыка</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Клубная музыка</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Club_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Club.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Concerts_popular.xml</location>
+    <title>Концерты</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Концерты</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Concerts_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Concerts.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Latino_popular.xml</location>
+    <title>Латино</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Латино</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Latino_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Latino.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Louge_popular.xml</location>
+    <title>Легкая музыка</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Легкая музыка</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Louge_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Louge.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Punk_popular.xml</location>
+    <title>Панк</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Панк</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Punk_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Punk.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Pop_popular.xml</location>
+    <title>Поп</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Поп</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Pop_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Pop.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/RnB_popular.xml</location>
+    <title>R&amp;B</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / R&amp;B</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/RnB_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/RnB.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Rock_popular.xml</location>
+    <title>Рок</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Рок</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Rock_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Rock.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Reggae_popular.xml</location>
+    <title>Рэгги</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Рэгги</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Reggae_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Reggae.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/RapHipHop_popular.xml</location>
+    <title>Рэп/Хип-Хоп</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Рэп/Хип-Хоп</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/RapHipHop_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/RapHipHop.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Soundtracks_popular.xml</location>
+    <title>Саундтреки</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Саундтреки</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Soundtracks_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Soundtracks.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/HardrocknMetal_popular.xml</location>
+    <title>Хардрок/Метал</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Хардрок/Метал</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/HardrocknMetal_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/HardrocknMetal.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Shanson_popular.xml</location>
+    <title>Шансон</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Шансон</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Shanson_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Shanson.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Electro_popular.xml</location>
+    <title>Электронная музыка</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Электронная музыка</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Electro_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Electro.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+  <item>
+    <location>http://music.ivi.ru/static/rss/Ethnik_popular.xml</location>
+    <title>Этническая музыка</title>
+    <rssLink>rss_file://../etc/translate/app/ivi/</rssLink>
+    <feedTitle>Музыка / Этническая музыка</feedTitle>
+    <type>music</type>
+    <best>http://music.ivi.ru/static/rss/Ethnik_popular.xml</best>
+    <new>http://music.ivi.ru/static/rss/Ethnik.xml</new>
+    <feedIndent>20</feedIndent>
+  </item>
+</channel>
+
+
+</rss>

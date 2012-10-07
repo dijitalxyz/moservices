@@ -1,0 +1,87 @@
+    <!-- clock in right top corner -->
+    <text redraw="yes" align="center" offsetXPC="82" offsetYPC="5" widthPC="14" heightPC="5"
+        fontSize="15" foregroundColor="255:255:255" backgroundColor="150:0:0" cornerRounding="7">
+        <widthPC><script>14 - osdPos;</script></widthPC>
+        <script>executeScript("getTimeStr");
+        timeStr;</script>
+    </text>
+    
+    <!-- main frame -->
+    <text redraw="yes" offsetXPC="20" offsetYPC="70" widthPC="60" heightPC="25"
+        backgroundColor="255:170:0" cornerRounding="20">
+        <widthPC><script>60 - osdPos;</script></widthPC>
+        <backgroundColor><script>if (playingChannel == getFocusItemIndex()) { "255:170:0"; } else { "80:80:80"; }</script></backgroundColor>
+    </text>
+    <!-- header line: channel logo -->
+    <image redraw="yes" offsetXPC="22" offsetYPC="71.5" widthPC="3" heightPC="4">
+        <widthPC><script>3 - osdPos;</script></widthPC>
+        <script>getItemInfo(-1, "thumbnail");</script>
+    </image>
+    <!-- header line: channel name -->
+    <text redraw="yes" offsetXPC="25" offsetYPC="71.5" widthPC="19" heightPC="4" fontSize="15" backgroundColor="255:170:0">
+        <widthPC><script>19 - osdPos;</script></widthPC>
+        <backgroundColor><script>if (playingChannel == getFocusItemIndex()) { "255:170:0"; } else { "80:80:80"; }</script></backgroundColor>
+        <script>getItemInfo(-1, "title");</script>
+    </text>
+    <!-- header line: program time -->
+    <text redraw="yes" offsetXPC="67" offsetYPC="71.5" widthPC="12" heightPC="4" fontSize="15" backgroundColor="255:170:0">
+        <widthPC><script>12 - osdPos;</script></widthPC>
+        <backgroundColor><script>if (playingChannel == getFocusItemIndex()) { "255:170:0"; } else { "80:80:80"; }</script></backgroundColor>
+        <script>currTime;</script>
+    </text>
+
+    <!-- header line: progressbar: background -->
+    <text redraw="yes" offsetXPC="45" offsetYPC="71.6" widthPC="21" heightPC="3.9"
+        align="center" fontSize="13" backgroundColor="{$config->get(bgNormal)}">
+        <widthPC>
+            <script>
+                if (null != currPercent) {
+                    21 - osdPos;
+                } else {
+                    0;
+                }
+            </script>
+        </widthPC>
+        <script>"";</script>
+    </text>
+    <!-- header line: progressbar: progress -->
+    <text redraw="yes" offsetXPC="45" offsetYPC="71.6" widthPC="21" heightPC="3.9"
+        align="center" fontSize="13" backgroundColor="50:50:50">
+        <widthPC>
+            <script>
+                if (null != currPercent) {
+                    currPercent * 21 / 100 - osdPos;
+                } else {
+                    0;
+                }
+            </script>
+        </widthPC>
+        <script>"";</script>
+    </text>
+    <!-- header line: progressbar: percentage info -->
+    <text redraw="yes" offsetXPC="52" offsetYPC="71.5" widthPC="7" heightPC="4"
+        align="center" fontSize="13" backgroundColor="-1:-1:-1">
+        <widthPC><script>7 - osdPos;</script></widthPC>
+        <script>
+            if (null != currPercent) {
+                "" + currPercent + "%";
+            } else {
+                "";
+            }
+        </script>
+    </text>
+
+    <!-- details pane: background -->
+    <text redraw="yes" offsetXPC="20.2" offsetYPC="76.5" widthPC="59.7" heightPC="18.3"
+        tailDots="yes" fontSize="14" lines="4" foregroundColor="150:150:150"
+        backgroundColor="{$config->get(bgNormal)}" cornerRounding="20">
+        <widthPC><script>59.7 - osdPos;</script></widthPC>
+        <script>"";</script>
+    </text>
+    <!-- details pane: description text -->
+    <text redraw="yes" offsetXPC="20" offsetYPC="78" widthPC="62" heightPC="15"
+        tailDots="yes" fontSize="14" lines="4" foregroundColor="150:150:150" backgroundColor="-1:-1:-1">
+        <widthPC><script>62 - osdPos;</script></widthPC>
+        <script>currDescr;</script>
+    </text>
+    

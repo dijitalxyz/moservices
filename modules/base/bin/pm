@@ -1,0 +1,447 @@
+#!/bin/sh
+#----------------------------------------------------------
+# Package manager moServices3
+#
+etc=/usr/local/etc
+mos=$etc/mos
+pm=$mos/etc/pm
+tmp=/tmp
+
+repository="http://www.moservices.org/mos3"
+
+# read config
+if [ -f $mos/etc/pm.conf ] ; then
+	eval "$( cat $mos/etc/pm.conf )"
+else
+	echo 'repository="'$repository'"' > $mos/etc/pm.conf
+fi
+
+# other repo
+[ -f /tmp/repo ] && repository="$( head -n 1 /tmp/repo )"
+
+#--------------------------------------
+loadFile()
+{
+	[ -n "$2" ] && tmp=$2
+
+	# download
+	if [ ! -f $tmp/$1.tar.bz2 ]; then
+		wget $repository/$1.tar.bz2 -O $tmp/$1.tar.bz2
+		if [ $? -ne 0 ] ; then
+			echo "Unable to download $repository/$1.tar.bz2"
+			rm -f $tmp/$1.tar.bz2
+			return 1
+		fi
+	fi
+	# check
+	tar -tjf $tmp/$1.tar.bz2 >/dev/null 2>&1
+	if [ $? -ne 0 ] ; then
+		echo "Archive $tmp/$1.tar.bz2 is corrupt"
+		rm -f $tmp/$1.tar.bz2
+		return 1
+	fi
+	return 0
+}
+
+#--------------------------------------
+extractFile()
+{
+	# untar
+	tar -xjf $tmp/$1.tar.bz2 -C $mos/
+	if [ $? -ne 0 ] ; then
+		echo "$tmp/$1.tar.bz2 extract error"
+		rm -f $tmp/$1.tar.bz2
+		return 1
+	fi
+	rm -f $tmp/$1.tar.bz2
+	return 0
+}
+
+
+# -------------------------------------
+getFreeMem()
+{
+	s=$( echo $( df | grep -E ' '$mos'$' ) | cut -d' ' -f4 )
+	[ -z "$s" ] && s=$( echo $( df | grep -E ' '$etc'$' ) | cut -d' ' -f4 )
+	echo $s
+}
+
+#--------------------------------------
+# $1 - list file
+# $2 - package name
+# $3 - parameter name
+#
+getParameterFromList()
+{
+	sed -nr '/\['$2'\]/{:a;n;/\[.*\]/q;s/^[ 	]*'$3'[ 	]*=[ 	]*"?([^"]*).*$/\1/p;t;ba;}' $1
+}
+
+#--------------------------------------
+# $1 - list file
+# $2 - package name
+#
+getPackageFromList()
+{
+	sed -n '/\['$2'\]/{p;:a;n;/^$/ba;/\[.*\]/q;p;ba;}' $1
+}
+
+#--------------------------------------
+# $1 - list file
+# $2 - package name
+#
+removePackageFromList()
+{
+	sed -ni '/\['$2'\]/{:a;n;/\[.*\]/bb;ba;:b;};p' $1
+}
+
+#--------------------------------------
+updateList()
+{
+	echo " Update repository list"
+
+	loadFile packages || return 1
+	extractFile packages || return 1
+
+	if [ ! -f $pm/installed ] ; then
+		getPackageFromList $pm/packages base > $pm/installed
+		echo >> $pm/installed
+	fi
+
+	return 0
+}
+
+#--------------------------------------
+checkPackageInList()
+{
+	if [ ! -f $pm/packages ] ; then
+		updateList || return 1
+	fi
+	grep -q "\[$1\]" $pm/packages && return 0
+	echo "  Package $1 not found in list"
+	return 1
+}
+
+#--------------------------------------
+checkPackageInstalled()
+{
+	grep -q "\[$1\]" $pm/installed && return 0
+	return 1
+}
+
+#--------------------------------------
+runPatches()
+{
+	for i in $mos/*.patch ; do
+		[ -f $i ] || continue
+		[ -x $i ] && $i
+		rm -f $i
+	done
+}
+
+#--------------------------------------
+installPackage()
+{
+local p
+
+	echo " Install package $1"
+
+	if [ "$2" != 'alone' ] ; then
+		checkPackageInList $1 || return 1
+	fi
+
+	if checkPackageInstalled $1 ; then
+		echo "  Package $1 already installed"
+	else
+		if [ "$2" != 'alone' ] ; then
+			# check for installable
+			h="$( getParameterFromList $pm/packages $1 check )"
+			if [ -n "$h" ] ; then
+				h="$pm/check/$h"
+			else
+				h="$pm/check/$1"
+			fi
+			v=$( echo $h | cut -d' ' -f1 )
+			if [ -f $v ] && [ -x $v ] ; then
+				$h $1
+				ret=$?
+				if [ $ret -eq 1 ] ; then
+					echo "  Package $1 is not installable"
+					return 1
+				elif [ $ret -eq 2 ] ; then
+					echo "  Package $1 is embeded"
+					echo -e "[$1]\n\trevision = emb\n" >> $pm/installed
+					return 0
+				fi
+			fi
+			# check memory
+			h=$( getFreeMem )
+			v=$( getParameterFromList $pm/packages $1 size )
+			if [ $v -gt $h ] ; then
+				echo "  No enough memory for $1"
+				return 1
+			fi
+		fi
+		#
+		loadFile $1 || return 1
+		extractFile $1 || return 1
+		cat $mos/$1.package >> $pm/installed
+		echo >> $pm/installed
+		rm -f $mos/$1.package
+	fi
+	# required packages
+	if [ -f $pm/required/$1 ] ; then
+
+		for p in $( cat $pm/required/$1 ) ; do
+
+			if [ "$p" != "$1" ] ; then
+				installPackage $p || continue
+			fi
+			# uses
+			mkdir -p $pm/uses
+			if [ ! -f $pm/uses/$p ] ; then
+				echo $1 > $pm/uses/$p
+			else
+				grep -q '^'$1'$' $pm/uses/$p || echo $1 >> $pm/uses/$p
+			fi
+		done
+	fi
+
+	runPatches
+
+	return 0
+}
+
+#--------------------------------------
+removePackage()
+{
+local p
+
+	echo " Remove package $1"
+
+	if ! checkPackageInstalled $1 ; then
+		echo "  Package $1 not installed"
+		return 1
+	fi
+
+	if [ -f $pm/uses/$1 ] ; then
+		echo "  Package $1 is used by other packages"
+		return 1
+	fi
+
+	# required packages
+	if [ -f $pm/required/$1 ] ; then
+
+		for p in $( cat $pm/required/$1 ) ; do
+
+			if [ -f $pm/uses/$p ] ; then
+				sed -i '/^'$1'$/d' $pm/uses/$p
+				if [ -z "$( cat $pm/uses/$p )" ] ; then
+					rm -f $pm/uses/$p
+					[ "$p" != "$1" ] && removePackage $p
+				fi
+			fi
+		done
+	fi
+
+	# remove files
+	if [ -f $pm/files/$1 ] ; then
+
+		for p in $( cat $pm/files/$1 ) ; do
+			rm -Rf $mos/$p
+		done;
+		rm -f $pm/required/$1
+		rm -f $pm/uses/$1
+		rm -f $pm/files/$1
+	fi
+	removePackageFromList $pm/installed $1
+}
+
+#--------------------------------------
+updatePackage()
+{
+local p
+
+	echo " Update package $1"
+
+	if [ "$2" != 'alone' ] ; then
+		checkPackageInList $1 || return 1
+	fi
+
+	if ! checkPackageInstalled $1 ; then
+		echo "  Package $1 not installed"
+		return 1
+	fi
+
+	irev=$( getParameterFromList $pm/installed $1 revision )
+	if [ "$irev" == 'emb' ] ; then
+		echo "  Package embeded"
+		return 0
+	fi
+
+	if [ "$2" != 'now' ] ; then
+		arev=$( getParameterFromList $pm/packages $1 revision )
+		if [ $irev -eq $arev ] ; then
+			echo "  Nothing for update"
+			return 0
+		fi
+	fi
+	# check memory
+	h=$( getFreeMem )
+	p=$( getParameterFromList $pm/installed $1 size )
+	v=$( getParameterFromList $pm/packages $1 size )
+	let h=h+p-v
+	if [ $h -le 0 ] ; then
+		echo "  No enough memory for update $1"
+		return 1
+	fi
+
+	# load package
+	loadFile $1 || return 1
+
+	# remove files
+	if [ -f $pm/files/$1 ] ; then
+
+		for p in $( cat $pm/files/$1 ) ; do
+			rm -Rf $mos/$p
+		done;
+		rm -f $pm/files/$1
+		rm -f $pm/required/$1
+	fi
+	removePackageFromList $pm/installed $1
+
+	# extract package
+	extractFile  $1 || return 1
+	cat $mos/$1.package >> $pm/installed
+	echo >> $pm/installed
+	rm -f $mos/$1.package
+
+	# required packages
+	if [ -f $pm/required/$1 ] ; then
+
+		for p in $( cat $pm/required/$1 ) ; do
+
+			if checkPackageInstalled $p ; then
+				[ "$p" != "$1" ] && updatePackage $p
+			else
+				if [ "$p" != "$1" ] ; then
+					installPackage $p || continue
+				fi
+				# uses
+				mkdir -p $pm/uses
+				if [ ! -f $pm/uses/$p ] ; then
+					echo $1 > $pm/uses/$p
+				else
+					grep -q '^'$1'$' $pm/uses/$p || echo $1 >> $pm/uses/$p
+				fi
+			fi
+		done
+	fi
+
+	runPatches
+
+	return 0
+}
+
+#--------------------------------------
+makePackage() {
+
+	if [ -f $pm/files/$1 ] ; then
+		echo "Making $1..."
+		i=$( cat $pm/files/$1 )
+		i=$i" etc/pm/files/$1"
+		[ -f $pm/required/$1 ] && i=$i" etc/pm/required/$1"
+		[ -f $pm/check/$1 ]  && i=$i" etc/pm/check/$1"
+
+		for a in $( ls $mos/etc/about/$1.* 2>/dev/null ) ; do
+			i="$i etc/about/$( basename $a )"
+		done
+
+		p=$PWD
+		cd $mos
+		s=$( du -sc $i | tail -n1 | cut -f1 )
+		cd $p
+
+		getPackageFromList $pm/installed $1 > $mos/$1.package
+
+		sed -i '/size[ 	]*=/d' $mos/$1.package
+		echo '	size = '$s >> $mos/$1.package
+
+		i=$i" $1.package"
+
+		tar cjf $2/$1.tar.bz2 -C $mos/ $i
+
+		rm -f $mos/$1.package
+	else
+		echo "$1 not present"
+	fi
+}
+
+#--------------------------------------
+# main
+#--------------------------------------
+
+case "$1" in
+  install)
+	installPackage $2 $3
+	;;
+  remove)
+	removePackage $2
+	;;
+  update)
+	updatePackage $2 $3
+	;;
+  updatelist)
+	updateList
+	;;
+  make)
+	m=''
+	[ $# -ge 2 ] && m=$2
+	[ "$m" = 'all' ] && m=''
+
+	d=/tmp
+	[ $# -ge 3 ] && d=$3
+
+	if [ "$m" = "full" ] ; then
+
+		echo "Making full..."
+		cd $mos
+		tar cjf $d/full.tar.bz2 *
+
+	else
+		s=$( ls $pm/files/$m* )
+		for i in $s ; do
+			makePackage $( basename $i ) $d
+		done
+	fi
+	;;
+  get)
+	loadFile $2 $3
+	;;
+  show)
+	case "$2" in
+	  repository)
+		echo $repository
+		;;
+	  freememory)
+		getFreeMem
+		;;
+	esac
+	;;
+
+  *)
+	echo "moServices Package Manager v 0.10 (http://www.moservices.org)
+Usage: pm <action> ...
+Avaiable:
+	install <package> [alone]
+	remove <package>
+	update <package> [alone]
+	updatelist
+	make <package>|all|full [<destination_path>] (default /tmp)
+	get <package> [<destination_path>] (default /tmp)
+	show
+		repository
+		freememory"
+	;;
+esac
+
+exit $?

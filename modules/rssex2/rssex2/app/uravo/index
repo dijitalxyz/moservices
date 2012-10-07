@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2011  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+local DATAPATH=$BASEPATH/app/uravo
+cd $DATAPATH
+
+local CHANNELFILE="$CACHEPATH/uravo.index.xml"
+local CHANNELXML=$TMPFILE.xml
+
+TIMELIFE=21600
+
+let tsttime=`date +%s`-$TIMELIFE
+
+REFRESHCACHE=yes
+if [ -f "$CHANNELFILE" ]; then
+  if [ `date +%s -r "$CHANNELFILE"` -gt $tsttime ]; then
+    REFRESHCACHE=
+  fi
+fi
+
+if [ $REFRESHCACHE ]; then
+  $MSDL -q -o "$CHANNELXML" -p http --useragent "$USERAGENT" "http://uravo.tv"
+  if [ -f "$CHANNELXML" ]; then
+    if [ "`ls -s "$CHANNELXML" | awk '{print $1}'`" != "0" ]; then
+      if [ -x "$XSLTPROC" ]; then
+        $XSLTPROC --encoding utf-8 --html index.xslt "$CHANNELXML" 2>/dev/null | sed '1d' > $CHANNELFILE
+      fi
+      rm -f "$CHANNELXML"
+    fi
+  fi
+fi
+
+if [ -f "$CHANNELFILE" ]; then
+(
+  export BASEPATH;
+  export CHANNELFILE;
+  template2rss index.xml | printContent "application/rss+xml"
+)
+fi

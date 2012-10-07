@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+mos=/usr/local/etc/mos
+
+start()
+{
+	#wait IP
+	$mos/bin/wait_ip && exit 1
+
+	$mos/bin/ushare -D -f $mos/etc/ushare.conf
+}
+
+stop()
+{
+	if ps | grep -q '[u]share'; then
+		killall -SIGINT ushare 2> /dev/null
+		sleep 3
+		killall -9 ushare 2> /dev/null
+	fi
+}
+
+case "$1" in
+  start|restart)
+	stop
+	start
+	;;
+  stop)
+	stop
+	;;
+  status)
+	if ps | grep -q '[u]share'; then
+		echo "uShare running"
+	else
+		echo "uShare stopped"
+	fi
+	;;
+  enable|disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit 0

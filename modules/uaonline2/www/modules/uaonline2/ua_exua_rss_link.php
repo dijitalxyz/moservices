@@ -1,0 +1,341 @@
+<?php
+/*	------------------------------
+	Ukraine online services 	
+	EX.ua RSS link module v1.7
+	------------------------------
+	Created by Sashunya 2012	
+	wall9e@gmail.com			
+	Some code was used from 
+	Farvoice & others 
+	------------------------------ */
+
+
+include( 'ua_rss_view.php' );
+
+class ua_rss_link extends ua_rss_link_const
+{
+	// функция вставляет бордюры все картинки и текст
+	//-------------------------------
+	public function mediaDisplay_content()
+	{
+	global $ua_images_path;
+	
+		include ("ua_rss_images_rss_link.inc.php");
+	
+	?>
+	
+	
+		<image  offsetXPC="<?= static::image_site_footer_display_offsetXPC ?>" offsetYPC="<?= static::image_site_footer_display_offsetYPC ?>" widthPC="<?= static::image_site_footer_display_widthPC ?>" heightPC="<?= static::image_site_footer_display_heightPC ?>">
+					<?= $ua_images_path . static::exua_logo ?>
+		</image>
+	<?php
+		include ("ua_rss_description.inc.php");
+	?>
+	
+	<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
+		 <script>
+			footer = "Страница :"+page+"/"+countPage+" Качество: "+qual+" Плеер: "+type_player; 
+		 footer; </script>
+	</text>
+	
+	<?php	
+		
+	}
+	// функция выводит список фильмов
+	//-------------------------------
+	public function itemDisplay_content()
+	{
+	include ("ua_rss_itemdisplay_rss_link.inc.php");
+	}	
+	//-------------------------------
+	public function onRefresh()
+	{
+	global $ua_path;
+	global $ua_path_link;
+	global $exua_parser_filename;
+	global $ua_favorites_filename;
+	?>
+	<initialScript>
+		setting = getURL("<?=$ua_path_link.$exua_parser_filename.'?exua_quality=req'?>");
+		print("setting:",setting);
+		if (setting == "1") qual = "Высокое"; else qual = "Низкое";
+		pitemCount = 0;
+		ptitleArray = null;
+		plinkArray = null;
+		pdownlinkArray = null;
+		pdownameArray = null;
+		pbooklinkArray = null;
+		dlok = getURL(url+"&amp;quality="+setting);
+		print("***dlok"+dlok);
+		if (dlok != null) dlok = readStringFromFile( dlok );
+		if (dlok != null)
+			{
+				ds1 = getStringArrayAt(dlok, 1);
+				ds2 = getStringArrayAt(dlok, 2);
+				ds3 = getStringArrayAt(dlok, 3);
+				ds4 = getStringArrayAt(dlok, 4);
+				ds5 = getStringArrayAt(dlok, 5);
+				ds6 = getStringArrayAt(dlok, 6);
+				ds7 = getStringArrayAt(dlok, 7);
+				ds8 = getStringArrayAt(dlok, 8);
+				ds9 = getStringArrayAt(dlok, 9);
+				name = getStringArrayAt(dlok, 0);
+				img = getStringArrayAt(dlok, 10);
+				c = 11;
+				pitemCount = getStringArrayAt(dlok, c); c += 1;
+				count = 0;
+				while( count != pitemCount )
+					{
+					ptitleArray = pushBackStringArray( ptitleArray, getStringArrayAt(dlok, c)); c += 1;
+					plinkArray = pushBackStringArray( plinkArray, getStringArrayAt(dlok, c)); c += 1;			
+					pdownlinkArray = pushBackStringArray( pdownlinkArray, getStringArrayAt(dlok, c)); c += 1;			
+					pdownameArray = pushBackStringArray( pdownameArray, getStringArrayAt(dlok, c)); c += 2;						
+					pbooklinkArray = pushBackStringArray( pbooklinkArray, getStringArrayAt(dlok, c)); c += 1;						
+					count += 1;
+					}
+			}	
+		countPage = getURL("<?=$ua_path_link?>ua_exua_parser.php?pitemCount="+pitemCount+"&amp;num=20");
+		print ("countPage - "+countPage);
+	</initialScript>
+	
+	<onRefresh>
+	setRefreshTime(-1);    
+	showIdle();
+    if (pstyle == "1") 	type_player="Альтерн.";
+		else
+						type_player="Стандарт.";
+	itemCount = 0;
+	titleArray = null;
+	linkArray = null;
+	downlinkArray = null;
+	downameArray = null;
+	booklinkArray = null;
+	
+	
+		if ( page &lt;= countPage ){
+			maxCount = page*20;
+			count = maxCount-20;
+			if (maxCount &gt; pitemCount) maxCount = pitemCount; 
+			itemCount = maxCount - count;
+			print ("maxCount - "+maxCount);
+			print ("count - "+count);
+			while( count &lt;= maxCount )
+				{
+				titleArray = pushBackStringArray( titleArray, getStringArrayAt(ptitleArray, count));
+				linkArray = pushBackStringArray( linkArray, getStringArrayAt(plinkArray, count));			
+				downlinkArray = pushBackStringArray( downlinkArray, getStringArrayAt(pdownlinkArray, count)); 
+				downameArray = pushBackStringArray( downameArray, getStringArrayAt(pdownameArray, count)); 						
+				booklinkArray = pushBackStringArray( booklinkArray, getStringArrayAt(pbooklinkArray, count)); 						
+				count -=- 1;
+				}
+		}
+	
+		menuArray = null;
+		menucmdArray = null;
+		menuCount = 4;
+		if ( page &lt; countPage ){
+			menuArray = pushBackStringArray( menuArray, "След.страница");
+			menucmdArray = pushBackStringArray( menucmdArray, "next");
+			menuCount += 1;
+			}
+		if (page > 1) {
+			menuCount += 1;
+			menuArray = pushBackStringArray( menuArray, "Пред.страница");
+			menucmdArray = pushBackStringArray( menucmdArray, "prev");
+			} 
+		if(countPage > 2){
+			if(page + 1 &lt; countPage)
+			{
+				menuCount += 1;
+				menuArray = pushBackStringArray( menuArray, "Послед.страница");
+				menucmdArray = pushBackStringArray( menucmdArray, "last");
+			}
+			if(page > 2)
+			{
+				menuCount += 1;
+				menuArray = pushBackStringArray( menuArray, "Перв.страница");
+				menucmdArray = pushBackStringArray( menucmdArray, "first");
+			}			
+		}
+		menuArray = pushBackStringArray( menuArray, "Качество");
+		menucmdArray = pushBackStringArray( menucmdArray, "quality");
+		menuArray = pushBackStringArray( menuArray, "Загрузить");
+		menucmdArray = pushBackStringArray( menucmdArray, "download");
+		menuArray = pushBackStringArray( menuArray, "Менеджер");
+		menucmdArray = pushBackStringArray( menucmdArray, "manager");
+	 	menuArray = pushBackStringArray( menuArray, "Плеер");
+		menucmdArray = pushBackStringArray( menucmdArray, "player_style");
+		
+			
+			
+		setFocusItemIndex(itm_index);
+		setFocusMenuIndex(menu);
+		redrawDisplay();
+	</onRefresh>
+	<?php
+	}
+	//-------------------------------
+	public function menu()
+	{
+	global $ua_path;
+	global $ua_path_link;
+	global $exua_parser_filename;
+	global $key_return;
+	global $ua_favorites_filename;
+	global $ua_rss_download_filename;
+	global $ua_player_parser_filename;
+	include ("ua_rss_download_rss_link.inc.php");
+	?>
+	<menu_template>
+	<displayTitle>
+		<script>
+			getStringArrayAt( menuArray , getQueryMenuIndex() );
+		</script> 
+	</displayTitle>
+	<onClick>
+		showIdle();
+		act = getStringArrayAt( menucmdArray , menu );
+		idx = getQueryItemIndex();
+		blink = getStringArrayAt(linkArray,idx);
+		bdownlink = getStringArrayAt(downlinkArray,idx);
+		bdowname = getStringArrayAt(downameArray,idx);
+		bbooklink = getStringArrayAt(booklinkArray,idx);
+		
+		if (act == "exit") postMessage("<?=$key_return?>"); 
+		else
+		if (act == "quality") {
+			
+			if (setting == "1") setting = "0"; else setting = "1";
+			data = getURL("<?=$ua_path_link.$exua_parser_filename.'?exua_quality=send&amp;exua_quality_val='?>"+setting);
+			executeScript("initialScript");
+			setRefreshTime(1);
+		}
+		else
+		if (act == "player_style") {
+			
+			if (pstyle == "1") pstyle = "0"; else pstyle = "1";
+			data = getURL("<?=$ua_path_link.$ua_player_parser_filename.'?player_style=send&amp;player_style_val='?>"+pstyle);
+			setRefreshTime(1);
+		}
+		
+		else
+		if (act == "download") {
+			down_jump="<?=$ua_path_link.$ua_rss_download_filename ?>"+"?title=" + urlEncode(bdowname) + "&amp;downloadlink=" + urlEncode(bdownlink);
+			jumpToLink("download");
+		}
+		else
+		if (act == "manager") {
+			down_jump="<?=$ua_path_link.$ua_rss_download_filename."?display=1"?>";
+			jumpToLink("download");
+		}
+		else
+		{
+			if (act == "next") {page-=-1; itm_index=0;}
+			else if (act == "prev") {page-=1; itm_index=0;}
+			else if(act == "first") { page =1; itm_index = 0;}
+			else if(act == "last") { page = countPage; itm_index = 0;}			
+			setRefreshTime(1);
+		}
+		null;
+	</onClick>
+	</menu_template>
+	<?php
+	}
+	//-------------------------------
+	public function onEnters()
+	{
+	global $ua_path_link;
+	global $ua_player_parser_filename;
+	global $xtreamer;
+	?>
+	<onEnter>
+	returnFromLink=readStringFromFile("/tmp/env_returnFromLink_message");
+	returnFromList=readStringFromFile("/tmp/env_returnFromList_message");
+		if (returnFromLink == "1" || returnFromList == "1")
+			{
+				writeStringToFile("/tmp/env_returnFromLink_message", "");
+				writeStringToFile("/tmp/env_returnFromList_message", "");
+			}
+	else
+	{ 
+	showIdle();
+	<?php
+		 if (isset($_GET['file'])) {
+			$param=$_GET['file'];
+			$url=$ua_path_link."ua_exua_parser.php?file=";
+			}
+	?>
+					
+	param = "<?= $param?>";
+	url = "<?= $url ?>"+param;
+	pstyle = getURL("<?=$ua_path_link.$ua_player_parser_filename.'?player_style=req'?>");
+	page = 1;
+	executeScript("initialScript");
+	itm_index=0;
+	menu=0;
+	use_alt_player=readStringFromFile("/tmp/env_use_alt_player_message");
+		if (use_alt_player == "1")
+			{
+				writeStringToFile("/tmp/env_use_alt_player_message", "");
+				idx_play=readStringFromFile("/tmp/env_idx_play_message");
+				print("idx_play",idx_play);
+				page=idx_play / 20;
+				if (page &gt; 10) div=100; else div =10;
+				page=page % div;
+				itm_index = idx_play-page*20;
+				page-=-1;
+			}
+	cancelIdle();
+	setRefreshTime(1);    
+	}
+	</onEnter>
+	
+	<onExit>
+		<?php
+		if ($xtreamer)
+			{
+			?>
+				SwitchViewer(0);
+			<?php
+			}
+		?>	
+		writeStringToFile("/tmp/env_returnFromLink_message", "1");
+	</onExit>
+	
+	<?php
+	}
+	//-------------------------------
+	public function items()
+	{
+	include ("ua_rss_items_rss_link.inc.php");
+	}
+	//-------------------------------
+	public function channel()
+	{
+	global $ua_path;
+	global $exua_rss_link_filename;
+	?>
+	<channel>
+	<title>LINK</title>
+	<link><?=$ua_path.$exua_rss_link_filename?></link>
+
+	<itemSize>
+		<script>
+			itemCount;
+		</script>
+    </itemSize>
+	<menuSize>
+		<script>
+			menuCount;
+		</script>
+    </menuSize>
+		
+	</channel>
+	<?php
+	}
+}
+//-------------------------------
+$view = new ua_rss_link;
+$view->showRss();
+exit;
+?>

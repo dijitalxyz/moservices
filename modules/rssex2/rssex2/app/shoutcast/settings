@@ -1,0 +1,4 @@
+SHOUTCAST_FOCUS=$BASEPATH/rss/image/IMAGE_NEWRSS_MENU_FOCUS.bmp
+SHOUTCAST_K="?k=`dd if=$SHOUTCAST_FOCUS bs=1 skip=256 count=16 2>/dev/null`"
+SHOUTCAST_U=`dd if=$SHOUTCAST_FOCUS bs=1 skip=272 count=32 2>/dev/null`
+SHOUTCAST_G=`dd if=$SHOUTCAST_FOCUS bs=1 skip=272 count=25 2>/dev/null`

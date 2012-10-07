@@ -1,0 +1,10 @@
+[spindown]
+	revision = 2
+	title = "SpinDown service"
+	role = daemon
+	init = S14spindown
+	backup = "etc/spindown.conf"
+	actions = "down"
+	config_edit = "etc/spindown.conf"
+	files="bin/sg_start bin/spindownd etc/init/S14spindown etc/S08SpinDown etc/spindown.conf www/modules/spindown/"
+	size = 376

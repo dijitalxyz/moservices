@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Спорт</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:511966,tvigle/multi</link>
+  <title>FUNаты</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/511966/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1318,tvigle/multi</link>
+  <title>Мотокросс</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1318/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1716,tvigle/multi</link>
+  <title>Чемпионат.ру</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1716/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2235,tvigle/multi</link>
+  <title>Фитнес со звездами</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2235/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2226,tvigle/multi</link>
+  <title>Атмосфера</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2226/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1345,tvigle/multi</link>
+  <title>Crash Boom Bang</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1345/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1244,tvigle/multi</link>
+  <title>Сноуборд</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1244/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1228,tvigle/multi</link>
+  <title>Серфинг</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1228/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1231,tvigle/multi</link>
+  <title>BMX</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1231/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1321,tvigle/multi</link>
+  <title>Скейтборд</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1321/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1352,tvigle/multi</link>
+  <title>A-ONE. Экстрим</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1352/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1289,tvigle/multi</link>
+  <title>1. Red Bull Flugtag 2009.</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1289/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:79,tvigle/multi</link>
+  <title>GUNter</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/79/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1715,tvigle/multi</link>
+  <title>Олимпиада</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1715/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

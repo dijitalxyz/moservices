@@ -1,0 +1,346 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- playerTV -->
+
+<script>
+	elapsedTime = "";
+	loadingStatus = 0;
+	checkStatus = 1;
+	showLoading = 0;
+	record = 0;
+	showInfo = 0;
+	changeChannel = 0;
+	channelStr = "";
+	channelCount = 0;
+
+	cPlayPause = 1;
+</script>
+
+<onEnter>
+	info_streamTitle = "<!--{TITLE}!-->";
+	info_streamURL = "<!--{LINK}!-->";
+	info_playURL = "<!--{URL}!-->";
+	info_recordURL = "<!--{REC_URL}!-->";
+	setRefreshTime(100);
+	startVideo = 1;
+	timeStamp = <!--{TIMESTAMP}!-->;
+	currentChannel = <!--{CHANNEL}!-->;
+</onEnter>
+
+<onExit>
+	playItemURL(-1, 1);
+	setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+	if(changeChannel != 0)
+	{
+		if (channelStr != "")
+		{
+			changeChannel = Integer(channelStr) - 1;
+		}
+		channelStr = "";
+		if(changeChannel &gt;= 0 &amp;&amp; changeChannel &lt; channelCount)
+		{
+			currentChannel = changeChannel;
+			info_streamTitle = getStringArrayAt(itemTitleArray, changeChannel);
+			info_streamURL = getStringArrayAt(itemURLArray, changeChannel);
+			info_playURL = getStringArrayAt(itemPlayURLArray, changeChannel);
+			info_recordURL = getStringArrayAt(itemRecordURLArray, changeChannel);
+			
+			playItemURL(-1, 1);
+			setRefreshTime(-1);
+			changeChannel = 0;
+			elapsedTime = "";
+			loadingStatus = 0;
+			checkStatus = 1;
+			showLoading = 0;			
+			startVideo = 1;
+			record = 0;
+		}
+		changeChannel = 0;
+	}
+	vidProgress = getPlaybackStatus();
+	bufProgress = getCachedStreamDataSize(0, 262144);
+	playElapsed = getStringArrayAt(vidProgress, 0);
+	playStatus = getStringArrayAt(vidProgress, 3);
+	print("Media status =", vidProgress);
+	if(checkStatus != 0 &amp;&amp; loadingStatus == 0)
+	{
+		loadingStatus = 1;
+		checkStatus = 0;
+	}
+	loadingStatus = 0;
+	if (startVideo == 1)
+	{
+		setRefreshTime(1000);
+		showLoading = 1;
+		startVideo = 0;
+		timeStamp += 1;
+		if(record == 0)
+			playItemURL(info_playURL, 0, "mediaDisplay", "previewWindow");
+		else
+		{
+			recordURL = info_recordURL + "&amp;" + timeStamp;
+			playItemURL(recordURL, 0, "mediaDisplay", "previewWindow");		
+		}
+		updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+	} else
+	{
+		if (playElapsed != 0)
+		{
+			x = Integer(playElapsed / 60);
+			h = Integer(playElapsed / 3600);
+			s = playElapsed - (x * 60);
+			m = x - (h * 60);
+			if(h &lt; 10) 
+				elapsedTime = "0" + sprintf("%s:", h);
+			else
+				elapsedTime = sprintf("%s:", h);
+			if(m &lt; 10)  elapsedTime += "0";
+			elapsedTime += sprintf("%s:", m);
+			if(s &lt; 10)  elapsedTime += "0";
+			elapsedTime += sprintf("%s", s);
+			print("elapsedTime =", elapsedTime);
+			if (startVideo == 0)
+			{
+				startVideo = 2;
+				statusCounter = 0;
+				statusTimeout = 60;
+				updatePlaybackProgress("delete", "mediaDisplay", "progressBar");
+			}
+			else if(startVideo == 2)
+			{
+				statusCounter += 1;
+				print("statusCounter =", statusCounter);
+				if (statusCounter &gt;= statusTimeout)
+				{
+					statusCounter = 0;
+					checkStatus = 1;
+				}
+			}
+		}
+		else if (playStatus == 0)
+		{
+			print("Media quit, return!");
+			postMessage("return");
+		}
+		else
+		{
+			print("no playing yet, update buffer progress ", bufProgress);
+			updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+		}
+	}
+	if(showInfo == 1)
+	{
+		updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+	}
+</onRefresh>
+
+<mediaDisplay name = "threePartsView" showDefaultInfo = "no" sideLeftWidthPC = "0" sideRightWidthPC = "0" backgroundColor="0:0:0">
+	<previewWindow windowColor=0:0:0 offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100></previewWindow>	
+
+	<progressBar backgroundColor=63:100:127 offsetXPC=10 offsetYPC=70 widthPC=80 heightPC=12>
+		<image redraw="yes" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="70">
+			/usr/local/etc/sayler/over.png
+		</image>
+		<text redraw="yes" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=70 fontSize=22 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+			<script>info_streamTitle;</script>
+		</text>
+		<text redraw="yes" offsetXPC="0" offsetYPC="70" widthPC="61" heightPC="31" fontSize="12" backgroundColor="200:200:200" foregroundColor="63:100:127">
+			<script>info_streamURL;</script>
+		</text>
+		<image redraw="yes" offsetXPC="60" offsetYPC="70" widthPC="40" heightPC="31">
+			/usr/local/etc/sayler/over.png
+		</image>
+		<text redraw="yes" offsetXPC="60" offsetYPC="70" widthPC="40" heightPC="31" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+			<script>
+				if (record == 0)
+				{
+					info_record = "Нажмите '<!--{REC_KEY}!-->' для записи";
+				}
+				else
+				{
+					info_record = "Идет запись... '<!--{REC_KEY}!-->' - стоп";
+				}
+				info_record;
+			</script>
+		</text>
+		<bar offsetXPC=60 offsetYPC=45 widthPC=38 heightPC=12 barColor=45:53:91 progressColor=200:200:200 bufferColor=-1:-1:-1/>
+		<text redraw="yes" offsetXPC=60 offsetYPC=10 widthPC=20 heightPC=30 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+			<script>
+				if (playStatus == 2)
+				{
+					showstr = "Буферизация...";
+				}
+				else
+				{
+					showstr = "Соединение...";
+				}
+				showstr;
+		  </script>
+		</text>
+		<image redraw="yes" offsetXPC="86" offsetYPC="10" widthPC="3" heightPC="30">
+			<script>
+				if (record == 0)
+				{
+					"/usr/local/etc/sayler/play.png";
+				}
+				else
+				{
+					"/usr/local/etc/sayler/rec.png";
+				}
+			</script>
+		</image>
+		<text redraw="yes" offsetXPC="88" offsetYPC="10" widthPC="12" heightPC="30" fontSize="15" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+			<script>elapsedTime;</script>
+		</text>
+		<destructor offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" color="-1:-1:-1">
+		</destructor>
+	</progressBar>
+	<onUserInput>
+		input = currentUserInput();
+		print("*player_tv input***",input);
+		ret = "false";
+
+		if (input == "video_completed")
+		{
+			if (cPlayPause == 1)
+			{
+				cPlayPause = 0;
+				postMessage("video_stop");
+				ret = "true";
+			}
+			else
+			{
+				cPlayPause = 1;
+				postMessage("video_completed");
+				ret = "true";
+			}
+		}
+
+		else if (input == "display")
+		{
+			if(showInfo == 0)
+			{
+				showInfo = 1;
+			}
+			else
+			{
+				showInfo = 0;
+			}
+		}
+		else if (input == "<!--{REC_KEY}!-->")
+		{
+			if (record == 0)
+				record = 1;
+			else
+				record = 0;
+			playItemURL(-1, 1);
+			setRefreshTime(-1);
+			elapsedTime = "";
+			loadingStatus = 0;
+			checkStatus = 1;
+			showLoading = 0;
+			setRefreshTime(100);
+			startVideo = 1;
+			ret = "true";
+		}
+		else if (input == "one")
+		{
+			changeChannel = 1;
+			channelStr += "1";
+		}
+		else if (input == "two")
+		{
+			changeChannel = 2;
+			channelStr += "2";
+		}
+		else if (input == "three")
+		{
+			changeChannel = 3;
+			channelStr += "3";			
+		}
+		else if (input == "four")
+		{
+			changeChannel = 4;
+			channelStr += "4";
+		}
+		else if (input == "five")
+		{
+			changeChannel = 5;
+			channelStr += "5";
+		}
+		else if (input == "six")
+		{
+			changeChannel = 6;
+			channelStr += "6";
+		}
+		else if (input == "seven")
+		{
+			changeChannel = 7;
+			channelStr += "7";
+		}
+		else if (input == "eight")
+		{
+			changeChannel = 8;
+			channelStr += "8";
+		}
+		else if (input == "nine")
+		{
+			changeChannel = 9;
+			channelStr += "9";
+		}
+		else if (input == "zero")
+		{
+			channelStr += "0";
+		}
+		else if (input == "pageup")
+		{
+			channelStr = "";
+			changeChannel = currentChannel - 1;
+		}
+		else if (input == "pagedown")
+		{
+			channelStr = "";
+			changeChannel = currentChannel + 1;
+		}
+		ret;
+	</onUserInput>
+</mediaDisplay>
+
+<script>
+	itemTitleArray = null;
+	itemURLArray = null;
+	itemPlayURLArray = null;
+	itemRecordURLArray = null;
+	dlok = loadXMLFile("<!--{TEMP_FILE}!-->");
+	if (dlok != null)
+	{
+		channelCount = 0;		
+		while(1)
+		{
+			itemTitle = getXMLText("rss", "channel", "item", channelCount, "title");
+			itemURL = getXMLText("rss", "channel", "item", channelCount, "url");
+			itemPlayURL = getXMLText("rss", "channel", "item", channelCount, "playURL");
+			itemRecordURL = getXMLText("rss", "channel", "item", channelCount, "recordURL");
+			if(itemTitle == null)
+			{
+				break;
+			}
+			itemTitleArray = pushBackStringArray(itemTitleArray, itemTitle);
+			itemURLArray = pushBackStringArray(itemURLArray, itemURL);
+			itemPlayURLArray = pushBackStringArray(itemPlayURLArray, itemPlayURL);
+			itemRecordURLArray = pushBackStringArray(itemRecordURLArray, itemRecordURL);
+			channelCount += 1;
+		}
+	}
+</script>
+
+<channel>
+	<title><!--{TITLE}!--></title>
+	<link><!--{HOST_STRING}!--></link>	
+	
+</channel>
+</rss>;

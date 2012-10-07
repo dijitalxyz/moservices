@@ -1,0 +1,47 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'tvali.ge' plug-in
+#
+# version: 1.0 14.03.2011 13:23:01
+#
+# http://tvali.ge/index.php?action=watch&v=199077
+# http://tvali.ge/index.php?action=sat&channel=1000001&d=4
+#
+
+
+if echo "${arg_url}" | grep -qs 'tvali\.ge/.*?action=watch.*$'; then 
+  $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>/dev/null
+  if [ -f ${TMPFILE} ]; then
+  	local video_id=`grep "bbcode" ${TMPFILE} | sed 's/^.*\[video\]//;s/\[\/video\].*$//'`
+  	local video_title
+  	
+  	stream_type="application/xspf+xml"
+  	stream_url="http://tvali.ge/dataxml.php?vid=${video_id}&ext=.xspf"
+  	
+  	arg_opt="Resolve-playlist:1"
+    rm -f $TMPFILE
+  fi
+	return $RC_OK
+elif echo "${arg_url}" | grep -qs '\(www\.\)*tvali\.ge/.*?action=sat.*$'; then 
+	return $RC_OK
+fi
+
+return $RC_FAIL

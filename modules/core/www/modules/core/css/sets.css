@@ -1,0 +1,29 @@
+table.set_list
+{
+	padding:0;
+	margin:0;
+
+	background-color:white;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+.set_list thead
+{
+	background-color: #d0d0d0;
+	font-weight: bold;
+}
+
+.set_list td.set_delim
+{
+	border-top:1px solid #ccc;
+}
+div.set_card
+{
+	position:relative;
+	display:block;
+	float:left;
+	padding:0;
+	margin:2px;
+}
+

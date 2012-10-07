@@ -1,0 +1,19 @@
+#EXTM3U
+#EXTINF:-1, (E U R O P A  P L U S - Nizhny Novgorod  103.9 FM)
+http://nnov.europaplus.ru:8008/
+#EXTINF:-1,Radio "Wizard" of Nizhny Novgorod, Russia. The 80s 90s channel
+http://radio.wizard.nnov.ru:9100/
+#EXTINF:-1,Radio "Wizard" of Nizhny Novgorod, Russia. Russian Rock channel
+http://radio.wizard.nnov.ru:9170/
+#EXTINF:-1,Radio "Wizard" of Nizhny Novgorod, Russia. New Age channel
+http://wizard.mts-nn.ru/ondemand/?cmd=listen&s=radio&file=filename.pls
+#EXTINF:-1,Radio "Wizard" of Nizhny Novgorod, Russia. Radio "Wizard". House channel
+http://radio.wizard.nnov.ru:9130/
+#EXTINF:-1,"Wizard" Ralph.nnov.ru
+http://radio.wizard.nnov.ru:9150/
+#EXTINF:-1,"Wizard" Радио Арсенал
+mms://media.mts-nn.ru/live/nashe
+#EXTINF:-1,"Wizard" Станция Пульс
+http://radio.wizard.nnov.ru:9130/
+#EXTINF:-1,"Wizard" Радио "Эхо Москвы"
+http://radio.wizard.nnov.ru:9050/

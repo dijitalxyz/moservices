@@ -1,0 +1,6 @@
+[sovok]
+	revision = 9
+	title = "Sovok.TV"
+	role = rss
+	files="www/modules/sovok/"
+	size = 132

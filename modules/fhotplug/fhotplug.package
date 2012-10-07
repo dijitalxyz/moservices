@@ -1,0 +1,7 @@
+[fhotplug]
+	revision = 1
+	title = "Fork hotplug"
+	role = patch
+	init = S00hotplug.sh
+	files="bin/fork_hotplug etc/init/S00hotplug.sh etc/hotplug/"
+	size = 60

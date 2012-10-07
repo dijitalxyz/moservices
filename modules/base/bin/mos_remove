@@ -1,0 +1,20 @@
+#!/bin/sh
+#----------------------------------------------------------
+# remove moServices3
+#
+etc=/usr/local/etc
+mos=$etc/mos
+
+if [ -d $mos ] ; then
+	echo "Remove moServices..."
+	$mos/services stop
+	$mos/services disable
+
+	# remove lib from system
+	if grep -q $mos/lib $etc/ld.so.conf ; then
+		sed -i '/mos\/lib\//d' $etc/ld.so.conf
+		$mos/bin/ldconfig -C $etc/ld.so.cache 2>/dev/null
+	fi
+
+	rm -Rf /usr/local/etc/mos/
+fi

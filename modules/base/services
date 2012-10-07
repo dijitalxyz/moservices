@@ -1,0 +1,66 @@
+#!/bin/sh
+#---------------------------------------------------------
+#
+# description: manage list of services
+#
+mos=/usr/local/etc/mos
+init=$mos/etc/init
+#
+# Execute scripts from mos/init
+# $1 - key
+# $2 - order: normal, reverse
+# $3 - wait 
+doInit() {
+	if [ $2 = "normal" ] ; then
+		list=$( ls $init )
+	else
+		list=$( ls $init | sed -n '1!G;h;$p' )
+	fi
+
+	for i in $list ; do
+		[ ! -f $init/$i ] && continue
+		[ ! -x $init/$i ] && continue
+
+		if [ $3 = "wait" ] ; then
+			$init/$i $1
+		else
+			case $i in
+			    *.sh)
+				$init/$i $1
+				;;
+			    *)
+				$init/$i $1 &
+			esac
+		fi
+	done
+}
+#
+# begin
+#
+export LD_LIBRARY_PATH=$mos/lib:/lib:$LD_LIBRARY_PATH
+export PATH=$mos/bin:$PATH
+
+case "$1" in
+  start)
+	# starting services
+	. /usr/local/etc/profile
+	doInit start normal nowait
+	;;
+  stop)
+	#stopping services
+	doInit stop reverse wait
+	;;
+  enable)
+	#enabling services
+	doInit enable normal wait
+	;;
+  disable)
+	#disabling services
+	doInit disable reverse wait
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|enable|disable}"
+	;;
+esac
+
+exit $?

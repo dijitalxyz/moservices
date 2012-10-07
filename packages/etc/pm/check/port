@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Check for install:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+#
+
+netstat -ln | grep -q ':'$1' ' && exit 2
+exit 0

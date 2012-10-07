@@ -1,0 +1,93 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+local DATAPATH=$BASEPATH/app/onehd
+cd $DATAPATH
+
+local CHANNELFILE=$TMPFILE.channel
+
+local TITLE=$arg_opt
+local PLAYLIST_URL=$arg_url
+
+STARTITEM="  startitem = \"first\";"
+
+local channel_key=$arg_opt
+
+local PHPSESSID=`$MSDL --debug -o /dev/null -p http --useragent "${USERAGENT}" "http://live.1hd.ro/" 2>&1 | awk '/Set-Cookie/ {match($0, /PHPSESSID=([^; ]+)[; ]/, arr); print arr[1]}'`
+$WGET -q --header "User-Agent: ${USERAGENT}" --header "Cookie: PHPSESSID=${PHPSESSID}" -O $TMPFILE "$PLAYLIST_URL" 2>/dev/null
+
+if [ -x "$XSLTPROC" -a -f playlist.xslt ]; then
+  $XSLTPROC playlist.xslt $TMPFILE | sed '1d' > $CHANNELFILE
+else
+  awk -v channeltitle="$TITLE" '
+    BEGIN {
+      print "<channel>";
+      print "<title>" channeltitle "</title>";
+      
+    }
+    /<track>/ {
+      location = "";
+      streamer = "";
+      title = "";
+    }
+    /<title>/ {
+      match($0, /<title>([^<]+)<\/title>/, arr);
+      title = arr[1];
+    }
+    /<location>/ {
+      match($0, /<location>([^<]+)<\/location>/, arr);
+      location = arr[1];
+    }
+    /<meta rel="streamer">/ {
+      match($0, /<meta[^>]+>([^<]+)<\/meta>/, arr);
+      streamer = arr[1];
+    }
+    /<\/track>/ {
+      url = streamer location;
+      if(!(url in cache))
+      {
+        cache[url] = title;
+        print "<item>";
+        print "<location>" url "</location>"
+        print "<title>" title "</title>"
+        print "<options>Rtmp-options:-v</options>"
+        print "<stream_url>" url "</stream_url>"
+        print "<stream_type>video/mp4</stream_type>"
+        print "<stream_protocol>rtmp</stream_protocol>"
+        print "<stream_class>video</stream_class>"
+        print "</item>";
+      }
+    }
+    END {
+      print "</channel>";
+    }
+  ' $TMPFILE > $CHANNELFILE
+fi
+
+(
+  export TRANSLATE_CGI;
+  export BASEPATH;
+  export ANNOTATIONSIZE;
+  export CHANNELFILE; 
+  export COLUMNCOUNT; 
+  export STARTITEM;
+  template2rss playlist.xml | printContent "application/rss+xml"
+  rm -f $CHANNELFILE
+  rm -f $TMPFILE
+)

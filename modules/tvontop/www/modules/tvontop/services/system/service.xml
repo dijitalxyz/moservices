@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+	<name>System</name>
+	<shortName>sys</shortName>
+	<displayName>Служебный сервис</displayName>
+	<description>
+		Клавиатура и др.
+	</description>
+	<hidden>true</hidden>
+	<provider class="SysProvider" />
+	<version>1.0</version>
+	<author>http://TVonTop.com</author>
+</service>

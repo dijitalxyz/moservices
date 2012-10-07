@@ -1,0 +1,8 @@
+[remount]
+	revision = 2
+	title = "Remount drives"
+	role = patch
+	init = S06Remount
+	actions = "restart"
+	files="etc/init/S06Remount"
+	size = 40

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="cache-control" content="Private" />
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link href="./images/favicon.ico" rel="icon" />
+		<link href="./images/favicon.png" rel="shortcut icon" />
+		<link rel="apple-touch-icon" href="./images/webclip-icon.png"/>
+		<script type="text/javascript" src="./javascript/jquery/jquery.min.js"></script>
+		<link media="only screen and (max-device-width: 480px)" href="./stylesheets/iphone.css" type= "text/css" rel="stylesheet" />
+		<link media="screen and (min-device-width: 481px)" href="./stylesheets/common.css" type="text/css" rel="stylesheet" />
+		<!--[if IE]>
+			<link media="screen" href="./stylesheets/common.css" type="text/css" rel="stylesheet" />
+			<link media="screen" href="./stylesheets/ieAll.css" type="text/css" rel="stylesheet" />
+		<![endif]-->
+		<!--[if IE 6]><link media="screen" href="./stylesheets/ie6.css" type="text/css" rel="stylesheet" /><![endif]-->
+		<!--[if IE 7]><link media="screen" href="./stylesheets/ie7.css" type="text/css" rel="stylesheet" /><![endif]-->
+		<script type="text/javascript" src="./javascript/jquery/jquery.transmenu.min.js"></script>
+		<script type="text/javascript" src="./javascript/jquery/jquery.contextmenu.min.js"></script>
+		<script type="text/javascript" src="./javascript/menu.js"></script>
+		<script type="text/javascript" src="./javascript/jquery/jquery.form.min.js"></script>
+		<script type="text/javascript" src="./javascript/jquery/json.min.js"></script>
+		<script type="text/javascript" src="./javascript/common.js"></script>
+		<script type="text/javascript" src="./javascript/transmission.remote.js"></script>
+		<script type="text/javascript" src="./javascript/transmission.js"></script>
+		<script type="text/javascript" src="./javascript/torrent.js"></script>
+		<script type="text/javascript" src="./javascript/dialog.js"></script>
+		<script type="text/javascript" src="./javascript/formatter.js"></script>
+		<title>Transmission веб интерфейс</title>
+	</head>
+	<body id="transmission_body">
+
+		<div class="torrent_global_menu">
+			<ul>
+				<li id="open"><div id="open_link"><div class="toolbar_image"></div>Открыть</div></li>
+				<li id="remove" class="disabled"><div id="remove_link"><div class="toolbar_image"></div>Удалить</div></li>
+				<li class="divider">&nbsp;</li>
+				<li id="pause_selected" class="disabled"><div id="pause_selected_link"><div class="toolbar_image"></div>Приостановить</div></li>
+				<li id="resume_selected" class="disabled"><div id="resume_selected_link"><div class="toolbar_image"></div>Возобновить</div></li>
+				<li class="divider">&nbsp;</li>
+				<li id="pause_all" class="disabled"><div id="pause_all_link"><div class="toolbar_image"></div>Приостановить все</div></li>
+				<li id="resume_all" class="disabled"><div id="resume_all_link"><div class="toolbar_image"></div>Возобновить все</div></li>
+				<li id="inspector"><div id="inspector_link"><div class="toolbar_image"></div>Инспектор</div></li>
+				<li id="filter"><div id="filter_toggle_link"><div class="toolbar_image"></div>Фильтр</div></li>
+			</ul>
+		</div>
+
+		<div class="torrent_global_details">
+			<div id="torrent_global_transfer">0 Заданий</div>
+			<div id="torrent_global_upload">0 Б/с</div>
+			<div id="torrent_global_download">0 Б/с</div>
+		</div>
+
+		<div id="torrent_filter_bar">
+			<ul>
+				<li><a href="#all" id="filter_all_link" class="active">Все</a></li>
+				<li><a href="#active" id="filter_active_link">Активные</a></li>
+				<li><a href="#downloading" id="filter_downloading_link">Загрузка</a></li>
+				<li><a href="#seeding" id="filter_seeding_link">Раздача</a></li>
+				<li><a href="#paused" id="filter_paused_link">Приостановленные</a></li>
+				<li><a href="#finished" id="filter_finished_link" class="finished">Готовые</a></li>
+			</ul>
+			<input type="search" id="torrent_search" placeholder="Фильтр" results="0" />
+		</div>
+
+		<div id="torrent_inspector" style="display:none;">
+
+			<div style="display:none;" class="inspector_close" id="inspector_close"><img id="inspector_close_image" src="./images/buttons/cancel.png"/></div>
+
+			<div id="inspector_tabs">
+				<div class="inspector_tab selected" id="inspector_tab_info"><a href="#info"><img src="images/buttons/info_general.png" alt="Information"/></a></div>
+				<div class="inspector_tab" id="inspector_tab_activity"><a href="#activity"><img src="images/buttons/info_activity.png" alt="Activity"/></a></div>
+				<div class="inspector_tab" id="inspector_tab_peers"><a href="#peers"><img src="images/buttons/info_peers.png" alt="Peers"/></a></div>
+				<div class="inspector_tab" id="inspector_tab_trackers"><a href="#trackers"><img src="images/buttons/info_trackers.png" alt="Trackers"/></a></div>
+				<div class="inspector_tab" id="inspector_tab_files"><a href="#files"><img src="images/buttons/info_files.png" alt="Files"/></a></div>
+			</div>
+
+			<div id="inspector_header">
+				<h1 id="torrent_inspector_name"></h1>
+				<span id="torrent_inspector_size"></span>
+			</div>
+
+			<div class="inspector_container" id="inspector_tab_info_container">
+				<div class="inspector_group">
+					<div class="inspector_group_label">Информация</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Частей:</div>
+						<div id="torrent_inspector_pieces"></div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Хэш:</div>
+						<div id="torrent_inspector_hash"></div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Безопасность:</div>
+						<div id="torrent_inspector_secure"></div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Комментарий:</div>
+						<div id="torrent_inspector_comment"></div>
+					</div>
+				</div><!-- class="inspector_group"-->
+
+				<div class="inspector_group">
+					<div class="inspector_group_label">Создано</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Автор:</div>
+						<div id="torrent_inspector_creator">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Дата:</div>
+						<div id="torrent_inspector_creator_date">Н/Д</div>
+					</div>
+				</div><!-- class="inspector_group"-->
+
+				<div class="inspector_group">
+					<div class="inspector_group_label">Где</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Папка загрузки:</div>
+						<div id="torrent_inspector_download_dir">Н/Д</div>
+					</div>
+				</div><!-- class="inspector_group"-->
+			</div><!-- id="inspector_tab_info_container" -->
+
+			<div style="display:none;" class="inspector_container" id="inspector_tab_activity_container">
+
+				<div class="inspector_group">
+					<div class="inspector_group_label">Активность</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Состояние:</div>
+						<div id="torrent_inspector_state">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Процесс:</div>
+						<div id="torrent_inspector_progress">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Есть:</div>
+						<div id="torrent_inspector_have">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Существует:</div>
+						<div id="torrent_inspector_availability">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Загружено:</div>
+						<div id="torrent_inspector_downloaded">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Отдано:</div>
+						<div id="torrent_inspector_uploaded">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Ратио:</div>
+						<div id="torrent_inspector_ratio">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Ошибка:</div>
+						<div id="torrent_inspector_error">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Скорость заг.:</div>
+						<div id="torrent_inspector_download_speed">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Скорость отд.:</div>
+						<div id="torrent_inspector_upload_speed">Н/Д</div>
+					</div>
+				</div><!-- class="inspector_group"-->
+
+				<div class="inspector_group">
+					<div class="inspector_group_label">Пиры</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Раздача:</div>
+						<div id="torrent_inspector_upload_to">Н/Д</div>
+					</div>
+					<div class="inspector_row">
+						<div class="inspector_label">Загрузка:</div>
+						<div id="torrent_inspector_download_from">Н/Д</div>
+					</div>
+				</div><!-- class="inspector_group"-->
+			</div><!-- id="inspector_tab_activity_container" -->
+
+			<div style="display:none;" class="inspector_container" id="inspector_tab_peers_container">
+				<div id="inspector_peers_list">
+				</div>
+			</div><!-- id="inspector_tab_peers_container" -->
+
+			<div style="display:none;" class="inspector_container" id="inspector_tab_trackers_container">
+				<div id="inspector_trackers_list">
+				</div>
+			</div><!-- id="inspector_tab_trackers_container" -->
+
+			<div style="display:none;" class="inspector_container" id="inspector_tab_files_container">
+				<div id="inspector_file_list">
+					<ul id="select_all_button_container">
+						<li id="files_deselect_all" class="select_all_button">Отменить все</li>
+						<li id="files_select_all" class="select_all_button">Выделить все</li>
+					</ul>
+				</div>
+			</div><!-- id="inspector_tab_files_container" -->
+
+		</div>
+
+		<div id="torrent_container">
+			<ul class="torrent_list" id="torrent_list"><li style="display: none;"></li></ul>
+		</div>
+
+		<div class="dialog_container" id="dialog_container" style="display:none;">
+			<div class="dialog_top_bar"></div>
+			<div class="dialog_window">
+				<img src="images/graphics/logo.png" alt="Transmission Logo" />
+				<h2 class="dialog_heading" id="dialog_heading"></h2>
+				<div class="dialog_message" id="dialog_message"></div>
+				<a href="#confirm" id="dialog_confirm_button">ОК</a>
+				<a href="#cancel" id="dialog_cancel_button">Отмена</a>
+			</div>
+		</div>
+
+		<div class="dialog_container" id="prefs_container" style="display:none;">
+			<div class="dialog_top_bar"></div>
+			<div class="dialog_window">
+				<h2 class="dialog_heading">Параметры</h2>
+				<div id="pref_error"></div>
+				<form action="" id="prefs_form">
+					<div id="prefs_tabs">
+						<ul>
+							<li id="prefs_tab_general_tab" class="prefs_tab_enabled">Главные</li>
+							<li id="prefs_tab_speed_tab" class="prefs_tab_disabled">Скорость</li>
+							<li id="prefs_tab_peers_tab" class="prefs_tab_disabled">Пиры</li>
+							<li id="prefs_tab_network_tab" class="prefs_tab_disabled">Сеть</li>
+						</ul>
+						<div id="prefs_tab_general" class="prefs_tab">
+							<div class="preference download_location">
+								<label class="category">Добавить загрузку:</label>
+								<div class="formdiv">
+									<label for="download_location" class="item">Сохранять в:</label>
+									<input type="text" name="download_location" id="download_location"/>
+								</div>
+								<div class="formdiv checkbox auto_start">
+									<input type="checkbox" name="auto_start" id="auto_start"/>
+									<label for="auto_start" class="item">Запускать закачку при добавлении</label>
+								</div>
+							</div>
+
+							<div class="preference encryption">
+								<label class="category">Шифрование:</label>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="encryption" id="encryption"/>
+									<label for="encryption" class="item">Игнорировать не зашифрованные пиры</label>
+								</div>
+							</div>
+							<div class="preference web_gui">
+								<label class="category">Веб клиент:</label>
+								<div class="formdiv">
+									<label for="refresh_rate" class="item">Время обновления:</label>
+									<input type="text" name="refresh_rate" id="refresh_rate"/>
+									<label class="suffix">секунд</label>
+								</div>
+							</div>
+							<div style="clear: both; visibility: hidden;"></div>
+						</div>
+						<div id="prefs_tab_speed" class="prefs_tab" style="display: none;">
+							<div class="preference limit_total">
+								<label class="category">Ограничение скорости:</label>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="limit_download" id="limit_download"/>
+									<label for="limit_download" class="item">Загрузка:</label>
+									<input type="text" name="download_rate" id="download_rate"/>
+									<label class="suffix">кБ/с</label>
+								</div>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="limit_upload" id="limit_upload"/>
+									<label for="limit_upload" class="item">Отдача:</label>
+									<input type="text" name="upload_rate" id="upload_rate"/>
+									<label class="suffix">кБ/с</label>
+								</div>
+							</div>
+							<div class="preference limit_turtle">
+								<label class="category">Временное ограничение скорости: (Черепашка)</label>
+								<label>Ограничение скорости вручную или по расписанию</label>
+								<div class="formdiv">
+									<label for="turtle_download_rate" class="item">Загрузка:</label>
+									<input type="text" name="turtle_download_rate" id="turtle_download_rate"/>
+									<label class="suffix">кБ/с</label>
+								</div>
+								<div class="formdiv">
+									<label for="turtle_upload_rate" class="item">Отдача:</label>
+									<input type="text" name="turtle_upload_rate" id="turtle_upload_rate"/>
+									<label class="suffix">кБ/с</label>
+								</div>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="turtle_schedule" id="turtle_schedule"/>
+									<label for="turtle_schedule" class="item">Расписание:</label>
+									<select name="turtle_start_time" id="turtle_start_time" size="1">
+									</select>
+									<select name="turtle_end_time" id="turtle_end_time" size="1">
+									</select>
+								</div>
+								<div class="formdiv">
+									<label for="turtle_days" class="item">Дни:</label>
+									<select name="turtle_days" id="turtle_days" size="1">
+										<option value="127">Каждый день</option>
+										<option value="62">Каждую неделю</option>
+										<option value="65">Выходные дни</option>
+										<option value="1">Воскресенье</option>
+										<option value="2">Понедельник</option>
+										<option value="4">Вторник</option>
+										<option value="8">Среда</option>
+										<option value="16">Четверг</option>
+										<option value="32">Пятница</option>
+										<option value="64">Суббота</option>
+									</select>
+								</div>
+							</div>
+							<div style="clear: both; visibility: hidden;"></div>
+						</div>
+						<div id="prefs_tab_peers" class="prefs_tab" style="display: none;">
+							<div class="preference peers_conn">
+								<label class="category">Подключения:</label>
+								<div class="formdiv">
+									<label for="conn_global" class="item">Максимум соединений:</label>
+									<input type="text" name="conn_global" id="conn_global"/>
+									<label class="suffix">пиры</label>
+								</div>
+								<div class="formdiv">
+									<label for="conn_torrent" class="item">Максимальное число подключений:</label>
+									<input type="text" name="conn_torrent" id="conn_torrent"/>
+									<label class="suffix">пиры</label>
+								</div>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="conn_pex" id="conn_pex"/>
+									<label for="conn_pex" class="item">Использлвать обмен пирами (PEX) для открытых торрентов</label>
+								</div>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="conn_dht" id="conn_dht"/>
+									<label for="conn_dht" class="item">Использлвать обмен хеш (DHT) для открытых торрентов</label>
+								</div>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="conn_lpd" id="conn_lpd"/>
+									<label for="conn_lpd" class="item">Использование локальных пиров для открытых торрентов</label>
+								</div>
+							</div>
+							<div class="preference block_conn">
+								<label class="category">Блокировка:</label>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="block_enable" id="block_enable"/>
+									<label for="block_enable" class="item">Добавить пиры в черный список</label>
+								</div>
+								<div class="formdiv block_url">
+									<label for="block_url" class="item">URL:</label>
+									<input type="text" name="block_url" id="block_url"/>
+								</div>
+								<div class="formdiv">
+									<input type="button" name="block_update_button" id="block_update_button" value="Update"/>
+									<label class="suffix" id="block_size">Разрешенные IP</label>
+								</div>
+							</div>
+							<div style="clear: both; visibility: hidden;"></div>
+						</div>
+						<div id="prefs_tab_network" class="prefs_tab" style="display: none;">
+							<div class="preference utp">
+								<label class="category">Подключения:</label>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="network_utp" id="network_utp"/>
+									<label for="network_utp" class="item">Включить Micro Transport Protocol (µTP)</label>
+								</div>
+							</div>
+							<div class="preference port">
+								<label class="category">Настройка порта:</label>
+								<div class="formdiv">
+									<label for="port" class="item">Входящий TCP порт:</label>
+									<input type="text" id="port" name="port"/>
+									<label class="suffix" id="port_test"></label>
+								</div>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="port_rand" id="port_rand"/>
+									<label for="port_rand" class="item">Разный порт при запуске</label>
+								</div>
+								<div class="formdiv checkbox">
+									<input type="checkbox" name="port_forward" id="port_forward"/>
+									<label for="port_forward" class="item">Автоматическая настройка порта</label>
+								</div>
+							</div>
+
+							<div style="clear: both; visibility: hidden;"></div>
+						</div>
+					</div>
+					<span id="transmission_version"></span>
+					<a href="#save" id="prefs_save_button">ОК</a>
+					<a href="#cancel" id="prefs_cancel_button">Отмена</a>
+				</form>
+			</div>
+		</div>
+
+		<div class="dialog_container" id="stats_container" style="display:none;">
+			<div class="dialog_top_bar"></div>
+			<div class="dialog_window">
+				<h2 class="dialog_heading">Статистика</h2>
+				<div id="stats_error"></div>
+				<div id="stats_info_container" class="stats_info_container">
+					<div class="stats_group">
+						<label class="category">Текущая сессия:</label>
+						<div class="stats_row">
+							<div class="item">Отдано:</div>
+							<div id="stats_session_uploaded"></div>
+						</div>
+						<div class="stats_row">
+							<div class="item">Загружено:</div>
+							<div id="stats_session_downloaded"></div>
+						</div>
+						<div class="stats_row">
+							<div class="item">Ратио:</div>
+							<div id="stats_session_ratio"></div>
+						</div>
+						<div class="stats_row">
+							<div class="item">Отношение:</div>
+							<div id="stats_session_duration"></div>
+						</div>
+					</div>
+					<div class="stats_group">
+						<label class="category">Всего:</label>
+						<div class="stats_row">
+							<div class="item2">Запущено </div>
+							<div id="stats_total_count"></div>
+						</div>
+						<div class="stats_row">
+							<div class="item">Отдано:</div>
+							<div id="stats_total_uploaded"></div>
+						</div>
+						<div class="stats_row">
+							<div class="item">Загружено:</div>
+							<div id="stats_total_downloaded"></div>
+						</div>
+						<div class="stats_row">
+							<div class="item">Ратио:</div>
+							<div id="stats_total_ratio"></div>
+						</div>
+						<div class="stats_row">
+							<div class="item">Отношение:</div>
+							<div id="stats_total_duration"></div>
+						</div>
+					</div>
+				</div>
+				<a href="#close" id="stats_close_button">Закрыть</a>
+			</div>
+		</div>
+
+		<div class="dialog_container" id="upload_container" style="display:none;">
+			<div class="dialog_top_bar"></div>
+			<div class="dialog_window">
+				<img src="images/graphics/logo.png" alt="Transmission Logo" />
+				<h2 class="dialog_heading">Добавить новый торрент</h2>
+				<form action="#" method="post" id="torrent_upload_form"
+					enctype="multipart/form-data" target="torrent_upload_frame">
+					<div class="dialog_message">
+						<label for="torrent_upload_file">Выберите торрент файл:</label>
+							<input type="file" name="torrent_files[]" id="torrent_upload_file" multiple="multiple" />
+						<label for="torrent_upload_url">Или введите URL:</label>
+							<input type="text" id="torrent_upload_url"/>
+							<input type="checkbox" id="torrent_auto_start" />
+						<label for="torrent_auto_start" id="auto_start_label">Запустить при добавлении</label>
+					</div>
+					<a href="#upload" id="upload_confirm_button">Добавить</a>
+					<a href="#cancel" id="upload_cancel_button">Отмена</a>
+				</form>
+			</div>
+		</div>
+
+		<div class="torrent_footer">
+			<div id="disk_space_container"></div>
+			<ul id="settings_menu">
+				<li id="button">&nbsp;
+					<ul id="footer_super_menu">
+						<li class="separator"></li>
+						<li id="preferences">Параметры</li>
+						<li id="statistics">Статистика</li>
+						<li class="separator"></li>
+						<li>Общий уровень загрузки
+							<ul id="footer_download_rate_menu">
+								<li id="unlimited_download_rate">Неограничен</li>
+								<li id="limited_download_rate">Ограничен (10 кБ/с)</li>
+								<li class="separator"></li>
+								<li>5 кБ/с</li>
+								<li>10 кБ/с</li>
+								<li>20 кБ/с</li>
+								<li>30 кБ/с</li>
+								<li>40 кБ/с</li>
+								<li>50 кБ/с</li>
+								<li>75 кБ/с</li>
+								<li>100 кБ/с</li>
+								<li>150 кБ/с</li>
+								<li>200 кБ/с</li>
+								<li>250 кБ/с</li>
+								<li>500 кБ/с</li>
+								<li>750 кБ/с</li>
+							</ul>
+						</li>
+						<li>Общий уровень отдачи
+							<ul id="footer_upload_rate_menu">
+								<li id="unlimited_upload_rate">Неограничен</li>
+								<li id="limited_upload_rate">Ограничен (10 кБ/с)</li>
+								<li class="separator"></li>
+								<li>5 кБ/с</li>
+								<li>10 кБ/с</li>
+								<li>20 кБ/с</li>
+								<li>30 кБ/с</li>
+								<li>40 кБ/с</li>
+								<li>50 кБ/с</li>
+								<li>75 кБ/с</li>
+								<li>100 кБ/с</li>
+								<li>150 кБ/с</li>
+								<li>200 кБ/с</li>
+								<li>250 кБ/с</li>
+								<li>500 кБ/с</li>
+								<li>750 кБ/с</li>
+							</ul>
+						</li>
+						<li class="separator"></li>
+						<li>Сортировать загрузки по
+							<ul id="footer_sort_menu">
+								<li id="sort_by_activity">Активность</li>
+								<li id="sort_by_age">Возраст</li>
+								<li id="sort_by_name">Имя</li>
+								<li id="sort_by_percent_completed">Процесс</li>
+								<li id="sort_by_queue_order">Качающим</li>
+								<li id="sort_by_state">Состояние</li>
+								<li class="separator"></li>
+								<li id="reverse_sort_order">Инвертировать список</li>
+							</ul>
+						</li>
+						<li class="separator"></li>
+						<li id="compact_view">Компактный просмотр</li>
+					</ul>
+				</li>
+			</ul>
+			<div id="turtle_button">&nbsp;</div>
+			<div style="clear: both; visibility: hidden;"></div>
+		</div>
+
+		<div class="contextMenu" id="torrent_context_menu">
+			<ul>
+				<li id="context_pause_selected" class="disabled context_pause_selected">Приостановить</li>
+				<li id="context_resume_selected" class="disabled context_resume_selected">Возобновить</li>
+				<li class="separator"></li>
+				<li id="context_remove">Удалить из списка...</li>
+				<li id="context_removedata">Стереть данные и удалить из списка...</li>
+				<li class="separator"></li>
+				<li id="context_verify">Проверить данные</li>
+				<li class="separator"></li>
+				<li id="context_reannounce">Запросить еще пиры</li>
+				<li class="separator"></li>
+				<li id="context_toggle_inspector">Открыть инспектор</li>
+				<li class="separator"></li>
+				<li id="context_select_all" class="context_select_all">Выделить все</li>
+				<li id="context_deselect_all" class="context_deselect_all">Отменить все</li>
+			</ul>
+		</div>
+
+		<iframe name="torrent_upload_frame" id="torrent_upload_frame" src="about:blank" ></iframe>
+	</body>
+</html>
