@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <mediaDisplay name=onePartView
+   viewAreaXPC="0"
+   viewAreaYPC="15"
+   viewAreaWidthPC="26"
+   viewAreaHeightPC="70"
+
+   backgroundColor="0:0:0"
+
+   sideLeftWidthPC="0"
+   sideRightWidthPC="0"
+   sideColorLeft="0:0:0"
+   sideColorRight="0:0:0"
+
+   showHeader="no"
+   showDefaultInfo="no"
+
+   itemPerPage="12"
+   itemXPC="0"
+   itemYPC="20"
+   itemWidthPC="98"
+   itemHeightPC="8.5"
+   forceFocusOnItem="yes"
+   itemBackgroundColor="0:0:0"
+
+   focusBorderColor = "255:255:255"
+   unFocusBorderColor = "0:0:0"
+
+   imageFocus=""
+   imageParentFocus=""
+   imageUnFocus=""
+
+   idleImageXPC="45.5882"
+   idleImageYPC="42.1875"
+   idleImageWidthPC="8.8235"
+   idleImageHeightPC="15.625"
+  >
+    <idleImage>../etc/translate/rss/image/POPUP_LOADING_01.png</idleImage>
+    <idleImage>../etc/translate/rss/image/POPUP_LOADING_02.png</idleImage>
+    <idleImage>../etc/translate/rss/image/POPUP_LOADING_03.png</idleImage>
+    <idleImage>../etc/translate/rss/image/POPUP_LOADING_04.png</idleImage>
+    <idleImage>../etc/translate/rss/image/POPUP_LOADING_05.png</idleImage>
+    <idleImage>../etc/translate/rss/image/POPUP_LOADING_06.png</idleImage>
+    <idleImage>../etc/translate/rss/image/POPUP_LOADING_07.png</idleImage>
+    <idleImage>../etc/translate/rss/image/POPUP_LOADING_08.png</idleImage>
+    <backgroundDisplay>
+<!--
+      <image offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" >
+        /usr/local/etc/mos/www/modules/core/rss/skins/default/bg_left.png
+      </image>
+-->
+    </backgroundDisplay>
+    <itemDisplay>
+      <script>
+	idx = getQueryItemIndex();
+	drawState = getDrawingItemState();
+	if (drawState == "unfocus")
+	{
+		color = "63:63:63";
+	}
+	else
+	{
+		color = "255:255:255";
+	}
+      </script>
+      <text align="left" lines="1" offsetXPC="22.4719" offsetYPC="0" widthPC="67.4157" heightPC="100" 
+       fontSize="14" backgroundColor="0:0:0">
+	<foregroundColor>
+          <script>
+            color;
+          </script>
+	</foregroundColor>
+	<script>
+	  getItemInfo( idx, "title" );
+	</script>
+      </text>
+    </itemDisplay>
+    <onUserInput>
+	ret = "false";
+	userInput = currentUserInput();
+
+	if (userInput == "enter"  || userInput == "right")
+	{
+		idx = getFocusItemIndex();
+		theme = getItemInfo( idx, "theme" );
+		if( theme == 1172 )
+		{
+/*
+			theme = doModalRss("../usr/local/etc/translate/rss/24video/age_check.rss");
+*/
+		}
+		setReturnString( theme );
+		postMessage( "return" );
+		ret = "true";
+	}
+	else
+	if (userInput == "left")
+	{
+		postMessage( "return" );
+		ret = "true";
+	}
+	ret;
+    </onUserInput>
+  </mediaDisplay>
+  <onEnter>
+	cancelIdle();
+	itemCount = getPageInfo( "itemCount" );
+  </onEnter>
+  <channel>
+    <item>
+      <title>Все</title>
+      <theme>0</theme>
+    </item>
+    <item>
+      <title>Реклама</title>
+      <theme>1482</theme>
+    </item>
+    <item>
+      <title>Приколы</title>
+      <theme>1354</theme>
+    </item>
+    <item>
+      <title>Спорт</title>
+      <theme>1470</theme>
+    </item>
+    <item>
+      <title>Авто, транспорт</title>
+      <theme>1496</theme>
+    </item>
+    <item>
+      <title>Сюжеты, политика</title>
+      <theme>1769006</theme>
+    </item>
+    <item>
+      <title>Музыка, клипы</title>
+      <theme>1497</theme>
+    </item>
+    <item>
+      <title>Люди, блоги</title>
+      <theme>1498</theme>
+    </item>
+    <item>
+      <title>Животные</title>
+      <theme>1499</theme>
+    </item>
+    <item>
+      <title>Путешествия</title>
+      <theme>1500</theme>
+    </item>
+    <item>
+      <title>Дом, семья</title>
+      <theme>1501</theme>
+    </item>
+    <item>
+      <title>Кино, анимация</title>
+      <theme>1483</theme>
+    </item>
+    <item>
+      <title>Личные съемки</title>
+      <theme>4482684</theme>
+    </item>
+<!--
+    <item>
+      <title>Эротика</title>
+      <theme>1172</theme>
+    </item>
+-->
+  </channel>
+</rss>

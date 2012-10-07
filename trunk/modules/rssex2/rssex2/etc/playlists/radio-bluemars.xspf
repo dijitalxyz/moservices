@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/">
+   <title>Bluemars</title>
+   <trackList>
+      <track>
+         <location>http://207.200.96.225:8024/listen.pls</location>
+         <title>Voices From Within</title>
+         <annotation>In these days of stellar exporations, encountering alien lifeforms is the dream of many space-travellers, but Language will always hinder the realization of the full potential of such an event.
+Thus, Voices from Within tries to prepare cosmonauts for the experience by focusing on the abandonment of Words in favor of Vibrations, which, being uniquely suited to channel your Emotions, will usher Comprehension into the Mind of your new alien friends.</annotation>
+         <image>http://www.bluemars.org/gfx/illus-vfw.jpg</image>
+         <meta rel="genre">Ambient</meta>
+         <meta rel="url">http://bluemars.org</meta>
+      
+<meta rel="stream_url">http://207.200.96.225:8024/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Voices From Within</meta>
+<meta rel="stream_genre">Ambient</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <location>http://207.200.96.225:8022/listen.pls</location>
+         <title>Cryosleep - Zero Beat Guaranteed</title>
+         <annotation>Most people who underwent cryosleep have reported that the mind seems to naturally retreat into a place of infinite tranquility, where the experience of Time itself is distorted in a subtle way.
+Although there is no trace of conscious activity in the brain of sleepers, it appears that Experience itself never ceases, creating atemporals bubbles of memories of transcendental calm when the subject awakes.
+It may be possible that chemicals used in the cryosleep process alter the outer cortex in a way that is not yet understood, however we believe cryosleep is a perfectly safe means of interstellar travel.</annotation>
+         <image>http://www.bluemars.org/gfx/illus-cs.jpg</image>
+         <meta rel="genre">Ambient</meta>
+         <meta rel="url">http://bluemars.org</meta>
+      
+<meta rel="stream_url">http://207.200.96.225:8022/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Cryosleep - Zero Beat Guaranteed</meta>
+<meta rel="stream_genre">Ambient</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <location>http://207.200.96.225:8020/listen.pls</location>
+         <title>Bluemars - Music for the Space Traveler</title>
+         <annotation>Long ago, when the waters of Mars were still under the ground and above the sky, our ancestors came to this place and called it “Home”. And from the high Plains of Tharsis to the Elysium Ocean, from as high as Mount Olympus to as deep as the floor of the Hellas sea, one can still hear the song of our brothers and sisters chanting to us throughout the ages.
+This melody is one that is made of hopes... It is sang with the voice of nostalgia, and looks ahead with pride. Listen...</annotation>
+         <image>http://www.bluemars.org/gfx/illus-bm.jpg</image>
+         <meta rel="genre">Ambient</meta>
+         <meta rel="url">http://bluemars.org</meta>
+      
+<meta rel="stream_url">http://207.200.96.225:8020/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Bluemars - Music for the Space Traveler</meta>
+<meta rel="stream_genre">Ambient</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+   </trackList>
+</playlist>

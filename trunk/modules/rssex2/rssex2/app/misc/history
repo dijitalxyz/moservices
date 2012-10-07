@@ -1,0 +1,120 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+DATAPATH=$BASEPATH/app/misc
+cd $DATAPATH
+
+local CHANNELFILE=$TMPFILE.channel
+
+get_opt "File"
+local FILE="$opt"
+
+if ! expr "$FILE" : '/.*' > /dev/null; then
+  FILE="$BASEPATH/$FILE"
+fi
+
+if [ -f "$FILE" ]; then
+
+  awk '
+    function escapeXML( text )
+    {
+      gsub( "\\&",  "&amp;",  text );
+      gsub( "\"", "&quot;", text );
+      gsub( ">",  "&gt;",   text );
+      gsub( "<",  "&lt;",   text );
+      return text;
+    }
+  
+    BEGIN {
+      max_count = 50;
+      max_usage = 0;
+      threshold = 5;
+      print "<channel>"
+      print "<title>Most recent links</title>"
+      idx = 0;
+    }
+    /^#EXTM3U/ { 
+      next 
+    }
+    /^#EXTINF/ {
+      match($0, /^#EXTINF:-1,(.*)$/, arr)
+      title = arr[1]
+      next
+    }
+    {
+      history[idx] = $0;
+      idx++;
+      if(!($0 in url)) {
+        url[$0] = 0;
+        tit[$0] = title;
+      }
+      else if(tit[$0] == "") {
+        tit[$0] = title;
+      }
+      if(url[$0] < threshold)
+      {
+        url[$0]++;
+        if(url[$0] > max_usage)
+          max_usage = url[$0];
+      }
+    }
+    END {
+      j = 0;
+      for(usage = max_usage; usage > 0; usage--) {
+        for(i = idx-1; i >= 0; i--)
+          if(url[history[i]] == usage && !(history[i] in done))
+          {
+            item[j] = history[i];
+            done[history[i]] = j;
+            if(j++ >= max_count)
+            {
+              usage = 0;
+              break;
+            }
+          }
+      }
+      for(i = 0; i < j; i++) {
+        print "<item>"
+        print "<title>" escapeXML(tit[item[i]]) "</title>"
+        print "<location>" escapeXML(item[i]) "</location>"
+        print "</item>"
+      }
+      print "</channel>"
+      
+      print "#EXTM3U" > FILENAME
+      for(i = j-1; i >= 0; i--) {
+        for(k = 0; k < url[item[i]]; k++) {
+          print "#EXTINF:-1," tit[item[i]] >> FILENAME
+          print item[i] >> FILENAME
+        }
+      }
+    }
+  ' $FILE > $CHANNELFILE
+else
+  echo "<channel><title>No history</title></channel>" > $CHANNELFILE
+fi
+
+(
+  export TRANSLATE_CGI;
+  export BASEPATH;
+  export CHANNELFILE; 
+  template2rss history.xml | printContent "application/rss+xml"
+  rm -f $CHANNELFILE
+)
+

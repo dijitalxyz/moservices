@@ -1,0 +1,10 @@
+[udpxy]
+	revision = 3
+	title = "UDP-to-HTTP Proxy v1.0b19-Chipmunk"
+	role = daemon
+	check = "port 8080"
+	init = S24udpxy
+	navy_title = "UDPxy status"
+	navy_frame = "http://%addr%:8080/status"
+	files="bin/udpxy etc/init/S24udpxy"
+	size = 424

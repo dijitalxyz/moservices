@@ -1,0 +1,112 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+#
+# Translate CGI module
+# 'rutube.ru' plug-in
+#
+# version: 1.3 19.07.2011 11:39
+#
+# http://rutube.ru/tv/o2tv.html
+# http://rutube.ru/tracks/1088305.html?v=1c21315933044e39fdd57808ac5e3958
+# http://video.rutube.ru/online/2250784.flv
+# http://rutube.ru/tracks/5134012.html
+#
+
+local video_id=
+
+rutube_video()
+{
+    case $arg_cmd in
+        info)
+            stream_url=$arg_url
+            stream_type=
+            server_type='_translate_'
+            stream_class='video'
+            protocol='http'
+            $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "http://rutube.ru/trackinfo/${video_id}.html?" 2>/dev/null
+            if [ -f ${TMPFILE} ]; then
+                icy_name=`get_xml_text "title"`
+                icy_name=`unescapeXML "$icy_name"`
+            fi
+            rm -f $TMPFILE
+        ;;
+        *)
+          $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "http://bl.rutube.ru/${video_id}.xml?schema=rtmp" 2>/dev/null
+          if [ -f ${TMPFILE} ]; then
+            stream_type='video/x-flv'
+            server_type='rutube'
+            stream_url=`awk -f getxml.awk -f ${PLUGINS_DIR}rutube.ru.response.awk "$TMPFILE" | sed -n '1p' | unescapeXML`
+            protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+            # http://tradiz.org/Rutube/Skachivanie-s-rutuberu-po-rtmp-ssylkam
+            local rtmp_swfurl="http://rutube.ru/player.swf"
+            local rtmp_playpath=`echo "$stream_url" | sed 's/^.*\/mp4:/mp4:/'`
+            local rtmp_tcUrl=`echo "$stream_url" | sed 's/\/mp4:.*/\//'`
+
+            if echo "$stream_url" | grep -qs "_definst_"; then
+                arg_opt="Rtmp-options:-s $rtmp_swfurl;"$arg_opt
+            elif echo "$stream_url" | grep -qs "rutube_vod_"; then
+                arg_opt="Rtmp-options:-s $rtmp_swfurl -y $rtmp_playpath -t $rtmp_tcUrl;"$arg_opt
+            else
+                arg_opt="Rtmp-options:-s $rtmp_swfurl -v -y $rtmp_playpath;"$arg_opt
+            fi
+            rm -f $TMPFILE
+          fi
+        ;;
+    esac
+}
+
+unset RESOLVE_CACHE_ENABLED
+	
+if echo "${arg_url}" | grep -q -s "video\.rutube\.ru/[0-9a-f]*$"; then 
+  video_id=`echo "$arg_url" | sed -e 's/.*\///;s/&.*//'`
+  rutube_video
+  return $RC_OK
+elif echo "${arg_url}" | grep -q -s "video\.rutube\.ru/online/.*$"; then 
+  video_id=`echo "$arg_url" | sed -e 's/.*online\///;s/\..*$//'`
+  stream_url="http://webcaster.rutube.ru:8000/${video_id}?format=flv"
+  stream_type='video/x-flv'
+  server_type='rutube'
+  return $RC_OK
+elif echo "${arg_url}" | grep -q -s "\(www\.\)*rutube\.ru.*[&?]v=[0-9a-f]*$"; then 
+  video_id=`echo "$arg_url" | sed -e 's/.*[?&]v=//;s/&.*//'`
+  rutube_video
+  return $RC_OK
+elif echo "${arg_url}" | grep -q -s "\(www\.\)*rutube\.ru/tracks/[0-9]*\.html$"; then 
+  host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" $arg_url 2>&1`
+  if [ -f ${TMPFILE} ]; then
+      video_id=$(awk '/<link rel="video_src"/{ match($0, /href="http:\/\/video.rutube.ru\/([0-9a-f]+)"/, arr); print arr[1]; exit; }' $TMPFILE)
+      rutube_video
+      return $RC_OK
+  fi
+elif echo "${arg_url}" | grep -q -s "\(www\.\)*rutube\.ru/tv/.*$"; then 
+  host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" $arg_url 2>&1`
+  if [ -f ${TMPFILE} ]; then
+    stream_type='video/x-flv'
+    server_type='rutube'
+    video_id=`grep "playMovie('play'" ${TMPFILE} | sed "s/.*\/online\///;s/\.flv?.*//"`
+    stream_url="http://webcaster.rutube.ru:8000/${video_id}?format=flv"
+    protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+    icy_name=`grep 'meta name="description"' ${TMPFILE} | sed 's/.*t="//;s/".*//' | $XCODE -s +k | $TOUTF8`
+    rm -f $TMPFILE
+  fi
+  return $RC_OK
+fi
+
+return $RC_FAIL

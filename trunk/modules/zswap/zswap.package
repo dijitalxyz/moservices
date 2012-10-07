@@ -1,0 +1,7 @@
+[zswap]
+	revision = 2
+	title = "RAM zipped SWAP (compcache 0.6.2)"
+	role = patch
+	init = S43zswap
+	files="etc/init/S43zswap zswap/"
+	size = 120

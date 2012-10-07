@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'uravo.tv' plug-in
+#
+# version: 1.0 31.07.2011 12:35:55
+#
+# http://www.uravo.tv/cartoon/389/
+# http://www.uravo.tv/documentary/656/
+# http://www.uravo.tv/movie/215/
+#
+
+if echo "${arg_url}" | grep -qs '\(www\.\)*uravo\.tv/.*/[0-9]*/$'; then
+
+  $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>/dev/null
+
+  if [ -f ${TMPFILE} ]; then
+    stream_type='video/x-flv'
+    stream_url=`grep -i 'id="player"' ${TMPFILE} | sed 's/^.*<a href="//;s/".*$//'`
+    server_type='uravo'
+    protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+    icy_name=`grep -i '</h2>' ${TMPFILE} | sed 's/<\/h2>.*$//;s/.*>//'`
+    rm -f $TMPFILE
+  fi
+  return $RC_OK
+fi
+return $RC_FAIL

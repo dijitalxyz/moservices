@@ -1,0 +1,942 @@
+﻿<?xml version='1.0' encoding="UTF8" ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+    translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+    storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+  
+  error_info          = "";
+
+  startitem = "middle";
+  
+
+  testStream = 0;
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 10);
+    if(value != null &amp;&amp; value != "")
+      testStream = Integer(value);
+  }
+
+    startitem = "";
+		
+  columnCount=5;
+</onEnter>
+
+<script>
+  setRefreshTime(1);
+</script>
+
+<onRefresh>
+    setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+  middleItem = Integer(itemCount / 2);
+  if(startitem == "middle")
+    setFocusItemIndex(middleItem);
+  else
+  if(startitem == "last")
+    setFocusItemIndex(itemCount);
+  else
+  if(startitem &gt; 0 &amp;&amp; startitem &lt;= itemCount)
+    setFocusItemIndex(startitem-1);
+  redrawDisplay();
+
+</onRefresh>
+
+	<mediaDisplay name=photoView 
+	  centerXPC=7 
+		centerYPC=25
+		centerHeightPC=40
+    columnCount=5
+		
+	  rowCount=1
+		menuBorderColor="55:55:55"
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+	  backgroundColor="0:0:0"
+		imageBorderColor="0:0:0"
+		itemBackgroundColor="0:0:0"
+		itemGapXPC=0
+		itemGapYPC=1
+		sideTopHeightPC=22
+		bottomYPC=85
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=no
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+		>
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+		<image offsetXPC=5 offsetYPC=2 widthPC=21 heightPC=16>
+		  <script>channelImage;</script>
+      <widthPC>
+        <script>
+          21 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          5 + 21 * (1 - screenYp / screenXp) / 2;
+        </script>
+      </offsetXPC>
+		</image>
+
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+
+		<!--  lines="5" fontSize=15 -->
+		<text align="center" redraw="yes" 
+      lines=3 fontSize=18
+		
+		      offsetXPC=10 offsetYPC=70 widthPC=80 heightPC=15
+		      backgroundColor=0:0:0 foregroundColor=120:120:120>
+			<script>print(annotation); annotation;</script>
+		</text>
+		
+		<text align="center" redraw="yes" offsetXPC=10 offsetYPC=85 widthPC=80 heightPC=10 fontSize=15 backgroundColor=0:0:0 foregroundColor=75:75:75>
+			<script>print(location); location;</script>
+		</text>
+
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+
+		<itemDisplay>
+      <script>
+				imageW = 90/columnCount;
+				imageH = imageW * screenXp / screenYp * 100 / 40;
+				if(imageH > 84)
+				{
+				  imageH = 84;
+				  imageW = imageH * screenYp / screenXp * 40 / imageW;
+				}
+			  else
+			  {
+			    imageW = 100;
+        }
+      </script>
+  		<image offsetXPC=0 offsetYPC=95 widthPC=100 heightPC=5>
+  		  <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+  		      "../etc/translate/rss/image/gradient_line.bmp";
+  		    else
+  		      "";
+  		  </script>
+  		</image>
+			<image>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  if(annotation == "" || annotation == null)
+					    annotation = getItemInfo(idx, "stream_genre");
+					}
+					getItemInfo(idx, "image");
+				</script>
+			 <widthPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageW; else imageW * 3 / 4;
+			   </script>
+			 </widthPC>
+			 <heightPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageH; else imageH * 3 / 4;
+			   </script>
+			 </heightPC>
+			 <offsetXPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 50 - imageW/2; else 50 - imageW * 3 / 8;
+			   </script>
+			 </offsetXPC>
+			 <offsetYPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 0; else imageH / 8;
+			   </script>
+			 </offsetYPC>
+			</image>
+			
+			<text align="center" lines="5" fontSize="14" offsetXPC=0 offsetYPC=50 widthPC=100 heightPC=50 backgroundColor=-1:-1:-1>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+        <lines>
+          <script>Integer((95 - imageH - 2) / 9);</script>
+        </lines>
+        <offsetYPC>
+          <script>imageH + 2;</script>
+        </offsetYPC>
+        <heightPC>
+          <script>95 - imageH - 2;</script>
+        </heightPC>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "75:75:75";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+    <onUserInput>
+      <script>		
+      ret = "false";
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      if(userInput == "enter" || userInput == "ENTR")
+      {
+        showIdle();
+        focus = getFocusItemIndex();
+
+        request_title = getItemInfo(focus, "title");
+        request_url = getItemInfo(focus, "location");
+        request_options = getItemInfo(focus, "options");
+        request_image = getItemInfo(focus, "image");
+
+        stream_url = getItemInfo(focus, "stream_url");
+        stream_title = getItemInfo(focus, "stream_title");
+        stream_type = getItemInfo(focus, "stream_type");
+        stream_protocol = getItemInfo(focus, "stream_protocol");
+        stream_soft = getItemInfo(focus, "stream_soft");
+        stream_class = getItemInfo(focus, "stream_class");
+        stream_server = getItemInfo(focus, "stream_server");
+        stream_status_url = "";
+        stream_current_song = "";
+        stream_genre = getItemInfo(focus, "stream_genre");
+        stream_bitrate = getItemInfo(focus, "stream_bitrate");
+        playlist_autoplay = getItemInfo(focus, "autoplay");
+        playlist_repeat = getItemInfo(focus, "repeat");
+
+        if(playlist_repeat == "" || playlist_repeat == null)
+          playlist_repeat = "None";
+
+        if(playlist_autoplay == "" || playlist_autoplay == null)
+          playlist_autoplay = 1;
+        
+        if(stream_class == "" || stream_class == null || testStream == 1)
+          stream_class = "unknown";
+
+        if(stream_url == "" || stream_url == null)
+          stream_url = request_url;
+
+        if(stream_server != "" &amp;&amp; stream_server != null)
+          stream_status_url = translate_base_url + "status," + urlEncode(stream_server) + "," + urlEncode(stream_url);
+
+        if(stream_title == "" || stream_title == null)
+          stream_title = request_title;
+
+        if(stream_url != "" &amp;&amp; stream_url != null)
+        {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+          {
+            url = stream_url;
+          }
+          else
+          {
+            if(stream_type != null &amp;&amp; stream_type != "")
+            {
+              request_options = "Content-type:"+stream_type+";"+request_options;
+            }
+            url = translate_base_url + "stream," + request_options + "," + urlEncode(stream_url);
+          }
+        
+          executeScript(stream_class+"Dispatcher");
+        }
+        
+        cancelIdle();
+        ret = "true";
+      }
+      else if(userInput == "one" || userInput == "1")
+      {
+        if(itemCount &gt;= 1)
+        {
+          setFocusItemIndex(0);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "two" || userInput == "2")
+      {
+        if(itemCount &gt;= 2)
+        {
+          setFocusItemIndex(1);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "three" || userInput == "3")
+      {
+        if(itemCount &gt;= 3)
+        {
+          setFocusItemIndex(2);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "four" || userInput == "4")
+      {
+        if(itemCount &gt;= 4)
+        {
+          setFocusItemIndex(3);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "five" || userInput == "5")
+      {
+        if(itemCount &gt;= 5)
+        {
+          setFocusItemIndex(4);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "six" || userInput == "6")
+      {
+        if(itemCount &gt;= 6)
+        {
+          setFocusItemIndex(5);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "seven" || userInput == "7")
+      {
+        if(itemCount &gt;= 7)
+        {
+          setFocusItemIndex(6);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "eight" || userInput == "8")
+      {
+        if(itemCount &gt;= 8)
+        {
+          setFocusItemIndex(7);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "nine" || userInput == "9")
+      {
+        if(itemCount &gt;= 9)
+        {
+          setFocusItemIndex(8);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "display" || userInput == "DISPLAY")
+      {
+        ret = "true";
+      }
+      else if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -columnCount;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= columnCount;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+
+      ret;
+
+      </script>		
+    </onUserInput>
+		
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView">
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+		</mediaDisplay>
+	</item_template>
+
+  <videoDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/videoRenderer.rss");
+  </videoDispatcher>
+  
+  <audioDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_status_url);
+    streamArray = pushBackStringArray(streamArray, stream_current_song);
+    streamArray = pushBackStringArray(streamArray, stream_genre);
+    streamArray = pushBackStringArray(streamArray, stream_bitrate);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, request_image);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/audioRenderer.rss");
+  </audioDispatcher>
+  
+  <playlistDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "playlist");
+    streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+    streamArray = pushBackStringArray(streamArray, playlist_repeat);
+    writeStringToFile(storagePath_playlist, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+  </playlistDispatcher>
+  
+  <rssDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/rss_mediaFeed.rss");
+  </rssDispatcher>
+
+  <unknownDispatcher>
+    info_url    = translate_base_url + "info," + request_options + "," + urlEncode(request_url);
+    error_info  = "";
+
+    res = loadXMLFile(info_url);
+    
+    if (res != null)
+    {
+      error = getXMLElementCount("info","error");
+      
+      if(error != 0)
+      {
+  	    value = getXMLText("info","error");
+  	    if(value != null)
+  	    {
+  	     error_info = value;
+  	    }
+      }
+      else
+      {
+  	    value = getXMLAttribute("info","stream","url");
+  	    if(value != null)
+  	     stream_url = value;
+  
+  	    value = getXMLAttribute("info","stream","type");
+  	    if(value != null)
+  	     stream_type = value;
+  	    
+  	    value = getXMLAttribute("info","stream","class");
+  	    if(value != null)
+  	     stream_class = value;
+  
+  	    value = getXMLAttribute("info","stream","protocol");
+  	    if(value != null)
+  	     stream_protocol = value;
+  
+  	    value = getXMLAttribute("info","stream","server");
+  	    if(value != null)
+  	     stream_soft = value;
+  
+        stream_status_url = "";
+        
+  	    value = getXMLAttribute("info","stream","server_url");
+  	    if(value != null)
+  	    {
+  	     stream_server_url = value;
+  	     if((stream_soft == "icecast" || stream_soft == "shoutcast") &amp;&amp; stream_server_url!="")
+  	     {
+    	      stream_status_url = translate_base_url+"status,"+urlEncode(stream_server_url)+","+urlEncode(stream_url);
+    	   }
+  	    }
+  	     
+        value = getXMLText("info","status","stream-title");
+  	    if(value != null)
+  	     stream_title = value;
+  
+        stream_current_song = "";
+  	    value = getXMLText("info","status","current-song");
+  	    if(value != null)
+    		  stream_current_song = value;
+    		  
+  	    value = getXMLText("info","status","stream-genre");
+  	    if(value != null)
+  	      stream_genre = value;
+        
+  	    value = getXMLText("info","status","stream-bitrate");
+  	    if(value != null)
+  	      stream_bitrate = value;
+  
+        options = "";
+        
+        if(stream_type != "")
+          options = "Content-type:"+stream_type;
+        
+        if(options == "")
+          options = stream_options;
+        else
+          options = options + ";" + stream_options;
+  
+  	    stream_translate_url = translate_base_url + "stream," + options + "," + urlEncode(stream_url);
+  	    
+  	    url = null;
+  	    
+  	    if(stream_class == "video" || stream_class == "audio")
+    	  {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+    	      url = stream_url;
+    	    else
+    	      url = stream_translate_url;
+    	  }
+    	  else
+    	  {
+  	      url = stream_url;
+    	  }
+    	     
+    	  if(url != null)
+    	  {
+          if(stream_class == "audio" || stream_class == "video" || stream_class == "playlist" || stream_class == "rss")
+          {
+            executeScript(stream_class+"Dispatcher");
+          }
+          else
+          {
+            error_info = "Unsupported media type: " + stream_type;
+          }
+  	    }
+  	    else
+  	    {
+          error_info = "Empty stream url!";
+  	    }
+      }
+    }
+    else
+    {
+      error_info = "CGI translate module failed!";
+    }
+    print("error_info=",error_info);
+  </unknownDispatcher>
+
+	
+<script>
+    channelImage = "";
+  </script><channel>
+  <title>SomaFM</title>
+  <item>
+    <location>http://somafm.com/covers.pls</location>
+    <title>Covers</title>
+    <annotation>All covers. All the time. Nothing by the original artists!</annotation>
+    <image>../etc/translate/rss/image/somafm/covers120.jpg</image>
+    <stream_url>http://voxsc1.somafm.com:8700</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Covers (#1 128k mp3): Just covers. Songs you know by artists you don't. We've got you covered. - Cover Me: All covers, all the time. [SomaFM]</stream_title>
+    <stream_genre>Experimental Eclectic</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/u80s.pls</location>
+    <title>Underground 80s</title>
+    <annotation>Early 80s UK Synthpop and a bit of New Wave.</annotation>
+    <image>../etc/translate/rss/image/somafm/u80s-120.png</image>
+    <stream_url>http://voxsc1.somafm.com:8880</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Underground 80s (#1 128k mp3): Early 80s UK Synthpop and a bit of New Wave. - Underground Eighties: UK Synthop and a bit of New Wave. [SomaFM]</stream_title>
+    <stream_genre>80s New Wave Synthpop</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/groovesalad.pls</location>
+    <title>Groove Salad</title>
+    <annotation>A nicely chilled plate of ambient beats and grooves.</annotation>
+    <image>../etc/translate/rss/image/somafm/groovesalad120.gif</image>
+    <stream_url>http://streamer-dtc-aa02.somafm.com:80/stream/1018</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Groove Salad (#1 128k mp3): A nicely chilled plate of ambient/downtempo beats and grooves. -  Groove Salad: a nicely chilled plate of ambient beats and grooves. [SomaFM]</stream_title>
+    <stream_genre>Ambient Chill</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/secretagent.pls</location>
+    <title>Secret Agent</title>
+    <annotation>The soundtrack for your stylish, mysterious, dangerous life. For Spies and PIs too!</annotation>
+    <image>../etc/translate/rss/image/somafm/secretagent120.jpg</image>
+    <stream_url>http://streamer-dtc-aa02.somafm.com:80/stream/1021</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Secret Agent (#1 128k mp3): The soundtrack for your stylish, mysterious, dangerous life. For Spies and PIs too! -  Secret Agent: The soundtrack for your stylish, mysterious, dangerous life. For Spys and P.I.'s too! [SomaFM]</stream_title>
+    <stream_genre>Downtempo Lounge Spy</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/dronezone.pls</location>
+    <title>Drone Zone</title>
+    <annotation>Served best chilled, safe with most medications. Atmospheric textures with minimal beats.</annotation>
+    <image>../etc/translate/rss/image/somafm/dronezone120.jpg</image>
+    <stream_url>http://streamer-dtc-aa04.somafm.com:80/stream/1032</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Drone Zone (#1 128k mp3): Served best chilled, safe with most medications. Atmospheric textures with minimal beats. -  Drone Zone: Atmospheric ambient space music. Serve Best Chilled. Safe with most medications. [SomaFM]</stream_title>
+    <stream_genre>Techno Ambient Space</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/indiepop.pls</location>
+    <title>Indie Pop Rocks!</title>
+    <annotation>New and your favorite classic indie pop tracks.</annotation>
+    <image>../etc/translate/rss/image/somafm/indychick.jpg</image>
+    <stream_url>http://mp1-ipr128.somafm.com:80</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Indie Pop Rocks! (#1 128k mp3): New and classic favorite indie pop tracks. - SomaFM presents: Indie Pop Rocks! [SomaFM]</stream_title>
+    <stream_genre>Indie LoFi College</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/cliqhop.pls</location>
+    <title>cliqhop idm</title>
+    <annotation>Blips'n'beeps backed mostly w/beats. Intelligent Dance Music.</annotation>
+    <image>../etc/translate/rss/image/somafm/cliqhop.gif</image>
+    <stream_url>http://voxsc1.somafm.com:8062</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: cliqhop idm (#1 128k mp3): Blips'n'beeps backed mostly w/beats. Intelligent Dance Music. - &lt;-- cliqhop --&gt; blips'n'bleeps backed w/ beats. broadband. [SomaFM]</stream_title>
+    <stream_genre>IDM</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/beatblender.pls</location>
+    <title>Beat Blender</title>
+    <annotation>A late night blend of deep-house and downtempo chill.</annotation>
+    <image>../etc/translate/rss/image/somafm/blender.gif</image>
+    <stream_url>http://voxsc1.somafm.com:8384</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Beat Blender (#1 128k mp3): A late night blend of deep-house and downtempo chill. - Beat Blender: A late night blend of deep-house &amp; downtempo chill. [SomaFM]</stream_title>
+    <stream_genre>Downtempo House Techno</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/tags.pls</location>
+    <title>Tag's Trip</title>
+    <annotation>Progressive house / trance. Tip top tunes.</annotation>
+    <image>../etc/translate/rss/image/somafm/tagstrancefract.jpg</image>
+    <stream_url>http://205.188.215.230:8012</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Tag's Trip (#1 128k mp3): Progressive house / trance. Tip top tunes. - Tag's Trip  [SomaFM]</stream_title>
+    <stream_genre>Dance Trance House</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/illstreet.pls</location>
+    <title>Illinois Street Lounge</title>
+    <annotation>Classic bachelor pad, playful exotica and vintage music of tomorrow.</annotation>
+    <image>../etc/translate/rss/image/somafm/illstreet.jpg</image>
+    <stream_url>http://voxsc1.somafm.com:8500</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Illinois Street Lounge (#1 128k mp3): Classic bachelor pad, playful exotica and vintage music of tomorrow. - Ill Street Lounge: Classic bachelor pad, playful exotica and vintage music of tomorrow. [SomaFM]</stream_title>
+    <stream_genre>Exotica Lounge</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/spacestation.pls</location>
+    <title>Space Station Soma</title>
+    <annotation>Tune in, turn on, space out. Spaced-out ambient and mid-tempo electronica.</annotation>
+    <image>../etc/translate/rss/image/somafm/sss.jpg</image>
+    <stream_url>http://207.200.96.231:8012</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Space Station Soma (#1 128k mp3): Tune in, turn on, space out. Spaced-out ambient and mid-tempo electronica. - Space Station Soma: Tune in, turn on, space out. Ambient and mid-tempo electronica. [SomaFM]</stream_title>
+    <stream_genre>Space Electronica</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/doomed.pls</location>
+    <title>Doomed</title>
+    <annotation>Dark music for tortured souls</annotation>
+    <image>../etc/translate/rss/image/somafm/doomed.gif</image>
+    <stream_url>http://voxsc1.somafm.com:8300</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Doomed (#1 128k mp3): Dark industrial/ambient music for tortured souls. - Doomed: Dark music for tortured souls [SomaFM]</stream_title>
+    <stream_genre>Halloween Dark Industrial</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/bootliquor.pls</location>
+    <title>Boot Liquor</title>
+    <annotation>Americana Roots music for Cowhands, Cowpokes and Cowtippers</annotation>
+    <image>../etc/translate/rss/image/somafm/bootliquor.gif</image>
+    <stream_url>http://voxsc1.somafm.com:7000</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Boot Liquor (#1 128k mp3): Americana Roots music for Cowhands, Cowpokes and Cowtippers - Boot Liquor: Americana roots music for Cowhands, Cowpokes and Cowtippers. [SomaFM]</stream_title>
+    <stream_genre>Alt Country Americana</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/lush.pls</location>
+    <title>Lush</title>
+    <annotation>Sensuous and mellow vocals, mostly female, with an electronic influence.</annotation>
+    <image>../etc/translate/rss/image/somafm/lush120.jpg</image>
+    <stream_url>http://streamer-dtc-aa04.somafm.com:80/stream/1073</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Lush (#1 128k mp3): Sensuous and mellow vocals, mostly female, with an electronic influence. -  Lush: Mostly female vocals with an electronic influence. [SomaFM]</stream_title>
+    <stream_genre>Female Vocal Electronica</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/digitalis.pls</location>
+    <title>Digitalis</title>
+    <annotation>Digitally affected analog rock to calm the agitated heart.</annotation>
+    <image>../etc/translate/rss/image/somafm/digitalis120.gif</image>
+    <stream_url>http://voxsc1.somafm.com:8900</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Digitalis (#1 128k mp3): Digitally affected analog rock to calm the agitated heart. - Digitalis. Analog rock, digitally-affected, to calm the agitated heart. [SomaFM]</stream_title>
+    <stream_genre>Indie Post Rock</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/suburbsofgoa.pls</location>
+    <title>Suburbs of Goa</title>
+    <annotation>Desi-influenced Asian world beats.</annotation>
+    <image>../etc/translate/rss/image/somafm/sog120.jpg</image>
+    <stream_url>http://voxsc1.somafm.com:8850</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Suburbs of Goa (#1 128k mp3): Desi-influenced Asian world beats and beyond. - Suburbs of Goa: Desi-influenced Asian world beats. [SomaFM]</stream_title>
+    <stream_genre>Indian Asian</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/sonicuniverse.pls</location>
+    <title>Sonic Universe</title>
+    <annotation>NuJazz + avant-garde EuroJazz. Transcending the world of jazz with experimental takes on tradition.</annotation>
+    <image>../etc/translate/rss/image/somafm/sonicuniverse120.jpg</image>
+    <stream_url>http://voxsc1.somafm.com:8600</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Sonic Universe (#1 128k mp3): Transcending the world of jazz with eclectic, avant-garde takes on tradition. - Sonic Universe. Nu Jazz plus avant-garde Euro Jazz: Transcending the boundaries of jazz with experimental takes on tradition. [SomaFM]</stream_title>
+    <stream_genre>Experimental NuJazz</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/missioncontrol.pls</location>
+    <title>Mission Control</title>
+    <annotation>Celebrating NASA and Space Explorers everywhere.</annotation>
+    <image>../etc/translate/rss/image/somafm/missioncontrol120.jpg</image>
+    <stream_url>http://mp1-mc128.somafm.com</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Mission Control (#1 128k mp3): Celebrating NASA and Space Explorers everywhere. - Mission Control: Celebrating NASA and space explorers everywhere. [SomaFM]</stream_title>
+    <stream_genre>Space Electronica</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/poptron.pls</location>
+    <title>PopTron</title>
+    <annotation>Electropop and indie dance rock with sparkle and pop.</annotation>
+    <image>../etc/translate/rss/image/somafm/poptron120.png</image>
+    <stream_url>http://voxsc1.somafm.com:2200</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: PopTron (#1 128k mp3): Electropop and indie dance rock with sparkle and pop. - PopTron: Electro-Pop and Indie Dance Rock [SomaFM]</stream_title>
+    <stream_genre>Electro Pop</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/brfm.pls</location>
+    <title>Black Rock FM</title>
+    <annotation>From the Playa to the world, for the 2010 Burning Man festival.</annotation>
+    <image>../etc/translate/rss/image/somafm/1023brc.jpg</image>
+    <stream_url>http://voxsc1.somafm.com:8040</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>SomaFM: Black Rock FM (#1 128k mp3): From the Playa to the world, for the 2011 Burning Man festival. - SomaFM Black Rock City: 102.3 FM at the Burningman Festival [SomaFM]</stream_title>
+    <stream_genre>Misc Electronic</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/xmasinfrisko.pls</location>
+    <title>Xmas in Frisko</title>
+    <annotation>It's back! Our annual eclectic, irreverent holiday broadcast. May not be suitable for all ages! </annotation>
+    <image>../etc/translate/rss/image/somafm/sfxmas.jpg</image>
+    <stream_url>http://voxsc1.somafm.com:2100</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Xmas in Frisko: SomaFM's eclectic holiday mix. Not for the easily offended. [SomaFM]</stream_title>
+    <stream_genre>Christmas Holiday</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/480min.pls</location>
+    <title>480 Minutes</title>
+    <annotation>Live Every Friday: What alternative rock radio would sound like had Nirvana never happened.</annotation>
+    <image>../etc/translate/rss/image/somafm/480min120.png</image>
+    <stream_url>http://mp1.somafm.com:8080</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>480 Minutes from Bagel Radio [SomaFM]</stream_title>
+    <stream_genre>Alternative</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://somafm.com/christmas.pls</location>
+    <title>Christmas Lounge</title>
+    <annotation>Chilled holiday grooves and classic winter lounge tracks. (Kid and Parent safe!)</annotation>
+    <image>../etc/translate/rss/image/somafm/christmaslounge120.png</image>
+    <stream_url>http://sgsc.somafm.com:8100</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>The Christmas Lounge. Chilled holiday grooves and classic winter lounge tracks. [SomaFM]</stream_title>
+    <stream_genre>Christmas Holiday Xmas</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+</channel>
+
+
+</rss>

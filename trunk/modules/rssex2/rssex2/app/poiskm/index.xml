@@ -1,0 +1,89 @@
+﻿<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+  <!--`cat "$BASEPATH/app/include/media_onenter.script"`-->
+  setRefreshTime(1);
+</onEnter>
+
+<onExit>
+  setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+    setRefreshTime(-1);
+	  keyboard = null;
+	  keyboard = pushBackStringArray(keyboard, "poiskm");
+	  keyboard = pushBackStringArray(keyboard, "../etc/translate/rss/image/poiskm.png");
+	  keyboard = pushBackStringArray(keyboard, "ru");
+    writeStringToFile(getStoragePath("key")+"keyboard.dat", keyboard);
+		keyword = doModalRss("rss_file://../etc/translate/rss/key/keyboard.rss");
+		
+		if(keyword != "" &amp;&amp; keyword != null)
+		{
+  		stream_url  = translate_base_url + "app/poiskm/search," + urlEncode(keyword);
+  		playlist_autoplay = 0;
+  		
+      streamArray = null;
+      streamArray = pushBackStringArray(streamArray, stream_url);
+      streamArray = pushBackStringArray(streamArray, stream_url);
+      streamArray = pushBackStringArray(streamArray, "");
+      streamArray = pushBackStringArray(streamArray, "");
+      streamArray = pushBackStringArray(streamArray, "playlist");
+      streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+      streamArray = pushBackStringArray(streamArray, "All");
+      writeStringToFile(storagePath_playlist, streamArray);
+      doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+      setRefreshTime(1);
+    }
+    else {
+      postMessage("return");
+    }
+</onRefresh>
+
+<mediaDisplay name=onePartView
+	sideLeftWidthPC = 0
+	sideRightWidthPC = 0
+
+	sideColorRight="0:0:0"
+	sideColorLeft="0:0:0"
+	backgroundColor="0:0:0"
+	showHeader=no
+	showDefaultInfo=no
+	>
+
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+</mediaDisplay>
+
+
+	<channel></channel>
+</rss>

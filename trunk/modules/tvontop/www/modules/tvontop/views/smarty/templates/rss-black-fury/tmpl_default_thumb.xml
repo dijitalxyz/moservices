@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+<onEnter>
+    executeScript("platformInit");
+</onEnter>
+
+<mediaDisplay name="photoView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    drawItemText="no"
+
+    rowCount="3"
+    columnCount="2"
+
+    itemOffsetXPC="1"
+    itemOffsetYPC="9.5"
+    itemWidthPC="22"
+    itemHeightPC="24"
+    itemGapXPC="1"
+    itemGapYPC="1"
+
+    itemBorderColor="{$config->get(bgNormal)}"
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    >
+    <onUserInput>
+        userInput = currentUserInput();
+        if ( userInput == "1" ) {
+            url = "{$config->get(cfg_processing_url,Runtime)}&amp;type=CHANGE_AUTH";
+            jumpToLink("setup_link");
+            redrawDisplay();
+            "true";
+        } else {
+            "false";
+        }
+    </onUserInput>
+
+    <!-- header -->
+{$titleExtra = " [{$mediaObj->getType()}]"}
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+
+    <text redraw="yes" align="center" offsetXPC="2.2"  offsetYPC="87" widthPC="8" heightPC="13"
+        foregroundColor="255:255:255" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <script>getPageInfo("focusItemIndex") + "/" + getPageInfo("itemCount");</script>
+    </text>
+
+    <text redraw="yes" offsetXPC="10.2" offsetYPC="87" widthPC="51.8" heightPC="13"
+        foregroundColor="130:130:130" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <script>getItemInfo("title") + " [" + getItemInfo("type") + "]";</script>
+    </text>
+
+    <text offsetXPC="62" offsetYPC="89" widthPC="38" heightPC="8" fontSize="13"
+        foregroundColor="170:170:170" lines="2">
+        <script>"*{$locale->msg('Default template')}";</script>
+    </text>
+
+<!-- detailed info -->
+{call recalcParentParams p=$parentParams c=$childParams length=14 assign="parentParams"}
+{$childParams = 14 - $parentParams}
+{$diffY = 5}
+{$startOffY = 10.5}
+
+
+    {$bg1 = "40:40:40"}
+    {$bg2 = "60:60:60"}
+    <text offsetXPC="50" offsetYPC="9.4" widthPC="50" heightPC="{2.9 + $parentParams * $diffY}"
+        backgroundColor="{$bg1}" />
+    <text offsetXPC="50" offsetYPC="{9.4 + 2.9 + $parentParams * $diffY}" widthPC="50" heightPC="{3.8 + $childParams * $diffY}"
+        backgroundColor="{$bg2}" />
+
+    <text offsetXPC="50" offsetYPC="9.4" widthPC="0.3" heightPC="76.7"
+        backgroundColor="200:200:200" />
+    <text offsetXPC="50" offsetYPC="{9.4 + 2.9 + $parentParams * $diffY}" widthPC="50" heightPC="0.3"
+        backgroundColor="200:200:200" />
+
+
+
+<!-- media object params -->
+{$offY = $startOffY}
+{$i = 0}
+{foreach $mediaObj->getParams() as $param => $value}
+{call isParamOk assign="res"}
+{if $res == "OK" && $i < $parentParams}
+    <text offsetXPC="52" offsetYPC="{$offY}" widthPC="10" heightPC="{$diffY}"
+        fontSize="15" foregroundColor="200:200:200" backgroundColor="{$bg1}">
+        <script>"{$param}";</script>
+    </text>
+    <text offsetXPC="62" offsetYPC="{$offY}" widthPC="36" heightPC="{$diffY}"
+        fontSize="15" foregroundColor="130:130:130" backgroundColor="{$bg1}">
+        <script>"{$value}";</script>
+    </text>
+    {$i = $i + 1}
+    {$offY = $offY + $diffY}
+{/if}
+{/foreach}
+
+<!-- child params -->
+{$offY  = $startOffY + 3.3 + $diffY * $parentParams}
+{for $i = 0 to $childParams - 1}
+    <text offsetXPC="52" offsetYPC="{$offY}" widthPC="10" heightPC="{$diffY}"
+        fontSize="15" foregroundColor="200:200:200" backgroundColor="{$bg2}">
+        <script>getItemInfo("param{$i}");</script>
+    </text>
+    <text offsetXPC="62" offsetYPC="{$offY}" widthPC="36" heightPC="{$diffY}"
+        fontSize="15" foregroundColor="130:130:130" backgroundColor="{$bg2}">
+        <script>getItemInfo("value{$i}");</script>
+    </text>
+    {$offY = $offY + $diffY}
+{/for}
+
+    <itemDisplay>
+        <script>
+        	{call calculateItemColors}
+        </script>
+
+        <text offsetXPC="7" offsetYPC="0" widthPC="92" heightPC="100" cornerRounding="15">
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+        </text>
+        <image redraw="no" offsetXPC="28" offsetYPC="2" widthPC="50" heightPC="72">
+            <script>getItemInfo("thumbnail");</script>
+        </image>
+        <text align="center" redraw="yes" fontSize="15"
+            offsetXPC="3" offsetYPC="80" widthPC="94" heightPC="20"
+            backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+            <script>getItemInfo("title");</script>
+        </text>
+    </itemDisplay>
+{call getIdleImages}
+</mediaDisplay>
+
+{call getRssLink tag=setup_link}
+
+<channel>
+{foreach $mediaObj->getChildren() as $child}
+{$link = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
+    <item>
+        <title>{$child->title}</title>
+        <type>{$child->type}</type>
+        <media:thumbnail>{$child->getParam(thumbnail)}</media:thumbnail>
+{if $child->type == "STREAM_URL"}
+        <enclosure url="{$link}&amp;mode=redirect" type="video/mp4" />
+{else}
+        <link>{$link}</link>
+{/if}
+
+<!-- child params -->
+{$counter = 0}
+{foreach $child->getParams() as $param => $value}
+    {call isParamOk assign="res"}
+    {if $res == "OK"}
+        <param{$counter}>{$param}</param{$counter}>
+        <value{$counter}>{$value}</value{$counter}>
+        {$counter = $counter + 1}
+    {/if}
+{/foreach}
+    </item>
+{/foreach}
+</channel>
+</rss>

@@ -1,0 +1,41 @@
+#!/bin/sh
+#---------------------------------------------------------
+#
+# description: Starts and stops SwapOnDrive
+#
+bin=/usr/local/etc/mos/bin
+
+case "$1" in
+  start)
+	# waiting for mount
+	$bin/wait_mount && exit 1
+
+	#swap search & activate
+	s=$( fdisk -l | grep swap | cut -d" " -f 1 )
+	for i in $s ; do
+		echo "Adding swap $i"
+		swapon $i
+	done
+	;;
+  stop)
+	#swap search & deactivate
+	s=$( fdisk -l | grep swap | cut -d" " -f 1 )
+	for i in $s ; do
+		swapoff $i
+		echo "Remove swap $i"
+	done
+	;;
+  status)
+	if cat /proc/swaps | grep -q /dev/scsi/host
+	then echo "SwapOnDrive running"
+	else echo "SwapOnDrive stopped"
+	fi
+	;;
+  enable | disable)
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

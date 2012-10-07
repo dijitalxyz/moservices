@@ -1,0 +1,192 @@
+#!/bin/sh
+#
+# description: Starts and stops the core of moServices
+#
+etc=/usr/local/etc
+mos=$etc/mos
+dvs=$etc/dvdplayer
+spa=$dvs/savedrss/scripts
+xtr='/tmp/usbmounts/sda1/scripts/Xtreamering'
+menu=$mos/www/modules/core/def_rss.php
+
+symdir()
+{
+	local sr=$1
+	local ds=$2
+	local j=
+
+	[ ! -d $ds ] && mkdir -p $ds
+	for j in $sr/* ; do
+		j=$(echo $j | sed "s/.*\//\//")
+		if [ -f $sr$j ] ; then
+			ln -s "$sr$j" "$ds$j"
+		elif [ -d $sr$j ] ; then
+			symdir "$sr$j" "$ds$j"
+		fi
+	done
+}
+
+case "$1" in
+  start)
+	if [ -d /sbin/www ] ; then
+		# xTreamer FW
+		mos_url='http://127.0.0.1/mos/'
+
+		# present hdds ?
+		if ! $mos/bin/wait_mount ; then
+			# present xTreamering ?
+			xtr='';
+			for i in $( ls /tmp/usbmounts ) ; do
+				if [ -f /tmp/usbmounts/$i/scripts/Xtreamering/index.php ] ; then
+					xtr=/tmp/usbmounts/$i/scripts/Xtreamering
+					break
+				fi
+			done
+			if [ -n $xtr ] ; then
+				[ ! -f $xtr/index_orig.php ] && mv -f $xtr/index.php $xtr/index_orig.php
+
+				# redirect to rss_menu
+				echo '<?php
+header("HTTP/1.1 301 Moved Permanently");
+header("Location: http://".$_SERVER['HTTP_HOST']."/mos/?page=rss_menu");
+exit();
+?>' > $xtr/index.php
+
+				# add orig menu to rss_menu
+				sed -i '
+/\$nav_rss\["aaa"\] = array/{N;N;N;N;N;N;d}
+/\?>/i\
+$nav_rss["aaa"] = array (\
+	"module"=> "core",\
+	"rss"	=> "http://127.0.0.1/media/'$i'/scripts/Xtreamering/index_orig.php",\
+	"icon"  => "rss/images/xTreamering.png",\
+	"title" => "xTreamering"\
+);\
+
+' $menu
+			fi
+		fi
+		# set cmdset
+		sed -ir 's/^([ \t]*commands[ \t]*=[ \t]*).*$/\1xtreamer/' $mos/etc/core.ini
+
+		dst='/sbin/www/mos'
+	else
+		# Standard FW
+		sleep 10
+
+		mos_url='http://127.0.0.1/'
+
+		orig='/usr/local/bin/scripts/menu.rss'
+		[ -f $spa/menu.rss ] && [ ! -L $spa/menu.rss ] && {
+			mv -f $spa/menu.rss $etc/menu_orig.rss
+			orig=$etc/menu_orig.rss
+		}
+		mkdir -p $spa
+		rm -f $spa/menu.rss
+		ln -s $mos/www/modules/core/rss/moMenu.rss $spa/menu.rss
+
+		# Asus HD2 patch
+		nas=/usr/local/bin/scripts/nas/nasSetup.rss
+		if [ -L $nas ] ; then
+			[ ! -f $nas.orig ] && mv -f $nas $nas.orig
+			ln -s $mos/www/modules/core/rss/moServices.rss $nas
+		else
+			if [ -f $nas ] ; then
+				mount | grep -q $nas || mount -o bind $mos/www/modules/core/rss/moServices.rss $nas
+			fi
+		fi
+
+		# add orig menu to rss_menu
+		sed -i '
+/\$nav_rss\["aaa"\] = array/{N;N;N;N;N;N;d}
+/\?>/i\
+$nav_rss["aaa"] = array (\
+	"module"=> "core",\
+	"rss"	=> "rss_file://'$orig'",\
+	"icon"  => "rss/images/OnlineMedia.png",\
+	"title" => "Online Media"\
+);\
+
+' $menu
+		# set cmdset
+		sed -ir 's/^([ \t]*commands[ \t]*=[ \t]*).*$/\1sdk/' $mos/etc/core.ini
+
+		dst='/tmp/www'
+
+		# remove symlink to www root
+		if [ -L $dst ] ; then
+			symlink=$(ls -la $dst | sed 's/.*-> //')
+			rm -f $dst
+			symdir $symlink $dst
+		fi
+	fi
+
+	# copy www files
+	[ ! -d $dst ] && mkdir $dst
+	cp -a $mos/www/index.php $dst
+	cp -a $mos/www/favicon.ico $dst
+	[ -e $dst/modules ] && rm -f $dst/modules
+	ln -s $mos/www/modules/ $dst/modules
+
+	sync
+
+	if [ ! -d /sbin/www ] ; then
+		$mos/bin/php -q $dst/index.php page=rss_menu > $mos/www/modules/core/rss/moMenu.rss &
+		$mos/bin/php -q $dst/index.php page=rss_services > $mos/www/modules/core/rss/moServices.rss &
+	fi
+	;;
+
+  stop)
+	sed -i '/\$nav_rss\["aaa"\] = array/{N;N;N;N;N;N;d}' $menu
+	if [ -d /sbin/www ] ; then
+		# xTreamer FW
+
+		# present xTreamering ?
+		xtr='';
+		for i in $( ls /tmp/usbmounts ) ; do
+			if [ -f /tmp/usbmounts/$i/scripts/Xtreamering/index.php ] ; then
+				xtr=/tmp/usbmounts/$i/scripts/Xtreamering
+				break
+			fi
+		done
+
+		[ -n $xtr ] && \
+		[ -f $xtr/index.php ] && \
+		[ -f $xtr/index_orig.php ] && \
+		mv -f $xtr/index_orig.php $xtr/index.php
+		dst='/sbin/www/mos'
+	else
+		# Standard FW
+		if [ -f $etc/menu_orig.rss ] ; then
+			mv -f $etc/menu_orig.rss $spa/menu.rss
+		else
+			rm -Rf $dvs/savedrss
+			rm -f $etc/menu_default.rss
+		fi
+
+		# Asus HD2 patch
+		nas=/usr/local/bin/scripts/nas/nasSetup.rss
+		if [ -L $nas ] ; then
+			[ -f $nas.orig ] && mv -f $nas.orig $nas
+		else
+			mount | grep -q $nas && umount $nas
+		fi
+
+		dst='/tmp/www'
+	fi
+	rm -f $dst/index.php
+	rm -f $dst/favicon.ico
+	rm -f $dst/modules
+
+	rm -f $mos/www/modules/core/rss/moMenu.rss
+	rm -f $mos/www/modules/core/rss/moServices.rss
+	;;
+
+  status | enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

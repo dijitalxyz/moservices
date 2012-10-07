@@ -1,0 +1,115 @@
+/lib/modules/2.6.12.6-VENUS/kernel/net/ipv4/xfrm4_tunnel.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/net/ipv4/ipcomp.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/net/ipv4/ipip.ko: /lib/modules/2.6.12.6-VENUS/kernel/net/ipv4/xfrm4_tunnel.ko
+/lib/modules/2.6.12.6-VENUS/kernel/net/8021q/8021q.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/sound/usb/snd-usb-audio.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-pcm.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-timer.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-page-alloc.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/usb/snd-usb-lib.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-rawmidi.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-device.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/usb/snd-usb-lib.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-rawmidi.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-device.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-page-alloc.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/oss/snd-pcm-oss.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-pcm.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-timer.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-page-alloc.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/oss/snd-mixer-oss.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/oss/snd-mixer-oss.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-pcm.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-timer.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-page-alloc.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-rawmidi.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-device.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-timer.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/oss/snd-seq-oss.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-midi-event.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-timer.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-device.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-dummy.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-timer.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-device.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-midi-event.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-timer.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-device.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-timer.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-device.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-midi.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-rawmidi.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-midi-event.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd-timer.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-device.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/sound/core/seq/snd-seq-device.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/core/snd.ko /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/scsi/libata.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/scsi/sata_mars.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/scsi/libata.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/host/ohci-hcd.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/host/ehci-hcd.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/mon/usbmon.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/net/pegasus.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/net/usbnet.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/net/rtl8150.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/net/zd1201.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/net/catc.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/net/kaweth.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/image/mdc800.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/input/touchkitusb.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/input/usbkbd.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/input/mtouchusb.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/input/usbhid.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/input/usbmouse.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/cypress_m8.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/usbserial.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/garmin_gps.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/usbserial.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/ftdi_sio.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/usbserial.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/usbserial.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/pl2303.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/usbserial.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/cp2101.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/serial/usbserial.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/stv680.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/se401.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/sn9c102.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/ov511.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/usbvideo.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/pwc/pwc.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/dabusb.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/uvc/uvcvideo.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/v4l1-compat.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/v4l2-common.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/konicawc.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/usbvideo.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/vicam.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/media/dsbr100.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/class/cdc-acm.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/class/usb-midi.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/class/audio.ko: /lib/modules/2.6.12.6-VENUS/kernel/sound/soundcore.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/usb/class/bluetty.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/w1/wire.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/w1/w1_therm.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/w1/wire.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/bsd_comp.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/ppp_generic.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/slhc.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/pppox.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/ppp_generic.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/slhc.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/atmel.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/rt2570.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/rtUSBsta.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/rt73.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/strip.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211-8187.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211_crypt.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211_crypt_tkip.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211_crypt.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211_crypt_wep.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211_crypt.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211_crypt.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211_crypt_ccmp.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211_crypt.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/rtl8187/r8187.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211-8187.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek/rtl8187/ieee80211/ieee80211_crypt.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek_new/rtl8192du/drv/8192du.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek_new/rtl8712/8712u.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek_new/ar9170/OAL/Otus/Linux/arusb_lnx.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/wireless/realtek_new/rtl8192cu/drv/8192cu.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/ppp_generic.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/slhc.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/ppp_async.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/ppp_generic.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/slhc.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/ppp_synctty.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/ppp_generic.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/slhc.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/ppp_deflate.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/ppp_generic.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/slhc.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/slhc.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/net/pppoe.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/pppox.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/ppp_generic.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/net/slhc.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/input/tsdev.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/input/mousedev.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/input/touchscreen/mtouch.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/input/touchscreen/gunze.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/input/touchscreen/mk712.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/input/touchscreen/elo.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/media/dvb/dvb-core/dvb-core.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/media/dvb/frontends/dvb-pll.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/media/radio/radio-maestro.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/cpia.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/v4l1-compat.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/v4l2-common.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/tuner-3036.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/cpia_usb.ko: /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/cpia.ko /lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/videodev.ko
+/lib/modules/2.6.12.6-VENUS/kernel/drivers/media/video/ovcamchip/ovcamchip.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/vcd/vcd.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/ufs/ufs.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/nls/nls_cp1251.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/nls/nls_koi8-r.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/udf/udf.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/smbfs/smbfs.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/hfsplus/hfsplus.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/ptp/ptpfs.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/hfs/hfs.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/reiserfs/reiserfs.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/isofs/isofs.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/crypto/arc4.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/crypto/michael_mic.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/crypto/aes.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/crypto/deflate.ko:
+/lib/modules/2.6.12.6-VENUS/kernel/fs/ufsd/ufsd.ko:

@@ -1,0 +1,35 @@
+#EXTM3U
+#EXTINF:-1,stream1
+http://nn.j-radio.ru:8008/stream1
+#EXTINF:-1,Наше Радио
+http://nn.j-radio.ru:8010/nashe-128
+#EXTINF:-1,Love Radio
+http://nn.j-radio.ru:8010/loveradio
+#EXTINF:-1,Серебряный дождь
+http://nn.j-radio.ru:8010/silverrain
+#EXTINF:-1,Попса
+http://nn.j-radio.ru:8010/stream2
+#EXTINF:-1,Хиты
+http://nn.j-radio.ru:8010/stream3
+#EXTINF:-1,Ретро
+http://nn.j-radio.ru:8008/stream4
+#EXTINF:-1,Hard n Heavy
+http://nn.j-radio.ru:8008/stream5
+#EXTINF:-1,Русский Рок
+http://nn.j-radio.ru:8008/stream6
+#EXTINF:-1,Рэп и Хип-Хоп
+http://nn.j-radio.ru:8008/stream7
+#EXTINF:-1,Блатняк
+http://nn.j-radio.ru:8008/stream8
+#EXTINF:-1,Романсы
+http://nn.j-radio.ru:8008/stream9
+#EXTINF:-1,Алтернатива
+http://nn.j-radio.ru:8008/stream10
+#EXTINF:-1,Джаз
+http://nn.j-radio.ru:8008/stream11
+#EXTINF:-1,Классическая музыка
+http://nn.j-radio.ru:8008/stream14
+#EXTINF:-1,Барды
+http://nn.j-radio.ru:8008/stream15
+#EXTINF:-1,RnB
+http://nn.j-radio.ru:8008/stream17

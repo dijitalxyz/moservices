@@ -1,0 +1,8 @@
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+  
+  error_info          = "";
+
+  startitem = "middle";
+  

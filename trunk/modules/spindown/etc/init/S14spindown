@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# description: Starts and stops the spindown service
+#
+mos=/usr/local/etc/mos
+
+case "$1" in
+  start)
+	# start service
+	echo "Starting spindown service..."
+	$mos/bin/spindownd >/dev/null 2>&1 &
+	;;
+  stop)
+	echo "Stoping spindown service..."
+	killall spindownd
+	;;
+  status)
+	if ps | grep -q '/[s]pindownd' ; then
+		echo "spindown is running"
+	else
+		echo "spindown is stopped"
+	fi
+	;;
+  enable)
+	# add to rc.init
+	if [ -d /usr/local/etc/rc.init ] ; then
+		cp -a $mos/etc/S08SpinDown /usr/local/etc/rc.init/
+	fi
+	;;
+
+  disable)
+	#remove from rc.init
+	rm -f /usr/local/etc/rc.init/S08SpinDown
+
+	;;
+  down)
+	# shootdown drives
+	for i in $( ls -1 /dev | sed -n '/^sd.$/p' ) ; do
+
+	  $mos/bin/sg_start --stop /dev/$i
+
+	  # mark drive as down
+	  [ -f /tmp/spindown.stat.new ] && sleep 5
+	  [ -f /tmp/spindown.stat ] && sed -i 's/^\('$i'\ .*\)\ .*$/\1\ 0/' /tmp/spindown.stat
+	done
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable|down}"
+	;;
+esac
+
+exit $?

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+<!-- smarty variables initialization -->
+{$rootUrl = $config->get(cfg_processing_url,Runtime)}
+
+{$select = "{$mediaObj->getParam(select)}"}
+{if $select == "new"}
+    {$titleExtra = " - {$locale->msg('Last added')}"}
+    {$key_title_select = $locale->msg('Favorites')}
+    {$selectUrl = "{$rootUrl}&amp;select=favorites"}
+{elseif $select == "favorites"}
+    {$titleExtra = " - {$locale->msg('Favorites')}"}
+    {$key_title_select = $locale->msg('All')}
+    {$selectUrl = $rootUrl}
+{else}
+    {$titleExtra = " - {$locale->msg('All')}"}
+    {$key_title_select = $locale->msg('Favorites')}
+    {$selectUrl = "{$rootUrl}&amp;select=favorites"}
+{/if}
+
+<!-- Hot keys definition -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/hotKeys.tpl"}
+{$hotKeys[0]["title"] = "{$locale->msg('Add to favorites')}"}
+{$hotKeys[0]["url"]   = "{$rootUrl}&amp;op=set&amp;id=\" + getItemInfo(getFocusItemIndex(),\"id\") + \"&amp;update=favorites_add"}
+{$hotKeys[1]["title"] = $key_title_select}
+{$hotKeys[1]["url"]   = $selectUrl}
+{$hotKeys[2]["title"] = "{$locale->msg('Remove from favorites')}"}
+{$hotKeys[2]["url"]   = "{$rootUrl}&amp;op=set&amp;id=\" + getItemInfo(getFocusItemIndex(),\"id\") + \"&amp;update=favorites_remove"}
+{$hotKeys[3]["title"] = "{$locale->msg('Last added')}"}
+{$hotKeys[3]["url"]   = "{$rootUrl}&amp;op=get&amp;select=new"}
+
+{$infoBgColor = "255:255:255"}
+{$infoFgColor = "30:30:30"}
+
+
+<onEnter>
+    executeScript("platformInit");
+</onEnter>
+<mediaDisplay name="threePartsView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    capWidthPC="0"
+
+    focusBorderColor="{$config->get(focusBorderColor)}"
+    unFocusBorderColor="{$config->get(unFocusBorderColor)}"
+
+    drawItemText="no"
+    slidingItemText="no"
+    sliding="no"
+
+    itemImageXPC="4"
+    itemImageYPC="10"
+    itemImageWidthPC="5"
+    itemImageHeightPC="7.5"
+
+    itemXPC="10"
+    itemYPC="10"
+    itemWidthPC="38.5"
+    itemHeightPC="7.5"
+
+    itemGap="0"
+    itemPerPage="10"
+
+    itemBackgroundColor="{$config->get(bgNormal)}"
+
+    fontSize="13"
+    >
+
+   <onUserInput>
+        key = currentUserInput();
+        res = "false";
+
+        if ( 3 == 5 ) {
+            /* stub section, real logic comes from hot keys */
+        }
+        {call onHotKeyPress}
+
+        if ("true" == res) {
+            redrawDisplay();
+        }
+        res;
+    </onUserInput>
+    <!-- header -->
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+
+    <!-- detailed info -->
+    <text offsetXPC="50" offsetYPC="10" widthPC="48" heightPC="75"
+        backgroundColor="{$infoBgColor}" foregroundColor="{$infoFgColor}" cornerRounding="15">
+    </text>
+
+    <text offsetXPC="-50" offsetYPC="-50" widthPC="200" heightPC="200"
+        backgroundColor="{$infoBgColor}" foregroundColor="{$infoFgColor}" >
+    </text>
+
+    <text redraw="yes" offsetXPC="52" offsetYPC="11" widthPC="46" heightPC="5"
+        align="center" backgroundColor="{$infoBgColor}" foregroundColor="{$infoFgColor}" fontSize="16">
+        <script>getItemInfo(getQueryItemIndex(),"title");</script>
+    </text>
+
+    {$imgHeight   = 35}
+    {$thumbWidth  = 55}
+    /*always set all 4 variables to avoid not definde warnings */
+    {$thumbHeight = 0}
+    {$imgWidth    = 0}
+    {include file="{$config->get(activeTemplate,Runtime)}scripts/img_sizes.tpl"}
+
+    <image redraw="yes" offsetYPC="17.5" heightPC="{$imgHeight}" >
+        <offsetXPC><script>Add(55,(40-calculatedImgWidth)/2);</script></offsetXPC>
+        <widthPC><script>calculatedImgWidth;</script></widthPC>
+        <script>getItemInfo(getQueryItemIndex(),"img");</script>
+    </image>
+
+    <text redraw="yes" offsetXPC="52" offsetYPC="{18+$imgHeight}" widthPC="46" heightPC="{66-$imgHeight}"
+        align="justify" backgroundColor="{$infoBgColor}" foregroundColor="{$infoFgColor}"
+        lines="{(66-$imgHeight)/2.4}" fontSize="12" >
+    <script>getItemInfo(getQueryItemIndex(),"descr");</script></text>
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+
+    <text redraw="yes" offsetXPC="4"  offsetYPC="87" widthPC="10" heightPC="8" fontSize="15"
+        foregroundColor="255:255:255" backgroundColor="{$config->get(bgNormal)}">
+        <script>getPageInfo("focusItemIndex") + "/" + getPageInfo("itemCount");</script>
+    </text>
+    <text redraw="yes" offsetXPC="14" offsetYPC="87" widthPC="86" heightPC="8" fontSize="15"
+        foregroundColor="200:200:200" backgroundColor="{$config->get(bgNormal)}">
+        <script>
+            titleRu = getItemInfo(getQueryItemIndex(),"title");
+            titleEn = getItemInfo(getQueryItemIndex(),"etitle");
+            if (titleEn != null &amp;&amp; titleEn != "") {
+                titleRu +  " / " + titleEn;
+            } else {
+                titleRu;
+            }
+        </script>
+    </text>
+
+    <!-- hot keys -->
+    {call displayHotKeys}
+
+    <itemDisplay>
+        <script>
+            {call calculateItemColors}
+        </script>
+
+        <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" fontSize="16" cornerRounding="10">
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+            <script>getItemInfo("title");</script>
+        </text>
+    </itemDisplay>
+{call getIdleImages}
+</mediaDisplay>
+
+{call getRssLink}
+
+<channel>
+{foreach $mediaObj->getChildren() as $child}
+    <item>
+        <title>{$child->title}</title>
+        <link>{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}</link>
+        <media:thumbnail>{$child->getParam(thumbnail)}</media:thumbnail>
+        <thumbnail_ratio>{$child->getParam(thumbnail_ratio)}</thumbnail_ratio>
+        <img>{$child->getParam(img)}</img>
+        <img_ratio>{$child->getParam(img_ratio)}</img_ratio>
+        <descr>{$child->getParam(descr)}</descr>
+        <closed>{$child->getParam(isclosed)}</closed>
+        <etitle>{$child->getParam(etitle)}</etitle>
+        <id>{$child->id}</id>
+    </item>
+{/foreach}
+</channel>
+</rss>

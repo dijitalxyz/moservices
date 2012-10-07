@@ -1,0 +1,68 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+#
+# Translate CGI module
+# 'shoutcast.com' plug-in
+#
+# version: 1.0 13.08.2010 17:20
+#
+# http://yp.shoutcast.com/sbin/tunein-station.pls?id=1116397
+#
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -q -s '\.*shoutcast\.com/.*?id=[0-9].*$'; then 
+
+  local station_id=`echo "$arg_url" | sed -e 's/.*[?&]id=//;s/&.*//'`
+
+  host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" $arg_url 2>&1`
+  
+  if [ -f $TMPFILE ]; then
+    local numberofentries=`sed -ne '/^numberofentries=/p' $TMPFILE | awk -F= '{print $2}'`
+    local tit=dummy
+    local index=0
+
+    while [ -n "$tit" ]; do
+        let index=$index+1
+        tit=`sed -ne "/^Title$index=\(.*- 0\/[0-9]*\)/p" $TMPFILE`
+    done
+
+    stream_url=`sed -ne "/^File$index=/p" $TMPFILE | sed -e "s/^File$index=//"`
+    if [ -z "$stream_url" ]; then
+        let index=$index-1
+        stream_url=`sed -ne "/File$index=/p" $TMPFILE | sed -e "s/File$index=//"`
+    fi
+
+    rm -f $TMPFILE
+    
+    if [ -n "$stream_url" ]; then
+      server_type='shoutcast'
+      protocol='http'
+      #host_response=`$MSDL --debug --stream-timeout 1 -o /dev/null -p http "$stream_url" 2>&1`
+      #stream_type=`echo "$host_response" | sed -n '/^[cC]ontent[ -][tT]ype/p' | sed -n '$p' | awk '{ match($0, /[ ;:]+([a-z]+\/[a-z\-]+)[ ;]*.*$/, arr); print arr[1]}'`
+      arg_url="$stream_url"
+      arg_cmd='icyonly'
+      return $RC_FAIL
+    fi
+  fi
+  return $RC_OK
+fi
+
+return $RC_FAIL

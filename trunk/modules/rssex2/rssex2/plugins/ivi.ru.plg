@@ -1,0 +1,75 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'ivi.ru' plug-in
+#
+# version: 1.5 31.01.2012 13:11:42
+#
+# http://www.ivi.ru/video/view/?id=2756
+# http://france.ivi.ru/movie.php?id=2490
+# http://www.ivi.ru/watch/2756
+# http://www.ivi.ru/watch/future_shorts/54656
+#
+# options:
+#   HD:[0|1]
+#
+# required CURL
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -q -s '\(www\.\|france\.\)*ivi\.ru/\(watch/\|video/view/?id=\|movie\.php?id=\).*$'; then 
+
+  get_opt "HD"
+  [ -z "$opt" ] && opt=`sed -n '7p' $RSSCONF 2>/dev/null`
+  [ -z "$opt" ] && opt=$IVI_HD
+  case $opt in
+    yes|Yes|YES|1)
+      hdc='hi'
+    ;;
+    *)
+      hdc='lo'
+    ;;
+  esac
+  
+  host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>&1`
+  if [ -f ${TMPFILE} ]; then
+    local video_id=`grep -i "video_src" ${TMPFILE} | awk '{match($0, /videoId=([0-9]+)/, arr);print arr[1];}' | urldecode`
+    rm -f $TMPFILE
+    
+    host_response=`$CURL -s -o "${TMPFILE}" --user-agent "${USERAGENT}" --data-ascii "{\"params\":[\"${video_id}\",{\"_url\":\"http://www.ivi.ru/watch/${video_id}\",\"site\":\"1\",\"_domain\":\"www.ivi.ru\",\"test\":1}],\"method\":\"da.content.get\"}" --header "FlashAuth: Basic Zmxhc2hfcGxheWVyOmZsYXNoX3BsYXllcg=="  http://api.digitalaccess.ru/api/json/ 2>&1`
+    
+    if [ -f ${TMPFILE} ]; then
+      server_type='ivi'
+      stream_url=`sed "s/.*files\": \[//;s/\].*//;s/}, *{/}\n{/g" ${TMPFILE} | awk "/\"MP4-${hdc}\"/"' {match($2, /\"([^"]+)\".*$/, arr); print arr[1];}'`
+      if [ -n "$stream_url" ]; then
+        stream_type='video/mp4'
+      else
+        stream_url=`sed "s/.*files\": \[//;s/\].*//;s/}, *{/}\n{/g" ${TMPFILE} | awk "/\"FLV-${hdc}\"/"' {match($2, /\"([^"]+)\".*$/, arr); print arr[1];}'`
+        stream_type='video/x-flv'
+      fi
+      protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+      icy_name=`sed 's/.*"title": "//;s/".*//g' ${TMPFILE} | unitohtml | $XCODE -s -l | $TOUTF8`
+      rm -f $TMPFILE
+    fi
+  fi  
+  return $RC_OK
+fi
+
+return $RC_FAIL

@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# description: Starts and stops the Samba smbd daemon
+#	       used to provide SMB network services.
+#
+bin=/usr/local/etc/mos/bin
+mos=/usr/local/etc/mos/samba
+
+case "$1" in
+  start)
+	# waiting for mount
+	$bin/wait_mount && exit 1
+
+	# making symlinks to mounted drives
+	mkdir -p /tmp/ramfs/smb
+	vol=/tmp/ramfs/volumes/
+	for f in $( ls $vol )
+	do
+		if [ -e $vol$f ] && [ -L $vol$f ] ; then
+			n=$( echo $f | sed 's/://' )
+			ln -s $vol$f /tmp/ramfs/smb/$n
+		fi
+	done
+
+	[ ! -d /tmp/smb ] && mkdir /tmp/smb
+	rm -f /tmp/smb/private
+	ln -s $mos/private/ /tmp/smb/private
+
+	echo "Starting smbd services..."
+	$mos/smbd -D -s $mos/smb.conf -l /tmp/smb &
+        echo "Starting nmbd services..."
+	$mos/nmbd -D -s $mos/smb.conf -l /tmp/smb &
+	;;
+
+  stop)
+	echo "Shutting down SMB services... "
+	killall smbd
+	echo "Shutting down NMB services... "
+	killall nmbd
+	rm -Rf /tmp/smb
+	rm -f /tmp/ramfs/smb/*
+	;;
+
+  status)
+	if [ -e /tmp/smb/smbd.pid ]
+	then 
+	  PID=`cat /tmp/smb/smbd.pid`
+          if [ -e /proc/$PID ]
+          then
+	    echo "SMB Service is running"
+	  else
+	    echo "SMB Serice is stopped"
+          fi
+	else
+	  echo "SMB Serice is stopped"
+	fi
+	;;
+
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

@@ -1,0 +1,846 @@
+﻿<?xml version='1.0' encoding="UTF8" ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+    translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+    storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+  
+  error_info          = "";
+
+  startitem = "middle";
+  
+
+  testStream = 0;
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 10);
+    if(value != null &amp;&amp; value != "")
+      testStream = Integer(value);
+  }
+
+    startitem = "left";
+		
+  columnCount=5;
+</onEnter>
+
+<script>
+  setRefreshTime(1);
+</script>
+
+<onRefresh>
+    setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+  middleItem = Integer(itemCount / 2);
+  if(startitem == "middle")
+    setFocusItemIndex(middleItem);
+  else
+  if(startitem == "last")
+    setFocusItemIndex(itemCount);
+  else
+  if(startitem &gt; 0 &amp;&amp; startitem &lt;= itemCount)
+    setFocusItemIndex(startitem-1);
+  redrawDisplay();
+
+</onRefresh>
+
+	<mediaDisplay name=photoView 
+	  centerXPC=7 
+		centerYPC=25
+		centerHeightPC=40
+    columnCount=5
+		
+	  rowCount=1
+		menuBorderColor="55:55:55"
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+	  backgroundColor="0:0:0"
+		imageBorderColor="0:0:0"
+		itemBackgroundColor="0:0:0"
+		itemGapXPC=0
+		itemGapYPC=1
+		sideTopHeightPC=22
+		bottomYPC=85
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=no
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+		>
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+		<image offsetXPC=5 offsetYPC=2 widthPC=21 heightPC=16>
+		  <script>channelImage;</script>
+      <widthPC>
+        <script>
+          21 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          5 + 21 * (1 - screenYp / screenXp) / 2;
+        </script>
+      </offsetXPC>
+		</image>
+
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+
+		<!--  lines="5" fontSize=15 -->
+		<text align="center" redraw="yes" 
+      lines=5 fontSize=14
+		
+		      offsetXPC=10 offsetYPC=70 widthPC=80 heightPC=15
+		      backgroundColor=0:0:0 foregroundColor=120:120:120>
+			<script>print(annotation); annotation;</script>
+		</text>
+		
+		<text align="center" redraw="yes" offsetXPC=10 offsetYPC=85 widthPC=80 heightPC=10 fontSize=15 backgroundColor=0:0:0 foregroundColor=75:75:75>
+			<script>print(location); location;</script>
+		</text>
+
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+
+		<itemDisplay>
+      <script>
+				imageW = 90/columnCount;
+				imageH = imageW * screenXp / screenYp * 100 / 40;
+				if(imageH > 84)
+				{
+				  imageH = 84;
+				  imageW = imageH * screenYp / screenXp * 40 / imageW;
+				}
+			  else
+			  {
+			    imageW = 100;
+        }
+      </script>
+  		<image offsetXPC=0 offsetYPC=95 widthPC=100 heightPC=5>
+  		  <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+  		      "../etc/translate/rss/image/gradient_line.bmp";
+  		    else
+  		      "";
+  		  </script>
+  		</image>
+			<image>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  if(annotation == "" || annotation == null)
+					    annotation = getItemInfo(idx, "stream_genre");
+					}
+					getItemInfo(idx, "image");
+				</script>
+			 <widthPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageW; else imageW * 3 / 4;
+			   </script>
+			 </widthPC>
+			 <heightPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageH; else imageH * 3 / 4;
+			   </script>
+			 </heightPC>
+			 <offsetXPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 50 - imageW/2; else 50 - imageW * 3 / 8;
+			   </script>
+			 </offsetXPC>
+			 <offsetYPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 0; else imageH / 8;
+			   </script>
+			 </offsetYPC>
+			</image>
+			
+			<text align="center" lines="5" fontSize="14" offsetXPC=0 offsetYPC=50 widthPC=100 heightPC=50 backgroundColor=-1:-1:-1>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+        <lines>
+          <script>Integer((95 - imageH - 2) / 9);</script>
+        </lines>
+        <offsetYPC>
+          <script>imageH + 2;</script>
+        </offsetYPC>
+        <heightPC>
+          <script>95 - imageH - 2;</script>
+        </heightPC>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "75:75:75";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+    <onUserInput>
+      <script>		
+      ret = "false";
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      if(userInput == "enter" || userInput == "ENTR")
+      {
+        showIdle();
+        focus = getFocusItemIndex();
+
+        request_title = getItemInfo(focus, "title");
+        request_url = getItemInfo(focus, "location");
+        request_options = getItemInfo(focus, "options");
+        request_image = getItemInfo(focus, "image");
+
+        stream_url = getItemInfo(focus, "stream_url");
+        stream_title = getItemInfo(focus, "stream_title");
+        stream_type = getItemInfo(focus, "stream_type");
+        stream_protocol = getItemInfo(focus, "stream_protocol");
+        stream_soft = getItemInfo(focus, "stream_soft");
+        stream_class = getItemInfo(focus, "stream_class");
+        stream_server = getItemInfo(focus, "stream_server");
+        stream_status_url = "";
+        stream_current_song = "";
+        stream_genre = getItemInfo(focus, "stream_genre");
+        stream_bitrate = getItemInfo(focus, "stream_bitrate");
+        playlist_autoplay = getItemInfo(focus, "autoplay");
+        playlist_repeat = getItemInfo(focus, "repeat");
+
+        if(playlist_repeat == "" || playlist_repeat == null)
+          playlist_repeat = "None";
+
+        if(playlist_autoplay == "" || playlist_autoplay == null)
+          playlist_autoplay = 1;
+        
+        if(stream_class == "" || stream_class == null || testStream == 1)
+          stream_class = "unknown";
+
+        if(stream_url == "" || stream_url == null)
+          stream_url = request_url;
+
+        if(stream_server != "" &amp;&amp; stream_server != null)
+          stream_status_url = translate_base_url + "status," + urlEncode(stream_server) + "," + urlEncode(stream_url);
+
+        if(stream_title == "" || stream_title == null)
+          stream_title = request_title;
+
+        if(stream_url != "" &amp;&amp; stream_url != null)
+        {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+          {
+            url = stream_url;
+          }
+          else
+          {
+            if(stream_type != null &amp;&amp; stream_type != "")
+            {
+              request_options = "Content-type:"+stream_type+";"+request_options;
+            }
+            url = translate_base_url + "stream," + request_options + "," + urlEncode(stream_url);
+          }
+        
+          executeScript(stream_class+"Dispatcher");
+        }
+        
+        cancelIdle();
+        ret = "true";
+      }
+      else if(userInput == "one" || userInput == "1")
+      {
+        if(itemCount &gt;= 1)
+        {
+          setFocusItemIndex(0);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "two" || userInput == "2")
+      {
+        if(itemCount &gt;= 2)
+        {
+          setFocusItemIndex(1);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "three" || userInput == "3")
+      {
+        if(itemCount &gt;= 3)
+        {
+          setFocusItemIndex(2);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "four" || userInput == "4")
+      {
+        if(itemCount &gt;= 4)
+        {
+          setFocusItemIndex(3);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "five" || userInput == "5")
+      {
+        if(itemCount &gt;= 5)
+        {
+          setFocusItemIndex(4);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "six" || userInput == "6")
+      {
+        if(itemCount &gt;= 6)
+        {
+          setFocusItemIndex(5);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "seven" || userInput == "7")
+      {
+        if(itemCount &gt;= 7)
+        {
+          setFocusItemIndex(6);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "eight" || userInput == "8")
+      {
+        if(itemCount &gt;= 8)
+        {
+          setFocusItemIndex(7);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "nine" || userInput == "9")
+      {
+        if(itemCount &gt;= 9)
+        {
+          setFocusItemIndex(8);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "display" || userInput == "DISPLAY")
+      {
+        ret = "true";
+      }
+      else if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -columnCount;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= columnCount;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+
+      ret;
+
+      </script>		
+    </onUserInput>
+		
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView">
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+		</mediaDisplay>
+	</item_template>
+
+  <videoDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/videoRenderer.rss");
+  </videoDispatcher>
+  
+  <audioDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_status_url);
+    streamArray = pushBackStringArray(streamArray, stream_current_song);
+    streamArray = pushBackStringArray(streamArray, stream_genre);
+    streamArray = pushBackStringArray(streamArray, stream_bitrate);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, request_image);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/audioRenderer.rss");
+  </audioDispatcher>
+  
+  <playlistDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "playlist");
+    streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+    streamArray = pushBackStringArray(streamArray, playlist_repeat);
+    writeStringToFile(storagePath_playlist, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+  </playlistDispatcher>
+  
+  <rssDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/rss_mediaFeed.rss");
+  </rssDispatcher>
+
+  <unknownDispatcher>
+    info_url    = translate_base_url + "info," + request_options + "," + urlEncode(request_url);
+    error_info  = "";
+
+    res = loadXMLFile(info_url);
+    
+    if (res != null)
+    {
+      error = getXMLElementCount("info","error");
+      
+      if(error != 0)
+      {
+  	    value = getXMLText("info","error");
+  	    if(value != null)
+  	    {
+  	     error_info = value;
+  	    }
+      }
+      else
+      {
+  	    value = getXMLAttribute("info","stream","url");
+  	    if(value != null)
+  	     stream_url = value;
+  
+  	    value = getXMLAttribute("info","stream","type");
+  	    if(value != null)
+  	     stream_type = value;
+  	    
+  	    value = getXMLAttribute("info","stream","class");
+  	    if(value != null)
+  	     stream_class = value;
+  
+  	    value = getXMLAttribute("info","stream","protocol");
+  	    if(value != null)
+  	     stream_protocol = value;
+  
+  	    value = getXMLAttribute("info","stream","server");
+  	    if(value != null)
+  	     stream_soft = value;
+  
+        stream_status_url = "";
+        
+  	    value = getXMLAttribute("info","stream","server_url");
+  	    if(value != null)
+  	    {
+  	     stream_server_url = value;
+  	     if((stream_soft == "icecast" || stream_soft == "shoutcast") &amp;&amp; stream_server_url!="")
+  	     {
+    	      stream_status_url = translate_base_url+"status,"+urlEncode(stream_server_url)+","+urlEncode(stream_url);
+    	   }
+  	    }
+  	     
+        value = getXMLText("info","status","stream-title");
+  	    if(value != null)
+  	     stream_title = value;
+  
+        stream_current_song = "";
+  	    value = getXMLText("info","status","current-song");
+  	    if(value != null)
+    		  stream_current_song = value;
+    		  
+  	    value = getXMLText("info","status","stream-genre");
+  	    if(value != null)
+  	      stream_genre = value;
+        
+  	    value = getXMLText("info","status","stream-bitrate");
+  	    if(value != null)
+  	      stream_bitrate = value;
+  
+        options = "";
+        
+        if(stream_type != "")
+          options = "Content-type:"+stream_type;
+        
+        if(options == "")
+          options = stream_options;
+        else
+          options = options + ";" + stream_options;
+  
+  	    stream_translate_url = translate_base_url + "stream," + options + "," + urlEncode(stream_url);
+  	    
+  	    url = null;
+  	    
+  	    if(stream_class == "video" || stream_class == "audio")
+    	  {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+    	      url = stream_url;
+    	    else
+    	      url = stream_translate_url;
+    	  }
+    	  else
+    	  {
+  	      url = stream_url;
+    	  }
+    	     
+    	  if(url != null)
+    	  {
+          if(stream_class == "audio" || stream_class == "video" || stream_class == "playlist" || stream_class == "rss")
+          {
+            executeScript(stream_class+"Dispatcher");
+          }
+          else
+          {
+            error_info = "Unsupported media type: " + stream_type;
+          }
+  	    }
+  	    else
+  	    {
+          error_info = "Empty stream url!";
+  	    }
+      }
+    }
+    else
+    {
+      error_info = "CGI translate module failed!";
+    }
+    print("error_info=",error_info);
+  </unknownDispatcher>
+
+	
+<script>
+    channelImage = "/usr/local/etc/translate/util/scripts/all.jpg";
+  </script><channel>
+  <title>Sampo.ru</title>
+  <item>
+    <annotation>Радио хорошего настроения. Современная музыка способная поднять настроение.</annotation>
+    <title>Радио Импульс</title>
+    <image>../etc/translate/rss/image/sampo/impulse.png</image>
+    <location>http://radio.sampo.ru/impulse.mp3</location>
+    <stream_url>http://radio.sampo.ru:8001/impulse.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Radio Impulse</stream_title>
+    <stream_genre>Dance</stream_genre>
+    <stream_bitrate>192</stream_bitrate>
+  </item>
+  <item>
+    <annotation>НАШЕ радио – Петрозаводск это не только «самая полная коллекция рок-н-ролла», но и разнообразные программы местного производства. Только на 105,7 fm можно услышать дневную и вечернюю программы по заявкам «Вперед и с песней!», подборку лучших образцов нашей музыки в программе «Главные Песни», ночной проект «Экспертиза», а также карельские новости и погоду.</annotation>
+    <title>НАШЕ радио - Петрозаводск</title>
+    <image>../etc/translate/rss/image/sampo/nashe-ptz.png</image>
+    <location>http://radio.sampo.ru/nashe-ptz.mp3</location>
+    <stream_url>http://radio.sampo.ru:8000/nashe-ptz.mp3</stream_url>
+    <stream_class>video</stream_class>
+    <stream_type>video/x-msvideo</stream_type>
+    <stream_protocol>http</stream_protocol>
+  </item>
+  <item>
+    <annotation>Транслирует музыку в стиле Hardstyle. Стиль Hardstyle возник в конце 90-х годов из направления Techno, как подвид этого стиля. В дальнейшем утяжелённое Techno смешивается с басовой и синт (синтезаторной, где сама мелодия) линией Hard-trance, вследствие чего получался более жёсткий звук, который звучал уже почти как Hardcore Techno. Более широкое распространение этот стиль получил после выпуска многочисленных ремиксов на различные популярные композиции других исполнителей (музыкантов). Прародителем этого стиля принято считать девушку-диджея DJ Dana van Dreven, ныне известную как Lady Dana, DJ Isaac, The Prophet и другие. Станция является частью семейства онлайн станций вещающих под маркой "Рекорд".</annotation>
+    <title>Teodor</title>
+    <image>../etc/translate/rss/image/sampo/teodor.png</image>
+    <location>http://radio.sampo.ru/teodor.mp3</location>
+    <stream_url>http://radio.sampo.ru:8000/teodor-radio.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Teodor Radio</stream_title>
+    <stream_genre>Hardstyle</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <annotation>Петрозаводское интернет радио community popjoy про популярную музыку, рассчитано на широкую публику с разносторонними музыкальными вкусами. На радио вы можете услышать лучших российских и зарубежных ди-джеев и музыкантов новой волны, музыкальные стили которых - движение к эклектизму - это и диско 70х-80х, техно 90х, мелодичный френч-хаус, элитная поп-музыка, электро - поп - панк, хип - хаус, винтаж, а также самые интересные поп- и рок-хиты на все времена! </annotation>
+    <title>PopJoy radio</title>
+    <image>../etc/translate/rss/image/sampo/popjoy.png</image>
+    <location>http://radio.sampo.ru/popjoy.mp3</location>
+  </item>
+  <item>
+    <annotation>Государственная радиовещательная компания "Маяк". В прямом эфире вы можете слышать голоса Сергея Стиллавина, Антона Комолова и Ольги Шелест, Романа Трахтенберга, Леры Кудрявцевой, Тутты Ларсен и бесменного ведущего автомобильного радио-шоу "Право руля" Виктора Травина, а так же многих других известных людей.</annotation>
+    <title>Радио Маяк</title>
+    <image>../etc/translate/rss/image/sampo/mayak.png</image>
+    <location>http://radio.sampo.ru/mayak.mp3</location>
+  </item>
+  <item>
+    <annotation>NETRA - молодежное Online радио, вещающее все разновидности и течения музыкальных движений House, Electro-House, Trance. Это музыка от любимых DJ'ев, новые релизы, а также живые выступления DJ и музыкантов нашего города! Мы всегда открыты для новых идей и сотрудничества, будь вы DJ или просто слушатель, мы всегда будем рады узнать ваше мнение, ведь именно вы выбираете то, что хотите слушать!</annotation>
+    <title>Netra</title>
+    <image>../etc/translate/rss/image/sampo/netra.png</image>
+    <location>http://radio.sampo.ru/netra.mp3</location>
+  </item>
+  <item>
+    <annotation>Rock Radio1 предлагает вашему вниманию лучшие образцы классического хард-рока и тяжелого металла 60-х, 70-х, 80-х и 90-х годов.</annotation>
+    <title>Rock Radio 1</title>
+    <image>../etc/translate/rss/image/sampo/rockradio1.png</image>
+    <location>http://radio.sampo.ru/rockradio1.mp3</location>
+  </item>
+  <item>
+    <annotation>BassDrive is a 24/7 drum and bass radio station featuring live shows with guest DJs, as well as broadcasts from venues all over the world representing the best of drum and bass &amp; jungle music. BassDrive is also a new record label promoting US drum and bass. BassDrive internet radio offers superior sound quality in comparison to other online drum n bass and techno radio stations. Please tune in by clicking one of the tune-in buttons in the top right corner. Please refer to our help section if you experience problems listening to our online radio.</annotation>
+    <title>Bassdrive radio</title>
+    <image>../etc/translate/rss/image/sampo/bassdrive.png</image>
+    <location>http://radio.sampo.ru/bassdrive.mp3</location>
+    <stream_url>http://radio.sampo.ru:8000/bassdrive.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Bassdrive - Worldwide Drum and Bass Radio</stream_title>
+    <stream_genre>Techno</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <annotation>24/7 drum and bass radio with daily LIVE shows. </annotation>
+    <title>Jungletrain radio</title>
+    <image>../etc/translate/rss/image/sampo/jungletrain.png</image>
+    <location>http://radio.sampo.ru/jungletrain.mp3</location>
+    <stream_url>http://radio.sampo.ru:8088/jungletrain.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>jungletrain.net - 24/7 drum and bass</stream_title>
+    <stream_genre>Jungle, Drum and Bass, Electronic</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <annotation>It's a new Underground Music Radio featuring the sounds of Drum and Bass, Dubstep and all that bizzle. </annotation>
+    <title>DeepBassNine</title>
+    <image>../etc/translate/rss/image/sampo/deepbassnine.png</image>
+    <location>http://radio.sampo.ru/deepbassnine.mp3</location>
+    <stream_url>http://radio.sampo.ru:8001/deepbassnine.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>DB9 Radio - db9radio.com</stream_title>
+    <stream_genre>Electronic, Drum and Bass, Breaks, Dubstep, Oldschool Hardcore</stream_genre>
+    <stream_bitrate>192</stream_bitrate>
+  </item>
+  <item>
+    <annotation>Европа Плюс - это современное радио для молодых и активных людей! Первая коммерческая радиостанция в российском эфире начала вещание 30 апреля 1990 года в Москве на частоте 106,2 FM. Входит в Европейскую медиа группу. Европа Плюс - это лучшая популярная музыка в актуальном стиле в исполнении отечественных и зарубежных звезд.</annotation>
+    <title>Европа Плюс</title>
+    <image>../etc/translate/rss/image/sampo/europaplus.png</image>
+    <location>http://radio.sampo.ru/europaplus.mp3</location>
+    <stream_url>http://radio.sampo.ru:8001/europaplus.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Europaplus Saint-Peterburg</stream_title>
+    <stream_genre>Varios</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <annotation>chroniXradio.com - Hard Rock Radio and Metal Radio</annotation>
+    <title>Aggression</title>
+    <image>../etc/translate/rss/image/sampo/chronix_aggression.png</image>
+    <location>http://radio.sampo.ru/chronix_aggression.mp3</location>
+    <stream_url>http://radio.sampo.ru:8000/chronix_aggression.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>ChroniX Aggression - Loud &amp; Clear - www.chronixradio.com</stream_title>
+    <stream_genre>METAL, ROCK, ALTERNATIVE</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <annotation>Радио Ваня – музыкально-информационная радиостанция, впервые появившаяся в эфире в июле 2007 года. Частота радио Ваня Санкт-Петербург – 68,66 УКВ. Руководство радио Ваня описывает его как «потешное, разудалое, простецкое, свое в доску радио» для слушателей до 40 лет. Песни радио Ваня – веселые и озорные, исключительно русскоязычные (поскольку народное радио), иногда эпатажные, иногда разухабистые, но всегда для хорошего настроения – заметно отличают радиостанцию от всех других.</annotation>
+    <title>Радио Ваня</title>
+    <image>../etc/translate/rss/image/sampo/vanya.png</image>
+    <location>http://radio.sampo.ru/vanya.mp3</location>
+    <stream_url>http://radio.sampo.ru:8001/vanya.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Radio Vanya</stream_title>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <annotation>Радио «Юность» - «Ю-FM»!!! Круглосуточное молодёжное радио с акцентом на танцевальную музыку! Клубные хиты и новинки в исполнении отечественных и зарубежных джедаев! Авторские программы мастеров танцпола, ежедневные dj’s live-сеты! Звёздные гости, новости, фирменная двадцатка лучших треков недели!</annotation>
+    <title>Радио Юность</title>
+    <image>../etc/translate/rss/image/sampo/unost.png</image>
+    <location>http://radio.sampo.ru/unost.mp3</location>
+  </item>
+  <item>
+    <annotation>Автолюбителям, а также любителям хорошей музыки «Первое автомобильное радио» предлагает слушать музыку, которую узнают с первых тактов и напевают, развлекательные программы с участием суперзвезд, актуальную, интересную, оперативную информацию, увлекательные, динамичные игры в эфире.</annotation>
+    <title>Авторадио</title>
+    <image>../etc/translate/rss/image/sampo/avtoradio.png</image>
+    <location>http://radio.sampo.ru/avtoradio.mp3</location>
+    <stream_url>http://radio.sampo.ru:8001/avtoradio.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Avtoradio</stream_title>
+    <stream_genre>misc</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <annotation>Легендарная питерская станция "Модерн" - уникальное актерское радио с актуальным музыкальным форматом - покинула fm-диапазон в 2001 году. Спустя 9 лет после закрытия, "Модерн" возвращается к своему слушателю. Основа Интернет-версии - музыкальное наполнение того времени, которое мы попытались воссоздать в оригинальном виде. В ближайших планах - появление специальных программ, отвечающих главному - духу и настроению этого "очень странного места"...</annotation>
+    <title>Радио Модерн</title>
+    <image>../etc/translate/rss/image/sampo/modern.png</image>
+    <location>http://radio.sampo.ru/modern.mp3</location>
+    <stream_url>http://radio.sampo.ru:8001/modern.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Radio Modern</stream_title>
+    <stream_genre>Various</stream_genre>
+    <stream_bitrate>160</stream_bitrate>
+  </item>
+  <item>
+    <annotation>«Эхо Москвы» информирует обо всем, что делается в мире. Круглые сутки в его эфире - новости политики и культуры, обзоры прессы, беседы с гостями, интерактивное общение со слушателями, авторские программы на различные, интересующие москвичей и жителей других городов, темы.</annotation>
+    <title>Радио Эхо Москвы</title>
+    <image>../etc/translate/rss/image/sampo/echo-moskvy.png</image>
+    <location>http://radio.sampo.ru/echo-moskvy.mp3</location>
+  </item>
+  <item>
+    <annotation>Радио Рекорд — первая танцевальная радиостанция России с самой развитой структурой: помимо радио, это одна из крупнейших в Европе event-компаний с собственным record-лейблом.</annotation>
+    <title>Радио Рекорд</title>
+    <image>../etc/translate/rss/image/sampo/record.png</image>
+    <location>http://radio.sampo.ru/record.mp3</location>
+    <stream_url>http://radio.sampo.ru:8088/record.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Radio Record</stream_title>
+    <stream_genre>Dance</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <annotation>Все, кто любит и любим – вот слушатели LOVE RADIO. Песни, звучащие на этой волне на разных языках – только о любви. В программах этой волнующей радиостанции - признания и любовные истории обычных людей, а также романтические воспоминания знаменитых артистов. </annotation>
+    <title>Love Радио</title>
+    <image>../etc/translate/rss/image/sampo/loveradio.png</image>
+    <location>http://radio.sampo.ru/loveradio.mp3</location>
+    <stream_url>http://radio.sampo.ru:8088/loveradio.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Love Radio 106.6 FM MSK</stream_title>
+    <stream_genre>Various</stream_genre>
+    <stream_bitrate>96</stream_bitrate>
+  </item>
+  <item>
+    <annotation>Redbox - круглосуточная петрозаводская танцевальная интернет-радиостанция, в создании эфира которой участвуют сами пользователи. Программы для начинающих (и не только) диджеев, регулярные прямые эфиры из Петрозаводска, голосование за проигрываемые композиции, еженедельный хит-парад и многое другое - всё это Redbox. </annotation>
+    <title>Redbox</title>
+    <image>../etc/translate/rss/image/sampo/redbox.png</image>
+    <location>http://radio.sampo.ru/redbox.mp3</location>
+    <stream_url>http://radio.sampo.ru:8088/redbox.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_title>Redbox</stream_title>
+    <stream_bitrate>192</stream_bitrate>
+  </item>
+</channel>
+
+
+</rss>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Смотрите в кино</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1850,tvigle/multi</link>
+  <title>Сегодня в кинотеатрах</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1850/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:84,tvigle/multi</link>
+  <title>Трейлеры</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/84/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2095,tvigle/multi</link>
+  <title>Настоящее  кино</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2095/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1397,tvigle/multi</link>
+  <title>Трейлеры Walt Disney</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1397/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1419,tvigle/multi</link>
+  <title>Трейлеры от Афиша.ru</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1419/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1797,tvigle/multi</link>
+  <title>Киноляпы</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1797/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:86,tvigle/multi</link>
+  <title>Киноперсона</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/86/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1505,tvigle/multi</link>
+  <title>Все кино</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1505/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2068,tvigle/multi</link>
+  <title>Неудержимые</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2068/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2087,tvigle/multi</link>
+  <title>Про любoff</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2087/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:87,tvigle/multi</link>
+  <title>Кухня</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/87/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:83,tvigle/multi</link>
+  <title>Киноблог Милослава Чемоданова</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/83/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

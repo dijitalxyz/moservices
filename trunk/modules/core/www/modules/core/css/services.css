@@ -1,0 +1,136 @@
+.mod_index
+{
+	z-index: 90;
+}
+
+div.mod_role
+{
+/*
+	position:relative;
+	display:block;
+	float:left;
+*/
+	padding:0;
+	margin:4px 0;
+
+	background-color: #f4f4f4;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+
+div.mod_role_topic
+{
+	position: relative;
+	background: #D0D0D0;
+	padding:4px;
+	margin :0;
+	font-weight: bold;
+	border:0;
+}
+
+div.mod_role_list
+{
+	position: relative;
+	display:table-cell;
+	padding:4px;
+	margin :0;
+}
+
+div.mod_card
+{
+	position:relative;
+	display:block;
+	width:181px;
+	float:left;
+	padding:2px;
+	margin:2px;
+
+	background: white;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+
+div.mod_update
+{
+	position:absolute;
+	top:0px;
+	right:0px;
+	padding:2px 4px;
+	margin:0px;
+
+	background-color:#AFA;
+
+	border:0px;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+
+div.mod_card img
+{
+	height: 64px;
+}
+
+table.mod_listview
+{
+	padding:0px;
+	margin:2px;
+
+	white-space:nowrap;
+
+	background-color:white;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+
+.mod_listview td
+{
+	border-bottom:1px solid #ccc;
+}
+
+.mod_list_last td
+{
+	border:0;
+}
+
+.mod_listview thead
+{
+	background-color: #f8f8f8;
+	font-weight: bold;
+}
+
+.mod_list_start
+{
+	background-color: #bfb;
+}
+
+.mod_list_stop
+{
+	background-color: #fbb;
+}
+
+.mod_list_enable, .mod_list_install
+{
+	background-color: #fff;
+}
+
+.mod_list_disable
+{
+	background-color: #e4e4e4;
+}
+
+.mod_list_noinstall
+{
+	background-color: #d4d4d4;
+}
+
+ .mod_list_embeded, .mod_list_inaccess
+{
+	background-color: #c4c4c4;
+}
+
+.mod_list_update
+{
+	background-color:#bbf;
+}

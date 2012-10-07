@@ -1,0 +1,1386 @@
+﻿<?xml version='1.0' encoding="UTF8" ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+    translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+
+  testStream = 0;
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 10);
+    if(value != null &amp;&amp; value != "")
+      testStream = Integer(value);
+  }
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  
+  error_info          = "";
+
+    startitem = "middle";
+		
+  columnCount=5;
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+  middleItem = Integer(itemCount / 2);
+  if(startitem == "middle")
+    setFocusItemIndex(middleItem);
+  else
+  if(startitem == "last")
+    setFocusItemIndex(middleItem);
+  else
+  if(startitem &gt; 0 &amp;&amp; startitem &lt;= itemCount)
+    setFocusItemIndex(startitem-1);
+  redrawDisplay();
+</onRefresh>
+
+	<mediaDisplay name=photoView 
+	  centerXPC=7 
+		centerYPC=25
+		centerHeightPC=45
+    columnCount=5
+		
+	  rowCount=1
+		menuBorderColor="55:55:55"
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+	  backgroundColor="0:0:0"
+		imageBorderColor="0:0:0"
+		itemBackgroundColor="0:0:0"
+		itemGapXPC=0
+		itemGapYPC=1
+		sideTopHeightPC=22
+		bottomYPC=85
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=no
+		>
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+
+		<text align="center" redraw="yes" lines="2" offsetXPC=10 offsetYPC=73 widthPC=80 heightPC=12 fontSize=20 backgroundColor=0:0:0 foregroundColor=120:120:120>
+			<script>print(annotation); annotation;</script>
+		</text>
+		
+		<text align="center" redraw="yes" offsetXPC=10 offsetYPC=85 widthPC=80 heightPC=10 fontSize=15 backgroundColor=0:0:0 foregroundColor=75:75:75>
+			<script>print(location); location;</script>
+		</text>
+
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+		<itemDisplay>
+      <script>
+				imageW = 90/columnCount;
+				imageH = imageW * screenXp / screenYp * 100 / 45;
+				if(imageH > 50)
+				{
+				  imageH = 50;
+				  imageW = imageH * screenYp / screenXp * 45 / imageW;
+				}
+			  else
+			  {
+			    imageW = 100;
+        }
+      </script>
+			<image>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  if(annotation == "" || annotation == null)
+					    annotation = getItemInfo(idx, "stream_genre");
+					}
+				  "../etc/translate/rss/image/moskvafm/msk/"+getItemInfo(idx, "name")+".png";
+				</script>
+			 <widthPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageW; else imageW * 3 / 4;
+			   </script>
+			 </widthPC>
+			 <heightPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageH; else imageH * 3 / 4;
+			   </script>
+			 </heightPC>
+			 <offsetXPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 50 - imageW/2; else 50 - imageW * 3 / 8;
+			   </script>
+			 </offsetXPC>
+			 <offsetYPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 0; else imageH / 8;
+			   </script>
+			 </offsetYPC>
+			</image>
+			
+			<text align="center" offsetXPC=0 offsetYPC=55 widthPC=100 heightPC=15 fontSize=18>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "fm");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "200:200:200"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "50:50:50"; else "100:100:100";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+			<text align="center" lines="2" offsetXPC=0 offsetYPC=80 widthPC=100 heightPC=20 fontSize=15 backgroundColor=-1:-1:-1>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "75:75:75";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+		
+  <onUserInput>
+    <script>
+      ret = "false";
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      if(userInput == "enter" || userInput == "ENTR")
+      {
+        showIdle();
+        focus = getFocusItemIndex();
+
+        request_title = getItemInfo(focus, "title");
+        request_url = getItemInfo(focus, "location");
+        request_options = getItemInfo(focus, "options");
+        request_image = "../etc/translate/rss/image/moskvafm/msk/"+getItemInfo(focus, "name")+".png";
+
+        stream_url = getItemInfo(focus, "stream_url");
+        stream_title = getItemInfo(focus, "stream_title");
+        stream_type = getItemInfo(focus, "stream_type");
+        stream_protocol = getItemInfo(focus, "stream_protocol");
+        stream_soft = getItemInfo(focus, "stream_soft");
+        stream_class = getItemInfo(focus, "stream_class");
+        stream_server = getItemInfo(focus, "stream_server");
+        stream_status_url = "";
+        stream_current_song = "";
+        stream_genre = getItemInfo(focus, "stream_genre");
+        stream_bitrate = getItemInfo(focus, "stream_bitrate");
+        
+        if(stream_class == "" || stream_class == null || testStream == 1)
+          stream_class = "unknown";
+
+        if(stream_url == "" || stream_url == null)
+          stream_url = request_url;
+
+        if(stream_server != "" &amp;&amp; stream_server != null)
+          stream_status_url = translate_base_url + "status," + urlEncode(stream_server) + "," + urlEncode(stream_url);
+
+        if(stream_title == "" || stream_title == null)
+          stream_title = getItemInfo(focus, "fm") + "FM / " + request_title;
+
+        if(stream_url != "" &amp;&amp; stream_url != null)
+        {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+          {
+            url = stream_url;
+          }
+          else
+          {
+            if(stream_type != null &amp;&amp; stream_type != "")
+            {
+              request_options = "Content-type:"+stream_type+";"+request_options;
+            }
+            url = translate_base_url + "stream," + request_options + "," + urlEncode(stream_url);
+          }
+        
+          executeScript(stream_class+"Dispatcher");
+        }
+        
+        cancelIdle();
+        ret = "true";
+      }
+      else if(userInput == "down" || userInput == "D")
+      {
+        ret = "true";
+      }
+
+      ret;
+    </script>
+  </onUserInput>
+		
+	</mediaDisplay>
+	
+	<item_template>
+		<mediaDisplay  name="threePartsView">
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+		</mediaDisplay>
+	</item_template>
+
+  <videoDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/videoRenderer.rss");
+  </videoDispatcher>
+  
+  <audioDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_status_url);
+    streamArray = pushBackStringArray(streamArray, stream_current_song);
+    streamArray = pushBackStringArray(streamArray, stream_genre);
+    streamArray = pushBackStringArray(streamArray, stream_bitrate);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, request_image);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/audioRenderer.rss");
+  </audioDispatcher>
+  
+  <playlistDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "playlist");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_playlist, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+  </playlistDispatcher>
+  
+  <rssDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/rss_mediaFeed.rss");
+  </rssDispatcher>
+
+  <unknownDispatcher>
+    if(testStream == 1)
+      request_options = "Resolve-playlist:1";
+    info_url    = translate_base_url + "info," + request_options + "," + urlEncode(request_url);
+    error_info  = "";
+
+    res = loadXMLFile(info_url);
+    
+    if (res != null)
+    {
+      error = getXMLElementCount("info","error");
+      
+      if(error != 0)
+      {
+  	    value = getXMLText("info","error");
+  	    if(value != null)
+  	    {
+  	     error_info = value;
+  	    }
+      }
+      else
+      {
+  	    value = getXMLAttribute("info","stream","url");
+  	    if(value != null)
+  	     stream_url = value;
+  
+  	    value = getXMLAttribute("info","stream","type");
+  	    if(value != null)
+  	     stream_type = value;
+  	    
+  	    value = getXMLAttribute("info","stream","class");
+  	    if(value != null)
+  	     stream_class = value;
+  
+  	    value = getXMLAttribute("info","stream","protocol");
+  	    if(value != null)
+  	     stream_protocol = value;
+  
+  	    value = getXMLAttribute("info","stream","server");
+  	    if(value != null)
+  	     stream_soft = value;
+  
+        stream_status_url = "";
+        
+  	    value = getXMLAttribute("info","stream","server_url");
+  	    if(value != null)
+  	    {
+  	     stream_server_url = value;
+  	     if((stream_soft == "icecast" || stream_soft == "shoutcast") &amp;&amp; stream_server_url!="")
+  	     {
+    	      stream_status_url = translate_base_url+"status,"+stream_server_url+","+urlEncode(stream_url);
+    	   }
+  	    }
+  	     
+        value = getXMLText("info","status","stream-title");
+  	    if(value != null)
+  	     stream_title = value;
+  
+        stream_current_song = "";
+  	    value = getXMLText("info","status","current-song");
+  	    if(value != null)
+    		  stream_current_song = value;
+    		  
+  	    value = getXMLText("info","status","stream-genre");
+  	    if(value != null)
+  	      stream_genre = value;
+        
+  	    value = getXMLText("info","status","stream-bitrate");
+  	    if(value != null)
+  	      stream_bitrate = value;
+  
+        options = "";
+        
+        if(stream_type != "")
+          options = "Content-type:"+stream_type;
+        
+        if(options == "")
+          options = stream_options;
+        else
+          options = options + ";" + stream_options;
+  
+  	    stream_translate_url = translate_base_url + "stream," + options + "," + urlEncode(stream_url);
+  	    
+  	    url = null;
+  	    
+  	    if(stream_class == "video" || stream_class == "audio")
+    	  {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+    	      url = stream_url;
+    	    else
+    	      url = stream_translate_url;
+    	  }
+    	  else
+    	  {
+  	      url = stream_url;
+    	  }
+    	     
+    	  if(url != null)
+    	  {
+          if(stream_class == "audio" || stream_class == "video" || stream_class == "playlist" || stream_class == "rss")
+          {
+            executeScript(stream_class+"Dispatcher");
+          }
+          else
+          {
+            error_info = "Unsupported media type: " + stream_type;
+          }
+  	    }
+  	    else
+  	    {
+          error_info = "Empty stream url!";
+  	    }
+      }
+    }
+    else
+    {
+      error_info = "CGI translate module failed!";
+    }
+    print("error_info=",error_info);
+  </unknownDispatcher>
+
+<script>
+    channelImage = "";
+  </script><channel>
+  <title>Moskva.FM</title>
+  <item>
+    <location>mms://live.rfn.ru/radiorussia</location>
+    <title>Радио России</title>
+    <annotation>Государственная радиовещательная компания «Радио России» – главная государственная радиостанция страны</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/66_44.gif</image>
+    <url>http://www.moskva.fm/stations/FM_66.44</url>
+    <id>2106</id>
+    <fm>66.44</fm>
+    <name>66_44</name>
+    <stream_url>mmsh://live.rfn.ru/radiorussia</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_server>_empty_</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://streamall.rambler.ru/svoboda32.mp3</location>
+    <title>Радио Свобода</title>
+    <annotation>В эфире с 6:00 до 24:00 (закрыта в июле 2010)</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/68_30.gif</image>
+    <url>http://www.moskva.fm/stations/FM_68.30</url>
+    <id>2104</id>
+    <fm>68.30</fm>
+    <name>68_30</name>
+    <stream_url>http://streamall.rambler.ru/svoboda32.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>News</stream_genre>
+    <stream_bitrate>32</stream_bitrate>
+  </item>
+  <item>
+    <location>mms://live.rfn.ru/unost/stream.asf</location>
+    <title>ЮFM</title>
+    <annotation>Первое молодежное радио</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/68_84.gif</image>
+    <url>http://www.moskva.fm/stations/FM_68.84</url>
+    <id>2103</id>
+    <fm>68.84</fm>
+    <name>68_84</name>
+    <stream_url>mmsh://live.rfn.ru/unost/stream.asf</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_server>_empty_</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://streamall.rambler.ru:80/ultra128.mp3</location>
+    <title>Ultra</title>
+    <annotation>ULTRA - территория лучшей зарубежной альтернативной музыки! (закрыта в октябре 2010)</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/70_19.gif</image>
+    <url>http://www.moskva.fm/stations/FM_70.19</url>
+    <id>2102</id>
+    <fm>70.19</fm>
+    <name>70_19</name>
+    <stream_url>http://streamall.rambler.ru:80/ultra128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Rock</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://m1.bfm.ru:8000/fm64</location>
+    <title>Бизнес FM</title>
+    <annotation>Первое деловое радио</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/87_5.gif</image>
+    <url>http://www.moskva.fm/stations/FM_87.5</url>
+    <id>4005</id>
+    <fm>87.5</fm>
+    <name>87_5</name>
+    <stream_url>http://m1.bfm.ru:8000/fm64</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>radio</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/city_fm_online.m3u</location>
+    <title>Сити-FM</title>
+    <annotation>Московское информационное радио</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/87_9.gif</image>
+    <url>http://www.moskva.fm/stations/FM_87.9</url>
+    <id>4006</id>
+    <fm>87.9</fm>
+    <name>87_9</name>
+    <stream_url>http://79.143.70.114:8000/cityfm-64k.aac</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>CityFM news</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://webcast1.emg.fm:55655/retro128.mp3</location>
+    <title>Ретро FM</title>
+    <annotation>Подпевай!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/88_3.gif</image>
+    <options>Protocol:http</options>
+    <url>http://www.moskva.fm/stations/FM_88.3</url>
+    <id>4007</id>
+    <fm>88.3</fm>
+    <name>88_3</name>
+    <stream_url>http://webcast1.emg.fm:55655/retro128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Pop</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/umor_fm_online.m3u</location>
+    <title>Юмор FM</title>
+    <annotation>Радуйся жизни!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/88_7.gif</image>
+    <url>http://www.moskva.fm/stations/FM_88.7</url>
+    <id>4012</id>
+    <fm>88.7</fm>
+    <name>88_7</name>
+    <stream_url>mms://mms.online.ru/c2_4_128</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_server>_empty_</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>rtsp</stream_protocol>
+  </item>
+  <item>
+    <location>http://streamall.rambler.ru:/jazz128.mp3</location>
+    <title>Радио Jazz</title>
+    <annotation>Самое стильное радио в городе</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/89_1.gif</image>
+    <url>http://www.moskva.fm/stations/FM_89.1</url>
+    <id>2012</id>
+    <fm>89.1</fm>
+    <name>89_1</name>
+    <stream_url>http://streamall.rambler.ru:/jazz128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://w01-cn01.akadostream.ru:8108/megapolisfm128.mp3</location>
+    <title>Мегаполис FM</title>
+    <annotation>Радио для современных, активных и обеспеченных людей.</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/89_5.gif</image>
+    <url>http://www.moskva.fm/stations/FM_89.5</url>
+    <id>2013</id>
+    <fm>89.5</fm>
+    <name>89_5</name>
+  </item>
+  <item>
+    <location>http://webcast2.emg.fm:55655/keks128.mp3</location>
+    <title>Кекс FM</title>
+    <annotation>Играем, что хотим!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/89_9.gif</image>
+    <option>Protocol:http</option>
+    <url>http://www.moskva.fm/stations/FM_89.9</url>
+    <id>2014</id>
+    <fm>89.9</fm>
+    <name>89_9</name>
+    <stream_url>http://webcast2.emg.fm:55655/keks128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Pop</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/avtoradio_online_33.m3u</location>
+    <title>Авторадио</title>
+    <annotation>Первое автомобильное радио</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/90_3.gif</image>
+    <url>http://www.moskva.fm/stations/FM_90.3</url>
+    <id>4013</id>
+    <fm>90.3</fm>
+    <name>90_3</name>
+    <stream_url>mmsh://94.23.194.126/v3_1_22?st=043245100125266732820090917</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_server>_empty_</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/relax_fm_online_3.m3u</location>
+    <title>Relax FM</title>
+    <annotation>Спокойная волна</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/90_8.gif</image>
+    <url>http://www.moskva.fm/stations/FM_90.8</url>
+    <id>4014</id>
+    <fm>90.8</fm>
+    <name>90_8</name>
+    <stream_url>http://217.29.51.162:8000/radio-64k.aac</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/aacp</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>RelaxFM</stream_genre>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://streamall.rambler.ru:80/echo128.mp3</location>
+    <title>Эхо Москвы</title>
+    <annotation>Слушайте радио. Остальное — видимость.</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/91_2.gif</image>
+    <url>http://www.moskva.fm/stations/FM_91.2</url>
+    <id>4015</id>
+    <fm>91.2</fm>
+    <name>91_2</name>
+    <stream_url>http://streamall.rambler.ru:80/echo128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>mmsh://live.rfn.ru/rcult</location>
+    <title>Радио Культура</title>
+    <annotation>Государственная телевизионная и радиовещательная компания</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/91_6.gif</image>
+    <url>http://www.moskva.fm/stations/FM_91.6</url>
+    <id>2015</id>
+    <fm>91.6</fm>
+    <name>91_6</name>
+    <stream_url>mmsh://live.rfn.ru/rcult</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_server>_empty_</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/govorit_moskva_online_2.m3u</location>
+    <title>Говорит Москва</title>
+    <annotation>Радио большого города</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/92_0.gif</image>
+    <url>http://www.moskva.fm/stations/FM_92.0</url>
+    <id>4016</id>
+    <fm>92.0</fm>
+    <name>92_0</name>
+    <stream_url>http://stream09.rambler.ru:80/govoritmoskva64.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/dacha_fm_online.m3u</location>
+    <title>Радио Дача</title>
+    <annotation>Удачное радио!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/92_4.gif</image>
+    <url>http://www.moskva.fm/stations/FM_92.4</url>
+    <id>4017</id>
+    <fm>92.4</fm>
+    <name>92_4</name>
+    <stream_url>http://stream.loveradio.ru:8000/radiodacha_high.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Various</stream_genre>
+    <stream_bitrate>96</stream_bitrate>
+  </item>
+  <item>
+    <location>mmsh://online.carnivalfm.ru:1234</location>
+    <title>Радио Карнавал</title>
+    <annotation>Мировые хиты</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/92_8.gif</image>
+    <url>http://www.moskva.fm/stations/FM_92.8</url>
+    <id>4018</id>
+    <fm>92.8</fm>
+    <name>92_8</name>
+    <stream_url>mmsh://online.carnivalfm.ru:1234</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_server>_empty_</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/sport_fm_online.m3u</location>
+    <title>Радио Спорт</title>
+    <annotation>Главное спортивное радио страны</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/93_2.gif</image>
+    <url>http://www.moskva.fm/stations/FM_93.2</url>
+    <id>4019</id>
+    <fm>93.2</fm>
+    <name>93_2</name>
+    <stream_url>http://90.156.211.132:8000/sportfm-128</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>various</stream_genre>
+    <stream_bitrate>96</stream_bitrate>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/kommersant_fm_moskva_online.m3u</location>
+    <title>КоммерсантъFM</title>
+    <annotation>Все, что происходит сейчас</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/93_6.gif</image>
+    <url>http://www.moskva.fm/stations/FM_93.6</url>
+    <id>2020</id>
+    <fm>93.6</fm>
+    <name>93_6</name>
+  </item>
+  <item>
+    <location/>
+    <title>Newtone FM</title>
+    <annotation>Прямо в голову! (закрыта 9 марта 2010)</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/93_61.gif</image>
+    <url>http://www.moskva.fm/stations/FM_93.61</url>
+    <id>2021</id>
+    <fm>93.61</fm>
+    <name>93_61</name>
+  </item>
+  <item>
+    <location>http://online.pionerfm.ru:8000/pionerfm</location>
+    <title>Не очень взрослое радио</title>
+    <annotation>Не очень взрослое радио</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/94_0.gif</image>
+    <url>http://www.moskva.fm/stations/FM_94.0</url>
+    <id>2112</id>
+    <fm>94.0</fm>
+    <name>94_0</name>
+    <stream_url>http://online.pionerfm.ru:8000/pionerfm</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>MUSIC</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/dobrie_pesni_online.m3u</location>
+    <title>Добрые песни</title>
+    <annotation>Максимально позитивные эмоции</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/94_4.gif</image>
+    <url>http://www.moskva.fm/stations/FM_94.4</url>
+    <id>2105</id>
+    <fm>94.4</fm>
+    <name>94_4</name>
+  </item>
+  <item>
+    <location>http://188.127.243.169/ru-192.m3u</location>
+    <title>RU.FM</title>
+    <annotation>Рунет плюс радио</annotation>
+    <image>http://css.moskva.fm/img/stations/msk/94_8.png</image>
+    <url>http://www.moskva.fm/stations/FM_94.8</url>
+    <id>4020</id>
+    <fm>94.8</fm>
+    <name>94_8</name>
+    <stream_url>http://188.127.243.169:80/ru-192</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>various</stream_genre>
+    <stream_bitrate>192</stream_bitrate>
+  </item>
+  <item>
+    <location/>
+    <title>Моя Семья</title>
+    <annotation>Для тех, кого любим! (закрыта 15 ноября 2010)</annotation>
+    <image>http://css.moskva.fm/img/stations/msk/94_81.png</image>
+    <url>http://www.moskva.fm/stations/FM_94.8</url>
+    <id>4020</id>
+    <fm>94.8</fm>
+    <name>94_81</name>
+  </item>
+  <item>
+    <location>http://188.127.243.169:80/rock-192</location>
+    <title>ROCK FM</title>
+    <annotation>Больше музыки, больше рока!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/95_2.gif</image>
+    <url>http://www.moskva.fm/stations/FM_95.2</url>
+    <id>2011</id>
+    <fm>95.2</fm>
+    <name>95_2</name>
+    <stream_url>http://188.127.243.169:80/rock-192</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>various</stream_genre>
+    <stream_bitrate>192</stream_bitrate>
+  </item>
+  <item>
+    <location>http://89.208.99.16:8088/zvezda_128</location>
+    <title>Радио Звезда</title>
+    <annotation>Телерадиокомпания Вооруженных Сил Российской Федерации</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/95_6.gif</image>
+    <url>http://www.moskva.fm/stations/FM_95.6</url>
+    <id>4021</id>
+    <fm>95.6</fm>
+    <name>95_6</name>
+    <stream_url>http://89.208.99.16:8088/zvezda_128</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Live Air</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://www.dorognoe.ru/dor.m3u</location>
+    <title>Дорожное радио</title>
+    <annotation>Вместе в пути!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/96_0.gif</image>
+    <url>http://www.moskva.fm/stations/FM_96.0</url>
+    <id>2109</id>
+    <fm>96.0</fm>
+    <name>96_0</name>
+    <stream_url>http://online.dorognoe.ru:8080/dorognoe</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location/>
+    <title>Вояж FM</title>
+    <annotation>Золотые 90-е (закрыта в июле 2010)</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/96_0.gif</image>
+    <url>http://www.moskva.fm/stations/FM_96.0</url>
+    <id>2109</id>
+    <fm>96.01</fm>
+    <name>96_01</name>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/xfm_online.m3u</location>
+    <title>X-FM</title>
+    <annotation>Сенсация в прямом эфире</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/96_4.gif</image>
+    <url>http://www.moskva.fm/stations/FM_96.4</url>
+    <id>4022</id>
+    <fm>96.4</fm>
+    <name>96_4</name>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/detskoe_online_2.m3u</location>
+    <title>Детское радио</title>
+    <annotation>Спасибо Газпрому за наше счастливое детство!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/96_8.gif</image>
+    <url>http://www.moskva.fm/stations/FM_96.8</url>
+    <id>2017</id>
+    <fm>96.8</fm>
+    <name>96_8</name>
+    <stream_url>http://w03-cn03.akadostream.ru:8114/detifm192.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>various</stream_genre>
+  </item>
+  <item>
+    <location>http://radio.kp.ru:8000/stream</location>
+    <title>Комсомольская правда</title>
+    <annotation>Мы делаем мир желтее!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/97_2.gif</image>
+    <url>http://www.moskva.fm/stations/FM_97.2</url>
+    <id>2108</id>
+    <fm>97.2</fm>
+    <name>97_2</name>
+    <stream_url>http://radio.kp.ru:8000/stream</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Russian</stream_genre>
+    <stream_bitrate>96</stream_bitrate>
+  </item>
+  <item>
+    <location>mmsh://live.rfn.ru/vesti_fm</location>
+    <title>Вести FM</title>
+    <annotation>Государственная радиовещательная компания</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/97_6.gif</image>
+    <url>http://www.moskva.fm/stations/FM_97.6</url>
+    <id>4023</id>
+    <fm>97.6</fm>
+    <name>97_6</name>
+    <stream_url>mmsh://live.rfn.ru/vesti_fm</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_server>_empty_</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location/>
+    <title>Kino FM</title>
+    <annotation>98 FM - 98 хитов (зфкрыта в декабре 2010)</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/98_01.gif</image>
+    <url>http://www.moskva.fm/stations/FM_98.01</url>
+    <id>2018</id>
+    <fm>98.0</fm>
+    <name>98_01</name>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/98_8_fm_online.m3u</location>
+    <title>Шоколад FM</title>
+    <annotation>Всё в нём</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/98_0.gif</image>
+    <url>http://www.moskva.fm/stations/FM_98.0</url>
+    <id>2022</id>
+    <fm>98.0</fm>
+    <name>98_0</name>
+    <stream_url>http://92.243.67.124:10010/fm</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>TOP-100</stream_genre>
+    <stream_bitrate>131</stream_bitrate>
+  </item>
+  <item>
+    <location>http://webcast2.emg.fm:55655/fresh128.mp3</location>
+    <title>Свежее радио</title>
+    <annotation>100% МУЗЫКА – 100% СВЕЖЕЕ!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/98_4.gif</image>
+    <options>Protocol:http</options>
+    <url>http://www.moskva.fm/stations/FM_98.4</url>
+    <id>4024</id>
+    <fm>98.4</fm>
+    <name>98_4</name>
+    <stream_url>http://webcast2.emg.fm:55655/fresh128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Pop</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location/>
+    <title>Радио Алла</title>
+    <annotation>Все звезды на "Радио Алла"! (закрыта в январе 2011)</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/98_81.gif</image>
+    <url>http://www.moskva.fm/stations/FM_98.8</url>
+    <id>4011</id>
+    <fm>98.8</fm>
+    <name>98_81</name>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/radio_romantika_online.m3u</location>
+    <title>Радио Романтика</title>
+    <annotation>Все звезды на "Радио Романтика"!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/98_8.gif</image>
+    <url>http://www.moskva.fm/stations/FM_98.8</url>
+    <id>4026</id>
+    <fm>98.8</fm>
+    <name>98_8</name>
+  </item>
+  <item>
+    <location>mmsh://live.rfn.ru/orfey/</location>
+    <title>Радио Орфей</title>
+    <annotation>Классическая музыка</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/99_2.gif</image>
+    <url>http://www.moskva.fm/stations/FM_99.2</url>
+    <id>2101</id>
+    <fm>99.2</fm>
+    <name>99_2</name>
+    <stream_url>mmsh://live.rfn.ru/orfey/</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_server>_empty_</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://radio.solo.by:8001/finam</location>
+    <title>Финам FM</title>
+    <annotation>Живи по своим правилам!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/99_6.gif</image>
+    <url>http://www.moskva.fm/stations/FM_99.6</url>
+    <id>2019</id>
+    <fm>99.6</fm>
+    <name>99_6</name>
+    <stream_url>http://radio.solo.by:8001/finam</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>CLASSIC ROCK</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/silver_rain_online_2.m3u</location>
+    <title>Серебряный дождь</title>
+    <annotation>Всегда есть, что сказать</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/100_1.gif</image>
+    <url>http://www.moskva.fm/stations/FM_100.1</url>
+    <id>2000</id>
+    <fm>100.1</fm>
+    <name>100_1</name>
+  </item>
+  <item>
+    <location>http://www.radiogrom.com/online/moskva_fm/best_fm_online.m3u</location>
+    <title>Best FM</title>
+    <annotation>Каждая песня — лучшая</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/100_5.gif</image>
+    <url>http://www.moskva.fm/stations/FM_100.5</url>
+    <id>2001</id>
+    <fm>100.5</fm>
+    <name>100_5</name>
+    <stream_url>http://188.127.243.169:80/best-192</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>various</stream_genre>
+    <stream_bitrate>192</stream_bitrate>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/classic_fm_online.m3u</location>
+    <title>Радио Classic</title>
+    <annotation>Красивая музыка красивых людей</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/100_9.gif</image>
+    <url>http://www.moskva.fm/stations/FM_100.9</url>
+    <id>4010</id>
+    <fm>100.9</fm>
+    <name>100_9</name>
+  </item>
+  <item>
+    <location>http://station.ru/RadioStation.aspx?id=1720</location>
+    <title>DFM</title>
+    <annotation>Everybody dance now!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/101_2.gif</image>
+    <url>http://www.moskva.fm/stations/FM_101.2</url>
+    <id>2002</id>
+    <fm>101.2</fm>
+    <name>101_2</name>
+    <stream_url>mmsh://broadcast05.station.ru/dfm</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>station.ru</stream_soft>
+    <stream_server>http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=dfm</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://streamall.rambler.ru:80/nashe128.mp3</location>
+    <title>Наше Радио</title>
+    <annotation>Наша музыка</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/101_7.gif</image>
+    <url>http://www.moskva.fm/stations/FM_101.7</url>
+    <id>2003</id>
+    <fm>101.7</fm>
+    <name>101_7</name>
+    <stream_url>http://streamall.rambler.ru:80/nashe128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Rock</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://station.ru/RadioStation.aspx?id=1721</location>
+    <title>Монте-Карло</title>
+    <annotation>Радио для искушенных</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/102_1.gif</image>
+    <url>http://www.moskva.fm/stations/FM_102.1</url>
+    <id>2004</id>
+    <fm>102.1</fm>
+    <name>102_1</name>
+    <stream_url>mmsh://broadcast05.station.ru/montecarlo</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>station.ru</stream_soft>
+    <stream_server>http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=montecarlo</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/popsa_online.m3u</location>
+    <title>Первое Популярное</title>
+    <annotation>Лучшее в настоящем!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/102_5.gif</image>
+    <url>http://www.moskva.fm/stations/FM_102.5</url>
+    <id>2005</id>
+    <fm>102.5</fm>
+    <name>102_5</name>
+    <stream_url>http://stream06.rambler.ru:80/popsa64.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://w02-cn01.akadostream.ru:8108/shanson128.mp3</location>
+    <title>Шансон</title>
+    <annotation>Это просто песня</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/103_0.gif</image>
+    <url>http://www.moskva.fm/stations/FM_103.0</url>
+    <id>2006</id>
+    <fm>103.0</fm>
+    <name>103_0</name>
+    <stream_url>http://w02-cn01.akadostream.ru:8108/shanson128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Chanson</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>mmsh://stream03.rambler.ru/radiomayak</location>
+    <title>Радио Маяк</title>
+    <annotation>Жизнь продолжается!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/103_4.gif</image>
+    <url>http://www.moskva.fm/stations/FM_103.4</url>
+    <id>4009</id>
+    <fm>103.4</fm>
+    <name>103_4</name>
+    <stream_url>mmsh://stream03.rambler.ru/radiomayak</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_server>_empty_</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://station.ru/RadioStation.aspx?id=1722</location>
+    <title>Maximum</title>
+    <annotation>Если спросят, что слушаешь - ответь MAXIMUM!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/103_7.gif</image>
+    <url>http://www.moskva.fm/stations/FM_103.7</url>
+    <id>2007</id>
+    <fm>103.7</fm>
+    <name>103_7</name>
+    <stream_url>mmsh://broadcast05.station.ru/maximum</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>station.ru</stream_soft>
+    <stream_server>http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=maximum</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>mmsh://89.20.132.26/v1_1_128</location>
+    <title>NRJ</title>
+    <annotation>Energy — это радио</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/104_2.gif</image>
+    <url>http://www.moskva.fm/stations/FM_104.2</url>
+    <id>2008</id>
+    <fm>104.2</fm>
+    <name>104_2</name>
+  </item>
+  <item>
+    <location>http://webcast.emg.fm:55655/radiosept128.mp3</location>
+    <title>Радио 7</title>
+    <annotation>Радио на семи холмах</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/104_7.gif</image>
+    <options>Protocol:http</options>
+    <url>http://www.moskva.fm/stations/FM_104.7</url>
+    <id>2009</id>
+    <fm>104.7</fm>
+    <name>104_7</name>
+    <stream_url>http://webcast.emg.fm:55655/radiosept128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Pop</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://radiogrom.com/online/moskva_fm/radio_next_online.m3u</location>
+    <title>NEXT FM</title>
+    <annotation>Время новых героев</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/105_2.gif</image>
+    <url>http://www.moskva.fm/stations/FM_105.2</url>
+    <id>2010</id>
+    <fm>105.2</fm>
+    <name>105_2</name>
+    <stream_url>http://stream01.rambler.ru:80/next64.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_bitrate>64</stream_bitrate>
+  </item>
+  <item>
+    <location>http://station.ru/RadioStation.aspx?id=1723</location>
+    <title>Русское Радио</title>
+    <annotation>Музыка для души</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/105_7.gif</image>
+    <url>http://www.moskva.fm/stations/FM_105.7</url>
+    <id>4000</id>
+    <fm>105.7</fm>
+    <name>105_7</name>
+    <stream_url>mmsh://broadcast05.station.ru/rusradio</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>station.ru</stream_soft>
+    <stream_server>http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=rusradio</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://webcast.emg.fm:55655/europaplus128.mp3</location>
+    <title>Европа Плюс</title>
+    <annotation>Top Non Stop</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/106_2.gif</image>
+    <options>Protocol:http</options>
+    <url>http://www.moskva.fm/stations/FM_106.2</url>
+    <id>4001</id>
+    <fm>106.2</fm>
+    <name>106_2</name>
+    <stream_url>http://webcast.emg.fm:55655/europaplus128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_genre>Pop</stream_genre>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://streamall.rambler.ru:80/love128.mp3</location>
+    <title>Love Radio</title>
+    <annotation>Упругая поп-музыка!</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/106_6.gif</image>
+    <url>http://www.moskva.fm/stations/FM_106.6</url>
+    <id>4002</id>
+    <fm>106.6</fm>
+    <name>106_6</name>
+    <stream_url>http://streamall.rambler.ru:80/love128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>icecast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+  <item>
+    <location>http://station.ru/RadioStation.aspx?id=1724</location>
+    <title>Русская Служба Новостей</title>
+    <annotation>Мы делаем новости</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/107_0.gif</image>
+    <url>http://www.moskva.fm/stations/FM_107.0</url>
+    <id>4003</id>
+    <fm>107.0</fm>
+    <name>107_0</name>
+    <stream_url>mmsh://broadcast05.station.ru/rsn</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>station.ru</stream_soft>
+    <stream_server>http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=rsn</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://station.ru/RadioStation.aspx?id=1725</location>
+    <title>Хит FM</title>
+    <annotation>Музыка, с которой легко</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/107_4.gif</image>
+    <url>http://www.moskva.fm/stations/FM_107.4</url>
+    <id>4008</id>
+    <fm>107.4</fm>
+    <name>107_4</name>
+    <stream_url>mmsh://broadcast05.station.ru/hitfm</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>station.ru</stream_soft>
+    <stream_server>http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=hitfm</stream_server>
+    <stream_type>audio/x-ms-wma</stream_type>
+    <stream_protocol>mmsh</stream_protocol>
+  </item>
+  <item>
+    <location>http://streamall.rambler.ru/mv128.mp3</location>
+    <title>Милицейская волна</title>
+    <annotation>Радио МВД РФ</annotation>
+    <image>http://img.moskva.fm/img/stations/msk/107_8.gif</image>
+    <url>http://www.moskva.fm/stations/FM_107.8</url>
+    <id>4004</id>
+    <fm>107.8</fm>
+    <name>107_8</name>
+    <stream_url>http://streamall.rambler.ru/mv128.mp3</stream_url>
+    <stream_class>audio</stream_class>
+    <stream_soft>shoutcast</stream_soft>
+    <stream_type>audio/mpeg</stream_type>
+    <stream_protocol>http</stream_protocol>
+    <stream_bitrate>128</stream_bitrate>
+  </item>
+</channel>
+
+
+</rss>

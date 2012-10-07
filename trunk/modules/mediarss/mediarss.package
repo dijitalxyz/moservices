@@ -1,0 +1,9 @@
+[mediarss]
+	revision = 2
+	title = "Sayler's Media RSS"
+	role = rss
+	init = S33mediarss
+	backup = "mediarss/sayler.conf"
+	config_edit = "mediarss/sayler.conf"
+	files="etc/init/S33mediarss mediarss/ www/modules/mediarss/"
+	size = 1176

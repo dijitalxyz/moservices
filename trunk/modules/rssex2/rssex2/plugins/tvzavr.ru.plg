@@ -1,0 +1,85 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'tvzavr.ru' plug-in
+#
+# version: 1.0 10.08.2011 20:45
+#
+# http://www.tvzavr.ru/online-kino/5060
+#
+
+unset RESOLVE_CACHE_ENABLED
+
+icy_name=""
+
+if echo $arg_url | grep -qs 'tvzavr\.ru/filmy/.*$' ;  then
+
+ $CURL -s -o $TMPFILE $arg_url 2>&1
+
+ if [ -f ${TMPFILE} ]; then
+
+  icy_name=`cat $TMPFILE | grep '<div class="title .*</h1>' | sed 's/<\/h1>.*$//;s/.*>//'`
+
+#  clip_id=`echo $arg_url | sed 's/.*\///'`
+  clip_id=`cat $TMPFILE | grep 'clip_id =' | sed 's/.*clip_id = //;s/;//' `
+  clip_position=`cat $TMPFILE | grep 'clip_position =' | sed 's/.*clip_position = //;s/;//' `
+  playlist_queue=`cat $TMPFILE | grep playlist_queue | sed 's/.*playlist_queue = //;s/;//'`
+
+  src_url=`$CURL -s -o - http://www.tvzavr.ru/action/get-clip-url/$clip_id?media=http 2>&1`
+  repl=`$CURL -s -o - --data-ascii id=$clip_id http://www.tvzavr.ru/action/watch-video/ 2>&1`
+
+  url1=`echo $src_url | sed -r 's/(.+:\/\/.+\/).+$/\1/'`
+  url2=`echo $url1 | sed -r 's/(.+:\/\/.+)\/.+$/\1/'`
+
+#  resourse=`echo $src_url | sed -e 's/^.*\///;s/\..*//'`
+  clip=`echo $src_url | sed -e 's/^.*\///'`
+
+  random=`echo | awk '
+    function random32()
+    {
+     loc_1 = "";
+     loc_2 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV1234567890=-";
+     loc_3 = 0;
+
+     srand();
+     while (loc_3 < 32)
+     {
+      loc_1 = loc_1 substr(loc_2, rand() * length(loc_2), 1);
+      loc_3++;
+     }
+     return loc_1;
+    }
+    { print random32(); }'`
+
+  session=`$CURL -s -o - $url2/session`
+
+  t_digest=`echo -n $session$src_url$random$arg_url |$BASEPATH/bin/sha2 -q -256 | awk '{ print substr($0, 0, 32)}'`
+
+  stream_url="$url1$clip?usessionid=$session&pageurl=$arg_url&token=$random$t_digest&aid=null"
+  stream_type='video/mp4'
+  server_type='tvzavr'
+  protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+
+  rm -f $TMPFILE
+  return $RC_OK
+ fi
+fi
+return $RC_FAIL

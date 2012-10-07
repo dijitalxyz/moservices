@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+<onEnter>
+    executeScript("platformInit");
+    SwitchViewer({$config->get("viewer{$mediaObj->type}")});
+    /*calculate selected item*/
+    {$selectedIndex = -1}
+    {foreach $mediaObj->getChildren() as $child}
+        {if $child->getParam(start) < time()}
+            {$selectedIndex = $selectedIndex +1}
+        {/if}
+    {/foreach}
+    {if $selectedIndex >= 0}setItemFocus({$selectedIndex});{/if}
+
+    /* always use timerInterval to set refresh time!*/
+    timerInterval = 50;
+    setRefreshTime(timerInterval * 1000);
+</onEnter>
+
+<onRefresh>
+    executeScript("platformRefresh");
+    redrawDisplay();
+</onRefresh>
+
+<!--
+Returns class of programm: past/current/future.
+Params:
+    programIndex : index of item which value is needed.
+    name  : name of item tag which value is needed.
+Return:
+    value : requested item value.
+-->
+<getProgramClass>
+    maxItemNr = getPageInfo("itemCount") - 1;
+    if(programIndex &lt; maxItemNr )  {
+        timeTo = getItemInfo(programIndex- -1, "start");
+    }
+    timeFrom = getItemInfo(programIndex, "start");
+
+    if(programIndex == maxItemNr )  {
+        timeTo = Add(Integer(Add(Minus(timeFrom,7200)/(3600*24),1))*3600*24,7200);
+    }
+    timeNow=date("%s");
+
+    if(timeNow &gt; timeTo) {
+        programClass = "past";
+    } else if(timeNow &gt; timeFrom) {
+        programClass = "current";
+    } else {
+        programClass = "future";
+    }
+
+{if {$config->get(rss_debug)} == "1"}
+    print("================= getProgramClass(",programIndex,") ",timeFrom,"/",timeNow,"/",timeTo," class: ", programClass);
+{/if}
+</getProgramClass>
+
+<videoStart>
+    index = getFocusItemIndex();
+    url = getItemInfo(index, "link");
+
+{if {$config->get(rss_debug)} == "1"}
+    print("================= Link to load: ", url);
+{/if}
+
+    streamUrl = getURL(url);
+
+{if {$config->get(rss_debug)} == "1"}
+    print("================= status  : ", playStatus);
+{/if}
+
+    if (null != url &amp;&amp; "" != url &amp;&amp; "protected" != url) {
+        playItemURL(streamUrl, 0);
+    }
+</videoStart>
+
+
+<mediaDisplay name="threePartsView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    itemImageXPC="0"
+    itemImageYPC="10"
+    itemImageHeightPC="0"
+    itemImageWidthPC="0"
+
+    drawItemText="no"
+    slidingItemText="no"
+
+    itemXPC="0"
+    itemYPC="10"
+    itemWidthPC="100"
+    itemHeightPC="5"
+
+    itemGap="0"
+    itemPerPage="15"
+
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    fontSize="14"
+
+    >
+
+<onEnter>
+    /*calculate selected item*/
+    {$selectedIndex = -1}
+    {foreach $mediaObj->getChildren() as $child}
+        {if $child->getParam(start) < time()}
+            {$selectedIndex = $selectedIndex +1}
+        {/if}
+    {/foreach}
+    {if $selectedIndex >= 0}setItemFocus({$selectedIndex});{/if}
+</onEnter>
+    <onUserInput>
+        userInput = currentUserInput();
+        if ( userInput == keyPgUp ) {
+            url = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$mediaObj->getParam(channel_id)}_{$mediaObj->getParam(prevDayTime)}&amp;type={$mediaObj->type}";
+            jumpToLink("epg_link");
+            redrawDisplay();
+            "true";
+        } else if ( userInput == keyPgDn ) {
+            url = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$mediaObj->getParam(channel_id)}_{$mediaObj->getParam(nextDayTime)}&amp;type={$mediaObj->type}";
+            jumpToLink("epg_link");
+            redrawDisplay();
+            "true";
+        } else if ( userInput  == keyEnter ) {
+            showIdle();
+            executeScript("videoStart");
+            "true";
+        } else if ( userInput == keyRight ) {
+            "true";
+        } else {
+            "false";
+        }
+    </onUserInput>
+
+
+    {$titleExtra = $locale->msg("EPG_TITLE",date('d.m.Y',  $mediaObj->getParam(arcTime) -  3*60*60))}
+    <!-- header -->
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+    <image offsetXPC="5.7" offsetYPC="2" widthPC="4" heightPC="6" redraw="no">http://iptv.kartina.tv/img/ico/%%id%%.gif</image>
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+
+    <text redraw="yes" align="left" fontSize="20"
+        offsetXPC="6" offsetYPC="87" widthPC="8.5" heightPC="12"
+        foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}">
+        <script>getItemInfo(getFocusItemIndex(), "humanTime");</script>
+    </text>
+
+    <text redraw="yes" tailDots="no" fontSize="14" lines="3"
+        offsetXPC="15" offsetYPC="87" widthPC="84" heightPC="12"
+        foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}">
+        <script>getItemInfo(getFocusItemIndex(), "title") + " " + getItemInfo(getFocusItemIndex(), "description");</script>
+    </text>
+
+    <image offsetXPC="1.5" offsetYPC="90.5" widthPC="4" heightPC="6" redraw="yes">
+        <script>
+            if ("1" == "{$smarty.get.arc}") {
+                /*index parameter for getProgramClass*/
+                programIndex = getFocusItemIndex();
+                executeScript("getProgramClass");
+                if ("past" == programClass || "current" == programClass ) {
+                    "{$config->get(cfg_resources_home,Runtime)}img/indicator-green.png";
+                } else {
+                    "{$config->get(cfg_resources_home,Runtime)}img/indicator-gray.png";
+                }
+            } else {
+                "false";
+            }
+        </script>
+    </image>
+
+    <itemDisplay>
+        <script>
+            bgNormal  = "{$config->get(bgNormal)}";
+
+            /*index parameter for getProgramClass*/
+            programIndex = getQueryItemIndex();
+            executeScript("getProgramClass");
+
+            if (programClass == "current") {
+                bgNormal = "{$config->get(bgCurrent)}";
+            } else if (programClass == "future") {
+                bgNormal = "{$config->get(bgFuture)}";
+            } else {
+                bgNormal = "{$config->get(bgPast)}";
+            }
+            bgFocus   = "{$config->get(bgFocus)}";
+
+            fgNormal  = "{$config->get(fgNormal)}";
+            fgFocus   = "{$config->get(fgFocus)}";
+
+            if (getFocusItemIndex() == getQueryItemIndex()) {
+                itemBg = bgFocus;
+                itemFg = fgFocus;
+            } else {
+                itemBg = bgNormal;
+                itemFg = fgNormal;
+            }
+            /*print("------------------------ Item[",getQueryItemIndex(),"] "," class: ", programClass, ", color:" , itemBg);*/
+        </script>
+
+
+        <text align="center" offsetXPC="0" offsetYPC="5" widthPC="15" heightPC="95" fontSize="14">
+            <script>getItemInfo("humanTime");</script>
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+        </text>
+        <image offsetXPC="12.5" offsetYPC="12" widthPC="2.5" heightPC="70" redraw="yes">
+            <script>
+                description = getItemInfo("description");
+                if (description != null) {
+                    "{$config->get(cfg_resources_home,Runtime)}img/info.png";
+                }
+            </script>
+        </image>
+        <text offsetXPC="15" offsetYPC="5" widthPC="85" heightPC="95" fontSize="13">
+            <script>getItemInfo("title") + " " + getItemInfo("description");</script>
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+        </text>
+    </itemDisplay>
+    <previewWindow windowColor="0:0:0" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
+        <widthPC><script>videoOn;</script></widthPC>
+        <heightPC><script>videoOn;</script></heightPC>
+    </previewWindow>
+{call getIdleImages}
+</mediaDisplay>
+
+{call getRssLink tag=epg_link}
+
+<channel>
+    {foreach $mediaObj->getChildren() as $child}
+    <item>
+        <title>{$child->title}</title>
+        <humanTime>{date('H:i', $child->getParam("start"))}</humanTime>
+        <description>{$child->getParam("descr")}</description>
+        <link>{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->getParent()->getParam("channel_id")}&amp;gmt={$child->getParam("start")}&amp;type=STREAM_URL</link>
+        <start>{$child->getParam("start")}</start>
+    </item>
+
+    {/foreach}
+</channel>
+</rss>

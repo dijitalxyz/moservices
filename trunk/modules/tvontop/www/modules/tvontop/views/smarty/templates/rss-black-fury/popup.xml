@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<mediaDisplay name="onePartView"
+
+    viewAreaXPC="30"
+    viewAreaYPC="30"
+    viewAreaWidthPC="40"
+    viewAreaHeightPC="30"
+    showHeader="no"
+    headerXPC="0"
+    headerYPC="0"
+    showDefaultInfo="no"
+
+    sideTopHeightPC="0"
+    sideColorTop="0:0:0"
+    sideBottomHeightPC="0"
+    sideColorBottom="0:0:0"
+    sideLeftWidthPC="0"
+    sideColorLeft="0:0:0"
+    sideRightWidthPC="0"
+    sideColorRight="0:0:0"
+    imageFocus="null"
+    imageParentFocus="null"
+
+    backgroundColor="0:0:0"
+    mainPartColor="0:0:0"
+    idleImageXPC="4.5"
+    idleImageYPC="76"
+    idleImageWidthPC="10"
+    idleImageHeightPC="16"
+
+    autoSelectMenu="no"
+    autoSelectItem="no"
+    itemPerPage="1"
+
+    cornerRounding="15"
+
+    itemXPC="55"
+    itemYPC="35"
+    itemWidthPC="20"
+    itemHeightPC="8"
+    itemGap="0"
+
+    itemBackgroundColor="0:0:0"
+    itemImageXPC="34.6"
+    itemImageWidthPC="0"
+    itemImageHeightPC="0"
+    >
+
+    <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100"
+        backgroundColor="60:60:60" cornerRounding="15" />
+
+    <text offsetXPC="1" offsetYPC="2" widthPC="98" heightPC="96"
+        backgroundColor="30:30:30" cornerRounding="15" />
+
+    <text align="center" offsetXPC="3" offsetYPC="5" widthPC="94" heightPC="15" lines="1"
+        fontSize="14" backgroundColor="30:30:30" foregroundColor="130:130:130">
+        <script>getEnv("caption");</script>
+    </text>
+
+    <text align="center" offsetXPC="3" offsetYPC="30" widthPC="94" heightPC="41" lines="3"
+        fontSize="14" backgroundColor="30:30:30" foregroundColor="200:200:200">
+        <script>getEnv("msg");</script>
+    </text>
+
+
+    <text align="center" offsetXPC="30" offsetYPC="73" widthPC="40"
+        heightPC="15" fontSize="14" cornerRounding="5"
+        backgroundColor="255:170:0" foregroundColor="255:255:255">OK</text>
+
+    <idleImage>/tmp/usbmounts/sda1/scripts/TVonTop/views/smarty/templates/rss-black-fury/img/loading/loading_01.jpg</idleImage>
+    <idleImage>/tmp/usbmounts/sda1/scripts/TVonTop/views/smarty/templates/rss-black-fury/img/loading/loading_02.jpg</idleImage>
+    <idleImage>/tmp/usbmounts/sda1/scripts/TVonTop/views/smarty/templates/rss-black-fury/img/loading/loading_03.jpg</idleImage>
+    <idleImage>/tmp/usbmounts/sda1/scripts/TVonTop/views/smarty/templates/rss-black-fury/img/loading/loading_04.jpg</idleImage>
+    <idleImage>/tmp/usbmounts/sda1/scripts/TVonTop/views/smarty/templates/rss-black-fury/img/loading/loading_05.jpg</idleImage>
+    <idleImage>/tmp/usbmounts/sda1/scripts/TVonTop/views/smarty/templates/rss-black-fury/img/loading/loading_06.jpg</idleImage>
+    <idleImage>/tmp/usbmounts/sda1/scripts/TVonTop/views/smarty/templates/rss-black-fury/img/loading/loading_07.jpg</idleImage>
+    <idleImage>/tmp/usbmounts/sda1/scripts/TVonTop/views/smarty/templates/rss-black-fury/img/loading/loading_08.jpg</idleImage>
+</mediaDisplay>
+
+<channel>
+    <item>
+        <title>Ok</title>
+        <onClick>
+            <script>
+                postMessage("RET");
+                postMessage("Return");
+                null;
+            </script>
+        </onClick>
+    </item>
+</channel>
+</rss>

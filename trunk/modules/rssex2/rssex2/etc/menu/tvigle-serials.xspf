@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Сериалы</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:511974,tvigle/multi</link>
+  <title>Ходячие мертвецы. Первый сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/511974/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:536218,tvigle/multi</link>
+  <title>Ходячие мертвецы. Второй сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/536218/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509663,tvigle/multi</link>
+  <title>Адмиралъ</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509663/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:511971,tvigle/multi</link>
+  <title>Отчаянные Домохозяйки. Шестой сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/511971/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2227,tvigle/multi</link>
+  <title>Баллада о Бомбере</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2227/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509669,tvigle/multi</link>
+  <title>Исчезнувшие</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509669/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2224,tvigle/multi</link>
+  <title>Закрытая школа</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2224/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509666,tvigle/multi</link>
+  <title>Громовы. Дом надежды</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509666/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2200,tvigle/multi</link>
+  <title>Говорящая с призраками. Первый сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2200/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2233,tvigle/multi</link>
+  <title>Говорящая с призраками. Второй сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2233/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2246,tvigle/multi</link>
+  <title>Говорящая с призраками. Третий сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2246/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2250,tvigle/multi</link>
+  <title>Говорящая с призраками. Четвертый сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2250/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:508641,tvigle/multi</link>
+  <title>Говорящая с призраками. Пятый сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/508641/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2201,tvigle/multi</link>
+  <title>Университет</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2201/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509664,tvigle/multi</link>
+  <title>Десантура</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509664/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509672,tvigle/multi</link>
+  <title>Две судьбы. Новая жизнь</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509672/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509660,tvigle/multi</link>
+  <title>Даша Васильева. Любительница частного сыска</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509660/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509670,tvigle/multi</link>
+  <title>На пути к сердцу</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509670/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2167,tvigle/multi</link>
+  <title>Город Хищниц</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2167/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509671,tvigle/multi</link>
+  <title>Дом на Озерной</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509671/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2151,tvigle/multi</link>
+  <title>Отчаянные домохозяйки. Первый сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2151/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2158,tvigle/multi</link>
+  <title>Отчаянные домохозяйки. Второй сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2158/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2171,tvigle/multi</link>
+  <title>Отчаянные домохозяйки. Третий сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2171/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2206,tvigle/multi</link>
+  <title>Отчаянные Домохозяйки. Четвертый сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2206/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:508648,tvigle/multi</link>
+  <title>Отчаянные Домохозяйки. Пятый сезон</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/508648/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509665,tvigle/multi</link>
+  <title>Диверсант. Конец войны</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509665/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2189,tvigle/multi</link>
+  <title>Предлагаемые обстоятельства</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2189/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2198,tvigle/multi</link>
+  <title>Место встречи изменить нельзя</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2198/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:508639,tvigle/multi</link>
+  <title>Виола Тараканова. В мире преступных страстей</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/508639/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:508640,tvigle/multi</link>
+  <title>Кавалеры морской звезды</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/508640/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2204,tvigle/multi</link>
+  <title>Черкизона. Одноразовые люди</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2204/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2162,tvigle/multi</link>
+  <title>Атлантида</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2162/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2221,tvigle/multi</link>
+  <title>Подруга особого назначения</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2221/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2103,tvigle/multi</link>
+  <title>Antiсказка</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2103/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2196,tvigle/multi</link>
+  <title>Своя чужая жизнь</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2196/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2165,tvigle/multi</link>
+  <title>Дурдом</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2165/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2176,tvigle/multi</link>
+  <title>Евлампия Романова. Следствие ведет дилетант</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2176/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2184,tvigle/multi</link>
+  <title>Любовные авантюры</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2184/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2199,tvigle/multi</link>
+  <title>Рыжая</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2199/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2222,tvigle/multi</link>
+  <title>Саквояж со светлым будущим</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2222/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2177,tvigle/multi</link>
+  <title>Иван Подушкин: Джентльмен сыска</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2177/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2205,tvigle/multi</link>
+  <title>Зона</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2205/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2220,tvigle/multi</link>
+  <title>Дом-фантом в приданое</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2220/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2178,tvigle/multi</link>
+  <title>Молоды и счастливы</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2178/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2219,tvigle/multi</link>
+  <title>Формула</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2219/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2181,tvigle/multi</link>
+  <title>Миф об идеальном мужчине</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2181/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2182,tvigle/multi</link>
+  <title>Новый русский романс</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2182/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2207,tvigle/multi</link>
+  <title>Такси для ангела</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2207/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1828,tvigle/multi</link>
+  <title>Вся правда о Еве</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1828/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2166,tvigle/multi</link>
+  <title>Умножающий печаль</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2166/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2164,tvigle/multi</link>
+  <title>Вербное воскресенье</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2164/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1685,tvigle/multi</link>
+  <title>Тридцатилетние</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1685/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2163,tvigle/multi</link>
+  <title>Личное дело капитана Рюмина</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2163/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2082,tvigle/multi</link>
+  <title>Право на счастье</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2082/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1818,tvigle/multi</link>
+  <title>33 квадратных метра</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1818/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1684,tvigle/multi</link>
+  <title>Люди Шпака</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1684/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2071,tvigle/multi</link>
+  <title>Люба, дети и завод   </title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2071/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2156,tvigle/multi</link>
+  <title>Жизнь Клима Самгина</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2156/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

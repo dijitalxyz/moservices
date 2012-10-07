@@ -1,0 +1,59 @@
+#!/bin/sh
+#
+# description: Starts and stops lighttp daemon
+#
+etc=/usr/local/etc
+mos=$etc/mos
+
+case "$1" in
+  start)
+	rm -f $mos/etc/inetd.conf
+	if netstat -ln | grep -q ':80 ' ; then
+		if ps | grep -q '[m]ini_httpd' ; then
+			killall -9 mini_httpd
+		else
+			cp /etc/inetd.conf $mos/etc
+			sed -i 's/^www\(.*\)$/#www\1/' $mos/etc/inetd.conf
+
+			killall -9 inetd
+			inetd $mos/etc/inetd.conf
+		fi
+	fi
+##	echo "grab passwd for lighttp autirity"
+##	cat /etc/passwd | grep root | cut -d":" -f 1,2 >/etc/lighttpd.passwd
+	echo "Starting lighttp service..."
+	nice -n 10 $mos/bin/lighttpd -f $mos/etc/lighttpd.conf
+	if [ $? -eq 0 ] ; then
+		mkdir -p /tmp/locks
+		echo -n run > /tmp/locks/http
+	fi
+	;;
+
+  stop)
+	echo "Shutting down lighttp services..."
+	killall lighttpd php
+	rm /tmp/locks/http
+
+	if [ -f $mos/etc/inetd.conf ] ; then
+		rm -f $mos/etc/inetd.conf
+		killall -9 inetd
+		inetd
+	fi
+	;;
+
+  status)
+	if  ps | grep -q '[l]ighttpd' ; then
+		echo "lighttp running"
+	else
+		echo "lighttp stopped"
+	fi
+	;;
+
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

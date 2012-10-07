@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Check for install libraries:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+
+check=$1
+[ -z $2 ] && check="$check.so"
+
+f=1
+while true; do
+	lib=$( echo $LD_LIBRARY_PATH | cut -d':' -f $f )
+	[ -z "$lib" ] && exit 0
+	[ -e $lib/$check ] && exit 2
+	let f+=1
+done

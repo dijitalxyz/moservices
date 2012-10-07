@@ -1,0 +1,100 @@
+.ssk_top
+{
+	white-space: nowrap;
+}
+
+.ssk_index
+{
+	z-index: 90;
+}
+
+div.ssk_fw
+{
+	position:relative;
+	display:block;
+	float:left;
+
+	padding:0;
+	margin:4px;
+
+	background-color: #f4f4f4;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+
+div.ssk_fw_topic
+{
+	position: relative;
+	background: #D0D0D0;
+	padding:4px;
+	margin :0;
+	font-weight: bold;
+	border:0;
+}
+
+div.ssk_fw_list
+{
+	position: relative;
+	display:table-cell;
+	padding:4px;
+	margin:0px;
+
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+
+div.ssk_card
+{
+	position:relative;
+	display:block;
+
+	float:left;
+
+	padding:8px;
+	margin:2px;
+
+	background:white;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+
+div.ssk_card_alone
+{
+	padding:8px;
+	margin:3px;
+	border:0px;
+}
+
+div.ssk_st_active
+{
+	background-color: #bfb;
+}
+
+div.ssk_st_install
+{
+	background-color: #fff;
+}
+
+div.ssk_st_noinstall
+{
+	background-color: #f4f4f4;
+}
+
+div.ssk_update
+{
+	position:absolute;
+	top:0px;
+	right:0px;
+	padding:2px 4px;
+	margin:0px;
+
+	background-color:#AFA;
+
+	border:1px solid #ccc;
+/*
+	border:0px;
+*/
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+

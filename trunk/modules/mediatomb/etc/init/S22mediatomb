@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# description: Starts and stops the vsftpd daemon
+#
+bin=/usr/local/etc/mos/bin
+mos=/usr/local/etc/mos/mediatomb
+
+case "$1" in
+  start)
+	# waiting valid IP address
+	$bin/wait_ip && exit 1
+
+	echo "Starting mediatomb service..."
+	export MEDIATOMB_DATADIR="$mos/share/mediatomb"
+	export MEDIATOMB_MAGIC_FILE="$mos/share/file/magic"
+	$mos/bin/mediatomb -m $mos -f config -d -l /tmp/mediatomb.log
+	;;
+  stop)
+	echo "Shutting down mediatomb services..."
+	killall -9 mediatomb
+	while ps | grep -v 'S22mediatomb' | grep -q '[m]ediatomb' ; do
+		sleep 1
+	done
+	;;
+  status)
+	if ps | grep -v 'S22mediatomb' | grep -q '[m]ediatomb' ; then
+		echo "mediatomb is running"
+	else
+		echo "mediatomb is stopped"
+	fi
+	;;
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|status|enable|disable}"
+	;;
+esac
+
+exit $?

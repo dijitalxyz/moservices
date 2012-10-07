@@ -1,0 +1,222 @@
+<?xml version='1.0' ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+  <!--`cat "$BASEPATH/app/include/media_onenter.script"`-->
+	playlist_autoplay = 0;
+</onEnter>
+
+	<mediaDisplay name=photoView 
+	  columnCount=4 
+	  rowCount=5
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+		itemImageXPC="10"
+		backgroundColor="0:0:0"
+		imageBorderColor="15:20:230"
+		imageBorderPC="0"
+		itemBackgroundColor="0:0:0"
+		centerHeightPC=70
+		centerXPC=10
+		centerYPC=18
+		itemGapXPC=1
+		itemGapYPC=1
+		sideTopHeightPC=15
+		bottomYPC=90
+
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+
+		sliding=no
+		showHeader=no
+		showDefaultInfo=no
+		>
+
+    <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=26 backgroundColor=0:0:0 foregroundColor=200:200:200>
+      <script>getPageInfo("pageTitle");</script>
+    </text>
+    <image offsetXPC=0 offsetYPC=15 widthPC=100 heightPC=1>
+  		../etc/translate/rss/image/gradient_line.bmp
+  	</image>
+    <image offsetXPC=65 offsetYPC=2 widthPC=30 heightPC=12>
+      ../etc/translate/rss/image/gettune.png
+      <widthPC>
+        <script>
+          123 / 42 * 12 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          95 - 123 / 42 * 12 * screenYp / screenXp;
+        </script>
+      </offsetXPC>
+    </image>
+
+  <!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+		
+    <onUserInput>
+    <script>
+    ret = "false";
+    userInput = currentUserInput();
+    
+    if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+    {
+      itemSize = getPageInfo("itemCount");
+      idx = Integer(getFocusItemIndex());
+      if (userInput == "pagedown" || userInput == "PD")
+      {
+        idx -= -40;
+        if(idx &gt;= itemSize)
+          idx = itemSize-1;
+      }
+      else
+      {
+        idx -= 40;
+        if(idx &lt; 0)
+          idx = 0;
+      }
+      
+      print("new idx: "+idx);
+      setFocusItemIndex(idx);
+    	setItemFocus(0);
+      redrawDisplay();
+      ret = "true";
+    }
+    ret;
+    </script>
+    </onUserInput>
+    
+		<itemDisplay>
+			<text align="center" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 fontSize=20>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "150:150:150"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "0:0:0"; else "200:200:200";
+  				</script>
+			  </foregroundColor>
+			</text>
+		</itemDisplay>
+	</mediaDisplay>
+	
+	<item_template>
+    <mediaDisplay name="threePartsView">
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+    </mediaDisplay>
+    <onClick>
+      <script>
+         focus = getFocusItemIndex();
+         style = getItemInfo(focus, "style");
+         if(style == null || style == "") {
+          style = getItemInfo(focus, "title");
+         }
+          stream_url  = translate_base_url + "app/gettune/genre,"+style;
+          
+          streamArray = null;
+          streamArray = pushBackStringArray(streamArray, stream_url);
+          streamArray = pushBackStringArray(streamArray, style);
+          streamArray = pushBackStringArray(streamArray, "");
+          streamArray = pushBackStringArray(streamArray, "");
+          streamArray = pushBackStringArray(streamArray, "playlist");
+          streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+          streamArray = pushBackStringArray(streamArray, "All");
+          writeStringToFile(storagePath_playlist, streamArray);
+          doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+          null;
+      </script>
+    </onClick>	
+	</item_template>
+	
+	<channel>
+ 		<title>Жанры</title>
+
+		<item>
+			<title>Поп</title><style>Pop</style>
+		</item>
+		<item>
+			<title>Реп</title><style>Rap</style>
+		</item>
+		<item>
+			<title>Club</title>
+		</item>
+		<item>
+			<title>Dance</title>
+		</item>
+		<item>
+			<title>House</title>
+		</item>
+		<item>
+			<title>Trance</title>
+		</item>
+		<item>
+			<title>Electro</title>
+		</item>
+		<item>
+			<title>Disco</title>
+		</item>
+		<item>
+			<title>Метал</title><style>Metal</style>
+		</item>
+		<item>
+			<title>Рок</title><style>Rock</style>
+		</item>
+		<item>
+			<title>Панк</title><style>Punk</style>
+		</item>
+		<item>
+			<title>Классика</title><style>Classical</style>
+		</item>
+		<item>
+			<title>Опера</title><style>Opera</style>
+		</item>
+		<item>
+			<title>Country</title>
+		</item>
+		<item>
+			<title>Jazz</title>
+		</item>
+		<item>
+			<title>Blues</title>
+		</item>
+		<item>
+			<title>Шансон</title><style>Chanson</style>
+		</item>
+		<item>
+			<title>Ретро</title><style>Retro</style>
+		</item>
+  </channel>
+
+</rss>

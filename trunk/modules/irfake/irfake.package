@@ -1,0 +1,11 @@
+[irfake]
+	revision = 4
+	title = "IR Fake RC replacement v1.2.13"
+	role = patch
+	init = S41irfake
+	backup = "irfake/irfake.conf"
+	config_before = copy
+	config_after  = save
+	config_edit   = "irfake/irfake.conf"
+	files="etc/init/S41irfake irfake/"
+	size = 148

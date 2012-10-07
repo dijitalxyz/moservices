@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+
+<!-- Hot keys definition -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/hotKeys.tpl"}
+{$child = $mediaObj->getFirstChild()}
+{if $child != null and $child->getType() == $mediaObj->getType()}
+    {$hotKeys[0]["title"] = $child->getTitle()}
+    {$hotKeys[0]["url"]   = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
+{/if}
+
+{$hotKeys[1]["title"] = "{$locale->msg('Genres')}"}
+{$hotKeys[1]["url"]   = "{$config->get(cfg_processing_url,Runtime)}&amp;type=GENRE_LIST"}
+
+{$child = $mediaObj->getLastChild()}
+{if $child != null and $child->getType() == $mediaObj->getType()}
+    {$hotKeys[3]["title"] = $child->getTitle()}
+    {$hotKeys[3]["url"]   = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
+{/if}
+
+<onEnter>
+    executeScript("platformInit");
+    refreshInterval = 300;
+    detailsRefreshDelay = 11;
+    timeToRefresh = detailsRefreshDelay;
+    setRefreshTime(refreshInterval);
+</onEnter>
+
+<loadData>
+    link = getItemInfo("infolink");
+    dlok = loadXMLFile(link + "&amp;mode=xml");
+    if (dlok != null) {
+        item_descr   = getXMLText("SHOW_INFO", "description");
+        item_rating  = getXMLText("SHOW_INFO", "year");
+        item_details = getXMLText("SHOW_INFO", "genre");
+        seasons = getXMLText("SHOW_INFO", "seasons");
+        if (null != seasons &amp;&amp; seasons &gt; 1) {
+            item_details += " - {$locale->msg('Season')} 1-" + seasons;
+        }
+        etitle  = getXMLText("SHOW_INFO", "etitle");
+        if (null != etitle) {
+            item_details = etitle + " - " + item_details;
+        }
+    }
+</loadData>
+
+<onExit>
+    setRefreshTime(-1);
+</onExit>
+
+<!-- Method executed when the refreshtime times out  -->
+<onRefresh>
+    timeToRefresh = timeToRefresh - 1;
+    if (0 == timeToRefresh) {
+        setRefreshTime(-1);
+        executeScript("loadData");
+        redrawDisplay();
+    } 
+</onRefresh>
+
+
+<mediaDisplay name="photoView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    drawItemText="no"
+    rowCount="3"
+    columnCount="10"
+    itemOffsetXPC="1"
+    itemOffsetYPC="10"
+    itemWidthPC="8.85"
+    itemHeightPC="21.5"
+
+    itemBorderColor="{$config->get(bgFocus)}"
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    focusBorderColor="{$config->get(focusBorderColor)}"
+    unFocusBorderColor="{$config->get(unFocusBorderColor)}"
+    >
+    <onUserInput>
+        key = currentUserInput();
+        res = "false";
+
+        if ( 3 == 5 ) {
+            /* stub section, real logic comes from hot keys */
+        }
+        {call onHotKeyPress}
+
+        if ("true" == res) {
+            redrawDisplay();
+        } else if (key != keyEnter &amp;&amp; key != keyReturn) {
+            item_details = null;
+            item_rating  = null;
+            item_descr   = null;
+            setRefreshTime(-1);
+            timeToRefresh = detailsRefreshDelay;
+            setRefreshTime(refreshInterval);
+        }
+        res;
+    </onUserInput>
+
+    <!-- header -->
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+    <text redraw="yes" align="center" offsetXPC="0" offsetYPC="80" widthPC="100" heightPC="5"
+        foregroundColor="255:255:255" backgroundColor="60:60:60" fontSize="16">
+        <script>getItemInfo("title");</script>
+    </text>
+
+    <text redraw="yes" align="center" offsetXPC="2.2"  offsetYPC="87" widthPC="7.8" heightPC="8.6"
+        foregroundColor="255:255:255" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <script>Add(getFocusItemIndex(), 1) + "/" + getPageInfo("itemCount");</script>
+    </text>
+
+    <text redraw="yes" offsetXPC="10.2" offsetYPC="87" widthPC="78.8" heightPC="4.3"
+        foregroundColor="200:200:200" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <script>item_details;</script>
+    </text>
+    <text redraw="yes" offsetXPC="89" offsetYPC="87" widthPC="10" heightPC="4.3"
+        align="right" foregroundColor="200:200:200" backgroundColor="{$config->get(bgNormal)}" fontSize="15">
+        <script>item_rating + "   ";</script>
+    </text>
+    <text redraw="yes" offsetXPC="10.2" offsetYPC="91.3" widthPC="88.8" heightPC="4.3"
+        foregroundColor="130:130:130" backgroundColor="{$config->get(bgNormal)}" fontSize="15" lines="1">
+        <script>item_descr;</script>
+    </text>
+    <text redraw="yes" offsetXPC="20" offsetYPC="88.3" widthPC="60" heightPC="3"
+        backgroundColor="0:100:30" cornerRounding="5">
+        <widthPC><script>(timeToRefresh - 1) * 6;</script></widthPC>
+        <script>item_details;</script>
+    </text>
+    <!-- hot keys -->
+    {call displayHotKeys}
+
+
+{call getIdleImages}
+</mediaDisplay>
+
+{call getRssLink}
+
+<channel>
+{foreach $mediaObj->getChildren() as $child}
+{$link = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
+    <item>
+        <title>{$child->title}</title>
+        <type>{$child->type}</type>
+        <media:thumbnail>{$child->getParam(thumbnail)}</media:thumbnail>
+{if $child->type == "STREAM_URL"}
+        <enclosure url="{$link}&amp;mode=redirect" type="video/mp4" />
+{elseif $child->type == "SEARCH"}
+        <link>{$link}&amp;search={$child->getParam(search)}</link>
+{else}
+        <link>{$link}</link>
+{/if}
+        <infolink>{$child->getParam(infolink)}</infolink>
+    </item>
+{/foreach}
+</channel>
+</rss>

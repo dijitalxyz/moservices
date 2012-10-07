@@ -1,0 +1,130 @@
+#!/bin/sh
+#
+# description: Enable and disable moS on drive
+#
+etc=/usr/local/etc
+mos=$etc/mos
+
+#check to moS on drive
+checkMounted()
+{
+	m=
+	s="$( mount | grep '/usr/local/etc/mos' | cut -d ' ' -f 1 )"
+	for i in $s ; do
+		# check for root mounted
+		[ "$i" != '/dev/root' ] && m=$i
+	done
+
+	[ -z "$m" ] && return 1
+	return 0
+}
+
+case "$1" in
+  start)
+	checkMounted && exit 0
+	[ -f $etc/.mosOnDrive ] && exit 0
+
+	# restore services script
+	if [ -f $mos/services_orig ] ; then
+		rm -f $mos/services
+		mv -f $mos/services_orig $mos/services
+	fi
+	chmod -x $mos/etc/init/S47mosondrive
+	;;
+  stop)
+	;;
+
+  status)
+	if checkMounted ; then
+		echo "mosOnDrive is runnig"
+	else
+		echo "mosOnDrive is stopped"
+	fi
+	;;
+
+  enable)
+	if checkMounted ; then
+		echo "moS already moved on drive"
+		exit 0
+	fi
+
+	echo "Enabling moS on drive..."
+
+	disk=$2
+
+	if [ -z "$disk" ] ; then
+
+		for i in /tmp/usbmounts/* /tmp/hdd/root /tmp/hdd/volumes/HDD* /tmp/hddmedia/*; do
+			[ -d "$i" ] || continue
+			s="$( mount | grep $i | cut -d ' ' -f 5 )"
+			[ -z "$s" ] && continue
+
+			disk=$i
+			[ "$s" == 'ext3' ] && break
+		done
+	fi
+	[ -z "$disk" ] && exit
+
+	mount -o remount,rw $disk
+
+	# is ext3 partition ?
+	s="$( mount | grep $disk | cut -d ' ' -f 5 )"
+	if [ "$s" == 'ext3' ] ; then
+		#just directory
+		if [ ! -d $disk/.mos ] ; then
+			echo "Make moS directory on $disk..."
+			rm -Rf $disk/.mos
+			mkdir -p $disk/.mos
+			echo "Copy moS to directory..."
+			cp -a $mos/* $disk/.mos
+			sync
+		else
+			echo "moS directory on $disk already present..."
+		fi
+	else
+		# make image
+		if [ ! -e $disk/.mos ] ; then
+			echo "Make moS image on $disk..."
+			dd if=/dev/zero of=$disk/.mos bs=2048 count=262144 >/dev/null 2>&1
+			sync
+			mke2fs -F -q -j -m0 $disk/.mos
+			mkdir -p /tmp/mos_tmp
+			mount -o loop,rw $disk/.mos /tmp/mos_tmp
+		
+			echo "Copy moS to image..."
+			cp -a $mos/* /tmp/mos_tmp/
+			sync
+			umount /tmp/mos_tmp
+			rmdir /tmp/mos_tmp
+		else
+			echo "moS image on $disk already present..."
+		fi
+	fi
+
+	echo "Changing services script..."
+	[ -f $mos/services ] && [ ! -f $mos/services_orig ] && mv -f $mos/services $mos/services_orig
+	cp -a $mos/etc/services_drive $mos/services
+
+	# mount to mos
+	touch $etc/.mosOnDrive
+	if [ -d $disk/.mos ] ; then
+		echo "Mount to directory $disk/.mos..."
+		mount $disk/.mos $mos
+	else
+		echo "Mount to image $disk/.mos..."
+		mount -o loop,rw $disk/.mos $mos
+	fi
+	;;
+
+  disable)
+	echo "Disabling moS on drive..."
+	rm -f $etc/.mosOnDrive
+	sync
+	echo "Please, reboot player!..."
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

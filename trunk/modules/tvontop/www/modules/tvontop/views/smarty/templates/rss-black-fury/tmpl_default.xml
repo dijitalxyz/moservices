@@ -1,0 +1,33 @@
+{$count = 0}
+{$withThumbs = 0}
+{$parentParams = $mediaObj->getParams()|@count - 3}
+{$childParams = 0}
+
+{foreach $mediaObj->getChildren() as $child}
+    {$cp = $child->getParams()|@count - 3}
+    {if $childParams < $cp}
+        {$childParams = $cp}
+    {/if}
+    {$thumb = $child->getParam(thumbnail)}
+    {if isset($thumb) && "" != $thumb}
+        {$withThumbs = $withThumbs + 1}
+    {/if}
+    {$count = $count + 1}
+{/foreach}
+
+{function isParamOk}
+{if $param != "id" && $param != "type" && $param != "title" && $param != "servertime" && $value != ""}{"OK"}{/if}
+{/function}
+
+{function recalcParentParams}
+{$s = $p + $c}
+{if $s == 0}{$s = 1}{/if}
+{$s = $p * $length / $s}
+{$s|string_format:"%d"}
+{/function}
+
+{if $withThumbs > $count / 2 - 1}
+    {include file="{$config->get(activeTemplate,Runtime)}tmpl_default_thumb.xml"}
+{else}
+    {include file="{$config->get(activeTemplate,Runtime)}tmpl_default_no_thumb.xml"}
+{/if}

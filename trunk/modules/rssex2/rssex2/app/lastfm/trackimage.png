@@ -1,0 +1,150 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Title: artist_title - track_title
+# Title: artist_title-track_title
+# Title: track_title (artist_title)
+
+# Size: small|smallsquare|medium|mediumsquare|large|largesquare|mega|original
+
+local DATAPATH=$BASEPATH/app/lastfm
+cd $DATAPATH
+
+local LASTFMFILE=$TMPFILE.lastfm
+
+get_opt "Title"
+local tracktitle=$opt
+
+gettracktitle() 
+{
+  echo -n $tracktitle | awk '{
+      if(match($0, /(^[^-—(]+) *[-—]+ *([^(]+)/, arr)) {
+        gsub(/(^ +| +$)/, "", arr[1]);
+        gsub(/(^ +| +$)/, "", arr[2]);
+      	print arr[1];
+      	print arr[2];
+      }
+      else
+      if(match($0, /(^[^(]+) *\(([^)]+) */, arr)) {
+        gsub(/(^ +| +$)/, "", arr[1]);
+        gsub(/(^ +| +$)/, "", arr[2]);
+      	print arr[1];
+      	print arr[2];
+      }
+      else {
+        gsub(/(^ +| +$)/, "", $0);
+      	print;
+      	print "";
+      }
+  }' | sed 's/ /+/g;s/\//%5C/g'
+}
+
+local artist=$(gettracktitle | sed -n '1p')
+local track=$(gettracktitle | sed -n '2p')
+
+local request="http://www.last.fm/music/$artist
+#/_/$track"
+
+get_opt "Size"
+local size=largesquare
+case $opt in
+  small|smallsquare|medium|mediumsquare|large|largesquare|mega|original)
+    size=$opt
+    ;;
+esac
+
+get_opt "Clear-cache"
+local clear=
+case $opt in
+    0|no|No|NO)
+        clear=
+    ;;
+    1|yes|Yes|YES)
+        clear=1
+    ;;
+esac
+
+local imageurl=
+local type=
+local buf=
+local defaultimage=
+
+get_opt "Def"
+if [ "$opt" = "AR" ]; then
+  defaultimage=$(sed -n '11p' $CACHEPATH/stream.dat)
+else
+  defaultimage=$opt
+fi
+
+trackimage_loadImage()
+{
+  local imageurl="$1"
+  if expr "$imageurl" : '\..*' > /dev/null; then
+    imageurl="/usr/local/bin/$imageurl"
+  fi
+  if [ -f "$imageurl" ]; then
+    cp "$imageurl" "$LASTFMFILE"
+    local ext=$(echo "$imageurl" | sed 's/\./\n/g' | sed -n '$p')
+    type=image/$ext
+  else
+    buf=$($MSDL --debug -o "$LASTFMFILE" -p http --useragent "$USERAGENT" "$1" 2>&1)
+    if [ -f "$LASTFMFILE" ]; then
+      type=$(echo "$buf" | sed -n '/^[cC]ontent[ -][tT]ype/p' | sed -n '$p' | awk '{ match($0, /[ ;:]+([a-z]+\/[a-z\-]+)[ ;]*.*$/, arr); print arr[1]}')
+    else
+      cp "empty.png" "$LASTFMFILE"
+      type="image/png"
+    fi
+  fi
+}
+
+buf=$($MSDL -q -o "$LASTFMFILE" -p http --useragent "$USERAGENT" "$request" 2>&1)
+
+if [ -f "$LASTFMFILE" ]; then
+
+#  [ -n "$clear" ] && rm -f /tmp/cached/*_trackimage.png 2>&1 > /dev/null
+  
+  imageurl=`grep LFM.set\(\"Par "$LASTFMFILE" | sed "s/.*image\":{//;s/},.*//;s/.*\"$size\":\"//;s/\".*//;" | sed 's/\\\//g'`
+  rm -f "$LASTFMFILE"
+  
+  buf=$($MSDL --debug -o "$LASTFMFILE" -p http --useragent "$USERAGENT" "$imageurl" 2>&1)
+  if [ -f "$LASTFMFILE" ]; then
+    type=$(echo "$buf" | sed -n '/^[cC]ontent[ -][tT]ype/p' | sed -n '$p' | awk '{ match($0, /[ ;:]+([a-z]+\/[a-z\-]+)[ ;]*.*$/, arr); print arr[1]}')
+    rm -f "$LASTFMFILE"
+    head301()
+    {
+      echo "HTTP/1.0 301 Moved permanently"
+      echo "Content-type: $type"
+      echo "Location: $imageurl"
+      echo "Pragma: no-cache"
+      echo "Connection: close"
+      echo
+    }
+    head301 >$TMPFILE
+    exec nph-translate $TMPFILE
+  else
+    trackimage_loadImage "$defaultimage"
+  fi
+else
+  trackimage_loadImage "$defaultimage"
+fi
+
+printContent "$type" "$LASTFMFILE"
+
+
+

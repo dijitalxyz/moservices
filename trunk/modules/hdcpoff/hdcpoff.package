@@ -1,0 +1,8 @@
+[hdcpoff]
+	revision = 1
+	title = "Hdcp Off"
+	role = patch
+	init = S04HdcpOff
+	actions = "restart"
+	files="etc/init/S04HdcpOff"
+	size = 40

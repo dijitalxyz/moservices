@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/">
+   <title>SKY.fm</title>
+   <trackList>
+      <track>
+         <location>http://listen.sky.fm/public1/dreamscapes.pls</location>
+         <title>Dreamscapes</title>
+         <annotation>Relax to the sounds of dream and ibiza style chillout.</annotation>
+         <image>../etc/translate/rss/image/skyfm/dreamscapes.gif</image>
+         <meta rel="genre">Electronic Chillout Dream</meta>
+         <meta rel="url">http://www.sky.fm/dreamscapes</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_dreamscapes_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Dreamscapes - S K Y . F M - relax to the sounds of dream and ibiza style chillout</meta>
+<meta rel="stream_genre">Electronic Chillout Dream</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/vocalsmoothjazz.pls</location>
+         <title>Vocal Smooth Jazz</title>
+         <annotation>The best of vocal smooth jazz!!</annotation>
+         <image>../etc/translate/rss/image/skyfm/vocalsmoothjazz.gif</image>
+         <meta rel="genre">Jazz Smooth Vocals</meta>
+         <meta rel="url">http://www.sky.fm/vocalsmoothjazz/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_vocalsmoothjazz_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Vocal Smooth Jazz - S K Y . F M - The best of vocal smooth jazz!!</meta>
+<meta rel="stream_genre">Jazz Smooth Vocals</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/romantica.pls</location>
+         <title>Romantica</title>
+         <annotation>Timeless pop classical voices!</annotation>
+         <image>../etc/translate/rss/image/skyfm/romantica.gif</image>
+         <meta rel="genre">Opera Classical Pop</meta>
+         <meta rel="url">http://www.sky.fm/romantica/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_romantica_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Romantica - S K Y . F M - Timeless pop classical voices!</meta>
+<meta rel="stream_genre">Opera Classical Pop</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/indierock.pls</location>
+         <title>Indie Rock</title>
+         <annotation>Indie, Alternative, and Underground Rock!</annotation>
+         <image>../etc/translate/rss/image/skyfm/indierock.gif</image>
+         <meta rel="genre">Indie Rock Alternative</meta>
+         <meta rel="url">http://www.sky.fm/indierock/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_indierock_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Indie Rock - S K Y . F M - Indie, Alternative, and Underground Rock!</meta>
+<meta rel="stream_genre">Indie Rock Alternative</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/poppunk.pls</location>
+         <title>Pop Punk</title>
+         <annotation>A fusion of Punk and Pop!</annotation>
+         <image>../etc/translate/rss/image/skyfm/poppunk.gif</image>
+         <meta rel="genre">Punk Rock Pop</meta>
+         <meta rel="url">http://www.sky.fm/poppunk/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_poppunk_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Pop Punk - S K Y . F M - A fusion of Punk and Pop!</meta>
+<meta rel="stream_genre">Punk Rock Pop</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/jpop.pls</location>
+         <title>Jpop</title>
+         <annotation>A fine assortment of fresh Jpop hits!!</annotation>
+         <image>../etc/translate/rss/image/skyfm/jpop.gif</image>
+         <meta rel="genre">Jpop Japan Pop</meta>
+         <meta rel="url">http://www.sky.fm/jpop/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_jpop_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Jpop - S K Y . F M - A fine assortment of fresh Jpop hits!!</meta>
+<meta rel="stream_genre">Jpop Japan Pop</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/smoothjazz.pls</location>
+         <title>Absolutely Smooth Jazz</title>
+         <annotation>The world's smoothest jazz 24 hours a day.</annotation>
+         <image>../etc/translate/rss/image/skyfm/smoothjazz.gif</image>
+         <meta rel="genre">Soft Smooth Jazz</meta>
+         <meta rel="url">http://www.sky.fm/smoothjazz/</meta>
+      
+<meta rel="stream_url">http://u17b.sky.fm:80/sky_smoothjazz_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Absolutely Smooth Jazz - S K Y . F M - the world's smoothest jazz 24 hours a day</meta>
+<meta rel="stream_genre">Soft Smooth Jazz</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/uptemposmoothjazz.pls</location>
+         <title>Uptempo Smooth Jazz</title>
+         <annotation>The world's smoothest jazz, grooving 24 hours a day.</annotation>
+         <image>../etc/translate/rss/image/skyfm/uptemposmoothjazz.gif</image>
+         <meta rel="genre">Uptempo Smooth Jazz</meta>
+         <meta rel="url">http://www.sky.fm/uptemposmoothjazz/</meta>
+      
+<meta rel="stream_url">http://u17b.sky.fm:80/sky_uptemposmoothjazz_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Uptempo Smooth Jazz - S K Y . F M - the world's smoothest jazz, grooving 24 hours a day</meta>
+<meta rel="stream_genre">Uptempo Smooth Jazz</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/tophits.pls</location>
+         <title>Top Hits Music</title>
+         <annotation>Who cares about the chart order, less rap &amp; more hits!</annotation>
+         <image>../etc/translate/rss/image/skyfm/tophits.gif</image>
+         <meta rel="genre">Pop Top 40 Dance Rock</meta>
+         <meta rel="url">http://www.sky.fm/tophits/</meta>
+      
+<meta rel="stream_url">http://u17b.sky.fm:80/sky_tophits_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Top Hits Music - S K Y . F M - who cares about the chart order, less rap &amp; more hits!</meta>
+<meta rel="stream_genre">Pop Top 40 Dance Rock</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/the80s.pls</location>
+         <title>80s, 80s, 80s!</title>
+         <annotation>Hear your classic favorites right here!</annotation>
+         <image>../etc/translate/rss/image/skyfm/the80s.gif</image>
+         <meta rel="genre">80s Pop Rock Decades</meta>
+         <meta rel="url">http://www.sky.fm/the80s/</meta>
+      
+<meta rel="stream_url">http://u17b.sky.fm:80/sky_the80s_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">80s, 80s, 80s! - S K Y . F M - Hear your classic favorites right here! (www.sky.fm)</meta>
+<meta rel="stream_genre">80s Pop Rock Decades</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/hit70s.pls</location>
+         <title>All Hit 70s</title>
+         <annotation>All Hits, All The Time!</annotation>
+         <image>../etc/translate/rss/image/skyfm/hit70s.gif</image>
+         <meta rel="genre">70s Hits Oldies Decades</meta>
+         <meta rel="url">http://www.sky.fm/hit70s/</meta>
+      
+<meta rel="stream_url">http://u17b.sky.fm:80/sky_hit70s_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">All Hit 70s - S K Y . F M - All Hits, All The Time!</meta>
+<meta rel="stream_genre">70s Hits Oldies Decades</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/oldies.pls</location>
+         <title>Oldies - The 50s, 60s, &amp; 70s</title>
+         <annotation>Three decades of great oldies on www.sky.fm</annotation>
+         <image>../etc/translate/rss/image/skyfm/oldies.gif</image>
+         <meta rel="genre">Decades Oldies 60s 70s</meta>
+         <meta rel="url">http://www.sky.fm/oldies</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_oldies_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Oldies - The 50s, 60s, &amp; 70s - S K Y . F M - three decades of great oldies on www.sky.fm</meta>
+<meta rel="stream_genre">Decades Oldies 60s 70s</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/classical.pls</location>
+         <title>Mostly Classical</title>
+         <annotation>Listen and Relax, it's good for you!</annotation>
+         <image>../etc/translate/rss/image/skyfm/classical.gif</image>
+         <meta rel="genre">classical easy symphonic</meta>
+         <meta rel="url">http://www.sky.fm</meta>
+      
+<meta rel="stream_url">http://u17b.sky.fm:80/sky_classical_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Mostly Classical - S K Y . F M - Listen and Relax, it's good for you! www.sky.fm</meta>
+<meta rel="stream_genre">classical easy symphonic</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/guitar.pls</location>
+         <title>Classical &amp; Flamenco Guitar</title>
+         <annotation>A mix of classical, spanish, and flamenco guitar.</annotation>
+         <image>../etc/translate/rss/image/skyfm/guitar.gif</image>
+         <meta rel="genre">Flamenco Classical Guitar</meta>
+         <meta rel="url">http://www.sky.fm/guitar/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_guitar_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Classical &amp; Flamenco Guitar - S K Y . F M - a mix of classical, spanish, and flamenco guitar</meta>
+<meta rel="stream_genre">Flamenco Classical Guitar</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/solopiano.pls</location>
+         <title>Solo Piano</title>
+         <annotation>Musical journeys with piano masters and talented undiscovered pianists.</annotation>
+         <image>../etc/translate/rss/image/skyfm/solopiano.gif</image>
+         <meta rel="genre">Piano Classical New Age</meta>
+         <meta rel="url">http://www.sky.fm/piano/</meta>
+      
+<meta rel="stream_url">http://u16.sky.fm:80/sky_solopiano_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Solo Piano - S K Y . F M - Musical journeys with piano masters and talented undiscovered pianists</meta>
+<meta rel="stream_genre">Piano Classical New Age</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/newage.pls</location>
+         <title>New Age</title>
+         <annotation>Soothing sounds of new age and world music!</annotation>
+         <image>../etc/translate/rss/image/skyfm/newage.gif</image>
+         <meta rel="genre">New Age World</meta>
+         <meta rel="url">http://www.sky.fm/newage/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_newage_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">New Age - S K Y . F M - soothing sounds of new age and world music!</meta>
+<meta rel="stream_genre">New Age World</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/world.pls</location>
+         <title>World Music</title>
+         <annotation>Thanks for listening, visit us at www.sky.fm!</annotation>
+         <image>../etc/translate/rss/image/skyfm/world.gif</image>
+         <meta rel="genre">World New Age Newage</meta>
+         <meta rel="url">http://www.sky.fm/world</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_world_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">World Music - S K Y . F M - thanks for listening, visit us at www.sky.fm!</meta>
+<meta rel="stream_genre">World New Age Newage</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/rootsreggae.pls</location>
+         <title>Roots Reggae</title>
+         <annotation>The best of classic and modern Roots Reggae with DJ Bahilman</annotation>
+         <image>../etc/translate/rss/image/skyfm/rootsreggae.gif</image>
+         <meta rel="genre">Roots Reggae Island World</meta>
+         <meta rel="url">http://www.sky.fm/rootsreggae/</meta>
+      
+<meta rel="stream_url">http://u17b.sky.fm:80/sky_rootsreggae_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Roots Reggae - S K Y . F M - the best of classic and modern Roots Reggae with DJ Bahilman</meta>
+<meta rel="stream_genre">Roots Reggae Island World</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/datempolounge.pls</location>
+         <title>Datempo Lounge</title>
+         <annotation>Amazing combination of jazz, lounge, bossa, and much more!</annotation>
+         <image>../etc/translate/rss/image/skyfm/datempolounge.gif</image>
+         <meta rel="genre">Lounge Downtempo Eclectic</meta>
+         <meta rel="url">http://www.sky.fm/datempolounge/</meta>
+      
+<meta rel="stream_url">http://u17b.sky.fm:80/sky_datempolounge_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Datempo Lounge - S K Y . F M - amazing combination of jazz, lounge, bossa, and much more!</meta>
+<meta rel="stream_genre">Lounge Downtempo Eclectic</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/pianojazz.pls</location>
+         <title>Piano Jazz</title>
+         <annotation>Enjoy the sounds of piano jazz from historic and modern masters.</annotation>
+         <image>../etc/translate/rss/image/skyfm/pianojazz.gif</image>
+         <meta rel="genre">Jazz Piano Classical</meta>
+         <meta rel="url">http://www.sky.fm/pianojazz/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_pianojazz_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Piano Jazz - S K Y . F M - Enjoy the sounds of piano jazz from historic and modern masters.</meta>
+<meta rel="stream_genre">Jazz Piano Classical</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/country.pls</location>
+         <title>Country</title>
+         <annotation>Today's Hit Country with a mix of your favorites.</annotation>
+         <image>../etc/translate/rss/image/skyfm/country.gif</image>
+         <meta rel="genre">Country New Country Top 40</meta>
+         <meta rel="url">http://www.sky.fm/country/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_country_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Country - S K Y . F M - today's Hit Country with a mix of your favorites</meta>
+<meta rel="stream_genre">Country New Country Top 40</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/bossanova.pls</location>
+         <title>Bossa Nova Jazz</title>
+         <annotation>100% pure bossa nova channel, enjoy the sweet flavors of Brazil!</annotation>
+         <image>../etc/translate/rss/image/skyfm/bossanova.gif</image>
+         <meta rel="genre">Bossa Nova Jazz</meta>
+         <meta rel="url">http://www.sky.fm/bossanova/</meta>
+      
+<meta rel="stream_url">http://u17b.sky.fm:80/sky_bossanova_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Bossa Nova Jazz - S K Y . F M - 100% pure bossa nova channel, enjoy the sweet flavors of Brazil!</meta>
+<meta rel="stream_genre">Bossa Nova Jazz</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/altrock.pls</location>
+         <title>Alternative Rock</title>
+         <annotation>Alternative rock hits You want to hear!!</annotation>
+         <image>../etc/translate/rss/image/skyfm/altrock.gif</image>
+         <meta rel="genre">Alternative Rock Adult Hits</meta>
+         <meta rel="url">http://www.sky.fm/altrock/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_altrock_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Alternative Rock - S K Y . F M - Alternative rock hits You want to hear!!</meta>
+<meta rel="stream_genre">Alternative Rock Adult Hits</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/classicrock.pls</location>
+         <title>Classic Rock</title>
+         <annotation>Relive the classic rock sounds of the 70s and 80s.</annotation>
+         <image>../etc/translate/rss/image/skyfm/classicrock.gif</image>
+         <meta rel="genre">Classic Rock 70s 80s</meta>
+         <meta rel="url">http://www.sky.fm/classicrock/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_classicrock_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Classic Rock - S K Y . F M - relive the classic rock sounds of the 70s and 80s</meta>
+<meta rel="stream_genre">Classic Rock 70s 80s</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/bebop.pls</location>
+         <title>Bebop</title>
+         <annotation>Swinging to the sounds of bebop and straight ahead jazz.</annotation>
+         <image>../etc/translate/rss/image/skyfm/bebop.gif</image>
+         <meta rel="genre">Jazz Bebop Swing</meta>
+         <meta rel="url">http://www.sky.fm/bebop</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_bebop_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Bebop - S K Y . F M - swinging to the sounds of bebop and straight ahead jazz</meta>
+<meta rel="stream_genre">Jazz Bebop Swing</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/soundtracks.pls</location>
+         <title>Simply Soundtracks</title>
+         <annotation>A wide variety of Soundtracks from Movies, show themes, &amp; more!</annotation>
+         <image>../etc/translate/rss/image/skyfm/soundtracks.gif</image>
+         <meta rel="genre">Soundtracks Film Classical</meta>
+         <meta rel="url">http://www.sky.fm/soundtracks/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_soundtracks_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Simply Soundtracks - S K Y . F M - a wide variety of Soundtracks from Movies, show themes, &amp; more!</meta>
+<meta rel="stream_genre">Soundtracks Film Classical</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/christian.pls</location>
+         <title>Contemporary Christian</title>
+         <annotation>Today's Christian favorites and undiscovered hits.</annotation>
+         <image>../etc/translate/rss/image/skyfm/christian.gif</image>
+         <meta rel="genre">Christian Pop Spiritual</meta>
+         <meta rel="url">http://www.sky.fm/christian/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_christian_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Contemporary Christian - S K Y . F M - today's Christian favorites and undiscovered hits</meta>
+<meta rel="stream_genre">Christian Pop Spiritual</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/classicrap.pls</location>
+         <title>Classic Rap &amp; Hip Hop</title>
+         <annotation>Thanks for listening, check us out at www.sky.fm</annotation>
+         <image>../etc/translate/rss/image/skyfm/classicrap.gif</image>
+         <meta rel="genre">Hip Hop Rap Old School</meta>
+         <meta rel="url">http://www.sky.fm/classicrap</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_classicrap_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Classic Rap &amp; Hip Hop - S K Y . F M - thanks for listening, check us out at www.sky.fm</meta>
+<meta rel="stream_genre">Hip Hop Rap Old School</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/salsa.pls</location>
+         <title>Salsa</title>
+         <annotation>Best Salsa Collection now on www.sky.fm</annotation>
+         <image>../etc/translate/rss/image/skyfm/salsa.gif</image>
+         <meta rel="genre">Latin Salsa</meta>
+         <meta rel="url">http://www.sky.fm/salsa/</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_salsa_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">SALSASTREAM - S K Y . F M - Best Salsa Collection now on www.sky.fm</meta>
+<meta rel="stream_genre">Latin Salsa</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/dancehits.pls</location>
+         <title>Dance Hits</title>
+         <annotation>The hottest dance tunes 24/7.</annotation>
+         <image>../etc/translate/rss/image/skyfm/dancehits.gif</image>
+         <meta rel="genre">Dance Club Pop</meta>
+         <meta rel="url">http://www.sky.fm/dance</meta>
+      
+<meta rel="stream_url">http://u17b.sky.fm:80/sky_dancehits_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Dance Hits - S K Y . F M - the hottest dance tunes 24/7</meta>
+<meta rel="stream_genre">Dance Club Pop</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.sky.fm/public1/urbanjamz.pls</location>
+         <title>Urban Jamz</title>
+         <annotation>Kickin' with the baddest beats on the 'net.</annotation>
+         <image>../etc/translate/rss/image/skyfm/urbanjamz.gif</image>
+         <meta rel="genre">Urban RnB Hip Hop Rap</meta>
+         <meta rel="url">http://www.sky.fm/urbanjamz</meta>
+      
+<meta rel="stream_url">http://u17.sky.fm:80/sky_urbanjamz_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Urban Jamz - S K Y . F M - Kickin' with the baddest beats on the 'net (www.sky.fm)</meta>
+<meta rel="stream_genre">Urban RnB Hip Hop Rap</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+   </trackList>
+</playlist>

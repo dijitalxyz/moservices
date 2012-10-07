@@ -1,0 +1,6 @@
+[ipla]
+	revision = 1
+	title ="Polish IPTV ipla.tv"
+	role = rss
+	files="www/modules/ipla/"
+	size = 1044

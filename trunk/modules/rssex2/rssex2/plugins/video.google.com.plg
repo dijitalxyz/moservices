@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+#
+# Translate CGI module
+# 'video.google.com' plug-in
+#
+# version: 1.0 13.08.2010 16:54
+#
+# http://video.google.com/videoplay?docid=2280674843398367096
+#
+
+stream_type='video/x-flv'
+stream_url=''
+server_type='google'
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -q -s 'video\.google\.com/.*docid=..*$'; then 
+
+  local video_id=`echo "$arg_url" | sed -e 's/.*[?&]docid=//;s/[&#].*//g'`
+
+  host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "http://video.google.com/docinfo?{\"docid\":\"$video_id\",\"source\":1,\"autoplay\":true,\"hl\":\"ru\",\"title_len\":128,\"desc_len\":1024}" 2>&1`
+  
+  if [ -f ${TMPFILE} ]; then
+    stream_url=`sed 's/.*"streamer_url":"//;s/","docid.*//' ${TMPFILE} | unidecode`
+    protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+    icy_name=`sed 's/.*"short_title":"//;s/","short_.*//;s/\\\"/"/g' ${TMPFILE}`
+    rm -f $TMPFILE
+  fi
+  return $RC_OK
+
+fi
+
+return $RC_FAIL

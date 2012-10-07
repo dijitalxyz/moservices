@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# 
+# Translate CGI module
+# 'zaycev.net' plug-in
+#
+# version: 1.0 01.02.2011 19:23:14
+#
+# http://zaycev.net/pages/4917/491731.shtml
+#
+
+if echo "${arg_url}" | grep -q -s '\(www\.\)*zaycev\.net/pages/[0-9]*/[0-9]*\.shtml$'; then 
+    stream_type='audio/mpeg'
+    stream_url=`echo $arg_url | sed 's/.*\/pages\//http:\/\/dl.zaycev.net\/mini\//;s/shtml$/mp3/'`
+    protocol="http"
+    host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>&1`
+    if [ -f ${TMPFILE} ]; then
+        icy_name=`grep -i "<title>" ${TMPFILE} | $TOUTF8 | sed 's/.*<title>//;s/ *скачать.*//'`
+        rm -f $TMPFILE
+    fi  
+  fi
+  return $RC_OK
+fi
+
+return $RC_FAIL
+
+#http://dl2.zaycev.net/c7882f6e-e5f8-460b-a268-4b346256548d/4017/401765/madness_-_i_chase_the_devil_a.k.a._ironshirt.mp3

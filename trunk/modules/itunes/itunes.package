@@ -1,0 +1,12 @@
+[itunes]
+	revision= 1
+	title = "iTunes server"
+	role = daemon
+	check = "port 5353"
+	init = S21itunes
+	backup = "itunes/mt-daapd.conf"
+	navy_title = "manage iTunes server"
+	navy_frame = "http://%addr%:3689"
+	config_edit = "itunes/mt-daapd.conf"
+	files="etc/init/S21itunes itunes/"
+	size = 752

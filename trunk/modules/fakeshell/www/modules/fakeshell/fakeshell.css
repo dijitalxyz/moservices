@@ -1,0 +1,50 @@
+/* fake shell by mavvy */
+
+body {
+	color:#bbbbbb;
+	background-color:#000000;
+	font-size:8pt;
+	margin:0px;
+}
+
+p {	margin: 0 0 15px 0; }
+
+a {
+	color:#000000;
+	text-decoration:none;
+}
+
+a:hover { text-decoration:underline; }
+
+input, pre {
+	font-family:Fixedsys;
+	color:#bbbbbb;
+	background-color:#000000;
+	border:0px;
+}
+
+#shell, #diskinfo {
+	font-family:Fixedsys;
+	color:#bbbbbb;
+	background-color:#000000;
+	border:0px;
+	margin-top:10px;
+}
+
+#tabs {
+	font-family:Fixedsys;
+	color:#000000;
+	text-transform:uppercase;
+	background:#bbbbbb;
+}
+
+#tabs ul {
+	margin:0;
+	padding:5px 0 5px 0;
+}
+	
+#tabs li {
+	display:inline;
+	padding:0 5px 0 5px;
+	border-right:1px solid #000000;
+}

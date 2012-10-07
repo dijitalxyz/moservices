@@ -1,0 +1,6 @@
+[gmonitor]
+	revision = 1
+	title ="System monitoring"
+	role = web
+	files="www/modules/gmonitor/"
+	size = 284

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>Internet Video</title>
+
+  <trackList>
+    <track>
+      <link>rss_file://../etc/translate/rss/rutube/rutube_categories.rss</link>
+      <title>RuTube</title>
+      <annotation>На RuTube Вы всегда сможете найти интересные ролики, новые клипы, anime и другое интересное видео.</annotation>
+      <image>../etc/translate/rss/image/menu/rutube.png</image>
+      <meta rel="mediaDisplay">threePartsView</meta>
+    </track>
+    <track>
+      <link>rss_file://../etc/translate/rss/youtube/yt_index.rss</link>
+      <title>YouTube</title>
+      <annotation>Founded in February 2005, YouTube is the world's most popular online video community, allowing millions of people to discover, watch and share originally-created videos.</annotation>
+      <image>../etc/translate/rss/image/menu/youtube.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>rss_file://../etc/translate/rss/24video/24video.rss</link>
+      <title>24video.net</title>
+      <annotation>24video.net - видеоролики на любой вкус.</annotation>
+      <image>../etc/translate/rss/image/menu/24video.jpg</image>
+      <meta rel="mediaDisplay">threePartsView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:2;Start:first;File:etc/menu/tvigle-index.xspf,collection/simplemenu</link>
+      <title>Tvigle</title>
+      <annotation>Tvigle Media — медиакомпания нового поколения, производитель и дистрибьютор профессионального развлекательного видеоконтента для New Media: интернета, мобильных сетей, цифровых телеканалов.</annotation>
+      <image>../etc/translate/rss/image/menu/tvigle.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/ivi/index</link>
+      <title>Ivi</title>
+      <annotation>ivi.ru - первый в России бесплатный видеосервис с лицензионным полнометражным контентом. ivi.ru - это, пожалуй, самая большая коллекция лицензионного видео российского интернета.</annotation>
+      <image>../etc/translate/rss/image/menu/ivi.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>rss_file://../etc/translate/rss/music_ivi/index.rss</link>
+      <title>Ivi MUSIC</title>
+      <annotation>Смотрите онлайн новые видеоклипы популярных российских и зарубежных исполнителей бесплатно и без регистрации. Все музыкальные новинки на music.ivi.ru!</annotation>
+      <image>../etc/translate/rss/image/menu/ivi.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>rss_file://../etc/translate/rss/zoomby/music_index.rss</link>
+      <title>Zoomby MUSIC</title>
+      <annotation>Смотрите музыкальные видеоклипы на zoomby.ru!</annotation>
+      <image>../etc/translate/rss/image/menu/zoomby.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/onehd/index</link>
+      <title>OneHD</title>
+      <annotation>ONE HD - Online Network Entertainment - Romania. Bun venit pe site-ul ONE HD! - Prima televiziune online HD. Качественные концертные записи на любой вкус.</annotation>
+      <image>../etc/translate/rss/image/menu/onehd.png</image>
+      <meta rel="mediaDisplay">photoView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Size:3;Start:first;File:etc/menu/mosfilm-index.xspf,collection/simplemenu</link>
+      <title>Золотая коллекция</title>
+      <annotation>Официальный информационный портал ФГУП «Киноконцерн «Мосфильм». 1999-2011 Mosfilm © просмотр онлайн фильмов</annotation>
+      <image>../etc/translate/rss/image/menu/mosfilm.jpg</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/uravo/index</link>
+      <title>URAVO.TV</title>
+      <annotation>Интернет-кинотеатр. 2008–2011 © URAVO Group</annotation>
+      <image>../etc/translate/rss/image/menu/uravo.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/menu/tv-other.xspf,collection/menulist</link>
+      <title>Other</title>
+      <annotation>Разные списки интернет-телевидения</annotation>
+      <image>../etc/translate/rss/image/menu/internettv.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+  </trackList>
+
+</playlist>

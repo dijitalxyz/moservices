@@ -1,0 +1,326 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=onePartView
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemImageXPC="22"
+	itemImageYPC="18"
+	itemXPC="35"
+	itemYPC="18"
+	capXPC="88"
+	capYPC="17"
+	capHeightPC="10"
+	headerCapXPC="90"
+	headerCapYPC="10"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	showHeader=no
+	menuXPC=5
+	menuYPC=20
+	menuWidthPC=15
+	menuHeightPC=10
+    selectMenuOnRight=no
+    forceFocusOnItem=yes
+    forceFocusOnMenu=no
+	showDefaultInfo=yes
+	infoYPC=90
+	fontSize=18
+>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1 backgroundColor=255:255:255 >
+		../etc/translate/rss/image/gradient_line.bmp
+  </image>
+  <image offsetXPC=80 offsetYPC=3 widthPC=15 heightPC=6>
+    <script>pageLogo;</script>
+    <widthPC>
+      <script>
+        185 * 6 / 24 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 185 * 6 / 24 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+  </image>
+
+    <text offsetXPC=10 offsetYPC=85 widthPC=10 heightPC=5 fontSize=20 backgroundColor=0:0:0 foregroundColor=100:100:100>
+      <script>elapsedTime;</script>
+    </text>
+    <text offsetXPC=20 offsetYPC=85 widthPC=70 heightPC=5 fontSize=14 backgroundColor=0:0:0 foregroundColor=100:100:100>
+      <script>playTitle;</script>
+    </text>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      if (userInput == "pagedown" || userInput == "pageup")
+      {
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -5;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 5;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      else if(majorContext == "items" &amp;&amp; userInput == "right")
+      {
+        ret = "true";
+      }
+      ret;
+    </script>
+  </onUserInput>
+
+</mediaDisplay>
+
+<onExit>
+  playItemURL(-1, 1);
+  setRefreshTime(-1);
+</onExit>
+
+<onEnter>
+  print("zoomby_index::onEnter start");
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  storagePath = getStoragePath("tmp");
+  storagePath  = storagePath + "zoomby.dat";
+
+  pageLogo = "../etc/translate/rss/image/zoomby.jpg";
+  pageTitle = "ZOOMBY.RU/MUSIC"
+
+</onEnter>
+
+<onRefresh>
+</onRefresh>
+
+  <item_template>
+   <displayTitle>
+      <script>
+	tit=getItemInfo(-1, "title");
+        tit;
+      </script>
+   </displayTitle>
+<!--
+   <media:thumbnail>
+   </media:thumbnail>
+-->
+    <mediaDisplay name=theePartsView
+		    sideLeftWidthPC = 0
+		    sideRightWidthPC = 0
+		    backgroundColor="0:0:0">
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    </mediaDisplay>
+	<!--
+	<link>rss_file://../etc/translate/rss/xspf/streamPlayer.rss</link>
+	-->
+    <onClick>
+	idx   = getFocusItemIndex();
+	title = getItemInfo(idx,"title");
+	url   = getItemInfo(idx,"location");
+	arr = null;
+	arr = pushBackStringArray(arr, title);
+	arr = pushBackStringArray(arr, url);
+	writeStringToFile(storagePath, arr);
+    </onClick>
+    <link>rss_file://../etc/translate/rss/zoomby/music_alphabet.rss</link>
+  </item_template>
+
+<channel>
+  <title>ZOOMBY.RU/MUSIC/GENRES</title>
+  <item>
+   <title>Альтернатива</title>
+   <location>http://www.zoomby.ru/music/genres/alternative</location>
+  </item>
+  <item>
+   <title>Блюз</title>
+   <location>http://www.zoomby.ru/music/genres/blues</location>
+  </item>
+  <item>
+   <title>Бритпоп</title>
+   <location>http://www.zoomby.ru/music/genres/britpop</location>
+  </item>
+  <item>
+   <title>Грандж</title>
+   <location>http://www.zoomby.ru/music/genres/grunge</location>
+  </item>
+  <item>
+   <title>Джаз</title>
+   <location>http://www.zoomby.ru/music/genres/jazz</location>
+  </item>
+  <item>
+   <title>Инди</title>
+   <location>http://www.zoomby.ru/music/genres/indie</location>
+  </item>
+  <item>
+   <title>Кантри</title>
+   <location>http://www.zoomby.ru/music/genres/country</location>
+  </item>
+  <item>
+   <title>Классическая</title>
+   <location>http://www.zoomby.ru/music/genres/classical</location>
+  </item>
+  <item>
+   <title>Латино</title>
+   <location>http://www.zoomby.ru/music/genres/latin</location>
+  </item>
+  <item>
+   <title>Метал</title>
+   <location>http://www.zoomby.ru/music/genres/metal</location>
+  </item>
+  <item>
+   <title>Новая волна</title>
+   <location>http://www.zoomby.ru/music/genres/newwave</location>
+  </item>
+  <item>
+   <title>Панк</title>
+   <location>http://www.zoomby.ru/music/genres/punk</location>
+  </item>
+  <item>
+   <title>Поп</title>
+   <location>http://www.zoomby.ru/music/genres/pop</location>
+  </item>
+  <item>
+   <title>Регги</title>
+   <location>http://www.zoomby.ru/music/genres/reggae</location>
+  </item>
+  <item>
+   <title>Ритм-н-блюз</title>
+   <location>http://www.zoomby.ru/music/genres/rnb</location>
+  </item>
+  <item>
+   <title>Рок</title>
+   <location>http://www.zoomby.ru/music/genres/rock</location>
+  </item>
+  <item>
+   <title>Рэп</title>
+   <location>http://www.zoomby.ru/music/genres/rap</location>
+  </item>
+  <item>
+   <title>Ска</title>
+   <location>http://www.zoomby.ru/music/genres/Ska</location>
+  </item>
+  <item>
+   <title>Соул</title>
+   <location>http://www.zoomby.ru/music/genres/soul</location>
+  </item>
+  <item>
+   <title>Танцевальная</title>
+   <location>http://www.zoomby.ru/music/genres/dance</location>
+  </item>
+  <item>
+   <title>Техно</title>
+   <location>http://www.zoomby.ru/music/genres/techno</location>
+  </item>
+  <item>
+   <title>Фолк</title>
+   <location>http://www.zoomby.ru/music/genres/folk</location>
+  </item>
+  <item>
+   <title>Хаус</title>
+   <location>http://www.zoomby.ru/music/genres/house</location>
+  </item>
+  <item>
+   <title>Хип-хоп</title>
+   <location>http://www.zoomby.ru/music/genres/hiphop</location>
+  </item>
+  <item>
+   <title>Чиллаут</title>
+   <location>http://www.zoomby.ru/music/genres/chillout</location>
+  </item>
+  <item>
+   <title>Электроника</title>
+   <location>http://www.zoomby.ru/music/genres/electronic</location>
+  </item>
+  <item>
+   <title>Эмо</title>
+   <location>http://www.zoomby.ru/music/genres/emo</location>
+  </item>
+<!--
+  <item>
+   <title></title>
+   <location></location>
+  </item>
+-->
+</channel>
+</rss>

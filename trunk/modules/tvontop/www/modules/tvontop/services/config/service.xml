@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+	<name>Config</name>
+	<shortName>cfg</shortName>
+	<displayName>Настройки</displayName>
+	<description>
+		Настройки
+	</description>
+	<hidden>true</hidden>
+	<provider class="CfgProvider" />
+	<version>1.0</version>
+	<author>http://TVonTop.com</author>
+</service>

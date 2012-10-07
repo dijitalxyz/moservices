@@ -1,0 +1,7 @@
+[ivi]
+	revision = 5
+	title = "ivi.ru"
+	role = rss
+	files="www/modules/ivi/"
+	require="curl"
+	size = 104

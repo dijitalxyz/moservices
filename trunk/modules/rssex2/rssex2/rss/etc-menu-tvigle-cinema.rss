@@ -1,0 +1,438 @@
+﻿<?xml version='1.0' encoding="UTF8" ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+    translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+
+    startitem = "";
+		
+  columnCount=3;
+  print(getFocusItemIndex());
+</onEnter>
+
+<script>
+  setRefreshTime(1);
+</script>
+
+<onRefresh>
+    setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+  middleItem = Integer(itemCount / 2);
+  if(startitem == "middle")
+    setFocusItemIndex(middleItem);
+  else
+  if(startitem == "last")
+    setFocusItemIndex(itemCount);
+  else
+  if(startitem &gt; 0 &amp;&amp; startitem &lt;= itemCount)
+    setFocusItemIndex(startitem-1);
+  redrawDisplay();
+
+</onRefresh>
+
+	<mediaDisplay name=photoView 
+	  centerXPC=7 
+		centerYPC=25
+		centerHeightPC=50
+    columnCount=3
+		
+	  rowCount=1
+		menuBorderColor="55:55:55"
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+	  backgroundColor="0:0:0"
+		imageBorderColor="0:0:0"
+		itemBackgroundColor="0:0:0"
+		itemGapXPC=0
+		itemGapYPC=1
+		sideTopHeightPC=22
+		bottomYPC=95
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=no
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+		>
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+		<image offsetXPC=5 offsetYPC=2 widthPC=21 heightPC=16>
+		  <script>channelImage;</script>
+      <widthPC>
+        <script>
+          21 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          5 + 21 * (1 - screenYp / screenXp) / 2;
+        </script>
+      </offsetXPC>
+		</image>
+
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+
+		<text align="center" redraw="yes" lines="4" offsetXPC=10 offsetYPC=80 widthPC=80 heightPC=15 fontSize=16 backgroundColor=0:0:0 foregroundColor=120:120:120>
+			<script>print(annotation); annotation;</script>
+		</text>
+		
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+
+		<itemDisplay>
+			<script>
+				imageW = 90/columnCount;
+				imageH = imageW * 3 / 4 * screenXp / screenYp * 100 / 50;
+				if(imageH > 81)
+				{
+				  imageH = 81;
+				  imageW = imageH * 4 / 3 * screenYp / screenXp * 50 / imageW;
+				}
+			  else
+			  {
+			    imageW = 100;
+        }
+			</script>
+  		<image offsetXPC=0 offsetYPC=95 widthPC=100 heightPC=5>
+  		  <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+  		      "../etc/translate/rss/image/gradient_line.bmp";
+  		    else
+  		      "";
+  		  </script>
+  		</image>
+			<image>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "image");
+				</script>
+			 <widthPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageW; else imageW * 3 / 4;
+			   </script>
+			 </widthPC>
+			 <heightPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageH; else imageH * 3 / 4;
+			   </script>
+			 </heightPC>
+			 <offsetXPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 50 - imageW/2; else 50 - imageW * 3 / 8;
+			   </script>
+			 </offsetXPC>
+			 <offsetYPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 0; else imageH / 8;
+			   </script>
+			 </offsetYPC>
+			</image>
+			
+			<text align="center" lines="3" offsetXPC=0 offsetYPC=55 widthPC=100 heightPC=40 backgroundColor=-1:-1:-1>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+        <lines>
+          <script>Integer((95 - imageH - 2) / 12);</script>
+        </lines>
+        <offsetYPC>
+          <script>imageH + 2;</script>
+        </offsetYPC>
+        <heightPC>
+          <script>95 - imageH - 2;</script>
+        </heightPC>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "22"; else "18";
+  				</script>
+				</fontSize>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "75:75:75";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+		
+  <onUserInput>
+    <script>
+      ret = "false";
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      if(userInput == "one" || userInput == "1")
+      {
+        if(itemCount &gt;= 1)
+        {
+          setFocusItemIndex(0);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "two" || userInput == "2")
+      {
+        if(itemCount &gt;= 2)
+        {
+          setFocusItemIndex(1);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "three" || userInput == "3")
+      {
+        if(itemCount &gt;= 3)
+        {
+          setFocusItemIndex(2);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "four" || userInput == "4")
+      {
+        if(itemCount &gt;= 4)
+        {
+          setFocusItemIndex(3);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "five" || userInput == "5")
+      {
+        if(itemCount &gt;= 5)
+        {
+          setFocusItemIndex(4);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "six" || userInput == "6")
+      {
+        if(itemCount &gt;= 6)
+        {
+          setFocusItemIndex(5);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "seven" || userInput == "7")
+      {
+        if(itemCount &gt;= 7)
+        {
+          setFocusItemIndex(6);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "eight" || userInput == "8")
+      {
+        if(itemCount &gt;= 8)
+        {
+          setFocusItemIndex(7);
+          redrawDisplay();
+        }
+      }
+      else if(userInput == "nine" || userInput == "9")
+      {
+        if(itemCount &gt;= 9)
+        {
+          setFocusItemIndex(8);
+          redrawDisplay();
+        }
+      }
+      else if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -columnCount;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= columnCount;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      ret;
+      
+    </script>
+  </onUserInput>
+		
+	</mediaDisplay>
+	
+	<item_template>
+		<link>
+		  <script>getItemInfo(getQueryItemIndex(), "location");</script>
+		</link>
+		<onClick>
+      showIdle();
+		</onClick>
+	</item_template>
+
+
+<script>
+    channelImage = "../etc/translate/rss/image/tvigle.png";
+  </script><channel>
+  <title>Tvigle - Сборники</title>
+  <item>
+<link><script>translate_base_url+"app,Channel:2197,tvigle/multi";</script></link>
+    <title>Военное кино</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/2197/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:1689,tvigle/multi";</script></link>
+    <title>Кино про любовь</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/1689/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:2061,tvigle/multi";</script></link>
+    <title>Лучшее в коллекции Tvigle</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/2061/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:1451,tvigle/multi";</script></link>
+    <title>Лучшее короткометражное кино</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/1451/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:2036,tvigle/multi";</script></link>
+    <title>Шерлок Холмс и доктор Ватсон</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/2036/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:2239,tvigle/multi";</script></link>
+    <title>Фильмы Алексея Балабанова</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/2239/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:2231,tvigle/multi";</script></link>
+    <title>Три богатыря</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/2231/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:508645,tvigle/multi";</script></link>
+    <title>Д'Артаньян и три мушкетера</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/508645/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:2049,tvigle/multi";</script></link>
+    <title>Собачье сердце</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/2049/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:1701,tvigle/multi";</script></link>
+    <title>Фильмы ужасов. Избранное</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/1701/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:1602,tvigle/multi";</script></link>
+    <title>The New Russians</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/1602/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+  <item>
+<link><script>translate_base_url+"app,Channel:89,tvigle/multi";</script></link>
+    <title>Авторское кино</title>
+    <annotation/>
+    <image>http://photo.tvigle.ru/resource/rf/cnl/89/list.jpg?2</image>
+    <mediaDisplay name="photoView"/>
+  </item>
+</channel>
+
+
+</rss>

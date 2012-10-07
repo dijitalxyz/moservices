@@ -1,0 +1,7 @@
+[libcurl]
+	revision = 1
+	title = "Lib CUrl 4.2.0"
+	role = package
+	check = lib
+	files="lib/libcurl.so lib/libcurl.so.4 lib/libcurl.so.4.2.0"
+	size = 2808

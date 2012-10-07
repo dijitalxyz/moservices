@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>Most recent links</title>
+  <image>../etc/translate/rss/image/menu/recent.png</image>
+
+  <trackList>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/misc/history,File:/usr/local/etc/dvdplayer/translate.history_audio.m3u</link>
+      <title>Радио и аудио</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/menu/rss.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app/misc/history,File:/usr/local/etc/dvdplayer/translate.history_video.m3u</link>
+      <title>Видео и IPTV</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/menu/rss.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+  </trackList>
+
+</playlist>

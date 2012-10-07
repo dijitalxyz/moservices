@@ -1,0 +1,6 @@
+#!/bin/sh
+
+stream_url=$arg_url
+stream_type='video/x-flv'
+server_type='_translate_'
+return $RC_OK

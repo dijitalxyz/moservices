@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <title>Station.ru</title>
+    <trackList>
+<track>
+  <location>http://station.ru/RadioStation.aspx?id=1734</location>
+  <title>DFM Club</title>
+  <annotation>Западная клубная музыка</annotation>
+  <image>../etc/translate/rss/image/stationru/dfm_club.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station01</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station01</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">DFM Club / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1731</location>
+  <title>Monte-Carlo Nights</title>
+  <annotation>Lounge, downtempo и другая мягкая электронная музыка, которая не мешает отдыхать и работать.</annotation>
+  <image>../etc/translate/rss/image/stationru/mc_nights.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/montecarlonights</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=montecarlonights</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Monte-Carlo Nights / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1732</location>
+  <title>Monte-Carlo HED KANDI</title>
+  <annotation>Самая модная клубная музыка в стиле house.</annotation>
+  <image>../etc/translate/rss/image/stationru/mc_hedkandi.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/hadkandi</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=hadkandi</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">HED KANDI / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1733</location>
+  <title>Monte-Carlo Sweet</title>
+  <annotation>Изысканные зарубежные мелодичные хиты.</annotation>
+  <image>../etc/translate/rss/image/stationru/mc_sweet.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/mksweet</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=mksweet</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Monte-Carlo Sweet / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1736</location>
+  <title>DFM Russian Dance</title>
+  <annotation>Русскоязычная танцевальная музыка</annotation>
+  <image>../etc/translate/rss/image/stationru/dfm_rd.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station03</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station03</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">DFM Russian Dance / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=2466</location>
+  <title>FM Cafe</title>
+  <annotation>Lounge, Acid-jazz, New Age, NU-jazz в авторском проекте Александра Нуждина.</annotation>
+  <image>../etc/translate/rss/image/stationru/maxfmcafe_logo_100x100.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/fmcafe</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=fmcafe</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">FM Cafe / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1730</location>
+  <title>Станция 2000</title>
+  <annotation>Клубная музыка 1990-х годов: House, Ambient, Jungle, Trance, Drum-n-base</annotation>
+  <image>../etc/translate/rss/image/stationru/mc_station_2000.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station2000</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station2000</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Станция 2000 / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1742</location>
+  <title>Хит FM Романтика</title>
+  <annotation>Романтическая поп-музыка</annotation>
+  <image>../etc/translate/rss/image/stationru/hit_romantika.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station14</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station14</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Хит FM Романтика / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1996</location>
+  <title>Золотой Граммофон</title>
+  <annotation>Главные хиты современной российской эстрады</annotation>
+  <image>../etc/translate/rss/image/stationru/rr_zg.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/zg</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=zg</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Золотой Граммофон / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=7629</location>
+  <title>Mixer</title>
+  <annotation>Качественный клубный хаус от DJ Кирилоff - проверенные хиты и перспективные новинки танцевальной музыки.</annotation>
+  <image>../etc/translate/rss/image/stationru/max-mixer.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/mixer</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=mixer</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Mixer / station.ru</meta>
+</track>
+<track>
+  <location>http://station.ru/RadioStation.aspx?id=1739</location>
+  <title>DFM Динамит</title>
+  <annotation>Танцевальные хиты первой половины 2000-х годов.</annotation>
+  <image>../etc/translate/rss/image/stationru/dfm_dinamit.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station16</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station16</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">DFM Динамит / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1737</location>
+  <title>DFM Urban</title>
+  <annotation>Музыка в стиле рэп, хип-хоп, r'n'b</annotation>
+  <image>../etc/translate/rss/image/stationru/dfm_urban.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station04</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station04</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">DFM Urban / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1729</location>
+  <title>Monte-Carlo Rainbow</title>
+  <annotation>Жизнерадостные танцевальные ремиксы поп-хитов</annotation>
+  <image>../etc/translate/rss/image/stationru/mc_gayrario.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/rainbow</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=rainbow</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Monte-Carlo Rainbow / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1738</location>
+  <title>DFM Love</title>
+  <annotation>Романтическая поп-музыка</annotation>
+  <image>../etc/translate/rss/image/stationru/dfm_love.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station10</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station10</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">DFM Love / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1740</location>
+  <title>Хит FM 2000-е</title>
+  <annotation>Европейская танцевальная и поп-музыка</annotation>
+  <image>../etc/translate/rss/image/stationru/hit_2000.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station12</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station12</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Хит FM 2000-е / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1741</location>
+  <title>Хит FM 90-e</title>
+  <annotation>Евродэнс и поп-хиты 1990-х.</annotation>
+  <image>../etc/translate/rss/image/stationru/hit_90.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station13</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station13</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Хит FM 90-e / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1735</location>
+  <title>DFM Fresh</title>
+  <annotation>Танцевальная музыка в стиле latino и pop</annotation>
+  <image>../etc/translate/rss/image/stationru/dfm_fresh.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station02</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station02</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">DFM Buharest / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1997</location>
+  <title>Биология</title>
+  <annotation>Рок-музыка в авторской программе Шуры и Левы БИ-2.</annotation>
+  <image>../etc/translate/rss/image/stationru/max_biologia.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/biologia</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=biologia</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Биология / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1726</location>
+  <title>Проверено электроникой</title>
+  <annotation>New-wave и рок-хиты 80-х в only-music версии одноименной авторской программы Александра Нуждина</annotation>
+  <image>../etc/translate/rss/image/stationru/max_provelect.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/mpe</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=mpe</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Проверено электроникой / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1744</location>
+  <title>Хит FM Кино</title>
+  <annotation>Музыка из зарубежных фильмов</annotation>
+  <image>../etc/translate/rss/image/stationru/hit_kino.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station09</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station09</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Хит FM Кино / station.ru</meta>
+</track>
+<track>
+  <location>http://station.ru/RadioStation.aspx?id=1743</location>
+  <title>Хит FM Italy</title>
+  <annotation>Итальянская эстрада, поп-музыка</annotation>
+  <image>../etc/translate/rss/image/stationru/hit_italy.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station15</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station15</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Хит FM Italy / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=1998</location>
+  <title>Уроки Русского</title>
+  <annotation>Качественная отечественная музыка - от хитов до новинок - с комментариями музыкального критика Андрея Бухарина</annotation>
+  <image>../etc/translate/rss/image/stationru/max_uroki.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/uroki_russkogo</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=uroki_russkogo</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Уроки Русского / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=11369</location>
+  <title>DFM Восток</title>
+  <annotation>Самая яркая музыка от лучших представителей Востока.</annotation>
+  <image>../etc/translate/rss/image/stationru/Dfm_vostok.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station05</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station05</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">DFM Восток / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=17729</location>
+  <title>Утренние жаворонки Da Best</title>
+  <annotation>Лучшее из утреннего шоу Пашкова и Кириллова</annotation>
+  <image>../etc/translate/rss/image/stationru/max_utro_100x100_1.jpg</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/utrennie_zhavoronki</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=utrennie_zhavoronki</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Утренние жаворонки Da Best / station.ru</meta>
+</track><track>
+  <location>http://station.ru/RadioStation.aspx?id=56002</location>
+  <title>DFM D-скач 90</title>
+  <annotation>Euro Dance</annotation>
+  <image>../etc/translate/rss/image/stationru/dfm_Dskach90_100x100.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station07</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station07</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">DFM D-скач 90 / station.ru</meta>
+</track>
+  </trackList>
+</playlist>

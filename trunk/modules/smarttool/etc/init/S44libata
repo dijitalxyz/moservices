@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# description: Enable and disable libata.dev
+#
+etc=/usr/local/etc
+files=$etc/mos/libata
+target=/lib/modules/2.6.12.6-VENUS/kernel/drivers/scsi
+
+case "$1" in
+  start|stop|status)
+	;;
+  enable)
+	echo "Enabling Lib ATA..."
+	#copy files
+	[ ! -f $target/sata_mars.ko.orig ] && cp -f $target/libata.ko $target/libata.ko.orig
+	[ ! -f $target/sata_mars.ko.orig ] && cp -f $target/sata_mars.ko $target/sata_mars.ko.orig
+	cp -a $files/* $target/
+	echo "Please, reboot device!"
+	;;
+
+  disable)
+	echo "Disabling Lib Ata..."
+	[ -f $target/libata.ko.orig ] && mv -f $target/libata.ko.orig $target/libata.ko
+	[ -f $target/sata_mars.ko.orig ] && mv -f $target/sata_mars.ko.orig $target/sata_mars.ko
+	echo "Please, reboot device!"
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

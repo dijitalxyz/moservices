@@ -1,0 +1,91 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'tvigle.ru' plug-in
+#
+# version: 1.0 29.11.2010 15:26:08
+#
+# http://www.tvigle.ru/category/cinema/1882?video=495029
+# http://www.tvigle.ru/category/music/videoclips?video=497731
+#
+# options:
+#   HD:[0|1]
+#
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -q -s '\(www\.\)*tvigle\.ru/.*[?&]video=[0-9].*$'; then 
+
+  get_opt "HD"
+  [ -z "$opt" ] && opt=`sed -n '6p' $RSSCONF 2>/dev/null`
+  [ -z "$opt" ] && opt=$TVIGLE_HD
+  case $opt in
+    yes|Yes|YES|1)
+      hdc='hi'
+    ;;
+    *)
+      hdc='lo'
+    ;;
+  esac
+  
+  local video_id=`echo "$arg_url" | sed -e 's/.*[?&]video=//;s/&.*//'`
+  
+  host_response=`$MSDL -o ${TMPFILE} -p http --useragent "${USERAGENT}" http://www.tvigle.ru/xml/single.php?obj=$video_id 2>&1`
+  
+#echo $host_response > /tmp/tvigle.tmp
+#cat ${TMPFILE} >> /tmp/tvigle.tmp
+  
+  if [ -f ${TMPFILE} ]; then
+    stream_type='video/mp4'
+    stream_url=''
+    server_type='tvigle'
+    if grep -qs 'low="1"' ${TMPFILE}; then
+      :
+    else
+      hdc='hi'
+    fi
+    case $hdc in 
+      lo)
+        stream_url=`grep "low_file=" ${TMPFILE} | sed "s/.* low_file=\"//;s/\".*//g"`
+      ;;
+      *)
+        if grep -qs 'bigmp4="' ${TMPFILE}; then
+          stream_url=`grep "bigmp4=" ${TMPFILE} | sed "s/.* bigmp4=\"//;s/\".*//g"`
+        elif grep -qs ' file="' ${TMPFILE}; then
+          stream_url=`grep " file=" ${TMPFILE} | sed "s/.* file=\"//;s/\".*//g"`
+        fi
+      ;;
+    esac
+    
+#echo -e "\n$stream_url" >> /tmp/tvigle.tmp
+
+    if [ -z "$stream_url" ]; then
+      stream_type=''
+    elif echo $stream_url | grep -qs ".flv$"; then
+      stream_type='video/x-flv'
+    fi
+    protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+    icy_name=`grep "name=" ${TMPFILE} | sed 's/.* name="//;s/".*//g'`
+    rm -f $TMPFILE
+  fi
+  return $RC_OK
+fi
+
+return $RC_FAIL

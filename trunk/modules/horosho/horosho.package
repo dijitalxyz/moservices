@@ -1,0 +1,7 @@
+[horosho]
+	revision = 2
+	title = "Horosho.tv"
+	role = rss
+	files="www/modules/horosho/"
+	require="httpd curl"
+	size = 100

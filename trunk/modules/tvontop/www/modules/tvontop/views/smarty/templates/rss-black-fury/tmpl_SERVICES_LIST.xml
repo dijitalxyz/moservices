@@ -1,0 +1,188 @@
+﻿﻿<?xml version='1.0' encoding='utf-8' ?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+<!-- include platform scripts (and logging)  -->
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+<!-- Hot keys definition -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/hotKeys.tpl"}
+{for $i = 0 to 3}
+    {$hotKeys[$i]["icon"]  = "<script>getItemInfo(\"key_icon{$i}\");</script>"}
+    {$hotKeys[$i]["title"] = "<script>getItemInfo(\"key_descr{$i}\");</script>"}
+    {$hotKeys[$i]["key"]   = "getItemInfo(\"key_button{$i}\")"}
+    {$hotKeys[$i]["url"]   = "getItemInfo(\"key_url{$i}\")"}
+{/for}
+
+<onRefresh>
+    /*update time*/
+    redrawDisplay();
+</onRefresh>
+
+<mediaDisplay name="photoFocusView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    focusItem="3"
+    rowCount="1"
+    columnCount="5"
+
+    itemOffsetXPC="4"
+    itemOffsetYPC="47"
+    itemWidthPC="14"
+    itemHeightPC="23"
+    itemBackgroundWidthPC="15"
+    itemBackgroundHeightPC="24"
+    itemGapXPC="1.5"
+
+    focusItemOffsetXPC="4"
+    focusItemOffsetYPC="25.6"
+    focusItemWidthPC="28"
+    focusItemHeightPC="46"
+    focusItemBackgroundWidthPC="29"
+    focusItemBackgroundHeightPC="47"
+
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    itemBorderColor="{$config->get(bgNormal)}"
+    >
+    <onUserInput>
+        key = currentUserInput();
+        res = "false";
+        url = null;
+
+        currentItem = getPageInfo("focusItemIndex");
+		/*setEnv("{$mediaObj->type}_startIndex", currentItem - 1);*/
+		envKey 		= "{$mediaObj->type}_startIndex";
+		envValue	= currentItem - 1;
+        executeScript("setEnvValue");
+
+        if ( 3 == 5 ) {
+            /* stub section, real logic comes below */
+        }
+{$item_id = 1}
+{foreach $mediaObj->getChildren() as $child}
+{if $child->hasChildren()}
+    
+        else if ( currentItem == {$item_id} ) {
+            if ( 3 == 5 );
+            {foreach $child->getChildren() as $keyEntry}
+            
+            else if ( key == {$keyEntry->title} ) {
+                url = "{$config->get(cfg_processing_url,Runtime)}{$keyEntry->getParam(params)}";
+            }
+            {/foreach}
+
+        }
+{/if}
+{$item_id = $item_id + 1}
+{/foreach}
+
+        if (null != url) {
+            print("=============== Key url: ", url);
+            jumpToLink("rssLink");
+            res = "true";
+        } 
+        redrawDisplay();
+        res;
+    </onUserInput>
+
+    <!-- header -->
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+
+    <text redraw="yes" align="center" offsetXPC="18" offsetYPC="72" widthPC="60" heightPC="12" fontSize="24" foregroundColor="200:200:200" backgroundColor="{$config->get(bgNormal)}">
+        <script>getPageInfo("focusItemIndex") + ". " + getItemInfo("displayName");</script>
+    </text>
+    <text redraw="yes" align="center" tailDots="no" lines="2" fontSize="15"
+        offsetXPC="0" offsetYPC="87.5" widthPC="100" heightPC="8"
+        foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}">
+        <script>getItemInfo("description");</script>
+    </text>
+
+    <!-- hot keys -->
+    {call displayHotKeys dynamic=true}
+
+    <itemDisplay>
+        <image offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
+            <script>getItemInfo("media:thumbnail");</script>
+        </image>
+        <image offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
+            <script>
+                if (getItemInfo("demoService") == "1") {
+                    "{$config->get(cfg_resources_home, Runtime)}img/coming-soon4.png";
+                } else {
+                    "";
+                }
+            </script>
+        </image>
+    </itemDisplay>
+{call getIdleImages}
+</mediaDisplay>
+
+{call getRssLink}
+
+<channel>
+    <title>TVonTop {$config->get(version,Runtime)}</title>
+{$selectedService = 0}
+{$currentService = 0}
+{foreach $mediaObj->getChildren() as $child}
+
+    <item>
+        <title>{$child->title}</title>
+        <version>{$child->getParam(version)}</version>
+        <author>{$child->getParam(author)}</author>
+        <displayName>{$child->getParam(displayName)}</displayName>
+        <description>
+            {$child->getParam(description)}
+        </description>
+        <demoService>{$child->getParam(demoService)}</demoService>
+        <link>{$config->get(cfg_root_url,Runtime)}?pl={$child->id}</link>
+        <media:thumbnail url="{$config->get(cfg_home,Runtime)}{$child->getParam(icon)}" />
+{$key_id = 0}
+{foreach $child->getChildren() as $key}
+        {$icon="{$config->get(cfg_resources_home,Runtime)}img/keys/{$config->get(platform)}/{$key->title}.png"}
+        {if !file_exists($icon)}
+            {$icon="{$config->get(cfg_resources_home,Runtime)}img/keys/empty.png"}
+        {/if}
+        {$icon="{$config->get(cfg_resources_home,Runtime)}img/keys/{$config->get(platform)}/{$key->title}.png"}
+        
+        <key_icon{$key_id}>{$icon}</key_icon{$key_id}>
+        <key_descr{$key_id}>{$locale->msg($key->getParam(description))}</key_descr{$key_id}>
+        <key_button{$key_id}>{$key->title}</key_button{$key_id}>
+        <key_url{$key_id}>{$key->getParam(params)}</key_url{$key_id}>
+        {$key_id = $key_id + 1}
+{/foreach}
+
+    </item>
+    {if $mediaObj->getParam(selectedService) == $child->getId()}
+        {$selectedService=$currentService}
+    {/if}
+    {$currentService = $currentService + 1}
+{/foreach}
+</channel>
+
+<onEnter>
+    executeScript("platformInit");
+    /*startIndex = getEnv("{$mediaObj->type}_startIndex");*/
+	envKey 		= "{$mediaObj->type}_startIndex";
+	executeScript("getEnvValue");
+	startIndex = envValue;
+        
+    if (null == startIndex) {
+        startIndex = {$selectedService};
+        if (0 == startIndex) {
+            startIndex = {$config->get(selected_service)};
+        }
+    }
+    setFocusItemIndex(startIndex);
+    setRefreshTime(10000);
+</onEnter>
+</rss>

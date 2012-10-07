@@ -1,0 +1,311 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=threePartsView
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemImageXPC="27"
+	itemImageYPC="18"
+	itemXPC="40"
+	itemYPC="18"
+	itemWidthPC="54"
+	capXPC="94"
+	capYPC="17"
+	capHeightPC="10"
+	headerCapXPC="90"
+	headerCapYPC="10"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	showHeader=no
+  menuXPC=7
+  menuYPC=15
+  menuWidthPC=16
+  menuHeightPC=8
+  menuPerPage=9
+  selectMenuOnRight=no
+  forceFocusOnItem=yes
+  forceFocusOnMenu=no
+	showDefaultInfo=yes
+	infoYPC=90
+	fontSize=16
+>
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=90 heightPC=15 fontSize=20 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image offsetXPC=80 offsetYPC=3 widthPC=15 heightPC=6>
+    <script>pageLogo;</script>
+    <widthPC>
+      <script>
+        205 * 6 / 26 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 205 * 6 / 26 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+  </image>
+
+    <text redraw="yes" offsetXPC=30 offsetYPC=85 widthPC=70 heightPC=5 fontSize=14 backgroundColor=0:0:0 foregroundColor=100:100:100>
+      <script>linkUrl;</script>
+    </text>
+
+    <text redraw="no" align="right" offsetXPC=50 offsetYPC=92 widthPC=45 heightPC=5 fontSize=12 backgroundColor=0:0:0 foregroundColor=100:100:100>
+      Press 'Right' for get-tune.net
+    </text>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      linkUrl = getItemInfo(getFocusItemIndex(), "location");
+      
+      if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        idx = Integer(getFocusItemIndex());
+        itemSize = getPageInfo("itemCount");
+        if (userInput == "pagedown")
+        {
+          idx -= -5;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 5;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      else if(majorContext == "items" &amp;&amp; (userInput == "right" || userInput == "R"))
+      {
+        idx = Integer(getFocusItemIndex());
+        search_text = getItemInfo(idx, "title");
+    		search_url  = translate_base_url + "app/gettune/search," + urlEncode(search_text);
+        
+		    showIdle();
+    		playlist_autoplay = 0;
+        streamArray = null;
+        streamArray = pushBackStringArray(streamArray, search_url);
+        streamArray = pushBackStringArray(streamArray, search_text);
+        streamArray = pushBackStringArray(streamArray, getItemInfo(idx, "media:thumbnail"));
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, "playlist");
+        streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+        streamArray = pushBackStringArray(streamArray, "All");
+        writeStringToFile(storagePath_playlist, streamArray);
+        doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+        ret = "true";
+      }
+      else if(majorContext != "items" &amp;&amp; (userInput == "left" || userInput == "L"))
+      {
+        ret = "true";
+      }
+      else if(majorContext == "items" || (userInput != "enter" &amp;&amp; userInput != "ENTR")) {
+        repeat = 0;
+      }
+      ret;
+    </script>
+  </onUserInput>
+
+</mediaDisplay>
+
+<onExit>
+  playItemURL(-1, 1);
+  setRefreshTime(-1);
+</onExit>
+
+<onEnter>
+  print("music_ivi_ru_artists::onEnter start");
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+
+  storagePath = getStoragePath("tmp");
+  storagePath_ivi  = storagePath + "music_ivi.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+
+  arr = readStringFromFile(storagePath_ivi);
+  print("******* Initialize: "+arr);
+  pageTitle = getStringArrayAt(arr, 0);
+  feedUrl = getStringArrayAt(arr, 1);
+
+  pageLogo = "../etc/translate/rss/image/ivi-music.png";
+  linkUrl = getItemInfo(getFocusItemIndex(), "location");
+
+  setRefreshTime(-1);
+  cancelIdle();
+</onEnter>
+
+<onRefresh>
+  print("Wait for movie stop");
+  vidProgress = getPlaybackStatus();
+  playElapsed = getStringArrayAt(vidProgress, 0);
+  playStatus = getStringArrayAt(vidProgress, 3);
+
+  if (playStatus == 0) 
+  {
+     print("Movie stop");
+     setRefreshTime(-1);
+     playTitle = "";
+     
+     setFocusItemIndex(index);
+     setItemFocus(index);
+     itemSize = getPageInfo("itemCount");
+     
+     if(repeat == 1)
+     {
+      index -= -1;
+      if(index == itemSize)
+      {
+        index = 0;
+      }
+      if(index != last)
+      {
+       executeScript("play");
+      }
+     }
+     else if(repeat == 2)
+     {
+        if(randomArray != null &amp;&amp; index == getStringArrayAt(randomArray, randomIndex))
+        {
+          randomIndex -= -1;
+          if(randomIndex &lt; itemSize)
+          {
+            index = getStringArrayAt(randomArray, randomIndex);
+            executeScript("play");
+          }
+        }
+     }
+     linkUrl = getItemInfo(getFocusItemIndex(), "location");
+     redrawDisplay();
+  }
+  else
+  {
+    if (playElapsed != 0) 
+    {
+      x = Integer(playElapsed / 60);
+      h = Integer(playElapsed / 3600);
+      s = playElapsed - (x * 60);
+      m = x - (h * 60);
+      elapsedTime = sprintf("%s:", h);
+      if(m &lt; 10)  elapsedTime += "0";
+      elapsedTime += sprintf("%s:", m);
+      if(s &lt; 10)  elapsedTime += "0";
+      elapsedTime += sprintf("%s", s);
+      print("elapsedTime =", elapsedTime);
+    }
+  }
+</onRefresh>
+
+  <item_template>
+    <onClick>
+      repeat = 0;
+      index  = getFocusItemIndex();
+      executeScript("play");
+      null;
+		</onClick>
+  </item_template>
+
+<play>
+    playItemURL(-1, 1);
+    url = getItemInfo(index, "location");
+    urlToPlay = translate_base_url+"stream,," + url;
+    if(repeat == 0)
+    {
+      historyPath = getStoragePath("key")+"translate.history_video.m3u";
+      historydat = readStringFromFile(historyPath);
+      if(historydat == null)
+        historydat = pushBackStringArray(historydat, "#EXTM3U");
+      historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+getItemInfo(index, "title"));
+      historydat = pushBackStringArray(historydat, url);
+      writeStringToFile(historyPath, historydat);
+    }
+    showIdle();
+    playItemURL(urlToPlay, 0);
+    cancelIdle();
+    mode = 0;
+    setRefreshTime(100);
+</play>
+
+<submenu>
+ <title>Все</title>
+ <onClick>
+   repeat = 1;
+   index   = getFocusItemIndex();
+   last = index; 
+   executeScript("play");
+   null;
+ </onClick>
+</submenu>
+
+<submenu>
+ <title>Произвольно</title>
+ <onClick>
+    repeat = 2;
+    index   = getFocusItemIndex();
+    itemSize = getPageInfo("itemCount");
+    dlok = loadXMLFile(translate_base_url+"random,"+itemSize+","+index);
+    if (dlok != null)
+    {
+      randomArray = null;
+    	count = 0;
+    	while(1)
+    	{
+    		value = getXMLText("randomList","item",count);
+  	  	randomArray  = pushBackStringArray(randomArray, value);
+  	  	count += 1;
+  	  	if(count == itemSize)
+  	  	  break;
+    	}
+    }
+    randomIndex = 0;
+    index = getStringArrayAt(randomArray, randomIndex);
+    executeScript("play");
+    null;
+ </onClick>
+</submenu>
+
+<!--`cat "$CHANNELXML"`-->
+
+</rss>

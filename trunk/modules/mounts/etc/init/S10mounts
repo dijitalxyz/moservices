@@ -1,0 +1,88 @@
+#!/bin/sh
+#
+# description: Starts User mounts
+#
+mos=/usr/local/etc/mos
+
+case "$1" in
+  start)
+	echo "Starting user mounts..."
+
+	# read options
+	wAddr=0
+	wMount=0
+	nTries=5
+	[ -f $mos/etc/mounts.ini ] && eval "$( cat $mos/etc/mounts.ini | sed '/^$/d' )"
+
+	[ $wMount -eq 1 ] && $mos/bin/wait_mount && exit 1
+	[ $wAddr  -eq 1 ] && $mos/bin/wait_ip && exit 1
+
+	touch /tmp/mounts.pid
+
+	if [ -f $mos/etc/mounts.list ] ; then
+	
+	  cIFS=$IFS
+	  IFS="
+"
+	  str=$( cat $mos/etc/mounts.list )
+	  for i in $str ; do
+	    cPoint=$( echo "$i" | cut -d"	" -f 1 )
+	    cDevice=$( echo "$i" | cut -d"	" -f 2 )
+	    cFS=$( echo "$i" | cut -d"	" -f 3 )
+	    cOption=$( echo "$i" | cut -d"	" -f 4 )
+
+	    IFS=$cIFS
+
+	    [ ! -z "$cOption" ] && cOption=" -o $cOption"
+
+	    [ ! -d "$cPoint" ] && mkdir -p "$cPoint"
+	    [ ! -d "$cPoint" ] && continue
+
+	    t=0
+	    while [ $t -lt $nTries ] ; do
+		mount -t ${cFS}${cOption} "${cDevice}" "${cPoint}"
+		sleep 3
+		mount | grep -q "${cPoint}" && break
+		let t+=1
+	    done
+	  done
+	fi
+	;;
+  stop)
+	echo "Stopping user mounts..."
+
+	if [ -f $mos/etc/mounts.list ] ; then
+
+	  cIFS=$IFS
+	  IFS="
+"
+	  str=$( cat $mos/etc/mounts.list )
+	  for i in $str ; do
+	    cPoint=$( echo "$i" | cut -d"	" -f 1 )
+
+	    IFS=$cIFS
+
+	    umount "$cPoint"
+	    rmdir "$cPoint"
+
+	  done
+	fi
+
+	rm -f /tmp/mounts.pid
+	;;
+  status)
+	if [ -f /tmp/mounts.pid ] ; then
+		echo "Mounts is running"
+	else
+		echo "Mounts is stopped"
+	fi
+	
+	;;
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

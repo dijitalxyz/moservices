@@ -1,0 +1,139 @@
+#!/bin/sh
+#
+# description: Skin Selector
+#
+etc=/usr/local/etc
+mos=$etc/mos
+shr=/usr/share/bin
+
+nfw=$2
+nskin=$3
+[ -z "$nfw" ] && exit 0
+
+# read fw config
+fw=''
+skin=''
+[ -f $shr/boot_fw.conf ] && eval "$( cat $shr/boot_fw.conf | sed '/^$/d' )"
+
+# read sskin config
+direct=0
+[ -f $mos/etc/sskin.conf ] && eval "$( cat $mos/etc/sskin.conf | sed '/^$/d' )"
+
+# get repo
+repo=$( $mos/bin/pm show repository )
+
+getFile()
+{
+	if [ $direct -eq 0 ] ; then
+		# get on drive
+		echo "Find drive..."
+		sd=
+		for folder in /tmp/usbmounts/sd* ; do
+			[ -d "$folder" ] || continue
+			cat /proc/mounts | grep -q -E "$folder .* rw" || continue
+			sd="$folder"
+			break
+		done
+		if [ -z "$sd" ] ; then
+			echo '  Not found drive.'
+			return 1
+		fi
+		echo "  Found $sd"
+		# download
+		if [ ! -f $sd/$1.tar ]; then
+			$mos/bin/wget $repo/skins/$1.tar -O $sd/$1.tar
+			if [ $? -ne 0 ] ; then
+				echo "Unable to download $repo/$1.tar"
+				rm -f $sd/$1.tar
+				return 1
+			fi
+		fi
+		tar xf $sd/$1.tar -C $2
+		rm -f $sd/$1.tar
+	else
+		# direct get
+		$mos/bin/wget $repo/skins/$1.tar -O - | tar x -C $2
+	fi
+}
+
+case "$1" in
+
+  change)
+	[ -z "$nskin" ] && exit 0
+
+	[ "$nfw" = "$fw" ] && [ "$nskin" = "$skin" ] && exit 0
+
+	if [ "$nfw" != "$fw" ] ; then
+		# disable old fw
+		[ -f $shr/$fw/disable_fw ] && $shr/$fw/disable_fw
+
+		# change irfake config
+		if [ -f $shr/$nfw/irfake.conf ] ; then
+			[ -d $etc/irfake ] && cp -af $etc/irfake/irfake.conf $shr/$fw/
+
+			[ -d $mos/irfake ] && cp -af $shr/$nfw/irfake.conf $mos/irfake/
+			[ -d $etc/irfake ] && cp -af $shr/$nfw/irfake.conf $etc/irfake/
+		fi
+
+		# change dvdplayer saved dir
+		stopall
+		[ -d /usr/local/etc/dvdplayer ] && mv /usr/local/etc/dvdplayer /usr/local/etc/dvdplayer.$fw
+		[ -d /usr/local/etc/dvdplayer.$nfw ] && mv /usr/local/etc/dvdplayer.$nfw /usr/local/etc/dvdplayer
+
+		# change hotplug
+		rm -f $shr/hotplug
+		[ -f $shr/$nfw/hotplug ] && ln -s $shr/$nfw/hotplug $shr/hotplug
+
+		# enable new fw
+		[ -f $shr/$nfw/enable_fw ] && $shr/$nfw/enable_fw
+	fi
+	echo "fw=$nfw
+skin=$nskin" > $shr/boot_fw.conf
+
+	sync
+	reboot
+	;;
+  delete)
+	if [ -z "$nskin" ] ; then
+		# delete FW
+		rm -Rf $shr/$nfw
+		[ -d /usr/local/etc/dvdplayer.$nfw ] && rm -Rf /usr/local/etc/dvdplayer.$nfw
+	else
+		# delete skin
+		rm -f $shr/$nfw/res.$nskin.squash
+		rm -f $shr/$nfw/$nfw.$nskin.png
+		rm -f $shr/$nfw/$nfw.$nskin.ini
+	fi
+	;;
+  get)
+	if [ ! -d $shr/$nfw ] ; then
+		# get FW
+		getFile $nfw $shr
+		if [ -f $shr/$nfw/etc.tar.bz2 ] ; then
+			tar xjf $shr/$nfw/etc.tar.bz2 -C /usr/local/etc/
+			rm -f $shr/$nfw/etc.tar.bz2
+		else
+			mkdir $etc/dvdplayer.$nfw
+		fi
+	fi
+	[ -n "$nskin" ] && getFile $nfw.$nskin $shr/$nfw
+	;;
+  update)
+	if [ -z "$nskin" ] ; then
+		# update FW
+		getFile $nfw $shr
+		if [ -f $shr/$nfw/etc.tar.bz2 ] ; then
+			tar xjf $shr/$nfw/etc.tar.bz2 -C /usr/local/etc/
+			rm -f $shr/$nfw/etc.tar.bz2
+		fi
+	else
+		# update skin
+		 getFile $nfw.$nskin $shr/$nfw
+	fi
+	;;
+  *)
+	echo "Usage: $0 {select|delete|get|update}"
+	;;
+esac
+
+exit $?

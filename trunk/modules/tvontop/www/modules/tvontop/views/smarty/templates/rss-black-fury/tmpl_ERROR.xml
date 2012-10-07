@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+<onEnter>
+    executeScript("platformInit");
+</onEnter>
+<mediaDisplay name="onePartView"
+
+{call getViewArea x=30 y=30 w=40 h=30}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    autoSelectMenu="no"
+    autoSelectItem="no"
+    itemPerPage="1"
+
+    cornerRounding="15"
+
+    itemXPC="55"
+    itemYPC="35"
+    itemWidthPC="20"
+    itemHeightPC="8"
+    itemGap="0"
+
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    itemImageXPC="34.6"
+    itemImageWidthPC="0"
+    itemImageHeightPC="0"
+    >
+
+    <onUserInput>
+        if (currentUserInput() != keyReturn) {
+            postMessage(keyReturn);
+            "true";
+        } else {
+            "false";
+        }
+    </onUserInput>
+
+    <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100"
+        backgroundColor="60:60:60" cornerRounding="15" />
+
+    <text offsetXPC="1" offsetYPC="2" widthPC="98" heightPC="96"
+        backgroundColor="30:30:30" cornerRounding="15" />
+
+    <text align="center" offsetXPC="3" offsetYPC="5" widthPC="94" heightPC="15" lines="1"
+        fontSize="14" backgroundColor="30:30:30" foregroundColor="130:130:130">{$locale->msg($mediaObj->title)}</text>
+
+    <text align="center" offsetXPC="3" offsetYPC="30" widthPC="94" heightPC="41" lines="3"
+        fontSize="14" backgroundColor="30:30:30" foregroundColor="200:200:200">{$locale->msg($mediaObj->getParam(descr))}</text>
+
+
+    <text align="center" offsetXPC="30" offsetYPC="73" widthPC="40"
+        heightPC="15" fontSize="14" cornerRounding="5"
+        backgroundColor="255:170:0" foregroundColor="255:255:255">OK</text>
+{call getIdleImages}
+</mediaDisplay>
+
+<channel>
+    <item>
+        <title>Ok</title>
+    </item>
+</channel>
+</rss>
+

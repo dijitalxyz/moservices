@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+{include file="{$config->get(activeTemplate,Runtime)}scripts/osdFunctions.tpl"}
+
+{$thumbHeight = 15}
+
+<showSeason>
+    {$curSeason=0}
+    {foreach $mediaObj->getChildren() as $season}
+    if(selectedSeason == {$curSeason}) {
+            titleArray  = "{foreach $season->getChildren() as $serie}{$serie->title}&#10;{/foreach}";
+            idArray  = "{foreach $season->getChildren() as $serie}{$serie->id}&#10;{/foreach}";
+            print("titile array =", titleArray);
+            print("idArray =", idArray);
+            itemSize = {$season->getChildCount()};
+            seasonThumb = "{$season->getParam(thumbnail)}";
+            seasonThumbRatio = {$season->getParam(thumbnail_ratio)};
+        {$curSeason = $curSeason +1}
+}
+    {/foreach}
+    redrawDisplay();
+    setFocusItemIndex(0);
+    setFocusMenuIndex(selectedSeason);
+</showSeason>
+
+<onEnter>
+    executeScript("doInit");
+    SwitchViewer(7);
+    /*Hack! try to find function like getMenuTitle(i)*/
+    menuArray="{foreach $mediaObj->getChildren() as $season}{$season->title}&#10;{/foreach}";
+    menuCount="{$mediaObj->getChildCount()-1}";
+    /*TODO: save last viewed season/episode*/
+    selectedSeason = 0;
+    executeScript("showSeason");
+</onEnter>
+
+<mediaDisplay name="threePartsView"
+
+{call getViewArea}
+{call getIdleImageParams}
+
+    showHeader="no"
+    headerXPC="0"
+    headerYPC="0"
+    showDefaultInfo="no"
+
+    sideTopHeightPC="0"
+    sideColorTop="{$config->get(bgNormal)}"
+    sideBottomHeightPC="0"
+    sideColorBottom="{$config->get(bgNormal)}"
+    sideLeftWidthPC="20"
+    sideColorLeft="{$config->get(bgNormal)}"
+    sideRightWidthPC="0"
+    sideColorRight="{$config->get(bgNormal)}"
+
+    imageFocus="null"
+    imageParentFocus="null"
+
+    backgroundColor="{$config->get(bgNormal)}"
+    mainPartColor="0:0:0"
+
+    itemBackgroundColor="{$config->get(bgNormal)}"
+
+    itemXPC="20"
+    itemYPC="10"
+    itemWidthPC="79"
+    itemHeightPC="5"
+
+    rollItems="yes"
+    drawItemText="no"
+    itemGap="0"
+    itemPerPage="15"
+
+    itemImageXPC="20"
+    itemImageYPC="10"
+    itemImageHeightPC="0"
+    itemImageWidthPC="0"
+
+    forceFocusOnItem="no"
+    forceFocusOnMenu="yes"
+    autoSelectItem="no"
+
+
+    focusBorderColor="{$config->get(focusBorderColor)}"
+    unFocusBorderColor="{$config->get(unFocusBorderColor)}"
+    focusFontColor="255:170:0"
+    unFocusFontColor="255:255:255"
+    focusItemBackgroundWidthPC="100"
+    unFocusItemBackgroundWidthPC="100"
+
+    menuXPC="3"
+    menuYPC="{$thumbHeight + 12}"
+    menuWidthPC ="15"
+    menuHeightPC="5"
+    menuPerPage="9"
+    >
+
+    <onUserInput>
+        userInput = currentUserInput();
+        /* menu/items */
+        majorContext = getPageInfo("majorContext");
+        keyProcessed = "false";
+        if(majorContext == "menu") {
+            if ( userInput == keyDown || userInput == keyUp) {
+                selectedMenu = getFocusMenuIndex();
+                if ( userInput == keyDown) {
+                    if(menuCount == selectedMenu) {
+                        selectedMenu = 0;
+                    } else {
+                        selectedMenu = Add(selectedMenu,1);
+                    }
+                } else {
+                    if(0 == selectedMenu) {
+                        selectedMenu = menuCount;
+                    } else {
+                        selectedMenu = selectedMenu-1;
+                    }
+                }
+                selectedSeason = selectedMenu;
+                executeScript("showSeason");
+                keyProcessed = "true";
+            } else if ( userInput == keyEnter ) {
+                postMessage(keyRight);
+                redrawDisplay();
+                keyProcessed = "true";
+            } else if ( userInput == keyRight ) {
+                /*Hack: send double keyRight to select item*/
+                postMessage(keyRight);
+                redrawDisplay();
+                keyProcessed = "false";
+            }
+        } else {
+            if ( userInput == keyDown || userInput == keyUp) {
+                selectedItem = getFocusItemIndex();
+                count = getPageInfo("itemCount")-1;
+
+                if ( userInput == keyDown) {
+                    if(count == selectedItem) {
+                        selectedItem = 0;
+                    } else {
+                        selectedItem = Add(selectedItem,1);
+                    }
+                } else {
+                    if(0 == selectedItem) {
+                        selectedItem = count;
+                    } else {
+                        selectedItem = selectedItem-1;
+                    }
+                }
+                setFocusItemIndex(selectedItem);
+                redrawDisplay();
+                keyProcessed = "true";
+            } else if ( userInput == keyEnter ) {
+                showIdle();
+                executeScript("getStreamUrl");
+                /*cancelIdle();*/
+                if (null != streamUrl &amp;&amp; "" != streamUrl &amp;&amp; "protected" != streamUrl) {
+                    playItemURL(streamUrl,0);
+                }
+                keyProcessed = "true";
+                redrawDisplay();
+            } else if ( userInput == keyRight ) {
+                keyProcessed = "true";
+            } else if ( userInput == key2 ) {
+                selectMenu(0);
+                redrawDisplay();
+                keyProcessed = "true";
+            }
+        }
+        keyProcessed;
+    </onUserInput>
+    <!-- header -->
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+    {$screen_ratio = $config->get(screen_ratio,templates)}
+    <script>
+        if(seasonThumbRatio == 0 || seasonThumbRatio == "") {
+            seasonThumbRatio = 1;
+        }
+        {if $screen_ratio == 0}
+            $screen_ratio = 1;
+        {/if}
+        calculatedThumbWidth    = {$thumbHeight / $screen_ratio} * seasonThumbRatio;
+    </script>
+    <image redraw="yes"  offsetYPC="10" heightPC="{$thumbHeight}">
+        <widthPC>
+            <script>calculatedThumbWidth;</script>
+        </widthPC>
+        <offsetXPC><script>Add(3,(16-calculatedThumbWidth)/2);</script></offsetXPC>
+        <script>seasonThumb;</script>
+    </image>
+
+    <!-- footer -->
+    {include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+
+    <text redraw="yes" offsetXPC="3" offsetYPC="87" widthPC="17" heightPC="6" fontSize="14" foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}">
+        <script>
+            "{$locale->msg('Season')} " + Add(getFocusMenuIndex(),1)  + "/" + Add(menuCount,1);
+        </script>
+    </text>
+
+    <text redraw="yes" align="right" offsetXPC="18" offsetYPC="87" widthPC="6" heightPC="6" fontSize="14" foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}">
+        <script>
+            Add(getFocusItemIndex(),1) + "/" + getPageInfo("itemCount");
+        </script>
+    </text>
+    <text redraw="yes" offsetXPC="24" offsetYPC="87" widthPC="55" heightPC="6" fontSize="16" foregroundColor="255:255:255" backgroundColor="{$config->get(bgNormal)}">
+        <script>getItemInfo("title");</script>
+    </text>
+<menuDisplay>
+    <script>
+        bgNormal  = "{$config->get(bgNormal)}";
+        bgFocus   = "{$config->get(bgFocus)}";
+        fgNormal  = "{$config->get(fgNormal)}";
+        fgFocus   = "{$config->get(fgFocus)}";
+        bgFocusInactive  = "100:100:100";
+
+        if (getFocusMenuIndex() == getQueryMenuIndex()) {
+            if(getPageInfo("majorContext")== "menu") {
+                itemBg = bgFocus;
+            } else {
+                itemBg = bgFocusInactive;
+            }
+            itemFg = fgFocus;
+        } else {
+            itemBg = bgNormal;
+            itemFg = fgNormal;
+        }
+    </script>
+    <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" fontSize="16" cornerRounding="5">
+        <backgroundColor><script>itemBg;</script></backgroundColor>
+        <foregroundColor><script>itemFg;</script></foregroundColor>
+        <script>getStringArrayAt(menuArray,getQueryMenuIndex());</script>
+    </text>
+</menuDisplay>
+<itemDisplay>
+    <script>
+        bgNormal  = "{$config->get(bgNormal)}";
+        bgFocus   = "{$config->get(bgFocus)}";
+        fgNormal  = "{$config->get(fgNormal)}";
+        fgFocus   = "{$config->get(fgFocus)}";
+        bgFocusInactive  = "100:100:100";
+
+        if (getFocusItemIndex() == getQueryItemIndex()) {
+            if(getPageInfo("majorContext")== "items") {
+                itemBg = bgFocus;
+            } else {
+                itemBg = bgFocusInactive;
+            }
+            itemFg = fgFocus;
+        } else {
+            itemBg = bgNormal;
+            itemFg = fgNormal;
+        }
+    </script>
+
+    <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" cornerRounding="5">
+        <foregroundColor><script>itemFg;</script></foregroundColor>
+        <backgroundColor><script>itemBg;</script></backgroundColor>
+    </text>
+    <text offsetXPC="1" offsetYPC="4.5" widthPC="6" heightPC="90" fontSize="16">
+        <foregroundColor><script>itemFg;</script></foregroundColor>
+        <backgroundColor><script>itemBg;</script></backgroundColor>
+        <script>
+            curr  = Add(getQueryItemIndex(), 1);
+            count = getPageInfo("itemCount");
+            if (count &gt; 99) {
+                if (curr &lt; 10) {
+                    curr = "00" + curr;
+                } else if (curr &lt; 100) {
+                    curr = "0" + curr;
+                }
+            } else if (count &gt; 9 &amp;&amp; curr &lt; 10) {
+                curr = "0" + curr;
+            }
+            curr;
+        </script>
+    </text>
+    <text offsetXPC="6" offsetYPC="5" widthPC="93" heightPC="90" fontSize="16">
+        <foregroundColor><script>itemFg;</script></foregroundColor>
+        <backgroundColor><script>itemBg;</script></backgroundColor>
+        <script>getItemInfo("title");</script>
+    </text>
+</itemDisplay>
+{call getIdleImages}
+</mediaDisplay>
+
+{foreach $mediaObj->getChildren() as $season}
+<submenu>
+    <title>{$season->title}</title>
+</submenu>
+{/foreach}
+<item_template>
+<title>
+     <script>
+        getStringArrayAt(titleArray , -1);
+     </script>
+</title>
+<link>
+    <script>link = "{$config->get(cfg_processing_url,Runtime)}&amp;id=" + getStringArrayAt(idArray , -1) + "&amp;type=STREAM_URL";
+    link;
+    </script>
+</link>
+<enclosure type="video/mp4" >
+<url>
+    <script>
+        link = "{$config->get(cfg_processing_url,Runtime)}&amp;id=" + getStringArrayAt(idArray , -1) + "&amp;type=STREAM_URL&amp;mode=redirect";
+        print("url: " + link);
+        link;
+    </script>
+</url>
+</enclosure>
+</item_template>
+
+<channel>
+<itemSize>
+    <script>
+        itemSize;
+    </script>
+</itemSize>
+</channel>
+</rss>

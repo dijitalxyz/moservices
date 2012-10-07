@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'yourock.rocktelevision.com' plug-in
+#
+# version: 1.0 06.03.2011 21:19
+#
+# http://yourock.rocktelevision.com/VideoPlayer/TabId/56/VideoId/508/ORANGE-LEM--Geometric-Woman.aspx
+#
+
+local UVGINFO=$TMPFILE.uvginfo
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -q -s 'yourock\.rocktelevision\.com/.*/VideoId/[0-9][0-9]*/.*$'; then 
+	
+	local video_id=`echo "${arg_url}" | sed 's/.*VideoId\///;s/\/.*//g'`
+
+#http://yourock.rocktelevision.com/DesktopModules/UltraVideoGallery/vId.aspx?vId=508&portalId=0&timeStamp=6211742&baseUrl=/DesktopModules/UltraVideoGallery/
+
+  $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "http://yourock.rocktelevision.com/DesktopModules/UltraVideoGallery/vId.aspx?vId=${video_id}&portalId=0&timeStamp=`date +%s`&baseUrl=/DesktopModules/UltraVideoGallery/" 2>/dev/null
+  if [ -f ${TMPFILE} ]; then
+    awk -f getxml.awk -f ${PLUGINS_DIR}cultandrare.rocktelevision.com.uvg.awk "$TMPFILE" > $UVGINFO
+    stream_type='video/x-flv'
+    stream_url='http://yourock.rocktelevision.com'`sed -n '1p' ${UVGINFO}`
+    protocol='http'
+    icy_name=`sed -n '2p' ${UVGINFO}`
+    rm -f $UVGINFO
+    rm -f $TMPFILE
+  fi  
+  return $RC_OK
+fi
+
+return $RC_FAIL

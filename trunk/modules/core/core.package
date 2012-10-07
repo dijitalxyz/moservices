@@ -1,0 +1,9 @@
+[core]
+	revision = 36
+	title = "moServices core"
+	role = core
+	init = S01core
+	backup = "etc/core.ini"
+	config_link = "?page=sets"
+	files="etc/core.ini etc/init/S01core www/modules/core/ www/index.php www/favicon.ico"
+	size = 844

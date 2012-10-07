@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name="onePartView"
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemXPC="30"
+	itemYPC="25"
+	itemWidthPC="40"
+	itemHeightPC="7"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="9"
+  itemGap="0"
+	bottomYPC="90"
+	showHeader="no"
+	showDefaultInfo="no"
+	sliding="yes"
+	imageFocus=""
+	imageUnFocus=""
+	imageParentFocus=""
+>
+
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  URAVO.TV
+		</text>
+
+		<image offsetXPC=5 offsetYPC=2 widthPC=25 heightPC=16>
+		  ../etc/translate/rss/image/uravo.png
+      <widthPC>
+        <script>
+          25 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          5 + 25 * (1 - screenYp / screenXp) / 2;
+        </script>
+      </offsetXPC>
+		</image>
+
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+	
+	<itemDisplay>
+		<text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" fontSize="17" backgroundColor="0:0:0" foregroundColor="250:250:250">
+			<script>
+			  idx = getQueryItemIndex();
+			  focus = getFocusItemIndex();
+		    getItemInfo(idx, "title");
+			</script>
+		  <foregroundColor>
+  			<script>
+  			  idx = getQueryItemIndex();
+  			  focus = getFocusItemIndex();
+  		    if(idx==focus) "255:255:255"; else "150:150:150";
+  			</script>
+		  </foregroundColor>
+		  <backgroundColor>
+  			<script>
+  			  idx = getQueryItemIndex();
+  			  focus = getFocusItemIndex();
+  		    if(idx==focus) "10:105:150"; else "0:0:0";
+  			</script>
+		  </backgroundColor>
+		  <offsetXPC>
+		    <script>
+		      idx = getQueryItemIndex();
+		      value = getItemInfo(idx, "indent");  
+		      if(value == "" || value == null)
+		        value = 0;
+		      value;
+		    </script>
+		  </offsetXPC>
+		  <widthPC>
+		    <script>
+		      100 - value;
+		    </script>
+		  </widthPC>
+		</text>
+	</itemDisplay>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown" || userInput == "PD")
+        {
+          idx -= -9;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 9;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+      	setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      ret;
+    </script>
+  </onUserInput>
+
+</mediaDisplay>
+
+<item_template>
+	<mediaDisplay name="photoView">
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+	</mediaDisplay>
+	<onClick>
+	  <script>
+	     focus = getFocusItemIndex();
+	     path = getItemInfo(focus, "path");
+	     if(path != null &amp;&amp; path != "") {
+	      showIdle();
+	      doModalRss(translate_base_url + "app/uravo/chapter,"+path);
+	      cancelIdle();
+	     }
+	  </script>
+	</onClick>
+</item_template>
+
+<onExit></onExit>
+
+<onEnter>
+  itemCount = getPageInfo("itemCount");
+
+<!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+  
+  storagePath = getStoragePath("tmp");
+</onEnter>
+
+<!--`cat "$CHANNELFILE"`-->
+
+</rss>

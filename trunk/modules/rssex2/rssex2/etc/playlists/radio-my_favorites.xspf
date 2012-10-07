@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+   <title>Радио - избранное</title>
+   <trackList>
+      <track>
+         <annotation>RTFM-радио — первое в Томске интернет-радио с живыми диджеями, которое не будет подчиняться обычным законам работы российских эфирных радиостанций.</annotation>
+         <title>RTFM</title>
+         <image>http://guzei.com/online_radio/logo/5337.png</image>
+         <location>http://stream.rtfm.fm</location>
+      
+<meta rel="stream_url">http://stream.rtfm.fm</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">RTFM.fm</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+<track>
+  <location>http://station.ru/RadioStation.aspx?id=1743</location>
+  <title>Хит FM Italy</title>
+  <annotation>Итальянская эстрада, поп-музыка</annotation>
+  <image>../etc/translate/rss/image/stationru/hit_italy.gif</image>
+<meta rel="stream_url">mmsh://broadcast05.station.ru/station15</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">station.ru</meta>
+<meta rel="stream_server">http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=station15</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Хит FM Italy / station.ru</meta>
+</track>
+      <track>
+         <location>http://voxsc1.somafm.com:8700</location>
+         <title>Covers</title>
+         <annotation>All covers. All the time. Nothing by the original artists!</annotation>
+         <image>../etc/translate/rss/image/somafm/covers120.jpg</image>
+      
+<meta rel="stream_url">http://voxsc1.somafm.com:8700</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Cover Me: All covers, all the time. [SomaFM]</meta>
+<meta rel="stream_genre">Experimental Eclectic</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+      <track>
+         <location>http://voxsc1.somafm.com:8884</location>
+         <title>Underground 80s</title>
+         <annotation>Early 80s UK Synthpop and a bit of New Wave.</annotation>
+         <image>../etc/translate/rss/image/somafm/u80s-120.png</image>
+      
+<meta rel="stream_url">http://voxsc1.somafm.com:8884</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Underground Eighties: UK Synthop and a bit of New Wave. [SomaFM]</meta>
+<meta rel="stream_genre">80s New Wave Synthpop</meta>
+<meta rel="stream_bitrate">192</meta>
+</track>
+      <track>
+         <location>http://u11b.di.fm:80/di_chillout_aacplus</location>
+         
+         <title>Chillout</title>
+         <annotation>Ambient psy chillout, check out our trippy flavors!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic Chillout Ambient</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+</track>
+   </trackList>
+</playlist>

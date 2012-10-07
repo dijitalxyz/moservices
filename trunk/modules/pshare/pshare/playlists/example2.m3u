@@ -1,0 +1,19 @@
+#EXTM3U
+#EXTINF:0,Эфирный: Первый
+#EXTLOGO: http://aaa/logo.jpg
+#EXTTYPE: mp3,DLNA.ORG_PN=MP3;DLNA.ORG_OP=01;DLNA.ORG_FLAGS=01700000000000000000000000000000
+http://192.168.1.1:4022/udp/234.5.2.1:20000
+#EXTINF:0,Эфирный: Первый2222
+#EXTINF:0,Эфирный: Россия
+#EXTLOGO: http://aaa/logo.gif
+http://192.168.1.1/udp/234.5.2.2:20000
+#EXTINF:0,Эфирный: ТВЦ
+#EXTTYPE: mp3
+http://192.168.1.1:4022
+#EXTINF:0,Эфирный: ТВЦ
+#EXTTYPE: mp3
+http://192.168.1.1
+#EXTINF:0,Test AVI
+http://192.168.6.36/shocker/test.avi
+#EXTINF:0,Test MP3
+http://192.168.6.36/shocker/test.mp3

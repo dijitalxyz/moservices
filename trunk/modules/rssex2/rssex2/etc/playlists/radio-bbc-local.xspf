@@ -1,0 +1,512 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+<title>BBC Radio Nations &amp; Local</title>
+<trackList>
+<track>
+<title>Radio Cymru</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/rc.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/nations/cymru?BBC-UID=04ee53d8a9236b4e89324fd531120704728264a7605021f4940f196794331d85&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Radio Cymru</meta>
+</track>
+<track>
+<title>Radio Foyle</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/rf.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/nations/foyle?BBC-UID=b46e431889e3fd242a675bf1e16105a266c6be9280f0024192089004b3bc0088&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Radio Foyle</meta>
+</track>
+<track>
+<title>Radio nan Gaidheal</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/rng.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/nations/nangaidheal?BBC-UID=243e93e889d33ed889536fef11e1f35369903a468020b164b40f49e704d38d15&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Radio Nan Gaidheal</meta>
+</track>
+<track>
+<title>Radio Scotland</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/rs.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/nations/scotland?BBC-UID=547e03b81933df7da81099d7e1fa8a93c438c40ab050a1e4a48fb821dcaa8c1d&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Radio Scotland</meta>
+</track>
+<track>
+<title>Radio Ulster</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/ru.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/nations/ulster?BBC-UID=048e03c889a42173b9f5401771ecef5263608972b090b1f4f47fb9c794931d15&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Radio Ulster</meta>
+</track>
+<track>
+<title>Radio Wales</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/rw.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/nations/wales?BBC-UID=e4ce23f8991462a7bd34abea4137703aad0e617bf020e1b444afb967b4c31394&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Radio Wales</meta>
+</track>
+<track>
+<title>BBC Berkshire</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcberkshire.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrberkshire?BBC-UID=842ed31819d4232f0e6021d0817e4d468f5d259a3000a154f41feafa9def28ef&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Radio Berkshire / BBC</meta>
+</track>
+<track>
+<title>BBC Bristol</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcbristol.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrbristol?BBC-UID=44ee53c8f984059ee9e60f12a16e3c40da3e7f9d201051b474ef99b7ccb2dac1&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Bristol</meta>
+</track>
+<track>
+<title>BBC Cambridgeshire</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbccambridgeshire.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrcambridgeshire?BBC-UID=347ef3c8196477d40997b64421e61f693ec2867fd0d05184344fb9f754a30da5&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Radio Cambridge / BBC</meta>
+</track>
+<track>
+<title>BBC Cornwall</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbccornwall.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrcornwall?BBC-UID=24ee43f83954b889eaece1edf1460bdecfa82c273040e2f152384064833c0048&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Cornwall</meta>
+</track>
+<track>
+<title>BBC Coventry &amp; Warwickshire</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbccoventryandwarwickshire.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrcoventryandwarwickshire?BBC-UID=a46e53e8a9442a58745837c7b1602a32e4c37b96a0b092a1e2c87074c42d1234&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Coventry &amp; Warwickshire</meta>
+</track>
+<track>
+<title>BBC Cumbria</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbccumbria.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrcumbria?BBC-UID=549e53e839640d1a9abe91dab114a3c1be8ea48660d032f182b81034136cf068&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Cumbria</meta>
+</track>
+<track>
+<title>BBC Derby</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcderby.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrderby?BBC-UID=14be733809e46f9a48460c47c1b018e29248de3cf070e1c4943fc8612c7a5c0d&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Derby</meta>
+</track>
+<track>
+<title>BBC Devon</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcdevon.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrdevon?BBC-UID=341eb318f9e5c04f34ba9f1bd1396ba39c8addddd05032f1320810c4b44d7234&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Devon</meta>
+</track>
+<track>
+<title>BBC Essex</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcessex.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lressex?BBC-UID=444e2308b9b5c27d699bbef961c365c80985e3d19020810484cf0957c493ad95&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Radio Essex / BBC</meta>
+</track>
+<track>
+<title>BBC Gloucestershire</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcgloucestershire.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrgloucestershire?BBC-UID=e46e8368f945c4333ec68658213099c76089991790109134e4bf1aea9dafc8ef&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Gloucester</meta>
+</track>
+<track>
+<title>BBC Guernsey</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcguernsey.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrguernsey?BBC-UID=a4cef3382955c5e83470a4ae3179a1c2f5042d0300d0f19474df88d19f5bf655&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Guernsey</meta>
+</track>
+<track>
+<title>BBC Hereford &amp; Worcester</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcherefordandworcester.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrherefordandworcester?BBC-UID=84eea3a82935264d8204f6b051c1aaced89ef08630601184e47f3a51743d7b37&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Hereford &amp;Worcester</meta>
+</track>
+<track>
+<title>BBC Humberside</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbchumberside.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrhumberside?BBC-UID=54bee3f809d56892091ec0d001666c19d556832cd0d0b14464bf59477423ad65&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Humberside</meta>
+</track>
+<track>
+<title>BBC Jersey</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcjersey.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrjersey?BBC-UID=a44e1388a9f5d9e689de6902f15e338ac901a6aef0e0d104b4df49b70c225aa1&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Jersey</meta>
+</track>
+<track>
+<title>BBC Kent</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbckent.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrkent?BBC-UID=f46ea39829159a7c590f51085170e6ae55c123cf2040d144040f29f79c82ea51&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Radio Kent / BBC</meta>
+</track>
+<track>
+<title>BBC Lancashire</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbclancashire.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrlancashire?BBC-UID=a4ee832869f59ce144528dfb6157335a2a8cc1a990d09144f43f48b15fab66d5&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Lancashire</meta>
+</track>
+<track>
+<title>BBC Leeds</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcleeds.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrleeds?BBC-UID=b4de3328d9759d340bb4031371baf96b246f4ca1b0b032f19268a0b4332c3028&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Leeds</meta>
+</track>
+<track>
+<title>BBC Leicester</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcleicester.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrleicester?BBC-UID=a47e1348a9253e797e4a37c5515cb53411eeeba9d060819404bfdaba6dff583f&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Leicester</meta>
+</track>
+<track>
+<title>BBC Lincolnshire</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbclincolnshire.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrlincolnshire?BBC-UID=74bea3e87926c0c049c0d2fa019e361f3bb7c29140305154946fe9975276462b&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Lincolnshire</meta>
+</track>
+<track>
+<title>BBC London</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbclondon.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrlondon?BBC-UID=b4ce2358e9c6b25a09c132ddb1c7b0812a6a99caf0906164548f796792a6462b&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Radio London / BBC</meta>
+</track>
+<track>
+<title>BBC Manchester</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcmanchester.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrmanchester?BBC-UID=541ef3d8e9d6f4487981def901508c6e7647ed8680d0e144c4af0957b276962b&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Manchester</meta>
+</track>
+<track>
+<title>BBC Merseyside</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcmerseyside.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrmerseyside?BBC-UID=349ec3c89916163cc748d79aa11daecff999bbc990e00174345f39d74d76513f&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Merseyside</meta>
+</track>
+<track>
+<title>BBC Newcastle</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcnewcastle.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrnewcastle?BBC-UID=14eea3c81926f8c10452392d71bfbf49836d0bb2b010417404aff476e8809e4a&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Newcastle</meta>
+</track>
+<track>
+<title>BBC Norfolk</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcnorfolk.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrnorfolk?BBC-UID=d4be73f8c9c6296f0719abc891d793faed8008d9f020c144443fb9773da6317f&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Norfolk</meta>
+</track>
+<track>
+<title>BBC Northampton</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcnorthampton.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrnorthampton?BBC-UID=143e839889d66b8e0434218ea1a1115de2b0ab823080f1c424ffa42658d03e2a&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Radio Northampton / BBC</meta>
+</track>
+<track>
+<title>BBC Nottingham</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcnottingham.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrnottingham?BBC-UID=14ee332849665d03d484692e9168af59dcae5e0db0f0a15494ff9456c8c03e1a&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Nottingham / BBC Hereford &amp;Worcester</meta>
+</track>
+<track>
+<title>BBC Oxford</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcoxford.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lroxford?BBC-UID=24de3368f9868e96179b1755d14ddb9d4bd5a99e10e0b164f4af4977ad7631ff&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Radio Oxford / BBC</meta>
+</track>
+<track>
+<title>BBC Sheffield</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcsheffield.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrsheffield?BBC-UID=545e233859266fab875b1f18517c0c4865768ad030d091f4648f7927fd2661cf&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Sheffield</meta>
+</track>
+<track>
+<title>BBC Shropshire</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcshropshire.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrshropshire?BBC-UID=245e53e8e9f7306fd426b119f1bd1518b2c9e8a1d0d03134b4dfa42678c05eca&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC  Shropshire</meta>
+</track>
+<track>
+<title>BBC Solent</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcsolent.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrsolent?BBC-UID=34eee308c94702a4a5d7dffe01e6f4ddeb1d0e626070f2f1e20860c494dd5284&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Solent</meta>
+</track>
+<track>
+<title>BBC Somerset</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcsomerset.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrsomerset?BBC-UID=644ec338c9a79472a548cbff81c43055ff021d2e40c0c2f1e2d8c0f404add224&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Somerset</meta>
+</track>
+<track>
+<title>BBC Stoke</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcstoke.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrstoke?BBC-UID=643ec3f8a94775761350546ed1cc26d9f07c9c1b7060e134343f1a91247d8b37&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Stoke</meta>
+</track>
+<track>
+<title>BBC Suffolk</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcsuffolk.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrsuffolk?BBC-UID=649e63383997f63abbcec14eb1f2f67e49495c8de020f271b228a0c4a34c6008&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Suffolk</meta>
+</track>
+<track>
+<title>BBC Surrey</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcsurrey.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrsurrey?BBC-UID=645ef3583977c7be858af356a1e4efee2871e82d70a0e231f26820b4d41d02a4&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Surrey</meta>
+</track>
+<track>
+<title>BBC Sussex</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcsussex.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrsussex?BBC-UID=f43e63988957c9a3f53a3bd4713f9adab49b2f37a0f082017268c0c4d46df2b4&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Sussex</meta>
+</track>
+<track>
+<title>BBC Tees</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbctees.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrtees?BBC-UID=f43e03d8d9873b8a254b7a1bc1273da45d8976ad90f0d2f162287034d41d8294&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Tees</meta>
+</track>
+<track>
+<title>BBC Three Counties</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcthreecounties.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrthreecounties?BBC-UID=04ee23385987cc9f2ce0e95681ba19f8a4fd5628d09082610288a014c32cb048&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">Radio Three Counties / BBC</meta>
+</track>
+<track>
+<title>BBC Wiltshire</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcwiltshire.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrwiltshire?BBC-UID=841e7308c9d75e149cd1b1c4a113ea97115c7c2a202092f1b29870d4038c40d8&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC Wiltshire</meta>
+</track>
+<track>
+<title>BBC WM</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcwm.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lrwm?BBC-UID=941e13e879679f48d56de29b51bbd1eb33aac09960001281d278f0c4b4bde2a4&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC West Midlands / BBC Hereford &amp;Worcester</meta>
+</track>
+<track>
+<title>BBC York</title>
+<annotation>Local news, entertainment and debate</annotation>
+<location>http://bbc.co.uk/radio/listen/live/bbcyork.asx</location>
+<meta rel="stream_url">mmsh://wm-live.bbc.net.uk/wms/england/lryork?BBC-UID=54aea368f9a801958aee01f591d6bdc67df4a30d40c04194143f29d734b3cd15&amp;amp;SSO2-UID=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC York</meta>
+</track>
+</trackList>
+</playlist>

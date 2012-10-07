@@ -1,0 +1,115 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'zoomby.ru' plug-in
+#
+# version: 2.1 01.08.2011 22:02:43
+#
+# http://www.zoomby.ru/watch/4396-kamenskaya-3
+#
+# options:
+#   HD:[0|1]
+
+unset RESOLVE_CACHE_ENABLED
+
+#echo "zoomby.ru.plg started" > /tmp/zoomby.log
+
+local SMILINFO=$TMPFILE.smilinfo
+local PLAYLISTFILE=$CACHEPATH/temp.xspf
+rm -f $PLAYLISTFILE
+
+if echo "${arg_url}" | grep -qs '\(www\.\)*zoomby\.ru/.*$'; then
+
+  get_opt "HD"
+  [ -z "$opt" ] && opt=`sed -n '8p' $RSSCONF 2>/dev/null`
+  [ -z "$opt" ] && opt=$ZOOMBY_HD
+  case $opt in
+    yes|Yes|YES|1)
+      hdc=4
+    ;;
+    no|No|NO|0)
+      hdc=2
+    ;;
+    *)
+      hdc=3
+    ;;
+  esac
+
+  $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>/dev/null
+
+  if [ -f ${TMPFILE} ]; then
+    local smil_path="`awk '/video *=/{match($0,/video *=[ "]*([^&"]+)[&"]/,arr);print arr[1];exit;}' ${TMPFILE}`"
+    if [ -n ${smil_path} ]; then
+     local smil_path="`awk '/video: *"/{match($0,/video:[ "]+([^"]+)"/,arr);print arr[1];exit;}' ${TMPFILE}`"
+    fi
+    $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "http://www.zoomby.ru${smil_path}" 2>/dev/null
+    if [ -f ${TMPFILE} ]; then
+    	if grep -qs "<smil" ${TMPFILE}; then
+    		:
+    	else
+    		$TOUTF8 -x `echo "$smil_path" | sed 's/.*\///g'` <$TMPFILE >$TMPFILE.smil
+		mv -f $TMPFILE.smil $TMPFILE
+	fi
+	cat $TMPFILE | sed 's/>/>\n/g' >$TMPFILE.smil
+	mv -f $TMPFILE.smil $TMPFILE
+	local swcount=`grep "</switch>" $TMPFILE | wc -l`
+	if [ $swcount -eq 1 ]; then
+	      stream_type='video/mp4'
+	      server_type='zoomby'
+	      awk -f getxml.awk -f ${PLUGINS_DIR}zoomby.ru.smil.awk "$TMPFILE" > $SMILINFO
+	      stream_url=`sed -n "${hdc}p" $SMILINFO | awk '{print $2;}'`
+	      protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+	      icy_name=`sed -n '1p' $SMILINFO`
+	      if [ "$protocol" = "rtmp" ]; then
+		      if echo "$RTMPDUMP" | grep -qs flvstreamer; then
+		        stream_url="`echo ${stream_url} | sed 's/\(.f4v\)/\1\1/'`"
+		      fi
+		    fi
+	      rm -f $SMILINFO
+        local rtmp_playpath=`echo "$stream_url" | sed 's/^.*\/mp4:/mp4:/;s/?.*//'`
+        arg_opt="Rtmp-options:-y $rtmp_playpath;"$arg_opt
+        if [ "$arg_cmd" = "info" -a  "$protocol" = "rtmp" ]; then
+          if echo "$arg_url" | $TOUTF8 -t; then
+    				stream_url=`echo "$arg_url" | $XCODE -s | $TOUTF8`
+    		  else
+    		    stream_url="$arg_url"
+          fi
+          stream_type=
+          server_type='_translate_'
+          protocol='http'
+          stream_class='video'
+        fi
+	elif [ $swcount -gt 1 ]; then
+	      local f4v=
+	      if echo "$RTMPDUMP" | grep -qs flvstreamer; then
+	        f4v=".f4v"
+	      fi
+	      awk -f getxml.awk -v QUALITY="$hdc" -v EXT="$f4v" -f ${PLUGINS_DIR}zoomby.ru.xspf.awk "$TMPFILE" > $PLAYLISTFILE
+	      stream_type='application/xspf+xml'
+	      stream_url=$PLAYLISTFILE
+	      protocol='file'
+	fi
+      rm -f $TMPFILE
+    fi
+  fi
+  return $RC_OK
+fi
+
+return $RC_FAIL

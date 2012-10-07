@@ -1,0 +1,9 @@
+#EXTM3U
+#EXTINF:-1,Плеер USB
+/var/ramfs/volumes/
+#EXTINF:-1,Плеер Playlists
+/usr/local/etc/playlist/
+#EXTINF:-1,Home Playlists
+/tmp/usbmounts/sda3/Media/Playlists/XSPF/
+#EXTINF:-1,Local FTP
+ftp://127.0.0.1/

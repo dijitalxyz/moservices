@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <title>Radiogrom.com - classic</title>
+  <trackList>
+    <track>
+      <location>http://www.radiogrom.com/online/moskva_fm/orfey_online.html</location>
+      <title>Радио Орфей</title>
+      <annotation>Основу вещания радиостанции «Орфей» составляет классическая музыка. Программы «Орфея» включают русскую и зарубежную классику, духовную музыку, фольклор и джаз, классическую оперетту</annotation>
+    
+<meta rel="stream_url">mmsh://live.rfn.ru/orfey/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/classic/radio_bbc_3_online.html</location>
+      <title>Радио BBC Radio 3</title>
+      <annotation>Одна из самых популярных радиостанций Великобритании, вещающая классическую музыку. Формат BBC Radio 3: классическая музыка, джаз, драматическая музыка и национальная музыка мира.</annotation>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/classic/radio_wqxr_fm_online.html</location>
+      <title>Радио WQXR FM</title>
+      <annotation>WQXR FM - это старейшая радиостанция США (работает с 1939 года), вещающая классическую музыку. </annotation>
+    
+<meta rel="stream_url">mmsh://wnycwm.streamguys.com/bumpers/wnycam-fm.wma</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/classic/radio_classic_fm_praha_online.html</location>
+      <title>Радио Classic FM</title>
+      <annotation>Classic FM - одна из самых популярных чешких радиостанций, вещающих так называемый classic music. Classic FM вещает в Праге на частоте 98.7FM, а также по всему миру через компьютерную сеть интернет.</annotation>
+    
+<meta rel="stream_url">mms://netshow4.play.cz/classic128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">rtsp</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/classic/radio_Suisse_Classique_online.html</location>
+      <title>Radio Suisse Classique</title>
+      <annotation>Radio Suisse Classique - швейцарская радиостанция, передающая классическую музыку без перерыва с анонсами на французском языке. В плейлисте Radio Suisse Classique чаще всего встречаются такие имена как Giuseppe Verdi, Vincenzo Bellini, Edvard Grieg, Wolfgang Amadeus Mozart, Niccolo Paganini.</annotation>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/classic/radio_Pop_Classical_Music_online.html</location>
+      <title>Радио Pop Classical Music</title>
+      <annotation>Pop Classical Music - это лучшее из классической музыки от ведущего российского радиохолдинга "Вещательная корпорация «Проф-Медиа»" и интернет-портала 101.ru.</annotation>
+    
+<meta rel="stream_url">mmsh://mos2.101.ru/c16_4_128?st=</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/classic/radio_RMF_Classic_online.html</location>
+      <title>Радио RMF Classic</title>
+      <annotation>Слоган польской радиостанции RMF Classic - "RMF Classic - Muzyka z Klasa". Он полностью совпадает с музыкальным и программным наполнением эфира. На RMF Classic вы услышите как классическую музыку, так и оперу, музыку из фильмов, а также концерты современных исполнителей классики.</annotation>
+    
+<meta rel="stream_url">http://www.miastomuzyki.pl/wpl/mmsrc.asx?id=7&amp;n=0&amp;m=0</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_type">audio/x-ms-wax</meta>
+<meta rel="stream_protocol">http</meta>
+</track>
+  </trackList>
+</playlist>

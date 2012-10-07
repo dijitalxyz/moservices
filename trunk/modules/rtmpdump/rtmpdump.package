@@ -1,0 +1,6 @@
+[rtmpdump]
+	revision= 1
+	title = "RTMPDump v2.3"
+	role = package
+	files="bin/rtmpdump"
+	size = 2720

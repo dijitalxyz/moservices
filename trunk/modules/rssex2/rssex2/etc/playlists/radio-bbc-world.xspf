@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+<title>BBC World Service</title>
+<trackList>
+<track>
+<title>English (UK Schedule)</title>
+<annotation>BBC World Service - English (UK Schedule). / BBC World Service</annotation>
+<location>http://www.bbc.co.uk/worldservice/meta/tx/nb/live_infent_au_nb.asx</location>
+<meta rel="stream_url">mmsh://a1022.l3944043021.c39440.g.lm.akamaistream.net/D/1022/39440/v0001/reflector:43021</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC World Service - EIEUK network. / BBC World Service</meta>
+</track>
+<track>
+<title>English News</title>
+<annotation>BBC World Service - 24 Hour News Stream. / BBC World Service</annotation>
+<location>http://www.bbc.co.uk/worldservice/meta/tx/nb/live_news_au_nb.asx</location>
+<meta rel="stream_url">mmsh://a279.l3944048278.c39440.g.lm.akamaistream.net/D/279/39440/v0001/reflector:48278</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC World Service - EINWS network. / BBC World Service</meta>
+</track>
+<track>
+<title>BBC Arabic</title>
+<annotation>BBC World Service - bbcarabic.com. / BBC World Service</annotation>
+<location>http://www.bbc.co.uk/arabic/meta/tx/nb/arabic_live_au_nb.asx</location>
+<meta rel="stream_url">mmsh://a294.l3944042293.c39440.g.lm.akamaistream.net/D/294/39440/v0001/reflector:42293</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC World Service - ARABA network. / BBC World Service</meta>
+</track>
+<track>
+<title>BBC Russian</title>
+<annotation>BBC World Service - bbcrussian.com. / BBC World Service</annotation>
+<location>http://www.bbc.co.uk/russian/meta/tx/nb/russian_live_au_nb.asx</location>
+<meta rel="stream_url">mmsh://a89.l3944044088.c39440.g.lm.akamaistream.net/D/89/39440/v0001/reflector:44088</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+<meta rel="stream_title">BBC World Service - RUSSA network. / BBC World Service</meta>
+</track>
+</trackList>
+</playlist>

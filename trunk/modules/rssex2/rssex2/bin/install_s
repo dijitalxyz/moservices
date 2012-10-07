@@ -1,0 +1,25 @@
+#!/bin/sh
+
+cd ..
+
+rm -rf /usr/local/etc/translate
+mkdir -p /usr/local/etc/translate/bin
+
+ln -s `pwd`/app /usr/local/etc/translate/app
+ln -s `pwd`/etc /usr/local/etc/translate/etc
+ln -s `pwd`/lib /usr/local/etc/translate/lib
+ln -s `pwd`/plugins /usr/local/etc/translate/plugins
+ln -s `pwd`/rss /usr/local/etc/translate/rss
+ln -s `pwd`/www /usr/local/etc/translate/www
+
+cd bin
+for f in *; do ln -s `pwd`/$f /usr/local/etc/translate/bin/$f; done
+
+cd /usr/local/etc/translate/bin
+ln -sf ex_module msdl
+ln -sf ex_module flac
+ln -sf ex_module xcode
+ln -sf ex_module toutf8
+ln -sf ex_module flvstreamer
+ln -sf ex_module md5
+ln -sf ex_module sha2

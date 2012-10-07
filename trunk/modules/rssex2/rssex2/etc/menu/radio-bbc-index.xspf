@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>BBC Radio</title>
+
+  <trackList>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Start:left;File:etc/playlists/radio-bbc-world.xspf,collection/medialist</link>
+      <title>BBC World Service</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radio-bbc.xspf,collection/medialist</link>
+      <title>BBC Radio</title>
+      <annotation>Other BBC Radio Stations</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radio-bbc-local.xspf,collection/medialist</link>
+      <title>BBC Radio Nations &amp; Local</title>
+      <annotation>Local news, entertainment and debate</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+  </trackList>
+
+</playlist>

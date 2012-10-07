@@ -1,0 +1,8 @@
+[httpd]
+	revision = 1
+	title ="HTTPd busybox daemon"
+	role = package
+	backup = "etc/httpd.conf"
+	files="etc/init/S07httpd etc/httpd.conf"
+	require="busybox"
+	size = 44

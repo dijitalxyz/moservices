@@ -1,0 +1,63 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'cinema.mosfilm.ru' plug-in
+#
+# version: 1.1 23.07.2011 14:14
+#
+# http://www.cinema.mosfilm.ru/Film.aspx?id=ee914026-6828-4327-9f31-a3a63623dbd1
+#
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -qs '\(www\.\)*cinema\.mosfilm\.ru/Film.aspx?id=.*$'; then 
+
+  local url
+
+  if echo "${arg_url}" | grep -qs 'autoplay=true'; then 
+    url="${arg_url}"
+  else
+    url="${arg_url}&autoplay=true"
+  fi
+
+	$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "$url" 2>&1
+	
+	local video_id=`grep 'movieType=privateOnline' ${TMPFILE} | sed -n '1p' | sed 's/^.*,id=//;s/,.*$//g'`
+	local film_title=`grep '<h1' ${TMPFILE} | sed 's/.*id=[^>]*>//;s/<\/.*//g'`
+	local film_year=`grep '_yearLabel"' ${TMPFILE} | sed 's/.*_yearLabel"[^>]*>//;s/<\/.*//g'`
+	
+  $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "http://www.cinema.mosfilm.ru/GetMovieCode.ashx?purchaseID=${video_id}" 2>&1
+  if [ -f ${TMPFILE} ]; then
+    local code=`sed -n '1p' ${TMPFILE}`
+
+    $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "http://cinema.mosfilm.ru/MovieWithOutSessionState.ashx?getserver=${code}" 2>&1
+
+    stream_url=`sed -n '1p' ${TMPFILE}`
+    stream_url=${stream_url:-"http://www.cinema.mosfilm.ru/MovieWithOutSessionState.ashx?code=${code}"}
+    
+    stream_type='video/x-ms-wmv'
+    protocol='http'
+    icy_name="${film_title}${film_year:+" ($film_year)"}"
+    rm -f $TMPFILE
+  fi  
+  return $RC_OK
+fi
+
+return $RC_FAIL

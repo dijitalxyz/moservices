@@ -1,0 +1,65 @@
+#!/bin/sh
+#
+# description: Starts and stops Sayler MediaRSS
+#
+etc=/usr/local/etc
+mos=$etc/mos
+sayler=$mos/mediarss
+
+cgi=/tmp/www/cgi-bin
+conf=$mos/etc
+if [ -d '/sbin/www' ] ; then
+	cgi='/sbin/www/cgi-bin'
+	conf='/sbin/www'
+fi
+
+case "$1" in
+  start)
+	echo "Starting MediaRSS..."
+	[ ! -d $cgi ] && mkdir -p $cgi
+	cp -f $sayler/rss $cgi
+	rm -f $etc/sayler
+	ln -s $sayler/templates/ $etc/sayler
+	;;
+  stop)
+	echo "Stopping MediaRSS..."
+	rm -f $cgi/rss
+	rm -f $etc/sayler
+	;;
+
+  status)
+	if [ -e $etc/sayler ] ; then
+	  echo "MediaRSS is running"
+	else
+	  echo "MediaRSS is stopped"
+	fi
+	;;
+
+  enable)
+	echo "Enabling MediaRSS..."
+	cp -fp  $sayler/sayler.conf $etc/
+	cp -fp  $sayler/sayler.list $etc/
+	mkdir -p $etc/playlist
+	cp -fp $sayler/playlist/* $etc/playlist/
+	# patch lighttpd.conf
+	if [ -f $conf/lighttpd.conf ] ; then
+		if ! grep -q '"/rss" => ""' $conf/lighttpd.conf ; then
+			sed -i '
+/".sh"	=> "",/a\
+				"/rss" => "",
+' $conf/lighttpd.conf
+			echo "Please, reboot device!"
+		fi
+	fi
+	;;
+
+  disable)
+	echo "Disabling MediaRSS..."
+	rm -f $etc/sayler.conf
+	rm -f $etc/sayler.list
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+esac
+
+exit $?

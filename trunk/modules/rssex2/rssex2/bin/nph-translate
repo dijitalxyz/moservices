@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ -f "$1" ]; then
+    cat "$1"
+    rm -f "$1"
+fi

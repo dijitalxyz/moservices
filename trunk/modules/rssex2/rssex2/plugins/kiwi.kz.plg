@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#   Copyright (C) 2011  nnb
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'mults.spb.ru' plug-in
+#
+# version: 1.1 13.12.2011 11:30:39
+#
+# http://kiwi.kz/watch/hijx5nx5jitq/
+#
+
+if echo "${arg_url}" | grep -qs 'kiwi\.kz\/watch\/.*'; then
+
+  host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>&1`
+
+  if [ -f ${TMPFILE} ]; then
+    stream_type='video/mp4'
+    stream_url=`awk '/<param name="movie"/{ match($0, /value="([^"]+)"/, arr); print arr[1]; }' ${TMPFILE} | unescapeXML | urldecode | sed 's/^.*\(url\|file\)=//;s/&.*$//'`
+    protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+    icy_name=`grep "<title>" ${TMPFILE} | sed 's/^.*<title>//;s/<\/title>.*$//' | unescapeXML`
+    rm -f $TMPFILE
+  fi
+  return $RC_OK
+fi
+
+return $RC_FAIL

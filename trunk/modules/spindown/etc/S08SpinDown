@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case "$1" in
+  stop)
+	/usr/local/etc/mos/etc/init/S14spindown down
+	;;
+  *)
+	;;
+esac
+
+exit $?

@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# description: Starts and stops the Telnet
+#
+etc=/usr/local/etc
+mos=$etc/mos
+bin=$mos/bin
+
+case "$1" in
+  start)
+	echo "Starting telnetd..."
+
+	$bin/telnetd -p 23
+	;;
+  stop)
+	echo "Stopping telnetd..."
+
+	pid=$( echo $( ps | grep 'mos/bin/[t]elnetd' ) | cut -d' ' -f1 )
+	for i in $pid ; do
+		kill $i
+	done
+	;;
+
+  status)
+	if ps | grep -q 'mos/bin/[t]elnetd' ; then
+	  echo "telnetd is running"
+	else
+	  echo "telnetd is stopped"
+	fi
+	;;
+
+  enable | disable)
+	;;
+
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

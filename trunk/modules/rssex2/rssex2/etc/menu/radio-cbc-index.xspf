@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>BBC Radio</title>
+
+  <trackList>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,Start:left;File:etc/playlists/radio-cbc-radio1.xspf,collection/medialist</link>
+      <title>CBC Radio One</title>
+      <annotation></annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radio-cbc-radio2.xspf,collection/medialist</link>
+      <title>CBC Radio 2</title>
+      <annotation>Live Streams, Online Music Channels</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+<!--
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radio-cbc-radio3.xspf,collection/medialist</link>
+      <title>CBC Radio 3</title>
+      <annotation>Live Stream</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+-->
+  </trackList>
+
+</playlist>

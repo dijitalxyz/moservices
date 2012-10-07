@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/">
+  <title>ProFM</title>
+  <image>http://www.profm.ro/images/logotip.jpg</image>
+  <trackList>
+    <track>
+      <location>http://stream.profm.ro:8012/profm.mp3</location>
+      <title>ProFM</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/2444770/2/logo-profm.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8012/profm.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Live</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">0</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8032/dancefm.mp3</location>
+      <title>ProFM Dance</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/2434348/2/profm-dance.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8032/dancefm.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">DanceFM Live</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8349/profmdiverse.mp3</location>
+      <title>ProFM Guns'n'Roses</title>
+      <image></image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8349/profmdiverse.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8332/profmrogen.mp3</location>
+      <title>ProFM Romania, Gen</title>
+      <image>http://web3.protv.ro/assets/infopro/profm_gen.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8332/profmrogen.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM RO Gen</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8360/profmmichaeljackson.mp3</location>
+      <title>ProFM Michael Jackson</title>
+      <image>http://web3.protv.ro/assets/infopro/profm-mj.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8360/profmmichaeljackson.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Michael Jackson</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8042/alternativ.mp3</location>
+      <title>ProFM Alternative</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/2434346/2/logo-profm-alternative-final.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8042/alternativ.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Alternative</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8052/black.mp3</location>
+      <title>ProFM Black</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/2434349/2/logo-profm-black-final.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8052/black.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Black</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8082/clasic.mp3</location>
+      <title>ProFM Classic</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/2753564/2/logo-profm-classic.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8082/clasic.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Clasic</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">224</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8112/gold.mp3</location>
+      <title>ProFM Gold</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/2434351/2/logo-profm-gold-final.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8112/gold.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Gold</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8062/reggae.mp3</location>
+      <title>ProFM Reggae</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/3200387/2/logo-profm-reggae.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8062/reggae.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Reggae</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8122/80s.mp3</location>
+      <title>ProFM `80s</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/3232556/2/logo-profm-80s.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8122/80s.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM 80s</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8092/90s.mp3</location>
+      <title>ProFM `90s</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/2782751/2/logo-profm-90s.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8092/90s.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM 90s</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8072/love.mp3</location>
+      <title>ProFM Love</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/2545543/2/logo-profm-love.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8072/love.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Love</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8132/sofa.mp3</location>
+      <title>ProFM Sofa</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/3247041/2/logo-profm-sofa.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8132/sofa.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Sofa</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8142/rock.mp3</location>
+      <title>ProFM Rock</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/3386952/2/logo-profm-rock.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8142/rock.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Rock</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8152/blues.mp3</location>
+      <title>ProFM Rhythm&amp;Blues</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/2434353/1/logo-profm-rhythm-blues.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8152/blues.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Rhythm and Blues</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8162/latino.mp3</location>
+      <title>ProFM Latino</title>
+      <image>http://storage0.dms.mpinteractiv.ro/media/1/641/8218/3666212/1/profm-latino.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8162/latino.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Latino</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8212/jazz.mp3</location>
+      <title>ProFM Jazz</title>
+      <image>http://web3.protv.ro/assets/infopro/profm-jazz.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8212/jazz.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Jazz</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8222/oldies.mp3</location>
+      <title>ProFM Oldies</title>
+      <image>http://web3.protv.ro/assets/infopro/profm-oldies.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8222/oldies.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Oldies</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8232/chillout.mp3</location>
+      <title>ProFM ChillOut</title>
+      <image>http://web3.protv.ro/assets/infopro/profm-chill.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8232/chillout.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Chillout</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8242/profmro.mp3</location>
+      <title>ProFM RO</title>
+      <image>http://web3.protv.ro/assets/infopro/profm-ro.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8242/profmro.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM RO</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8252/hot.mp3</location>
+      <title>ProFM HOT</title>
+      <image>http://web3.protv.ro/assets/infopro/profm-hot.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8252/hot.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Hot</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8312/house.mp3</location>
+      <title>ProFM HOUSE</title>
+      <image>http://www.profm.ro/images/profm-house.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8312/house.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM House</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8322/classicrock.mp3</location>
+      <title>ProFM Classic Rock</title>
+      <image>http://www.profm.ro/images/profm-classicrock.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8322/classicrock.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM ClassicRock</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+    <track>
+      <location>http://stream.profm.ro:8410/campus.mp3</location>
+      <title>ProFM Campus Bucuresti</title>
+      <image></image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8410/campus.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Music-FM Bucuresti</meta>
+<meta rel="stream_genre">live</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://82.77.127.233:80/campus.mp3</location>
+      <title>ProFM Campus Cluj</title>
+      <image></image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+</track>
+    <track>
+      <location>http://193.226.19.85:80/campus.mp3</location>
+      <title>ProFM Campus Tg. Mures</title>
+      <image></image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+</track>
+    <track>
+      <location>http://stream.profm.ro:8262/kids.mp3</location>
+      <title>ProFM Kids</title>
+      <image>http://web3.protv.ro/assets/infopro/profm-kids.png</image>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+<meta rel="stream_url">http://stream.profm.ro:8262/kids.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">ProFM Kids</meta>
+<meta rel="stream_bitrate">112</meta>
+</track>
+  </trackList>
+</playlist>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+<title>CBC Radio 3</title>
+<image>http://10.8.0.2/projects/player/media-translate/util/scripts/radio-cbc-radio3.jpg</image>
+<trackList>
+<track>
+<title>Radio 3 Rock</title>
+<location>http://webradio.cbcradio3.com/rock.m3u</location>
+</track>
+<track>
+<title>Radio 3 Electronica</title>
+<location>http://webradio.cbcradio3.com/electronic.m3u</location>
+</track>
+<track>
+<title>Radio 3 Hip Hop</title>
+<location>http://webradio.cbcradio3.com/hiphop.m3u</location>
+</track>
+<track>
+<title>Radio 3 Pop</title>
+<location>http://webradio.cbcradio3.com/pop.m3u</location>
+</track>
+</trackList>
+</playlist>

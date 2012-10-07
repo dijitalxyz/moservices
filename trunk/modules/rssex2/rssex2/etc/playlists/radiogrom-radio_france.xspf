@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <title>Radiogrom.com - radio_france</title>
+  <trackList>
+    <track>
+      <location>http://www.radiogrom.com/online/radio_france/radio_maxlaradio_fr_online.html</location>
+      <title> - Радио MAXLARADIO слушать онлайн</title>
+    
+<meta rel="stream_url">http://91.121.62.121:9410</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">GOLD FRANCE OLDIES ROCK NOSTALGIE POP</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/radio_france/radio_48fm_fr_online.html</location>
+      <title> - Радио 48FM слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/radio_france/radio_pulsar_fr_online.html</location>
+      <title>- Радио Pulsar слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/radio_france/one_station_fr_online.html</location>
+      <title>- Радио One Station слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/radio_france/maxx_france_online.html</location>
+      <title>- Радио MaxxHits слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/radio_france/virgin_radio_france_online.html</location>
+      <title>- Радио Virgin Radio - Scene Francaise слушать онлайн</title>
+    
+</track>
+  </trackList>
+</playlist>

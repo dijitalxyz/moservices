@@ -1,0 +1,199 @@
+﻿<?xml version='1.0' encoding="UTF8" ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2011  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+  <!--`cat "$BASEPATH/app/include/media_onenter.script"`-->
+  columnCount=3;
+</onEnter>
+
+<onRefresh>
+  <!--`cat "$BASEPATH/app/include/media_onrefresh.script"`-->
+</onRefresh>
+
+<script>
+  setRefreshTime(1);
+</script>
+
+	<mediaDisplay name=photoView 
+	  centerXPC=7 
+		centerYPC=23
+		centerHeightPC=47
+		columnCount=3
+	  rowCount=1
+		menuBorderColor="55:55:55"
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+	  backgroundColor="0:0:0"
+		imageBorderColor="0:0:0"
+		itemBackgroundColor="0:0:0"
+		itemGapXPC=0
+		itemGapYPC=1
+		sideTopHeightPC=22
+		bottomYPC=70
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=no
+		>
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+		
+		<image offsetXPC=5 offsetYPC=2 widthPC=21 heightPC=16>
+		  ../etc/translate/rss/image/uravo.png
+      <widthPC>
+        <script>
+          25 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          5 + 25 * (1 - screenYp / screenXp) / 2;
+        </script>
+      </offsetXPC>
+		</image>
+
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+
+  	<text align="center" lines="5" redraw="yes" offsetXPC="7" offsetYPC="75" widthPC="86" heightPC="20" fontSize="14" backgroundColor="0:0:0" foregroundColor="150:150:150">
+  		<script>annotation;</script>
+  	</text>
+
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+
+		<itemDisplay>
+      <script>
+				imageW = 90/3;
+				imageH = imageW * 158 / 282 * screenXp / screenYp * 100 / 47;
+				if(imageH > 50)
+				{
+				  imageH = 50;
+				  imageW = imageH * 282 / 158 * screenYp / screenXp * 47 / imageW;
+				}
+			  else
+			  {
+			    imageW = 100;
+        }
+      </script>
+  		<image offsetXPC=0 offsetYPC=95 widthPC=100 heightPC=5>
+  		  <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+  		      "../etc/translate/rss/image/gradient_line.bmp";
+  		    else
+  		      "";
+  		  </script>
+  		</image>
+			<image>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  year = getItemInfo(idx, "year");
+					}
+				  getItemInfo(idx, "image");
+				</script>
+			 <widthPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageW; else imageW * 3 / 4;
+			   </script>
+			 </widthPC>
+			 <heightPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) imageH; else imageH * 3 / 4;
+			   </script>
+			 </heightPC>
+			 <offsetXPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 50 - imageW/2; else 50 - imageW * 3 / 8;
+			   </script>
+			 </offsetXPC>
+			 <offsetYPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 0; else imageH / 8;
+			   </script>
+			 </offsetYPC>
+			</image>
+			
+			<text align="center" lines="3" fontSize="16" offsetXPC=0 offsetYPC=53 widthPC=100 heightPC=30 backgroundColor=-1:-1:-1>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "75:75:75";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+			<text align="center" lines="1" fontSize="13" offsetXPC=0 offsetYPC=85 widthPC=100 heightPC=10 backgroundColor=-1:-1:-1>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "country") + " - " + getItemInfo(idx, "year");
+				</script>
+			  <foregroundColor>
+  				<script>
+  			    "75:75:25";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+		
+    <onUserInput>
+      <script>		
+<!--`cat "$BASEPATH/app/include/media_onuserinput.script"`-->
+      </script>		
+    </onUserInput>
+		
+	</mediaDisplay>
+	
+	<item_template>
+		<mediaDisplay  name="threePartsView">
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+		</mediaDisplay>
+	</item_template>
+
+<!--`cat "$BASEPATH/app/include/media_dispatchers.inc"`-->
+
+<!--`cat "$CHANNELFILE"`-->
+
+</rss>

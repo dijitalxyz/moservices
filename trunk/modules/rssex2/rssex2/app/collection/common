@@ -1,0 +1,74 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+local DATAPATH=$BASEPATH/app/collection
+cd $DATAPATH
+
+local CHANNELFILE=$TMPFILE.channel
+
+get_opt "File"
+local FILE="$opt"
+
+[ -z "$FILE" -a "$SUBNAME" = "menuex" ] && FILE="$MAINMENU"
+
+[ -z "$FILE" ] && return 0
+
+if ! expr "$FILE" : '/.*' > /dev/null; then
+  FILE="$BASEPATH/$FILE"
+fi
+
+get_opt "Size"
+if [ -z "$opt" ]; then
+  opt=3
+fi
+COLUMNCOUNT="columnCount=$opt"
+
+get_opt "Start"
+STARTITEM="  startitem = \"$opt\";"
+
+get_opt "Lines"
+if [ -z "$opt" ]; then
+  opt=3
+fi
+TEXTLINES=$opt
+
+get_opt "Font"
+if [ -z "$opt" ]; then
+  opt=18
+fi
+FONTSIZE=$opt
+
+ANNOTATIONSIZE="  lines=$TEXTLINES fontSize=$FONTSIZE"
+
+if [ -x "$XSLTPROC" ]; then
+  $XSLTPROC channel.xslt "$FILE" | sed '1d' > $CHANNELFILE
+else
+  awk -f getxml.awk -f channel.awk "$FILE" > $CHANNELFILE
+fi
+
+(
+  export TRANSLATE_CGI;
+  export BASEPATH;
+  export ANNOTATIONSIZE;
+  export CHANNELFILE; 
+  export COLUMNCOUNT; 
+  export STARTITEM;
+  template2rss $SUBNAME.xml | printContent "application/rss+xml"
+  rm -f $CHANNELFILE
+)

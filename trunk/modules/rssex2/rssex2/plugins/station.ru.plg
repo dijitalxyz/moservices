@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# 
+
+
+# Translate CGI module
+# 'station.ru' plug-in
+#
+# version: 1.0 16.09.2010 14:41:00
+#
+# http://station.ru/RadioStation.aspx?id=1743
+#
+
+stream_type=''
+stream_url=''
+server_type='station.ru'
+
+if echo "${arg_url}" | grep -q -s '\(www\.\)*station\.ru/RadioStation.aspx?id=[0-9].*$'; then 
+
+  local host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>&1`
+  
+  if [ -f ${TMPFILE} ]; then
+    stream_url=`grep "url = '" "$TMPFILE" | sed "s/.* '//;s/'.*//"`;
+    local station_id=`echo "$stream_url" | sed 's/.*media=//'`
+    local station_title=`awk '/id="currentStationName"/{getline; match($0, /^ *([^<]+)/, arr); printf "%s", arr[1];}' "$TMPFILE"`;
+    rm -f "$TMPFILE"
+    arg_opt="Resolve-playlist:1"
+    check_playlist
+    ms_title="$station_title"
+    ms_author="station.ru"
+    icy_name="$station_title"
+    stream_status_url="http://station.ru/services/StationService.svc/json/GetCurrentStationTrack?stationId=$station_id"
+    $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${stream_status_url}" 2>&1
+  fi
+  return $RC_OK
+fi
+
+return $RC_FAIL

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{include file="{$config->get(activeTemplate,Runtime)}scripts/osdFunctions.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}  
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+<onEnter>
+    executeScript("doInit");
+</onEnter>
+
+<onRefresh>
+	executeScript("doRefresh");
+</onRefresh>
+
+<onExit>
+    executeScript("doDestroy");
+</onExit>
+
+
+<!--
+Returns diverse information about given item.
+Params:
+    index      : index of item which values are needed.
+Return:
+    time       : program times - begin and end separated with minus.
+    description: program name and description.
+    percent    : program progress in percents.
+-->
+<getItemInfo>
+
+    name = "humanTime";
+    position = 1;
+    executeScript("getValue");
+    time = value;
+
+    name = "description";
+    position = 0;
+    executeScript("getValue");
+    description = value;
+
+    name = "start";
+    position = 2;
+    executeScript("getValue");
+    start = value;
+
+    name = "end";
+    position = 3;
+    executeScript("getValue");
+    stop = value;
+
+	executeScript("getTime");
+    
+    percent = null;
+    if (null != start &amp;&amp; null != stop &amp;&amp; start != stop) {
+        curr = now - start;
+        percent = integer(curr * 100 / (stop - start));
+        if (percent &lt; 0) {
+            percent = 0;
+        } else if (percent > 100) {
+            percent = 100;
+        }
+    }
+
+    /* this ugly condition seems to be the only chance to get it working */
+    if ((null != stop &amp;&amp; stop > 0 &amp;&amp; now >= stop) ||
+        (null != percent &amp;&amp; 100 == percent))
+    {
+        forceRefresh = "true";
+    }
+</getItemInfo>
+
+<mediaDisplay name="threePartsView"
+
+{call getViewArea}
+{call getMediaDisplayParams}
+{call getIdleImageParams}
+
+    itemImageXPC="5"
+    itemImageYPC="10"
+    itemImageHeightPC="5"
+    itemImageWidthPC="4"
+
+    itemXPC="10"
+    itemYPC="10"
+    itemWidthPC="87"
+    itemHeightPC="5"
+
+    itemGap="0"
+    itemPerPage="15"
+
+    focusBorderColor="{$config->get(focusBorderColor)}"
+    unFocusBorderColor="{$config->get(unFocusBorderColor)}"
+
+    drawItemText="no"
+    slidingItemText="no"
+    sliding="no"
+
+    itemBackgroundColor="{$config->get(bgNormal)}"
+    fontSize="13"
+
+    >
+
+    <!-- Behavior differs in normal and video modes -->
+    <!-- In video mode first action almost always is show the OSD -->
+    <onUserInput>
+        key = currentUserInput();
+        res = "true";
+
+        if (0 == videoOn) {
+			
+            if ( key == keyRight || key == keyDisplay) {
+            	/* show EPG */
+                url = getItemInfo(-1, "epg_link");
+                jumpToLink("rssLink");
+            } else if ( key == "1" ) {
+                streamlink = getItemInfo(-1, "link");
+                playItemURL(streamlink, 10, 128*1024);
+            } else if ( key == keyEnter ) {
+                executeScript("videoStart");
+            } else if ( key == keyPgUp ) {
+                setFocusItemIndex(0);
+            } else if ( key == keyPgDn ) {
+                setFocusItemIndex(getPageInfo("itemCount") - 1);
+            } else {
+                res = "false";
+            }
+        } else {
+
+            if ( key == keyVStop || key == keyReturn ) {
+                executeScript("videoStop");
+            } else if ( key == keyDisplay ) {
+                if (0 != osdPos) {
+                    setFocusItemIndex(playingChannel);
+                    executeScript("osdShow");
+                } else {
+                    executeScript("osdHide");
+                }
+            } else if (0 != osdPos &amp;&amp; ( key == keyUp || key == keyDown || key == keyLeft || key == keyRight || key == keyEnter || key == keyPgUp || key == keyPgDn )) {
+
+                /* show OSD if it's not shown yet and do nothing more */
+                executeScript("osdShow");
+            } else if (0 == osdPos) {
+
+                executeScript("osdShow");
+
+                if ( key == keyUp || key == keyDown ) {
+                    res = "false";
+                } else if ( key == keyLeft ) {
+                    postMessage(keyUp);
+                } else if ( key == keyRight ) {
+                    postMessage(keyDown);
+                } else if ( key == keyEnter ) {
+                	if(playingChannel != index) {
+                    	executeScript("videoStart");
+                    } else {
+                    	executeScript("osdHide");
+                    }
+                } else if ( key == keyPgUp ) {
+                    setFocusItemIndex(0);
+                } else if ( key == keyPgDn ) {
+                    setFocusItemIndex(getPageInfo("itemCount") - 1);
+                } else {
+                    res = "false";
+                }
+            } else {
+                res = "false";
+            }
+        }
+        if ("true" == res) {
+            redrawDisplay();
+        }
+        res;
+    </onUserInput>
+
+    <!-- Collect actual data: percent, time and description -->
+    <script>
+        index = getFocusItemIndex();
+
+        executeScript("getItemInfo");
+        currPercent = percent;
+        currTime    = time;
+        currDescr   = description;
+    </script>
+
+    <!-- header -->
+{include file="{$config->get(activeTemplate,Runtime)}header.xml"}
+
+    <!-- footer -->
+{include file="{$config->get(activeTemplate,Runtime)}footer.xml"}
+
+    <text redraw="yes" tailDots="no" align="center" fontSize="15"
+        offsetXPC="1" offsetYPC="87" widthPC="23.5" heightPC="6"
+        foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}">
+        <script>
+            if (null != currPercent) {
+                currTime + "   (" + currPercent + "%)";
+            } else {
+                currTime;
+            }
+        </script>
+    </text>
+
+    <text redraw="yes" tailDots="no" align="center" fontSize="14"
+        offsetXPC="1" offsetYPC="93.5" widthPC="23.5" heightPC="6"
+        foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}">
+        <script>getItemInfo(-1, "category");</script>
+    </text>
+
+    <text redraw="yes" tailDots="yes" lines="4" fontSize="13"
+        offsetXPC="25" offsetYPC="87" widthPC="74.5" heightPC="12.5"
+        foregroundColor="150:150:150" backgroundColor="{$config->get(bgNormal)}">
+        <script>currDescr;</script>
+    </text>
+
+    <itemDisplay>
+        <script>
+            {call calculateItemColors}
+
+            /* item info vars differ from current info vars */
+            index = getQueryItemIndex();
+            executeScript("getItemInfo");
+
+            itemPercent = percent;
+            itemTime    = time;
+            itemDescr   = description;
+        </script>
+        <text offsetXPC="0.5" offsetYPC="5" widthPC="20" heightPC="95" fontSize="13" backgroundColor="{$config->get(bgNormal)}">
+            <script>getItemInfo("title");</script>
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+        </text>
+        <text offsetXPC="86.5" offsetYPC="5" widthPC="13" heightPC="95" fontSize="13" backgroundColor="{$config->get(bgNormal)}">
+            <script>itemTime;</script>
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+        </text>
+        <text offsetXPC="20" offsetYPC="5" widthPC="66" heightPC="95" backgroundColor="64:64:64">
+            <widthPC>
+                <script>
+                    if (null != itemPercent &amp;&amp; itemBg == bgNormal) {
+                        itemPercent * 66 / 100;
+                    } else {
+                        0;
+                    }
+                </script>
+            </widthPC>
+        </text>
+        <text offsetXPC="19" offsetYPC="5" widthPC="68" heightPC="95" fontSize="13" backgroundColor="{$config->get(bgNormal)}">
+            <script>itemDescr;</script>
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>if (itemBg == bgNormal) "-1:-1:-1"; else itemBg;</script></backgroundColor>
+        </text>
+    </itemDisplay>
+
+    <previewWindow windowColor="0:0:0" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
+        <widthPC><script>videoOn;</script></widthPC>
+        <heightPC><script>videoOn;</script></heightPC>
+    </previewWindow>
+
+    <!-- OSD -->
+{include file="{$config->get(activeTemplate,Runtime)}osd.xml"}
+{call getIdleImages}
+</mediaDisplay>
+
+
+{call getRssLink}
+
+<channel>
+    {foreach $mediaObj->getChildren() as $child}
+    <item>
+        <title>{$child->title}</title>
+        <humanTime>{date('H:i', $child->getParam("epg_start"))} - {date('H:i', $child->getParam("epg_end"))}</humanTime>
+        <description>{$child->getParam(epg_title)|replace:"\"":"″"}</description>
+        <enclosure1 type="video"  url="{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type=STREAM_URL&amp;mode=redirect" />
+        <link>{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type=STREAM_URL</link>
+        <media:thumbnail url="{$child->getParam(icon)}" />
+        <start>{$child->getParam(epg_start)}</start>
+        <end>{$child->getParam(epg_end)}</end>
+        <category>{$child->getParent()->title}</category>
+        <color>{$child->getParent()->getParam(color)}</color>
+        <epg_link>{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type=EPG</epg_link>
+    </item>
+    {/foreach}
+</channel>
+</rss>

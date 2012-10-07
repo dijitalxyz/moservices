@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Check for install:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+#
+[ ! -f /usr/local/bin/DvdPlayer ] && exit 1
+br=$( echo $( ls -l /usr/local/bin/DvdPlayer ) | cut -d" " -f 5 )
+[ $br -eq 35758024 ] && exit 0
+exit 1

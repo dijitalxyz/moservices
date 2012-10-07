@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Путешествия</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1493,tvigle/multi</link>
+  <title>Первый туристический канал</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1493/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509673,tvigle/multi</link>
+  <title>Человек и Море</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509673/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509667,tvigle/multi</link>
+  <title>Армения. Живые камни</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509667/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:76,tvigle/multi</link>
+  <title>Diving</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/76/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1370,tvigle/multi</link>
+  <title>Trip по жизни</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1370/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509668,tvigle/multi</link>
+  <title>Синяя дыра</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509668/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:508644,tvigle/multi</link>
+  <title>Наша география</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/508644/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:77,tvigle/multi</link>
+  <title>Затонувшие корабли</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/77/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509674,tvigle/multi</link>
+  <title>Дахаб. Красное море</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509674/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:78,tvigle/multi</link>
+  <title>manta</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/78/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:618,tvigle/multi</link>
+  <title>andynelf</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/618/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

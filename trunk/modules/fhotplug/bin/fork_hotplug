@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# fork hoplug
+#
+
+mos=/usr/local/etc/mos
+
+# =====================================
+# Execute scripts from mos/etc/hotlug/*
+# $1 - ( before | after )/<subsystem>
+# $2 - parameter
+starter() {
+	[ ! -d $mos/etc/hotplug/$1 ] && return 0
+
+	for i in $mos/etc/hotplug/$1/* ; do
+		[ ! -f $i ] && continue
+		[ ! -x $i ] && continue
+		if [ -z "$2" ] ; then
+			$i
+		else
+			$i $2 &
+		fi
+	done
+}
+#
+# main
+#
+[ -f /tmp/hotplug.orig ] && orig=$( cat /tmp/hotplug.orig )
+[ ! -f $orig ] && orig=/sbin/hotplug
+echo $SUBSYSTEM >>/tmp/fh__.log
+# before
+starter before/$SUBSYSTEM
+
+# run original hotplug
+$orig "$@"
+ret=$?
+
+# after
+starter after/$SUBSYSTEM $ret
+
+exit $ret

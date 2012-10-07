@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'mults.spb.ru' plug-in
+#
+# version: 1.0 11.12.2010 21:45
+#
+# http://mults.spb.ru/mults/?id=696
+#
+
+if echo "${arg_url}" | grep -qs 'mults\.spb\.ru/mults/?id=[0-9]*$'; then 
+
+  host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>&1`
+
+  if [ -f ${TMPFILE} ]; then
+    stream_type='video/x-flv'
+    local video_file=`grep -i "show_flv(" ${TMPFILE} | awk '{match($0, /show_flv\([0-9]+, *\x27([^\x27]+)\x27/, arr);print arr[1];}'`
+    stream_url="http://mults.spb.ru/flv/${video_file}?start=0"
+    protocol=`echo "$stream_url" | sed -e 's/:\/\/.*$//'`
+    icy_name=`grep -i "id='multname'" ${TMPFILE} | sed 's/.*<h2[^>]*>//;s/<.*//'`
+    icy_name=`unescapeXML "$icy_name"`
+    rm -f $TMPFILE
+  fi  
+  return $RC_OK
+fi
+
+return $RC_FAIL

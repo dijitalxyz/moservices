@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Юмор</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:509675,tvigle/multi</link>
+  <title>FUNаты</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/509675/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1200,tvigle/multi</link>
+  <title>ДаЁшь МолодЁжь</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1200/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:536219,tvigle/multi</link>
+  <title>Кристина Асмус в Гонконге</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/536219/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2092,tvigle/multi</link>
+  <title>Flash-игра Охрустенный квест</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2092/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2172,tvigle/multi</link>
+  <title>Город Хищниц</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2172/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:536220,tvigle/multi</link>
+  <title>Одна за всех</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/536220/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2105,tvigle/multi</link>
+  <title>Antiсказка</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2105/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2054,tvigle/multi</link>
+  <title>Smile TV</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2054/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2038,tvigle/multi</link>
+  <title>Ералаш</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2038/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1376,tvigle/multi</link>
+  <title>VERSUS. Хруст без правил</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1376/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1354,tvigle/multi</link>
+  <title>Ах, женщины</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1354/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2209,tvigle/multi</link>
+  <title>Маски-Шоу</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2209/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2028,tvigle/multi</link>
+  <title>ГопСтоп</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2028/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1786,tvigle/multi</link>
+  <title>UmaNetto</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1786/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1388,tvigle/multi</link>
+  <title>Правда хочешь знать?</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1388/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:12,tvigle/multi</link>
+  <title>В контакте с одноклассниками</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/12/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:11,tvigle/multi</link>
+  <title>Lobanov Show</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/11/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1827,tvigle/multi</link>
+  <title>Вся правда о Еве</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1827/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:14,tvigle/multi</link>
+  <title>Маленький человек большого офиса</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/14/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:15,tvigle/multi</link>
+  <title>Вася Пупкин. Начало</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/15/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:742,tvigle/multi</link>
+  <title>Монологи Папы Новака</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/742/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:99,tvigle/multi</link>
+  <title>Белка и Стрелка</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/99/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2024,tvigle/multi</link>
+  <title>Классические анекдоты</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2024/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:204,tvigle/multi</link>
+  <title>Biggi's Blog</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/204/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:100,tvigle/multi</link>
+  <title>Анекдот от звезды</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/100/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:17,tvigle/multi</link>
+  <title>Crazy Хата</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/17/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:16,tvigle/multi</link>
+  <title>За кадром</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/16/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:18,tvigle/multi</link>
+  <title>Мульти ТВ</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/18/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1292,tvigle/multi</link>
+  <title>12 недель позитива</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1292/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1874,tvigle/multi</link>
+  <title>Пятница! Время приколов</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1874/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <title>Radiogrom.com - belarus_fm</title>
+  <trackList>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/radio_minsk_92_4_fm.html</location>
+      <title>- Радио Минск слушать онлайн</title>
+    
+<meta rel="stream_url">http://93.84.113.142:8000/radio</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Latina</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/radio_minskaya_volna_97_4_fm.html</location>
+      <title>- Радио Минская Волна слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/russkoe_radio_minsk_online.html</location>
+      <title>- Русское радио Минск слушать онлайн</title>
+    
+<meta rel="stream_url">http://live.rusradio.by:8000/live</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Russian Pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/radio_gomel_online.html</location>
+      <title>- Радио Гомель слушать онлайн</title>
+    
+<meta rel="stream_url">http://skycast.su:2007/998</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aac</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">64</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/pilot_fm_online.html</location>
+      <title>- Пилот FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://www.live.bn.by:8000/pilotfm_128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/evroradio_online.html</location>
+      <title>- Еврорадио слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/radius_fm_online.html</location>
+      <title>- Радиус FM слушать онлайн</title>
+    
+<meta rel="stream_url">mms://livecast.tvr.by/radio4</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">rtsp</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/unistar_fm_online.html</location>
+      <title>- Радио Unistar слушать онлайн</title>
+    
+<meta rel="stream_url">http://213.184.232.36:8000/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/alfa_radio_online.html</location>
+      <title>- Альфа Радио слушать онлайн</title>
+    
+<meta rel="stream_url">http://86.57.151.4:8009/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/novoe_radio_online.html</location>
+      <title>- Новое Радио слушать онлайн</title>
+    
+<meta rel="stream_url">http://streaming.telecom.by:8001/novoeradio-128kb</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Dance</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/belarus_fm/ba_radio_online.html</location>
+      <title>- Радио Би Эй слушать онлайн</title>
+    
+<meta rel="stream_url">http://radio.solo.by:8002/radioba</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">BA</meta>
+<meta rel="stream_bitrate">48</meta>
+</track>
+  </trackList>
+</playlist>

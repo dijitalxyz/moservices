@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<playlist xmlns="http://xspf.org/ns/0/">
+
+  <title>Radiogrom.com</title>
+
+  <trackList>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radiogrom-classic.xspf,collection/medialist</link>
+      <title>Классическая музыка</title>
+      <annotation>РадиоГром (www.radiogrom.com) предоставляет на ваш выбор лучшие радиостанции для тех, кто ценит и понимает инструментальную и классическую музыку. Здесь вы также найдете радиостанции, вещающие оперную музыку онлайн, симфоническую музыку, а также всё то, что относится к классике. Другими словами - это Classical Music Online Radio!</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radiogrom-moskva_fm.xspf,collection/medialist</link>
+      <title>Москва FM</title>
+      <annotation>FM радиостанции Москвы. Вещание через интернет. Онлайн радио он лайн слушать</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radiogrom-piter_fm.xspf,collection/medialist</link>
+      <title>Питер FM</title>
+      <annotation>FM-радиостанции Санкт-Петербурга. Онлайн Радио. Слушать радио онлайн через интернет </annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radiogrom-russia.xspf,collection/medialist</link>
+      <title>Россия AM-FM</title>
+      <annotation>AM-FM Радиостанции России. Вещание через интернет слушать онлайн Радио онлайн</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radiogrom-belarus_fm.xspf,collection/medialist</link>
+      <title>Беларусь FM</title>
+      <annotation>FM-радиостанции Беларуси. Вещание через интернет. Слушать Радио онлайн</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radiogrom-ua_fm.xspf,collection/medialist</link>
+      <title>Киев FM</title>
+      <annotation>FМ радиостанции г. Киев и Украины. Вещание через интернет. Радио онлайн</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radiogrom-radio_france.xspf,collection/medialist</link>
+      <title>Радио Франции</title>
+      <annotation>Французские радиостанции. Вещание через интернет. Радио Франции слушать онлайн online</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radiogrom-great_britain.xspf,collection/medialist</link>
+      <title>Радио Британии</title>
+      <annotation>Английские радиостанции. Вещание через интернет. Радио Лондона слушать онлайн online</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+    <track>
+      <link>http://127.0.0.1/cgi-bin/translate?app,File:etc/playlists/radiogrom-internet_europe.xspf,collection/medialist</link>
+      <title>Радио Европы</title>
+      <annotation>Зарубежные интернет радиостанции. Вещание через интернет. Радио онлайн</annotation>
+      <image>../etc/translate/rss/image/menu/internetradio.png</image>
+      <meta rel="mediaDisplay">onePartView</meta>
+    </track>
+  </trackList>
+
+</playlist>

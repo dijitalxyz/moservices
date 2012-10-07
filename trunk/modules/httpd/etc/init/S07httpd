@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# description: Starts and stops the RSS Ex
+#
+etc=/usr/local/etc
+mos=$etc/mos
+bin=$mos/bin
+
+case "$1" in
+  start)
+	echo "Starting HTTPd..."
+
+	$bin/httpd -c $mos/etc/httpd.conf -h /tmp/www -p 88
+	;;
+  stop)
+	echo "Stopping HTTPd..."
+
+	pid=$( echo $( ps | grep 'mos/bin/[h]ttpd' ) | cut -d' ' -f1 )
+	for i in $pid ; do
+		kill $i
+	done
+	;;
+
+  status)
+	if ps | grep -q 'mos/bin/[h]ttpd' ; then
+	  echo "HTTPd is running"
+	else
+	  echo "HTTPd is stopped"
+	fi
+	;;
+
+  enable | disable)
+	;;
+
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2011  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'hdkinomir.com' plug-in
+#
+# version: 1.1 13.12.2011 10:24:41
+#
+# http://hdkinomir.com/comedy/1465-madagaskar-madagascar-2005-onlayn.html
+# http://hdkinomir.com/drama/2957-elena-2011-onlayn.html
+
+if echo "${arg_url}" | grep -qs 'hdkinomir\.com/.*-onlayn\.html$'; then 
+
+    $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>&1
+    
+    local stream_title=`grep "<title>" ${TMPFILE} | sed 's/^.*<title>//;s/&raquo;.*<\/title>//'`
+    
+    if [ -f ${TMPFILE} ]; then
+        arg_url=`awk '/iframe/ { match($0, /src="([^"]+)"/, arr); print arr[1]; }' ${TMPFILE} | unescapeXML`
+        check_stream
+        icy_name=$stream_title
+    fi  
+    return $RC_OK
+fi
+
+return $RC_FAIL

@@ -1,0 +1,88 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+DATAPATH=$BASEPATH/app/shoutcast
+cd $DATAPATH
+
+get_opt "Station-id"
+STATION_ID="$opt"
+get_opt "Station-name"
+STATION_NAME="$opt"
+get_opt "Station-br"
+STATION_BR="$opt"
+get_opt "Station-mt"
+STATION_MT="$opt"
+get_opt "Station-genre"
+STATION_GENRE="$opt"
+
+STATION_PLS="$CACHEPATH/shoutcast.$STATION_ID.cache.pls"
+
+CHANNELFILE=$TMPFILE.channel
+
+TIMELIFE=1200
+
+let tsttime=`date +%s`-$TIMELIFE
+
+REFRESHCACHE=yes
+if [ -f "$STATION_PLS" ]; then
+  if [ "`ls -s "$STATION_PLS" | awk '{print $1}'`" != "0" ]; then
+    if [ `date +%s -r "$STATION_PLS"` -gt $tsttime ]; then
+      REFRESHCACHE=
+    fi
+  fi
+fi
+
+if [ $REFRESHCACHE ]; then
+  rm -f "$STATION_PLS"
+  $WGET -q -O "$STATION_PLS" "http://yp.shoutcast.com/sbin/tunein-station.pls?id=${STATION_ID}"
+fi
+
+if [ -f "$STATION_PLS" ]; then
+  local numberofentries=`sed -ne '/^numberofentries=/p' $STATION_PLS | awk -F= '{print $2}'`
+  local tit=dummy
+  local index=0
+
+  while [ -n "$tit" ]; do
+      let index=$index+1
+      tit=`sed -ne "/^Title$index=\(.*- 0\/[0-9]*\)/p" $STATION_PLS`
+  done
+
+  local stream_url=`sed -ne "/^File$index=/p" $STATION_PLS | sed -e "s/^File$index=//"`
+  if [ -z "$stream_url" ]; then
+      let index=$index-1
+      stream_url=`sed -ne "/File$index=/p" $STATION_PLS | sed -e "s/File$index=//"`
+  fi
+  
+  mkdir -p /tmp/cached
+  STREAMDAT=/tmp/cached/stream.dat
+  echo "$stream_url" > $STREAMDAT       # request_url
+  echo "" >> $STREAMDAT                 # request_options
+  echo "$stream_url" >> $STREAMDAT      # stream_url
+  echo "${TRANSLATE_CGI}stream,Content-type:${STATION_MT},`urlencode_s $stream_url`" >> $STREAMDAT # [renderer_]url
+  echo "$STATION_MT" >> $STREAMDAT      # stream_type
+  echo "" >> $STREAMDAT                 # stream_status_url
+  echo "" >> $STREAMDAT                 # stream_current_song
+  echo "$STATION_GENRE" >> $STREAMDAT   # stream_genre
+  echo "$STATION_BR" >> $STREAMDAT      # stream_bitrate
+  echo "$STATION_NAME" >> $STREAMDAT    # stream_title
+  echo "" >> $STREAMDAT                 # request_image
+  echo "1" >> $STREAMDAT                # no_renderer_control
+  
+  cat $BASEPATH/rss/xspf/audioRenderer.rss | printContent "application/rss+xml"
+fi

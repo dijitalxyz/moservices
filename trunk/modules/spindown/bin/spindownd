@@ -1,0 +1,75 @@
+#!/bin/sh
+#
+mos=/usr/local/etc/mos
+
+# Number of seconds between cycles.
+cycleTime=60
+
+# The time in seconds a disk has to be idle before it is spundown.
+idleTime=600
+
+# List of device names of disks
+disks="sda sdb sdc sdd sde sdf"
+
+# Work file of spindown service
+statfile="/tmp/spindown.stat"
+
+# read config
+[ -f $mos/etc/spindown.conf ] && eval "$( cat $mos/etc/spindown.conf | sed '/^$/d' )"
+
+rm -f $statfile
+
+while [ 0 ] ; do
+
+	[ -f ${statfile}.new ] && rm -f ${statfile}.new
+	touch ${statfile}.new
+
+	for disk in $disks ; do
+
+		# read diskstats
+		s=$( cat /proc/diskstats | sed -n /\ $disk\ /p )
+
+		if [ ! -z "$s" ] ; then
+
+			rs=$( echo $s | cut -d" " -f 6 )
+			ws=$( echo $s | cut -d" " -f 10 )
+			let cSec=rs+ws
+
+			# read sipndown.stat
+			if [ -f ${statfile} ] ; then
+				s=$( cat ${statfile} | sed -n /^$disk\ /p )
+				if [ ! -z "$s" ] ; then
+					pSec=$( echo $s | cut -d" " -f 2 )
+					iTime=$( echo $s | cut -d" " -f 3 )
+				else
+					pSec=0
+					iTime=$idleTime
+				fi
+			fi
+			if [ "$cSec" -eq "$pSec" ] ; then
+
+				# idle drive
+				if [ "$iTime" -ne 0 ] ; then
+					let iTime=iTime-cycleTime
+					if [ $iTime -le 0 ] ; then
+						# stop drive
+						$mos/bin/sg_start --stop /dev/$disk
+
+						iTime=0
+					fi
+				fi
+			else
+				# drive active
+				pSec=$cSec
+				iTime=$idleTime
+			fi
+
+			echo $disk $pSec $iTime >> ${statfile}.new
+
+		fi
+
+	done
+
+	mv -f ${statfile}.new ${statfile}
+	sleep $cycleTime
+done

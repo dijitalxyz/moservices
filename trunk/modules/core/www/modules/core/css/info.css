@@ -1,0 +1,26 @@
+div.info_frame
+{
+	padding:0;
+	margin :0;
+
+	background: white;
+
+	border:1px solid #ccc;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+}
+div.info_topic
+{
+	position: relative;
+	background: #D0D0D0 no-repeat right top url(../images/btn_hide.png) ;
+	padding:4px;
+	margin :0;
+	font-weight: bold;
+	border:0;
+}
+
+div.info_list
+{
+	position: relative;
+	padding:4px;
+	margin :0;
+}

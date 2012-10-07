@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <title>Tvigle - RSS</title>
+  <image>../etc/translate/rss/image/menu/rss.png</image>
+   <trackList>
+      <track>
+          <annotation>Главная RSS-лента Tvidle Media.</annotation>
+          <title>Главная</title>
+          <image>../etc/translate/rss/image/menu/rss.png</image>
+          <location>http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/</location>
+          <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/</meta>
+          <meta rel="stream_class">rss</meta>
+          <meta rel="stream_type">application/rss</meta>
+          <meta rel="stream_protocol">http</meta>
+      </track>
+      <track>
+          <annotation>RSS-лента раздела 'юмор'. Видеоприколы, приколы видео смотреть бесплатно.</annotation>
+          <title>Юмор</title>
+          <image>../etc/translate/rss/image/menu/rss.png</image>
+          <location>http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=10</location>
+          <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=10</meta>
+          <meta rel="stream_class">rss</meta>
+          <meta rel="stream_type">application/rss</meta>
+          <meta rel="stream_protocol">http</meta>
+      </track>
+      <track>
+          <annotation>RSS-лента раздела 'фильмы'. Смотрите фильмы и бесплатное кино онлайн.</annotation>
+          <title>Фильмы</title>
+          <image>../etc/translate/rss/image/menu/rss.png</image>
+          <location>http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=1606</location>
+          <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=1606</meta>
+          <meta rel="stream_class">rss</meta>
+          <meta rel="stream_type">application/rss</meta>
+          <meta rel="stream_protocol">http</meta>
+      </track>
+      <track>
+          <annotation>RSS-лента раздела 'сериалы'. Смотрите сериалы онлайн бесплатно и без регистрации.</annotation>
+          <title>Сериалы</title>
+          <image>../etc/translate/rss/image/menu/rss.png</image>
+          <location>http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=262</location>
+          <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=262</meta>
+          <meta rel="stream_class">rss</meta>
+          <meta rel="stream_type">application/rss</meta>
+          <meta rel="stream_protocol">http</meta>
+      </track>
+      <track>
+          <annotation>RSS-лента раздела 'музыка'. Музыка онлайн: смотрите видео клипы, песни, живые выступления.</annotation>
+          <title>Музыка</title>
+          <image>../etc/translate/rss/image/menu/rss.png</image>
+          <location>http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=26</location>
+          <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=26</meta>
+          <meta rel="stream_class">rss</meta>
+          <meta rel="stream_type">application/rss</meta>
+          <meta rel="stream_protocol">http</meta>
+      </track>
+      <track>
+          <annotation>RSS-лента раздела 'мультфильмы'. Смотрите мультфильмы онлайн бесплатно.</annotation>
+          <title>Мультфильмы</title>
+          <image>../etc/translate/rss/image/menu/rss.png</image>
+          <location>http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=40</location>
+          <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=40</meta>
+          <meta rel="stream_class">rss</meta>
+          <meta rel="stream_type">application/rss</meta>
+          <meta rel="stream_protocol">http</meta>
+      </track>
+      <track>
+          <annotation>RSS-лента раздела 'спорт'. Экстрим на видео, смотрите онлайн русский экстрим, экстремальный спорт на видео.</annotation>
+          <title>Спорт</title>
+          <image>../etc/translate/rss/image/menu/rss.png</image>
+          <location>http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=75</location>
+          <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=75</meta>
+          <meta rel="stream_class">rss</meta>
+          <meta rel="stream_type">application/rss</meta>
+          <meta rel="stream_protocol">http</meta>
+      </track>
+      <track>
+          <annotation>RSS-лента раздела 'компьютерные игры'. Обзор видео игр, самые ожидаемые игры 2011 на PC.</annotation>
+          <title>Компьютерные игры</title>
+          <image>../etc/translate/rss/image/menu/rss.png</image>
+          <location>http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=1504</location>
+          <meta rel="stream_url">http://127.0.0.1/cgi-bin/translate?app/rss/tvigle.ru,http://www.tvigle.ru/rss/?cnl=1504</meta>
+          <meta rel="stream_class">rss</meta>
+          <meta rel="stream_type">application/rss</meta>
+          <meta rel="stream_protocol">http</meta>
+      </track>
+   </trackList>
+</playlist>

@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# description: Starts and stops the pShare service
+#
+bin=/usr/local/etc/mos/bin
+mos=/usr/local/etc/mos/pshare
+
+case "$1" in
+  start)
+	echo "pShare starting..."
+
+	#wait IP
+	$bin/wait_ip && exit 1
+
+	# DLNA server friendly name
+	fiendlyName=pShare
+
+	# Multicast interface address or device name
+	Interface=eth0
+
+	# single file or directory with utf8-encoded *.m3u files
+	Playlists=/usr/local/etc/playlist
+
+	# read config
+	[ -f $mos/pshare.conf ] && eval "$( cat $mos/pshare.conf | sed '/^$/d' )"
+
+	$mos/pshare -i ${Interface} -r $mos/www -n ${fiendlyName} ${Playlists}
+
+	;;
+  stop)
+	echo "pShare stopping..."
+	killall pshare
+	;;
+  status)
+	if ps | grep -q '[p]share'; then
+		echo "pShare running"
+	else
+		echo "pShare stopped"
+	fi
+	;;
+  enable|disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit 0

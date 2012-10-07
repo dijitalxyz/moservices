@@ -1,0 +1,77 @@
+#EXTM3U
+#EXTINF:-1,Беларусь TV
+mms://bcast.tvr.by/video
+#EXTINF:-1,Мир TV
+mms://213.232.226.11/MIRTV_300
+#EXTINF:-1,NRJ Paris TV
+mms://vipnrj.yacast.net/nrj_tvparis
+#EXTINF:-1,NRJ Web TV
+mms://vipnrj.yacast.net/nrj_tvhit
+#EXTINF:-1,NRJ Dance TV
+mms://vipnrj.yacast.net/nrj_webtv02
+#EXTINF:-1,NRJ Pop Rock TV
+mms://vipnrj.yacast.net/nrj_webtv03
+#EXTINF:-1,NRJ Groove TV
+mms://vipnrj.yacast.net/nrj_webtv01
+#EXTINF:-1,Rock One TV
+mms://mediatv2.topix.it/RockOne
+#EXTINF:-1,Soft and Ballads TV
+mms://194.116.83.15/Soft%20and%20Ballads
+#EXTINF:-1,HDTV 1 Channel TV
+mms://195.113.161.100/hdtv1
+#EXTINF:-1,Первый Канал Бизнеса TV
+mms://mms.tvsme.ru/high
+#EXTINF:-1,А1 ТВ Музыка TV
+mms://tv.gldn.net/A1
+#EXTINF:-1,TMFLive TV
+mms://85.119.217.29/TMFLive
+#EXTINF:-1,Music TV
+mms://80.237.157.98/musicchannel?MSWMExt=.asf
+#EXTINF:-1,playtv TV
+mms://212.18.63.144/playtv
+#EXTINF:-1,slamtv TV
+mms://stream02.wm.slamtv.true.nl/slamtv?MSWMExt=.asf
+#EXTINF:-1,Первый канал TV
+mms://live.1internet.tv/1tv-efir?wmbitrate=500000
+#EXTINF:-1,РТР Планета TV
+mms://video.rfn.ru/rtr-planeta
+#EXTINF:-1,Вести TV
+mms://video.rfn.ru/vesti_24
+#EXTINF:-1,Вести FM TV
+mms://video.rfn.ru/vesti_fm
+#EXTINF:-1,Радио России TV
+mms://audio.rfn.ru/radiorussia
+#EXTINF:-1,РБК TV
+mms://tv.gldn.net/rbc
+#EXTINF:-1,A-One TV
+mms://tv.gldn.net/A1
+#EXTINF:-1,Мир TV
+mms://213.232.226.11/MIRTV_300
+#EXTINF:-1,TV+ TV
+mms://38.103.146.146/TV+
+#EXTINF:-1,TV SME TV
+mms://mms.tvsme.ru/high
+#EXTINF:-1,Eurosport TV
+mms://stream02.rambler.ru/eurosport
+#EXTINF:-1,Наше Кино TV
+mms://64.132.55.2/Kino_050
+#EXTINF:-1,СГУ ТВ TV
+mms://www.sgatv.muh.ru/sgutv
+#EXTINF:-1,Океан ТВ TV
+mms://82.142.132.162:2020/
+#EXTINF:-1,W-TV TV
+mms://194.58.79.189/PublishingPoint wTv
+#EXTINF:-1,Max TV TV
+mms://38.100.138.222/max-online
+#EXTINF:-1,Шансон TV
+http://webcaster.ru:8000/698129?format=flv
+#EXTINF:-1,ТДК TV
+http://webcaster.ru:8000/157933?format=flv
+#EXTINF:-1,O2 TV TV
+http://webcaster.ru:8000/555?format=flv
+#EXTINF:-1,Союз TV
+http://webcaster.ru:8000/618784?format=flv
+#EXTINF:-1,Звезда TV
+http://webcaster.ru:8000/609833?format=flv
+#EXTINF:-1,Вести TV
+http://webcaster.ru:8000/2489040?format=flv

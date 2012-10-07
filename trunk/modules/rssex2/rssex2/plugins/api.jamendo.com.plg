@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Translate CGI module
+# 'api.jamendo.com' plug-in
+#
+# version: 1.0 19.01.2012 0:34
+#
+# http://api.jamendo.com/en/get2/stream/track/xspf/?n=100&amp;order=ratingweek_desc
+#
+
+unset RESOLVE_CACHE_ENABLED
+
+if echo "${arg_url}" | grep -q -s 'api\.jamendo\.com/.*/xspf/.*$'; then 
+
+  stream_type='application/xspf+xml'
+  protocol='http'
+  arg_opt='Resolve-playlist:0'
+  
+  if [ "$arg_cmd" = "playlist" ]; then
+    local PLAYLISTFILE=$CACHEPATH/temp.xspf
+    rm -f $PLAYLISTFILE
+  
+    $MSDL -q -o $PLAYLISTFILE -p http --useragent "${USERAGENT}" "$arg_url" 2>/dev/null
+    
+    local replacetitle=''
+    
+    [ "$arg_url" = "http://api.jamendo.com/en/get2/stream/track/xspf/?n=100&order=ratingweek_desc"  ] && replacetitle='s/Jamendo playlist/Jamendo playlist - Top 100/'
+    
+    if [ -f $PLAYLISTFILE ] ; then
+      sed -e 's/></>\n</g' $PLAYLISTFILE | sed -e '/<location>.*format=mp3/a\<meta rel="stream_protocol">http<\/meta><meta rel="stream_class">audio<\/meta><meta rel="stream_type">audio\/mpeg<\/meta>' -e '/<location>.*format=ogg/a\<meta rel="stream_protocol">http<\/meta><meta rel="stream_class">audio<\/meta><meta rel="stream_type">application\/ogg<\/meta>' | sed -e "$replacetitle"
+    fi
+  fi
+  return $RC_OK
+fi
+
+return $RC_FAIL

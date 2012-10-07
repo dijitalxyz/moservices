@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# execute autorun script on plugged drives
+#
+case "$1" in
+  start)
+	#
+	# waiting for mount disks
+	#
+	/usr/local/etc/mos/bin/wait_mount && exit 1
+
+	for i in $( ls /tmp/usbmounts ) ; do
+		if [ -f /tmp/usbmounts/$i/autorun ] ; then
+			cr=$( printf "\r" )
+			sed "s/$cr//" /tmp/usbmounts/$i/autorun > /tmp/autorun
+			chmod +x /tmp/autorun
+			/tmp/autorun
+			rm /tmp/autorun
+		fi
+	done
+	;;
+  stop|status|enable|disable)
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

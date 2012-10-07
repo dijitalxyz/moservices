@@ -1,0 +1,282 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=threePartsView
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	itemImageXPC="29"
+	itemImageYPC="18"
+	itemXPC="42"
+	itemYPC="18"
+	itemWidthPC="52"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+  menuXPC=10
+  menuYPC=25
+  menuWidthPC=17
+  menuHeightPC=8
+	showHeader=no
+  selectMenuOnRight=no
+  forceFocusOnItem=yes
+  forceFocusOnMenu=no
+	showDefaultInfo=yes
+	infoYPC=90
+>
+
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image offsetXPC=80 offsetYPC=1 widthPC=15 heightPC=10>
+    <script>pageLogo;</script>
+    <widthPC>
+      <script>
+        10 * 4 / 3 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 10 * 4 / 3 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+	</image>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+      {
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown" || userInput == "PD")
+        {
+          idx -= -5;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 5;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+      	setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      else if(majorContext == "items" &amp;&amp; (userInput == "right" || userInput == "R"))
+      {
+        idx = getFocusItemIndex();
+        url = getStringArrayAt(urlArray, idx);
+        title = getStringArrayAt(titleArray, idx);
+        thumbnail = getStringArrayAt(thumbnailArray, idx);
+        description = getXMLText("rss","channel","item",idx,"description");
+        
+        arr = null;
+        arr = pushBackStringArray(arr, url);
+        arr = pushBackStringArray(arr, title);
+        arr = pushBackStringArray(arr, thumbnail);
+        writeStringToFile(storagePath + "entry.dat", arr);
+
+        arr = null;
+        arr = pushBackStringArray(arr, "&lt;body&gt;");
+        arr = pushBackStringArray(arr, description);
+        arr = pushBackStringArray(arr, "&lt;/body&gt;");
+        writeStringToFile(storagePath + "entry.htm", arr);
+
+        print("description",description);
+        
+        act = doModalRss(translate_base_url + "app/ivi/index,entry");
+        ret = "true";
+      }
+      ret;
+    </script>
+  </onUserInput>
+  
+</mediaDisplay>
+
+<onExit>
+  playItemURL(-1, 1);
+  setRefreshTime(-1);
+</onExit>
+
+<onEnter>
+  cachePath = getStoragePath("key");
+
+  <!--`cat "$BASEPATH/app/include/rssconf.script"`-->
+
+	pageLogo = "../etc/translate/rss/image/menu/ivi.png";
+
+  storagePath = getStoragePath("tmp");
+  arr = readStringFromFile(storagePath + "stream.dat");
+  feedTitle = getStringArrayAt(arr, 0);
+
+	feedType = "new";
+	
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  
+	pageTitle = feedTitle + " - ";
+	if(feedType == "new")
+	 pageTitle += "новое видео"; 
+  else
+	if(feedType == "best")
+	 pageTitle += "популярное видео"; 
+	else
+	if(feedType == "recommend")
+	 pageTitle += "рекоммендуемое видео"; 
+
+  url = "http://www.ivi.ru/rss/"+feedType;
+
+  print("Start to load feed:",url);
+  
+  dlok = loadXMLFile(url);
+  if (dlok != null)
+  {
+    titleArray = null;
+    thumbnailArray = null;
+    urlArray = null;
+    
+  	itemSize = getXMLElementCount("rss","channel","item");
+  	if(itemSize == 0)
+  	  postMessage("return");
+  	print("Item Size = ", itemSize);
+  	
+  	count=0;
+  	while(itemSize != 0)
+  	{
+  	  title = getXMLText("rss","channel","item",count,"title");
+      url = getXMLText("rss","channel","item",count,"link");
+      thumbnail = getXMLAttribute("rss","channel","item",count,"image","url");
+  	  
+  	  titleArray  = pushBackStringArray(titleArray, title);
+  	  urlArray    = pushBackStringArray(urlArray, url);
+  	  thumbnailArray = pushBackStringArray(thumbnailArray, thumbnail);
+    
+  	  count += 1;
+  	  if (count == itemSize)
+  	  {
+  		  break;
+  	  }
+  	}
+  	setFocusItemIndex(0);
+  	redrawDisplay();
+  }
+</onRefresh>
+
+<submenu>
+  <title>Новое</title>
+  <onClick>
+    titleArray = null;
+    thumbnailArray = null;
+    urlArray = null;
+    idArray = null;
+    feedType = "new";
+    setRefreshTime(1);
+  </onClick>
+</submenu>
+
+<submenu>
+  <title>Популярное</title>
+  <onClick>
+    titleArray = null;
+    thumbnailArray = null;
+    urlArray = null;
+    idArray = null;
+    feedType = "best";
+    setRefreshTime(1);
+  </onClick>
+</submenu>
+
+<submenu>
+  <title>Рекоммендуемое</title>
+  <onClick>
+    titleArray = null;
+    thumbnailArray = null;
+    urlArray = null;
+    idArray = null;
+    feedType = "recommend";
+    setRefreshTime(1);
+  </onClick>
+</submenu>
+
+  <item_template>
+    <displayTitle>
+      <script>
+        getStringArrayAt(titleArray , -1);
+      </script>
+    </displayTitle>
+    <media:thumbnail>
+      <script>
+	      getStringArrayAt(thumbnailArray , -1);
+			</script>
+    </media:thumbnail>
+        
+    <mediaDisplay name=threePartsView
+		    sideLeftWidthPC = 0
+		    sideRightWidthPC = 0
+        backgroundColor="0:0:0">
+<!--`cat "$BASEPATH/app/include/media_idleimage.inc"`-->
+		</mediaDisplay>
+		<!--
+		<link>rss_file://../etc/translate/rss/xspf/streamPlayer.rss</link>
+		 -->
+		<onClick>
+		  playItemURL(-1, 1);
+      idx   = getFocusItemIndex();
+      url   = getStringArrayAt(urlArray, idx);
+      playTitle = url;
+      urlToPlay = translate_base_url+"stream,,"+urlEncode(url);
+<!--`cat "$BASEPATH/app/include/add.history_video.script"`-->
+      showIdle();
+      playItemURL(urlToPlay, 0);
+      cancelIdle();
+      null;
+		</onClick>
+  </item_template>
+
+<channel>
+	
+<itemSize>
+	<script>itemSize;</script>
+</itemSize>
+
+</channel>
+</rss>

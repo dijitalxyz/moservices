@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <title>Radiogrom.com - russia</title>
+  <trackList>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_roks_krasnodar_online.html</location>
+      <title>- 105,2 FM - Радио Рокс Краснодар онлайн</title>
+    
+<meta rel="stream_url">http://89.200.179.41:8000/rdrox_online=128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">miscellaneous</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/piratskaya_stantsiya_radio_online.html</location>
+      <title>- ***,* FM - Радио Пиратская станция слушать онлайн</title>
+    
+<meta rel="stream_url">http://stream.radiorecord.ru:8100/ps_aac</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Drum and Bass</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_priboy_online.html</location>
+      <title>- 100,7 FM - Радио Прибой Махачкала слушать онлайн</title>
+    
+<meta rel="stream_url">http://stream6.radiostyle.ru:8006/priboyfm</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">96</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_vatan_online.html</location>
+      <title>- 104,8 FM - Радио Ватан Махачкала слушать онлайн</title>
+    
+<meta rel="stream_url">http://stream1.radiostyle.ru:8001/radiovatan</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Various</meta>
+<meta rel="stream_bitrate">96</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_maks_fm_online.html</location>
+      <title>- 107,4 FM - Радио Макс FM слушать онлайн</title>
+    
+<meta rel="stream_url">http://radio.maks-fm.ru:8000/maksfm128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">MaksFM</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_intervolna_online.html</location>
+      <title>- 102,9 FM - Радио Интерволна слушать онлайн</title>
+    
+<meta rel="stream_url">http://online.intervolna.ru:8000</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">CHR</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/glavnoe_radio_online.html</location>
+      <title>- ***,* FM - Главное Радио слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_premuim_online.html</location>
+      <title>- ***,* FM - Радио Премиум слушать онлайн</title>
+    
+<meta rel="stream_url">http://listen.rpfm.ru:9000/premium128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Dance, House, Trance, R&amp;B, Pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_literaturnoe_online.html</location>
+      <title>- Литературное Радио Москва слушать онлайн</title>
+    
+<meta rel="stream_url">http://79.137.234.183:8000</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Talk</meta>
+<meta rel="stream_bitrate">64</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_teos_online.html</location>
+      <title>- AM 1134 кГц - Радио Теос Москва слушать онлайн</title>
+    
+<meta rel="stream_url">http://radioteos.ru:8004/</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Religious</meta>
+<meta rel="stream_bitrate">64</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_svoboda_online.html</location>
+      <title>- AM 1044 кГц - Радио Свобода. Москва слушать онлайн</title>
+    
+<meta rel="stream_url">mmsh://a1075.l1062331074.c10623.g.lm.akamaistream.net/D/1075/10623/v0001/reflector:31074</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_server">_empty_</meta>
+<meta rel="stream_type">audio/x-ms-wma</meta>
+<meta rel="stream_protocol">mmsh</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_107_krasnodar_online.html</location>
+      <title>- 107,7 FM - Радио 107 Краснодар слушать онлайн</title>
+    
+<meta rel="stream_url">http://62.183.34.109:8000/radio107.mp3</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/dfm_vladivostok_online.html</location>
+      <title>- 105,3 FM - DFM Владивосток слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/ac_fm_radio_online.html</location>
+      <title>- 106,0 FM - АС-FM. Иркутск слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_borneo_online.html</location>
+      <title>- 107,2 FM - Радио Борнео. Воронеж слушать онлайн</title>
+    
+<meta rel="stream_url">http://live.borneo.ru:8888/128</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">radio</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_red_army_online.html</location>
+      <title>- 104,6 FM - Радио Красная Армия Тюмень слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_sibir_online.html</location>
+      <title>- 104,6 FM - Радио Сибирь. Томск слушать онлайн</title>
+    
+<meta rel="stream_url">http://radiosibir.ru:8090/HQ</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Hot Adult Contemporary</meta>
+<meta rel="stream_bitrate">192</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_uniton_online.html</location>
+      <title>- 100,7 FM - Радио Юнитон Новосибирск слушать онлайн</title>
+    
+<meta rel="stream_url">http://www.r-uniton.ru:8000</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">pop</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/radio_vbc_online.html</location>
+      <title>- 103,3 FM - Радио VBC. Владивосток слушать онлайн</title>
+    
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/heart_fm_barnaul_online.html</location>
+      <title>- 105,9 FM - Heart FM Барнаул слушать онлайн</title>
+    
+<meta rel="stream_url">http://83.246.143.25:8000/HFMLow</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_bitrate">64</meta>
+</track>
+    <track>
+      <location>http://www.radiogrom.com/online/russia/love_radio_irkutsk_online.html</location>
+      <title>- 104,2 FM - Love Радио Иркутск слушать онлайн</title>
+    
+<meta rel="stream_url">http://as.baikal.tv:8004</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">shoutcast</meta>
+<meta rel="stream_type">audio/mpeg</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_genre">Romantic</meta>
+<meta rel="stream_bitrate">128</meta>
+</track>
+  </trackList>
+</playlist>

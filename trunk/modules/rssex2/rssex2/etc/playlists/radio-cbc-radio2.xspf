@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+<title>CBC Radio 2</title>
+<image>http://10.8.0.2/projects/player/media-translate/util/scripts/radio-cbc-radio2.jpg</image>
+<trackList>
+<track>
+<title>Mountain</title>
+<location>http://radiostreams.cbc.ca/cbc-cbcr2edm-128.m3u</location>
+</track>
+<track>
+<title>Atlantic</title>
+<location>http://radiostreams.cbc.ca/cbc-cbcr2hfx-128.m3u</location>
+</track>
+<track>
+<title>Central</title>
+<location>http://radiostreams.cbc.ca/cbc-cbcr2wpg-128.m3u</location>
+</track>
+<track>
+<title>Eastern</title>
+<location>http://radiostreams.cbc.ca/cbc-cbcr2tor-128.m3u</location>
+</track>
+<track>
+<title>Pacific</title>
+<location>http://radiostreams.cbc.ca/cbc-cbcr2vcr-128.m3u</location>
+</track>
+<track>
+<title>CBC Classical</title>
+<location>http://radiostreams.cbc.ca/cbc-cbcw3tor-128.m3u</location>
+</track>
+<track>
+<title>CBC Jazz</title>
+<location>http://radiostreams.cbc.ca/cbc-cbcw1tor-128.m3u</location>
+</track>
+<track>
+<title>CBC Canadian Songwriters</title>
+<location>http://radiostreams.cbc.ca/cbc-cbcw2tor-128.m3u</location>
+</track>
+<track>
+<title>CBC Canadian Composers</title>
+<location>http://radiostreams.cbc.ca/cbc-cbcw4tor-128.m3u</location>
+</track>
+</trackList>
+</playlist>

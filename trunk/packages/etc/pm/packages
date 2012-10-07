@@ -1,0 +1,594 @@
+[autorun]
+	revision = 1
+	title = "AutoRun"
+	role = patch
+	init = S05AutoRun
+	actions = "restart"
+	files="etc/init/S05AutoRun"
+	size = 40
+
+[awk]
+	revision = 1
+	title ="GNU Awk 3.1.5"
+	role = package
+	files="bin/awk"
+	size = 1272
+
+[base]
+	revision = 13
+	title = "moServices base"
+	role = package
+	init = S00base
+	files="services bin/mos_remove bin/pm bin/wait_ip bin/wait_mount bin/wget etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop base.noinit.patch"
+	require="libgcc_s busybox web core"
+	size = 404
+
+[busybox]
+	revision= 3
+	title = "BusyBox v1.18.4"
+	role = package
+	files="bin/busybox.1.18.4 bin/bzip2 bin/httpd bin/passwd bin/tar bin/telnetd bin/gunzip"
+	size = 1548
+
+[capture]
+	revision = 3
+	title = "Capture TV screen"
+	role = web
+	files="bin/bmp2jpg www/modules/capture/"
+	size = 3696
+
+[core]
+	revision = 36
+	title = "moServices core"
+	role = core
+	init = S01core
+	backup = "etc/core.ini"
+	config_link = "?page=sets"
+	files="etc/core.ini etc/init/S01core www/modules/core/ www/index.php www/favicon.ico"
+	size = 844
+
+[curl]
+	revision = 2
+	title = "cUrl 7.20.1"
+	role = package
+	files="bin/curl"
+	size = 800
+
+[fakeshell]
+	revision= 2
+	title = "Fake Shell 1.0.5.2"
+	role = web
+	navy_title = "Fake Shell"
+	navy_frame = "modules/fakeshell/fakeshell.php"
+	files="www/modules/fakeshell/"
+	size = 52
+
+[fex]
+	revision = 6
+	title = "fex.net / ex.ua"
+	role = rss
+	files="www/modules/fex/"
+	size = 144
+
+[fhotplug]
+	revision = 1
+	title = "Fork hotplug"
+	role = patch
+	init = S00hotplug.sh
+	files="bin/fork_hotplug etc/init/S00hotplug.sh etc/hotplug/"
+	size = 60
+
+[glavtv]
+	revision = 2
+	title = "GlavTV"
+	role = rss
+	files="www/modules/glavtv/"
+	size = 1432
+
+[gmonitor]
+	revision = 1
+	title ="System monitoring"
+	role = web
+	files="www/modules/gmonitor/"
+	size = 284
+
+[hdcpoff]
+	revision = 1
+	title = "Hdcp Off"
+	role = patch
+	init = S04HdcpOff
+	actions = "restart"
+	files="etc/init/S04HdcpOff"
+	size = 40
+
+[horosho]
+	revision = 2
+	title = "Horosho.tv"
+	role = rss
+	files="www/modules/horosho/"
+	require="httpd curl"
+	size = 100
+
+[httpd]
+	revision = 1
+	title ="HTTPd busybox daemon"
+	role = package
+	backup = "etc/httpd.conf"
+	files="etc/init/S07httpd etc/httpd.conf"
+	require="busybox"
+	size = 44
+
+[ipla]
+	revision = 1
+	title ="Polish IPTV ipla.tv"
+	role = rss
+	files="www/modules/ipla/"
+	size = 1044
+
+[irfake]
+	revision = 4
+	title = "IR Fake RC replacement v1.2.13"
+	role = patch
+	init = S41irfake
+	backup = "irfake/irfake.conf"
+	config_before = copy
+	config_after  = save
+	config_edit   = "irfake/irfake.conf"
+	files="etc/init/S41irfake irfake/"
+	size = 148
+
+[itunes]
+	revision= 1
+	title = "iTunes server"
+	role = daemon
+	check = "port 5353"
+	init = S21itunes
+	backup = "itunes/mt-daapd.conf"
+	navy_title = "manage iTunes server"
+	navy_frame = "http://%addr%:3689"
+	config_edit = "itunes/mt-daapd.conf"
+	files="etc/init/S21itunes itunes/"
+	size = 752
+
+[ivi]
+	revision = 5
+	title = "ivi.ru"
+	role = rss
+	files="www/modules/ivi/"
+	require="curl"
+	size = 104
+
+[keys]
+	revision = 2
+	title = "RSS Keys"
+	role = rss
+	files="www/modules/keys/"
+	size = 92
+
+[libcurl]
+	revision = 1
+	title = "Lib CUrl 4.2.0"
+	role = package
+	check = lib
+	files="lib/libcurl.so lib/libcurl.so.4 lib/libcurl.so.4.2.0"
+	size = 2808
+
+[libevent2]
+	revision = 1
+	title = "Lib Event-2.0 5.0.1"
+	role = package
+	check = lib
+	files="lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1 lib/libevent_pthreads.so"
+	size = 1472
+
+[libgcc_s]
+	revision= 1
+	title = "Lib gcc_s"
+	role = package
+	check = lib
+	files="lib/libgcc_s.so lib/libgcc_s.so.1"
+	size = 92
+
+[libiconv]
+	revision= 1
+	title = "Lib iConv v2.5.0"
+	role = package
+	check = "lib libiconv.so.2"
+	files="lib/libiconv.so.2 lib/libiconv.so.2.5.0"
+	size = 948
+
+[libjpeg]
+	revision= 1
+	title = "Lib Jpeg v8.0.1"
+	role = package
+	check = lib
+	files="lib/libjpeg.so.8 lib/libjpeg.so.8.0.1"
+	size = 328
+
+[libpng14]
+	revision= 1
+	title = "Lib Png v14.1.0"
+	role = package
+	check = lib
+	files="lib/libpng14.so.14 lib/libpng14.so.14.1.0"
+	size = 400
+
+[libxml2]
+	revision= 1
+	title = "Lib XML2 v 2.7.2"
+	role = package
+	check = lib
+	files="lib/libxml2.so.2 lib/libxml2.so.2.7.2"
+	size = 1712
+
+[libz]
+	revision= 1
+	title = "Lib Zip v1.2.5"
+	role = package
+	check = lib
+	files="lib/libz.so lib/libz.so.1 lib/libz.so.1.2.5"
+	size = 136
+
+[mediaportal]
+	revision = 16
+	title = "Media portal"
+	role = rss
+	files="www/modules/mediaportal/"
+	size = 64
+
+[mediarss]
+	revision = 2
+	title = "Sayler's Media RSS"
+	role = rss
+	init = S33mediarss
+	backup = "mediarss/sayler.conf"
+	config_edit = "mediarss/sayler.conf"
+	files="etc/init/S33mediarss mediarss/ www/modules/mediarss/"
+	size = 1176
+
+[mediatomb]
+	revision= 1
+	title = "MediaTomb server"
+	role = daemon
+	init = S22mediatomb
+	backup = "mediatomb/config/config.xml mediatomb/config/mediatomb.db"
+	navy_title = "manage MediaTomb"
+	navy_frame = "http://%addr%:49152"
+	config_edit = "mediatomb/config/config.xml"
+	files="etc/init/S22mediatomb mediatomb/"
+	size = 7324
+
+[mosondrive]
+	revision = 1
+	title = "moServices on drive"
+	role = patch
+	init = S47mosondrive
+	files="etc/services_drive etc/init/S47mosondrive"
+	size = 44
+
+[mounts]
+	revision = 5
+	title = "Mounts"
+	role = daemon
+	init = S10mounts
+	backup = "etc/mounts.ini etc/mounts.list"
+	config_link = "?page=mount_sets"
+	files="etc/mounts.ini etc/mounts.list etc/init/S10mounts www/modules/mounts/"
+	size = 76
+
+[myhit]
+	revision = 1
+	title = "MY-HIT.ru"
+	role = rss
+	files="www/modules/myhit/"
+	size = 80
+
+[parole]
+	revision = 2
+	title = "Authorization"
+	role = patch
+	files="www/modules/parole/"
+	require="busybox"
+	size = 64
+
+[patch61]
+	revision = 1
+	title = "Update amp r6 to amp r6.1"
+	role = patch
+	init = S45patch61
+	files="etc/init/S45patch61 patch61/"
+	size = 1452
+
+[php]
+	revision = 2
+	title ="PHP v5.3.2 curl hash ssl"
+	role = package
+	files="bin/php"
+	require="libgcc_s libcurl libiconv libjpeg libpng14 libxml2 libz"
+	size = 9948
+
+[pshare]
+	revision= 2
+	title = "pShare uPnP playlist browser 0.0.2rc2"
+	role = daemon
+	init = S26pShare
+	backup = "pshare/pshare.conf"
+	navy_title = "pShare status"
+	navy_frame = "http://%addr%:4044"
+	config_edit = "pshare/pshare.conf"
+	files="etc/init/S26pShare pshare/"
+	require="libgcc_s"
+	size = 196
+
+[quixplorer]
+	revision = 3
+	title = "QuiXplorer"
+	role = web
+	files="www/modules/quixplorer/"
+	size = 688
+
+[rdate]
+	revision = 2
+	title = "Remote date and time sync"
+	role = patch
+	init = S11rdate
+	backup = "etc/rdate.conf"
+	actions = "restart"
+	config_edit = "etc/rdate.conf"
+	files="bin/rdate etc/rdate.conf etc/init/S11rdate"
+	size = 52
+
+[remount]
+	revision = 2
+	title = "Remount drives"
+	role = patch
+	init = S06Remount
+	actions = "restart"
+	files="etc/init/S06Remount"
+	size = 40
+
+[repos]
+	revision = 1
+	title = "Manage repositories"
+	role = patch
+	config_link = "?page=repos"
+	files="www/modules/repos/"
+	size = 64
+
+[rootapp]
+	revision = 2
+	title ="Patched RootApp"
+	role = patch
+	init = S42rootapp
+	files="bin/RootApp etc/rc.suspend etc/rc.wakeup etc/S01Power etc/S10moServices etc/init/S42rootapp"
+	size = 340
+
+[rssex2]
+	revision = 14
+	title = "RSS Ex 2.0.11 r606"
+	role = rss
+	init = S31rssex2
+	backup= "rssex2/etc/"
+	config_edit = "rssex2/etc/translate.conf"
+	navy_title = "Media Renderer"
+	navy_frame = "http://%addr%:88/cgi-bin/renderer"
+	files="etc/init/S31rssex2 rssex2/ www/modules/rssex2/"
+	require="awk httpd curl rtmpdump"
+	size = 14720
+
+[rtmpdump]
+	revision= 1
+	title = "RTMPDump v2.3"
+	role = package
+	files="bin/rtmpdump"
+	size = 2720
+
+[samba]
+	revision= 1
+	title = "SAMBA daemon v3.0.8"
+	role = daemon
+	check = "port 139"
+	init = S12samba
+	backup = "samba/smb.conf"
+	config_edit = "samba/smb.conf"
+	files="etc/init/S12samba lib/libsamba.so.0.0 lib/libsamba.so.0 lib/libsamba.so samba/"
+	size = 5328
+
+[smarttool]
+	revision = 1
+	title ="SMART HDD Tool (smartctl 5.41)"
+	init = "S44libata"
+	role = web
+	files="etc/init/S44libata libata/ bin/smartctl www/modules/smarttool/"
+	size = 1108
+
+[sovok]
+	revision = 9
+	title = "Sovok.TV"
+	role = rss
+	files="www/modules/sovok/"
+	size = 132
+
+[spindown]
+	revision = 2
+	title = "SpinDown service"
+	role = daemon
+	init = S14spindown
+	backup = "etc/spindown.conf"
+	actions = "down"
+	config_edit = "etc/spindown.conf"
+	files="bin/sg_start bin/spindownd etc/init/S14spindown etc/S08SpinDown etc/spindown.conf www/modules/spindown/"
+	size = 376
+
+[sskin]
+	revision = 8
+	title = "Skin selector for HD2 revs"
+	role = patch
+	backup = "etc/sskin.conf"
+	config_link = "/?page=sskin_sets"
+	files="bin/sskin etc/sskin.conf www/modules/sskin"
+	size = 164
+
+[status]
+	revision = 2
+	title ="System status"
+	role = web
+	files="www/modules/status/"
+	require="top"
+	size = 88
+
+[swp]
+	revision = 1
+	title = "Swap on drive"
+	role = patch
+	init = S02swp
+	files="etc/init/S02swp"
+	size = 32
+
+[telnetd]
+	revision = 1
+	title ="telnet busybox daemon"
+	role = daemon
+	check = "port 23"
+	init = S08telnetd
+	files="etc/init/S08telnetd"
+	require="busybox"
+	size = 40
+
+[top]
+	revision = 1
+	title ="Top 3.6"
+	role = package
+	files="bin/top"
+	size = 188
+
+[trans]
+	revision = 9
+	title = "Transmission v2.33"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	files="etc/init/S23trans trans/ www/modules/trans/"
+	require="libgcc_s libevent2 libcurl libz"
+	size = 3236
+
+[tvigle]
+	revision = 1
+	title = "Tvigle.RU"
+	role = rss
+	files="www/modules/tvigle/"
+	size = 44
+
+[tvontop]
+	revision = 10
+	title = "TV on Top 1.1.4"
+	role = rss
+	files="www/modules/tvontop/"
+	size = 3004
+
+[uaonline]
+	revision = 7
+	title ="Ukraine Online Services"
+	role = rss
+	init = S32uaonline
+	backup = "uaonline/settings.conf"
+	config_edit = "uaonline/settings.conf"
+	files="etc/init/S32uaonline uaonline/ www/modules/uaonline/"
+	size = 2732
+
+[uaonline2]
+	revision = 17
+	title = "UA Online 2"
+	role = rss
+	backup = "www/modules/uaonline2/ua_favorites.conf www/modules/uaonline2/ua_settings.conf"
+	config_edit = "www/modules/uaonline2/ua_settings.conf"
+	navy_title = "UAOnline 2 Fav. Editor"
+	navy_frame = "http://%addr%/modules/uaonline2/index.php"
+	files="www/modules/uaonline2/"
+	size = 1624
+
+[udpxy]
+	revision = 3
+	title = "UDP-to-HTTP Proxy v1.0b19-Chipmunk"
+	role = daemon
+	check = "port 8080"
+	init = S24udpxy
+	navy_title = "UDPxy status"
+	navy_frame = "http://%addr%:8080/status"
+	files="bin/udpxy etc/init/S24udpxy"
+	size = 424
+
+[uletno]
+	revision = 7
+	title = "Uletno.info"
+	role = rss
+	files="www/modules/uletno/"
+	require="curl"
+	size = 96
+
+[ushare]
+	revision= 2
+	title = "uShare UPnP/DLNA server 1.1a"
+	role = daemon
+	init = S25uShare
+	backup = "etc/ushare.conf"
+	config_edit = "etc/ushare.conf"
+	files="bin/ushare etc/ushare.conf etc/init/S25uShare lib/libdlna.so lib/libdlna.so.0 lib/libdlna.so.0.2.3 lib/libupnp.so lib/libupnp.so.2 lib/libupnp.so.2.0.3"
+	require="libgcc_s libz"
+	size = 5984
+
+[vsftpd]
+	revision = 1
+	title = "vsFTPd FTP daemon v2.2.2"
+	role = daemon
+	check = "port 21"
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	files="bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	size = 300
+
+[weather]
+	revision = 6
+	title = "Weather Yahoo"
+	role = rss
+	config_edit = "www/modules/weather/weather.conf"
+	files="www/modules/weather/"
+	size = 80
+
+[web]
+	revision = 2
+	title ="Lighttpd web server v1.4.28 pcre"
+	role = package
+	backup = "etc/lighttpd.conf etc/lighttpd.plain"
+	files="bin/lighttpd bin/php etc/lighttpd.conf etc/lighttpd.plain etc/init/S03web lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so lib/libpcre.so lib/libpcre.so.0 lib/libpcre.so.0.0.1 lib/mod_proxy.so"
+	require="libgcc_s php"
+	size = 8956
+
+[woowza]
+	revision = 3
+	title = "Woowza movies"
+	role = rss
+	files="www/modules/woowza/ gunzip.patch"
+	require="busybox"
+	size = 116
+
+[youtube]
+	revision = 6
+	title = "YouTube"
+	role = rss
+	files="www/modules/youtube/"
+	size = 92
+
+[zswap]
+	revision = 2
+	title = "RAM zipped SWAP (compcache 0.6.2)"
+	role = patch
+	init = S43zswap
+	files="etc/init/S43zswap zswap/"
+	size = 120
+

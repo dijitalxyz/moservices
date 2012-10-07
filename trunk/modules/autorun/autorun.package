@@ -1,0 +1,8 @@
+[autorun]
+	revision = 1
+	title = "AutoRun"
+	role = patch
+	init = S05AutoRun
+	actions = "restart"
+	files="etc/init/S05AutoRun"
+	size = 40

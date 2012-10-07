@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+{function displayObj space=""}
+{if isset($obj)}
+
+{$space}<{$obj->type} id="{$obj->id}">
+    {foreach $obj->getParams() as $param => $value}
+{$space}<{$param}>{$value}</{$param}>
+    {/foreach}
+    {foreach $obj->getChildren() as $child}
+        {if isset($child)}
+            {call displayObj obj=$child space="    {$space}"}
+        {/if}
+    {/foreach}
+
+{$space}</{$obj->type}>
+{/if}
+{/function}
+
+{call displayObj obj=$mediaObj}

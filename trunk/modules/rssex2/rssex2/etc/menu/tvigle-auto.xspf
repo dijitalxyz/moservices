@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Авто / Мото</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2008,tvigle/multi</link>
+  <title>Официальные ролики автопроизводителей</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2008/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1187,tvigle/multi</link>
+  <title>Человек, автомобиль и Гора</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1187/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1437,tvigle/multi</link>
+  <title>Автомотобикини 2009</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1437/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:609,tvigle/multi</link>
+  <title>Low Gear</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/609/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1304,tvigle/multi</link>
+  <title>Звездное авто</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1304/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1274,tvigle/multi</link>
+  <title>Тест драйв</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1274/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1101,tvigle/multi</link>
+  <title>Спецпроекты</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1101/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1430,tvigle/multi</link>
+  <title>Мото-ТВ</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1430/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:774,tvigle/multi</link>
+  <title>Super Cars</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/774/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:588,tvigle/multi</link>
+  <title>Я и моя машина</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/588/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1537,tvigle/multi</link>
+  <title>Classic Cars</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1537/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:777,tvigle/multi</link>
+  <title>Concept Cars</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/777/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

@@ -1,0 +1,18 @@
+{if isset($smarty.get.offset) and $smarty.get.offset > 0}
+{$offset = $smarty.get.offset}
+{else}
+{$offset = 0}
+{/if}
+{if isset($smarty.get.length) and $smarty.get.length > 0}
+{$length = $smarty.get.length}
+{else}
+{$length = 10000}
+{/if}
+{foreach $mediaObj->getChildren() as $child}
+{if $offset > 0}
+{$offset = $offset - 1}
+{elseif $length > 0}
+{$length = $length - 1}
+{($child->getParam('epg_title')|replace:",":"‚")|replace:"\"":"″"},{date('H:i', $child->getParam('epg_start'))} - {date('H:i', $child->getParam('epg_end'))},{$child->getParam('epg_start')},{$child->getParam('epg_end')}
+{/if}
+{/foreach}

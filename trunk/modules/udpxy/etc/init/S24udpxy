@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# description: Starts and stops the udpxy daemon
+#
+bin=/usr/local/etc/mos/bin
+
+case "$1" in
+  start)
+	#wait IP
+	$bin/wait_ip && exit 1
+	echo "Starting udpxy service..."
+	mkdir -p /var/run
+	if ifconfig | grep -q 'eth0'; then
+		echo 2 > /proc/sys/net/ipv4/conf/eth0/force_igmp_version
+		$bin/udpxy -p 8080 -m eth0 -B 262144 -H 8 -l /tmp/udpxy.log
+	fi
+	if ifconfig | grep -q 'wlan0'; then
+		echo 2 > /proc/sys/net/ipv4/conf/wlan0/force_igmp_version
+		$bin/udpxy -p 8080 -a 0.0.0.0 -m wlan0 -l /tmp/udpxy.log
+	fi
+	;;
+  stop)
+	echo "Shutting down udpxy services..."
+	killall -9 udpxy
+	;;
+  status)
+	if ps | grep -q '[u]dpxy -p 8080'
+	then echo "udpxy running"
+	else echo "udpxy stopped"
+	fi
+	;;
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

@@ -1,0 +1,1450 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:media="http://purl.org/media/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+	
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="10"
+	itemYPC="13"
+	itemWidthPC="60"
+	itemHeightPC="7"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="10"
+  itemGap="0"
+	infoYPC="90"
+	infoXPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	sliding="no"
+	imageFocus=""
+	imageUnFocus=""
+>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+	<previewWindow windowColor="0:0:0" offsetXPC="99" offsetYPC="99" widthPC="1" heightPC="1"></previewWindow>	
+
+  <text redraw="yes" offsetXPC="5" offsetYPC="0" widthPC="90" heightPC="11" fontSize="20" backgroundColor="0:0:0" foregroundColor="200:200:200">
+    <script>pageTitle;</script>
+  </text>
+  <image redraw="no" offsetXPC="0" offsetYPC="11" widthPC="100" heightPC="1">
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image redraw="no" offsetXPC="0" offsetYPC="83" widthPC="73" heightPC="1">
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+
+  <image redraw="no" offsetXPC="72" offsetYPC="15" widthPC="23" heightPC="30">
+		<script>pageLogo;</script>
+    <widthPC>
+      <script>
+        30 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 30 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+	</image>
+  <text redraw="yes" offsetXPC="72" offsetYPC="47" widthPC="7" heightPC="4" fontSize="13" backgroundColor="0:0:0" foregroundColor="40:200:200">
+    <script>title_1;</script>
+  </text>
+  <text redraw="yes" offsetXPC="79" offsetYPC="47" widthPC="16" heightPC="4" fontSize="13" backgroundColor="0:0:0" foregroundColor="200:200:200">
+    <script>info_1;</script>
+  </text>
+  <text redraw="yes" offsetXPC="72" offsetYPC="51" widthPC="7" heightPC="4" fontSize="13" backgroundColor="0:0:0" foregroundColor="40:200:200">
+    <script>title_2;</script>
+  </text>
+  <text redraw="yes" offsetXPC="79" offsetYPC="51" widthPC="16" heightPC="13" fontSize="13" backgroundColor="0:0:0" foregroundColor="200:200:200" lines="3">
+    <script>info_2;</script>
+  </text>
+  <text redraw="yes" offsetXPC="72" offsetYPC="65" widthPC="23" heightPC="20" fontSize="14" backgroundColor="0:0:0" foregroundColor="200:80:80" lines="4">
+    <script>errorInfo;</script>
+    <foregroundColor><script>errorInfoColor;</script></foregroundColor>
+  </text>
+
+  <text redraw="yes" offsetXPC="0" offsetYPC="84" heightPC="2" fontSize="10" backgroundColor="0:100:155" foregroundColor="0:100:155">
+    <script>sprintf("%s",loadingProgress);</script>
+		<widthPC><script>print(loadingProgress); loadingProgress;</script></widthPC>
+	</text>
+
+  <text redraw="yes" offsetXPC="10" offsetYPC="86" widthPC="10" heightPC="5" fontSize="20" backgroundColor="0:0:0" foregroundColor="100:100:100">
+    <script>elapsedTime;</script>
+  </text>
+  <text redraw="yes" offsetXPC="20" offsetYPC="86" widthPC="70" heightPC="5" fontSize="14" backgroundColor="0:0:0" foregroundColor="255:255:255" align="left">
+    <script>playTitle;</script>
+  </text>
+  <text redraw="yes" offsetXPC="20" offsetYPC="91" widthPC="59" heightPC="5" fontSize="14" backgroundColor="0:0:0" foregroundColor="100:100:100" align="left">
+    <script>playSong;</script>
+  </text>
+
+  <text redraw="no" offsetXPC="79" offsetYPC="91" widthPC="8" heightPC="5" fontSize="16" backgroundColor="0:0:0" foregroundColor="40:200:200">Repeat:</text>
+  <text redraw="yes" offsetXPC="87" offsetYPC="91" widthPC="13" heightPC="5" fontSize="16" backgroundColor="0:0:0" foregroundColor="200:200:200">
+    <script>repeat;</script>
+  </text>
+
+	<text redraw="yes" offsetXPC="10" offsetYPC="92" widthPC="10" heightPC="2" backgroundColor="0:0:0">
+	  <script>progress;</script>
+	</text>
+  <text redraw="yes" offsetXPC="10" offsetYPC="92.5" widthPC="10" heightPC="1" backgroundColor="0:20:25">
+    <script>progress;</script>
+	</text>
+  <text redraw="yes" offsetXPC="10" offsetYPC="92" heightPC="2" backgroundColor="0:100:155">
+    <script>progress;</script>
+		<widthPC><script>print(playingProgress); playingProgress*10/100;</script></widthPC>
+	</text>
+
+
+	<text redraw="yes" offsetXPC=70.5 offsetYPC=13 widthPC=1 heightPC=70 backgroundColor=0:0:0>
+	  <script>bar;</script>
+	</text>
+	<text redraw="yes" offsetXPC=70.75 offsetYPC=13 widthPC=.5 heightPC=70 backgroundColor=30:30:30>
+	  <script>bar;</script>
+	</text>
+	<text redraw="yes" offsetXPC=70.5 offsetYPC=13 widthPC=1 heightPC=70 backgroundColor=130:130:30>
+	  <script>bar;</script>
+	  <heightPC>
+	    <script>
+	      if(itemSize != 0) 70 / itemSize;
+	      else              0;
+	    </script>
+	  </heightPC>
+	  <offsetYPC>
+	    <script>
+	      focus = getFocusItemIndex();
+	      if(itemSize != 0) 13 + 70 * focus / itemSize;
+	      else              13;
+	    </script>
+	  </offsetYPC>
+	</text>
+
+	<itemDisplay>
+		<image offsetXPC="8" offsetYPC="0" widthPC="92" heightPC="100">
+			<script>
+				idx1 = getFocusItemIndex();
+				idx2 = getQueryItemIndex();
+				if (idx1 == idx2)
+				{
+				  print("========================= select:", getStringArrayAt(titleArray, -1));
+					"../etc/translate/rss/image/IMAGE_NEWRSS_MENU_BTFOC.bmp";
+				}
+				else
+				{
+					"";
+				}
+			</script>
+		</image>
+		<script>
+		    him = 60 * 7 * screenXp / screenYp / 7;
+		    if(him>100)
+		    {
+		      him = 100;
+		      wim = him * 7 / 60 * screenYp / screenXp;
+		    }
+		    else
+		    {
+		      wim = 7;
+		    }
+		</script>
+		<image offsetXPC="0" offsetYPC="0" widthPC="7" heightPC="100">
+			<script>
+			  if(playContext == currentPwd &amp;&amp; getQueryItemIndex() == playIndex) 
+			  {
+			   "../etc/translate/rss/image/Play-1-Pressed-256x256.png";
+			  }
+			  else 
+			  {
+  				class = getStringArrayAt(classArray, -1);
+  				protocol = getStringArrayAt(protocolArray, -1);
+  				if (class == "directory")
+  				{
+  				  if(protocol == "ftp")
+  					  "../etc/translate/rss/image/folder_download.png";
+  					else
+  					  "../etc/translate/rss/image/folder.png";
+  				}
+  				else
+  				if (class == "playlist")
+  				{
+  					"../etc/translate/rss/image/playlist128x128.png";
+  				}
+  				else
+  				if (class == "video")
+  				{
+  					"../etc/translate/rss/image/video128x128.png";
+  				}
+  				else
+  				if (class == "audio")
+  				{
+  					"../etc/translate/rss/image/audio128x128.png";
+  				}
+  			  else
+  				if (class == "image")
+  				{
+  					"../etc/translate/rss/image/picture128x128.png";
+  				}
+  			  else
+  				{
+  					"";
+  				}
+  			}
+			</script>
+  		 <heightPC>
+  		   <script>him;</script>
+  		 </heightPC>
+  		 <widthPC>
+  		   <script>wim;</script>
+  		 </widthPC>
+  		 <offsetYPC>
+  		   <script>(100 - him)/2;</script>
+  		 </offsetYPC>
+  		 <offsetXPC>
+  		   <script>(7 - wim)/2;</script>
+  		 </offsetXPC>
+		</image>
+		<text offsetXPC="6" offsetYPC="0" widthPC="94" heightPC="100" fontSize="15" backgroundColor="-1:-1:-1" foregroundColor="160:160:160">
+			<script>
+			  bar = "";
+			  getStringArrayAt(titleArray , -1);
+			</script>
+		</text>
+	</itemDisplay>
+		
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      errorInfo = "";
+      errorInfoColor = "200:80:80";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG" || userInput == "left" || userInput == "L"  || userInput == "right" || userInput == "R")
+      {
+        if(playIndex == -1 || playContext != currentPwd || userInput == "left" || userInput == "L"  || userInput == "right" || userInput == "R")
+        {
+          idx = getFocusItemIndex();
+          if (userInput == "pagedown" || userInput == "PD" || userInput == "right" || userInput == "R")
+          {
+            idx -= -10;
+            if(idx &gt;= itemSize)
+              idx = itemSize-1;
+          }
+          else
+          {
+            idx -= 10;
+            if(idx &lt; 0)
+              idx = 0;
+          }
+          setFocusItemIndex(idx);
+        	setItemFocus(idx);
+          redrawDisplay();
+        }
+        else if(playContext == currentPwd)
+        {
+          idx = playIndex;
+          if (repeat != "Random")
+          {
+            while(1)
+            {
+              if (userInput == "pagedown" || userInput == "PD")
+              {
+                idx -= -1;
+                if(idx &gt;= itemSize)
+                  idx = 0;
+              }
+              else
+              {
+                idx -= 1;
+                if(idx &lt; 0)
+                  idx = itemSize-1;
+              }
+              class = getStringArrayAt(classArray, idx);
+              if(class == "audio" || class == "video" || idx == playIndex)
+                break;
+            }
+          }
+          else
+          {
+            if(randomArray == null)
+            {
+              executeScript("sub_initRandom");
+            }
+            while(1)
+            {
+              if (userInput == "pagedown" || userInput == "PD")
+              {
+                randomIndex -= -1;
+                if(randomIndex &gt;= itemSize)
+                  randomIndex = 0;
+              }
+              else
+              {
+                randomIndex -= 1;
+                if(randomIndex &lt; 0)
+                  randomIndex = itemSize-1;
+              }
+              idx = getStringArrayAt(randomArray, randomIndex);
+              class = getStringArrayAt(classArray, idx);
+              if(class == "audio" || class == "video" || idx == playIndex)
+                break;
+            }
+          }
+          
+          if(idx != playIndex)
+          {
+            executeScript("sub_clickItem");
+          }
+        }
+        ret = "true";
+      }
+      else if (userInput == "return" || userInput == "RET")
+      {
+        if(history &gt;= 0)
+        {
+          currentPwd = getStringArrayAt(historyPwd, history);
+          currentTitle = getStringArrayAt(historyTitle, history);
+          currentImage = getStringArrayAt(historyImage, history);
+          currentOptions = getStringArrayAt(historyOptions, history);
+          currentCommand = getStringArrayAt(historyCommand, history);
+          currentIndex = getStringArrayAt(historyIndex, history);
+          currentProtocol = getStringArrayAt(historyProtocol, history);
+          historyPwd = deleteStringArrayAt(historyPwd, history);
+          historyTitle = deleteStringArrayAt(historyTitle, history);
+          historyImage = deleteStringArrayAt(historyImage, history);
+          historyOptions = deleteStringArrayAt(historyOptions, history);
+          historyCommand = deleteStringArrayAt(historyCommand, history);
+          historyIndex = deleteStringArrayAt(historyIndex, history);
+          historyProtocol = deleteStringArrayAt(historyProtocol, history);
+          history -= 1;
+          print("from history: ",currentPwd);
+          print("**************************** history: ",history,historyPwd);
+
+	waitForRefreshList = 2;
+	setRefreshTime(100);
+          
+/*          executeScript("sub_refreshList"); */
+          ret = "true";
+        }
+      }
+      else if (userInput == "video_repeat")
+      {
+        ret = "true";
+        if(repeat == "None")
+        {
+          repeat = "All";
+        }
+        else if(repeat == "All")
+        {
+          repeat = "One";
+        }
+        else if(repeat == "One")
+        {
+          repeat = "Random";
+        }
+        else
+        {
+          repeat = "None";
+        }
+        redrawDisplay();
+        print(repeat);
+      }
+      else if (userInput == "display" || userInput == "DISPLAY")
+      {
+        if(playIndex != -1 &amp;&amp; playContext == currentPwd) 
+        {
+        	setFocusItemIndex(playIndex);
+        	setItemFocus(playIndex);
+        	redrawDisplay();
+        }
+        ret = "true";
+      }
+      else if (userInput == "zero" || userInput == "0")
+  		{
+        search_text = playSong;
+        if(search_text == "" || search_text == null)
+          search_text = playTitle;
+        if(search_text != "" &amp;&amp; search_text != null) 
+        {
+  		    showIdle();
+        	executeScript("sub_stopPlayback");
+          storagePath = getStoragePath("tmp") + "youtubeRSS.dat";
+          arr = null;
+          arr = pushBackStringArray(arr, "http://gdata.youtube.com/feeds/api/videos?");
+          arr = pushBackStringArray(arr, search_text);
+          arr = pushBackStringArray(arr, search_text);
+          
+          writeStringToFile(storagePath, arr);
+    	    doModalRss("rss_file://../etc/translate/rss/youtube/yt_search_feed.rss");
+    	  }
+  	    ret = "true";
+  	  }
+      else if (userInput == "one" || userInput == "1")
+  		{
+        search_text = playSong;
+        if(search_text == "" || search_text == null)
+          search_text = playTitle;
+        if(search_text != "" &amp;&amp; search_text != null) 
+        {
+        	executeScript("sub_stopPlayback");
+      		search_url  = translate_base_url + "app/gettune/search," + urlEncode(search_text);
+
+          history += 1;
+          historyPwd      = pushBackStringArray(historyPwd, currentPwd);
+          historyTitle    = pushBackStringArray(historyTitle, currentTitle);
+          historyImage    = pushBackStringArray(historyImage, currentImage);
+          historyOptions  = pushBackStringArray(historyOptions, currentOptions);
+          historyCommand  = pushBackStringArray(historyCommand, currentCommand);
+          historyIndex    = pushBackStringArray(historyIndex, currentIndex);
+          historyProtocol = pushBackStringArray(historyProtocol, currentProtocol);
+          
+          currentPwd = search_url;
+          currentTitle = search_text;
+          currentImage = pageLogo;
+          currentOptions = "";
+          currentCommand = "playlist";
+          currentIndex = 0;
+          currentProtocol = "http";
+          executeScript("sub_refreshList");
+          
+/*
+  		    showIdle();
+      		playlist_autoplay = 0;
+          streamArray = null;
+          streamArray = pushBackStringArray(streamArray, search_url);
+          streamArray = pushBackStringArray(streamArray, search_text);
+          streamArray = pushBackStringArray(streamArray, pageLogo);
+          streamArray = pushBackStringArray(streamArray, "");
+          streamArray = pushBackStringArray(streamArray, "playlist");
+          streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+          streamArray = pushBackStringArray(streamArray, "All");
+          writeStringToFile(storagePath_playlist, streamArray);
+          doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+*/          
+    	  }
+  	    ret = "true";
+  	  }
+      ret;
+    </script>
+  </onUserInput>
+  
+</mediaDisplay>
+
+<onExit>
+    playItemURL(-1, 1);
+    playStatus = 0;
+    setRefreshTime(-1);
+</onExit>
+
+<onEnter>
+  storagePath             = getStoragePath("tmp");
+  storagePath_playlist    = storagePath + "playlist.dat";
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_streamInfo  = storagePath + "streamInfo.dat";
+
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  arr = readStringFromFile(storagePath_playlist);
+  
+  if(arr != null)
+  {
+    root    = getStringArrayAt(arr, 0);
+    title   = getStringArrayAt(arr, 1);
+    image   = getStringArrayAt(arr, 2);
+    options = getStringArrayAt(arr, 3);
+    command = getStringArrayAt(arr, 4);
+    if(command == null)
+    {
+      command = "playlist";
+    }
+    autoplay = getStringArrayAt(arr, 5);
+    if(autoplay == null)
+    {
+      autoplay = 0;
+    }
+    repeat = getStringArrayAt(arr, 6);
+    if(repeat == null)
+    {
+      repeat = "None";
+    }
+    writeStringToFile(storagePath_playlist, "");
+  }
+  else
+  {
+    root    = "";
+    title   = "XSPF Browser starting point";
+    image   = "../etc/translate/rss/image/start_playlist.jpg";
+    options = "";
+    command = "startpoint";
+    autoplay = 0;
+    repeat = "None";
+  }
+  
+  
+  playStatus        = 0;
+  playIndex         = -1;
+  playContext       = "";
+  streamInfoTimeout = 30;
+
+  historyPwd      = null;
+  historyTitle    = null;
+  historyOptions  = null;
+  historyImage    = null;
+  historyCommand  = null;
+  historyIndex    = null;
+  historyProtocol = null;
+  
+  currentPwd      = root;
+  currentTitle    = title;
+  currentOptions  = options;
+  currentImage    = image;
+  currentCommand  = command;
+  currentIndex    = 0;
+  currentProtocol = "";
+  
+  randomArray = null;
+  randomIndex = -1;
+
+  history = -1;
+  loadingProgress = 0;
+  playingProgress = 0;
+  progress = "";
+
+  executeScript("sub_refreshList");
+</onEnter>
+
+<sub_doRefreshList>
+  length = getXMLElementCount("playlist","trackList","track");
+	if(length == 0)
+	{
+    errorInfo = "Empty list!";
+    errorInfoColor = "200:80:80";
+	  postMessage("return");
+	}
+	count=startItem;
+	while(length != 0)
+	{
+	  loadingProgress = count * 100 / length;
+	  location = getXMLText("playlist","trackList","track",count,"location");
+		title = getXMLText("playlist","trackList","track",count,"title");
+		if(title == null)
+		{
+  		annotation = getXMLText("playlist","trackList","track",count,"annotation");
+  		if(annotation != null)
+  		{
+  		  title = annotation;
+  		}
+  	  else
+  	  {
+  		  title = location;
+    	}
+		}
+		else
+		{ 
+  		creator = getXMLText("playlist","trackList","track",count,"creator");
+		  if (creator != null)
+		  {
+		    title = creator + " - " + title;
+		  }
+		}
+	  url = location;
+	  image = getXMLText("playlist","trackList","track",count,"image");
+	  option = "";
+    class = "auto";
+    protocol = "";
+    type = "";
+	  
+	  metaSize = getXMLElementCount("playlist","trackList","track",count,"meta")-1;
+  	while(metaSize &gt;= 0)
+  	{
+	    meta = getXMLText("playlist","trackList","track",count,"meta", metaSize);
+  	  rel = getXMLAttribute("playlist","trackList","track",count,"meta",metaSize,"rel");
+  	  if (rel == "ext")
+  	  {
+	      if(meta == "mp3" || meta == "mp2" || meta == "mpga")
+	      {
+  	      class = "audio";
+	        type = "audio/mpeg";
+	      }
+	      else if (meta == "ogg")
+	      {
+  	      class = "audio";
+	        type = "application/ogg";
+	      }
+	      else if (meta == "flac")
+	      {
+  	      class = "audio";
+	        type = "";
+	      }
+	      else if (meta == "wav")
+	      {
+  	      class = "audio";
+	        type = "audio/wav";
+	      }
+	      else if (meta == "wma" || meta == "wax")
+	      {
+  	      class = "audio";
+	        type = "audio/x-ms-" + meta;
+	      }
+	      else if (meta == "m4a" || meta == "mp4a")
+	      {
+  	      class = "audio";
+	        type = "audio/mp4";
+	      }
+	      
+	      else if (meta == "avi" || meta == "mpeg" || meta == "mpg" || meta == "mpe")
+	      {
+  	      class = "video";
+	        type = "video/mpeg";
+	      }
+	      else if (meta == "mkv")
+	      {
+  	      class = "video";
+	        type = "video/x-matroska";
+	      }
+	      else if (meta == "wmv" || meta == "wvx" || meta == "wm" || meta == "wmx")
+	      {
+  	      class = "video";
+	        type = "video/x-ms-" + meta;
+	      }
+	      else if (meta == "flv")
+	      {
+  	      class = "video";
+	        type = "video/x-flv";
+	      }
+	      else if (meta == "qt" || meta == "mov")
+	      {
+  	      class = "video";
+	        type = "video/quicktime";
+	      }
+	      else if (meta == "asf" || meta == "asx")
+	      {
+  	      class = "video";
+	        type = "video/x-ms-asf";
+	      }
+	      else if (meta == "mp4" || meta == "m4v" || meta == "mp4v" || meta == "mpg4")
+	      {
+  	      class = "video";
+	        type = "video/mp4";
+	      }
+
+	      else if (meta == "xspf")
+	      {
+  	      class = "playlist";
+	        type = "application/xspf+xml";
+	      }
+	      else if (meta == "m3u")
+	      {
+  	      class = "playlist";
+	        type = "audio/x-mpegurl";
+	      }
+	      else if (meta == "pls")
+	      {
+  	      class = "playlist";
+	        type = "audio/x-scpls";
+	      }
+	      else if (meta == "cue")
+	      {
+  	      class = "cue";
+	        type = "text/plain";
+	      }
+	      else if (meta == "rss")
+	      {
+  	      class = "rss";
+	        type = "application/rss+xml";
+	      }
+	      else if (meta == "png" || meta == "gif" || meta == "bmp")
+	      {
+  	      class = "image";
+	        type = "image/"+meta;
+	      }
+	      else if (meta == "jpg" || meta == "jpeg" || meta == "jpe")
+	      {
+  	      class = "image";
+	        type = "image/jpeg";
+	      }
+	      else if (meta == "txt")
+	      {
+  	      class = "text";
+	        type = "text/plain";
+	      }
+  	  }
+  	  else if(rel == "translate")
+  	  {
+  	    option = meta;  
+  	  }
+  	  else if(rel == "streamer")
+  	  {
+  	    url = meta + location;
+  	  }
+  	  else if(rel == "class" || rel == "stream_class") 
+  	  {
+  	    class = meta;  
+  	  }
+  	  else if(rel == "protocol" || rel == "stream_protocol")
+  	  {
+  	    protocol = meta;  
+  	  }
+  	  else if(rel == "stream_type")
+  	  {
+  	    type = meta;  
+  	  }
+  	  else if(rel == "stream_url") 
+  	  {
+  	    url = meta;  
+  	  }
+  	  metaSize = metaSize - 1;
+  	}
+  	
+  	if(protocol == "file" || protocol == "ftp")
+  	{
+    	if(type != "")
+    	{
+    	  type = "Content-type:" + type;
+      	if(option == "")
+      	  option = type;
+      	else
+      	  option = type + ";" + option;
+      }
+    }
+    else if(type == "")
+    {
+      class = "";
+    }
+	  
+	  titleArray    = pushBackStringArray(titleArray, title);
+	  urlArray      = pushBackStringArray(urlArray, url);
+	  classArray    = pushBackStringArray(classArray, class);
+	  protocolArray = pushBackStringArray(protocolArray, protocol);
+	  optionArray   = pushBackStringArray(optionArray, option);
+	  imageArray    = pushBackStringArray(imageArray, image);
+	  
+	  count += 1;
+	  if (count == length || count == (startItem+50))
+	  {
+		  break;
+	  }
+	}
+	itemSize = count;
+	print("Item Size = ", itemSize);
+	if(count == length)
+	{
+	  cancelIdle();
+  	waitForRefreshList = 0;
+  	setRefreshTime(-1);
+  	loadingProgress = 0;
+  	setFocusItemIndex(currentIndex);
+  	setItemFocus(currentIndex);
+
+    elapsedTime = "";
+	  print("Refresh list done!", itemSize);
+
+    if(autoplay == 1)
+    {
+      autoplay = 0;
+      idx = currentIndex;
+      executeScript("sub_clickItem");
+    }
+    else
+    {
+      if(playStatus != 0)
+      {
+        setRefreshTime(1000);
+      }
+    }
+	}
+	else
+	{
+ 	  setRefreshTime(10);
+    startItem = count;
+	}
+</sub_doRefreshList>
+
+
+<sub_refreshList>
+  print("sub_refreshList start");
+    cancelIdle();
+  	waitForRefreshList = 0;
+  	setRefreshTime(-1);
+  	
+    pageTitle = currentTitle;
+    
+    print("PWD: ",currentPwd);
+    
+    url = translate_base_url + currentCommand + "," + currentOptions + "," + urlEncode(currentPwd);
+    
+    print("Browse:",url);
+    
+    dlok = loadXMLFile(url);
+    if (dlok != null)
+    {
+      titleArray = null;
+      urlArray = null;
+      classArray = null;
+      protocolArray = null;
+      optionArray = null;
+      imageArray = null;
+      
+      value = getXMLText("playlist","title");
+      if(currentCommand == "playlist" &amp;&amp; value != null &amp;&amp; value != "")
+        pageTitle = value;
+      
+  	  if(currentImage == "")
+  	  {
+    	   playlistLogo = getXMLText("playlist","image");
+    	   if(playlistLogo == null)
+    	   {
+    	    if(currentProtocol == "http" || currentProtocol == "file")
+    	      playlistLogo = currentPwd + "cover.jpg";
+    	    else
+    	      playlistLogo = translate_base_url + "stream,Content-type:image/jpeg," + urlEncode(currentPwd + "cover.jpg");
+    	   }
+    	}
+  	  else
+  	    playlistLogo = currentImage;
+    	
+    	if(playStatus == 0)
+    	  pageLogo = playlistLogo;
+
+      randomArray = null;
+      
+      elapsedTime = "Wait ...";
+      showIdle();
+    	waitForRefreshList = 1;
+    	startItem = 0;
+    	itemSize = 0;
+    	setRefreshTime(1);
+    }
+    else
+    {
+      errorInfo = "Loading error!";
+      errorInfoColor = "200:80:80";
+      postMessage("return");
+    }
+  print("sub_refreshList end");
+</sub_refreshList>
+
+<sub_clickItem>
+  print("sub_clickItem start", idx);
+  
+  if(waitForRefreshList == 0)
+  {
+    if(currentPwd != playContext || idx != playIndex)
+    {
+      class = getStringArrayAt(classArray, idx);
+      protocol = getStringArrayAt(protocolArray, idx);
+      url = getStringArrayAt(urlArray, idx);
+      title = getStringArrayAt(titleArray, idx);
+      options = getStringArrayAt(optionArray, idx);
+      image = getStringArrayAt(imageArray, idx);
+      server_url = null;
+      soft = null;
+      statusUrl = null;
+      
+      error = 0;
+      errorInfo = "";
+      errorInfoColor = "200:80:80";
+      
+      translateUrl = translate_base_url + "stream," + options + "," + urlEncode(url);
+      
+      print(class);
+      print(protocol);
+      print(url);
+      
+      streamTitle = title;
+      streamGenre = "";
+      streamBitrate = "";
+      currentSong = "";
+      defImage = "";
+      
+      if(class == "auto" || class == "")
+      {
+        infoUrl = translate_base_url + "info," + options + "," + urlEncode(url);
+        
+        print("Info:",infoUrl);
+        
+        writeStringToFile(storagePath_streamInfo, "");
+        
+        dlok = loadXMLFile(infoUrl);
+        if (dlok != null)
+        {
+          error = getXMLElementCount("info","error");
+          
+          if(error != 0)
+          {
+      	    value = getXMLText("info","error");
+      	    if(value != null)
+      	    {
+      	     errorInfo = value;
+      	     errorInfoColor = "200:80:80";
+      	    }
+          }
+          else
+          {
+      	    value = getXMLAttribute("info","stream","url");
+      	    if(value != null)
+      	     url = value;
+    
+      	    value = getXMLAttribute("info","stream","type");
+      	    if(value != null)
+      	     type = value;
+      	    
+      	    value = getXMLAttribute("info","stream","class");
+      	    if(value != null)
+      	     class = value;
+    
+      	    value = getXMLAttribute("info","stream","protocol");
+      	    if(value != null)
+      	     protocol = value;
+    
+      	    value = getXMLAttribute("info","stream","server");
+      	    if(value != null)
+      	     soft = value;
+    
+      	    value = getXMLAttribute("info","stream","server_url");
+      	    if(value != null)
+      	    {
+      	     server_url = value;
+      	     if(soft == "icecast" || soft == "shoutcast")
+      	     {
+        	      statusUrl = translate_base_url+"status,"+server_url+","+urlEncode(url);
+        	   }
+      	    }
+      	     
+            value = getXMLText("info","status","stream-title");
+      	    if(value != null)
+      	     streamTitle = value;
+    
+      	    value = getXMLText("info","status","current-song");
+      	    if(value != null)
+        		  currentSong = value;
+        		  
+      	    value = getXMLText("info","status","stream-genre");
+      	    if(value != null)
+      	      streamGenre = value;
+            
+      	    value = getXMLText("info","status","stream-bitrate");
+      	    if(value != null)
+      	      streamBitrate = value;
+  
+            streamoptions = "";
+            
+            if(type != "")
+              streamoptions = "Content-type:"+type;
+            
+            if(streamoptions == "")
+              streamoptions = options;
+            else
+              streamoptions = streamoptions + ";" + options;
+  
+      	    translateUrl = translate_base_url + "stream," + streamoptions + "," + urlEncode(url);
+    
+            streamArray = null;
+             
+            streamArray = pushBackStringArray(streamArray, url);
+            streamArray = pushBackStringArray(streamArray, type);
+            streamArray = pushBackStringArray(streamArray, class);
+            streamArray = pushBackStringArray(streamArray, protocol);
+            streamArray = pushBackStringArray(streamArray, soft);
+            streamArray = pushBackStringArray(streamArray, server_url);
+            streamArray = pushBackStringArray(streamArray, translateUrl);
+            
+            writeStringToFile(storagePath_streamInfo, streamArray);
+          }
+        }
+      }
+  
+      if(error == 0)
+      {
+        if(class == "directory" || class == "playlist")
+        {
+          done = 0;
+        
+          if(title == ".." &amp;&amp; history &gt;= 0)
+          {
+            pwd = getStringArrayAt(historyPwd, history);
+            if(pwd == url)
+            {
+              postMessage("return");
+              done = 1;
+            }
+          }
+          
+          if(done == 0)
+          {
+            currentIndex = getFocusItemIndex();
+            
+            history += 1;
+            historyPwd      = pushBackStringArray(historyPwd, currentPwd);
+            historyTitle    = pushBackStringArray(historyTitle, currentTitle);
+            historyImage    = pushBackStringArray(historyImage, currentImage);
+            historyOptions  = pushBackStringArray(historyOptions, currentOptions);
+            historyCommand  = pushBackStringArray(historyCommand, currentCommand);
+            historyIndex    = pushBackStringArray(historyIndex, currentIndex);
+            historyProtocol = pushBackStringArray(historyProtocol, currentProtocol);
+            
+            print("********** history:",history,historyPwd);
+      
+            currentPwd = url;
+            if(title == "..")
+              currentTitle = url;
+            else
+              currentTitle = title;
+            currentImage    = image;
+            print("########### ",currentCommand,class);
+            if(currentCommand != "directory" &amp;&amp; class == "directory")
+              options = "Chroot:yes;" + options;
+            currentOptions  = options;
+            currentCommand  = class;
+            currentIndex    = 0;
+            currentProtocol = protocol;
+            
+            executeScript("sub_refreshList");
+          }
+        }
+        else if(class == "video")
+        {
+          executeScript("sub_stopPlayback");
+          
+            historyPath = getStoragePath("key")+"translate.history_video.m3u";
+            historydat = readStringFromFile(historyPath);
+            if(historydat == null)
+              historydat = pushBackStringArray(historydat, "#EXTM3U");
+            historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+getStringArrayAt(titleArray, idx));
+            historydat = pushBackStringArray(historydat, url);
+            writeStringToFile(historyPath, historydat);
+
+          if(image == "")
+            image = playlistLogo;
+            
+          print("!!!!!!!!!! image:",image);
+          
+          if(pageLogo != image &amp;&amp; image != "")
+          {
+            pageLogo = image;
+          }
+          if(protocol == "file" || (protocol == "http" &amp;&amp; soft != "_translate_"))
+          {
+            urlToPlay = url;
+          }
+          else
+          {
+            urlToPlay = translateUrl;
+          }
+          playIndex = idx;
+          playContext = currentPwd;
+          
+          setRefreshTime(1000);
+      
+          playItemURL(urlToPlay, 0);
+          print("play:",urlToPlay);
+        }
+        else if(class == "audio")
+        {
+          executeScript("sub_stopPlayback");
+        
+            historyPath = getStoragePath("key")+"translate.history_audio.m3u";
+            historydat = readStringFromFile(historyPath);
+            if(historydat == null)
+              historydat = pushBackStringArray(historydat, "#EXTM3U");
+            historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+getStringArrayAt(titleArray, idx));
+            historydat = pushBackStringArray(historydat, url);
+            writeStringToFile(historyPath, historydat);
+
+          if(protocol == "file" || (protocol == "http" &amp;&amp; (soft != "shoutcast" || soft != "_translate_")))
+          {
+            urlToPlay = url;
+          }
+          else
+          {
+            urlToPlay = translateUrl;
+          }
+          
+          if(playlistLogo != "")
+            defImage = playlistLogo;
+
+          if(image == "")
+          {
+            image = defImage;
+          }
+            
+          print("!!!!!!!!!! image:",image);
+          
+          if(pageLogo != image &amp;&amp; image != "")
+          {
+            pageLogo = image;
+          }
+          
+          playTitle   = streamTitle;
+          playSong    = currentSong;
+          playIndex   = idx;
+          playContext = currentPwd;
+          
+          if((playTitle != "" &amp;&amp; playTitle != null) || (playSong != "" &amp;&amp; playSong != null))
+          {
+            errorInfo = "Press '0' to search related video on Youtube; '1' - get-tune.net";
+            errorInfoColor = "200:200:200";
+          }
+          
+          if(playSong != "" &amp;&amp; playSong != null)
+            playArtistImage = translate_base_url + "app,Def:AR;Title:"+urlEncode(playSong)+",lastfm/trackimage.png";
+          else
+            playArtistImage = "";
+    
+  		    if(streamBitrate != "")
+    	    {
+    	      title_1 = "Bitrate:";
+    		    info_1 = streamBitrate;
+    		  }
+  		    if(streamGenre != "")
+    	    {
+    	      title_2 = "Genre:";
+    		    info_2 = streamGenre;
+    		  }
+    		  
+    		  elapsedTime = "Wait ...";
+    		  
+          setRefreshTime(1000);
+          showIdle();
+          playItemURL(urlToPlay, 0, "mediaDisplay", "previewWindow");
+          print("play:",urlToPlay);
+          redrawDisplay();
+        }
+        else if(class == "image")
+        {
+          if(protocol == "file" || protocol == "http")        
+          {
+            pageLogo = url;
+          }
+          else
+          {
+            pageLogo = translateUrl;
+          }
+          playlistLogo = pageLogo;
+          print("image:",pageLogo);
+          redrawDisplay();
+        }
+        else
+        {
+          streamArray = null;
+           
+          streamArray = pushBackStringArray(streamArray, url);
+          streamArray = pushBackStringArray(streamArray, title);
+          streamArray = pushBackStringArray(streamArray, image);
+          streamArray = pushBackStringArray(streamArray, options);
+          
+          writeStringToFile(storagePath_stream, streamArray);
+    
+          if(class == "cue")
+          {
+            gotoUrl = "rss_file://../etc/translate/rss/xspf/cue_Player.rss";
+          }
+          else
+          if(class == "rss")
+          {
+            gotoUrl = "rss_file://../etc/translate/rss/xspf/rss_mediaFeed.rss";
+          }
+          else
+          if(class == "renderer")
+          {
+            gotoUrl = "rss_file://../etc/translate/rss/xspf/streamRenderer.rss";
+          }
+          else
+          {
+            gotoUrl = "";
+            errorInfo = "Unsupported content type (" + type + ")!";
+            errorInfoColor = "200:80:80";
+          }
+          if(gotoUrl != "")
+          {
+            executeScript("sub_stopPlayback");
+            doModalRss(gotoUrl);
+          }
+        }
+      }
+      else
+      {
+        playIndex = -1;
+      }
+    }
+    else
+    {
+      print("already playing:",idx);
+    }
+  }
+  print("sub_clickItem end");
+</sub_clickItem>
+
+<sub_stopPlayback>
+  print("stop Playback");
+  playItemURL(-1, 1);
+  playStatus = 0;
+  playIndex = -1;
+  executeScript("sub_onStop");
+</sub_stopPlayback>
+
+
+<sub_onStop>
+  setRefreshTime(-1);
+  elapsedTime = "";
+  playTitle   = "";
+  playSong    = "";
+  title_1     = "";
+  info_1      = "";
+  title_2     = "";
+  info_2      = "";
+  statusCheck = 0;
+  playingProgress = 0;
+  progress = "";
+  errorInfo = "";
+</sub_onStop>
+
+<sub_initRandom>
+  print("sub_initRandom start");
+  dlok = loadXMLFile(translate_base_url+"random,"+itemSize+","+playIndex);
+  if (dlok != null)
+  {
+    randomArray = null;
+  	count = 0;
+  	while(1)
+  	{
+  		value = getXMLText("randomList","item",count);
+	  	randomArray  = pushBackStringArray(randomArray, value);
+	  	count += 1;
+	  	if(count == itemSize)
+	  	  break;
+  	}
+  }
+  randomIndex = 0;
+  print("sub_initRandom end");
+</sub_initRandom>
+
+<onRefresh>
+  if(waitForRefreshList == 1)
+  {
+    setRefreshTime(-1);
+    executeScript("sub_doRefreshList");
+  	redrawDisplay();
+  }
+  else
+  if(waitForRefreshList == 2)
+  {
+    setRefreshTime(-1);
+    executeScript("sub_refreshList");
+  }
+  else
+  {
+    playbackStatus  = getPlaybackStatus();
+    playElapsed     = getStringArrayAt(playbackStatus, 0);
+    playStatus      = getStringArrayAt(playbackStatus, 3);
+    playTime        = getStringArrayAt(playbackStatus, 1);
+    if(playTime &gt; 0) {
+      playingProgress = playElapsed * 100 / playTime;
+      progress = "";
+    }
+  
+    if(defImage == "")
+      if (playTime == 0 || playTime &gt; 1000000)
+        defImage = "../etc/translate/rss/image/radio_online.png";
+      
+    print("playbackStatus: ",playbackStatus);
+  
+    cancelIdle();
+    
+    if (playStatus == 0) 
+    {
+      print("playStatus",playStatus);
+      
+      executeScript("sub_onStop");
+      
+      idx = -1;
+      
+      if(playContext == currentPwd)
+      {
+        if(userInput != "video_stop")
+        {
+          if(repeat == "One")
+          {
+            idx = playIndex;
+          }
+          else if(repeat == "All")
+          {
+            idx = playIndex;
+            idx -= -1;
+            if(idx &gt;= itemSize)
+              idx = 0;
+          }
+          else if (repeat == "Random")
+          {
+            if(randomArray != null &amp;&amp; playIndex == getStringArrayAt(randomArray, randomIndex))
+            {
+              randomIndex -= -1;
+              if(randomIndex &gt;= itemSize)
+              {
+                randomArray = null;
+              }
+            }
+            if(randomArray == null)
+            {
+              executeScript("sub_initRandom");
+              if(itemSize == 1)
+                randomIndex = 0;
+              else
+                randomIndex = 1;
+            }
+            idx = getStringArrayAt(randomArray, randomIndex);
+          }
+        }
+        else {
+        	setFocusItemIndex(playIndex);
+        	setItemFocus(playIndex);
+        }
+      }
+  
+      if(idx != -1)
+      {
+        executeScript("sub_clickItem");
+      }
+      else
+      {
+        playIndex = -1;
+        pageLogo = playlistLogo;
+        redrawDisplay();
+      }
+      
+      user_input = "";
+    }
+    else if (playElapsed != 0) 
+    {
+      statusCheck += 1;
+      
+      if(statusCheck &gt;= streamInfoTimeout)
+      {
+        statusCheck = 0;
+        
+        if(statusUrl != null)
+        {
+          dlok = loadXMLFile(statusUrl);
+          if (dlok != null)
+          {
+      	    value = getXMLText("info","status","current-song");
+      	    if(value != null)
+        		  currentSong = value;
+          }
+      		playSong = currentSong;
+        }
+      }
+    
+      startPlaying = 1;
+  
+      t = playElapsed;
+      x = Integer(t / 60);
+      h = Integer(t / 3600);
+      s = t - (x * 60);
+      m = x - (h * 60);
+      elapsedTime = sprintf("%s:", h);
+      if(m &lt; 10)  elapsedTime += "0";
+      elapsedTime += sprintf("%s:", m);
+      if(s &lt; 10)  elapsedTime += "0";
+      elapsedTime += sprintf("%s", s);
+    } 
+  }
+</onRefresh>
+
+<item_template>
+	<mediaDisplay name="threePartsView">
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  </mediaDisplay>
+	<onClick>
+    idx   = getFocusItemIndex();
+	  executeScript("sub_clickItem");
+    null;
+	</onClick>
+  <media:thumbnail>"";</media:thumbnail>
+</item_template>
+
+<playerLink>
+	<mediaDisplay name="threePartsView">
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  </mediaDisplay>
+  <link>
+    <script>gotoUrl;</script>
+  </link>
+</playerLink>
+
+<channel>
+  <itemSize>
+  	<script>itemSize;</script>
+  </itemSize>
+</channel>
+</rss>

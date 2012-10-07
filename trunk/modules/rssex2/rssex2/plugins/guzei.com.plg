@@ -1,0 +1,94 @@
+#!/bin/sh
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+#
+# Translate CGI module
+# 'guzei.com' plug-in
+#
+# version: 2.0 04.03.2011 11:25:58
+#
+# http://guzei.com/online_radio/listen.php?online_radio_id=5325
+# http://guzei.com/online_tv/watch.php?online_tv_id=1781
+#
+
+if echo "${arg_url}" | grep -q -s '\(www\.\)*guzei\.com/online_radio/listen.php?online_radio_id=[0-9].*$'; then 
+
+  $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>/dev/null
+  
+  if [ -f ${TMPFILE} ]; then
+    local station_title=`grep "<h1" "$TMPFILE" | sed "s/.*<h1[^<>]*>//;s/<\/h1>.*//"`;
+  	local player=`grep "<object id=\"mp" "$TMPFILE"`
+  	local player_type=`echo "$player" | sed "s/.*type=\"application/application/;s/\".*//g"`
+    rm -f "$TMPFILE"
+    case $player_type in
+    	application/x-ms-wmp|application/x-mplayer2)
+	    	arg_url=`echo "$player" | sed "s/.*<param name=\"URL\" value=\"//;s/\".*//g"`
+	    	arg_url=`unescapeXML "$arg_url" | urldecode`
+	      check_av_stream
+    	;;
+	  esac
+    ms_title="$station_title"
+    icy_name="$station_title"
+  fi
+  return $RC_OK
+
+elif echo "${arg_url}" | grep -q -s '\(www\.\)*guzei\.com/online_tv/watch.php?online_tv_id=[0-9].*$'; then 
+
+  $MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENT}" "${arg_url}" 2>/dev/null
+  
+  if [ -f ${TMPFILE} ]; then
+    local station_title=`grep "<h1" "$TMPFILE" | sed "s/.*<h1[^<>]*>//;s/<\/h1>.*//"`;
+  	local player=`grep "<object id=\"mp" "$TMPFILE"`
+  	local player_type=`echo "$player" | sed "s/.*type=\"application/application/;s/\".*//g"`
+    rm -f "$TMPFILE"
+    case $player_type in
+    	application/x-ms-wmp|application/x-mplayer2)
+	    	arg_url=`echo "$player" | sed "s/.*<param name=\"URL\" value=\"//;s/\".*//g"`
+	    	arg_url=`unescapeXML "$arg_url" | urldecode`
+	      check_av_stream
+    	;;
+    	application/x-shockwave-flash)
+	      stream_type='video/x-flv'
+	      arg_url=`echo "$player" | sed "s/.*<param name=\"movie\" value=\"//;s/\".*//g"`
+	    	arg_url=`unescapeXML "$arg_url"  | urldecode`
+	      stream_url=`echo "${arg_url}" | sed 's/.*file=//;s/&.*//'`
+	      if echo "${arg_url}" | grep -qs 'type=rtmp'; then 
+	        local streamer=`echo "${arg_url}" | sed 's/.*streamer=//;s/&.*//'`
+	        stream_url="$streamer/$stream_url"
+	        protocol='rtmp'
+	      elif echo "${arg_url}" | grep -qs 'rtmp=rtmp'; then 
+	        stream_url=`echo "${arg_url}" | sed 's/.*rtmp=//;s/&.*//'`
+	        protocol='rtmp'
+	      elif echo "${arg_url}" | grep -qs '__streamurl__=rtmp'; then 
+	        stream_url=`echo "${arg_url}" | sed 's/.*__streamurl__=//;s/&.*//'`
+	        protocol='rtmp'
+	      else
+	        arg_url="$stream_url"
+	        check_stream
+	      fi
+	    ;;
+	  esac
+    ms_title="$station_title"
+    icy_name="$station_title"
+  fi
+  return $RC_OK
+
+fi
+
+return $RC_FAIL

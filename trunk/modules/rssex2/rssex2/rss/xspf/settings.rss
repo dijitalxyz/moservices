@@ -1,0 +1,404 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name="onePartView"
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemXPC="20"
+	itemYPC="25"
+	itemWidthPC="60"
+	itemHeightPC="10"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="6"
+  itemGap="0"
+	bottomYPC="90"
+	showHeader="no"
+	showDefaultInfo="no"
+	sliding="yes"
+	imageFocus=""
+	imageUnFocus=""
+	imageParentFocus=""
+>
+
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+		<image offsetXPC=5 offsetYPC=2 widthPC=21 heightPC=16>
+		  <script>channelImage;</script>
+      <widthPC>
+        <script>
+          21 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          5 + 21 * (1 - screenYp / screenXp) / 2;
+        </script>
+      </offsetXPC>
+		</image>
+
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+	
+	<itemDisplay>
+		<image offsetXPC="0" offsetYPC="0" widthPC="70" heightPC="100">
+			<script>
+				focus = getFocusItemIndex();
+				idx = getQueryItemIndex();
+				if (focus == idx)
+				{
+					"../etc/translate/rss/image/IMAGE_NEWRSS_MENU_BTFOC.bmp";
+				}
+				else
+				{
+					"";
+				}
+			</script>
+		</image>
+
+		<text offsetXPC="0" offsetYPC="25" widthPC="70" heightPC="50" fontSize="17" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+			<script>
+			  idx = getQueryItemIndex();
+			  getItemInfo(idx, "title");
+			</script>
+		  <offsetXPC>
+		    <script>
+		      idx = getQueryItemIndex();
+		      value = getItemInfo(idx, "offsetXPC");  
+		      if(value == "" || value == null)
+		        value = 0;
+		      value;
+		    </script>
+		  </offsetXPC>
+		  <widthPC>
+		    <script>
+		      70 - value;
+		    </script>
+		  </widthPC>
+		</text>
+		
+		<text offsetXPC="70" offsetYPC="25" widthPC="30" heightPC="50" fontSize="17" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+			<script>
+			  idx = getQueryItemIndex();
+			  
+			  if(idx == 0)
+			  {
+			   sprintf("%s",screenXp) + ":" + sprintf("%s",screenYp);
+			  }
+			  else if(idx == 2)
+			  {
+			   getStringArrayAt(hdArr, youtubeHD);
+			  }
+			  else if(idx == 3)
+			  {
+			   getStringArrayAt(hdArr, vimeoHD);
+			  }
+			  else if(idx == 4)
+			  {
+			   getStringArrayAt(hdArr, tvigleHD);
+			  }
+			  else if(idx == 5)
+			  {
+			   getStringArrayAt(hdArr, iviHD);
+			  }
+			  else if(idx == 6)
+			  {
+			   getStringArrayAt(hdArr, zoombyHD);
+			  }
+			  else if(idx == 7)
+			  {
+			   getStringArrayAt(hdArr, vkHD);
+			  }
+			  else if(idx == 8)
+			  {
+			   getStringArrayAt(ynArr, fullscreen);
+			  }
+			  else if(idx == 9)
+			  {
+			   getStringArrayAt(tsArr, testStream);
+			  }
+			  else
+			   "";
+			</script>
+		</text>
+		
+	</itemDisplay>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext, userInput =",majorContext,userInput);
+      
+      idx = getFocusItemIndex();
+
+      if (majorContext == "items")
+      {
+        if( userInput == "right" || userInput == "enter" || userInput == "R" || userInput == "ENTR")
+        {
+          if(idx == 0)
+          {
+            if(screenXp == 4)
+            {
+              screenXp = 14;
+              screenYp = 9;
+            }
+            else
+            if(screenXp == 14)
+            {
+              screenXp = 16;
+              screenYp = 9;
+            }
+            else
+            {
+              screenXp = 4;
+              screenYp = 3;
+            }
+          }
+          else if(idx == 2)
+          {
+            youtubeHD = 1 - youtubeHD;
+          }
+          else if(idx == 3)
+          {
+            vimeoHD = 1 - vimeoHD;
+          }
+          else if(idx == 4)
+          {
+            tvigleHD = 1 - tvigleHD;
+          }
+          else if(idx == 5)
+          {
+            iviHD = 1 - iviHD;
+          }
+          else if(idx == 6)
+          {
+            zoombyHD = zoombyHD - 1;
+            if(zoombyHD &lt; 0)
+              zoombyHD = 2;
+          }
+          else if(idx == 7)
+          {
+            vkHD = vkHD - 1;
+            if(vkHD &lt; 0)
+              vkHD = 2;
+          }
+          else if(idx == 8)
+          {
+            fullscreen = 1 - fullscreen;
+          }
+          else if(idx == 9)
+          {
+            testStream = 1 - testStream;
+          }
+          ret = "true";
+          redrawDisplay();
+        }
+      }
+      ret;
+    </script>
+  </onUserInput>
+</mediaDisplay>
+
+<onExit>
+  arr = null;
+  
+  arr = pushBackStringArray(arr, translate_base_url);
+  arr = pushBackStringArray(arr, screenXp);
+  arr = pushBackStringArray(arr, screenYp);
+  arr = pushBackStringArray(arr, youtubeHD);
+  arr = pushBackStringArray(arr, vimeoHD);
+  arr = pushBackStringArray(arr, tvigleHD);
+  arr = pushBackStringArray(arr, iviHD);
+  arr = pushBackStringArray(arr, zoombyHD);
+  arr = pushBackStringArray(arr, vkHD);
+  arr = pushBackStringArray(arr, fullscreen);
+  arr = pushBackStringArray(arr, testStream);
+
+  writeStringToFile(getStoragePath("key")+"translate.dat", arr);
+
+  cachePath = getStoragePath("key");
+  optionsPath = cachePath + "youtubeOptions.dat";
+  optionsArray = readStringFromFile(optionsPath);
+
+  arr = null;
+  
+  arr = pushBackStringArray(arr, getStringArrayAt(optionsArray, 0));
+  arr = pushBackStringArray(arr, youtubeHD);
+  arr = pushBackStringArray(arr, getStringArrayAt(optionsArray, 2));
+  
+  writeStringToFile(optionsPath, arr);
+</onExit>
+
+<onEnter>
+  itemCount = getPageInfo("itemCount");
+  
+  hdArr = null;
+  hdArr = pushBackStringArray(hdArr, "LO");
+  hdArr = pushBackStringArray(hdArr, "HD");
+  hdArr = pushBackStringArray(hdArr, "MD");
+
+  ynArr = null;
+  ynArr = pushBackStringArray(ynArr, "Нет");
+  ynArr = pushBackStringArray(ynArr, "Да");
+
+  tsArr = null;
+  tsArr = pushBackStringArray(tsArr, "Авто");
+  tsArr = pushBackStringArray(tsArr, "Всегда");
+  
+  translate_base_url  = "http://127.0.0.1:88/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  youtubeHD = 1;
+  vimeoHD = 1;
+  tvigleHD = 1;
+  iviHD = 1;
+  zoombyHD = 1;
+  vkHD = 1;
+  fullscreen = 0;
+  testStream = 0;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = value;
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = value;
+    value = getStringArrayAt(rssconf, 3);
+    if(value != null &amp;&amp; value != "")
+      youtubeHD = value;
+    value = getStringArrayAt(rssconf, 4);
+    if(value != null &amp;&amp; value != "")
+      vimeoHD = value;
+    value = getStringArrayAt(rssconf, 5);
+    if(value != null &amp;&amp; value != "")
+      tvigleHD = value;
+    value = getStringArrayAt(rssconf, 6);
+    if(value != null &amp;&amp; value != "")
+      iviHD = value;
+    value = getStringArrayAt(rssconf, 7);
+    if(value != null &amp;&amp; value != "")
+      zoombyHD = value;
+    value = getStringArrayAt(rssconf, 8);
+    if(value != null &amp;&amp; value != "")
+      vkHD = value;
+    value = getStringArrayAt(rssconf, 9);
+    if(value != null &amp;&amp; value != "")
+      fullscreen = value;
+    value = getStringArrayAt(rssconf, 10);
+    if(value != null &amp;&amp; value != "")
+      testStream = value;
+  }
+  
+  channelImage = "../etc/translate/rss/image/menu/settings.png";
+</onEnter>
+
+
+<channel>
+  <title>Settings</title>
+
+  <item>
+    <title>Пропорции экрана:</title>
+  </item>
+
+  <item>
+    <title>HD видео</title>
+  </item>
+
+  <item>
+    <title>Youtube:</title>
+    <offsetXPC>20</offsetXPC>
+  </item>
+
+  <item>
+    <title>Vimeo:</title>
+    <offsetXPC>20</offsetXPC>
+  </item>
+
+  <item>
+    <title>Tvigle:</title>
+    <offsetXPC>20</offsetXPC>
+  </item>
+
+  <item>
+    <title>Ivi:</title>
+    <offsetXPC>20</offsetXPC>
+  </item>
+
+  <item>
+    <title>Zoomby:</title>
+    <offsetXPC>20</offsetXPC>
+  </item>
+
+  <item>
+    <title>ВКонтакте:</title>
+    <offsetXPC>20</offsetXPC>
+  </item>
+
+  <item>
+    <title>Полноэкранное видео:</title>
+  </item>
+
+  <item>
+    <title>Тестировать поток:</title>
+  </item>
+
+<!--
+  <item>
+    <title>Обновить расширения</title>
+  </item>
+
+  <item>
+    <title>Язык интерфейса:</title>
+  </item>
+-->
+
+</channel>
+
+</rss>

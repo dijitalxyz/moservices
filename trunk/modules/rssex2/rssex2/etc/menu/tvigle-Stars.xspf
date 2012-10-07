@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title>Tvigle - Звезды</title>
+  <image>../etc/translate/rss/image/tvigle.png</image>
+  <trackList>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:2124,tvigle/multi</link>
+  <title>Остров 312</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/2124/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:189,tvigle/multi</link>
+  <title>Новости звезд</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/189/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:237,tvigle/multi</link>
+  <title>Анекдот от звезды</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/237/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1495,tvigle/multi</link>
+  <title>Голая правда от Алены Водонаевой</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1495/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:206,tvigle/multi</link>
+  <title>Звездные блоги</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/206/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:190,tvigle/multi</link>
+  <title>Тусовки</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/190/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:210,tvigle/multi</link>
+  <title>No comments</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/210/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1129,tvigle/multi</link>
+  <title>Звездный Live</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1129/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1408,tvigle/multi</link>
+  <title>Ранетки</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1408/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1373,tvigle/multi</link>
+  <title>Star Fashion</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1373/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:213,tvigle/multi</link>
+  <title>Звездное досье</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/213/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1305,tvigle/multi</link>
+  <title>Звездное авто</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1305/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+<track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1442,tvigle/multi</link>
+  <title>In Style</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1442/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:662,tvigle/multi</link>
+  <title>23 февраля</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/662/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:188,tvigle/multi</link>
+  <title>День влюбленных</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/188/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1692,tvigle/multi</link>
+  <title>Звездные страсти</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1692/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1709,tvigle/multi</link>
+  <title>Звездный десант </title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1709/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1775,tvigle/multi</link>
+  <title>Счастья вам, женщины!</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1775/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1776,tvigle/multi</link>
+  <title>Куда идет эта женщина?</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1776/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:643,tvigle/multi</link>
+  <title> С Новым годом  от звезды</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/643/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1566,tvigle/multi</link>
+  <title>Звездные истории</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1566/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:1693,tvigle/multi</link>
+  <title>От звезды с любовью</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/1693/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track><track>
+  <link>http://127.0.0.1/cgi-bin/translate?app,Channel:747,tvigle/multi</link>
+  <title>8 марта</title>
+  <annotation/>
+  <image>http://photo.tvigle.ru/resource/rf/cnl/747/list.jpg?2</image>
+  <meta rel="mediaDisplay">photoView</meta>
+</track>
+  </trackList>
+</playlist>

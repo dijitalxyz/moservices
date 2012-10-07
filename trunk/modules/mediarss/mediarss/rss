@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/local/etc/mos/mediarss/sayler_module

@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playlist xmlns="http://xspf.org/ns/0/">
+   <title>Digitally Imported</title>
+   <trackList>
+      <track>
+         <location>http://listen.di.fm/public2/chillout.pls</location>
+         <title>Chillout</title>
+         <annotation>Ambient psy chillout, check out our trippy flavors!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic Chillout Ambient</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17b.di.fm:80/di_chillout_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Chillout - D I G I T A L L Y - I M P O R T E D - ambient psy chillout, check out our trippy flavors!</meta>
+<meta rel="stream_genre">Electronic Chillout Ambient</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/futuresynthpop.pls</location>
+         <title>Future Synthpop</title>
+         <annotation>Finest selection of futurepop and synthpop!!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm/futuresynthpop/</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_futuresynthpop_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Future Synthpop - D I G I T A L L Y - I M P O R T E D - Finest selection of futurepop and synthpop!!</meta>
+<meta rel="stream_genre">Electronic Industrial Synthpop</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/liquiddnb.pls</location>
+         <title>Liquid DnB</title>
+         <annotation>Flowing with the freshest Liquid DnB!!</annotation>
+         <image>../etc/translate/rss/image/di/liquiddnb.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_liquiddnb_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Liquid DnB  - D I G I T A L L Y - I M P O R T E D - Flowing with the freshest Liquid DnB!!</meta>
+<meta rel="stream_genre">Electronic Liquid Drum N Bass</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/oldschoolhouse.pls</location>
+         <title>Oldschool House</title>
+         <annotation>The sounds of old school house music!</annotation>
+         <image>../etc/translate/rss/image/di/oldschoolhouse.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_oldschoolhouse_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Oldschool House - D I G I T A L L Y - I M P O R T E D - The sounds of old school house music!</meta>
+<meta rel="stream_genre">Electronic House Old</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/chiptunes.pls</location>
+         <title>Chiptunes</title>
+         <annotation>Playing the best chiptunes and video game music.</annotation>
+         <image>../etc/translate/rss/image/di/chiptunes.gif</image>
+         <meta rel="genre">Chiptunes Video Game</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_chiptunes_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Chiptunes - D I G I T A L L Y - I M P O R T E D - Playing the best chiptunes and video game music.</meta>
+<meta rel="stream_genre">Chiptunes Video Game</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/trance.pls</location>
+         <title>Trance Channel</title>
+         <annotation>We can't define it!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_trance_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Trance Channel - D I G I T A L L Y - I M P O R T E D - we can't define it!</meta>
+<meta rel="stream_genre">Electronic Trance Techno</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/vocaltrance.pls</location>
+         <title>Vocal Trance</title>
+         <annotation>A fusion of trance, dance, and chilling vocals together!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17b.di.fm:80/di_vocaltrance_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Vocal Trance - D I G I T A L L Y - I M P O R T E D - a fusion of trance, dance, and chilling vocals together!</meta>
+<meta rel="stream_genre">Electronic Trance Pop</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/classictrance.pls</location>
+         <title>Classic Trance</title>
+         <annotation>Relive the classic trance hits!!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_classictrance_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Classic Trance - D I G I T A L L Y - I M P O R T E D - relive the classic trance hits!!</meta>
+<meta rel="stream_genre">Electronic Trance Techno</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/techhouse.pls</location>
+         <title>Tech House</title>
+         <annotation>A fusion of minimal techno and soulful house music.</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17b.di.fm:80/di_techhouse_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Tech House - D I G I T A L L Y - I M P O R T E D - a fusion of minimal techno and soulful house music.</meta>
+<meta rel="stream_genre">Electronic Tech House</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/psychill.pls</location>
+         <title>PsyChill</title>
+         <annotation>Downtempo psychedelic dub grooves, goa ambient, and world beats.</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_psychill_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">PsyChill - D I G I T A L L Y - I M P O R T E D - downtempo psychedelic dub grooves, goa ambient, and world beats.</meta>
+<meta rel="stream_genre">Electronic Chillout Psy</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/chilloutdreams.pls</location>
+         <title>Chillout Dreams</title>
+         <annotation>Relax to the sounds of dream and ibiza style chillout</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_chilloutdreams_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Chillout Dreams - D I G I T A L L Y - I M P O R T E D - relax to the sounds of dream and ibiza style chillout</meta>
+<meta rel="stream_genre">Electronic Chillout Dream</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/eurodance.pls</location>
+         <title>EuroDance</title>
+         <annotation>The newest and best of Eurodance hits.</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_eurodance_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">EuroDance - D I G I T A L L Y - I M P O R T E D - the newest and best of Eurodance hits</meta>
+<meta rel="stream_genre">Electronic Eurodance HiNRG Italo</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/club.pls</location>
+         <title>Club Sounds</title>
+         <annotation>The hottest club and dance tunes 24/7.</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_clubsounds_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Club Sounds - D I G I T A L L Y - I M P O R T E D - the hottest club and dance tunes 24/7</meta>
+<meta rel="stream_genre">Electronic Club Dance</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/discohouse.pls</location>
+         <title>Disco House</title>
+         <annotation>Grooviest Disco House hits on the planet!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_discohouse_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Disco House - D I G I T A L L Y - I M P O R T E D - Grooviest Disco House hits on the planet!</meta>
+<meta rel="stream_genre">Electronic Disco House</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/dubstep.pls</location>
+         <title>Dubstep</title>
+         <annotation>Dubstep hits and mixes!!!!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17b.di.fm:80/di_dubstep_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Dubstep - D I G I T A L L Y - I M P O R T E D - Dubstep hits and mixes!!!!</meta>
+<meta rel="stream_genre">Electronic Dubstep Garage</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/electro.pls</location>
+         <title>Electro House</title>
+         <annotation>An eclectic mix of electro and dirty house.</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm/electro</meta>
+      
+<meta rel="stream_url">http://u17b.di.fm:80/di_electrohouse_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Electro House - D I G I T A L L Y - I M P O R T E D - an eclectic mix of electro and dirty house</meta>
+<meta rel="stream_genre">Electronic Electro House</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/classiceurodance.pls</location>
+         <title>Classic EuroDance</title>
+         <annotation>Finest imported cheese on the net!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_classiceurodance_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Classic EuroDance - D I G I T A L L Y - I M P O R T E D - Finest imported cheese on the net!</meta>
+<meta rel="stream_genre">Electronic Eurodance HiNRG Italo</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/house.pls</location>
+         <title>House</title>
+         <annotation>Silky sexy deep house music direct from New York city!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u16.di.fm:80/di_house_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">House - D I G I T A L L Y - I M P O R T E D - silky sexy deep house music direct from New York city!</meta>
+<meta rel="stream_genre">Electronic House Deep</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/soulfulhouse.pls</location>
+         <title>Soulful House</title>
+         <annotation>House music selected from Paris with love!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_soulfulhouse_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Soulful House - D I G I T A L L Y - I M P O R T E D - house music selected from Paris with love!</meta>
+<meta rel="stream_genre">Electronic Soulful House Deep</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/funkyhouse.pls</location>
+         <title>Funky House</title>
+         <annotation>A fine selection of funky house music!!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm/funkyhouse/</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_funkyhouse_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Funky House - D I G I T A L L Y - I M P O R T E D - A fine selection of funky house music!!</meta>
+<meta rel="stream_genre">Electronic House Disco</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/tribalhouse.pls</location>
+         <title>Tribal House</title>
+         <annotation>Finest selection of tribal and tech house!!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm/tribalhouse/</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_tribalhouse_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Tribal House - D I G I T A L L Y - I M P O R T E D - Finest selection of tribal and tech house!!</meta>
+<meta rel="stream_genre">Electronic Tribal House</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/harddance.pls</location>
+         <title>Hard Dance</title>
+         <annotation>Are you ready for this?!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_harddance_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Hard Dance - D I G I T A L L Y - I M P O R T E D - are you ready for this!</meta>
+<meta rel="stream_genre">Electronic Trance Techno</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/minimal.pls</location>
+         <title>Minimal</title>
+         <annotation>Finest selection of Minimal Techno &amp; House!!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm/minimal</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_minimal_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Minimal - D I G I T A L L Y - I M P O R T E D - Finest selection of Minimal Techno &amp; House!!</meta>
+<meta rel="stream_genre">Electronic Minimal Techno</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/techno.pls</location>
+         <title>Techno</title>
+         <annotation>From Minimal to Detroit to Schranz &amp; all in between!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_techno_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Techno - D I G I T A L L Y - I M P O R T E D - From Minimal to Detroit to Schranz &amp; all in between!</meta>
+<meta rel="stream_genre">Electronic Techno EDM</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/progressive.pls</location>
+         <title>Progressive</title>
+         <annotation>House, techno, and trance beats for your mind!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17b.di.fm:80/di_progressive_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Progressive - D I G I T A L L Y - I M P O R T E D - house, techno, and trance beats for your mind!</meta>
+<meta rel="stream_genre">Electronic Progressive House Trance</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/goapsy.pls</location>
+         <title>Goa &amp; Psychedelic Trance</title>
+         <annotation>A voyage out of this world!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_goapsy_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Goa &amp; Psychedelic Trance - D I G I T A L L Y - I M P O R T E D - a voyage out of this world!</meta>
+<meta rel="stream_genre">Electronic Psychedelic Goa Trance</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/hardstyle.pls</location>
+         <title>Hardstyle</title>
+         <annotation>Banging Hardstyle for your ears!!!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm/hardstyle</meta>
+      
+<meta rel="stream_url">http://u16.di.fm:80/di_hardstyle_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Hardstyle - D I G I T A L L Y - I M P O R T E D - Banging Hardstyle for your ears!!!</meta>
+<meta rel="stream_genre">Electronic Hardstyle Hard Bass</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/hardcore.pls</location>
+         <title>Hardcore</title>
+         <annotation>HappyHardcore.com - DJ mixes, hard dance and NuNRG!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_hardcore_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Hardcore - D I G I T A L L Y - I M P O R T E D &amp; HappyHardcore.com - DJ mixes, hard dance and NuNRG!</meta>
+<meta rel="stream_genre">Electronic Hardcore Trance</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/lounge.pls</location>
+         <title>Lounge</title>
+         <annotation>Sit back and enjoy the lounge grooves!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17b.di.fm:80/di_lounge_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Lounge - D I G I T A L L Y - I M P O R T E D - sit back and enjoy the lounge grooves!</meta>
+<meta rel="stream_genre">Electronic Lounge Downtempo</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/exposurenyc.pls</location>
+         <title>Exposure NYC</title>
+         <annotation>A fine selection of New York City sounds!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm/exposurenyc/</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_exposurenyc_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Exposure NYC - D I G I T A L L Y - I M P O R T E D - A fine selection of New York City sounds!</meta>
+<meta rel="stream_genre">Electronic House Progressive</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/djmixes.pls</location>
+         <title>DJ MIXES</title>
+         <annotation>Non-stop DJ sets featuring various forms of techno &amp; trance!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_djmixes_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">DJ MIXES - D I G I T A L L Y - I M P O R T E D - non-stop DJ sets featuring various forms of techno &amp; trance!</meta>
+<meta rel="stream_genre">Electronic Trance Techno</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/drumandbass.pls</location>
+         <title>Drum and Bass</title>
+         <annotation>Tasty assortment to satisfy your drum and bass fix!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17b.di.fm:80/di_drumandbass_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Drum and Bass - D I G I T A L L Y - I M P O R T E D - tasty assortment to satisfy your drum and bass fix!</meta>
+<meta rel="stream_genre">Electronic Drum and Bass Jungle</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/classictechno.pls</location>
+         <title>Classic Electronica</title>
+         <annotation>Old school techno, trance &amp; rave!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_oldschoolelectronica_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Classic Electronica - D I G I T A L L Y - I M P O R T E D - old school techno, trance &amp; rave!</meta>
+<meta rel="stream_genre">Electronic Techno Trance</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/breaks.pls</location>
+         <title>Breaks</title>
+         <annotation>A fine assortment of trance and house breaks</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17b.di.fm:80/di_breaks_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Breaks - D I G I T A L L Y - I M P O R T E D - a fine assortment of trance and house breaks</meta>
+<meta rel="stream_genre">Electronic Breaks Trance</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/ambient.pls</location>
+         <title>Ambient</title>
+         <annotation>A blend of ambient, downtempo, and chillout.</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17b.di.fm:80/di_ambient_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Ambient - D I G I T A L L Y - I M P O R T E D - a blend of ambient, downtempo, and chillout</meta>
+<meta rel="stream_genre">Electronic Ambient Downtempo</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/spacemusic.pls</location>
+         <title>Space Music</title>
+         <annotation>Ambient space music for expanding minds.</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm/spacemusic/</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_spacemusic_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Space Dreams - D I G I T A L L Y - I M P O R T E D - ambient space music for expanding minds</meta>
+<meta rel="stream_genre">Electronic Space Music Ambient</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+      <track>
+         <location>http://listen.di.fm/public2/gabber.pls</location>
+         <title>Gabber</title>
+         <annotation>Best sounds of this stuff right here for your ears!</annotation>
+         <image>../etc/translate/rss/image/di/radio_di.gif</image>
+         <meta rel="genre">Electronic</meta>
+         <meta rel="url">http://www.di.fm</meta>
+      
+<meta rel="stream_url">http://u17.di.fm:80/di_gabber_aacplus</meta>
+<meta rel="stream_class">audio</meta>
+<meta rel="stream_soft">icecast</meta>
+<meta rel="stream_type">audio/aacp</meta>
+<meta rel="stream_protocol">http</meta>
+<meta rel="stream_title">Gabber - D I G I T A L L Y - I M P O R T E D - best sounds of this stuff right here for your ears!</meta>
+<meta rel="stream_genre">Electronic Gabber Hardcore</meta>
+<meta rel="stream_bitrate">40</meta>
+</track>
+   </trackList>
+</playlist>

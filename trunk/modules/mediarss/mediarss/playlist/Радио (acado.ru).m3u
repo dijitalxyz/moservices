@@ -1,0 +1,435 @@
+#EXTM3U
+#EXTINF:0,Baltcom Radio
+http://w01-cn01.akadostream.ru:8110/radiobaltcom128.mp3
+#EXTINF:0,Baltcom Radio
+http://w02-cn01.akadostream.ru:8110/radiobaltcom128.mp3
+#EXTINF:0,Bass Drive Radio
+http://w01-cn01.akadostream.ru:8102/bassdrive128.mp3
+#EXTINF:0,Big Beat radio
+http://w01-cn01.akadostream.ru:8112/bbr128.mp3
+#EXTINF:0,Big Beat radio
+http://w02-cn01.akadostream.ru:8112/bbr128.mp3
+#EXTINF:0,CLUB 977 The 80s Channel
+http://w01-cn01.akadostream.ru:8112/club977_80s128.mp3
+#EXTINF:0,CLUB 977 The 80s Channel
+http://w02-cn01.akadostream.ru:8110/club977_80s128.mp3
+#EXTINF:0,CLUB 977 The Hitz
+http://w02-cn01.akadostream.ru:8112/club977_hitz128.mp3
+#EXTINF:0,CLUB 977 The Hitz
+http://w01-cn01.akadostream.ru:8112/club977_hitz128.mp3
+#EXTINF:0,ChroniX Aggression
+http://w01-cn01.akadostream.ru:8112/chronixaggression128.mp3
+#EXTINF:0,ChroniX Aggression
+http://w02-cn01.akadostream.ru:8112/chronixaggression128.mp3
+#EXTINF:0,ChroniX Grit
+http://w01-cn01.akadostream.ru:8112/chronixgrit128.mp3
+#EXTINF:0,ChroniX Grit
+http://w02-cn01.akadostream.ru:8112/chronixgrit128.mp3
+#EXTINF:0,ChroniX Metal
+http://w02-cn01.akadostream.ru:8112/chronixmetal128.mp3
+#EXTINF:0,ChroniX Metal
+http://w01-cn01.akadostream.ru:8112/chronixmetal128.mp3
+#EXTINF:0,D-FM
+http://w02-cn01.akadostream.ru:8000/dinamitfm128.mp3
+#EXTINF:0,D-FM
+http://w01-cn01.akadostream.ru:8000/dinamitfm128.mp3
+#EXTINF:0,DEEP & DEEPER
+http://w02-cn01.akadostream.ru:8110/deepinside_deeper128.mp3
+#EXTINF:0,DEEP & DEEPER
+http://w01-cn01.akadostream.ru:8110/deepinside_deeper128.mp3
+#EXTINF:0,DEEPINSIDE SESSION
+http://w02-cn01.akadostream.ru:8110/deepinside_in128.mp3
+#EXTINF:0,DEEPINSIDE SESSION
+http://w01-cn01.akadostream.ru:8110/deepinside_in128.mp3
+#EXTINF:0,DEFJAY
+http://w01-cn01.akadostream.ru:8110/defjay128.mp3
+#EXTINF:0,DEFJAY
+http://w02-cn01.akadostream.ru:8110/defjay128.mp3
+#EXTINF:0,DNB Radio
+http://w02-cn01.akadostream.ru:8102/dnbradio128.mp3
+#EXTINF:0,DNB Radio
+http://w01-cn01.akadostream.ru:8102/dnbradio128.mp3
+#EXTINF:0,DNBradio.net
+http://w02-cn01.akadostream.ru:8102/dnbradionet128.mp3
+#EXTINF:0,DNBradio.net
+http://w01-cn01.akadostream.ru:8102/dnbradionet128.mp3
+#EXTINF:0,Deep Mix Moscow Radio
+http://w01-cn01.akadostream.ru:8112/deepmix128.mp3
+#EXTINF:0,GothVille
+http://w02-cn01.akadostream.ru:8100/gothville128.mp3
+#EXTINF:0,GothVille
+http://w01-cn01.akadostream.ru:8100/gothville128.mp3
+#EXTINF:0,HitzRadio.com - #1 for all the hits!
+http://w01-cn01.akadostream.ru:8100/hitzradio128.mp3
+#EXTINF:0,HitzRadio.com - #1 for all the hits!
+http://w02-cn01.akadostream.ru:8100/hitzradio128.mp3
+#EXTINF:0,Lebalten
+http://w01-cn01.akadostream.ru:8112/lebalten128.mp3
+#EXTINF:0,Lebalten
+http://w02-cn01.akadostream.ru:8112/lebalten128.mp3
+#EXTINF:0,Lounge-radio.com
+http://w01-cn01.akadostream.ru:8112/loungeradiocom128.mp3
+#EXTINF:0,Lounge-radio.com
+http://w02-cn01.akadostream.ru:8112/loungeradiocom128.mp3
+#EXTINF:0,MIX FM
+http://w01-cn01.akadostream.ru:8112/mixfm128.mp3
+#EXTINF:0,MIX FM
+http://w02-cn01.akadostream.ru:8112/mixfm128.mp3
+#EXTINF:0,MoonBeat Radio
+http://w01-cn01.akadostream.ru:8112/moonbeat128.mp3
+#EXTINF:0,MoonBeat Radio
+http://w02-cn01.akadostream.ru:8112/moonbeat128.mp3
+#EXTINF:0,Morow
+http://w01-cn01.akadostream.ru:8102/morow128.mp3
+#EXTINF:0,Morow
+http://w02-cn01.akadostream.ru:8102/morow128.mp3
+#EXTINF:0,NETradio «100%»
+http://w02-cn01.akadostream.ru:8112/netradio100128.mp3
+#EXTINF:0,NETradio «100%»
+http://w01-cn01.akadostream.ru:8112/netradio100128.mp3
+#EXTINF:0,NETradio «Adult»
+http://w02-cn01.akadostream.ru:8112/netradioadult128.mp3
+#EXTINF:0,NETradio «Adult»
+http://w01-cn01.akadostream.ru:8112/netradioadult128.mp3
+#EXTINF:0,NETradio «Club»
+http://w01-cn01.akadostream.ru:8112/netradioclub128.mp3
+#EXTINF:0,NETradio «Club»
+http://w02-cn01.akadostream.ru:8112/netradioclub128.mp3
+#EXTINF:0,NETradio «ETHNOza»
+http://w02-cn01.akadostream.ru:8112/netradioethno128.mp3
+#EXTINF:0,NETradio «ETHNOza»
+http://w01-cn01.akadostream.ru:8112/netradioethno128.mp3
+#EXTINF:0,NETradio «France»
+http://w02-cn01.akadostream.ru:8112/netradiofrance128.mp3
+#EXTINF:0,NETradio «France»
+http://w01-cn01.akadostream.ru:8112/netradiofrance128.mp3
+#EXTINF:0,NETradio «Garage»
+http://w02-cn01.akadostream.ru:8112/netradiogarage128.mp3
+#EXTINF:0,NETradio «Garage»
+http://w01-cn01.akadostream.ru:8112/netradiogarage128.mp3
+#EXTINF:0,NETradio «Live»
+http://w01-cn01.akadostream.ru:8112/netradiolive128.mp3
+#EXTINF:0,NETradio «Live»
+http://w02-cn01.akadostream.ru:8112/netradiolive128.mp3
+#EXTINF:0,NETradio «RELAX»
+http://w01-cn01.akadostream.ru:8112/netradiorelax128.mp3
+#EXTINF:0,NETradio «RELAX»
+http://w02-cn01.akadostream.ru:8112/netradiorelax128.mp3
+#EXTINF:0,NETradio «Trance»
+http://w01-cn01.akadostream.ru:8112/netradiotrance128.mp3
+#EXTINF:0,NETradio «Trance»
+http://w02-cn01.akadostream.ru:8112/netradiotrance128.mp3
+#EXTINF:0,NETradio «Нot»
+http://w02-cn01.akadostream.ru:8112/netradiohot128.mp3
+#EXTINF:0,NETradio «Нot»
+http://w01-cn01.akadostream.ru:8112/netradiohot128.mp3
+#EXTINF:0,PSYRadio.FM
+http://w02-cn01.akadostream.ru:8102/psyradiofm128.mp3
+#EXTINF:0,PSYRadio.FM
+http://w01-cn01.akadostream.ru:8102/psyradiofm128.mp3
+#EXTINF:0,Radio Darkness
+http://w02-cn01.akadostream.ru:8100/radiodarkness128.mp3
+#EXTINF:0,Radio Darkness
+http://w01-cn01.akadostream.ru:8100/radiodarkness128.mp3
+#EXTINF:0,Radio Intrigue [live]
+http://w02-cn01.akadostream.ru:8110/intrigue-live128.mp3
+#EXTINF:0,Radio Intrigue [live]
+http://w01-cn01.akadostream.ru:8110/intrigue-live128.mp3
+#EXTINF:0,Radio Intrigue [non-stop]
+http://w01-cn01.akadostream.ru:8110/intrigue128.mp3
+#EXTINF:0,Radio Intrigue [non-stop]
+http://w02-cn01.akadostream.ru:8110/intrigue128.mp3
+#EXTINF:0,Radio SHOCK
+http://w02-cn01.akadostream.ru:8112/radioshock128.mp3
+#EXTINF:0,Radio SHOCK
+http://w01-cn01.akadostream.ru:8112/radioshock128.mp3
+#EXTINF:0,Radio13
+http://w01-cn01.akadostream.ru:8110/radio13128.mp3
+#EXTINF:0,Radio13
+http://w02-cn01.akadostream.ru:8110/radio13128.mp3
+#EXTINF:0,RadioCafe
+http://w01-cn01.akadostream.ru:8111/caferadio128.mp3
+#EXTINF:0,RadioCafe
+http://w02-cn01.akadostream.ru:8111/caferadio128.mp3
+#EXTINF:0,RadioTochka.Net
+http://w02-cn01.akadostream.ru:8111/radiotochka128.mp3
+#EXTINF:0,RadioTochka.Net
+http://w01-cn01.akadostream.ru:8111/radiotochka128.mp3
+#EXTINF:0,Rock N Metal station
+http://w02-cn01.akadostream.ru:8100/4urocknmetal128.mp3
+#EXTINF:0,Rock N Metal station
+http://w01-cn01.akadostream.ru:8100/4urocknmetal128.mp3
+#EXTINF:0,Rockabilly Radio
+http://w01-cn01.akadostream.ru:8100/rockabillyradio128.mp3
+#EXTINF:0,Rockabilly Radio
+http://w02-cn01.akadostream.ru:8100/rockabillyradio128.mp3
+#EXTINF:0,SUN Radio [LV]
+http://w01-cn01.akadostream.ru:8102/sunradio128.mp3
+#EXTINF:0,SUN Radio [LV]
+http://w02-cn01.akadostream.ru:8102/sunradio128.mp3
+#EXTINF:0,Seven Skies
+http://w01-cn01.akadostream.ru:8110/sevenskies128.mp3
+#EXTINF:0,Seven Skies
+http://w02-cn01.akadostream.ru:8110/sevenskies128.mp3
+#EXTINF:0,SnakeNet Metal Radio
+http://w02-cn01.akadostream.ru:8100/snakenetmetalradio128.mp3
+#EXTINF:0,SnakeNet Metal Radio
+http://w01-cn01.akadostream.ru:8100/snakenetmetalradio128.mp3
+#EXTINF:0,TOP Radio
+http://w01-cn01.akadostream.ru:8102/topradio128.mp3
+#EXTINF:0,TOP Radio
+http://w02-cn01.akadostream.ru:8102/topradio128.mp3
+#EXTINF:0,Tushino On Air 'Рок'
+http://w02-cn01.akadostream.ru:8111/tushinoonair128.mp3
+#EXTINF:0,Tushino On Air 'Рок'
+http://w01-cn01.akadostream.ru:8111/tushinoonair128.mp3
+#EXTINF:0,Tushino On Air 'Электро'
+http://w02-cn01.akadostream.ru:8112/tushinoonairelectro128.mp3
+#EXTINF:0,Tushino On Air 'Электро'
+http://w01-cn01.akadostream.ru:8112/tushinoonairelectro128.mp3
+#EXTINF:0,UK Bass Radio
+http://w02-cn01.akadostream.ru:8102/ukbassradio128.mp3
+#EXTINF:0,UK Bass Radio
+http://w01-cn01.akadostream.ru:8102/ukbassradio128.mp3
+#EXTINF:0,VLADIVOSTOK.FM - CLUB | DANCE  
+http://w02-cn01.akadostream.ru:8112/vladivostokfmclub128.mp3
+#EXTINF:0,VLADIVOSTOK.FM - CLUB | DANCE  
+http://w01-cn01.akadostream.ru:8112/vladivostokfmclub128.mp3
+#EXTINF:0,VLADIVOSTOK.FM - PETPO  
+http://w02-cn01.akadostream.ru:8112/vladivostokfmretro128.mp3
+#EXTINF:0,VLADIVOSTOK.FM - PETPO  
+http://w01-cn01.akadostream.ru:8112/vladivostokfmretro128.mp3
+#EXTINF:0,VLADIVOSTOK.FM - ROCK 
+http://w02-cn01.akadostream.ru:8112/vladivostokfmrock128.mp3
+#EXTINF:0,VLADIVOSTOK.FM - ROCK 
+http://w01-cn01.akadostream.ru:8112/vladivostokfmrock128.mp3
+#EXTINF:0,VLADIVOSTOK.FM - ДУШЕВНЫЙ  
+http://w02-cn01.akadostream.ru:8112/vladivostokfmsoul128.mp3
+#EXTINF:0,VLADIVOSTOK.FM - ДУШЕВНЫЙ  
+http://w01-cn01.akadostream.ru:8112/vladivostokfmsoul128.mp3
+#EXTINF:0,Verdure Station
+http://w01-cn01.akadostream.ru:8110/verdure128.mp3
+#EXTINF:0,Verdure Station
+http://w02-cn01.akadostream.ru:8110/verdure128.mp3
+#EXTINF:0,[SOMA.FM] Beat Blender
+http://w01-cn01.akadostream.ru:8112/somafm_blender128.mp3
+#EXTINF:0,[SOMA.FM] Beat Blender
+http://w02-cn01.akadostream.ru:8112/somafm_blender128.mp3
+#EXTINF:0,[SOMA.FM] DRONE ZONE
+http://w01-cn01.akadostream.ru:8112/somafm_dronezone128.mp3
+#EXTINF:0,[SOMA.FM] DRONE ZONE
+http://w02-cn01.akadostream.ru:8112/somafm_dronezone128.mp3
+#EXTINF:0,[SOMA.FM] DoomeD
+http://w02-cn01.akadostream.ru:8112/somafm_doomed128.mp3
+#EXTINF:0,[SOMA.FM] DoomeD
+http://w01-cn01.akadostream.ru:8112/somafm_doomed128.mp3
+#EXTINF:0,[SOMA.FM] Groove Salad
+http://w01-cn01.akadostream.ru:8112/somafm_groovesalad128.mp3
+#EXTINF:0,[SOMA.FM] Groove Salad
+http://w02-cn01.akadostream.ru:8112/somafm_groovesalad128.mp3
+#EXTINF:0,[SOMA.FM] Illinois Street Lounge
+http://w01-cn01.akadostream.ru:8112/somafm_illstreet128.mp3
+#EXTINF:0,[SOMA.FM] Illinois Street Lounge
+http://w02-cn01.akadostream.ru:8112/somafm_illstreet128.mp3
+#EXTINF:0,[SOMA.FM] Secret Agent
+http://w01-cn01.akadostream.ru:8112/somafm_secretagent128.mp3
+#EXTINF:0,[SOMA.FM] Secret Agent
+http://w02-cn01.akadostream.ru:8112/somafm_secretagent128.mp3
+#EXTINF:0,[SOMA.FM] Space Station SOMA
+http://w01-cn01.akadostream.ru:8112/somafm_spacestation128.mp3
+#EXTINF:0,[SOMA.FM] Space Station SOMA
+http://w02-cn01.akadostream.ru:8112/somafm_spacestation128.mp3
+#EXTINF:0,[SOMA.FM] Tags Trance Trip
+http://w01-cn01.akadostream.ru:8112/somafm_tagstrance128.mp3
+#EXTINF:0,[SOMA.FM] Tags Trance Trip
+http://w02-cn01.akadostream.ru:8112/somafm_tagstrance128.mp3
+#EXTINF:0,[SOMA.FM] cliqhop idm
+http://w01-cn01.akadostream.ru:8112/somafm_cliqhop128.mp3
+#EXTINF:0,[SOMA.FM] cliqhop idm
+http://w02-cn01.akadostream.ru:8112/somafm_cliqhop128.mp3
+#EXTINF:0,[SOMA.FM] indie pop rocks
+http://w01-cn01.akadostream.ru:8112/somafm_indychick128.mp3
+#EXTINF:0,[SOMA.FM] indie pop rocks
+http://w02-cn01.akadostream.ru:8112/somafm_indychick128.mp3
+#EXTINF:0,[ULTRA] BEST FM 100.5
+http://w01-cn01.akadostream.ru:8112/bestfm128.mp3
+#EXTINF:0,[ULTRA] BEST FM 100.5
+http://w02-cn01.akadostream.ru:8112/bestfm128.mp3
+#EXTINF:0,[ULTRA] Наше Радио
+http://w02-cn01.akadostream.ru:8112/nashe128.mp3
+#EXTINF:0,[ULTRA] Наше Радио
+http://w01-cn01.akadostream.ru:8112/nashe128.mp3
+#EXTINF:0,[ULTRA] РАДИО ULTRA 70,19 FM
+http://w01-cn01.akadostream.ru:8112/radioultra128.mp3
+#EXTINF:0,[ULTRA] РАДИО ULTRA 70,19 FM
+http://w02-cn01.akadostream.ru:8112/radioultra128.mp3
+#EXTINF:0,[VF] DemonMaestro
+http://w01-cn01.akadostream.ru:8100/demonmaestro128.mp3
+#EXTINF:0,[VF] DemonMaestro
+http://w02-cn01.akadostream.ru:8100/demonmaestro128.mp3
+#EXTINF:0,[VF] Hot Goth
+http://w01-cn01.akadostream.ru:8100/hg128.mp3
+#EXTINF:0,[VF] Hot Goth
+http://w02-cn01.akadostream.ru:8100/hg128.mp3
+#EXTINF:0,eSViDi radio
+http://w01-cn01.akadostream.ru:8111/esvidi128.mp3
+#EXTINF:0,eSViDi radio
+http://w02-cn01.akadostream.ru:8111/esvidi128.mp3
+#EXTINF:0,i-Radio: Heavy Duty
+http://w01-cn01.akadostream.ru:8112/iradiometal128.mp3
+#EXTINF:0,i-Radio: Heavy Duty
+http://w02-cn01.akadostream.ru:8112/iradiometal128.mp3
+#EXTINF:0,queerFM
+http://w01-cn01.akadostream.ru:8111/queerfm128.mp3
+#EXTINF:0,queerFM
+http://w02-cn01.akadostream.ru:8111/queerfm128.mp3
+#EXTINF:0,radio.wazee
+http://w02-cn01.akadostream.ru:8100/radiowazee128.mp3
+#EXTINF:0,radio.wazee
+http://w01-cn01.akadostream.ru:8100/radiowazee128.mp3
+#EXTINF:0,Авторадио
+http://w02-cn01.akadostream.ru:8000/avtoradio128.mp3
+#EXTINF:0,Авторадио
+http://w01-cn01.akadostream.ru:8000/avtoradio128.mp3
+#EXTINF:0,Айчына SHOUTcast
+http://w01-cn01.akadostream.ru:8108/aichyna128.mp3
+#EXTINF:0,Айчына SHOUTcast
+http://w02-cn01.akadostream.ru:8108/aichyna128.mp3
+#EXTINF:0,Борнео
+http://w01-cn01.akadostream.ru:8102/borneo128.mp3
+#EXTINF:0,Борнео
+http://w02-cn01.akadostream.ru:8102/borneo128.mp3
+#EXTINF:0,Вирус FM
+http://w02-cn01.akadostream.ru:8112/virusfm128.mp3
+#EXTINF:0,Вирус FM
+http://w01-cn01.akadostream.ru:8112/virusfm128.mp3
+#EXTINF:0,Говорит Москва
+http://w01-cn01.akadostream.ru:8108/govoritmoskva128.mp3
+#EXTINF:0,Говорит Москва
+http://w02-cn01.akadostream.ru:8108/govoritmoskva128.mp3
+#EXTINF:0,Европа плюс
+http://w01-cn01.akadostream.ru:8000/europaplus128.mp3
+#EXTINF:0,Европа плюс
+http://w02-cn01.akadostream.ru:8000/europaplus128.mp3
+#EXTINF:0,Маяк
+http://w01-cn01.akadostream.ru:8000/mayak128.mp3
+#EXTINF:0,Маяк
+http://w02-cn01.akadostream.ru:8000/mayak128.mp3
+#EXTINF:0,Муз Радио
+http://w01-cn01.akadostream.ru:8112/muzradio128.mp3
+#EXTINF:0,Муз Радио
+http://w02-cn01.akadostream.ru:8112/muzradio128.mp3
+#EXTINF:0,Новое Чистое Радио
+http://w02-cn01.akadostream.ru:8112/nu-clear128.mp3
+#EXTINF:0,Новое Чистое Радио
+http://w01-cn01.akadostream.ru:8112/nu-clear128.mp3
+#EXTINF:0,Общественное Российское Радио
+http://w02-cn01.akadostream.ru:8108/orrfm128.mp3
+#EXTINF:0,Общественное Российское Радио
+http://w01-cn01.akadostream.ru:8108/orrfm128.mp3
+#EXTINF:0,Радио 107
+http://w02-cn01.akadostream.ru:8111/radio107128.mp3
+#EXTINF:0,Радио 107
+http://w01-cn01.akadostream.ru:8111/radio107128.mp3
+#EXTINF:0,Радио MakkiRUS
+http://w02-cn01.akadostream.ru:8111/makkirus128.mp3
+#EXTINF:0,Радио MakkiRUS
+http://w01-cn01.akadostream.ru:8111/makkirus128.mp3
+#EXTINF:0,Радио MakkiRUS Light
+http://w02-cn01.akadostream.ru:8111/makkiruslight128.mp3
+#EXTINF:0,Радио MakkiRUS Light
+http://w01-cn01.akadostream.ru:8111/makkiruslight128.mp3
+#EXTINF:0,Радио MakkiRUS-Mix
+http://w01-cn01.akadostream.ru:8111/makkirus-mix128.mp3
+#EXTINF:0,Радио ВЕДО - Радио Друзей
+http://w01-cn01.akadostream.ru:8112/vedo128.mp3
+#EXTINF:0,Радио ВЕДО - Радио Друзей
+http://w02-cn01.akadostream.ru:8112/vedo128.mp3
+#EXTINF:0,Радио Гардарика
+http://w01-cn01.akadostream.ru:8112/radiogardarica128.mp3
+#EXTINF:0,Радио Гардарика
+http://w02-cn01.akadostream.ru:8112/radiogardarica128.mp3
+#EXTINF:0,Радио КИНО
+http://w02-cn01.akadostream.ru:8100/kinoradio128.mp3
+#EXTINF:0,Радио КИНО
+http://w01-cn01.akadostream.ru:8100/kinoradio128.mp3
+#EXTINF:0,Радио Мир
+http://w02-cn01.akadostream.ru:8000/radiomir128.mp3
+#EXTINF:0,Радио Мир
+http://w01-cn01.akadostream.ru:8000/radiomir128.mp3
+#EXTINF:0,Радио Орфей
+http://w02-cn01.akadostream.ru:8000/orfey128.mp3
+#EXTINF:0,Радио Орфей
+http://w01-cn01.akadostream.ru:8000/orfey128.mp3
+#EXTINF:0,Радио РОКС
+http://w01-cn01.akadostream.ru:8112/radioroks128.mp3
+#EXTINF:0,Радио РОКС
+http://w02-cn01.akadostream.ru:8112/radioroks128.mp3
+#EXTINF:0,Радио России
+http://w02-cn01.akadostream.ru:8000/radiorussia128.mp3
+#EXTINF:0,Радио России
+http://w01-cn01.akadostream.ru:8000/radiorussia128.mp3
+#EXTINF:0,Радио СПОРТ 93.2 ФМ
+http://w02-cn01.akadostream.ru:8108/radiosport128.mp3
+#EXTINF:0,Радио СПОРТ 93.2 ФМ
+http://w01-cn01.akadostream.ru:8108/radiosport128.mp3
+#EXTINF:0,Радио ТУТ
+http://w01-cn01.akadostream.ru:8111/radiotut128.mp3
+#EXTINF:0,Радио ТУТ
+http://w02-cn01.akadostream.ru:8111/radiotut128.mp3
+#EXTINF:0,Радио Чипльдук
+http://w02-cn01.akadostream.ru:8110/4duk128.mp3
+#EXTINF:0,Радио Чипльдук
+http://w01-cn01.akadostream.ru:8110/4duk128.mp3
+#EXTINF:0,Радио Шансон
+http://w01-cn01.akadostream.ru:8108/shanson128.mp3
+#EXTINF:0,Радио Шансон
+http://w02-cn01.akadostream.ru:8108/shanson128.mp3
+#EXTINF:0,Радио ЮНИТОН - Новосибирск 100.7FM
+http://w01-cn01.akadostream.ru:8108/uniton128.mp3
+#EXTINF:0,Радио ЮНИТОН - Новосибирск 100.7FM
+http://w02-cn01.akadostream.ru:8108/uniton128.mp3
+#EXTINF:0,Радио Юго-Восток
+http://w02-cn01.akadostream.ru:8110/radiouvao128.mp3
+#EXTINF:0,Радио Юго-Восток
+http://w01-cn01.akadostream.ru:8110/radiouvao128.mp3
+#EXTINF:0,Радио Юность
+http://w01-cn01.akadostream.ru:8000/radioyunost128.mp3
+#EXTINF:0,Радио Юность
+http://w02-cn01.akadostream.ru:8000/radioyunost128.mp3
+#EXTINF:0,Ретро FM
+http://w01-cn01.akadostream.ru:8000/radioretro128.mp3
+#EXTINF:0,Ретро FM
+http://w02-cn01.akadostream.ru:8000/radioretro128.mp3
+#EXTINF:0,Русское Радио
+http://w02-cn01.akadostream.ru:8000/russianradio128.mp3
+#EXTINF:0,Русское Радио
+http://w01-cn01.akadostream.ru:8000/russianradio128.mp3
+#EXTINF:0,Серебряный дождь
+http://w01-cn01.akadostream.ru:8000/silverrain128.mp3
+#EXTINF:0,Серебряный дождь
+http://w02-cn01.akadostream.ru:8000/silverrain128.mp3
+#EXTINF:0,Старое радио
+http://w02-cn01.akadostream.ru:8111/staroeradio128.mp3
+#EXTINF:0,Старое радио
+http://w01-cn01.akadostream.ru:8111/staroeradio128.mp3
+#EXTINF:0,Старое радио: Детское
+http://w02-cn01.akadostream.ru:8111/staroeradiodetskoe128.mp3
+#EXTINF:0,Старое радио: Детское
+http://w01-cn01.akadostream.ru:8111/staroeradiodetskoe128.mp3
+#EXTINF:0,Старое радио: Музыка
+http://w01-cn01.akadostream.ru:8111/staroeradiomusic128.mp3
+#EXTINF:0,Старое радио: Музыка
+http://w02-cn01.akadostream.ru:8111/staroeradiomusic128.mp3
+#EXTINF:0,Стильное радио
+http://w02-cn01.akadostream.ru:8112/stilnoe128.mp3
+#EXTINF:0,Стильное радио
+http://w01-cn01.akadostream.ru:8112/stilnoe128.mp3
+#EXTINF:0,Это Радио+
+http://w02-cn01.akadostream.ru:8112/etoradioplus128.mp3
+#EXTINF:0,Это Радио+
+http://w01-cn01.akadostream.ru:8112/etoradioplus128.mp3
+#EXTINF:0,Эхо Москвы
+http://w01-cn01.akadostream.ru:8000/moscowecho128.mp3
+#EXTINF:0,Эхо Москвы
+http://w02-cn01.akadostream.ru:8000/moscowecho128.mp3
