@@ -1,0 +1,174 @@
+#!/bin/sh
+#--------------------------------------
+# base rev > 13 has new structure
+#
+etc=/usr/local/etc
+mos=$etc/mos
+pm=$mos/etc/pm
+tmp=/tmp
+
+repository="http://www.moservices.org/mos3"
+enviroment=''
+
+# read config
+if [ -f $mos/etc/pm.conf ] ; then
+	. $mos/etc/pm.conf
+else
+	echo 'repository="'$repository'"' > $mos/etc/pm.conf
+fi
+
+# get enviroment
+if [ -z "$enviroment" ] ; then
+	s="$( uname -r )"
+	if [ "$s" = '2.6.12.6-VENUS' ] ; then
+		enviroment='12'
+	elif [ "$s" = '2.6.34-VENUS' ] ; then
+		enviroment='34'
+	else
+		echo "Env error: Linux $s is not supported"
+		exit 1
+	fi
+	echo "Env: Detected $s core"
+
+	if ls /lib | grep -q 'ld-uClibc-0\.9\.28' ; then
+		echo 'Env: Detected uClibc 0.9.28'
+		enviroment=$enviroment'28'
+	elif ls /lib | grep -q 'ld-uClibc-0\.9\.30' ; then
+		echo 'Env: Detected uClibc 0.9.30'
+		enviroment=$enviroment'30'
+	else
+		echo "Env error: Didn't detect supported uClibc"
+		exit 1
+	fi
+	echo "enviroment=$enviroment" >> $mos/etc/pm.conf
+fi
+
+# -------------------------------------
+# $1 - list file
+# $2 - package name
+#
+getPackageFromList()
+{
+	sed -n '/\['$2'\]/{p;:a;n;/^$/ba;/\[.*\]/q;p;ba;}' $1
+}
+
+# -------------------------------------
+# $1 - list file
+# $2 - package name
+#
+removePackageFromList()
+{
+	sed -ni '/\['$2'\]/{:a;n;/\[.*\]/bb;ba;:b;};p' $1
+}
+
+# -------------------------------------
+checkPackName()
+{
+local h
+	h=$1
+	[ "$1" == 'libgcc_s' ] && h='libgccs'
+	[ "$1" == 'libpng14' ] && h='libpng'
+	[ "$1" == 'libpng15' ] && h='libpng'
+	echo $h
+}
+
+# -------------------------------------
+checkPackEnv()
+{
+local h
+local k
+	h=$( checkPackName $1 )
+
+	for k in curl libcharset libcrypto libcurl libevent2 libgccs libiconv libintl libjpeg libpcre libpng libssl libxml2 libz php trans web ; do
+		if [ "$k" == "$h" ] ; then
+			h="${h}_${enviroment}"
+			break
+		fi
+	done
+	echo $h
+}
+
+# =====================================
+# main
+#
+# base rev < 13 hasn't init
+if [ -d $pm/files ] ; then
+	echo "Patch: base enable..."
+#	$mos/etc/init/S00base disable
+#	$mos/etc/init/S00base enable
+fi
+
+# files, required
+if [ -d $pm/files ] ; then
+	echo "Patch: convert files, requires..."
+	for i in $pm/files/* ; do
+		[ -f $i ] || coninue
+		mod=$( basename $i )
+		getPackageFromList $pm/installed $mod > $tmp/$mod.package
+		echo '	files = "'$( echo $( cat $i ) )'"' >> /tmp/$mod.package
+		rm -f $i
+
+		if [ -f $pm/required/$mod ] ; then
+
+			v=$( cat $pm/required/$mod )
+			n=''
+			for m in $v ; do
+				[ -n "$n" ] && n="$n "
+				n=$n$( checkPackName $m )
+			done
+			echo "	require = \"$n\"" >> /tmp/$mod.package
+
+			rm -f $pm/required/$mod
+		fi
+
+		removePackageFromList $pm/installed $mod
+
+		m=$( checkPackEnv $mod )
+		[ "$m" == "$mod" ] || sed -i 's/\['$mod'\]/['$m']/' $tmp/$mod.package
+
+		cat $tmp/$mod.package >> $pm/installed
+		echo >> $pm/installed
+		rm -f $tmp/$mod.package
+	done
+	[ -z "$( ls $pm/files )" ] && rm -Rf $pm/files
+	[ -z "$( ls $pm/required )" ] && rm -Rf $pm/required
+
+	sed -i 's/\[libgcc_s\]/[libgccs]/' $pm/installed
+fi
+
+# uses
+if [ -d $pm/uses ] ; then
+	echo "Patch: convert uses..."
+
+	rm -f $pm/uses.pm
+
+	for i in $pm/uses/* ; do
+		[ -f $i ] || coninue
+		mod=$( basename $i )
+		mod=$( checkPackEnv $mod )
+
+		v=$( cat $i )
+		n=''
+		for m in $v ; do
+			[ -n "$n" ] && n="$n "
+			n=$n$( checkPackEnv $m )
+		done
+		echo "$mod=\"$n\"" >> $pm/uses.pm
+	done
+	rm -Rf $pm/uses
+	mv $pm/uses.pm $pm/uses
+fi
+
+# patch xtreamer skins
+for i in ixtr271 xpro270 ; do
+	[ -d /usr/share/bin/$i ] || continue
+	echo "Patch: correct $i skin"
+	s=/usr/share/bin/$i/root/sbin
+	sed -i '/"LD_LIBRARY_PATH"/d' $s/www/lighttpd.conf
+	sed -i '/"LD_LIBRARY_PATH"/d' $s/www/lighttpd_local.conf
+	grep -q '/usr/local/etc/mos/' $s/service || sed -i '
+/export PATH/c\
+export LD_LIBRARY_PATH=/usr/local/etc/mos/lib:$LD_LIBRARY_PATH\
+export PATH=/usr/local/etc/mos/bin:$PATH' $s/service
+
+done

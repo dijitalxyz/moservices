@@ -245,6 +245,7 @@ global $nav_installed;
 			if( $arev != $irev ) $acts[] = 'update';
 			else if( ! $isAll && $hide ) continue;
 		}
+		else if( ! $isAll && $hide ) continue;
 
 		$menu = array();
 		$menu[$mod] = array (
@@ -311,10 +312,13 @@ global $nav_installed;
 	  if( ! array_key_exists( $mod, $nav_modules ) )
 	   if( $item['revision'] == 'emb' )
 	   {
+		if( isset( $packs[ $mod ]['title'] )) $title = $packs[ $mod ]['title'];
+		else $title = $mod;
+
 		$menu = array();
 		$menu[$mod] = array (
 			'type'	=> 'node',
-			'title'	=> $packs[ $mod ]['title'],
+			'title'	=> $title,
 			'items'	=> array()
 		);
 

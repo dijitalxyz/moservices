@@ -1,0 +1,20 @@
+#!/bin/sh
+#---------------------------------------------------------
+#
+# sycronization svn
+#
+
+svn stat > /tmp/stat.log
+while read s ; do
+	st=$( echo $s | sed 's/^\!\(.*\)$/0\1/' | cut -d ' ' -f 1 )
+	nm=$( echo $s | cut -d ' ' -f 2 )
+
+	if [ "$st" = '?' ] ; then
+		echo "Add $nm"
+		svn add $nm
+			
+	elif [ "$st" = '0' ] ; then
+		echo "Delete $nm"
+		svn delete $nm
+	fi
+done < /tmp/stat.log

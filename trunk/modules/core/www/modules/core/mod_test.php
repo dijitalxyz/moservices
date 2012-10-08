@@ -48,14 +48,14 @@ lrwxrwxrwx    1 root     root            18 Oct  2 15:27 libcrypto.so.1 -> libcr
 
 function test_body()
 {
-global $nav_modules;
+global $nav_options;
 
 	echo "<div id=\"container\">\n";
 //	phpInfo();
 
 echo "<pre>\n";
 
-print_r( $nav_modules );
+print_r( $nav_options );
 /*
 
 echo "<table>\n";

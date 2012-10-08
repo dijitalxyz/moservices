@@ -80,7 +80,6 @@ makePackages()
 	makeTarFromDir $packages $dst/packages
 }
 
-
 # -------------------------------------
 # $1 package name
 # $2 parameter name
@@ -102,6 +101,26 @@ local h
 			for i in $h ; do
 				echo $i >> $proj/$1/etc/pm/$3/$1
 			done
+		fi
+	fi
+}
+
+# -------------------------------------
+# $1 package name
+# $2 parameter name
+# $3 path name
+#
+mkParameterFromFile()
+{
+local h
+
+	h=$( getParameterFromList $1 $2 )
+	if [ -z "$h" ] ; then
+		if [ -f $proj/$1/etc/pm/$3/$1 ] ; then
+			h="$( echo $( cat $proj/$1/etc/pm/$3/$1 ) )"
+			echo '	'$2'="'$h'"' >> $proj/$1/$1.package
+		else
+			echo "Missing pm/$3/$1 file"
 		fi
 	fi
 }
@@ -130,6 +149,7 @@ makePack()
 		rm -Rf $proj/$1/etc/pm/files
 		rm -Rf $proj/$1/etc/pm/required
 		[ -z "$( ls $proj/$1/etc/pm )" ] && rm -Rf $proj/$1/etc/pm
+		[ -z "$( ls $proj/$1/etc )" ] && rm -Rf $proj/$1/etc
 
 		# change packages
 		removePackageFromList $pm/packages $1
@@ -191,9 +211,13 @@ extractPack()
 	tar -xjf $src/$1.tar.bz2 -C $proj/$1/
 
 	# files, required
+	mkParameterFromFile $1 files files
+	mkParameterFromFile $1 require required
 
-
-
+	rm -Rf $proj/$1/etc/pm/files
+	rm -Rf $proj/$1/etc/pm/required
+	[ -z "$( ls $proj/$1/etc/pm )" ] && rm -Rf $proj/$1/etc/pm
+	[ -z "$( ls $proj/$1/etc )" ] && rm -Rf $proj/$1/etc
 
 	# change packages
 	cat $proj/$1/$1.package >> $pm/packages
@@ -240,8 +264,10 @@ local mods
 remakePacks()
 {
 	pm make $1 $src
-	extractPacks $1
-	makePacks $1
+	extractPack $1
+	rm -f $src/$1.tar.bz2
+	makePack $1
+	makePackages
 }
 
 # =====================================
