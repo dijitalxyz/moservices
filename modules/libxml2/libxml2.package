@@ -1,7 +1,0 @@
-[libxml2]
-	revision= 1
-	title = "Lib XML2 v 2.7.2"
-	role = package
-	check = lib
-	files="lib/libxml2.so.2 lib/libxml2.so.2.7.2"
-	size = 1712

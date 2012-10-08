@@ -14,12 +14,25 @@
 	files="bin/awk"
 	size = 1272
 
+[bftpd]
+	revision = 1
+	title = "bFTPd FTP daemon v2.3"
+	role = daemon
+	check = "port 21"
+	init = S15bftpd
+	backup = "etc/bftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/bftpd.conf"
+	files="bin/bftpd etc/bftpd.conf etc/init/S15bftpd"
+	size = 48
+
 [busybox]
-	revision= 3
-	title = "BusyBox v1.18.4"
+	revision= 4
+	title = "BusyBox v1.18.5"
 	role = package
-	files="bin/busybox.1.18.4 bin/bzip2 bin/httpd bin/passwd bin/tar bin/telnetd bin/gunzip"
-	size = 1548
+	files = "bin/bunzip2 bin/busybox.1.18.5 bin/bzip2 bin/gunzip bin/gzip bin/httpd bin/passwd bin/tar bin/telnetd"
+	size = 1288
 
 [capture]
 	revision = 3
@@ -113,8 +126,8 @@
 	init = S41irfake
 	backup = "irfake/irfake.conf"
 	config_before = copy
-	config_after  = save
-	config_edit   = "irfake/irfake.conf"
+	config_after = save
+	config_edit = "irfake/irfake.conf"
 	files="etc/init/S41irfake irfake/"
 	size = 148
 
@@ -146,69 +159,298 @@
 	files="www/modules/keys/"
 	size = 92
 
-[libcurl]
-	revision = 1
-	title = "Lib CUrl 4.2.0"
+[libcharset_1228]
+	revision = 2
+	title = "lib CharSet 1.0.0"
 	role = package
-	check = lib
-	files="lib/libcurl.so lib/libcurl.so.4 lib/libcurl.so.4.2.0"
-	size = 2808
+	files = "lib/libcharset.so.1 lib/libcharset.so.1.0.0"
+	check = "lib libcharset.so.1"
+	env = 1228
+	size = 40
 
-[libevent2]
+[libcharset_1230]
+	revision = 2
+	title = "lib CharSet 1.0.0"
+	role = package
+	files = "lib/libcharset.so lib/libcharset.so.1 lib/libcharset.so.1.0.0"
+	check = "lib libcharset.so.1"
+	env = 1230
+	size = 36
+
+[libcharset_3430]
+	revision = 2
+	title = "lib CharSet 1.0.0"
+	role = package
+	check = "lib libcharset.so.1"
+	files = "lib/libcharset.so lib/libcharset.so.1 lib/libcharset.so.1.0.0"
+	env = 3430
+	size = 36
+
+[libcrypto_1228]
+	revision = 2
+	title = "lib Crypto 1.0.0"
+	role = package
+	files = "lib/libcrypto.so.1 lib/libcrypto.so.1.0.0"
+	check = "lib libcrypto.so.1"
+	env = 1228
+	size = 1704
+
+[libcrypto_1230]
+	revision = 2
+	title = "lib Crypto 1.0.0"
+	role = package
+	files = "lib/libcrypto.so lib/libcrypto.so.1 lib/libcrypto.so.1.0.0"
+	check = "lib libcrypto.so.1"
+	env = 1230
+	size = 1660
+
+[libcrypto_3430]
+	revision = 2
+	title = "lib Crypto 1.0.0"
+	role = package
+	files = "lib/libcrypto.so lib/libcrypto.so.1 lib/libcrypto.so.1.0.0"
+	check = "lib libcrypto.so.1"
+	env = 3430
+	size = 1728
+
+[libcurl_1228]
+	revision = 2
+	title = "lib CUrl 4.2.0"
+	role = package
+	files = "lib/libcurl.so lib/libcurl.so.4 lib/libcurl.so.4.2.0"
+	require = "libcrypto libssl libz"
+	check = "lib libcurl.so.4"
+	env = 1228
+	size = 384
+
+[libcurl_1230]
+	revision = 2
+	title = "lib CUrl 4.2.0"
+	role = package
+	files = "lib/libcurl.so lib/libcurl.so.4 lib/libcurl.so.4.2.0"
+	require = "libcrypto libssl libz"
+	check = "lib libcurl.so.4"
+	env = 1230
+	size = 360
+
+[libcurl_3430]
+	revision = 2
+	title = "lib CUrl 4.2.0"
+	role = package
+	files = "lib/libcurl.so lib/libcurl.so.4 lib/libcurl.so.4.2.0"
+	require = "libcrypto libssl libz"
+	check = "lib libcurl.so.4"
+	env = 3430
+	size = 420
+
+[libevent2_1228]
 	revision = 1
 	title = "Lib Event-2.0 5.0.1"
 	role = package
-	check = lib
-	files="lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1 lib/libevent_pthreads.so"
+	check = "lib lib/libevent-2.0.so.5"
+	env = 1228
+	files="lib/libevent.so lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1"
 	size = 1472
 
-[libgcc_s]
-	revision= 1
-	title = "Lib gcc_s"
+[libevent2_1230]
+	revision = 1
+	title = "Lib Event-2.0 5.0.1"
 	role = package
-	check = lib
-	files="lib/libgcc_s.so lib/libgcc_s.so.1"
-	size = 92
+	check = "lib lib/libevent-2.0.so.5"
+	env = 1230
+	files="lib/libevent.so lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1"
+	size = 1600
 
-[libiconv]
-	revision= 1
-	title = "Lib iConv v2.5.0"
+[libevent2_3430]
+	revision = 1
+	title = "Lib Event-2.0 5.0.1"
 	role = package
+	check = "lib lib/libevent-2.0.so.5"
+	env = 3430
+	files="lib/libevent.so lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1"
+	size = 1600
+
+[libiconv_1228]
+	revision= 2
+	title = "lib iConv v2.5.1"
+	role = package
+	files = "lib/libiconv.so lib/libiconv.so.2 lib/libiconv.so.2.5.1"
 	check = "lib libiconv.so.2"
-	files="lib/libiconv.so.2 lib/libiconv.so.2.5.0"
-	size = 948
+	env = 1228
+	size = 944
 
-[libjpeg]
-	revision= 1
-	title = "Lib Jpeg v8.0.1"
+[libiconv_1230]
+	revision= 2
+	title = "lib iConv v2.5.1"
 	role = package
-	check = lib
-	files="lib/libjpeg.so.8 lib/libjpeg.so.8.0.1"
-	size = 328
+	files = "lib/libiconv.so lib/libiconv.so.2 lib/libiconv.so.2.5.1"
+	check = "lib libiconv.so.2"
+	env = 1230
+	size = 940
 
-[libpng14]
+[libiconv_3430]
+	revision= 2
+	title = "lib iConv v2.5.1"
+	role = package
+	files = "lib/libiconv.so lib/libiconv.so.2 lib/libiconv.so.2.5.1"
+	check = "lib libiconv.so.2"
+	env = 3430
+	size = 940
+
+[libjpeg_1228]
+	revision = 2
+	title = "lib Jpeg 8.4.0"
+	role = package
+	files = "lib/libjpeg.so lib/libjpeg.so.8 lib/libjpeg.so.8.4.0"
+	check = "lib libjpeg.so.8"
+	env = 1228
+	size = 256
+
+[libjpeg_1230]
+	revision = 2
+	title = "lib Jpeg 8.4.0"
+	role = package
+	files = "lib/libjpeg.so lib/libjpeg.so.8 lib/libjpeg.so.8.4.0"
+	check = "lib libjpeg.so.8"
+	env = 1230
+	size = 304
+
+[libjpeg_3430]
+	revision = 2
+	title = "lib Jpeg 8.4.0"
+	role = package
+	files = "lib/libjpeg.so lib/libjpeg.so.8 lib/libjpeg.so.8.4.0"
+	check = "lib libjpeg.so.8"
+	env = 3430
+	size = 240
+
+[libpcre_1228]
+	revision = 1
+	title = "lib PCRE 0.0.1"
+	role = package
+	files = "lib/libpcre.so lib/libpcre.so.0 lib/libpcre.so.0.0.1"
+	check = "lib libpcre.so.0"
+	env = 1228
+	size = 376
+
+[libpng14_1228]
 	revision= 1
 	title = "Lib Png v14.1.0"
 	role = package
-	check = lib
-	files="lib/libpng14.so.14 lib/libpng14.so.14.1.0"
+	check = "lib libpng14.so.14"
+	files="lib/libpng.so lib/libpng14.so lib/libpng14.so.14 lib/libpng14.so.14.1.0"
 	size = 400
 
-[libxml2]
-	revision= 1
-	title = "Lib XML2 v 2.7.2"
+[libpng15_1228]
+	revision = 2
+	title = "lib Png 15.7.0"
 	role = package
-	check = lib
-	files="lib/libxml2.so.2 lib/libxml2.so.2.7.2"
-	size = 1712
+	check = "lib libpng15.so.15"
+	env = 1228
+	files = "lib/libpng.so lib/libpng15.so lib/libpng15.so.15 lib/libpng15.so.15.7.0"
+	require = "libz"
+	size = 224
 
-[libz]
-	revision= 1
+[libpng15_1230]
+	revision = 2
+	title = "lib Png 15.7.0"
+	role = package
+	check = "lib libpng15.so.15"
+	env = 1230
+	files = "lib/libpng.so lib/libpng15.so lib/libpng15.so.15 lib/libpng15.so.15.7.0"
+	require = "libz"
+	size = 316
+
+[libpng15_3430]
+	revision = 2
+	title = "lib Png 15.7.0"
+	role = package
+	check = "lib libpng15.so.15"
+	env = 3430
+	files = "lib/libpng.so lib/libpng15.so lib/libpng15.so.15 lib/libpng15.so.15.7.0"
+	require = "libz"
+	size = 316
+
+[libssl_1228]
+	revision = 1
+	title = "lib SSL 1.0.0"
+	role = package
+	check = "lib libssl.so.1"
+	env = 1228
+	files = "lib/libssl.so lib/libssl.so.1 lib/libssl.so.1.0.0"
+	size = 356
+
+[libssl_1230]
+	revision = 1
+	title = "lib SSL 1.0.0"
+	role = package
+	check = "lib libssl.so.1"
+	env = 1230
+	files = "lib/libssl.so lib/libssl.so.1 lib/libssl.so.1.0.0"
+	size = 352
+
+[libssl_3430]
+	revision = 1
+	title = "lib SSL 1.0.0"
+	role = package
+	check = "lib libssl.so.1"
+	env = 3430
+	files = "lib/libssl.so lib/libssl.so.1 lib/libssl.so.1.0.0"
+	size = 392
+
+[libxml2_1228]
+	revision = 2
+	title = "lib XML2 2.7.8"
+	role = package
+	check = "lib libxml2.so.2"
+	env = 1228
+	files = "lib/libxml2.so lib/libxml2.so.2 lib/libxml2.so.2.7.8"
+	size = 1432
+
+[libxml2_1230]
+	revision = 2
+	title = "lib XML2 2.7.8"
+	role = package
+	check = "lib libxml2.so.2"
+	env = 1230
+	files = "lib/libxml2.so lib/libxml2.so.2 lib/libxml2.so.2.7.8"
+	size = 1424
+
+[libxml2_3430]
+	revision = 2
+	title = "lib XML2 2.8.0"
+	role = package
+	check = "lib libxml2.so.2"
+	env = 3430
+	files = "lib/libxml2.so lib/libxml2.so.2 lib/libxml2.so.2.8.0"
+	size = 1428
+
+[libz_1228]
+	revision = 2
 	title = "Lib Zip v1.2.5"
 	role = package
-	check = lib
-	files="lib/libz.so lib/libz.so.1 lib/libz.so.1.2.5"
-	size = 136
+	check = "lib libz.so.1"
+	env = 1228
+	files = "lib/libz.so lib/libz.so.1 lib/libz.so.1.2.5"
+	size = 112
+
+[libz_1230]
+	revision = 2
+	title = "Lib Zip v1.2.5"
+	role = package
+	check = "lib libz.so.1"
+	env = 1230
+	files = "lib/libz.so lib/libz.so.1 lib/libz.so.1.2.5"
+	size = 112
+
+[libz_3430]
+	revision = 2
+	title = "Lib Zip v1.2.7"
+	role = package
+	check = "lib libz.so.1"
+	env = 3430
+	files = "lib/libz.so lib/libz.so.1 lib/libz.so.1.2.7"
+	size = 112
 
 [mediaportal]
 	revision = 16
@@ -270,23 +512,7 @@
 	role = patch
 	files="www/modules/parole/"
 	require="busybox"
-	size = 64
-
-[patch61]
-	revision = 1
-	title = "Update amp r6 to amp r6.1"
-	role = patch
-	init = S45patch61
-	files="etc/init/S45patch61 patch61/"
-	size = 1452
-
-[php]
-	revision = 2
-	title ="PHP v5.3.2 curl hash ssl"
-	role = package
-	files="bin/php"
-	require="libgcc_s libcurl libiconv libjpeg libpng14 libxml2 libz"
-	size = 9948
+	size = 72
 
 [pshare]
 	revision= 2
@@ -363,17 +589,6 @@
 	role = package
 	files="bin/rtmpdump"
 	size = 2720
-
-[samba]
-	revision= 1
-	title = "SAMBA daemon v3.0.8"
-	role = daemon
-	check = "port 139"
-	init = S12samba
-	backup = "samba/smb.conf"
-	config_edit = "samba/smb.conf"
-	files="etc/init/S12samba lib/libsamba.so.0.0 lib/libsamba.so.0 lib/libsamba.so samba/"
-	size = 5328
 
 [smarttool]
 	revision = 1
@@ -455,6 +670,45 @@
 	require="libgcc_s libevent2 libcurl libz"
 	size = 3236
 
+[trans_1228]
+	revision = 1
+	title = "Transmission v2.50"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	env = 1228
+	files = "etc/init/S23trans trans/ www/modules/trans"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 3884
+
+[trans_1230]
+	revision = 1
+	title = "Transmission v2.60"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	files = "etc/init/S23trans trans/ www/modules/trans/"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	env = 1230
+	size = 4808
+
+[trans_3430]
+	revision = 1
+	title = "Transmission v2.60"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	files = "etc/init/S23trans trans/ www/modules/trans/"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	env = 3430
+	size = 4800
+
 [tvigle]
 	revision = 1
 	title = "Tvigle.RU"
@@ -468,16 +722,6 @@
 	role = rss
 	files="www/modules/tvontop/"
 	size = 3004
-
-[uaonline]
-	revision = 7
-	title ="Ukraine Online Services"
-	role = rss
-	init = S32uaonline
-	backup = "uaonline/settings.conf"
-	config_edit = "uaonline/settings.conf"
-	files="etc/init/S32uaonline uaonline/ www/modules/uaonline/"
-	size = 2732
 
 [uaonline2]
 	revision = 17
@@ -541,6 +785,43 @@
 	files="www/modules/weather/"
 	size = 80
 
+[web_1228]
+	revision = 1
+	title ="Lighttpd web server v1.4.28 pcre"
+	role = package
+	files = "bin/lighttpd etc/init/S03web etc/lighttpd.conf etc/lighttpd.plain lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_proxy.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so"
+	require = "libgccs libpcre php"
+	backup = "etc/lighttpd.conf etc/lighttpd.plain"
+	env = 1228
+	size = 820
+
+[web_1230]
+	revision = 1
+	title ="Lighttpd web server v1.4.28"
+	role = package
+	files = "bin/lighttpd etc/init/S03web etc/lighttpd.conf lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_proxy.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so"
+	required = "libgccs php"
+	backup = "etc/lighttpd.conf etc/lighttpd.plain"
+	env = 1230
+	size = 536
+
+[web_3430]
+	revision = 1
+	title ="Lighttpd web server v1.4.28"
+	role = package
+	required = "libgccs php"
+	backup = "etc/lighttpd.conf etc/lighttpd.plain"
+	env = 3430
+	files = "bin/lighttpd etc/init/S03web etc/lighttpd.conf lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_cml.so lib/mod_compress.so lib/mod_dirlisting.so lib/mod_evasive.so lib/mod_evhost.so lib/mod_expire.so lib/mod_extforward.so lib/mod_fastcgi.so lib/mod_flv_streaming.so lib/mod_indexfile.so lib/mod_magnet.so lib/mod_mysql_vhost.so lib/mod_proxy.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_rrdtool.so lib/mod_scgi.so lib/mod_secdownload.so lib/mod_setenv.so lib/mod_simple_vhost.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_trigger_b4_dl.so lib/mod_userdir.so lib/mod_usertrack.so lib/mod_webdav.so"
+	size = 2160
+
+[wget]
+	revision = 1
+	title = "Wget 1.10.4"
+	role = package
+	files="bin/wget"
+	size = 324
+
 [woowza]
 	revision = 3
 	title = "Woowza movies"
@@ -564,29 +845,87 @@
 	files="etc/init/S43zswap zswap/"
 	size = 120
 
-[web]
-	revision = 2
-	title ="Lighttpd web server v1.4.28 pcre"
+[php_1228]
+	revision = 3
+	title ="PHP v5.3.9"
 	role = package
-	backup = "etc/lighttpd.conf etc/lighttpd.plain"
-	files="bin/lighttpd etc/lighttpd.conf etc/lighttpd.plain etc/init/S03web lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so lib/libpcre.so lib/libpcre.so.0 lib/libpcre.so.0.0.1 lib/mod_proxy.so"
-	require="libgcc_s php"
-	size = 1168
+	env = 1228
+	files = "bin/php"
+	require = "libz libcharset libiconv libpng15 libjpeg libcrypto libssl libcurl libxml2"
+	size = 7596
 
-[wget]
-	revision = 1
-	title = "Wget 1.10.4"
+[php_1230]
+	revision = 3
+	title ="PHP v5.3.9"
 	role = package
-	files="bin/wget"
-	size = 324
+	env = 1230
+	files = "bin/php"
+	require = "libz libiconv libpng15 libjpeg libcrypto libssl libcurl libxml2"
+	size = 7200
+
+[php_3430]
+	revision = 3
+	title ="PHP v5.3.9"
+	role = package
+	env = 3430
+	files = "bin/php"
+	require = "libz libiconv libpng15 libjpeg libcrypto libssl libcurl libxml2"
+	size = 7188
+
+[libgccs_1228]
+	revision = 1
+	title = "lib gcc_s 1.0.0"
+	role = package
+	env = 1228
+	check = "libgcc"
+	files = "lib/libgcc_s.so lib/libgcc_s.so.1"
+	size = 100
+
+[libgccs_1230]
+	revision = 1
+	title = "lib gcc_s 1"
+	role = package
+	env = 1230
+	check = "libgcc"
+	files = "lib/libgcc_s.so lib/libgcc_s.so.1"
+	size = 240
+
+[libgccs_3430]
+	revision = 1
+	title = "lib gcc_s 1"
+	role = package
+	env = 3430
+	check = "libgcc"
+	files = "lib/libgcc_s.so lib/libgcc_s.so.1"
+	size = 112
+
+[samba]
+	revision = 2
+	title = "SAMBA daemon v3.0.23c"
+	role = daemon
+	check = "port 139"
+	init = S12samba
+	backup = "samba/smb.conf"
+	config_edit = "samba/smb.conf"
+	files = "etc/init/S12samba samba/"
+	size = 6168
+
+[downloady]
+	revision = 1
+	title = "PHP Download manager v1.5"
+	role = web
+	navy_title = "Downloads"
+	navy_frame = "%host%/modules/downloady/dstatus.htm"
+	files = "bin/wget www/modules/downloady/ www/modules/core/mod_frame.php"
+	size = 440
 
 [base]
 	revision = 13
 	title = "moServices base"
 	role = package
 	init = S00base
-	files="services bin/mos_remove bin/pm bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop base.13.patch"
-	require="libgccs wget busybox web core"
+	files = "services bin/mos_remove bin/pm bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop base.13.patch"
+	require = "libgccs wget busybox web core"
 	size = 112
 
 [core]
@@ -596,6 +935,6 @@
 	init = S01core
 	backup = "etc/core.ini"
 	config_link = "?page=sets"
-	files="etc/core.ini etc/init/S01core www/modules/core/ www/index.php www/favicon.ico"
+	files = "etc/core.ini etc/init/S01core www/modules/core/ www/index.php www/favicon.ico"
 	size = 844
 

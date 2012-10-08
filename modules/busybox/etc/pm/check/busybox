@@ -5,5 +5,5 @@
 # returns 1 - not installable
 # returns 0 - installable
 #
-busybox --help | grep -q 'v1\.18\.' && exit 2
+busybox --help | grep -Eq 'v1\.18\.5' && exit 2
 exit 0

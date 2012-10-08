@@ -1,0 +1,9 @@
+[libcurl_3430]
+	revision = 2
+	title = "lib CUrl 4.2.0"
+	role = package
+	files = "lib/libcurl.so lib/libcurl.so.4 lib/libcurl.so.4.2.0"
+	require = "libcrypto libssl libz"
+	check = "lib libcurl.so.4"
+	env = 3430
+	size = 420

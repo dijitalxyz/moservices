@@ -1,0 +1,8 @@
+[libssl_1230]
+	revision = 1
+	title = "lib SSL 1.0.0"
+	role = package
+	check = "lib libssl.so.1"
+	env = 1230
+	files = "lib/libssl.so lib/libssl.so.1 lib/libssl.so.1.0.0"
+	size = 352

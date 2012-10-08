@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# description: Starts and stops the btpd daemon
+#
+etc=/usr/local/etc
+mos=$etc/mos
+
+case "$1" in
+  start)
+	echo "Starting vsftpd service..."
+	$mos/bin/bftpd -d -c $mos/etc/bftpd.conf >/dev/null 2>&1 &
+	;;
+
+  stop)
+	echo "Shutting down bftpd services..."
+	killall -9 bftpd
+	;;
+
+  status)
+	if ps | grep -v 'S15bftpd' | grep -q '[b]ftpd'
+	then echo "bftpd running"
+	else echo "bftpd stopped"
+	fi
+	;;
+
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

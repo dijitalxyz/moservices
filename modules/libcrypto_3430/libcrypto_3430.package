@@ -1,0 +1,8 @@
+[libcrypto_3430]
+	revision = 2
+	title = "lib Crypto 1.0.0"
+	role = package
+	files = "lib/libcrypto.so lib/libcrypto.so.1 lib/libcrypto.so.1.0.0"
+	check = "lib libcrypto.so.1"
+	env = 3430
+	size = 1728

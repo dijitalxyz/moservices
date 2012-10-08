@@ -1,0 +1,8 @@
+[libjpeg_1230]
+	revision = 2
+	title = "lib Jpeg 8.4.0"
+	role = package
+	files = "lib/libjpeg.so lib/libjpeg.so.8 lib/libjpeg.so.8.4.0"
+	check = "lib libjpeg.so.8"
+	env = 1230
+	size = 304

@@ -1,7 +1,0 @@
-[php]
-	revision = 2
-	title ="PHP v5.3.2 curl hash ssl"
-	role = package
-	files="bin/php"
-	require="libgcc_s libcurl libiconv libjpeg libpng14 libxml2 libz"
-	size = 9948

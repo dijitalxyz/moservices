@@ -5,7 +5,7 @@
 	init = S41irfake
 	backup = "irfake/irfake.conf"
 	config_before = copy
-	config_after  = save
-	config_edit   = "irfake/irfake.conf"
+	config_after = save
+	config_edit = "irfake/irfake.conf"
 	files="etc/init/S41irfake irfake/"
 	size = 148

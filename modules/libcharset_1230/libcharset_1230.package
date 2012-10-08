@@ -1,0 +1,8 @@
+[libcharset_1230]
+	revision = 2
+	title = "lib CharSet 1.0.0"
+	role = package
+	files = "lib/libcharset.so lib/libcharset.so.1 lib/libcharset.so.1.0.0"
+	check = "lib libcharset.so.1"
+	env = 1230
+	size = 36

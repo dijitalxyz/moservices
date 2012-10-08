@@ -1,0 +1,9 @@
+[libpng15_3430]
+	revision = 2
+	title = "lib Png 15.7.0"
+	role = package
+	check = "lib libpng15.so.15"
+	env = 3430
+	files = "lib/libpng.so lib/libpng15.so lib/libpng15.so.15 lib/libpng15.so.15.7.0"
+	require = "libz"
+	size = 316

@@ -1,0 +1,208 @@
+#!/bin/sh
+#
+# description: Starts ans stops Transmission daemon
+#
+bin=/usr/local/etc/mos/bin
+mos=/usr/local/etc/mos/trans
+
+getParam() {
+  cat $mos/home/settings.json | sed -n 's/^.*"'$1'".*: *"*\([^ ,"]*\).*$/\1/p'
+}
+
+start() {
+	# waiting for mount
+	$bin/wait_mount && exit 1
+
+	# copying files
+	cgi=/tmp/www/cgi-bin
+	[ -d /sbin/www ] && cgi=/sbin/www/cgi-bin
+	[ ! -d $cgi ] && mkdir $cgi
+	cp -af $mos/torrents_xml.cgi $cgi/
+
+	export TRANSMISSION_HOME=$mos
+
+	# localization
+	[ -e $mos/web ] && [ -L $mos/web ] && rm -f $mos/web
+	if [ "$( cat /usr/local/etc/mos/etc/core.ini | sed -n 's/^ *language *= *\(.*\)$/\1/p' )" == "ru" ] ; then
+	  ln -s $mos/web_ru/ $mos/web
+	else
+	  ln -s $mos/web_en/ $mos/web
+	fi
+	export TRANSMISSION_WEB_HOME=$mos/web
+
+	#prepare paths
+	export USERNAME=root
+	mkdir -p /var/run
+	mkdir -p /var/log
+	mkdir -p /var/tmp
+	chmod 777 /var/tmp
+
+	sd=
+	for folder in /tmp/usbmounts/ext3 /tmp/hdd/volumes/HDD*/ext /tmp/hdd/volumes/HDD*/ext3 /tmp/hddmedia/*/ext3 /tmp/usbmounts/sd*/ext3 /tmp/hdd/volumes/HDD* /tmp/hddmedia/* /tmp/usbmounts/sd*; do
+		[ -d "$folder" ] || continue
+		m=$(cat /proc/mounts | grep "$folder ")
+		[ $? -ne 0 ] && continue
+		sd="$folder"
+		fs=$(echo $m | cut -d" " -f 3)
+		if [ "$fs" == ext3 -o "$fs" == ext2 ]; then
+			limit_down=2048
+			limit_up=512
+			limit_file=100
+			limit_peer=100
+			limit_peer_t=30
+			prealloc=1
+		else
+			limit_down=1024
+			limit_up=100
+			limit_file=30
+			limit_peer=50
+			limit_peer_t=50
+			prealloc=1
+		fi
+		break
+	done
+	[ -z "$sd" ] && exit 1
+
+	dl_dir=$sd/torrent
+	ic_dir=$dl_dir/incomplete
+	wch_dir=/tmp/watch
+
+	[ ! -d $mos/home ] && mkdir -p $mos/home
+	export TRANSMISSION_CONFIG_PATH=$mos/home
+
+	if [ -f $mos/home/settings.json ] ; then
+		# use config
+		i=$( getParam download-dir )
+		[ -n "$i" ] && dl_dir=$i
+		is_ic=$( getParam incomplete-dir-enabled )
+		i=$( getParam incomplete-dir )
+		[ -n "$i" ] && ic_dir=$i
+		i=$( getParam watch-dir )
+		[ -n "$i" ] && wch_dir=$i
+	else
+		# create config
+		echo '{
+	"alt-speed-down": 50,
+	"alt-speed-enabled": false,
+	"alt-speed-time-begin": 540,
+	"alt-speed-time-day": 127,
+	"alt-speed-time-enabled": false,
+	"alt-speed-time-end": 1020,
+	"alt-speed-up": 50,
+	"bind-address-ipv4": "0.0.0.0",
+	"bind-address-ipv6": "::",
+	"blocklist-enabled": false,
+	"dht-enabled": false,
+	"download-dir": "'$dl_dir'",
+	"encryption": 0,
+	"incomplete-dir": "'$ic_dir'",
+	"incomplete-dir-enabled": false,
+	"lazy-bitfield-enabled": true,
+	"message-level": 2,
+	"open-file-limit": '$limit_file',
+	"peer-limit-global": '$limit_peer',
+	"peer-limit-per-torrent": '$limit_peer_t',
+	"peer-port": 51413,
+	"peer-port-random-high": 65535,
+	"peer-port-random-low": 49152,
+	"peer-port-random-on-start": false,
+	"peer-socket-tos": 0,
+	"pex-enabled": true,
+	"port-forwarding-enabled": true,
+	"preallocation": '$prealloc',
+	"proxy": "",
+	"proxy-auth-enabled": false,
+	"proxy-auth-password": "",
+	"proxy-auth-username": "",
+	"proxy-enabled": false,
+	"proxy-port": 80,
+	"proxy-type": 0,
+	"ratio-limit": 2.0000,
+	"ratio-limit-enabled": false,
+	"rename-partial-files": false,
+	"rpc-authentication-required": true,
+	"rpc-bind-address": "0.0.0.0",
+	"rpc-enabled": true,
+	"rpc-password": "1234",
+	"rpc-port": 9091,
+	"rpc-username": "torrent",
+	"rpc-whitelist": "127.0.0.1",
+	"rpc-whitelist-enabled": true,
+	"script-torrent-done-enabled": false, 
+	"script-torrent-done-filename": "",
+	"speed-limit-down": '$limit_down',
+	"speed-limit-down-enabled": true,
+	"speed-limit-up": '$limit_up',
+	"speed-limit-up-enabled": true,
+	"start-added-torrents": true,
+	"trash-original-torrent-files": false,
+	"umask": 18, 
+	"upload-slots-per-torrent": 30,
+	"watch-dir": "'$wch_dir'",
+	"watch-dir-enabled": true,
+	"cache-size-mb": 8
+}' > $mos/home/settings.json
+	fi
+	#remount rw torrent drive
+	mount -o remount,rw $( dirname $dl_dir )
+
+	[ ! -d $dl_dir ] && mkdir -p $dl_dir
+	[ "$is_ic" == 'true' ] && [ ! -d $ic_dir ] && mkdir -p $ic_dir
+	
+	if [ ! -d $wch_dir ]; then
+		mkdir -p $wch_dir
+	else
+		rm -f $wch_dir/*.torrent
+	fi
+	echo $wch_dir > $mos/watch.dir
+
+	echo "Starting Transmission..."
+	$mos/transmission-daemon -a *.*.*.* -c $wch_dir -g $mos/home -p 9091 -t
+	sleep 1
+	$mos/transmission-remote 127.0.0.1:9091 -n torrent:1234 -t all -s >/dev/null 2>&1
+}
+stop()
+{
+	echo "Stopping Transmission..."
+	$mos/transmission-remote 127.0.0.1:9091 -n torrent:1234 -t all -S >/dev/null 2>&1
+	sleep 1
+
+	killall transmission-daemon 2>/dev/null
+	i=60
+	while [ $i -ne 0 ] ; do
+		[ -z "$( ps | grep '[t]ransmission-daemon' )" ] && break
+		sleep 1
+		let i-=1
+	done
+
+	#remove web
+	[ -e $mos/web ] && [ -L $mos/web ] && rm -f $mos/web
+	# remove cgi
+	cgi=/tmp/www/cgi-bin
+	[ -d /sbin/www ] && cgi=/sbin/www/cgi-bin
+	rm -f $cgi/torrents_xml.cgi
+
+	rm -f $mos/watch.dir
+}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  status)
+	if [ -z "$( ps | grep '[t]ransmission-daemon' )" ] ; then
+		echo "Transmission stopped"
+	else
+		echo "Transmission running"
+	fi
+	;;
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+esac
+
+exit $?

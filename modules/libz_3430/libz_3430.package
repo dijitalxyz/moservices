@@ -1,0 +1,8 @@
+[libz_3430]
+	revision = 2
+	title = "Lib Zip v1.2.7"
+	role = package
+	check = "lib libz.so.1"
+	env = 3430
+	files = "lib/libz.so lib/libz.so.1 lib/libz.so.1.2.7"
+	size = 112

@@ -1,10 +1,10 @@
 [samba]
-	revision= 1
-	title = "SAMBA daemon v3.0.8"
+	revision = 2
+	title = "SAMBA daemon v3.0.23c"
 	role = daemon
 	check = "port 139"
 	init = S12samba
 	backup = "samba/smb.conf"
 	config_edit = "samba/smb.conf"
-	files="etc/init/S12samba lib/libsamba.so.0.0 lib/libsamba.so.0 lib/libsamba.so samba/"
-	size = 5328
+	files = "etc/init/S12samba samba/"
+	size = 6168

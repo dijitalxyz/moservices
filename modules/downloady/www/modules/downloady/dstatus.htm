@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+<title>Downloady - PHP Download Manager - By CyberLeo &amp; Wesha</title>
+<link rel="stylesheet" type="text/css" href="style.css"></link>
+<script type="text/javascript" src="dstatus.js"></script>
+<script type="text/javascript" src="rpc.js"></script>
+</head><body onload="LoadAll();">
+
+<table id="content" style="visibility: hidden;">
+
+	<tr>
+		<td>
+			<form action="rpc.php" enctype="application/x-form-urlencoded" method="get" name="download">
+			<input name="url" size="100%" type="text" value="&lt;Enter URL here&gt;" onfocus="if(this.value == '&lt;Enter URL here&gt;') this.value = '';"/>
+			<input type="hidden" name="action" value="add">
+			<input type="submit" value="Submit"/>
+</form>
+		</td>
+	</tr>
+	<tr>
+	<tr>
+		<td>
+			<div id="usage" class="progress">
+				<div class="on" style="width: 0%;"></div>
+				<div class="off" style="width: 100%;"></div>
+				<div class="value">&nbsp;</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="background" id="progress">
+			<table id="files">
+				<tr style="display: none;">
+					<td class="name"></td>
+					<td class="size"></td>
+					<td style="float: left;">
+						<div class="progress">
+							<div class="on" style="width: 0%;"></div>
+							<div class="off" style="width: 100%;"></div>
+							<div class="value">&nbsp;</div>
+						</div>
+					</td>
+					<td class="speed"><span style="white-space: nowrap;">&nbsp;</span></td>
+					<td class="actions">
+						<div>&nbsp;</div>
+						<div>&nbsp;</div>
+						<div>&nbsp;</div>
+						<div>&nbsp;</div>
+						<div>&nbsp;</div>
+					</td>
+				</tr>
+				<tr style="display: none;">
+					<td colspan="5">
+						<table class="stats">
+							<tr>
+								<th>Source URL:</th>
+								<td colspan="3">&nbsp;</td>
+							</tr>
+							<tr>
+								<th>Dest file:</th>
+								<td colspan="3">&nbsp;</td>
+							</tr>
+							<tr>
+								<th>Size:</th>
+								<td>&nbsp;</td>
+								<th>PID:</th>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="4"><div class="log"><pre></pre></div></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<th>Filename</th>
+					<th>Size</th>
+					<th>Fetched</th>
+					<th>Speed</th>
+					<th>Opts</th>
+				</tr>
+		  </table>
+		</td>
+	</tr>
+	<tr>
+		<td class="background">
+			<div style="width: 100%; text-align: center;" class="small">Downloady - PHP Download Manager - By CyberLeo &amp; Wesha<br/>
+				<a href="http://www.cyberleo.net/cyberleo/Projects/">http://www.cyberleo.net/cyberleo/Projects/</a><br />
+			</div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

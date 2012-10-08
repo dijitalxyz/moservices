@@ -67,8 +67,6 @@ checkPackName()
 local h
 	h=$1
 	[ "$1" == 'libgcc_s' ] && h='libgccs'
-	[ "$1" == 'libpng14' ] && h='libpng'
-	[ "$1" == 'libpng15' ] && h='libpng'
 	echo $h
 }
 
@@ -79,7 +77,7 @@ local h
 local k
 	h=$( checkPackName $1 )
 
-	for k in curl libcharset libcrypto libcurl libevent2 libgccs libiconv libintl libjpeg libpcre libpng libssl libxml2 libz php trans web ; do
+	for k in curl libcharset libcrypto libcurl libevent2 libgccs libiconv libintl libjpeg libpcre libpng14 libpng15 libssl libxml2 libz php trans web ; do
 		if [ "$k" == "$h" ] ; then
 			h="${h}_${enviroment}"
 			break
@@ -133,7 +131,7 @@ if [ -d $pm/files ] ; then
 	[ -z "$( ls $pm/files )" ] && rm -Rf $pm/files
 	[ -z "$( ls $pm/required )" ] && rm -Rf $pm/required
 
-	sed -i 's/\[libgcc_s\]/[libgccs]/' $pm/installed
+	sed -i 's/\[libgcc_s\]/[libgccs_'$enviroment']/' $pm/installed
 fi
 
 # uses

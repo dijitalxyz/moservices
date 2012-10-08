@@ -1,0 +1,8 @@
+[libpcre_1228]
+	revision = 1
+	title = "lib PCRE 0.0.1"
+	role = package
+	files = "lib/libpcre.so lib/libpcre.so.0 lib/libpcre.so.0.0.1"
+	check = "lib libpcre.so.0"
+	env = 1228
+	size = 376

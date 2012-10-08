@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<onEnter>
+	showIdle();
+</onEnter>
+
+<mediaDisplay name=onePartView
+	sideLeftWidthPC = 0
+	sideRightWidthPC = 0
+
+	itemImageHeightPC="0" 
+	itemImageWidthPC="0"
+
+	itemXPC = 10
+	itemYPC = 19
+	itemWidthPC=80
+	itemHeightPC=8
+
+	itemGap=0
+	itemPerPage=7
+
+	backgroundColor="0:0:0"
+
+	idleImageXPC=45
+	idleImageYPC=41
+	idleImageWidthPC = 10
+	idleImageHeightPC = 18	
+
+	showHeader="no"
+	showDefaultInfo="no"
+
+ imageFocus="/usr/local/etc/mos/trans/rss/focus.bmp"
+ imageParentFocus="/usr/local/etc/mos/trans/rss/parent.bmp"
+ imageUnFocus="/usr/local/etc/mos/core/trans/unfocus.bmp"
+>
+	<idleImage> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage> image/POPUP_LOADING_06.png </idleImage>
+
+	<backgroundDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>/usr/local/etc/mos/trans/rss/torrents_bg.png</image>
+	</backgroundDisplay>		
+	<text offsetXPC=19.2 offsetYPC=8 widthPC=78 heightPC=10 fontSize=20 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+		<script>getPageInfo("pageTitle");</script>
+	</text>
+</mediaDisplay>
+
+
+<channel>
+	<title>Торренты</title>
+	<link>/usr/local/etc/mos/trans/rss/torrent/menu.rss</link>
+	
+<item><title>RuTor.Org</title><link>rss_file:///usr/local/etc/mos/trans/rss/rutor.rss</link><mediaDisplay name="onePartView" /></item>
+<item><title>OpenSharing.Org</title><link>rss_file:///usr/local/etc/mos/trans/rss/opensharing.rss</link><mediaDisplay name="onePartView" /></item>
+<item><title>Xtor.Info</title><link>rss_file:///usr/local/etc/mos/trans/rss/xtor.rss</link><mediaDisplay name="onePartView" /></item>
+<item><title>FreeTorrent.Ru</title><link>rss_file:///usr/local/etc/mos/trans/rss/freetorrent.rss</link><mediaDisplay name="onePartView" /></item>
+<item><title>FilesZona.com</title><link>rss_file:///usr/local/etc/mos/trans/rss/fileszona.rss</link><mediaDisplay name="onePartView" /></item>
+</channel>
+</rss>
