@@ -21,7 +21,7 @@
 # Translate CGI module
 # 'youtube.com' plug-in
 #
-# version: 2.7 27.01.2012 23:40
+# version: 2.8 Oscar mod Oct 01 2012
 #
 # http://www.youtube.com/v/JZtcw6GIxTY
 # http://www.youtube.com/watch?v=JZtcw6GIxTY
@@ -57,7 +57,7 @@ if echo "${arg_url}" | grep -qs 'youtube\.com.*\(/embed/\|/v/\|/watch?\|movie?\)
   local USERAGENTG="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
 
   if echo "${arg_url}" | grep -qs '&list='; then
-    host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENTG}" ${arg_url} 2>&1`
+    host_response=`$CURL -s -o ${TMPFILE} -U "${USERAGENTG}" ${arg_url} 2>&1`
     if grep -qs "data-list-id=" ${TMPFILE}; then
 
       local PLAYLISTFILE=$CACHEPATH/temp.xspf
@@ -104,15 +104,16 @@ if echo "${arg_url}" | grep -qs 'youtube\.com.*\(/embed/\|/v/\|/watch?\|movie?\)
   fi
   
   if [ -z "$fmt_url_map" ]; then   
-      host_response=`$MSDL -q -o ${TMPFILE} -p http --useragent "${USERAGENTG}" http://www.youtube.com/watch?v=$video_id 2>&1`
+	  host_response=`$CURL -s -o ${TMPFILE} -U "${USERAGENTG}" http://www.youtube.com/watch?v=$video_id 2>&1`
       if [ -f ${TMPFILE} ]; then
         fmt_url_map=`grep -i 'url_encoded_fmt_stream_map=' ${TMPFILE} | sed -n '1p'`
         if [ -z "$fmt_url_map" ]; then
 	        fmt_url_map=`grep -i 'fmt_url_map=' ${TMPFILE} | sed '1p'`
 	        fmt_url_map=`echo "$fmt_url_map" | unidecode | unescapeXML | awk '{match($0, /&fmt_url_map=([^&]*)&/, arr);print arr[1];}' | urldecode`
 	      else
-        	fmt_url_map=`echo "$fmt_url_map" | unidecode | unescapeXML | awk '{match($0, /&url_encoded_fmt_stream_map=url%3D([^&]*)&/, arr);print arr[1];}' | urldecode | urldecode`
-        fi
+			fmt_url_map=`echo "$fmt_url_map" | unidecode | unescapeXML | awk '{match($0, /&url_encoded_fmt_stream_map=([^&]*)&/, arr);print arr[1];}' | urldecode | urldecode`
+		fi
+
         icy_name=`grep 'meta name="title"' ${TMPFILE} | sed 's/.*t="//;s/".*//'`
         icy_name=`unescapeXML "$icy_name"`
         icy_name=`unescapeXML "$icy_name"`
@@ -127,11 +128,15 @@ if echo "${arg_url}" | grep -qs 'youtube\.com.*\(/embed/\|/v/\|/watch?\|movie?\)
     stream_url=''
     server_type='youtube'
     protocol='http'
-    if echo "$fmt_url_map" | grep -qs ",url="; then
+	signature=''
+    if echo "$fmt_url_map" | grep -qs "&url="; then
     	#22 / HD720
-    	[ -n "$hdc" ] && stream_url=`echo $fmt_url_map | awk 'BEGIN{RS=",url="} /itag=22/{print $0}' | sed 's/;.*//'`
-    	#18 / MEDIUM (default)
-    	[ -z "$stream_url" ] && stream_url=`echo $fmt_url_map | awk 'BEGIN{RS=",url="} /itag=18/{print $0}' | sed 's/;.*//'`
+    	[ -n "$hdc" ] && stream_url=`echo $fmt_url_map | awk 'BEGIN{RS="&url="} /&itag=22/{print $0}' | sed 's/;.*//'`
+		[ -n "$hdc" ] && signature=`echo $fmt_url_map | awk 'BEGIN{RS="&url="} /&itag=22/{print $0}' | sed 's/.*sig=//' | sed 's/&.*//'`
+		#18 / MEDIUM (default)
+    	[ -z "$stream_url" ] && stream_url=`echo $fmt_url_map | awk 'BEGIN{RS="&url="} /&itag=18/{print $0}' | sed 's/;.*//'`
+		[ -z "$signature" ] && signature=`echo $fmt_url_map | awk 'BEGIN{RS="&url="} /&itag=18/{print $0}' | sed 's/.*sig=//' | sed 's/&.*//'`
+		stream_url=$stream_url"&signature="$signature
     else
     	#22 / HD720
     	[ -n "$hdc" ] && stream_url=`echo $fmt_url_map | awk '{match($0,/.*22\|([^,]+),?/,arr);print arr[1]}'`

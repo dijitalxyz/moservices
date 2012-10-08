@@ -570,19 +570,6 @@
 	files="bin/RootApp etc/rc.suspend etc/rc.wakeup etc/S01Power etc/S10moServices etc/init/S42rootapp"
 	size = 340
 
-[rssex2]
-	revision = 14
-	title = "RSS Ex 2.0.11 r606"
-	role = rss
-	init = S31rssex2
-	backup= "rssex2/etc/"
-	config_edit = "rssex2/etc/translate.conf"
-	navy_title = "Media Renderer"
-	navy_frame = "http://%addr%:88/cgi-bin/renderer"
-	files="etc/init/S31rssex2 rssex2/ www/modules/rssex2/"
-	require="awk httpd curl rtmpdump"
-	size = 14720
-
 [rtmpdump]
 	revision= 1
 	title = "RTMPDump v2.3"
@@ -937,4 +924,17 @@
 	config_link = "?page=sets"
 	files = "etc/core.ini etc/init/S01core www/modules/core/ www/index.php www/favicon.ico"
 	size = 844
+
+[rssex2]
+	revision = 15
+	title = "RSS Ex 2.0.11 r606"
+	role = rss
+	init = S31rssex2
+	backup= "rssex2/etc/"
+	config_edit = "rssex2/etc/translate.conf"
+	navy_title = "Media Renderer"
+	navy_frame = "http://%addr%:88/cgi-bin/renderer"
+	files="etc/init/S31rssex2 rssex2/ www/modules/rssex2/"
+	require="awk httpd curl rtmpdump"
+	size = 14720
 
