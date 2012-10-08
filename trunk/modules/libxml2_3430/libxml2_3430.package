@@ -1,0 +1,8 @@
+[libxml2_3430]
+	revision = 2
+	title = "lib XML2 2.8.0"
+	role = package
+	check = "lib libxml2.so.2"
+	env = 3430
+	files = "lib/libxml2.so lib/libxml2.so.2 lib/libxml2.so.2.8.0"
+	size = 1428

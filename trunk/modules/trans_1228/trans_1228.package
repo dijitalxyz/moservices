@@ -1,0 +1,12 @@
+[trans_1228]
+	revision = 1
+	title = "Transmission v2.50"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	env = 1228
+	files = "etc/init/S23trans trans/ www/modules/trans"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 3884

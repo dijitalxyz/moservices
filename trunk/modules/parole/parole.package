@@ -4,4 +4,4 @@
 	role = patch
 	files="www/modules/parole/"
 	require="busybox"
-	size = 64
+	size = 72

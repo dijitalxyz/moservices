@@ -1,0 +1,8 @@
+[libevent2_3430]
+	revision = 1
+	title = "Lib Event-2.0 5.0.1"
+	role = package
+	check = "lib lib/libevent-2.0.so.5"
+	env = 3430
+	files="lib/libevent.so lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1"
+	size = 1600

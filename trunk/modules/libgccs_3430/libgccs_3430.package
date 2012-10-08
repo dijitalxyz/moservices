@@ -1,0 +1,8 @@
+[libgccs_3430]
+	revision = 1
+	title = "lib gcc_s 1"
+	role = package
+	env = 3430
+	check = "libgcc"
+	files = "lib/libgcc_s.so lib/libgcc_s.so.1"
+	size = 112

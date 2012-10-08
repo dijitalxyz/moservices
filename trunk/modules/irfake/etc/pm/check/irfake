@@ -5,5 +5,10 @@
 # returns 1 - not installable
 # returns 0 - installable
 #
+mos=/usr/local/etc/mos
+
+[ -f $mos/etc/pm.conf ] && . $mos/etc/pm.conf
+[ "$enviroment" == '3430' ] && exit 1
+
 ps | grep -q '[i]rfake4' && exit 2
 exit 0

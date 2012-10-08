@@ -1,0 +1,12 @@
+[bftpd]
+	revision = 1
+	title = "bFTPd FTP daemon v2.3"
+	role = daemon
+	check = "port 21"
+	init = S15bftpd
+	backup = "etc/bftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/bftpd.conf"
+	files="bin/bftpd etc/bftpd.conf etc/init/S15bftpd"
+	size = 48

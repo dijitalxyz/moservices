@@ -1,7 +1,0 @@
-[patch61]
-	revision = 1
-	title = "Update amp r6 to amp r6.1"
-	role = patch
-	init = S45patch61
-	files="etc/init/S45patch61 patch61/"
-	size = 1452

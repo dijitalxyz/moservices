@@ -1,0 +1,8 @@
+[php_1230]
+	revision = 3
+	title ="PHP v5.3.9"
+	role = package
+	env = 1230
+	files = "bin/php"
+	require = "libz libiconv libpng15 libjpeg libcrypto libssl libcurl libxml2"
+	size = 7200

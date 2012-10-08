@@ -3,6 +3,6 @@
 	title = "moServices base"
 	role = package
 	init = S00base
-	files="services bin/mos_remove bin/pm bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop base.13.patch"
-	require="libgccs wget busybox web core"
+	files = "services bin/mos_remove bin/pm bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop base.13.patch"
+	require = "libgccs wget busybox web core"
 	size = 112

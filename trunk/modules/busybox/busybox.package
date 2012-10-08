@@ -1,6 +1,6 @@
 [busybox]
-	revision= 3
-	title = "BusyBox v1.18.4"
+	revision= 4
+	title = "BusyBox v1.18.5"
 	role = package
-	files="bin/busybox.1.18.4 bin/bzip2 bin/httpd bin/passwd bin/tar bin/telnetd bin/gunzip"
-	size = 1548
+	files = "bin/bunzip2 bin/busybox.1.18.5 bin/bzip2 bin/gunzip bin/gzip bin/httpd bin/passwd bin/tar bin/telnetd"
+	size = 1288

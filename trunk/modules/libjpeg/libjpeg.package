@@ -1,7 +1,0 @@
-[libjpeg]
-	revision= 1
-	title = "Lib Jpeg v8.0.1"
-	role = package
-	check = lib
-	files="lib/libjpeg.so.8 lib/libjpeg.so.8.0.1"
-	size = 328

@@ -1,0 +1,8 @@
+[downloady]
+	revision = 1
+	title = "PHP Download manager v1.5"
+	role = web
+	navy_title = "Downloads"
+	navy_frame = "%host%/modules/downloady/dstatus.htm"
+	files = "www/modules/downloady/"
+	size = 440

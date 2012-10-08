@@ -119,8 +119,6 @@ local h
 		if [ -f $proj/$1/etc/pm/$3/$1 ] ; then
 			h="$( echo $( cat $proj/$1/etc/pm/$3/$1 ) )"
 			echo '	'$2'="'$h'"' >> $proj/$1/$1.package
-		else
-			echo "Missing pm/$3/$1 file"
 		fi
 	fi
 }
@@ -148,8 +146,8 @@ makePack()
 		# remove files, required
 		rm -Rf $proj/$1/etc/pm/files
 		rm -Rf $proj/$1/etc/pm/required
-		[ -z "$( ls $proj/$1/etc/pm )" ] && rm -Rf $proj/$1/etc/pm
-		[ -z "$( ls $proj/$1/etc )" ] && rm -Rf $proj/$1/etc
+		[ -z "$( ls $proj/$1/etc/pm 2>/dev/null )" ] && rm -Rf $proj/$1/etc/pm
+		[ -z "$( ls $proj/$1/etc 2>/dev/null )" ] && rm -Rf $proj/$1/etc
 
 		# change packages
 		removePackageFromList $pm/packages $1
@@ -216,8 +214,8 @@ extractPack()
 
 	rm -Rf $proj/$1/etc/pm/files
 	rm -Rf $proj/$1/etc/pm/required
-	[ -z "$( ls $proj/$1/etc/pm )" ] && rm -Rf $proj/$1/etc/pm
-	[ -z "$( ls $proj/$1/etc )" ] && rm -Rf $proj/$1/etc
+	[ -z "$( ls $proj/$1/etc/pm 2>/dev/null )" ] && rm -Rf $proj/$1/etc/pm
+	[ -z "$( ls $proj/$1/etc 2>/dev/null )" ] && rm -Rf $proj/$1/etc
 
 	# change packages
 	cat $proj/$1/$1.package >> $pm/packages

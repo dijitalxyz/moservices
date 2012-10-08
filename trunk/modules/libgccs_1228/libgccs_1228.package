@@ -1,0 +1,8 @@
+[libgccs_1228]
+	revision = 1
+	title = "lib gcc_s 1.0.0"
+	role = package
+	env = 1228
+	check = "libgcc"
+	files = "lib/libgcc_s.so lib/libgcc_s.so.1"
+	size = 100

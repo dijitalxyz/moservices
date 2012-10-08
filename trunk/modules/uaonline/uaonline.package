@@ -1,9 +1,0 @@
-[uaonline]
-	revision = 7
-	title ="Ukraine Online Services"
-	role = rss
-	init = S32uaonline
-	backup = "uaonline/settings.conf"
-	config_edit = "uaonline/settings.conf"
-	files="etc/init/S32uaonline uaonline/ www/modules/uaonline/"
-	size = 2732

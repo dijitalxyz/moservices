@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Check for install libraries:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+
+/usr/local/etc/mos/etc/pm/check/lib libpcre.so.0 libpcre
+[ $? -ne 0 ] exit 0
+exit 1
