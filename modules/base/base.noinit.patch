@@ -1,8 +1,0 @@
-#!/bin/sh
-#--------------------------------------
-# base rev < 13 hasn't init
-#
-init=/usr/local/etc/mos/etc/init
-
-$init/S00base disable
-$init/S00base enable

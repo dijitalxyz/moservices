@@ -24,11 +24,13 @@ $nav_pages = array ();
 $nav_funcs = array ();
 $nav_modules = array ();
 $nav_installed = array ();
+$nav_uses = array();
 
 // get options
-$nav_options = array();
-$nav_options = parse_ini_file( $mos.'/etc/core.ini', false );
-
+$nav_options = array_merge(
+	parse_ini_file( $mos.'/etc/core.ini', false ),
+	parse_ini_file( $mos.'/etc/pm.conf', false )
+);
 // define language
 $nav_lang = 'en';
 if( isset( $nav_options['language'] )) $nav_lang = $nav_options['language'];

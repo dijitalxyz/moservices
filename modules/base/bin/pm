@@ -30,13 +30,13 @@ if [ -z "$enviroment" ] ; then
 		echo "Env error: Linux $s is not supported"
 		exit 1
 	fi
-	echo "  Detected $s core"
+	echo "Env: Detected $s core"
 
 	if ls /lib | grep -q 'ld-uClibc-0\.9\.28' ; then
-		echo '  Detected uClibc 0.9.28'
+		echo 'Env: Detected uClibc 0.9.28'
 		enviroment=$enviroment'28'
 	elif ls /lib | grep -q 'ld-uClibc-0\.9\.30' ; then
-		echo '  Detected uClibc 0.9.30'
+		echo 'Env: Detected uClibc 0.9.30'
 		enviroment=$enviroment'30'
 	else
 		echo "Env error: Didn't detect supported uClibc"
@@ -57,14 +57,14 @@ loadFile()
 	if [ ! -f $tmp/$1.tar.bz2 ]; then
 		if [ -n "$localrepo" ] ; then
 			if [ ! -e $localrepo/$1.tar.bz2 ] ; then
-				echo "File $localrepo/$1.tar.bz2 not found"
+				echo "Load error: File $localrepo/$1.tar.bz2 not found"
 				return 1
 			fi
 			cp -a $localrepo/$1.tar.bz2 $tmp/
 		else
 			wget $repository/$1.tar.bz2 -O $tmp/$1.tar.bz2
 			if [ $? -ne 0 ] ; then
-				echo "Unable to download $repository/$1.tar.bz2"
+				echo "Load error: Unable to download $repository/$1.tar.bz2"
 				rm -f $tmp/$1.tar.bz2
 				return 1
 			fi
@@ -73,7 +73,7 @@ loadFile()
 	# check
 	tar -tjf $tmp/$1.tar.bz2 >/dev/null 2>&1
 	if [ $? -ne 0 ] ; then
-		echo "Archive $tmp/$1.tar.bz2 is corrupt"
+		echo "Load error: Archive $tmp/$1.tar.bz2 is corrupt"
 		rm -f $tmp/$1.tar.bz2
 		return 1
 	fi
@@ -86,7 +86,7 @@ extractFile()
 	# untar
 	tar -xjf $tmp/$1.tar.bz2 -C $mos/
 	if [ $? -ne 0 ] ; then
-		echo "$tmp/$1.tar.bz2 extract error"
+		echo "Extract error: $tmp/$1.tar.bz2 extract error"
 		rm -f $tmp/$1.tar.bz2
 		return 1
 	fi
@@ -135,7 +135,7 @@ removePackageFromList()
 #--------------------------------------
 updateList()
 {
-	echo " Update repository list"
+	echo "Update repository list..."
 
 	loadFile packages || return 1
 	extractFile packages || return 1
@@ -155,32 +155,43 @@ checkPackageInList()
 		updateList || return 1
 	fi
 	grep -q "\[$1\]" $pm/packages && return 0
-	echo "  Package $1 not found in list"
-	return 1
+	grep -q "\[$1_$enviroment\]" $pm/packages && return 1
+	echo "Check error: Package $1 not found in list"
+	return 2
 }
 
 #--------------------------------------
 checkPackageInstalled()
 {
 	grep -q "\[$1\]" $pm/installed && return 0
-	return 1
+	grep -q "\[$1_$enviroment\]" $pm/installed && return 1
+	return 2
 }
 
 #--------------------------------------
 getPackageSize()
 {
+local pkg
 local s
 local h
 local p
-	checkPackageInList $1 || return 1
+	pkg="$1"
+	checkPackageInList $1 > /dev/null
+	v=$?
+	[ $v -eq 1 ] && pkg=$1'_'$enviroment
+	if [ $v -eq 2 ] ; then
+		echo '0'
+		return 1
+	fi
 
-	s=$( getParameterFromList $pm/packages $1 size )
+	s=$( getParameterFromList $pm/packages $pkg size )
 
 	# required packages
-	h="$( getParameterFromList $pm/packages $1 require )"
+	h="$( getParameterFromList $pm/packages $pkg require )"
 	if [ -n "$h" ] ; then
 		for p in $h ; do
-			checkPackageInstalled $p || let s=s+$( getPackageSize $p )
+			checkPackageInstalled $p
+			[ $? -eq 2 ] && let s=s+$( getPackageSize $p )
 		done
 	fi
 
@@ -198,77 +209,110 @@ runPatches()
 }
 
 #--------------------------------------
-installPackage()
+goesToNewVersion()
 {
-local p
-
-	echo " Install package $1"
-
-	if [ "$2" != 'alone' ] ; then
-		checkPackageInList $1 || return 1
+	if [ -d $pm/files ] ; then
+		grep -q 'files =' $mos/$1.package || echo '	files = "'$( echo $( cat $pm/files/$1 ) )'"' >> $mos/$1.package
+		rm -f $pm/files/$1
+		[ -z "$( ls $pm/files )" ] && rm -Rf $pm/files
 	fi
 
-	if checkPackageInstalled $1 ; then
-		echo "  Package $1 already installed"
+	if [ -d $pm/required ] ; then
+		grep -q 'require =' $mos/$1.package || echo '	require = "'$( echo $( cat $pm/required/$1 ) )'"' >> $mos/$1.package
+		rm -f $pm/required/$1
+		[ -z "$( ls $pm/required )" ] && rm -Rf $pm/required
+	fi
+}
+
+#--------------------------------------
+installPackage()
+{
+local pkg
+local h
+local p
+
+	pkg=$1
+
+	if [ "$2" != 'alone' ] ; then
+		checkPackageInList $1
+		v=$?
+		[ $v -eq 2 ] && return 1
+		[ $v -eq 1 ] && pkg=$1'_'$enviroment
+	fi
+
+	echo "Install package $pkg..."
+
+	if checkPackageInstalled $pkg ; then
+		echo "Install notice: Package $pkg already installed"
 	else
 		if [ "$2" != 'alone' ] ; then
 			# check enviroment
-			h="$( getParameterFromList $pm/packages $1 env )"
+			h="$( getParameterFromList $pm/packages $pkg env )"
 			if [ -n "$h" ] ; then
 				if [ $h -ne $enviroment ] ; then
-					echo "  Package $1 not supported by enviroment"
+					echo "Install error: Package $pkg not supported by enviroment"
 					return 1
 				fi
 			fi
 			# check for installable
-			h="$( getParameterFromList $pm/packages $1 check )"
+			h="$( getParameterFromList $pm/packages $pkg check )"
 			if [ -n "$h" ] ; then
 				h="$pm/check/$h"
 			else
-				h="$pm/check/$1"
+				h="$pm/check/$pkg"
 			fi
 			v=$( echo $h | cut -d' ' -f1 )
 			if [ -f $v ] && [ -x $v ] ; then
-				$h $1
+				$h $pkg
 				ret=$?
 				if [ $ret -eq 1 ] ; then
-					echo "  Package $1 is not installable"
+					echo "Install error: Package $pkg is not installable"
 					return 1
 				elif [ $ret -eq 2 ] ; then
-					echo "  Package $1 is embeded"
-					echo -e "[$1]\n\trevision = emb\n" >> $pm/installed
+					echo "Install notise: Package $pkg is embeded"
+					echo -e "[$pkg]\n\trevision = emb\n" >> $pm/installed
 					return 0
 				fi
 			fi
 			# check memory
 			h=$( getFreeMem )
-			v=$( getPackageSize $1 )
+			v=$( getPackageSize $pkg )
 			if [ $v -gt $h ] ; then
-				echo "  No enough memory for $1"
+				echo "  No enough memory for $pkg"
 				return 1
 			fi
 		fi
 		#
-		loadFile $1 || return 1
-		extractFile $1 || return 1
-		cat $mos/$1.package >> $pm/installed
+		loadFile $pkg || return 1
+		extractFile $pkg || return 1
+
+		goesToNewVersion $pkg
+
+		cat $mos/$pkg.package >> $pm/installed
 		echo >> $pm/installed
-		rm -f $mos/$1.package
+		rm -f $mos/$pkg.package
 	fi
 	# required packages
-	if [ -f $pm/required/$1 ] ; then
+	h="$( getParameterFromList $pm/installed $pkg require )"
+	if [ -n "$h" ] ; then
 
-		for p in $( cat $pm/required/$1 ) ; do
-
-			if [ "$p" != "$1" ] ; then
-				installPackage $p || continue
+		for p in $h ; do
+			if [ "$2" != 'alone' ] ; then
+				checkPackageInList $p
+				v=$?
+				[ $v -eq 2 ] && continue
+				[ $v -eq 1 ] && p=$p'_'$enviroment
 			fi
+			installPackage $p $2 || continue
+
 			# uses
-			mkdir -p $pm/uses
-			if [ ! -f $pm/uses/$p ] ; then
-				echo $1 > $pm/uses/$p
+			touch $pm/uses
+			if grep -Eq '^'$p'=' $pm/uses ; then
+				if ! grep -Eq '^'$p'=".*'$pkg'.*"$' $pm/uses ; then
+					sed -ri 's/^('$p')="(.*)"$/\1="\2 '$pkg'"/' $pm/uses
+				fi
 			else
-				grep -q '^'$1'$' $pm/uses/$p || echo $1 >> $pm/uses/$p
+				echo "$p=\"$pkg\"" >> $pm/uses
 			fi
 		done
 	fi
@@ -281,125 +325,150 @@ local p
 #--------------------------------------
 removePackage()
 {
+local pkg
+local h
 local p
 
-	echo " Remove package $1"
+	pkg=$1
 
-	if ! checkPackageInstalled $1 ; then
-		echo "  Package $1 not installed"
+	checkPackageInstalled $1
+	v=$?
+	if [ $v -eq 2 ] ; then
+		echo "Remove error: Package $1 not installed"
 		return 1
 	fi
+	[ $v -eq 1 ] && pkg=$1'_'$enviroment
 
-	if [ -f $pm/uses/$1 ] ; then
-		echo "  Package $1 is used by other packages"
+	echo "Remove package $pkg..."
+
+	if grep -Eq '^'$pkg'=' $pm/uses ; then
+		echo "Remove error: Package $pkg used by other packages"
 		return 1
 	fi
 
 	# required packages
-	if [ -f $pm/required/$1 ] ; then
+	h="$( getParameterFromList $pm/installed $pkg require )"
+	if [ -n "$h" ] ; then
 
-		for p in $( cat $pm/required/$1 ) ; do
+		for p in $h ; do
 
-			if [ -f $pm/uses/$p ] ; then
-				sed -i '/^'$1'$/d' $pm/uses/$p
-				if [ -z "$( cat $pm/uses/$p )" ] ; then
-					rm -f $pm/uses/$p
-					[ "$p" != "$1" ] && removePackage $p
-				fi
+			checkPackageInstalled $p
+			v=$?
+			[ $v -eq 2 ] && continue
+			[ $v -eq 1 ] && p=$p'_'$enviroment
+
+			# uses
+			if grep -Eq '^'$p'=' $pm/uses ; then
+
+				sed -ri 's/^'$p'="(.*) *'$pkg' *(.*)"$/'$p'="\1\2"/' $pm/uses
+				sed -ri 's/ "/"/' $pm/uses
+				sed -ri '/^'$p'=""$/d' $pm/uses
+
+				grep -Eq '^'$p'=' $pm/uses || removePackage $p $2
 			fi
 		done
 	fi
 
 	# remove files
-	if [ -f $pm/files/$1 ] ; then
-
-		for p in $( cat $pm/files/$1 ) ; do
+	h="$( getParameterFromList $pm/installed $pkg files )"
+	if [ -n "$h" ] ; then
+		for p in $h ; do
 			rm -Rf $mos/$p
 		done;
-		rm -f $pm/required/$1
-		rm -f $pm/uses/$1
-		rm -f $pm/files/$1
 	fi
-	removePackageFromList $pm/installed $1
+	removePackageFromList $pm/installed $pkg
 }
 
 #--------------------------------------
 updatePackage()
 {
+local pkg
+local h
 local p
 
-	echo " Update package $1"
+	pkg="$1"
 
-	if [ "$2" != 'alone' ] ; then
-		checkPackageInList $1 || return 1
-	fi
-
-	if ! checkPackageInstalled $1 ; then
-		echo "  Package $1 not installed"
+	checkPackageInstalled $1
+	v=$?
+	if [ $v -eq 2 ] ; then
+		echo "Update error: Package $1 not installed"
 		return 1
 	fi
+	[ $v -eq 1 ] && pkg=$1'_'$enviroment
 
-	irev=$( getParameterFromList $pm/installed $1 revision )
+	irev=$( getParameterFromList $pm/installed $pkg revision )
 	if [ "$irev" == 'emb' ] ; then
-		echo "  Package embeded"
+		echo "Update notice: Package $pkg embeded"
 		return 0
 	fi
 
 	if [ "$2" != 'now' ] ; then
-		arev=$( getParameterFromList $pm/packages $1 revision )
+		arev=$( getParameterFromList $pm/packages $pkg revision )
 		if [ $irev -eq $arev ] ; then
-			echo "  Nothing for update"
+			echo "Update notice: $pkg nothing for update"
 			return 0
 		fi
 	fi
+
+	echo "Update package $pkg..."
+
 	# check memory
 	h=$( getFreeMem )
-	p=$( getParameterFromList $pm/installed $1 size )
-	v=$( getParameterFromList $pm/packages $1 size )
+	p=$( getParameterFromList $pm/installed $pkg size )
+	v=$( getParameterFromList $pm/packages $pkg size )
+	[ -z "$v" ] && v=p
 	let h=h+p-v
 	if [ $h -le 0 ] ; then
-		echo "  No enough memory for update $1"
+		echo "Update error: No enough memory for update $pkg"
 		return 1
 	fi
 
 	# load package
-	loadFile $1 || return 1
+	loadFile $pkg || return 1
 
 	# remove files
-	if [ -f $pm/files/$1 ] ; then
-
-		for p in $( cat $pm/files/$1 ) ; do
+	h="$( getParameterFromList $pm/installed $pkg files )"
+	if [ -n "$h" ] ; then
+		for p in $h ; do
 			rm -Rf $mos/$p
 		done;
-		rm -f $pm/files/$1
-		rm -f $pm/required/$1
 	fi
-	removePackageFromList $pm/installed $1
+	removePackageFromList $pm/installed $pkg
 
 	# extract package
-	extractFile  $1 || return 1
-	cat $mos/$1.package >> $pm/installed
+	extractFile  $pkg || return 1
+
+	goesToNewVersion $pkg
+
+	cat $mos/$pkg.package >> $pm/installed
 	echo >> $pm/installed
-	rm -f $mos/$1.package
+	rm -f $mos/$pkg.package
 
 	# required packages
-	if [ -f $pm/required/$1 ] ; then
+	h="$( getParameterFromList $pm/installed $pkg require )"
+	if [ -n "$h" ] ; then
 
-		for p in $( cat $pm/required/$1 ) ; do
+		for p in $h ; do
 
-			if checkPackageInstalled $p ; then
-				[ "$p" != "$1" ] && updatePackage $p
+			checkPackageInstalled $p
+			v=$?
+			if [ $v -eq 2 ] ; then
+				installPackage $p $2 || continue
+
 			else
-				if [ "$p" != "$1" ] ; then
-					installPackage $p || continue
+				[ $v -eq 1 ] && p=$p'_'$enviroment
+				updatePackage $p $2 || continue
+			fi
+
+			# uses
+			touch $pm/uses
+			if grep -Eq '^'$p'=' $pm/uses ; then
+
+				if ! grep -Eq '^'$p'=".*'$pkg'.*"$' $pm/uses ; then
+					sed -ri 's/^('$p')="(.*)"$/\1="\2 '$pkg'"/' $pm/uses
 				fi
-				# uses
-				mkdir -p $pm/uses
-				if [ ! -f $pm/uses/$p ] ; then
-					echo $1 > $pm/uses/$p
-				else
-					grep -q '^'$1'$' $pm/uses/$p || echo $1 >> $pm/uses/$p
-				fi
+			else
+				echo "$p=\"$pkg\"" >> $pm/uses
 			fi
 		done
 	fi
@@ -409,37 +478,77 @@ local p
 	return 0
 }
 
-#--------------------------------------
+# -------------------------------------
+# $1 package name
+# $2 parameter name
+# $3 path name
+#
+mkFileFromParameter()
+{
+local i
+local s
+	s="$( getParameterFromList $pm/installed $1 $2 )"
+	if [ -n "$s" ] ; then
+		mkdir -p $pm/$3
+		for i in $s ; do
+			echo $i >> $pm/$3/$1
+		done
+	fi
+}
+
+# -------------------------------------
 makePackage() {
 
-	if [ -f $pm/files/$1 ] ; then
-		echo "Making $1..."
-		i=$( cat $pm/files/$1 )
-		i=$i" etc/pm/files/$1"
-		[ -f $pm/required/$1 ] && i=$i" etc/pm/required/$1"
-		[ -f $pm/check/$1 ]  && i=$i" etc/pm/check/$1"
+	pkg="$1"
 
-		for a in $( ls $mos/etc/about/$1.* 2>/dev/null ) ; do
-			i="$i etc/about/$( basename $a )"
+	checkPackageInstalled $1
+	v=$?
+	if [ $v -eq 2 ] ; then
+		echo "Make error: Package $1 not installed"
+		return 1
+	fi
+	[ $v -eq 1 ] && pkg=$1'_'$enviroment
+
+	h="$( getParameterFromList $pm/installed $pkg files )"
+	if [ -n "$h" ] ; then
+		echo "Making package $pkg..."
+		[ -f $pm/check/$pkg ]  && h=$h" etc/pm/check/$pkg"
+
+		# files, require
+		mkFileFromParameter $pkg files files
+		[ -f $pm/files/$pkg ] && h=$h" etc/pm/files/$pkg"
+		mkFileFromParameter $pkg require required
+		[ -f $pm/required/$pkg ] && h=$h" etc/pm/required/$pkg"
+
+		# about
+		for a in $mos/etc/about/$pkg.* ; do
+			[ -f $a ] || continue
+			h="$h etc/about/$( basename $a )"
 		done
 
 		p=$PWD
 		cd $mos
-		s=$( du -sc $i | tail -n1 | cut -f1 )
+		s=$( du -sc $h | tail -n1 | cut -f1 )
 		cd $p
 
-		getPackageFromList $pm/installed $1 > $mos/$1.package
+		getPackageFromList $pm/installed $pkg > $mos/$pkg.package
 
-		sed -i '/size[ 	]*=/d' $mos/$1.package
-		echo '	size = '$s >> $mos/$1.package
+		sed -i '/size[ 	]*=/d' $mos/$pkg.package
+		echo '	size = '$s >> $mos/$pkg.package
 
-		i=$i" $1.package"
+		h=$h" $pkg.package"
 
-		tar cjf $2/$1.tar.bz2 -C $mos/ $i
+		tar cjf $2/$pkg.tar.bz2 -C $mos/ $h
 
-		rm -f $mos/$1.package
+		rm -f $mos/$pkg.package
+
+		# remove files, required
+		rm -f $pm/files/$pkg
+		rm -f $pm/required/$pkg
+		[ -z "$( ls $pm/files 2>/dev/null )" ] && rm -Rf $pm/files
+		[ -z "$( ls $pm/required 2>/dev/null )" ] && rm -Rf $pm/required
 	else
-		echo "$1 not present"
+		echo "Make error: Package $1 has wrong structure"
 	fi
 }
 
@@ -463,7 +572,6 @@ case "$1" in
   make)
 	m=''
 	[ $# -ge 2 ] && m=$2
-	[ "$m" = 'all' ] && m=''
 
 	d=/tmp
 	[ $# -ge 3 ] && d=$3
@@ -475,10 +583,7 @@ case "$1" in
 		tar cjf $d/mos_full.tar.bz2 *
 
 	else
-		s=$( ls $pm/files/$m* )
-		for i in $s ; do
-			makePackage $( basename $i ) $d
-		done
+		[ -n "$m" ] && makePackage $m $d
 	fi
 	;;
   get)
@@ -522,19 +627,19 @@ case "$1" in
 	echo "moServices Package Manager rev10 (http://www.moservices.org)
 Usage: pm <action> ...
 Avaiable:
-	install <package> [alone]
-	remove <package>
-	update <package> [now]
+	install <package>	[alone]
+	remove	<package>
+	update	<package>	[now]
+	make	<package>|full	[<destination_path>] (default /tmp)
+	get 	<package>	[<destination_path>] (default /tmp)
 	updatelist
-	make <package>|all|full [<destination_path>] (default /tmp)
-	get <package> [<destination_path>] (default /tmp)
 	show
 		repository
 		enviroment
 		freememory
-		size <package>
+		size	  <package>
 		installed <package>
-		package <package>
+		package	  <package>
 	list
 		installed
 		packages"

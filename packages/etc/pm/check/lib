@@ -10,7 +10,7 @@ check=$1
 
 f=1
 while true; do
-	lib=$( echo $LD_LIBRARY_PATH | cut -d':' -f $f )
+	lib=$( echo $LD_LIBRARY_PATH: | cut -d':' -f $f )
 	[ -z "$lib" ] && exit 0
 	[ -e $lib/$check ] && exit 2
 	let f+=1

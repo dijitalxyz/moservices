@@ -99,7 +99,13 @@ global $nav_funcs;
 function isInstalable( $mod, $opt )
 {
 global $mos;
+global $nav_options;
 
+	# enviroment
+	if( isset( $opt['env'] ))
+	if( $opt['env'] != $nav_options['enviroment'] ) return 1;
+
+	# etc/pm/check
 	$f = $mod;
 	if( isset( $opt['check'] )) $f = $opt['check'];
 	$f = $mos.'/etc/pm/check/'.$f;
@@ -117,6 +123,7 @@ global $mos;
 function loadModuleOptions( $mod, &$opt )
 {
 global $mos;
+global $nav_uses;
 
 	if( ! isset( $opt['revision'] )) return false;
 	if( $opt['revision'] == 'emb' ) return false;
@@ -157,7 +164,7 @@ global $mos;
 			$act[] = 'enable';
 		}
 	}
-	if ( ! file_exists( $mos.'/etc/pm/uses/'.$mod ) ) $act[] = 'delete';
+	if ( ! isset( $nav_uses[ $mos ] )) $act[] = 'delete';
 
 	if( $show )
 	if( isset( $opt['actions'] ))
@@ -179,10 +186,14 @@ global $mos;
 function loadOptions( )
 {
 global $mos;
+global $nav_uses;
 global $nav_modules;
 global $nav_installed;
 
 	$nav_modules = array ();
+
+	$nav_uses = array ();
+	$nav_uses = parse_ini_file( $mos.'/etc/pm/uses', false );
 
 	$nav_installed = array ();
 	$nav_installed = parse_ini_file( $mos.'/etc/pm/installed', true );

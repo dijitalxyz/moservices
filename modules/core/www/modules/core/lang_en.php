@@ -62,6 +62,7 @@ $nav_msg[ 'coreTSaveSets' ] ='Save configuration files of modules<br /> and moSe
 $nav_msg[ 'coreTLoadSets' ] ='Load and recovery moServices state<br /> and configuration files of modules';
 $nav_msg[ 'coreTRemoveMos'] ='Complete remove moServices from player';
 
+$nav_msg[ 'coreRole_'       ] = 'Unknown';
 $nav_msg[ 'coreRole_daemon' ] = 'Daemons';
 $nav_msg[ 'coreRole_core'   ] = 'Core';
 $nav_msg[ 'coreRole_patch'  ] = 'Patches';
