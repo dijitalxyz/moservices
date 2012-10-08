@@ -621,7 +621,7 @@
     <image>../etc/translate/rss/image/skyfm/dreamscapes.gif</image>
     <genre>Electronic Chillout Dream</genre>
     <url>http://www.sky.fm/dreamscapes</url>
-    <stream_url>http://u17.sky.fm:80/sky_dreamscapes_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_dreamscapes_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -637,7 +637,7 @@
     <image>../etc/translate/rss/image/skyfm/vocalsmoothjazz.gif</image>
     <genre>Jazz Smooth Vocals</genre>
     <url>http://www.sky.fm/vocalsmoothjazz/</url>
-    <stream_url>http://u17.sky.fm:80/sky_vocalsmoothjazz_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_vocalsmoothjazz_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -653,7 +653,7 @@
     <image>../etc/translate/rss/image/skyfm/romantica.gif</image>
     <genre>Opera Classical Pop</genre>
     <url>http://www.sky.fm/romantica/</url>
-    <stream_url>http://u17.sky.fm:80/sky_romantica_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_romantica_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -669,7 +669,7 @@
     <image>../etc/translate/rss/image/skyfm/indierock.gif</image>
     <genre>Indie Rock Alternative</genre>
     <url>http://www.sky.fm/indierock/</url>
-    <stream_url>http://u17.sky.fm:80/sky_indierock_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_indierock_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -685,7 +685,7 @@
     <image>../etc/translate/rss/image/skyfm/poppunk.gif</image>
     <genre>Punk Rock Pop</genre>
     <url>http://www.sky.fm/poppunk/</url>
-    <stream_url>http://u17.sky.fm:80/sky_poppunk_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_poppunk_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -701,7 +701,7 @@
     <image>../etc/translate/rss/image/skyfm/jpop.gif</image>
     <genre>Jpop Japan Pop</genre>
     <url>http://www.sky.fm/jpop/</url>
-    <stream_url>http://u17.sky.fm:80/sky_jpop_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_jpop_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -717,7 +717,7 @@
     <image>../etc/translate/rss/image/skyfm/smoothjazz.gif</image>
     <genre>Soft Smooth Jazz</genre>
     <url>http://www.sky.fm/smoothjazz/</url>
-    <stream_url>http://u17b.sky.fm:80/sky_smoothjazz_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_smoothjazz_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -733,7 +733,7 @@
     <image>../etc/translate/rss/image/skyfm/uptemposmoothjazz.gif</image>
     <genre>Uptempo Smooth Jazz</genre>
     <url>http://www.sky.fm/uptemposmoothjazz/</url>
-    <stream_url>http://u17b.sky.fm:80/sky_uptemposmoothjazz_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_uptemposmoothjazz_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -749,7 +749,7 @@
     <image>../etc/translate/rss/image/skyfm/tophits.gif</image>
     <genre>Pop Top 40 Dance Rock</genre>
     <url>http://www.sky.fm/tophits/</url>
-    <stream_url>http://u17b.sky.fm:80/sky_tophits_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_tophits_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -765,7 +765,7 @@
     <image>../etc/translate/rss/image/skyfm/the80s.gif</image>
     <genre>80s Pop Rock Decades</genre>
     <url>http://www.sky.fm/the80s/</url>
-    <stream_url>http://u17b.sky.fm:80/sky_the80s_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_the80s_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -781,7 +781,7 @@
     <image>../etc/translate/rss/image/skyfm/hit70s.gif</image>
     <genre>70s Hits Oldies Decades</genre>
     <url>http://www.sky.fm/hit70s/</url>
-    <stream_url>http://u17b.sky.fm:80/sky_hit70s_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_hit70s_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -797,7 +797,7 @@
     <image>../etc/translate/rss/image/skyfm/oldies.gif</image>
     <genre>Decades Oldies 60s 70s</genre>
     <url>http://www.sky.fm/oldies</url>
-    <stream_url>http://u17.sky.fm:80/sky_oldies_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_oldies_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -813,7 +813,7 @@
     <image>../etc/translate/rss/image/skyfm/classical.gif</image>
     <genre>classical easy symphonic</genre>
     <url>http://www.sky.fm</url>
-    <stream_url>http://u17b.sky.fm:80/sky_classical_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_classical_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -829,7 +829,7 @@
     <image>../etc/translate/rss/image/skyfm/guitar.gif</image>
     <genre>Flamenco Classical Guitar</genre>
     <url>http://www.sky.fm/guitar/</url>
-    <stream_url>http://u17.sky.fm:80/sky_guitar_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_guitar_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -845,7 +845,7 @@
     <image>../etc/translate/rss/image/skyfm/solopiano.gif</image>
     <genre>Piano Classical New Age</genre>
     <url>http://www.sky.fm/piano/</url>
-    <stream_url>http://u16.sky.fm:80/sky_solopiano_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_solopiano_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -861,7 +861,7 @@
     <image>../etc/translate/rss/image/skyfm/newage.gif</image>
     <genre>New Age World</genre>
     <url>http://www.sky.fm/newage/</url>
-    <stream_url>http://u17.sky.fm:80/sky_newage_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_newage_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -877,7 +877,7 @@
     <image>../etc/translate/rss/image/skyfm/world.gif</image>
     <genre>World New Age Newage</genre>
     <url>http://www.sky.fm/world</url>
-    <stream_url>http://u17.sky.fm:80/sky_world_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_world_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -893,7 +893,7 @@
     <image>../etc/translate/rss/image/skyfm/rootsreggae.gif</image>
     <genre>Roots Reggae Island World</genre>
     <url>http://www.sky.fm/rootsreggae/</url>
-    <stream_url>http://u17b.sky.fm:80/sky_rootsreggae_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_rootsreggae_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -909,7 +909,7 @@
     <image>../etc/translate/rss/image/skyfm/datempolounge.gif</image>
     <genre>Lounge Downtempo Eclectic</genre>
     <url>http://www.sky.fm/datempolounge/</url>
-    <stream_url>http://u17b.sky.fm:80/sky_datempolounge_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_datempolounge_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -925,7 +925,7 @@
     <image>../etc/translate/rss/image/skyfm/pianojazz.gif</image>
     <genre>Jazz Piano Classical</genre>
     <url>http://www.sky.fm/pianojazz/</url>
-    <stream_url>http://u17.sky.fm:80/sky_pianojazz_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_pianojazz_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -941,7 +941,7 @@
     <image>../etc/translate/rss/image/skyfm/country.gif</image>
     <genre>Country New Country Top 40</genre>
     <url>http://www.sky.fm/country/</url>
-    <stream_url>http://u17.sky.fm:80/sky_country_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_country_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -957,7 +957,7 @@
     <image>../etc/translate/rss/image/skyfm/bossanova.gif</image>
     <genre>Bossa Nova Jazz</genre>
     <url>http://www.sky.fm/bossanova/</url>
-    <stream_url>http://u17b.sky.fm:80/sky_bossanova_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_bossanova_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -973,7 +973,7 @@
     <image>../etc/translate/rss/image/skyfm/altrock.gif</image>
     <genre>Alternative Rock Adult Hits</genre>
     <url>http://www.sky.fm/altrock/</url>
-    <stream_url>http://u17.sky.fm:80/sky_altrock_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_altrock_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -989,7 +989,7 @@
     <image>../etc/translate/rss/image/skyfm/classicrock.gif</image>
     <genre>Classic Rock 70s 80s</genre>
     <url>http://www.sky.fm/classicrock/</url>
-    <stream_url>http://u17.sky.fm:80/sky_classicrock_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_classicrock_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -1005,7 +1005,7 @@
     <image>../etc/translate/rss/image/skyfm/bebop.gif</image>
     <genre>Jazz Bebop Swing</genre>
     <url>http://www.sky.fm/bebop</url>
-    <stream_url>http://u17.sky.fm:80/sky_bebop_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_bebop_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -1021,7 +1021,7 @@
     <image>../etc/translate/rss/image/skyfm/soundtracks.gif</image>
     <genre>Soundtracks Film Classical</genre>
     <url>http://www.sky.fm/soundtracks/</url>
-    <stream_url>http://u17.sky.fm:80/sky_soundtracks_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_soundtracks_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -1037,7 +1037,7 @@
     <image>../etc/translate/rss/image/skyfm/christian.gif</image>
     <genre>Christian Pop Spiritual</genre>
     <url>http://www.sky.fm/christian/</url>
-    <stream_url>http://u17.sky.fm:80/sky_christian_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_christian_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -1053,7 +1053,7 @@
     <image>../etc/translate/rss/image/skyfm/classicrap.gif</image>
     <genre>Hip Hop Rap Old School</genre>
     <url>http://www.sky.fm/classicrap</url>
-    <stream_url>http://u17.sky.fm:80/sky_classicrap_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_classicrap_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -1069,7 +1069,7 @@
     <image>../etc/translate/rss/image/skyfm/salsa.gif</image>
     <genre>Latin Salsa</genre>
     <url>http://www.sky.fm/salsa/</url>
-    <stream_url>http://u17.sky.fm:80/sky_salsa_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_salsa_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -1085,7 +1085,7 @@
     <image>../etc/translate/rss/image/skyfm/dancehits.gif</image>
     <genre>Dance Club Pop</genre>
     <url>http://www.sky.fm/dance</url>
-    <stream_url>http://u17b.sky.fm:80/sky_dancehits_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_dancehits_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
@@ -1101,7 +1101,7 @@
     <image>../etc/translate/rss/image/skyfm/urbanjamz.gif</image>
     <genre>Urban RnB Hip Hop Rap</genre>
     <url>http://www.sky.fm/urbanjamz</url>
-    <stream_url>http://u17.sky.fm:80/sky_urbanjamz_aacplus</stream_url>
+    <stream_url>http://pub2.sky.fm:80/sky_urbanjamz_aacplus</stream_url>
     <stream_class>audio</stream_class>
     <stream_soft>icecast</stream_soft>
     <stream_type>audio/aacp</stream_type>
