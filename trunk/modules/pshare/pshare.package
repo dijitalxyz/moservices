@@ -7,6 +7,6 @@
 	navy_title = "pShare status"
 	navy_frame = "http://%addr%:4044"
 	config_edit = "pshare/pshare.conf"
-	files="etc/init/S26pShare pshare/"
-	require="libgcc_s"
+	files = "etc/init/S26pShare pshare/"
+	require = "libgcc_s"
 	size = 196

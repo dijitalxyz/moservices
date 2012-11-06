@@ -2,5 +2,5 @@
 	revision = 1
 	title = "MY-HIT.ru"
 	role = rss
-	files="www/modules/myhit/"
+	files = "www/modules/myhit/"
 	size = 80

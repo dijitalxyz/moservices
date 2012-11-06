@@ -3,7 +3,7 @@
 # description: Enable and disable IRFake
 #
 etc=/usr/local/etc
-mos=$etc/mos/irfake
+mos=$etc/mos
 rc=$etc/rcS
 
 case "$1" in
@@ -12,18 +12,17 @@ case "$1" in
   enable)
 	echo "Enabling IRFake..."
 	#copy files
-	cp -a $mos $etc/
+	cp -a $mos/irfake $etc/
 
 	# patch rcS
-	sed -i '/# irfake patch/{N;N;N;d}' /usr/local/etc/rcS
-	sed -i '
-/ln -s \/dev\/cdroms\/cdrom0 \/dev\/cdrom0/i\
-# irfake patch\
-/sbin/insmod '$etc'/irfake/venus_ir_new.ko\
-'$etc'/irfake/irfake4 -R -f '$etc'/irfake/irfake.conf&\
-#\
+	sed -i '/# irfake patch/{N;N;N;d}' $etc/rcS
+	cp -a $mos/etc/rc.init/S04irfake.sh $etc/rc.init/
 
-' /usr/local/etc/rcS
+	# fork r6+
+	if grep -q '# fork for r6+' $etc/rcS ; then
+		sed -i '/# fork for r6+/{N;N;d}' $etc/rcS
+		cp -a $mos/etc/rc.init/S05powerkey.sh $etc/rc.init/
+	fi
 	echo "Please, reboot device!"
 	;;
 

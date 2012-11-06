@@ -1,8 +1,8 @@
 [sskin]
-	revision = 8
-	title = "Skin selector for HD2 revs"
+	revision = 9
+	title = "Skin selector for amp revs"
 	role = patch
 	backup = "etc/sskin.conf"
 	config_link = "/?page=sskin_sets"
-	files="bin/sskin etc/sskin.conf www/modules/sskin"
+	files = "bin/sskin etc/sskin.conf www/modules/sskin"
 	size = 164

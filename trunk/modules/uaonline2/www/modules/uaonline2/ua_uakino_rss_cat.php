@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	uakino.net RSS category module v1.3
+	uakino.net RSS category module v1.4
 	------------------------------
 	Created by Sashunya 2012
 	wall9e@gmail.com			
@@ -48,7 +48,8 @@ class ua_rss_cat extends ua_rss_cat_const2
 								{
 									$cat = str_replace( 'category/video/','', $cat );
 									$name = $a->textContent;
-									$category [trim(utf8_decode($name))] = array ("link"=>$cat);
+									$category [trim(uakino_utf8_check($name))] = array ("link"=>$cat);
+									//$category [trim(utf8_decode($name))] = array ("link"=>$cat);
 								}
 							}
 					}

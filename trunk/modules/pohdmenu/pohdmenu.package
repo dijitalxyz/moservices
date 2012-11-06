@@ -1,0 +1,7 @@
+[pohdmenu]
+	revision = 2
+	title = "Home menu replacement for pohd skin"
+	init = S33pohdmenu
+	role = patch
+	files = "pohdmenu/ etc/init/S33pohdmenu"
+	size = 84

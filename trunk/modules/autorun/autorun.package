@@ -4,5 +4,5 @@
 	role = patch
 	init = S05AutoRun
 	actions = "restart"
-	files="etc/init/S05AutoRun"
+	files = "etc/init/S05AutoRun"
 	size = 40

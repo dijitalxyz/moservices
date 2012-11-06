@@ -1,0 +1,85 @@
+<h3>Config</h3>
+<h4>VKontakte</h4>
+
+${vk_auth_link}
+
+<a class="btn info" onclick="window.open(this.href,'newwin','width=450,scrollbars=yes,toolbar=no,menubar=no'); return false;" href="/ui/vk_status">status and help</a></a><br /><br />
+<h4>YouTube</h4>
+<form method=get action="/ui/apply">
+
+YouTube quality:<br>
+<select name=youtube_q id=youtube_q>
+<option value=18>360p</option>
+<option selected value=22>720p</option>
+<option value=37>1080p</option>
+<option value=84>720p 3D</option>
+<option value=85>1080p 3D</option>
+</select>
+
+<br><br>
+YouTube region:<br>
+<select name=youtube_r id=youtube_r>
+<option selected value="*">*</option>
+<option value=AU>AU</option>
+<option value=BR>BR</option>
+<option value=CA>CA</option>
+<option value=FR>FR</option>
+<option value=DE>DE</option>
+<option value=GB>GB</option>
+<option value=NL>NL</option>
+<option value=HK>HK</option>
+<option value=IE>IE</option>
+<option value=IT>IT</option>
+<option value=JP>JP</option>
+<option value=MX>MX</option>
+<option value=NZ>NZ</option>
+<option value=PL>PL</option>
+<option value=RU>RU</option>
+<option value=KR>KR</option>
+<option value=ES>ES</option>
+<option value=TW>TW</option>
+<option value=US>US</option>
+</select>
+
+<br><br>
+<h4>ivi.ru</h4>
+
+ivi.ru quality:<br>
+<select name=ivi_q id=ivi_q>
+<option value="MP4-lo">Low</option>
+<option selected value="MP4-hi">High</option>
+</select>
+
+<br><br>
+<h4>AG.ru</h4>
+
+AG.ru quality:<br>
+<select name=ag_q id=ag_q>
+<option selected value="MP4-lo">Standart</option>
+<option value="MP4-hi">VIP</option>
+</select>
+
+<br><br><br>
+
+<input class="btn primary" type=submit value=Apply>
+<a class='btn info' href='/ui'>Back</a>
+</form>
+
+<script>
+    function set_select_selected(id,value)
+    {
+        var z=document.getElementById(id)
+        for(i=0;i<z.length;i++)
+        {
+            if(z.options[i].value==value)
+            {
+                z.options[i].selected=true;
+                break;
+            }
+        }
+    }
+    set_select_selected('youtube_q','${youtube_fmt}');
+    set_select_selected('youtube_r','${youtube_region}');
+    set_select_selected('ivi_q','${ivi_fmt}');
+    set_select_selected('ag_q','${ag_fmt}');
+</script>

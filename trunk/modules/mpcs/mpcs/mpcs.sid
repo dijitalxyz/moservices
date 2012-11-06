@@ -1,0 +1,19 @@
+[sid]
+label = hdntv
+sid   = 2F45-2F4A
+
+[sid]
+label = sdntv
+sid   = 28A5,2A31-2A39,2A3A,2B62-2B66,50E3
+
+[sid]
+label = sdntvl
+sid   = 0-28A4,28A6-2A30,2A40-2B61,2B67-2F44,2F50-50E2,50E4-FFFF
+
+#и т д 
+
+#последним
+
+[sid]
+label = all
+sid   = 0-FFFF

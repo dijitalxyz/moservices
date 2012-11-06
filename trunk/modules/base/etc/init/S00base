@@ -50,7 +50,10 @@ case "$1" in
 		sed -i '/# moServices /{N;N;N;d}' $rcs
 		cp -a $rc/S03mosOnRoot.sh $etc/rc.init/
 	fi
-
+	if grep -q '# moServices .* data' $rcs ; then
+		sed -i '/# moServices /{N;N;d}' $rcs
+		cp -a $rc/S03mosOnData.sh $etc/rc.init/
+	fi
 	sed -i '/# rc.init patch/{N;d}' $rcs
 
 	if grep -q 'swapon /mnt/rd/swap.img' $rcs ; then
@@ -71,7 +74,7 @@ case "$1" in
 /#export PATH /i\
 # mos3 section\
 pathmunge /usr/local/etc/mos/bin\
-export LD_LIBRARY_PATH=/usr/local/etc/mos/lib:/lib\
+#export LD_LIBRARY_PATH=/usr/local/etc/mos/lib:/lib\
 #
 ' $etc/profile
 	fi

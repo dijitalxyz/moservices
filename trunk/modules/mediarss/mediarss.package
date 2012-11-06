@@ -5,5 +5,5 @@
 	init = S33mediarss
 	backup = "mediarss/sayler.conf"
 	config_edit = "mediarss/sayler.conf"
-	files="etc/init/S33mediarss mediarss/ www/modules/mediarss/"
+	files = "etc/init/S33mediarss mediarss/ www/modules/mediarss/"
 	size = 1176

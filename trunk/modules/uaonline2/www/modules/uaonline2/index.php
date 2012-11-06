@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	WEB interface module v2.2
+	WEB interface module v2.4
 	------------------------------
 	Created by Sashunya 2012
 	wall9e@gmail.com			
@@ -167,6 +167,7 @@ if ($_REQUEST["operation"]=="ua_set")
 		$exua_region=$_REQUEST["ex_region"];
 		$exua_lang=$_REQUEST["ex_language"];
 		$ua_sort=$_REQUEST["uakino_sort"];
+		$uakino_decode=$_REQUEST["uakino_decode"];
 		$fsua_sort=$_REQUEST["fs_sort"];
 		$search_history=$_REQUEST["search_text"];
 		$download_path=$_REQUEST["download_path"];
@@ -269,6 +270,17 @@ if ($_REQUEST["operation"]=="ua_set")
 			$ua_sort_rating=""; 
 			$ua_sort_views="checked"; 
 		}
+		
+		if ($uakino_decode=='0') 
+		{
+			$uakino_decode_on="checked"; 
+			$uakino_decode_off="";
+		}
+			else 
+		{
+			$uakino_decode_on=""; 
+			$uakino_decode_off="checked";
+		}	
 	// fs.ua сортировка
 	if ($fsua_sort=='new') 
 		{
@@ -447,6 +459,15 @@ if ($_REQUEST["operation"]=="ua_set")
 							<p><input name="uakino_sort" type="radio" value="date" <?=$ua_sort_date?>> дата </p>
 							<p><input name="uakino_sort" type="radio" value="rating" <?=$ua_sort_rating?>> рейтинг </p>
 							<p><input name="uakino_sort" type="radio" value="views" <?=$ua_sort_views?>> просмотр </p>
+						</td>
+					</tr>
+						<tr>
+						<td class="setup_td">
+							Декодирование строк
+						</td>
+						<td class="setup_td">
+							<p><input name="uakino_decode" type="radio" value="0" <?=$uakino_decode_on?>> включено </p>
+							<p><input name="uakino_decode" type="radio" value="1" <?=$uakino_decode_off?>> выключено </p>
 						</td>
 					</tr>
 					<tr>
@@ -801,6 +822,9 @@ function fav_header($head)
 			<tr>
 				<td>
 					<img src="./images/ua_web_logo.png">	
+				</td>
+				<td>
+					<span id="header_ver">Rev.<?=file_get_contents($tmpPath."ua_version")?></span>
 				</td>
 				<td id="name_header">
 					<span id="header_text"><?=$head?></span>

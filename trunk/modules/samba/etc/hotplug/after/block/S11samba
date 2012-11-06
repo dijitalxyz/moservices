@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# restart samba service
+#
+sleep 5
+/usr/local/etc/mos/etc/init/S12samba restart 

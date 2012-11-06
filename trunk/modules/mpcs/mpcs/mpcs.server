@@ -1,0 +1,12 @@
+[reader]
+Label = Tricolor (36e)
+Protocol = newcamd
+Key = 0102030405060708091011121314
+Device = cserv.net,13650
+Account = user,passwd
+Fallback = 0
+Group = 1
+#CAID = 4ae1
+#IDENT = 000000
+ReconnectTimeout = 20
+InactivityTimeOut = 15

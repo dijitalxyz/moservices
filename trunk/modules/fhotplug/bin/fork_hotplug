@@ -5,6 +5,9 @@
 
 mos=/usr/local/etc/mos
 
+export LD_LIBRARY_PATH=$mos/lib:/lib:$LD_LIBRARY_PATH
+export PATH=$mos/bin:$PATH
+
 # =====================================
 # Execute scripts from mos/etc/hotlug/*
 # $1 - ( before | after )/<subsystem>
@@ -27,12 +30,12 @@ starter() {
 #
 [ -f /tmp/hotplug.orig ] && orig=$( cat /tmp/hotplug.orig )
 [ ! -f $orig ] && orig=/sbin/hotplug
-echo $SUBSYSTEM >>/tmp/fh__.log
+#echo $SUBSYSTEM >>/tmp/fh__.log
 # before
 starter before/$SUBSYSTEM
 
 # run original hotplug
-$orig "$@"
+[ ! -f $orig ] || $orig "$@"
 ret=$?
 
 # after

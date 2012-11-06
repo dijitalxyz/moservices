@@ -1,12 +1,11 @@
 #!/bin/sh
-#----------------------------------------------------------
+# ---------------------------------------------------------
 # Package manager moServices3
 #
 etc=/usr/local/etc
 mos=$etc/mos
 pm=$mos/etc/pm
 tmp=/tmp
-
 
 localrepo=''
 repository="http://www.moservices.org/mos3"
@@ -18,6 +17,10 @@ if [ -f $mos/etc/pm.conf ] ; then
 else
 	echo 'repository="'$repository'"' > $mos/etc/pm.conf
 fi
+
+# other settings
+[ -f $tmp/install.conf ] && . $tmp/install.conf
+[ -f $tmp/repo ] && repository="$( head -n 1 $tmp/repo )"
 
 # get enviroment
 if [ -z "$enviroment" ] ; then
@@ -32,10 +35,10 @@ if [ -z "$enviroment" ] ; then
 	fi
 	echo "Env: Detected $s core"
 
-	if ls /lib | grep -q 'ld-uClibc-0\.9\.28' ; then
+	if ls /lib/ | grep -q 'ld-uClibc-0\.9\.28' ; then
 		echo 'Env: Detected uClibc 0.9.28'
 		enviroment=$enviroment'28'
-	elif ls /lib | grep -q 'ld-uClibc-0\.9\.30' ; then
+	elif ls /lib/ | grep -q 'ld-uClibc-0\.9\.30' ; then
 		echo 'Env: Detected uClibc 0.9.30'
 		enviroment=$enviroment'30'
 	else
@@ -44,9 +47,6 @@ if [ -z "$enviroment" ] ; then
 	fi
 	echo "enviroment=$enviroment" >> $mos/etc/pm.conf
 fi
-
-# other repo
-[ -f /tmp/repo ] && repository="$( head -n 1 /tmp/repo )"
 
 #--------------------------------------
 loadFile()
@@ -62,7 +62,7 @@ loadFile()
 			fi
 			cp -a $localrepo/$1.tar.bz2 $tmp/
 		else
-			wget $repository/$1.tar.bz2 -O $tmp/$1.tar.bz2
+			nice -n 10 wget -T 5 -t 3 $repository/$1.tar.bz2 -O $tmp/$1.tar.bz2
 			if [ $? -ne 0 ] ; then
 				echo "Load error: Unable to download $repository/$1.tar.bz2"
 				rm -f $tmp/$1.tar.bz2
@@ -95,12 +95,24 @@ extractFile()
 }
 
 
+#--------------------------------------
+# $1 - package name
+runPatches()
+{
+	for i in $mos/$1*.patch ; do
+		[ -f $i ] || continue
+		[ -x $i ] && $i
+		rm -f $i
+	done
+}
+
 # -------------------------------------
 getFreeMem()
 {
 	s=$( echo $( df | grep -E ' '$mos'$' ) | cut -d' ' -f4 )
 	[ -z "$s" ] && s=$( echo $( df | grep -E ' '$etc'$' ) | cut -d' ' -f4 )
 	[ -z "$s" ] && s=$( echo $( df | grep -E ' /data$'  ) | cut -d' ' -f4 )
+	[ -z "$s" ] && s=0
 	echo $s
 }
 
@@ -145,27 +157,47 @@ updateList()
 		echo >> $pm/installed
 	fi
 
+	runPatches packages
+
 	return 0
 }
 
+retPkg=''
+
 #--------------------------------------
+# $1 - package name
+#
 checkPackageInList()
 {
 	if [ ! -f $pm/packages ] ; then
 		updateList || return 1
 	fi
-	grep -q "\[$1\]" $pm/packages && return 0
-	grep -q "\[$1_$enviroment\]" $pm/packages && return 1
+	if grep -q "\[$1\]" $pm/packages ; then
+		retPkg=$1
+		return 0
+	fi
+	if grep -q "\[$1_$enviroment\]" $pm/packages ; then
+		retPkg=$1_$enviroment
+		return 0
+	fi
 	echo "Check error: Package $1 not found in list"
-	return 2
+	return 1
 }
 
 #--------------------------------------
+# $1 - package name
+#
 checkPackageInstalled()
 {
-	grep -q "\[$1\]" $pm/installed && return 0
-	grep -q "\[$1_$enviroment\]" $pm/installed && return 1
-	return 2
+	if grep -q "\[$1\]" $pm/installed ; then
+		retPkg=$1
+		return 0
+	fi
+	if grep -q "\[$1_$enviroment\]" $pm/installed ; then
+		retPkg=$1_$enviroment
+		return 0
+	fi
+	return 1
 }
 
 #--------------------------------------
@@ -177,12 +209,11 @@ local h
 local p
 	pkg="$1"
 	checkPackageInList $1 > /dev/null
-	v=$?
-	[ $v -eq 1 ] && pkg=$1'_'$enviroment
-	if [ $v -eq 2 ] ; then
+	if [ $? -ne 0 ] ; then
 		echo '0'
 		return 1
 	fi
+	pkg=$retPkg
 
 	s=$( getParameterFromList $pm/packages $pkg size )
 
@@ -190,8 +221,7 @@ local p
 	h="$( getParameterFromList $pm/packages $pkg require )"
 	if [ -n "$h" ] ; then
 		for p in $h ; do
-			checkPackageInstalled $p
-			[ $? -eq 2 ] && let s=s+$( getPackageSize $p )
+			checkPackageInstalled $p || let s=s+$( getPackageSize $p )
 		done
 	fi
 
@@ -199,26 +229,16 @@ local p
 }
 
 #--------------------------------------
-runPatches()
-{
-	for i in $mos/*.patch ; do
-		[ -f $i ] || continue
-		[ -x $i ] && $i
-		rm -f $i
-	done
-}
-
-#--------------------------------------
 goesToNewVersion()
 {
-	if [ -d $pm/files ] ; then
-		grep -q 'files =' $mos/$1.package || echo '	files = "'$( echo $( cat $pm/files/$1 ) )'"' >> $mos/$1.package
+	if [ -f $pm/files/$1 ] ; then
+		grep -Eq 'files *=' $mos/$1.package || echo '	files = "'$( echo $( cat $pm/files/$1 ) )'"' >> $mos/$1.package
 		rm -f $pm/files/$1
 		[ -z "$( ls $pm/files )" ] && rm -Rf $pm/files
 	fi
 
-	if [ -d $pm/required ] ; then
-		grep -q 'require =' $mos/$1.package || echo '	require = "'$( echo $( cat $pm/required/$1 ) )'"' >> $mos/$1.package
+	if [ -f $pm/required/$1 ] ; then
+		grep -q 'require *=' $mos/$1.package || echo '	require = "'$( echo $( cat $pm/required/$1 ) )'"' >> $mos/$1.package
 		rm -f $pm/required/$1
 		[ -z "$( ls $pm/required )" ] && rm -Rf $pm/required
 	fi
@@ -234,10 +254,8 @@ local p
 	pkg=$1
 
 	if [ "$2" != 'alone' ] ; then
-		checkPackageInList $1
-		v=$?
-		[ $v -eq 2 ] && return 1
-		[ $v -eq 1 ] && pkg=$1'_'$enviroment
+		checkPackageInList $1 || return 1
+		pkg=$retPkg
 	fi
 
 	echo "Install package $pkg..."
@@ -298,12 +316,11 @@ local p
 
 		for p in $h ; do
 			if [ "$2" != 'alone' ] ; then
-				checkPackageInList $p
-				v=$?
-				[ $v -eq 2 ] && continue
-				[ $v -eq 1 ] && p=$p'_'$enviroment
+				checkPackageInList $p || continue
+				p=$retPkg
 			fi
 			installPackage $p $2 || continue
+			p=$retPkg
 
 			# uses
 			touch $pm/uses
@@ -317,8 +334,9 @@ local p
 		done
 	fi
 
-	runPatches
+	runPatches $pkg
 
+	retPkg=$pkg
 	return 0
 }
 
@@ -332,12 +350,11 @@ local p
 	pkg=$1
 
 	checkPackageInstalled $1
-	v=$?
-	if [ $v -eq 2 ] ; then
+	if [ $? -ne 0 ] ; then
 		echo "Remove error: Package $1 not installed"
 		return 1
 	fi
-	[ $v -eq 1 ] && pkg=$1'_'$enviroment
+	pkg=$retPkg
 
 	echo "Remove package $pkg..."
 
@@ -352,10 +369,8 @@ local p
 
 		for p in $h ; do
 
-			checkPackageInstalled $p
-			v=$?
-			[ $v -eq 2 ] && continue
-			[ $v -eq 1 ] && p=$p'_'$enviroment
+			checkPackageInstalled $p || continue
+			p=$retPkg
 
 			# uses
 			if grep -Eq '^'$p'=' $pm/uses ; then
@@ -383,18 +398,18 @@ local p
 updatePackage()
 {
 local pkg
+local req
 local h
 local p
 
 	pkg="$1"
 
 	checkPackageInstalled $1
-	v=$?
-	if [ $v -eq 2 ] ; then
+	if [ $? -ne 0 ] ; then
 		echo "Update error: Package $1 not installed"
 		return 1
 	fi
-	[ $v -eq 1 ] && pkg=$1'_'$enviroment
+	pkg=$retPkg
 
 	irev=$( getParameterFromList $pm/installed $pkg revision )
 	if [ "$irev" == 'emb' ] ; then
@@ -404,6 +419,10 @@ local p
 
 	if [ "$2" != 'now' ] ; then
 		arev=$( getParameterFromList $pm/packages $pkg revision )
+		if [ -z "$arev" ] ; then
+			echo "Update notice: $pkg is alone"
+			return 0
+		fi
 		if [ $irev -eq $arev ] ; then
 			echo "Update notice: $pkg nothing for update"
 			return 0
@@ -425,6 +444,25 @@ local p
 
 	# load package
 	loadFile $pkg || return 1
+
+	# remove old requires from uses
+	req="$( getParameterFromList $pm/installed $pkg require )"
+	if [ -n "$req" ] ; then
+
+		for p in $req ; do
+
+			checkPackageInstalled $p || continue
+			p=$retPkg
+
+			# uses
+			if grep -Eq '^'$p'=' $pm/uses ; then
+
+				sed -ri 's/^'$p'="(.*) *'$pkg' *(.*)"$/'$p'="\1\2"/' $pm/uses
+				sed -ri 's/ "/"/' $pm/uses
+				sed -ri '/^'$p'=""$/d' $pm/uses
+			fi
+		done
+	fi
 
 	# remove files
 	h="$( getParameterFromList $pm/installed $pkg files )"
@@ -451,13 +489,12 @@ local p
 		for p in $h ; do
 
 			checkPackageInstalled $p
-			v=$?
-			if [ $v -eq 2 ] ; then
+			if [ $? -ne 0 ] ; then
 				installPackage $p $2 || continue
-
+				p=$retPkg
 			else
-				[ $v -eq 1 ] && p=$p'_'$enviroment
 				updatePackage $p $2 || continue
+				p=$retPkg
 			fi
 
 			# uses
@@ -473,8 +510,22 @@ local p
 		done
 	fi
 
-	runPatches
+	# check old requires
+	if [ -n "$req" ] ; then
 
+		for p in $req ; do
+
+			checkPackageInstalled $p || continue
+			p=$retPkg
+
+			# uses
+			grep -Eq '^'$p'=' $pm/uses || removePackage $p $2
+		done
+	fi
+
+	runPatches $pkg
+
+	retPkg=$pkg
 	return 0
 }
 
@@ -502,19 +553,18 @@ makePackage() {
 	pkg="$1"
 
 	checkPackageInstalled $1
-	v=$?
-	if [ $v -eq 2 ] ; then
+	if [ $? -ne 0 ] ; then
 		echo "Make error: Package $1 not installed"
 		return 1
 	fi
-	[ $v -eq 1 ] && pkg=$1'_'$enviroment
+	pkg=$retPkg
 
 	h="$( getParameterFromList $pm/installed $pkg files )"
 	if [ -n "$h" ] ; then
 		echo "Making package $pkg..."
 		[ -f $pm/check/$pkg ]  && h=$h" etc/pm/check/$pkg"
 
-		# files, require
+		# files, require for old version
 		mkFileFromParameter $pkg files files
 		[ -f $pm/files/$pkg ] && h=$h" etc/pm/files/$pkg"
 		mkFileFromParameter $pkg require required

@@ -2,5 +2,5 @@
 	revision = 2
 	title = "GlavTV"
 	role = rss
-	files="www/modules/glavtv/"
+	files = "www/modules/glavtv/"
 	size = 1432

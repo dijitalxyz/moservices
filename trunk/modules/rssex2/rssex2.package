@@ -7,6 +7,6 @@
 	config_edit = "rssex2/etc/translate.conf"
 	navy_title = "Media Renderer"
 	navy_frame = "http://%addr%:88/cgi-bin/renderer"
-	files="etc/init/S31rssex2 rssex2/ www/modules/rssex2/"
-	require="awk httpd curl rtmpdump"
+	files = "etc/init/S31rssex2 rssex2/ www/modules/rssex2/"
+	require = "awk httpd curl rtmpdump"
 	size = 14720

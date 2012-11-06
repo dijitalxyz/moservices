@@ -2,11 +2,10 @@
 	revision = 1
 	title = "vsFTPd FTP daemon v2.2.2"
 	role = daemon
-	check = "port 21"
 	init = S15vsftpd
 	backup = "etc/vsftpd.conf"
 	navy_title = "Explore FTP"
 	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
 	config_edit = "etc/vsftpd.conf"
-	files="bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
-	size = 300
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	size = 308

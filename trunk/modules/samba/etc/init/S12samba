@@ -3,56 +3,77 @@
 # description: Starts and stops the Samba smbd daemon
 #	       used to provide SMB network services.
 #
-bin=/usr/local/etc/mos/bin
 mos=/usr/local/etc/mos/samba
 
-case "$1" in
-  start)
-	# waiting for mount
-	$bin/wait_mount && exit 1
+stopSmb()
+{
+	if ps | grep -q "$mos/[s]mbd" ; then
+		echo 'Shutting down SMB services...'
+		killall smbd
+		echo 'Shutting down NMB services...'
+		killall nmbd
+		rm -Rf /tmp/smb
+	fi
+}
 
-	# making symlinks to mounted drives
-	mkdir -p /tmp/ramfs/smb
-	vol=/tmp/ramfs/volumes/
-	for f in $( ls $vol )
-	do
-		if [ -e $vol$f ] && [ -L $vol$f ] ; then
-			n=$( echo $f | sed 's/://' )
-			ln -s $vol$f /tmp/ramfs/smb/$n
+case "$1" in
+  start|restart)
+
+	stopSmb
+
+	# have shares?
+	s=''
+	for f in /tmp/ramfs/volumes/* ; do
+		if [ -e $f ] && [ -L $f ] ; then
+			s=$f
+			break
+		fi
+	done
+	if [ -z "$s" ] ; then
+		echo 'No samba shares.'
+		exit 1
+	fi
+
+	# making config
+	mkdir -p /tmp/smb
+	cp -a $mos/smb.conf /tmp/smb/smb.conf
+
+	for f in /tmp/ramfs/volumes/* ; do
+
+		if [ -e $f ] && [ -L $f ] ; then
+			n=$( basename $f | sed 's/://' )
+			s=$( realpath $f )
+			echo "
+[$n]
+path=$s
+hide dot files=yes
+guest ok=yes
+writable=yes
+browseable=yes
+force create mode=0775
+force directory mode=0775" >> /tmp/smb/smb.conf
+
 		fi
 	done
 
-	[ ! -d /tmp/smb ] && mkdir /tmp/smb
 	rm -f /tmp/smb/private
 	ln -s $mos/private/ /tmp/smb/private
 
-	echo "Starting smbd services..."
-	$mos/smbd -D -s $mos/smb.conf -l /tmp/smb &
-        echo "Starting nmbd services..."
-	$mos/nmbd -D -s $mos/smb.conf -l /tmp/smb &
+	echo 'Starting smbd services...'
+	$mos/smbd -D -s /tmp/smb/smb.conf -l /tmp/smb >/dev/null 2>&1 &
+        echo 'Starting nmbd services...'
+	$mos/nmbd -D -s /tmp/smb/smb.conf -l /tmp/smb >/dev/null 2>&1 &
 	;;
 
   stop)
-	echo "Shutting down SMB services... "
-	killall smbd
-	echo "Shutting down NMB services... "
-	killall nmbd
-	rm -Rf /tmp/smb
-	rm -f /tmp/ramfs/smb/*
+	stopSmb
 	;;
 
   status)
-	if [ -e /tmp/smb/smbd.pid ]
-	then 
-	  PID=`cat /tmp/smb/smbd.pid`
-          if [ -e /proc/$PID ]
-          then
-	    echo "SMB Service is running"
-	  else
-	    echo "SMB Serice is stopped"
-          fi
+	if ps | grep -q "$mos/[s]mbd" ; then
+		echo 'SMB Service is running'
 	else
-	  echo "SMB Serice is stopped"
+		echo 'SMB Serice is stopped'
 	fi
 	;;
 

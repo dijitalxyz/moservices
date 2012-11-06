@@ -6,4 +6,4 @@
 	require = "libcrypto libssl libz"
 	check = "lib libcurl.so.4"
 	env = 3430
-	size = 420
+	size = 360

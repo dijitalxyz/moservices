@@ -2,7 +2,7 @@
 /*	------------------------------
 	Ukraine online services 	
 	uakino.net parser
-	module v1.6
+	module v1.7
 	------------------------------
 	Created by Sashunya 2012	
 	wall9e@gmail.com			
@@ -37,18 +37,29 @@ $doc->loadHTML($s);
 $metas= $doc->getElementsByTagName('meta');
 foreach( $metas as $meta )
 	{
+	/*
 	if( $meta->hasAttribute('name'))
 	if( $meta->getAttribute('name') == 'description' )
 		{
-			$descr=utf8_decode($meta->getAttribute('content'));
+			$descr=uakino_utf8_check($meta->getAttribute('content'));
 		}
+	*/
 	if( $meta->hasAttribute('property'))
 	if( $meta->getAttribute('property') == 'og:title' )
 		{
-			$item_name=utf8_decode($meta->getAttribute('content'));
+			$item_name=uakino_utf8_check($meta->getAttribute('content'));
 		}
 	}	
 $title=trim($item_name);
+$divs= $doc->getElementsByTagName('div');
+foreach( $divs as $div )
+	if( $div->hasAttribute('id'))
+	if( $div->getAttribute('id') == 'media_description')
+	{
+		$descr=uakino_utf8_check(trim(strip_tags($div->textContent)));
+	}
+
+
 unset($doc);
 
 $temps = $title."\n".descr_split($descr)."\n".$image."\n1\n".$ua_file."\n".$url."\n".$item_name."\n0\n".$item_name."\n";
@@ -70,6 +81,10 @@ else {
 if(isset($_GET["file"])) {
 $view = $_GET["file"];
 $s=file_get_contents("http://uakino.net/video/".$view);
+//$s=iconv("utf-8","cp1251",$s);
+//$s=str_replace( "\r", "", $s );
+
+//file_put_contents( "/tmp/test.txt", $s );
 if (isset($_GET["fav_refresh"])) 
 			{
 				$main=get_data($s,$view,true);			
@@ -94,7 +109,7 @@ $doc = new DOMDocument();
 libxml_use_internal_errors( true );
 $doc->loadHTML($s);
 $titles=$doc->getElementsByTagName('title');	
-foreach( $titles as $title2 ) $title=utf8_decode($title2->textContent);
+foreach( $titles as $title2 ) $title=uakino_utf8_check($title2->textContent);
 $divs= $doc->getElementsByTagName('div');
 foreach( $divs as $div )
 	if( $div->hasAttribute('class'))
@@ -143,7 +158,7 @@ foreach( $divs as $div )
 														$link = $ua_path_link.$uakino_rss_link_filename."?file=".$cat."&image=".$preview;
 														$type="link";
 													}
-										$temps.= fix_str(trim(utf8_decode($titl)))."\n".$link."\n".$preview."\n".$cat."\n".$type."\n";
+										$temps.= fix_str(trim(uakino_utf8_check($titl)))."\n".$link."\n".$preview."\n".$cat."\n".$type."\n";
 										$videocount++;
 									}
 							}
@@ -208,7 +223,7 @@ if (isset($_GET['page'])){
    }
 	else {
 		$page = 1;
-		$s=file_get_contents('http://uakino.net/search_result.php?search_id='.$search.'&search_type_id=search_videos&offset=0');
+		$s=file_get_contents('http://uakino.net/search_result.php?search_id='.$search.'&search_type_id=search_videos&offset='.$nt*16);
 		
     }
 

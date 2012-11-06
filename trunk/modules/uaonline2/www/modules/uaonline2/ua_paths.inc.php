@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	configuration manager module v1.8
+	configuration manager module v1.9
 	------------------------------
 	Created by Sashunya 2012
 	wall9e@gmail.com			
@@ -53,11 +53,6 @@ $fsua_rss_cat_filename = 'ua_fsua_rss_cat.php';
 $fsua_rss_list_filename = 'ua_fsua_rss_list.php';
 $fsua_rss_link_filename = 'ua_fsua_rss_link.php';
 
-$filmix_parser_filename = 'ua_filmix_parser.php';
-$filmix_rss_cat_filename = 'ua_filmix_rss_cat.php';
-$filmix_rss_list_filename = 'ua_filmix_rss_list.php';
-$filmix_rss_link_filename = 'ua_filmix_rss_link.php';
-
 
 $ua_rss_keyboard_filename = 'ua_keyboard_rss.php';
 $ua_rss_favorites_filename = 'ua_favorites_rss.php';
@@ -78,11 +73,12 @@ $exua_quality = $ini->read('exua_setting','quality','1');
 $exua_region = $ini->read('exua_setting','region','0');
 $exua_lang = $ini->read('exua_setting','language','0');
 $ua_sort = $ini->read('uakino','sort','date');
+$uakino_decode = $ini->read('uakino','decode_strings','0');
 $fsua_sort = $ini->read('fsua','sort','rating');
 
 $search_history = $ini->read('other','search_history','');
 
-$player_style=$ini->read('player','style','1');
+$player_style=$ini->read('player','style','0');
 
 // checking player for setting keys /sbin/www - for Xtreamer else other Realtek
 // if HDP_R1_R3=1 then using keys for HDP_R1/R3 firmware
@@ -143,6 +139,7 @@ global $exua_quality;
 global $exua_region;
 global $exua_lang;
 global $ua_sort;
+global $uakino_decode;
 global $fsua_sort;
 global $player_style;
 global $hdpr1;
@@ -159,6 +156,7 @@ $ini->write('exua_setting','quality',$exua_quality);
 $ini->write('exua_setting','region',$exua_region);
 $ini->write('exua_setting','language',$exua_lang);
 $ini->write('uakino','sort',$ua_sort);
+$ini->write('uakino','decode_strings',$uakino_decode);
 $ini->write('fsua','sort',$fsua_sort);
 
 $ini->write('player','style',$player_style);
@@ -413,4 +411,13 @@ if(isset($_GET["get_fav_site"]))
 		echo get_fav_site($_GET["get_fav_site"],$_GET["get_fav_type"]);
 		exit;
 	}
+
+	
+function uakino_utf8_check($s)
+{
+global $uakino_decode;
+if ($uakino_decode == "0") $s=utf8_decode($s);
+//if (LIBXML_VERSION >= 20632) $s=utf8_decode($s);
+return $s;
+}
 ?>

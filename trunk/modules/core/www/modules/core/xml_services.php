@@ -3,40 +3,50 @@
 doActions( 'core_actions', false );
 
 // ------------------------------------
+header( "Content-type: text/plain" );
+
 if( $npage == 'xml_modules' )
 {
 	$ptitle = getMsg( 'coreModules' );
-	$isAll = true;
+	$isMod = true;
 }
 else
 {
 	$ptitle = getMsg( 'coreServices' );
-	$isAll = false;
+	$isMod = false;
 }
 
 // load options
 loadOptions();
 
+$packs = array();
+$packs = parse_ini_file( $mos.'/etc/pm/packages', true );
+
 $mods = array();
 
 foreach( $nav_modules as $mod => $item )
 {
-	$role = $item['role'];
-	if(( ! $isAll )and( $role == 'core' )) continue;
-
 	$irev = $item['revision'];
 	$sts  = $item['_status'];
+	$role = $item['role'];
+
+	$hide = $role == 'core' || $role == 'package';
+
+	$arev = '';
+	if( isset( $packs[ $mod ] ))
+	{
+		$arev = $packs[ $mod ]['revision'];
+		if(( $arev == $irev ) && $hide ) continue;
+	}
+	else if( $hide ) continue;
 
 	$mods[ $mod ] = array(
 		'status' => $sts,
 		'title'  => $item['title']
 	);
 }
-if( $isAll )
+if( $isMod )
 {
-	$packs = array();
-	$packs = parse_ini_file( $mos.'/etc/pm/packages', true );
-
 	// adding non installed modules
 
 	foreach( $packs as $mod => $item )
@@ -67,10 +77,15 @@ foreach( $mods as $mod => $item )
 	$s .= getMosUrl() ."?page=rss_services_actions&mod=$mod&ret=$npage\n";
 }
 
-file_put_contents( '/tmp/put.dat', $s );
-
-header( "Content-type: text/plain" );
-echo "/tmp/put.dat";
+if( isset( $_REQUEST['debug'] ))
+{
+	echo $s;
+}
+else
+{
+	file_put_contents( '/tmp/put.dat', $s );
+	echo "/tmp/put.dat";
+}
 
 exit;
 

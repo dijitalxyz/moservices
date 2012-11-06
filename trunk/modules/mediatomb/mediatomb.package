@@ -7,5 +7,5 @@
 	navy_title = "manage MediaTomb"
 	navy_frame = "http://%addr%:49152"
 	config_edit = "mediatomb/config/config.xml"
-	files="etc/init/S22mediatomb mediatomb/"
+	files = "etc/init/S22mediatomb mediatomb/"
 	size = 7324

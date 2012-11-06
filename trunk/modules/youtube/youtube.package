@@ -2,5 +2,5 @@
 	revision = 6
 	title = "YouTube"
 	role = rss
-	files="www/modules/youtube/"
+	files = "www/modules/youtube/"
 	size = 92

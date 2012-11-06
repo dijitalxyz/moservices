@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# description: Starts and stops the xupnpd daemon
+#
+mos=/usr/local/etc/mos
+
+case "$1" in
+  start)
+	$mos/bin/wait_ip && exit 1
+	echo "Starting xupnpd service..."
+	cd $mos/xupnpd
+	./xupnpd-mipsel
+	;;
+  stop)
+	echo "Shutting down xupnpd services..."
+	killall xupnpd-mipsel
+	;;
+  status)
+	if ps | grep -q '[xX]upnpd-mipsel'
+	then echo "xupnpd running"
+	else echo "xupnpd stopped"
+	fi
+	;;
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

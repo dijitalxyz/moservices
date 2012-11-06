@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS player module v1.6
+	RSS player module v1.7
 	------------------------------
 	Created by Sashunya 2012
 	wall9e@gmail.com			
@@ -135,13 +135,12 @@ class ua_player extends ua_player_const
 						{
 							postMessage("<?= $key_pause ?>"); 
 							cPlayPause = 0;
+							
 						} else
 						{
 							postMessage("<?= $key_play ?>"); 
 							cPlayPause = 1;	
 						}
-			
-						if(showInfo == 0) showInfo = 1;	else showInfo = 0;
 						ret = "true";
 					}
 					
@@ -264,14 +263,17 @@ class ua_player extends ua_player_const
 		if (startVideo == 1)
 		{
 			info_streamTitle = getStringArrayAt(ptitleArray, idx_play); 
-			info_playURL =  getStringArrayAt(plinkArray, idx_play); 
+			info_playURL =  getStringArrayAt(plinkArray, idx_play)+ " autoReconnect"; 
 			playItemURL(-1, 1);
 			setRefreshTime(1000);
 			showLoading = 1;
 			startVideo = 0;
 			timeStamp += 1;
+			info_timer = 0;
+			showInfo = 1;
 			playItemURL(info_playURL, 0, "mediaDisplay", "previewWindow");
-			updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+			
+			
 		} else
 		{
 			if (playElapsed != 0)
@@ -313,6 +315,12 @@ class ua_player extends ua_player_const
 					if (statusCounter &gt;= statusTimeout) statusCounter = 0;
 					
 				}
+				else
+				{
+					
+					updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+					
+				}
 			}
 			else if (playStatus == 0)
 			{
@@ -338,8 +346,10 @@ class ua_player extends ua_player_const
 		}
 		if(showInfo == 1)
 		{
+			info_timer += 1;
 			updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
-		}
+		} else info_timer = 0;
+		if (info_timer == 10) showInfo =0;
 	</onRefresh>
 	<?php
 	}

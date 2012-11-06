@@ -1,6 +1,6 @@
 [web_1228]
 	revision = 1
-	title ="Lighttpd web server v1.4.28 pcre"
+	title = "Lighttpd web server v1.4.28 pcre"
 	role = package
 	files = "bin/lighttpd etc/init/S03web etc/lighttpd.conf etc/lighttpd.plain lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_proxy.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so"
 	require = "libgccs libpcre php"

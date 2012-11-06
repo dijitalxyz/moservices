@@ -5,5 +5,5 @@
 	init = S10mounts
 	backup = "etc/mounts.ini etc/mounts.list"
 	config_link = "?page=mount_sets"
-	files="etc/mounts.ini etc/mounts.list etc/init/S10mounts www/modules/mounts/"
+	files = "etc/mounts.ini etc/mounts.list etc/init/S10mounts www/modules/mounts/"
 	size = 76

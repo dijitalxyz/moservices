@@ -6,5 +6,5 @@
 	backup = "etc/rdate.conf"
 	actions = "restart"
 	config_edit = "etc/rdate.conf"
-	files="bin/rdate etc/rdate.conf etc/init/S11rdate"
+	files = "bin/rdate etc/rdate.conf etc/init/S11rdate"
 	size = 52

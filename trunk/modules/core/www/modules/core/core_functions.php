@@ -164,7 +164,7 @@ global $nav_uses;
 			$act[] = 'enable';
 		}
 	}
-	if ( ! isset( $nav_uses[ $mos ] )) $act[] = 'delete';
+	if ( ! isset( $nav_uses[ $mod ] )) $act[] = 'delete';
 
 	if( $show )
 	if( isset( $opt['actions'] ))

@@ -3,5 +3,5 @@
 	title = "Weather Yahoo"
 	role = rss
 	config_edit = "www/modules/weather/weather.conf"
-	files="www/modules/weather/"
+	files = "www/modules/weather/"
 	size = 80

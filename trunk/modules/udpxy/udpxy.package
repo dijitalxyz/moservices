@@ -6,5 +6,5 @@
 	init = S24udpxy
 	navy_title = "UDPxy status"
 	navy_frame = "http://%addr%:8080/status"
-	files="bin/udpxy etc/init/S24udpxy"
+	files = "bin/udpxy etc/init/S24udpxy"
 	size = 424

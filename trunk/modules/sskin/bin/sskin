@@ -13,11 +13,11 @@ nskin=$3
 # read fw config
 fw=''
 skin=''
-[ -f $shr/boot_fw.conf ] && eval "$( cat $shr/boot_fw.conf | sed '/^$/d' )"
+[ -f $shr/boot_fw.conf ] && . $shr/boot_fw.conf
 
 # read sskin config
 direct=0
-[ -f $mos/etc/sskin.conf ] && eval "$( cat $mos/etc/sskin.conf | sed '/^$/d' )"
+[ -f $mos/etc/sskin.conf ] && . $mos/etc/sskin.conf
 
 # get repo
 repo=$( $mos/bin/pm show repository )
@@ -41,7 +41,7 @@ getFile()
 		echo "  Found $sd"
 		# download
 		if [ ! -f $sd/$1.tar ]; then
-			$mos/bin/wget $repo/skins/$1.tar -O $sd/$1.tar
+			nice -n 10 wget -T 5 -t 3 $repo/skins/$1.tar -O $sd/$1.tar
 			if [ $? -ne 0 ] ; then
 				echo "Unable to download $repo/$1.tar"
 				rm -f $sd/$1.tar
@@ -52,10 +52,13 @@ getFile()
 		rm -f $sd/$1.tar
 	else
 		# direct get
-		$mos/bin/wget $repo/skins/$1.tar -O - | tar x -C $2
+		nice -n 10 wget -T 5 -t 3 $repo/skins/$1.tar -O - | tar x -C $2
 	fi
 }
 
+# -------------------------------------
+# main
+#
 case "$1" in
 
   change)
@@ -79,10 +82,6 @@ case "$1" in
 		stopall
 		[ -d /usr/local/etc/dvdplayer ] && mv /usr/local/etc/dvdplayer /usr/local/etc/dvdplayer.$fw
 		[ -d /usr/local/etc/dvdplayer.$nfw ] && mv /usr/local/etc/dvdplayer.$nfw /usr/local/etc/dvdplayer
-
-		# change hotplug
-		rm -f $shr/hotplug
-		[ -f $shr/$nfw/hotplug ] && ln -s $shr/$nfw/hotplug $shr/hotplug
 
 		# enable new fw
 		[ -f $shr/$nfw/enable_fw ] && $shr/$nfw/enable_fw
@@ -132,7 +131,7 @@ skin=$nskin" > $shr/boot_fw.conf
 	fi
 	;;
   *)
-	echo "Usage: $0 {select|delete|get|update}"
+	echo "Usage: $0 {change|delete|get|update}"
 	;;
 esac
 

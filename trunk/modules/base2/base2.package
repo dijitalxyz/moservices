@@ -1,0 +1,6 @@
+[base2]
+	revision = 1
+	title = "moServices base patch"
+	role = package
+	files = "base2.patch"
+	size = 32

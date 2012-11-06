@@ -7,6 +7,6 @@
 	backup = "trans/home/"
 	config_edit = "trans/home/settings.json"
 	env = 1228
-	files = "etc/init/S23trans trans/ www/modules/trans"
+	files = "etc/init/S23trans trans/ www/modules/trans_1228/"
 	require = "libevent2 libcurl libz libssl libcrypto libgccs"
 	size = 3884

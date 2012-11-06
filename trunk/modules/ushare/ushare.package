@@ -5,6 +5,6 @@
 	init = S25uShare
 	backup = "etc/ushare.conf"
 	config_edit = "etc/ushare.conf"
-	files="bin/ushare etc/ushare.conf etc/init/S25uShare lib/libdlna.so lib/libdlna.so.0 lib/libdlna.so.0.2.3 lib/libupnp.so lib/libupnp.so.2 lib/libupnp.so.2.0.3"
-	require="libgcc_s libz"
+	files = "bin/ushare etc/ushare.conf etc/init/S25uShare lib/libdlna.so lib/libdlna.so.0 lib/libdlna.so.0.2.3 lib/libupnp.so lib/libupnp.so.2 lib/libupnp.so.2.0.3"
+	require = "libgcc_s libz"
 	size = 5984

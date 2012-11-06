@@ -1,0 +1,86 @@
+#!/bin/sh
+#
+# description: Starts and stops the mpcs
+#
+etc=/usr/local/etc
+mos=$etc/mos/mpcs
+
+#--------------------------------------
+stopMpcs()
+{
+	if ps | grep -q '[mM]pcs-linux' ; then
+		echo "Shutting down mpcs services..."
+		killall -9 mpcs-linux
+		sleep 1
+	fi
+}
+
+#--------------------------------------
+# $1 - config name
+#
+putConfig()
+{
+	echo '### '$1' ###' >> $mos/mpcs.config
+	cat $mos/$1 >> $mos/mpcs.config
+	echo '### end ###' >> $mos/mpcs.config
+	echo >> $mos/mpcs.config
+}
+
+#--------------------------------------
+# $1 - config name
+#
+getConfig()
+{
+	sed -n '/### *'$1' *###/{:a;n;/^$/ba;/### *end *###/q;p;ba;}' $mos/mpcs.config > $mos/$1
+}
+
+#--------------------------------------
+case "$1" in
+  start | restart)
+	# check serial port
+	s=$( cat $mos/mpcs.conf | sed -n 's/^[dD]evice *=.*\@\([^:\?]*\).*$/\1/p' )
+	[ -z "$s" ] && exit 1
+
+	if [ ! -c $s ]  ; then
+		echo "mpcs: Port $s not present"
+		exit 1
+	fi
+
+	stopMpcs
+
+	echo "Starting mpcs service..."
+	$mos/mpcs-linux -b -c $mos -m /tmp/mpcs.mem
+	;;
+
+  stop)
+	stopMpcs
+	;;
+
+  status)
+	if ps | grep -q '[mM]pcs-linux'
+	then echo "mpcs running"
+	else echo "mpcs stopped"
+	fi
+	;;
+
+  enable | disable)
+	;;
+
+  get)
+	rm -f $mos/mpcs.config
+	putConfig mpcs.user
+	putConfig mpcs.server
+	putConfig mpcs.conf
+	;;
+  put)
+	getConfig mpcs.user
+	getConfig mpcs.server
+	getConfig mpcs.conf
+	rm -f $mos/mpcs.config
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?
