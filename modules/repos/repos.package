@@ -3,5 +3,5 @@
 	title = "Manage repositories"
 	role = patch
 	config_link = "?page=repos"
-	files="www/modules/repos/"
+	files = "www/modules/repos/"
 	size = 64

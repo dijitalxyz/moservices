@@ -186,7 +186,7 @@ global $mos;
 	}
 	else $irev = $opts['revision'];
 
-	if( $opts['role'] == 'core' ) $opts['_actions'] = array();
+	if(( $opts['role'] == 'core' )||( $opts['role'] == 'package' )) $opts['_actions'] = array();
 
 	if( isset( $packs[ $mod ] ))
 	{

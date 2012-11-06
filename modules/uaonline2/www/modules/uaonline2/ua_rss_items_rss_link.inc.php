@@ -2,7 +2,7 @@
 /*	------------------------------
 	Ukraine online services 	
 	items part for 
-	rss_link V1.1
+	rss_link V1.2
 	------------------------------
 	Created by Sashunya 2012	
 	wall9e@gmail.com			
@@ -27,7 +27,7 @@
 		<onClick>
 			<script>
 				idx = getFocusItemIndex();
-				act = getStringArrayAt( linkArray , idx );
+				act = getStringArrayAt( linkArray , idx )+ " autoReconnect";
 				print("act==============",act);
 				idx_play = (page * 20)-20;
 				idx_play -=-idx;

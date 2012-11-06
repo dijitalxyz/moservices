@@ -1,0 +1,1453 @@
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+	iptvlist created by Roman Lut aka hax.
+-->
+
+<bookmark> Home_Menu </bookmark>
+<!--
+Refresh1_2_3:
+   0: 不用刷新。
+   ！0: 要刷新
+   
+   1: 要刷新第1层
+   2: 要刷新第2层
+   3: 要刷新第3层
+   4: 1\2\3层已全部刷完 or 从3层返回
+-->
+<script>
+	SetScreenSaverStatus("yes");
+	setEnv("Refresh1_2_3", 1);
+	Refresh1_2_3_Env = getEnv("Refresh1_2_3");
+	redrawDisplay();
+	setEnv("FocusLevel", 1);
+	setEnv("HomeMenuAutoPlay", 0);
+        setEnv("StorageChanged", 0);	
+        setEnv("NeedGetDataAgain", 0);
+        setEnv("GetDataTime", 0);
+
+	GetHDDTimes_Env = getEnv("GetHDDTimes");
+	if(GetHDDTimes_Env == null || GetHDDTimes_Env == "" )
+    	setEnv("GetHDDTimes", 0);	   	
+	flag = getCurrentSetting("$[INIT_SETUP]");
+	if (flag == "$[ON]") {
+		setInitFlag("$[OFF]");
+	}    
+</script>
+
+  <!-- the entry point of the view, you can set the initial focus here -->
+  <!-- you can also use postMessage to do the initial operation on the focus item -->
+  <onEnter>
+
+
+		setEnv("isInYamj", "no");
+		setEnv("isInMyFav", "no");  
+                cancelIdle();
+  		SetHomeMenuFlag("true");
+
+  		executeScript("UpgradeCheck"); 
+ 		CurAPName = getCurrentAPName();
+
+ 		print("CurAPName:", CurAPName, "===> FS PNG");
+ 		
+  		CurrentAP = getEnv("EntryStatusString1");
+		CurrentType = getEnv("EntryStatusString2");
+		isMyFavreturn = getEnv("isMyFavreturn");	
+		isIPTVReturn = getEnv("isIPTVReturn");	
+		isBTreturn = getEnv("isBTreturn");
+		PlayMusic = getEnv("EntryStatusString3");
+		CurrentSubType = getEnv("EntryStatusString4");
+		CurrentSubType5 = getEnv("EntryStatusString5");
+		CurrentSubType6 = getEnv("EntryStatusString6");
+		CurrentSubType7 = getEnv("EntryStatusString7");
+		print("CurStatus:" , CurrentAP, CurrentType, PlayMusic, CurrentSubType, CurrentSubType5, CurrentSubType6, CurrentSubType7);
+		AppTotalNum = 0;
+		IsAVinDisable = "yes";
+		IsDTVDisable = "yes";
+		IMSDisable = "yes";
+		WebKitDisable = "yes";
+		flashUIDisable = "yes";
+		NetflixDisable = "yes";
+		CinemaNowDisable = "Yes";		
+		YAMJDisable = "yes";
+		IsBTDisable = "yes";
+		MyFavDisable = "yes";
+		
+		if(IsItemDisasble("IsAVinDisable") == "false"){
+			IsAVinDisable = "no";
+		}
+		if(IsItemDisasble("DtvDisable") == "false"){
+			IsDTVDisable = "no";
+		}
+		if(IsItemDisasble("IMSDisable") == "false"){
+			IMSDisable = "no";
+		}
+/*		if(IsItemDisasble("WebKitDisable") == "false"){
+			WebKitDisable = "no";
+		}*/
+		if(IsItemDisasble("NetflixDisable") == "false"){
+			NetflixDisable = "no";
+		}
+		if(IsItemDisasble("CinemaNowDisable") == "false"){
+			CinemaNowDisable = "no";
+		}
+		if(IsItemDisasble("flashUIDisable") == "false"){
+			flashUIDisable = "no";
+		}
+		if(IsItemDisasble("IsBTDisable") == "false"){
+			IsBTDisable = "no";
+		}	
+		if(IsItemDisasble("YAMJDisable") == "false"){
+			YAMJDisable = "no";
+		}		
+		if(IsItemDisasble("MyFavDisable") == "false"){
+			MyFavDisable = "no";
+		}
+		
+        DTVFocus = -1;
+        if (IsDTVDisable == "no"){
+			DTVFocus = 0;
+		   	AppTotalNum = Add(AppTotalNum, 1);   	
+        }
+        	
+		if(IsAVinDisable == "no"){
+			AVinFocus = DTVFocus + 1;
+		    AppTotalNum = Add(AppTotalNum, 1);
+		}
+		else
+			AVinFocus = DTVFocus;
+
+		IPTVFocus=AVinFocus + 1;
+	    	AppTotalNum = Add(AppTotalNum, 1);
+
+
+		if(MyFavDisable == "no"){
+			MyFavFocus = IPTVFocus + 1;	
+		        AppTotalNum = Add(AppTotalNum, 1);
+		}
+		else{
+			MyFavFocus = IPTVFocus;	
+		}				
+		MovieFocus = MyFavFocus;		
+		MusicFocus = MovieFocus;	
+		PhotoFocus = MusicFocus;
+		FileFocus = PhotoFocus + 1;
+		AppTotalNum = Add(AppTotalNum, 1);	
+		IMSFocus = FileFocus + 1;
+		AppTotalNum = Add(AppTotalNum, 1);	
+		if(WebKitDisable == "no"){
+			WebKitFocus = IMSFocus + 1;
+			AppTotalNum = Add(AppTotalNum, 1);	
+		}
+		else
+			WebKitFocus = IMSFocus;		
+
+YAMJDisable = "true";
+
+		if(YAMJDisable == "no"){
+			YAMJFocus = WebKitFocus + 1;	
+			AppTotalNum = Add(AppTotalNum, 1);		
+		}
+		else{
+			YAMJFocus = WebKitFocus;	
+		}		
+
+			MRFocus = YAMJFocus + 1;	
+			AppTotalNum = Add(AppTotalNum, 1);		
+
+		if(IsBTDisable == "no"){
+			BTFocus = MRFocus + 1;	
+			AppTotalNum = Add(AppTotalNum, 1);		
+		}
+		else{
+			BTFocus = MRFocus;	
+		}
+		/*setup*/
+		SetupFocus = BTFocus + 1;	
+		AppTotalNum = Add(AppTotalNum, 1);
+		if(NetflixDisable == "no"){
+			NetFlixFocus = SetupFocus+1;
+			AppTotalNum = Add(AppTotalNum, 1);	
+		}else{
+			NetFlixFocus = SetupFocus;
+		}
+
+		if(CinemaNowDisable == "no"){
+			CinemaNowFocus = NetFlixFocus + 1;
+			AppTotalNum = Add(AppTotalNum, 1);	
+		}else{
+			CinemaNowFocus = NetFlixFocus;
+		}
+		
+		CurrentSel = 0;
+		if(CurrentAP=="RootAP"){
+			if(CurrentType=="DTV"){
+				CurrentSel = DTVFocus;
+			}else{
+				CurrentSel = AVinFocus;
+			}			
+		}
+		else if(CurrentAP=="IMSAP"){
+			isInitRetrun = getEnv("isInitReturn");
+			if(isInitRetrun == 1){
+				CurrentSel = MovieFocus;
+ 				setEnv("isInitReturn", 0);	
+ 			}
+			else if(isIPTVReturn=="yes"){
+				CurrentSel = IPTVFocus;
+ 				setEnv("isIPTVReturn", "no");	
+ 			}
+			else if(isMyFavreturn=="yes"){
+				CurrentSel = MyFavFocus;
+ 				setEnv("isMyFavreturn", "no");	
+ 			}
+ 			else if(isBTreturn=="yes"){
+				CurrentSel = BTFocus;
+ 				setEnv("isBTreturn", "no");	
+ 			}
+			else
+				CurrentSel = IMSFocus;					
+		}else if(CurrentAP=="SetupMenuAP"){
+			CurrentSel = SetupFocus;
+		}else if(CurrentAP=="VideoPlayback"){
+			if(CurrentSubType == "DB")
+				CurrentSel = MovieFocus;
+			else
+				CurrentSel = FileFocus;		
+		}else if(CurrentAP=="PhotoPlaybackAP"){
+			if(CurrentSubType == "DB")
+				CurrentSel = PhotoFocus;
+			else
+				CurrentSel = FileFocus;
+		}else if(CurrentAP=="WebKitAP"){
+			CurrentSel = WebKitFocus;
+		}else if(CurrentAP=="WebKitAP_cntv" || CurrentAP=="WebKitAP_youtubexl" || CurrentAP=="YoutubeXLAP"){
+			CurrentSel = IMSFocus;
+		}else if(CurrentAP=="CinemaNowAP"){
+			CurrentSel = CinemaNowFocus;		
+		}else if(CurrentAP=="GBrowserSelectAP"){
+			CurrentSel = PhotoFocus;
+		}else if(CurrentAP=="AudioPlaybackAP"){
+			CurrentSel = MusicFocus;
+		}else if(CurrentAP=="SearchViewAP"){
+
+			if(CurrentType=="Video"){
+				CurrentSel = MovieFocus;
+			}else if(CurrentType=="Photo"){
+				CurrentSel = PhotoFocus;
+			}else if(CurrentType=="Music"){
+				CurrentSel = MusicFocus;
+			}else{
+				CurrentSel = FileFocus;
+			}
+		}else if(CurrentAP=="GBrowserGridViewAP"){
+
+			if(CurrentType=="Video"){
+				CurrentSel = MovieFocus;
+			}else if(CurrentType=="Photo"){
+				CurrentSel = PhotoFocus;
+			}else if(CurrentType=="Music"){
+				CurrentSel = MusicFocus;
+			}else{
+				CurrentSel = FileFocus;
+			}
+		}else if(NetflixDisable == "no"){
+			if(CurrentAP=="SWFMenuAP"){
+				if(CurrentType=="NetFlix"){	
+					CurrentSel = NetFlixFocus;
+				}
+			}else if(CurrentAP=="NetFlixAP"){
+				CurrentSel = NetFlixFocus;
+			}
+		}else if(YAMJDisable == "no"){
+			if(CurrentAP=="YamjAP"){
+				CurrentSel = YAMJFocus;
+			}
+		}
+
+		print("4Sel: ", getFocusItemIndex(), CurrentSel, CurrentAP, CurrentType);
+
+	 	Refresh1_2_3_Env = getEnv("Refresh1_2_3");	
+		if(Refresh1_2_3_Env == 1 ){
+			setItemFocus(CurrentSel);
+			setFocusItemIndex(CurrentSel);
+		}
+		else
+		{
+			setItemFocus(getFocusItemIndex());
+			setFocusItemIndex(getFocusItemIndex());
+		}
+                EntryTimes = 1;
+                BltType = "NoBitBlt";
+
+                IsScanning = 0;
+                DBReady = "false";
+                DBReady = IsDBReady();
+                print("DBReady=", DBReady);
+                        CurScanDisk = GetScanningDisk();
+                        if(CurScanDisk != null){
+                                showIdle("true");   
+                                IsScanning = 1;
+                        }
+                curpath = null;
+                if(IsScanning != 0){
+                        curpath = GetScanningPath();
+                }
+
+                LastDBReady = DBReady;
+                LastCurScanDisk = CurScanDisk;
+                LastCurScanPath = curpath;    
+                scantimer = 3000;
+                setRefreshTime(scantimer);
+
+ 		IsDisplaySysStatus = IsSysStatusOn();
+ 		
+ 		HomeMenuAutoPlay_Env = getEnv("HomeMenuAutoPlay");
+ 		if(HomeMenuAutoPlay_Env == 1){
+ 		 	Refresh1_2_3_Env = getEnv("Refresh1_2_3");
+			if(Refresh1_2_3_Env == 4)
+			{
+				setEnv("Refresh1_2_3", 0);
+				setItemFocus(MovieFocus);		
+				setFocusItemIndex(MovieFocus);
+			}
+			else
+			{
+				setItemFocus(MusicFocus);		
+				setFocusItemIndex(MusicFocus);
+			}
+		
+ 			postMessage ("enter");
+ 			redrawDisplay("no");
+ 		}
+ 		else 
+ 		{
+		 			 		
+		 	Refresh1_2_3_Env = getEnv("Refresh1_2_3");	
+			
+		 	FocusLevel_Env = getEnv("FocusLevel");
+
+		 	setEnv("LostFocusL1", 0);
+		 	jumpFlag = 0;
+		 	print("FocusLevel_Env=", FocusLevel_Env);
+	 		if(Refresh1_2_3_Env == 1){
+	 			postMessage ("seven");
+	 			redrawDisplay();
+	 		}
+	 		else if(Refresh1_2_3_Env == 4){
+	 			redrawDisplay("no"); 
+				postMessage("eight");	 			
+	 		}
+	 		else if(Refresh1_2_3_Env == 0)
+	 		{
+	 			setEnv("FocusLevel", 1);	 		
+	 			redrawDisplay("no"); 
+				postMessage("eight");
+	 		}
+ 		}
+
+  </onEnter>
+  
+  <onExit>
+  	print("onExit HomeMenu");
+  	SetHomeMenuFlag("false");
+  	DeleteAllRecentlyMusicThumPic();
+  	unsetEnv("Refresh1_2_3");
+  	unsetEnv("LostFocusL1");
+  	unsetEnv("FocusLevel");
+        unsetEnv("NeedGetDataAgain");
+        unsetEnv("GetDataTime");
+	setRefreshTime(-1);
+	cancelIdle();
+	IsScanning = 0;  
+	freeMusicThumbList();
+  </onExit>
+  
+<onRefresh>
+	setRefreshTime(scantimer);              
+       
+        DBReady = IsDBReady();
+        print("DBReady = '",DBReady,"'");
+
+                 CurScanDisk = GetScanningDisk();
+                 curpath = null;
+                 if(CurScanDisk != null){
+                         showIdle("true");   
+                         IsScanning = 1;
+                 }
+                 if(IsScanning != 0){
+                         curpath = GetScanningPath();
+                 }
+        IsRedraw = 0;
+        if(curpath != LastCurScanPath){
+            IsRedraw = 1;
+        }
+        if(IsRedraw == 0){
+	   		if(CurScanDisk != LastCurScanDisk){
+	   			IsRedraw = 1;
+	   		}
+        }
+        if(DBReady != LastDBReady){
+        	IsRedraw = 1;
+        }
+   	if(IsRedraw == 1){
+   		redrawDisplay("item", MovieFocus);
+   		redrawDisplay("item", MusicFocus);
+   		redrawDisplay("item", PhotoFocus);
+   		redrawDisplay("widget");
+   		setEnv("NeedGetDataAgain", 1);
+   		setEnv("GetDataTime", 0);
+   		IsRedraw = 0;
+   	}
+
+   	
+	if(CurScanDisk != LastCurScanDisk){
+		if(LastCurScanDisk == null){
+    		showIdle("true"); 
+    		IsScanning = 1;       
+		}
+                else{
+                        if(CurScanDisk == null){
+				cancelIdle();
+				IsScanning = 0;
+			}
+		}
+	}	
+
+	if(DBReady != LastDBReady){
+		setEnv("NeedGetDataAgain", 1);
+		setEnv("GetDataTime", 0);
+	}
+	
+	LastDBReady = DBReady;
+	LastCurScanDisk = CurScanDisk;
+	LastCurScanPath = curpath;
+	
+
+        NeedGetDataAgain_Env = getEnv("NeedGetDataAgain");	
+        GetDataTime_Env = getEnv("GetDataTime");	
+        if(NeedGetDataAgain_Env == 1 &amp;&amp; GetDataTime_Env &lt; 3){
+                GetDataTime_Env = 1 + GetDataTime_Env;
+                setEnv("GetDataTime", GetDataTime_Env);
+                setEnv("Refresh1_2_3", 1);
+                postMessage ("seven");
+        }
+        else if(NeedGetDataAgain_Env == 1)
+        {
+                setEnv("NeedGetDataAgain", 0);
+                setEnv("GetDataTime", 0);
+        }
+        else
+                setEnv("GetDataTime", 0);
+
+
+</onRefresh>
+
+<mediaDisplay
+	name=onePartView
+	itemPerPage=6
+	viewAreaXPC=0
+	viewAreaYPC=0
+	viewAreaWidthPC=100
+	viewAreaHeightPC=100
+
+	itemXPC=20.23
+	itemYPC=8.33
+	itemWidthPC=30.23
+	itemHeightPC=5.80
+	itemImageXPC=20.23
+	itemImageYPC=8.33
+	itemImageWidthPC = 0
+	itemImageHeightPC = 0
+	
+	imageFocus=""
+	imageUnFocus=""
+
+	sideColorRight=-1:-1:-1
+	sideColorLeft=-1:-1:-1
+	sideColorTop=-1:-1:-1
+	sideColorBottom=-1:-1:-1
+	backgroundColor=-1:-1:-1
+	focusBorderColor=-1:-1:-1
+	unFocusBorderColor=-1:-1:-1
+	itemBackgroundColor=-1:-1:-1
+
+	showHeader="no"
+	showDefaultInfo="no"
+
+	idleImageXPC=55
+	idleImageYPC=9
+	idleImageWidthPC=3.1
+	idleImageHeightPC=5.5	
+
+	DoAnimation="yes"
+
+	rollItems="no"
+	forceRedrawItems="yes"
+>
+	<idleImage> image/POPUP_LOADING_01.bmp </idleImage>
+	<idleImage> image/POPUP_LOADING_02.bmp </idleImage>
+	<idleImage> image/POPUP_LOADING_03.bmp </idleImage>
+	<idleImage> image/POPUP_LOADING_04.bmp </idleImage>
+	<idleImage> image/POPUP_LOADING_05.bmp </idleImage>
+	<idleImage> image/POPUP_LOADING_06.bmp </idleImage>
+	<idleImage> image/POPUP_LOADING_07.bmp </idleImage>
+	<idleImage> image/POPUP_LOADING_08.bmp </idleImage>
+		
+<backgroundDisplay  name="HomeMenuBackground">
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 >
+		<script>
+			bg1_image = "home_menu/image/HomeMenu_BG.bmp";
+			image = GetDesktopPath();
+			if (image != NULL)
+			{
+				bg1_image = image;
+			}
+			bg1_image;
+		</script>
+	</image>
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 >
+		home_menu/image/HomeMenu_BG2.bmp
+	</image>	
+</backgroundDisplay>
+	 
+	<BackgroundDark>
+		<script>
+                        backdoor = "null";
+			ret = "yes";
+			if(CurrentAP=="IMSAP"){
+				if(CurrentType=="Photo"){
+					ret = "no";
+				}else if(CurrentType=="Video"){
+					ret = "no";
+				}
+			}else if(CurrentAP=="VideoPlayback"){
+				ret = "no";
+			}else if(CurrentAP=="PhotoPlaybackAP"){
+				ret = "no";
+			}
+		</script>
+	</BackgroundDark>
+
+  <!--system status-->
+  <!--Network-->
+  <image offsetXPC=53.67 offsetYPC=42.36 widthPC=2.81 heightPC=4.72 align=left useBackgroundSurface="yes" redraw="yes" >
+  	<script>
+  		Img = "";
+  		if(IsDisplaySysStatus == "true"){
+  			status = GetSysNetStatus() ;	
+			if(status == "true")
+				Img = "home_menu/image/net_on.bmp";
+			else
+				Img = "home_menu/image/net_off.bmp";
+  		}
+  		Img;
+  	</script>
+  </image>
+  <!--WIRELESS-->
+ <image offsetXPC=56.64 offsetYPC=41.94 widthPC=3.52 heightPC=5.28 align=left useBackgroundSurface="yes" redraw="yes" >
+  	<script>
+  		Img = "";
+  		if(IsDisplaySysStatus == "true"){
+  			status = GetWirelessStatus() ;	  		
+			if(status == "true")
+				Img = "home_menu/image/wireless_on.bmp";
+			else
+				Img = "home_menu/image/wireless_off.bmp";
+  		}
+  		Img;
+  	</script>
+  </image>  
+ 
+  <!--USB-->
+ <image offsetXPC=60.23 offsetYPC=42.64 widthPC=3.51 heightPC=3.61 align=left useBackgroundSurface="yes" redraw="yes"  >
+  	<script>
+  		Img = "";
+  		if(IsDisplaySysStatus == "true"){
+  			status = GetUSBStatus() ;  		
+			if(status == "true")  		
+					Img = "home_menu/image/usb_on.bmp";
+				else
+					Img = "home_menu/image/usb_off.bmp";
+  		}
+  		Img;
+  	</script>
+  </image>
+  <!--MUTE-->
+ <image offsetXPC=64.30 offsetYPC=42.22 widthPC=3.36 heightPC=4.72 align=left useBackgroundSurface="yes" redraw="yes"  >	
+  	<script>
+  		Img = "";
+  		if(IsDisplaySysStatus == "true"){
+  			status = GetMuteStatus() ;	  		
+			if(status == "true")  		  		
+				Img = "home_menu/image/mute_on.bmp";
+			else
+				Img = "home_menu/image/mute_off.bmp";
+  		}
+  		Img;
+  	</script>
+  </image>  
+   <!--HDD-->
+ <image offsetXPC=70.4 offsetYPC=41.94 heightPC=4.86 align=left useBackgroundSurface="yes"  redraw="yes" >	
+ 	<widthPC>
+ 		<script>
+ 			width = 2.27;
+ 			status = isInterHddExist() ;	
+ 			if(status == "false")  		
+ 				width = 0;
+ 			width;
+ 		</script>
+ 	</widthPC>
+  	<script>
+  		Img = "";
+  		status1 = getsupportHddState() ;	
+  		if(status1 == "no")
+  		{
+  	           if(IsDisplaySysStatus == "true"){
+  			  status = isInterHddExist() ;		
+			  if(status == "true")  		  		
+				  Img = "home_menu/image/hdd_on.bmp";
+			  else
+			  	Img = "home_menu/image/hdd_off.bmp";
+  	           }
+  		}	
+  		Img;
+  	</script>
+  </image> 
+ <text offsetXPC=73.0 offsetYPC=41.9 heightPC=4.86 fontSize=10 lines=1 align=left useBackgroundSurface="yes"  redraw="yes" > 	
+ 	<widthPC>
+ 		<script>
+ 			width = 25;
+ 			status = isInterHddExist() ;	
+ 			if(status == "false")  		
+ 				width = 0;
+ 			width;
+ 		</script>
+ 	</widthPC> 	
+  	<script>
+  		if(IsDisplaySysStatus == "true"){
+                   curHddTextValue = GetInterHddSize();
+  		}
+  		curHddTextValue;
+  	</script>
+  </text>       
+
+	<text offsetXPC=31.5 offsetYPC=82.5 widthPC=60 heightPC=10 fontSize=10 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left useBackgroundSurface="yes" >
+		<script>
+			text = "$[TO_SELECT_OR_PLAY]";
+			
+			EnterInSetupFromHome_Env = getEnv("EnterInSetupFromHome");
+			ExitFromSetup_Env = getEnv("ExitFromSetup");
+			if(EnterInSetupFromHome_Env == 1 &amp;&amp; ExitFromSetup_Env == 1){
+				setEnv("EnterInSetupFromHome", 0);	
+				setEnv("ExitFromSetup", 0);	
+				setEnv("Refresh1_2_3", 1);
+			 	postMessage ("seven");		
+			}
+			text;
+        </script>
+	</text>
+
+	<text offsetXPC=58 offsetYPC=9 widthPC=35 heightPC=10 fontSize=10 lines=3 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=yes redraw=yes useBackgroundSurface=yes>
+		<script>
+			Stophint = "";
+			if(CurScanDisk != null){
+				Stophint = "$[IMS_SCAN_STOP_HINT]" + " (" +CurScanDisk + ")" + curpath;
+			}
+			Stophint;
+		</script>
+	</text>
+
+	<!--DTV-->
+	<image offsetXPC=17.66 offsetYPC=8.22 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">
+		<script>
+			if(AppTotalNum &gt; 0){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 0 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>
+	<!--AVIN-->	
+	<image offsetXPC=17.66 offsetYPC=11 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">	
+		<script>
+			if(AppTotalNum &gt; 1){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 1 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+         </script>
+	</image>
+	<!--MOVIE-->	
+	<image offsetXPC=17.66 offsetYPC=13.78 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">		
+		<script>
+			if(AppTotalNum &gt; 2){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 2 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>
+	<!--MUSIC-->	
+	<image offsetXPC=17.66 offsetYPC=16.56 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">			
+		<script>
+			if(AppTotalNum &gt; 3){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 3 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>
+	<!--PHOTO-->	
+	<image offsetXPC=17.66 offsetYPC=19.34 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">		
+		<script>
+			if(AppTotalNum &gt; 4){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 4 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>
+	<!--FILE MANAGER-->	
+	<image offsetXPC=17.66 offsetYPC=22.12 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">		
+		<script>
+			if(AppTotalNum &gt; 5){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 5 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>	
+	<!--MY FAVORITES-->		
+	<image offsetXPC=17.66 offsetYPC=24.9 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">			
+		<script>
+			if(AppTotalNum &gt; 6){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 6 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>	
+	<!--Internet Media-->		
+	<image offsetXPC=17.66 offsetYPC=27.68 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">		
+		<script>
+			if(AppTotalNum &gt; 7){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 7 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>
+	<!--Webkit only for 1185 and 1283-->		
+	<image offsetXPC=17.66 offsetYPC=30.46 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">		
+		<script>
+			if(AppTotalNum &gt; 8){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 8 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>
+	<!--Jukebox-->		
+    <image offsetXPC=17.66 offsetYPC=33.24 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">		
+		<script>
+			if(AppTotalNum &gt; 9){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 9 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>	
+	<!--BT only for 1073-->		
+    <image offsetXPC=17.66 offsetYPC=36.02 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">		
+		<script>
+			if(AppTotalNum &gt; 10){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 10 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>
+	<!--Setup-->		
+    <image offsetXPC=17.66 offsetYPC=38.80 widthPC=1.56 heightPC=2.78  useBackgroundSurface="yes" redraw = "yes">		
+		<script>
+			if(AppTotalNum &gt; 11){
+				LostFocusEnv = getEnv("LostFocusL1");
+				if(getFocusItemIndex() == 11 &amp;&amp; LostFocusEnv == 0)
+			          Img = "home_menu/image/MenuPosition_focus.bmp";
+	            else
+			          Img = "home_menu/image/MenuPosition_unfocus.bmp";
+		     }
+		     else
+		     	Img = "";
+            Img;
+		</script>
+	</image>
+	
+	<onUserInput>
+		userInput = currentUserInput();
+		print("userInput L1 = ", userInput);
+		ret = "false";		
+		Refresh1_2_3_Env = getEnv("Refresh1_2_3");
+		print("Refresh1_2_3_Env = ", Refresh1_2_3_Env);
+		if ("guide" == userInput){
+			print("====== ignore guide key ======");
+			ret = "true";
+		}
+		else if("video_stop" == userInput){
+			if(CurScanDisk != null){
+				StopCurDiskScan();
+				ret = "true";
+			}
+		}
+		else if(userInput == "usb_updated")
+		{
+				setEnv("NeedGetDataAgain", 1);
+				GetDataTime = 0;
+				ret = "true";
+		}
+		else if (userInput == "edit" || userInput == "menu" || userInput == "right" || userInput == "left")
+		{
+			print("ignore edit key");
+			ret = "true";
+		}
+		else if(userInput == "seven"){
+			if(Refresh1_2_3_Env == 1){
+				setEnv("Refresh1_2_3", 2);
+				jumpToLink("latestMusicLink");
+				ret = "true";
+			}
+         	else if (Refresh1_2_3_Env == 0 &amp;&amp; jumpFlag == 1 &amp;&amp; DBReady == "true")
+			{
+				jumpToLink("latestMusicLink");
+				jumpFlag = 0;
+				ret = "true";
+			}			
+		}
+		else if(userInput == "eight" &amp;&amp; (Refresh1_2_3_Env == 4 || Refresh1_2_3_Env == 0)){
+				ClearBG();
+                                redrawDisplay("item", getFocusItemIndex()); 
+				redrawDisplay("widget");
+				setEnv("Refresh1_2_3", 0);
+				ret = "true";	
+		}		
+        else if (userInput == "down" &amp;&amp; Refresh1_2_3_Env == 0)
+		{
+				focusIdx = getFocusItemIndex();
+				L2ItemCount_Env = getEnv("L2ItemCount");
+				L3ItemCount_Env = getEnv("L3ItemCount");
+				if(getFocusItemIndex()  == (AppTotalNum - 1)   &amp;&amp; DBReady == "true" &amp;&amp; (L2ItemCount_Env &gt; 0 || L3ItemCount_Env &gt; 0)){
+					SetHomeMenuFlag("false");
+					setEnv("LostFocusL1", 1);
+					redrawDisplay("item", getFocusItemIndex());
+					redrawDisplay("widget");
+					jumpFlag = 1;
+					postMessage ("seven");		
+					ret = "true";
+				}
+				else{
+					redrawDisplay("widget");
+				}		
+        }       
+        else if (userInput == "up" &amp;&amp; Refresh1_2_3_Env == 0)
+		{
+				redrawDisplay("widget");	
+		}
+		else if(userInput == "setup" &amp;&amp; Refresh1_2_3_Env == 0)
+		{	
+				SetHomeMenuFlag("false");		
+                setEnv("EnterInSetupFromHome", 1);           
+         }
+         else if(userInput == "video_volume_down")
+         {
+                 if(GetVolume() == 1)
+                 {
+                        redrawDisplay("widget");     
+                 }
+         }
+         else if(userInput == "video_volume_up")
+         {
+                        if(GetMuteStatus() == "true")
+                        {
+                                redrawDisplay("widget");        
+                        }
+         }
+        else if(Refresh1_2_3_Env != 0){
+        	print("====== ignore key: ", userInput);
+        	ret = "true";
+        }
+         if(ret == "false")
+		{
+			print("====== process key: ", userInput);
+		}
+		ret;
+	</onUserInput>
+  <!-- over write user key mapping here -->
+  <!-- return true means the event has been handled -->
+  <!-- return false means the View will continue to handle the event -->
+
+
+<itemDisplay>
+	<!-- draw foreground -->
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100  useBackgroundSurface="yes" redraw="yes">
+		<script>
+			thumbnail = getItemInfo( getQueryItemIndex(), "imagePath");
+			ItemGroup = getItemInfo("group");
+			state = getDrawingItemState();
+			if(ItemGroup == "DB"){
+				if(DBReady == "false"){
+					thumbnail= thumbnail + "_gray";
+				}
+			}	
+			LostFocusEnv = getEnv("LostFocusL1");	
+			if (state == "focus" &amp;&amp; LostFocusEnv == 0) {
+				thumbnail = thumbnail;
+			}
+			else if (state== "unfocus" || LostFocusEnv == 1){
+				if(ItemGroup != "DB" || DBReady != "false")
+					thumbnail = thumbnail + "_unfocus";
+			}
+			else {
+                                thumbnail = thumbnail + "_unfocus";
+			}
+			if(thumbnail != null){
+				thumbnail = thumbnail + ".bmp";
+			}
+			thumbnail;
+		</script>
+	</image>
+	<text offsetXPC=18 offsetYPC=5 widthPC=60 heightPC=90 align=left fontSize=16 backgroundColor=-1:-1:-1 redraw="yes"  useBackgroundSurface="yes">
+		<foregroundColor>
+			<script>
+			state = getDrawingItemState();
+			LostFocusEnv = getEnv("LostFocusL1");	
+			if (state == "focus" &amp;&amp; LostFocusEnv == 0) 
+				"255:255:255";
+			else
+				"121:121:121";
+			</script>
+		</foregroundColor>
+		<script>
+			queryIndex = getQueryItemIndex();
+			title = getItemInfo(queryIndex, "title");
+		</script>		
+	</text>
+</itemDisplay>	
+
+</mediaDisplay>
+
+<latestMusicLink>
+	<link>
+		<script>
+		"./home_menu/scripts/LatestAddMusic.rss";
+		</script>
+	</link>
+</latestMusicLink>
+
+<channel>
+	<title> HomeMenu </title>
+	<link>./home_menu/scripts/HomeMenu.rss</link>
+
+<item>
+<title>$[DTV]</title>
+<imagePath> home_menu/image/Home_DTV </imagePath>
+<disable>
+	<script>
+		IsDTVDisable;
+	</script>
+</disable>
+<onClick>
+	<script>
+		APName = "RootAP";
+                if (CheckSource("DTV") == "true")
+                        menuCmd(APName, "DTV");
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[IMS_AVIN]</title>
+<imagePath> home_menu/image/Home_AVin </imagePath>
+<disable>
+	<script>
+		IsAVinDisable;
+	</script>
+</disable>
+<onClick>
+	<script>
+		APName = "RootAP";
+                if (CheckSource("AVIN") == "true")
+		        menuCmd(APName, "AVIN");
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>IPTV</title>
+<disable>
+   <script>
+      "no";
+   </script>
+</disable>
+<imagePath> home_menu/image/Home_Internet </imagePath>
+<onClick>
+   <script>
+      APName = "IMSAP";
+      MenuType = "TopMenu";
+      MenuLink = "http://127.0.0.1/rss_iptv";
+      menuCmd(APName, MenuType, MenuLink, BltType);
+      null;
+   </script>
+</onClick>
+</item>
+
+<item>
+  <title>$[GUIDE_MY_FAVORITES]</title> 
+  <disable>
+	<script>
+		MyFavDisable;
+	</script>
+	</disable>
+  <imagePath>home_menu/image/Home_Shortcuts</imagePath>
+  <onClick>
+   <script>
+	   setEnv("ImsType", "Favorites");
+	   APName = "IMSAP";
+	   MenuType = "MyFavorites";
+	   MenuLink = "rss_file://./scripts/myfavorites_list.rss";
+   		menuCmd(APName, MenuType, MenuLink, BltType);
+	   null;
+   </script>
+  </onClick>
+</item>
+<!-- 
+<item>
+<title>$[GBROWSER_MOVIE]</title>
+<imagePath> home_menu/image/Home_Movie </imagePath>
+<group> DB </group>
+<onClick>
+	<script>
+		if(DBReady == "true"){
+			subStoragePath = getStoragePath("key");
+			subStoragePath = subStoragePath + "MoviesSelects.dat";
+			selectArray = readStringFromFile(subStoragePath);
+
+			APName = "GBrowserGridViewAP";
+			MMType = "Video";
+			SrcSel = "DB";
+			if(selectArray != null){
+				ViewSel = getStringArrayAt(selectArray, 0);
+				SortSel = getStringArrayAt(selectArray, 1);
+				ShowSel = getStringArrayAt(selectArray, 2);
+			}
+			else
+			{
+				ViewSel = "Grid";
+	     		if(HomeMenuAutoPlay_Env == 1)
+	 	 			SortSel = "ByRectAdd";
+	 	 		else				
+					SortSel = "ByName";
+				ShowSel = "All";			
+			}
+			
+			if(HomeMenuAutoPlay_Env == 1 &amp;&amp; SortSel != "ByRectAdd" &amp;&amp; selectArray != null)
+			{
+			 	DeleteFile(subStoragePath);
+			 	selectArray = readStringFromFile(subStoragePath);
+			 	SortSel = "ByRectAdd";
+		  	}
+			
+			if(selectArray == null){
+			  selectArray =  pushBackStringArray(selectArray, ViewSel);
+	  		  selectArray = pushBackStringArray(selectArray, SortSel);
+	  		  selectArray = pushBackStringArray(selectArray, ShowSel);
+	  		  writeStringToFile(subStoragePath, selectArray);
+			}	  		  	
+			print("select::", ViewSel, SortSel, ShowSel, HomeMenuAutoPlay_Env);			
+			menuCmd(APName, SrcSel, ViewSel, MMType, ShowSel, SortSel, BltType);			
+		}
+		else{
+					setEnv("Refresh1_2_3", 1);	 
+		 			postMessage ("seven");	
+		}
+		null;
+	</script>
+</onClick>
+
+</item>
+
+<item>
+<title>$[GBROWSER_MUSIC]</title>
+<imagePath> home_menu/image/Home_Music </imagePath>
+<group> DB </group>
+<onClick>
+	<script>
+		 HomeMenuAutoPlay_Env = getEnv("HomeMenuAutoPlay");
+		 print("HomeMenuAutoPlay_Env=", HomeMenuAutoPlay_Env);		
+		if(DBReady == "true"){
+			subStoragePath = getStoragePath("key");
+			subStoragePath = subStoragePath + "MusicSelects.dat";
+			selectArray = readStringFromFile(subStoragePath);
+			
+			APName = "GBrowserGridViewAP";
+			MMType = "Music";
+			SrcSel = "DB";
+			if(selectArray != null){
+				ViewSel = getStringArrayAt(selectArray, 0);
+				SortSel = getStringArrayAt(selectArray, 1);
+				ShowSel = getStringArrayAt(selectArray, 2);
+			}
+			else
+			{
+				ViewSel = "List";
+	     		if(HomeMenuAutoPlay_Env == 1)
+	 	 			SortSel = "ByRectAdd";
+	 	 		else				
+					SortSel = "ByRectPlay";
+				ShowSel = "All";			
+			}
+			
+			if(HomeMenuAutoPlay_Env == 1 &amp;&amp; SortSel != "ByRectAdd" &amp;&amp; selectArray != null)
+			{
+			 	DeleteFile(subStoragePath);
+			 	selectArray = readStringFromFile(subStoragePath);
+			 	SortSel = "ByRectAdd";
+		  	}
+			
+			if(selectArray == null){
+			  selectArray =  pushBackStringArray(selectArray, ViewSel);
+	  		  selectArray = pushBackStringArray(selectArray, SortSel);
+	  		  selectArray = pushBackStringArray(selectArray, ShowSel);
+	  		  writeStringToFile(subStoragePath, selectArray);
+			}	  		  	
+			print("select::", ViewSel, SortSel, ShowSel, HomeMenuAutoPlay_Env);			
+			menuCmd(APName, SrcSel, ViewSel, MMType, ShowSel, SortSel, BltType);
+		}
+		else{
+					setEnv("Refresh1_2_3", 1);	 
+		 			postMessage ("seven");	
+		}		
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[GBROWSER_PICTURE]</title>
+<imagePath> home_menu/image/Home_Photo </imagePath>
+<group> DB </group>
+<onClick>
+	<script>
+		if(DBReady == "true"){
+			subStoragePath = getStoragePath("key");
+			subStoragePath = subStoragePath + "PictureSelects.dat";
+			selectArray = readStringFromFile(subStoragePath);
+			if (selectArray == null){
+			  selectArray = pushBackStringArray(selectArray, "Grid");
+	  		  selectArray = pushBackStringArray(selectArray, "ByName");
+	  		  selectArray = pushBackStringArray(selectArray, "All");
+			  writeStringToFile(subStoragePath, selectArray);
+			}
+			APName = "GBrowserGridViewAP";
+			MMType = "Photo";
+			SrcSel = "DB";
+			ViewSel = getStringArrayAt(selectArray, 0);
+			SortSel = getStringArrayAt(selectArray, 1);
+			ShowSel = getStringArrayAt(selectArray, 2);
+			print("select::", ViewSel, SortSel, ShowSel);
+			menuCmd(APName, SrcSel, ViewSel, MMType, ShowSel, SortSel, BltType);
+		}
+		else{
+					setEnv("Refresh1_2_3", 1);	 
+		 			postMessage ("seven");	
+		}		
+		null;
+	</script>
+</onClick>
+</item>
+-->
+
+
+<item>
+<title>$[IMS_FILE_MANAGER]</title>
+<imagePath> home_menu/image/Home_FileManager </imagePath>
+<onClick>
+	<script>
+		subStoragePath = getStoragePath("key");
+		subStoragePath = subStoragePath + "DeviceSelects.dat";
+		selectArray = readStringFromFile(subStoragePath);
+		if (selectArray == null){
+		  selectArray = pushBackStringArray(selectArray, "Grid");
+ 		  selectArray = pushBackStringArray(selectArray, "All");
+  		  writeStringToFile(subStoragePath, selectArray);
+		}
+		APName = "GBrowserGridViewAP";
+		Source = "Dev";
+		ViewSel = getStringArrayAt(selectArray, 0);
+		MMType = getStringArrayAt(selectArray, 1);
+		print("select::", ViewSel, SortSel, ShowSel);
+		menuCmd(APName, Source, ViewSel, MMType, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+
+<item>
+<title>$[IMS_INTERNET_MEDIA]</title>
+<disable>
+	<script>
+		IMSDisable;
+	</script>
+</disable>
+<imagePath> home_menu/image/Home_Internet </imagePath>
+<onClick>
+	<script>
+
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "rss_file://./scripts/menu.rss";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[IMS_WEB_BROWSER]</title>
+<disable>
+	<script>
+		WebKitDisable;
+	</script>
+</disable>
+<imagePath> home_menu/image/Home_Internet </imagePath>
+<onClick>
+	<script>
+		APName = "WebKitAP";
+        Is_CustomURL= "custom_url";
+        CustomURL= "http://www.acryan.com";
+        CurAPName = getCurrentAPName();
+        CurMenuType = "TopMenu";
+        CurMenuLink = "rss_file://./home_menu/scripts/HomeMenu.rss";
+        menuCmd(APName, Is_CustomURL, CustomURL, CurAPName, CurMenuType, CurMenuLink);
+		null;
+	</script>
+</onClick>
+</item>
+<!--
+<item>
+<title>$[ACRYAN_YAMJ]</title>
+<imagePath> home_menu/image/Home_YAMJ </imagePath>
+<onClick>
+	<script>
+		APName = "YamjAP";
+		Source = "";
+		ViewSel = "";
+		MMType = "";
+		print("select::", ViewSel, SortSel, ShowSel);
+		menuCmd(APName);
+		null;
+	</script>
+</onClick>
+</item>
+-->
+
+<item>
+  <title>Stream Renderer</title> 
+  <disable>
+	<script>
+		"no";
+	</script>
+	</disable>
+  <imagePath>home_menu/image/Home_Shortcuts</imagePath>
+  <onClick>
+   <script>
+	   setEnv("ImsType", "Favorites");
+	   APName = "IMSAP";
+      	MenuType = "TopMenu";
+		MenuLink="/usr/local/etc/mos/rssex2/rss/xspf/streamRenderer.rss";
+	   	menuCmd(APName, MenuType, MenuLink, BltType);
+	   null;
+   </script>
+  </onClick>
+</item>
+
+<item>
+<title>$[BT_GUIDE]</title>
+<disable>
+	<script>
+		IsBTDisable;
+	</script>
+</disable>
+<imagePath> home_menu/image/Home_BT </imagePath>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[ERROR]";
+		popupMessageSize = 1;
+		popupMessages = "$[CLOSE]";
+		popupOptionSize = 1;
+		popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+		popupOptionWide = 1;		
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		status = readStringFromFile("/usr/local/etc/dvdplayer/bt");
+		print("status = '", status, "'");
+		status = " $[ON]";
+		if(status == " $[ON]"){
+			APName = "IMSAP";
+			MenuType = "TopMenu";
+			MenuLink = "rss_file://./scripts/BtpdApp/BitTorrent.rss";
+			menuCmd(APName, MenuType, MenuLink, BltType);
+		}
+		else{
+			rss = "rss_file://./scripts/setup/dynamicPopup.rss";
+			doModalRss(rss);
+		}
+		null;
+	</script>
+</onClick>
+</item>
+
+
+<item>
+<title>$[SETUP_MENU]</title>
+<imagePath> home_menu/image/Home_Setup </imagePath>
+<!-- if use DG Setup Menu, need to switch AP to SetupMenuAP. -->
+<!-- if use script based setup menu, use IMSAP to open setup.rss -->
+<onClick>
+	<script>
+		APName = "MenuBarAP";
+		MenuType = "TopMenu";
+		MenuLink = "rss_file://./setup_menu/scripts/setup.rss";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		setEnv("EnterInSetupFromHome", 1);
+		SetHomeMenuFlag("false");
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>Flash Home Menu</title>
+<disable>
+	<script>
+		flashUIDisable = "yes";
+		flashUIDisable;
+	</script>
+</disable>
+<imagePath> home_menu/image/Home_FlashUI </imagePath>
+<onClick>
+    <script>
+        APName = "SWFHomeAP";
+        MenuLink = "./swf/loader/deploy/Navigator.swf";
+        menuCmd(APName, MenuLink);
+        null;
+    </script>
+</onClick>
+</item>
+
+<item>
+<title>$[Cinema_Now]</title>
+<disable>
+	<script>
+		CinemaNowDisable;
+	</script>
+</disable>
+<imagePath> home_menu/image/Home_Opera </imagePath>
+<onClick>
+	<script>
+		APName = "CinemaNowAP";
+		menuCmd(APName);
+		null;
+	</script>
+</onClick>
+</item>
+
+
+<item>
+<title>Netflix</title>
+<disable>
+	<script>
+		NetflixDisable;
+	</script>
+</disable>
+<imagePath> home_menu/image/Home_Netflix </imagePath>
+<onClick>
+	<script>
+		APName = "NetFlixAP";
+		swf_path = GetMenuPath("NetFlix");
+		Init_item = "0";
+		CurAPName = getCurrentAPName();
+		CurMenuType = "TopMenu";
+		CurMenuLink = "rss_file://./home_menu/scripts/HomeMenu.rss";
+		menuCmd(APName, swf_path, Init_item, CurAPName, CurMenuType, CurMenuLink);
+		null;
+	</script>
+</onClick>
+</item>
+
+</channel>
+
+</rss>
+       

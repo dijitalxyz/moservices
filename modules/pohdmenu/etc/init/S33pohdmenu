@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+pohd=/usr/share/bin/pohd7317
+mos=/usr/local/etc/mos
+                               	
+case "$1" in
+  start | stop | status)
+	;;
+
+  enable)
+	# change home menu on pohd skin
+	if [ -f $pohd/do_add ] ; then
+		sed -i '/\/usr\/local\/bin\/home_menu\/scripts\/HomeMenu.rss/d' $pohd/do_add
+		echo 'umount /usr/local/bin/home_menu/scripts/HomeMenu.rss' >> $pohd/do_add
+		echo 'mount -o bind '$mos'/pohdmenu/HomeMenu.rss /usr/local/bin/home_menu/scripts/HomeMenu.rss' >> $pohd/do_add
+		echo "Please, reboot device!"
+	fi
+	;;
+
+  disable)
+	# restore home menu on pohd skin
+	if [ -f $pohd/do_add ] ; then
+		sed -i '/\/usr\/local\/bin\/home_menu\/scripts\/HomeMenu.rss/d' $pohd/do_add
+		echo "Please, reboot device!"
+	fi
+	;;
+
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

@@ -7,7 +7,7 @@ mos=$etc/mos
 
 case "$1" in
   start)
-	echo "Starting vsftpd service..."
+	echo "Starting bftpd service..."
 	$mos/bin/bftpd -d -c $mos/etc/bftpd.conf >/dev/null 2>&1 &
 	;;
 

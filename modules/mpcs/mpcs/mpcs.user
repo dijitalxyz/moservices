@@ -1,0 +1,6 @@
+[account]
+User = tuner
+Pwd = tuner
+#Uniq = 1
+Group = 1
+IDENT = 4ae1:000000

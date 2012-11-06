@@ -2,6 +2,6 @@
 	revision = 2
 	title ="System status"
 	role = web
-	files="www/modules/status/"
-	require="top"
+	files = "www/modules/status/"
+	require = "top"
 	size = 88

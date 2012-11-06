@@ -27,7 +27,6 @@ global $nav_modules;
 		{
 			$src = $nav_modules[$mod]['navy_frame'];
 			$src = str_replace("%addr%", $_SERVER["SERVER_ADDR"], $src);
-			$src = str_replace("%cgi%", 'http://'.$_SERVER["HTTP_HOST"].'/cgi-bin/', $src);
 			$src = str_replace("%host%", 'http://'.$_SERVER["HTTP_HOST"].'/', $src);
 			$src = str_replace("%mos%", $mos_url, $src);
 

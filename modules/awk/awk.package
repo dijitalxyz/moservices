@@ -1,6 +1,6 @@
 [awk]
 	revision = 1
-	title ="GNU Awk 3.1.5"
+	title = "GNU Awk 3.1.5"
 	role = package
-	files="bin/awk"
+	files = "bin/awk"
 	size = 1272

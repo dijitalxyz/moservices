@@ -2,5 +2,5 @@
 	revision = 6
 	title = "fex.net / ex.ua"
 	role = rss
-	files="www/modules/fex/"
+	files = "www/modules/fex/"
 	size = 144

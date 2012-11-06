@@ -4,10 +4,6 @@
 #
 case "$1" in
   start)
-	#
-	# waiting for mount disks
-	#
-	/usr/local/etc/mos/bin/wait_mount && exit 1
 
 	cIFS=$IFS
 	IFS="

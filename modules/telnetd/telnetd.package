@@ -1,9 +1,9 @@
 [telnetd]
 	revision = 1
-	title ="telnet busybox daemon"
+	title = "telnet busybox daemon"
 	role = daemon
 	check = "port 23"
 	init = S08telnetd
-	files="etc/init/S08telnetd"
-	require="busybox"
+	files = "etc/init/S08telnetd"
+	require = "busybox"
 	size = 40

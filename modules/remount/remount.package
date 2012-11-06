@@ -1,8 +1,9 @@
 [remount]
-	revision = 2
+	revision = 3
 	title = "Remount drives"
 	role = patch
 	init = S06Remount
 	actions = "restart"
-	files="etc/init/S06Remount"
-	size = 40
+	files = "etc/init/S06Remount etc/hotplug/after/block/S10remount"
+	require = "fhotplug"
+	size = 64

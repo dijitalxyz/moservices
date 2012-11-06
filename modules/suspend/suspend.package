@@ -1,0 +1,7 @@
+[suspend]
+	revision = 1
+	title = "Suspend: reboot on wakeup"
+	role = patch
+	init = S09suspend
+	files = "etc/init/S07suspend etc/init/rc.init/S07suspend.sh"
+	size = 48

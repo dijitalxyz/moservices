@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Enable/disable suspend patch
+#
+etc=/usr/local/etc
+mos=$etc/mos
+
+case "$1" in
+  start | stop | status)
+	;;
+
+  enable)
+	cp -a $mos/etc/rc.init/S09suspend.sh $etc/rc.init/
+	$etc/rc.init/S09suspend.sh start
+	;;
+
+  disable)
+	rm -f $etc/rc.init/S09suspend.sh
+	umount /sbin/suspend
+	;;
+  *)
+	echo "Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

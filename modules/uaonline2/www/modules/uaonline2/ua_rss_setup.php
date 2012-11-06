@@ -2,7 +2,7 @@
 
 /*	------------------------------
 	Ukraine online services 2	
-	RSS EX.UA setup module v 2.1
+	RSS EX.UA & uakino setup module v 2.2
 	------------------------------
 	Created by Sashunya 2012	
 	wall9e@gmail.com			
@@ -89,22 +89,31 @@ public function showDisplay()
 	itemTitleArray = null;
 	itemTitleArray  = pushBackStringArray(itemTitleArray, "САЙТ:");
 	itemTitleArray  = pushBackStringArray(itemTitleArray, "ЯЗЫК:");
-	itemSize = 2;
+	itemTitleArray  = pushBackStringArray(itemTitleArray, "ДЕКОДИРОВАНИЕ СТРОК:");
+	itemSize = 3;
+	uakinoDecodeArray = null;
+	uakinoDecodeCount = 2;
+	uakinoDecodeArray = pushBackStringArray(uakinoDecodeArray, "ВКЛ.");
+	uakinoDecodeArray = pushBackStringArray(uakinoDecodeArray, "ВЫКЛ.");
+	uakinoDecodeIndex = 0;
+	
 	dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?load=1"?>");
 		if (dlok != null)
 			{
 				regIdx = getStringArrayAt(dlok, 0);
 				langIdx = getStringArrayAt(dlok, 1);
+				uakinoIdx = getStringArrayAt(dlok, 2);
 			}
 	regionIndex -=-regIdx;
 	languageIndex -= -langIdx;
+	uakinoDecodeIndex -= -uakinoIdx;
 	setFocusItemIndex(0);
 	setItemFocus(0);
 	redrawDisplay();
 </onEnter>
 
 <onExit>
-dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?save_region="?>"+regionIndex+"&amp;save_language="+languageIndex);
+dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?save_region="?>"+regionIndex+"&amp;save_language="+languageIndex+"&amp;decode_strings="+uakinoDecodeIndex);
 </onExit>
 
 <mediaDisplay name="onePartView"
@@ -115,7 +124,7 @@ dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?save_region="?>"+reg
 	headerXPC			="16"
 	headerYPC			="3"
 	headerWidthPC		="0"
-	itemXPC				="20"
+	itemXPC				="25"
 	itemYPC				="20"
 	itemWidthPC			="30"
 	itemHeightPC		="10"
@@ -152,29 +161,59 @@ dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?save_region="?>"+reg
 	</image>
 		
 	<text  align="<?= static::text_header_align ?>" redraw="<?= static::text_header_redraw ?>" lines="<?= static::text_header_lines ?>" offsetXPC="<?= static::text_header_offsetXPC ?>" offsetYPC="<?= static::text_header_offsetYPC ?>" widthPC="<?= static::text_header_widthPC ?>" heightPC="<?= static::text_header_heightPC ?>" fontSize="<?= static::text_header_fontSize ?>" backgroundColor="<?= static::text_header_backgroundColor ?>" foregroundColor="<?= static::text_header_foregroundColor ?>">
-		НАСТРОЙКИ EX.UA
+		НАСТРОЙКИ
 	</text>
-		<image  offsetXPC="<?= static::image_site_footer_display_offsetXPC ?>" offsetYPC="<?= static::image_site_footer_display_offsetYPC ?>" widthPC="<?= static::image_site_footer_display_widthPC ?>" heightPC="<?= static::image_site_footer_display_heightPC ?>">
-					<?= $ua_images_path . static::exua_logo ?>
-		</image>
+	
 	<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
 		 ВЫХОД - RETURN
 	</text>
-	<text redraw="yes" offsetXPC=52 offsetYPC=20 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	<text  align="left" redraw="yes" lines="1" offsetXPC="10" offsetYPC="25" widthPC="50" heightPC="10" fontSize="16" backgroundColor="-1:-1:-1">
+		<foregroundColor>
+			<script>
+				idx = Integer(getFocusItemIndex());
+				if (idx == 0 || idx == 1 ) color = "255:227:37";
+				else color = "255:255:255";
+				color;
+			</script>
+		</foregroundColor>
+		<script>"EX.UA";</script>
+	</text>
+	
+	<text  align="left" redraw="yes" lines="1" offsetXPC="10" offsetYPC="40" widthPC="50" heightPC="10" fontSize="16" backgroundColor="-1:-1:-1" >
+	<foregroundColor>
+			<script>
+				idx = Integer(getFocusItemIndex());
+				if (idx == 2) color = "255:227:37";
+				else color = "255:255:255";
+				color;
+			</script>
+		</foregroundColor>
+		<script>"UAKINO.NET";</script>
+	</text>
+	
+	
+	<text redraw="yes" offsetXPC=57 offsetYPC=20 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
 	  <script>
 	  region = getStringArrayAt(regionArray, regionIndex);
 	  print("region=",region);
 	  region;
 	  </script>
 	</text>
- 	<text redraw="yes" offsetXPC=52 offsetYPC=30 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+ 	<text redraw="yes" offsetXPC=57 offsetYPC=30 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
 	  <script>
 	  language = getStringArrayAt(languageArray, languageIndex);
 	  print("language=",language);
 	  language;
 	  </script>
 	</text>
- 
+ 	
+	<text redraw="yes" offsetXPC=57 offsetYPC=40 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	  <script>
+	  uakinoDecode = getStringArrayAt(uakinoDecodeArray, uakinoDecodeIndex);
+	  print("uakinoDecode=",uakinoDecode);
+	  uakinoDecode;
+	  </script>
+	</text>
 <itemDisplay>
 		<text offsetXPC=0 offsetYPC=25 widthPC=100 heightPC=50 fontSize=17 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
 			<script>
@@ -196,7 +235,7 @@ dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?save_region="?>"+reg
       
       idx = Integer(getFocusItemIndex());
 
-      if (majorContext == "items" &amp;&amp; idx &lt; 2)
+      if (majorContext == "items" &amp;&amp; idx &lt; 3)
       {
         if( userInput == "<?= $key_left ?>" )
         {
@@ -213,6 +252,13 @@ dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?save_region="?>"+reg
               languageIndex = languageCount - 1;
             else
               languageIndex = languageIndex - 1;
+          }
+		  else if(idx == 2)
+          {
+            if(uakinoDecodeIndex == 0)
+              uakinoDecodeIndex = uakinoDecodeCount - 1;
+            else
+              uakinoDecodeIndex = uakinoDecodeIndex - 1;
           }
           ret = "true";
           redrawDisplay();
@@ -233,6 +279,14 @@ dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?save_region="?>"+reg
             if(languageIndex == languageCount)
             {
               languageIndex = 0;
+            }
+          }
+		   else if(idx == 2)
+          {
+            uakinoDecodeIndex = uakinoDecodeIndex + 1;
+            if(uakinoDecodeIndex == uakinoDecodeCount)
+            {
+              uakinoDecodeIndex = 0;
             }
           }
 			ret = "true";

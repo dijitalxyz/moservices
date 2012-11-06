@@ -4,5 +4,5 @@
 	role = patch
 	init = S04HdcpOff
 	actions = "restart"
-	files="etc/init/S04HdcpOff"
+	files = "etc/init/S04HdcpOff"
 	size = 40

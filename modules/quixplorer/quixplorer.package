@@ -2,5 +2,5 @@
 	revision = 3
 	title = "QuiXplorer"
 	role = web
-	files="www/modules/quixplorer/"
+	files = "www/modules/quixplorer/"
 	size = 688

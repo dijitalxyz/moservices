@@ -2,6 +2,6 @@
 	revision = 3
 	title = "Woowza movies"
 	role = rss
-	files="www/modules/woowza/ gunzip.patch"
-	require="busybox"
+	files = "www/modules/woowza/ gunzip.patch"
+	require = "busybox"
 	size = 116

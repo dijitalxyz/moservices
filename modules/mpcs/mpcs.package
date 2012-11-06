@@ -1,0 +1,12 @@
+[mpcs]
+	revision = 1
+	title = "streamboard mp-cardserver v0.8k-rc13m"
+	role = daemon
+	init = S18mpcs
+	backup = "mpcs/mpcs.*"
+	config_edit = "mpcs/mpcs.config"
+	config_before = "get"
+	config_after  = "put"
+	files = "mpcs/ etc/init/S18mpcs etc/hotplug/after/usb-serial/S10mpcs"
+	require = "fhotplug"
+	size = 408

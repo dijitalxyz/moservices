@@ -2,7 +2,7 @@
 
 /*	------------------------------
 	Ukraine online services 	
-	FS.UA parser module v1.3
+	FS.UA parser module v1.7
 	------------------------------
 	Created by Sashunya 2012	
 	wall9e@gmail.com			
@@ -278,6 +278,7 @@ global $fsua_rss_link_filename;
 global $ua_path_link2;
 global $fsua_rss_list_filename;
 global $tmp;
+			
 			$fav_folder=true;
 			$temps = '';
 			$videocount=0;
@@ -345,6 +346,9 @@ global $tmp;
 						}
 					}
 				}
+				$folder_parse=false;
+				$season_parse=false;
+				
 			if( $div->getAttribute('class') == 'b-filelist' )
 							{
 								$uls=$div->getElementsByTagName('ul');
@@ -356,10 +360,12 @@ global $tmp;
 										$m_current=true;
 										break;
 									}
+									//echo $m_current;
 								foreach( $uls as $ul )
 									if( $ul->hasAttribute('class'))
 									{
 										if ($m_current) $check_filelist='filelist m-current'; else $check_filelist = 'filelist ';
+										
 										if( $ul->getAttribute('class') == $check_filelist)
 										{	
 											$lis = $ul->getElementsByTagName('li');
@@ -369,6 +375,7 @@ global $tmp;
 												$li_class=$li->getAttribute('class');
 												if( $li_class == 'folder')
 												{	
+													$folder_parse=true;
 													$q_c=0;
 													$spans = $li->getElementsByTagName('span');
 													foreach( $spans as $span )
@@ -385,6 +392,7 @@ global $tmp;
 															$class= $div2->getAttribute('class');
 															if( $class  == 'header' )
 																{		
+																	$season_parse=true;
 																	$as = $div2->getElementsByTagName('a');
 																	$file_list = false;	
 																	foreach( $as as $a )
@@ -413,31 +421,57 @@ global $tmp;
 																}
 														} else
 														{	
-															$as = $div2->getElementsByTagName('a');
-															foreach( $as as $a )
+															if (!$season_parse)
 															{
-																$type = $a->getAttribute('class');
-																if( $type == 'folder-filelist' )
-																	{
-																		$as = $div2->getElementsByTagName('a');
-																		foreach( $as as $a )
-																			{
-																				$type2=$a->getAttribute('class');
-																				if( $type2 == 'link-subtype title' || $type2 == 'link-subtype m-ru title' || $type2 == 'link-subtype m-ua title'|| $type2 == 'link-subtype m-en title' )
+																$as = $div2->getElementsByTagName('a');
+																foreach( $as as $a )
+																{
+																	$type = $a->getAttribute('class');
+																	if( $type == 'folder-filelist' )
+																		{
+																			$as = $div2->getElementsByTagName('a');
+																			foreach( $as as $a )
 																				{
-																					$link=check_fs_url(check_prefix(check_url2($file).$a->getAttribute('href')));
-																					$name = fix_str($a->textContent);
+																					$type2=$a->getAttribute('class');
+																					if( $type2 == 'link-subtype title' || $type2 == 'link-subtype m-ru title' || $type2 == 'link-subtype m-ua title'|| $type2 == 'link-subtype m-en title' )
+																					{
+																						$link=check_fs_url(check_prefix(check_url2($file).$a->getAttribute('href')));
+																						$name = fix_str($a->textContent);
+																					}
 																				}
-																			}
-																		$fav=$link; $link=$ua_path_link.$fsua_parser_filename."?file=".$link."&enter=0&final=1"; 
-																		$temps.= $name." ".$qual."\n".$link."\n".$image."\n".$fav."\nlink\n";
-																		$videocount++;
-																		$qual="";
-																	}
+																			$fav=$link; $link=$ua_path_link.$fsua_parser_filename."?file=".$link."&enter=0&final=1"; 
+																			$temps.= $name." ".$qual."\n".$link."\n".$image."\n".$fav."\nlink\n";
+																			$videocount++;
+																			$qual="";
+																		}
+																}
 															}
 														}	
 													}
-												} 
+												}  
+												if (preg_match("/file/",$li_class) && !$folder_parse) 
+												{												
+													$as3 = $li->getElementsByTagName('a');
+													foreach( $as3 as $a3 )
+													{
+														$type3=$a3->getAttribute('class');
+														if ($type3 == "link-material")
+														{
+															$link=$a3->getAttribute('href');
+														}
+													}
+													$spans = $li->getElementsByTagName('span');
+													foreach( $spans as $span )
+														if ($span->hasAttribute('style'))
+														{
+																$name=$span->textContent;
+														}
+													$temps .= $name."\n".$ua_path_link.$fsua_parser_filename."?play=".$link."\n".$link."\n".$name."\n".$name."\n".$ua_path_link.$fsua_parser_filename."?file=".$link."&fav_refresh=1\n";	
+													$videocount++;
+													$single = true;
+												}
+												
+												
 											}	
 										}
 									}
@@ -448,6 +482,7 @@ if ($single)
 {
 	$temps = $title." ".$title_name."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
 	$redirect = $ua_path_link2.$fsua_rss_link_filename;
+	//echo $temps;
 }
 else
 {
@@ -494,13 +529,13 @@ if ($final=="0")
 					$flist=file(check_prefix($file)."&flist");
 					foreach ($flist as $links)
 					{
-						$name=trim(get_name($links));
+						$name=urldecode(trim(get_name($links)));
 						$videocount++;	
 						$fs_title=$videocount.".".$name;
 						$links=trim($links);
-						$temps.=$fs_title."\n".$ua_path_link.$fsua_parser_filename."?play=".urlencode($links)."\n".$links."\n".$name."\n".$fs_title."\n".$ua_path_link.$fsua_parser_filename."?file=".$links."&fav_refresh=1\n";
+						$temps.=$fs_title."\n".$ua_path_link.$fsua_parser_filename."?play=".$links."\n".$links."\n".$name."\n".$fs_title."\n".$ua_path_link.$fsua_parser_filename."?file=".$links."&fav_refresh=1\n";
 					}
-	$temps = $title." ".$title_name."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
+$temps = $title." ".$title_name."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
 	
 	
 	
@@ -539,7 +574,7 @@ if (isset($_GET['final'])) $final = $_GET["final"];
 			$s=file_get_contents(check_prefix($file));
 			}
 			else $s=file_get_contents(check_prefix($file));
-			//file_put_contents("/tmp/test.txt",$s);
+			file_put_contents("/tmp/test.txt",$s);
 			if (isset($_GET["fav_refresh"])) 
 			{
 				$main=get_data($s,$file,$final,true);			

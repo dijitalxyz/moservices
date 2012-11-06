@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# description: Enable and disable IRFake
+#
+etc=/usr/local/etc
+mos=$etc/mos
+rc=$etc/rcS
+
+case "$1" in
+  start|stop|status)
+	;;
+  enable)
+	echo "Enabling IRFake..."
+	#copy files
+	cp -a $mos/irfake $etc/
+
+	# patch rcS
+	sed -i '/# irfake patch/{N;N;N;d}' $etc/rcS
+	cp -a $mos/etc/rc.init/S04irfake.sh $etc/rc.init/
+
+	echo "Please, reboot device!"
+	;;
+
+  disable)
+	echo "Disabling IRFake..."
+	sed -i '/# irfake patch/{N;N;N;N;d}' /usr/local/etc/rcS
+	killall irfake4
+	echo "Please, reboot device!"
+	;;
+  copy)
+	cp $etc/irfake/irfake.conf $mos/irfake.conf
+	;;
+
+  save)
+	killall irfake4
+	cp $mos/irfake.conf $etc/irfake/irfake.conf
+	$etc/irfake/irfake4 -R -f $etc/irfake/irfake.conf >/dev/null 2>&1 &
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

@@ -2,5 +2,5 @@
 	revision = 3
 	title = "Capture TV screen"
 	role = web
-	files="bin/bmp2jpg www/modules/capture/"
+	files = "bin/bmp2jpg www/modules/capture/"
 	size = 3696

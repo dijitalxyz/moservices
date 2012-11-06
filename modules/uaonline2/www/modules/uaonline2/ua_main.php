@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS main menu module v2.5
+	RSS main menu module v2.6
 	------------------------------
 	Created by Sashunya 2012	
 	wall9e@gmail.com			
@@ -316,7 +316,7 @@ class ua_rss_main extends ua_rss_cat_const
 		itemTitleArray  = pushBackStringArray(itemTitleArray, "UAKINO.NET");
 		itemTitleArray  = pushBackStringArray(itemTitleArray, "FS.UA");
 		itemTitleArray  = pushBackStringArray(itemTitleArray, "МЕНЕДЖЕР ЗАГРУЗОК");
-		itemTitleArray  = pushBackStringArray(itemTitleArray, "НАСТРОЙКИ EX.UA");
+		itemTitleArray  = pushBackStringArray(itemTitleArray, "НАСТРОЙКИ");
 		
 
 		

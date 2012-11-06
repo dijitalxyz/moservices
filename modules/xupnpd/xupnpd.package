@@ -1,0 +1,12 @@
+[xupnpd]
+	revision= 2
+	title = "xupnpd 1.0rc12"
+	role = daemon
+	check = "port 4044"
+	init = S35xupnpd
+	navy_title = "xupnpd web interface"
+	navy_frame = "http://%addr%:4044"
+	config_edit = "xupnpd/xupnpd.lua"
+	files = "xupnpd/ etc/init/S35xupnpd"
+	require = "libgcc_s"
+	size = 776

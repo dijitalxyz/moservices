@@ -1,6 +1,6 @@
 [rtmpdump]
-	revision= 1
-	title = "RTMPDump v2.3"
+	revision= 2
+	title = "RTMPDump v2.4"
 	role = package
-	files="bin/rtmpdump"
-	size = 2720
+	files = "bin/rtmpdump"
+	size = 568

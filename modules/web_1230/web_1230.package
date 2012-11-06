@@ -1,9 +1,9 @@
 [web_1230]
 	revision = 1
-	title ="Lighttpd web server v1.4.28"
+	title = "Lighttpd web server v1.4.28"
 	role = package
-	files = "bin/lighttpd etc/init/S03web etc/lighttpd.conf lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_proxy.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so"
-	required = "libgccs php"
 	backup = "etc/lighttpd.conf etc/lighttpd.plain"
 	env = 1230
-	size = 536
+	files = "bin/lighttpd etc/init/S03web etc/lighttpd.conf lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_proxy.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so"
+	require = "libgccs php"
+	size = 544

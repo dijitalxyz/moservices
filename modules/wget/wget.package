@@ -2,5 +2,5 @@
 	revision = 1
 	title = "Wget 1.10.4"
 	role = package
-	files="bin/wget"
+	files = "bin/wget"
 	size = 324

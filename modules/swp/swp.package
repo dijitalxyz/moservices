@@ -3,5 +3,5 @@
 	title = "Swap on drive"
 	role = patch
 	init = S02swp
-	files="etc/init/S02swp"
+	files = "etc/init/S02swp"
 	size = 32

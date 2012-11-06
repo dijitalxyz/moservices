@@ -1,7 +1,7 @@
 [smarttool]
 	revision = 1
-	title ="SMART HDD Tool (smartctl 5.41)"
+	title = "SMART HDD Tool (smartctl 5.41)"
 	init = "S44libata"
 	role = web
-	files="etc/init/S44libata libata/ bin/smartctl www/modules/smarttool/"
+	files = "etc/init/S44libata libata/ bin/smartctl www/modules/smarttool/"
 	size = 1108
