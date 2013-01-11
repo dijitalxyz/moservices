@@ -19,6 +19,8 @@ $nav_msg['youtube_this_week' ] = 'Per week';
 $nav_msg['youtube_this_month'] = 'Per month';
 $nav_msg['youtube_all_time'  ] = 'All time';
 
+$nav_msg['youtubeSearch'] = 'Search';
+
 $nav_msg['youtubeQuality'   ] = 'Video quality';
 $nav_msg['youtubeLowQual'   ] = 'Low';
 $nav_msg['youtubeHighQual'  ] = 'High';
@@ -69,5 +71,14 @@ $nav_msg['youtube_region_UG'] = 'Uganda';
 $nav_msg['youtube_region_US'] = ' Worldwide (All)';
 $nav_msg['youtube_region_YE'] = 'Yemen';
 $nav_msg['youtube_region_ZA'] = 'South Africa';
+
+$nav_msg['youtubeKeyboard'] = 'Keyboard';
+$nav_msg['youtubeEmbKbrd'] = 'Embedded';
+$nav_msg['youtubeRssKbrd'] = 'RSS';
+
+$nav_msg['youtubeMy'] = 'My subscriptions';
+$nav_msg['youtubeUsername'] = "User's name";
+
+$nav_msg['youtubeSubscription'] = 'Subscriptions of ';
 
 ?>

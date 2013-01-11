@@ -1,0 +1,9 @@
+[wget_1228]
+	revision = 1
+	title = "wget 1.14 dynamic"
+	check = wget
+	role = package
+	env = 1228
+	files = "bin/wget"
+	require = "libgccs libpcre"
+	size = 644

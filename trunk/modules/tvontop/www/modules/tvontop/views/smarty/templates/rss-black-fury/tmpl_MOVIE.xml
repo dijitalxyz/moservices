@@ -39,7 +39,16 @@
     focusBorderColor="{$config->get(focusBorderColor)}"
     unFocusBorderColor="{$config->get(unFocusBorderColor)}"
     >
-
+	<onUserInput>
+        key = currentUserInput();
+		if (key == keyEnter) {
+			envKey 		= "playedTitle";
+			index = getFocusItemIndex();
+			envValue = "{$mediaObj->title}";
+			executeScript("setEnvValue");
+		} 
+		"false";
+	</onUserInput>
     <!-- header -->
 {include file="{$config->get(activeTemplate,Runtime)}header.xml"}
 
@@ -61,7 +70,7 @@
     {$infoBgColor  = "60:60:60"}
     {$labelFgColor = "255:255:255"}
     {$valueFgColor = "160:160:160"}
-    {$diffY = 5}
+    {$diffY = 4}
     {$offY = 12}
 
     <text offsetXPC="1.6"  offsetYPC="10.9" widthPC="31.8" heightPC="54.5" backgroundColor="{$infoBorderColor}" />
@@ -139,12 +148,8 @@
     {$height = 83 - $offY}
     {$lines  = $height / $diffY + 1}
 
-    <text align="justify" offsetXPC="35.1" offsetYPC="{$offY}" widthPC="63.1" heightPC="{$height}" fontSize="15"
-        backgroundColor="{$infoBgColor}" foregroundColor="{$valueFgColor}" lines="{$lines}">
-        <script>"{$mediaObj->getParam(descr)}";</script>
-    </text>
-
-
+    <text align="justify" offsetXPC="35.1" offsetYPC="{$offY}" widthPC="63.1" heightPC="{$height}" fontSize="14"
+        backgroundColor="{$infoBgColor}" foregroundColor="{$valueFgColor}" lines="{$lines}">{$mediaObj->getParam(descr)}</text>
     <itemDisplay>
         <script>
         	{call calculateItemColors}
@@ -163,7 +168,8 @@
             <script>getItemInfo("description");</script>
         </text>
     </itemDisplay>
-{call getIdleImages}
+    <!-- turn off idle images -->
+	<idleImage></idleImage>
 </mediaDisplay>
 
 {call getRssLink}
@@ -174,11 +180,7 @@
     <item>
         <title>{$child->title}</title>
         <description>{$child->getParam(descr)}</description>
-{if $child->type == "STREAM_URL"}
-        <enclosure url="{$link}&amp;mode=redirect" type="video/mp4" />
-{else}
         <link>{$link}</link>
-{/if}
     </item>
 {/foreach}
 </channel>

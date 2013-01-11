@@ -175,7 +175,7 @@
 	envKey 		= "{$mediaObj->type}_startIndex";
 	executeScript("getEnvValue");
 	startIndex = envValue;
-        
+
     if (null == startIndex) {
         startIndex = {$selectedService};
         if (0 == startIndex) {

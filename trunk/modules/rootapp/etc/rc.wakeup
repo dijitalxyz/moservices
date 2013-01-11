@@ -1,7 +1,2 @@
 #!/bin/sh
-init=/usr/local/etc/rc.init
-# normal order
-list=$( ls $init )
-for i in $list ; do
-	[ -x $init/$i ] && $init/$i start &
-done
+reboot

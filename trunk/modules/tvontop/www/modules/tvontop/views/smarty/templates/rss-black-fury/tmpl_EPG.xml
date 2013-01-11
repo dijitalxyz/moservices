@@ -133,9 +133,17 @@ Return:
             redrawDisplay();
             "true";
         } else if ( userInput  == keyEnter ) {
-            showIdle();
-            executeScript("videoStart");
-            "true";
+			{if {$config->get(enableOSD)} == "1"}
+	            showIdle();
+	            executeScript("videoStart");
+	            "true";
+			{else}
+				envKey 	 = "playedTitle";
+				index = getFocusItemIndex();
+				envValue = getItemInfo(index, "title");
+				executeScript("setEnvValue");
+               	"false";
+            {/if}
         } else if ( userInput == keyRight ) {
             "true";
         } else {

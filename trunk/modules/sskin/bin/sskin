@@ -41,7 +41,7 @@ getFile()
 		echo "  Found $sd"
 		# download
 		if [ ! -f $sd/$1.tar ]; then
-			nice -n 10 wget -T 5 -t 3 $repo/skins/$1.tar -O $sd/$1.tar
+			nice -n 10 wget -T 5 $repo/skins/$1.tar -O $sd/$1.tar
 			if [ $? -ne 0 ] ; then
 				echo "Unable to download $repo/$1.tar"
 				rm -f $sd/$1.tar
@@ -52,7 +52,7 @@ getFile()
 		rm -f $sd/$1.tar
 	else
 		# direct get
-		nice -n 10 wget -T 5 -t 3 $repo/skins/$1.tar -O - | tar x -C $2
+		nice -n 10 wget -T 5 $repo/skins/$1.tar -O - | tar x -C $2
 	fi
 }
 
@@ -90,7 +90,7 @@ case "$1" in
 skin=$nskin" > $shr/boot_fw.conf
 
 	sync
-	reboot
+	$mos/bin/reboot.sh&
 	;;
   delete)
 	if [ -z "$nskin" ] ; then

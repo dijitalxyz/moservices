@@ -56,6 +56,7 @@ class ua_rss_link extends ua_rss_link_const
 	global $ua_favorites_filename;
 	?>
 	<initialScript>
+		
 		setting = getURL("<?=$ua_path_link.$exua_parser_filename.'?exua_quality=req'?>");
 		print("setting:",setting);
 		if (setting == "1") qual = "Высокое"; else qual = "Низкое";
@@ -84,24 +85,70 @@ class ua_rss_link extends ua_rss_link_const
 				c = 11;
 				pitemCount = getStringArrayAt(dlok, c); c += 1;
 				count = 0;
+				fav_idx = 0;
+				found = 0;
 				while( count != pitemCount )
 					{
-					ptitleArray = pushBackStringArray( ptitleArray, getStringArrayAt(dlok, c)); c += 1;
+					ptitle = getStringArrayAt(dlok, c);
+					ptitleArray = pushBackStringArray( ptitleArray, ptitle); c += 1;
 					plinkArray = pushBackStringArray( plinkArray, getStringArrayAt(dlok, c)); c += 1;			
 					pdownlinkArray = pushBackStringArray( pdownlinkArray, getStringArrayAt(dlok, c)); c += 1;			
-					pdownameArray = pushBackStringArray( pdownameArray, getStringArrayAt(dlok, c)); c += 2;						
+					pdowname = getStringArrayAt(dlok, c);
+					pdownameArray = pushBackStringArray( pdownameArray, pdowname); c += 2;						
 					pbooklinkArray = pushBackStringArray( pbooklinkArray, getStringArrayAt(dlok, c)); c += 1;						
 					count += 1;
+					cnt = 0;
+						if ( found == 0)
+						{
+							while( cnt != histCount )
+							{
+								histFiles=getStringArrayAt(historyFilesArray, cnt);
+								if (histFiles == pdowname) 
+								{
+									fav_idx = count;
+									found = 1;
+									
+								} else found = 0;
+								
+								cnt += 1;
+							}	
+						}
+					}
+					if (found == 1)
+					{
+					
+					page = 0;
+					i = 0;
+					while (i &lt; fav_idx)
+					{
+						i +=  20;
+						page += 1;
+					}
+					i -=20;
+					if (p == 1 ) itm_index=fav_idx-1; else itm_index = (i-fav_idx+1)*-1;
+					
+					print ("i----------------------",i);
+					print ("page----------------------",page);
+					print ("itm_index----------------------",itm_index);
+					
 					}
 			}	
-		countPage = getURL("<?=$ua_path_link?>ua_exua_parser.php?pitemCount="+pitemCount+"&amp;num=20");
-		print ("countPage - "+countPage);
+			countPage = 0;
+			i = 0;
+			while (i &lt; pitemCount)
+			{
+				i +=  20;
+				countPage += 1;
+			}
+			print ("countPage - "+countPage);
+		
 	</initialScript>
 	
 	<onRefresh>
 	setRefreshTime(-1);    
 	showIdle();
-    if (pstyle == "1") 	type_player="Альтерн.";
+ 
+	if (pstyle == "1") 	type_player="Альтерн.";
 		else
 						type_player="Стандарт.";
 	itemCount = 0;
@@ -166,8 +213,6 @@ class ua_rss_link extends ua_rss_link_const
 	 	menuArray = pushBackStringArray( menuArray, "Плеер");
 		menucmdArray = pushBackStringArray( menucmdArray, "player_style");
 		
-			
-			
 		setFocusItemIndex(itm_index);
 		setFocusMenuIndex(menu);
 		redrawDisplay();
@@ -247,8 +292,11 @@ class ua_rss_link extends ua_rss_link_const
 	global $ua_path_link;
 	global $ua_player_parser_filename;
 	global $xtreamer;
+	
+	
 	?>
 	<onEnter>
+	site = 0;
 	returnFromLink=readStringFromFile("/tmp/env_returnFromLink_message");
 	returnFromList=readStringFromFile("/tmp/env_returnFromList_message");
 		if (returnFromLink == "1" || returnFromList == "1")
@@ -270,8 +318,13 @@ class ua_rss_link extends ua_rss_link_const
 	url = "<?= $url ?>"+param;
 	pstyle = getURL("<?=$ua_path_link.$ua_player_parser_filename.'?player_style=req'?>");
 	page = 1;
-	executeScript("initialScript");
 	itm_index=0;
+	<?
+		include ("ua_rss_historyfiles.inc.php");
+	?>
+		
+	executeScript("initialScript");
+	
 	menu=0;
 	use_alt_player=readStringFromFile("/tmp/env_use_alt_player_message");
 		if (use_alt_player == "1")
@@ -300,6 +353,7 @@ class ua_rss_link extends ua_rss_link_const
 			}
 		?>	
 		writeStringToFile("/tmp/env_returnFromLink_message", "1");
+		writeStringToFile("/tmp/env_returnListIndex_message", listIndex);
 	</onExit>
 	
 	<?php

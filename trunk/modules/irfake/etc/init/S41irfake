@@ -15,30 +15,34 @@ case "$1" in
 	cp -a $mos/irfake $etc/
 
 	# patch rcS
-	sed -i '/# irfake patch/{N;N;N;d}' $etc/rcS
+	grep -q '# irfake patch' $etc/rcS && sed -i '/# irfake patch/{N;N;N;d}' $etc/rcS
 	cp -a $mos/etc/rc.init/S04irfake.sh $etc/rc.init/
 
 	# fork r6+
-	if grep -q '# fork for r6+' $etc/rcS ; then
-		sed -i '/# fork for r6+/{N;N;d}' $etc/rcS
-		cp -a $mos/etc/rc.init/S05powerkey.sh $etc/rc.init/
-	fi
+	grep -q '# fork for r6' $etc/rcS && sed -i '/# fork for r6+/{N;N;d}' $etc/rcS
+	rm -f $etc/rc.init/S05powerkey.sh
+
 	echo "Please, reboot device!"
 	;;
 
   disable)
 	echo "Disabling IRFake..."
-	sed -i '/# irfake patch/{N;N;N;N;d}' /usr/local/etc/rcS
+	grep -q '# irfake patch' $etc/rcS && sed -i '/# irfake patch/{N;N;N;d}' $etc/rcS
+	grep -q '# fork for r6' $etc/rcS && sed -i '/# fork for r6+/{N;N;d}' $etc/rcS
+	rm -f $etc/rc.init/S04irfake.sh
+	rm -f $etc/rc.init/S05powerkey.sh
+
 	killall irfake4
 	echo "Please, reboot device!"
 	;;
+
   copy)
-	cp $etc/irfake/irfake.conf $mos/irfake.conf
+	cp $etc/irfake/irfake.conf $mos/irfake/irfake.conf
 	;;
 
   save)
 	killall irfake4
-	cp $mos/irfake.conf $etc/irfake/irfake.conf
+	cp $mos/irfake/irfake.conf $etc/irfake/irfake.conf
 	$etc/irfake/irfake4 -R -f $etc/irfake/irfake.conf >/dev/null 2>&1 &
 	;;
   *)

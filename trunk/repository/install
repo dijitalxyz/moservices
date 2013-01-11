@@ -1,0 +1,192 @@
+#!/bin/sh
+# -------------------------------------
+# install moServices3
+# =====================================
+# Revision: 7
+# -------------------------------------
+# 12/10/13 FarVoice  www.moservices.org
+# =====================================
+#
+cError()
+{
+	if [ $1 != 0 ] ; then
+		echo "error: $2"
+		[ -n $3 ] && rm -f $3
+		exit 1
+	fi
+}
+
+sizePart()
+{
+	s=$( echo $( df | grep -E $1'$' ) | cut -d' ' -f4 )
+	[ -z "$s" ] && s=0
+	echo $s
+}
+
+addFile()
+{
+	if [ ! -f /usr/local/etc/$1 ] ; then
+		cp -a /etc/$1 /usr/local/etc/$1
+		cat /proc/mounts | grep -q /etc/$1 || mount -o bind /usr/local/etc/$1 /etc/$1
+	fi
+		
+	grep -q $1 $2 || echo "mount -o bind /usr/local/etc/$1 /etc/$1" >> $2
+}
+#
+# =====================================
+if [ "$1" = '-h' ] ; then
+	echo 'Installing moServices 3 r7
+ Options:
+  auto - root or etc partition - default
+  root - root partition
+  etc  - etc partition
+  data - data partition (for 1186)
+'
+	exit
+fi
+
+target='auto'
+[ $# -ge 1 ] && target=$1
+
+# init variables
+etc='/usr/local/etc'
+repository="http://www.moservices.org/mos3"
+enviroment=''
+
+# read config
+[ -f $PWD/install.conf ] && . $PWD/install.conf
+[ -f /tmp/repo ] && repository="$( head -n 1 /tmp/repo )"
+
+# get enviroment
+if [ -z "$enviroment" ] ; then
+	s="$( uname -r )"
+	if [ "$s" = '2.6.12.6-VENUS' ] ; then
+		enviroment='12'
+	elif [ "$s" = '2.6.34-VENUS' ] ; then
+		enviroment='34'
+	else
+		cError 1 "Linux $s is not supported"
+	fi
+	echo "  Detected $s core"
+
+	if ls /lib/ | grep -q 'ld-uClibc-0\.9\.28' ; then
+		echo '  Detected uClibc 0.9.28'
+		enviroment=$enviroment'28'
+	elif ls /lib/ | grep -q 'ld-uClibc-0\.9\.30\.3' ; then
+		echo '  Detected uClibc 0.9.30.3'
+		enviroment=$enviroment'30'
+	else
+		cError 1 "Didn't detect supported uClibc"
+	fi
+fi
+
+# checking and remove previous installation
+mos=$etc/mos
+
+if [ -d $mos ] && [ -f $mos/services ] ; then
+  echo "  Remove previous installation"
+  $mos/services stop
+  $mos/services disable
+  rm -Rf /usr/local/etc/mos/*
+fi
+
+if [ ! -d $mos ] ; then
+	mkdir $mos
+	cError $? "Can't create $mos directory"
+fi
+
+# analize where install
+# mos already mounted?
+if ! df | grep -q $mos ; then
+	if [ "$target" == "auto" ] ; then
+
+		if [ $enviroment = 3430 ] ; then
+			target='data'
+			st=$( sizePart '/data' )
+			s=$( sizePart '/usr/local/etc' )
+			if [ $s -ge $st ] ; then
+				target='etc'
+			fi
+		else
+			target='root'
+			st=$( sizePart '/' )
+			s=$( sizePart '/usr/local/etc' )
+			if [ $s -gt $st ] ; then
+				target='etc'
+			fi
+		fi
+echo "  Place to install: $target"
+	fi
+
+	if [ "$target" == "root" ] ; then
+
+		# goes to root
+		grep -q '# moServices goes to root' $etc/rcS || sed -i '
+/\/sbin\/modprobe sata_mars\&/a\
+\
+# moServices goes to root\
+mount -o remount,rw /\
+mount /usr/share/mos /usr/local/etc/mos\
+#\
+' $etc/rcS
+		# mount & remount
+		mount -o remount,rw /
+		mkdir -p /usr/share/mos
+		mount /usr/share/mos $mos
+
+	elif [ "$target" == "data" ] ; then
+		# goes to data
+		grep -q '# moServices goes to data' $etc/rcS || echo '
+# moServices goes to data
+mount /data/mos /usr/local/etc/mos
+#' >> $etc/rcS
+		# mount & remount
+		mkdir -p /data/mos
+		mount /data/mos $mos
+	fi
+fi
+
+# Seagate FW patch
+if [ ! -f $etc/rcS ] ; then
+
+	if [ ! -f $etc/autorun.sh ] ; then
+		echo '#!/bin/sh' > $etc/autorun.sh
+		chmod +x $etc/autorun.sh
+	fi
+
+	addFile profile $etc/autorun.sh
+	addFile passwd $etc/autorun.sh
+fi
+
+#download
+f='base.tar.bz2'
+if [ ! -f /tmp/$f ] ; then
+	wget $repository/$f -O /tmp/$f
+	cError $? "Unable to download $f" /tmp/$f
+fi
+
+# checking archive
+tar -tjf /tmp/$f >/dev/null 2>&1
+cError $? "Archive /tmp/$f is corrupt!" /tmp/$f
+
+# extract
+tar -xjf /tmp/$f -C $mos/
+cError $? "Archive /tmp/$f extract error!" /tmp/$f
+rm -f /tmp/$f
+
+# initial action
+echo "repository=$repository
+enviroment=$enviroment" > $mos/etc/pm.conf
+
+rm -f $mos/base.package
+
+export PATH=/usr/local/etc/mos/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/etc/mos/lib:/lib
+
+$mos/bin/pm install base
+
+# starting packages
+$mos/services enable
+$mos/services start
+
+echo 'moServices3 install complete. Please, reboot the player'

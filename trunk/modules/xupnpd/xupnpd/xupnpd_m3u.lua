@@ -1,4 +1,4 @@
--- Copyright (C) 2011 Anton Burdinuk
+-- Copyright (C) 2011-2012 Anton Burdinuk
 -- clark15b@gmail.com
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
@@ -31,8 +31,7 @@ function playlist_new_folder(parent,name)
     local child={}
     parent.size=parent.size+1
     child.name=name
-    child.objid=parent.objid..'/'..parent.size
---    child.id=parent.size
+    child.objid=parent.objid..'_'..parent.size
     child.parent=parent
     child.size=0
     child.elements={}
@@ -43,17 +42,12 @@ end
 function playlist_sort_elements(pls)
     if cfg.sort_files~=true or pls==nil or pls.elements==nil then return end
     table.sort(pls.elements,function(a,b) return string.lower(a.name)<string.lower(b.name) end)
-
---    for i,j in ipairs(pls.elements) do
---        print('* '..j.name)
---    end
 end
 
 function playlist_fix_sub_tree(pls)
     playlist_sort_elements(pls)
     for i,j in ipairs(pls.elements) do
---        j.id=i
-        j.objid=pls.objid..'/'..i
+        j.objid=pls.objid..'_'..i
         j.parent=pls
 
         if j.elements then
@@ -61,10 +55,7 @@ function playlist_fix_sub_tree(pls)
         else
             j.type=util.getfext(j.url)
 
-            local m=mime[j.type]
-            if not m then j.type=cfg.default_mime_type m=mime[j.type] end
-            j.mime=m
-            j.dlna_extras=m[5]
+            if not mime[j.type] then j.type=cfg.default_mime_type end
         end
 
     end
@@ -72,8 +63,7 @@ end
 
 function playlist_attach(parent,pls)
     parent.size=parent.size+1
-    pls.objid=parent.objid..'/'..parent.size
---    pls.id=parent.size
+    pls.objid=parent.objid..'_'..parent.size
     pls.parent=parent
     parent.elements[parent.size]=pls
 end
@@ -127,10 +117,9 @@ function reload_playlists()
                 playlist_fix_sub_tree(pls)
             else
                 local udpxy=nil
-                if cfg.udpxy_url then udpxy=cfg.udpxy_url..'/udp/' end
+                if cfg.udpxy_url then udpxy=cfg.udpxy_url end
 
                 for ii,jj in ipairs(pls.elements) do
-
 
                     if udpxy then
                         jj.url=string.gsub(jj.url,'udp://@',udpxy..'/udp/',1)
@@ -148,22 +137,12 @@ function reload_playlists()
                     if pls.plugin and not jj.plugin then jj.plugin=pls.plugin end
 
                     if pls.dlna_extras and not jj.dlna_extras then jj.dlna_extras=pls.dlna_extras end
-                    local m=mime[jj.type]
 
-                    if not m then jj.type=cfg.default_mime_type m=mime[jj.type] end
+                    if not mime[jj.type] then jj.type=cfg.default_mime_type end
 
-                    jj.mime=m
-
-                    if jj.dlna_extras and dlna_org_extras[jj.dlna_extras] then
-                        jj.dlna_extras=dlna_org_extras[jj.dlna_extras]
-                    else
-                        jj.dlna_extras=m[5]
-                    end
-
-                    jj.objid=pls.objid..'/'..ii
+                    jj.objid=pls.objid..'_'..ii
                     jj.parent=pls
---                    jj.id=ii
-                    if cfg.debug>1 then print('\''..jj.name..'\' '..jj.url..' <'..jj.mime[3]..'>') end
+                    if cfg.debug>1 then print('\''..jj.name..'\' '..jj.url..' <'..jj.type..'>') end
 
                     if cfg.group==true then
                         local group_title=jj['group-title']
@@ -198,7 +177,7 @@ function reload_playlists()
             playlist_attach(playlist_data,j)
 
             for ii,jj in ipairs(j.elements) do
-                jj.objid=j.objid..'/'..ii
+                jj.objid=j.objid..'_'..ii
             end
         end
     end
@@ -206,11 +185,13 @@ function reload_playlists()
 end
 
 function find_playlist_object(s)
+    if not s then return nil end
+
     local pls=nil
 
-    for i in string.gmatch(s,'([^/]+)') do
+    for i in string.gmatch(s,'([^_]+)') do
         if not pls then
-            if i~='0' then return nil else pls=playlist_data end
+            if string.find(i,'^%d+$') then pls=playlist_data else return nil end
         else
             if not pls.elements then return nil end            
             pls=pls.elements[tonumber(i)]

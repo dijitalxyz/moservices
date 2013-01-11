@@ -87,7 +87,7 @@ class ua_rss_cat extends ua_rss_cat_const2
 	global $ua_rss_favorites_filename;
 	global $fsua_rss_list_filename;
 	global $fsua_parser_filename;
-	
+	global $built_in_keyb;
 	?>
 
 	<searchLink>
@@ -103,8 +103,20 @@ class ua_rss_cat extends ua_rss_cat_const2
 		<title>ПОИСК</title>
 			<onClick>
 				showIdle();
-				rss = "<?=$ua_path_link.$ua_rss_keyboard_filename?>";
-				keyword = doModalRss(rss);
+				<?
+				if ($built_in_keyb == "1")
+				{
+					?>
+					keyword = getInput("Search", "doModal");	
+					<?
+				} else
+				{
+				?>
+					rss = "<?=$ua_path_link.$ua_rss_keyboard_filename?>";
+					keyword = doModalRss(rss);
+				<?
+				}
+				?>
 				cancelIdle();
 				if (keyword!=null)
 				{

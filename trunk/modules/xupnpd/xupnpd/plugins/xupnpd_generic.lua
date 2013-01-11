@@ -1,4 +1,4 @@
--- Copyright (C) 2011 Anton Burdinuk
+-- Copyright (C) 2011-2012 Anton Burdinuk
 -- clark15b@gmail.com
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
@@ -41,5 +41,7 @@ function generic_sendurl(generic_url,range)
 end
 
 plugins['generic']={}
+plugins.generic.name="Generic"
+plugins.generic.desc="<i>m3u_url</i>"
 plugins.generic.sendurl=generic_sendurl
 plugins.generic.updatefeed=generic_updatefeed

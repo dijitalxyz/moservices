@@ -93,6 +93,7 @@ class ua_rss_cat extends ua_rss_cat_const2
 	global $ua_path_link;
 	global $ua_rss_keyboard_filename;
 	global $ua_rss_favorites_filename;
+	global $built_in_keyb;
 	?>
 
 	<searchLink>
@@ -108,8 +109,20 @@ class ua_rss_cat extends ua_rss_cat_const2
 		<title>ПОИСК</title>
 			<onClick>
 				showIdle();
-				rss = "<?=$ua_path_link.$ua_rss_keyboard_filename?>";
-				keyword = doModalRss(rss);
+				<?
+				if ($built_in_keyb == "1")
+				{
+					?>
+					keyword = getInput("Search", "doModal");	
+					<?
+				} else
+				{
+				?>
+					rss = "<?=$ua_path_link.$ua_rss_keyboard_filename?>";
+					keyword = doModalRss(rss);
+				<?
+				}
+				?>
 				cancelIdle();
 				if (keyword!=null)
 				{
@@ -125,7 +138,7 @@ class ua_rss_cat extends ua_rss_cat_const2
 		<image><?=$ua_images_path ?>ua_favorites.png</image>		
 	</item>
 	<item>
-		<title>ПОСЛЕДНИЕ ПОСТУПЛЕНИЯ</title>
+		<title>Последние поступления</title>
 		<link><?=$ua_path_link.$uakino_rss_list_filename."?view=last"?></link>
 		<image><?=$ua_images_path ?>ua_folder.png</image>		
 	</item>

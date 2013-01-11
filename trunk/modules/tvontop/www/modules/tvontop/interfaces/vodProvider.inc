@@ -7,6 +7,7 @@
 #############################################################################
 require_once 'interfaces/provider.inc';
 require_once 'providers/commonProvider.inc';
+require_once "tools/exceptions.inc";
 
 abstract class VodProvider extends Provider {
 

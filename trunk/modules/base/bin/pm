@@ -62,7 +62,7 @@ loadFile()
 			fi
 			cp -a $localrepo/$1.tar.bz2 $tmp/
 		else
-			nice -n 10 wget -T 5 -t 3 $repository/$1.tar.bz2 -O $tmp/$1.tar.bz2
+			nice -n 10 wget $repository/$1.tar.bz2 -O $tmp/$1.tar.bz2
 			if [ $? -ne 0 ] ; then
 				echo "Load error: Unable to download $repository/$1.tar.bz2"
 				rm -f $tmp/$1.tar.bz2

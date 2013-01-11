@@ -43,6 +43,7 @@ class Logger {
     public static function getDefaultLevel() {
         return self::$defaultLevel;
     }
+
     public static function setDefaultLevel($level) {
         if ($level < 0) {
             $level = 0;
@@ -51,9 +52,11 @@ class Logger {
         }
         self::$defaultLevel = $level;
     }
+
     public static function getDefaultFilepath() {
         return self::$defaultFilepath;
     }
+
     public static function setDefaultFilepath($filepath) {
         if(!is_dir(dirname($filepath))) {
 			mkdir(dirname($filepath),0666,TRUE);

@@ -1,0 +1,14 @@
+[vsftpd_1228]
+	revision = 2
+	title = "vsFTPd FTP daemon v3.0.2 dynamic"
+	role = daemon
+	check = "port 21"
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	env = 1228
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	require = "libgccs"
+	size = 288

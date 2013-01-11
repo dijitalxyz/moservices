@@ -18,17 +18,11 @@
 	
 	
 
-	<image offsetXPC="<?= static::item_offsetXPC ?>" offsetYPC="<?= static::item_offsetYPC ?>" widthPC="<?= static::item_widthPC ?>" heightPC="<?= static::item_heightPC ?>" >
-      <?= $ua_images_path . static::item_image ?>
-    </image>
-	
-	<image offsetXPC="<?= static::poster_offsetXPC ?>" offsetYPC="<?= static::poster_offsetYPC	 ?>" widthPC="<?= static::poster_widthPC ?>" heightPC="<?= static::poster_heightPC ?>" >
-       <?= $ua_images_path . static::poster_image ?>
-    </image>
 
-	<image offsetXPC="<?= static::menu_offsetXPC ?>" offsetYPC="<?= static::menu_offsetYPC ?>" widthPC="<?= static::menu_widthPC ?>" heightPC="<?= static::menu_heightPC ?>" >
-		<?= $ua_images_path . static::menu_image ?>
-    </image>
+	
+
+
+
 	
 	<image  offsetXPC="<?= static::image_poster_offsetXPC ?>" offsetYPC="<?= static::image_poster_offsetYPC ?>" widthPC="<?= static::image_poster_widthPC ?>" heightPC="<?= static::image_poster_heightPC ?>">
 			<script> img;</script>

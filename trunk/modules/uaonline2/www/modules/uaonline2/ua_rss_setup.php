@@ -18,27 +18,18 @@ class ua_rss_setup_const
 	const imageParentFocus 		= 	'ua_parent_focus_category.bmp';
 	const imageUnFocus 			= 	'ua_unfocus_category.bmp';
 	const background_image		=   'ua_setup_border.png';
-	const header				=   'ua_header.png';
-	const footer				=   'ua_footer.png';
-	const header_offsetXPC		=	'0';
-	const header_offsetYPC		=	'4.3';
-	const header_widthPC		=	'100';
-	const header_heightPC		=	'5.6';
-	const footer_offsetXPC		=	'0';
-	const footer_offsetYPC		=	'90.4';
-	const footer_widthPC		=	'100';
-	const footer_heightPC		=	'5.6';
+	
 	// текст заголовка
 	const text_header_align		=	'left'; // далее идут константы для текста заголовка
 	const text_header_redraw	=	'yes';
 	const text_header_lines		=	'1';
-	const text_header_offsetXPC	=	'27';
+	const text_header_offsetXPC	=	'28';
 	const text_header_offsetYPC	=	'2';
 	const text_header_widthPC	=	'70';
 	const text_header_heightPC	=	'10';
 	const text_header_fontSize	=	'20'; // размер шрифта заголовка
 	const text_header_backgroundColor	=	'-1:-1:-1';// фон 
-	const text_header_foregroundColor	=	'0:0:0'; //цвет шрыфта
+	const text_header_foregroundColor	=	'255:255:255'; //цвет шрыфта
 	
 	// текст подписи 
 	const text_footer_align		=	'left';
@@ -50,14 +41,8 @@ class ua_rss_setup_const
 	const text_footer_heightPC	=	'10';
 	const text_footer_fontSize	=	'20'; 
 	const text_footer_backgroundColor	=	'-1:-1:-1';
-	const text_footer_foregroundColor	=	'0:0:0'; 
+	const text_footer_foregroundColor	=	'255:255:255'; 
     
-	// название сайта (которое справа внизу)	
-	const image_site_footer_display_offsetXPC 	= '85';
-	const image_site_footer_display_offsetYPC 	= '90.3';
-	const image_site_footer_display_widthPC 	= '4';
-	const image_site_footer_display_heightPC	= '5.5';
-	const exua_logo								= 'ua_exua_ukr.png';
 }
 class ua_rss_setup extends ua_rss_setup_const 
 {
@@ -152,13 +137,11 @@ dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?save_region="?>"+reg
 	<?php
 		include("ua_rss_idle.inc.php");
 	?>
-	<image  redraw="no" offsetXPC="<?= static::header_offsetXPC ?>" offsetYPC="<?= static::header_offsetYPC ?>" widthPC="<?= static::header_widthPC ?>" heightPC="<?= static::header_heightPC ?>">
-			<?= $ua_images_path.static::header ?>
-	</image>
-	
-	<image  redraw="no" offsetXPC="<?= static::footer_offsetXPC ?>" offsetYPC="<?= static::footer_offsetYPC ?>" widthPC="<?= static::footer_widthPC ?>" heightPC="<?= static::footer_heightPC ?>">
-			<?= $ua_images_path.static::footer ?>
-	</image>
+	<backgroundDisplay>
+			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+					<?=$ua_images_path?>ua_background_main.png
+			</image>
+	</backgroundDisplay>
 		
 	<text  align="<?= static::text_header_align ?>" redraw="<?= static::text_header_redraw ?>" lines="<?= static::text_header_lines ?>" offsetXPC="<?= static::text_header_offsetXPC ?>" offsetYPC="<?= static::text_header_offsetYPC ?>" widthPC="<?= static::text_header_widthPC ?>" heightPC="<?= static::text_header_heightPC ?>" fontSize="<?= static::text_header_fontSize ?>" backgroundColor="<?= static::text_header_backgroundColor ?>" foregroundColor="<?= static::text_header_foregroundColor ?>">
 		НАСТРОЙКИ

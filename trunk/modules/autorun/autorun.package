@@ -1,8 +1,8 @@
 [autorun]
-	revision = 1
+	revision = 2
 	title = "AutoRun"
 	role = patch
 	init = S05AutoRun
 	actions = "restart"
-	files = "etc/init/S05AutoRun"
-	size = 40
+	files = "etc/init/S05AutoRun etc/hotplug/after/block/S12autorun"
+	size = 56

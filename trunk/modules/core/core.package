@@ -1,5 +1,5 @@
 [core]
-	revision = 36
+	revision = 37
 	title = "moServices core"
 	role = core
 	init = S01core

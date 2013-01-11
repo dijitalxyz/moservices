@@ -5,7 +5,7 @@ $act = $_REQUEST[ 'do' ];
 
 if( $act == "reboot" )
 {
-	exec( 'reboot' );
+	exec( 'reboot.sh' );
 }
 // ------------------------------------
 

@@ -5,6 +5,7 @@
 # returns 1 - not installable
 # returns 0 - installable
 #
-mount | grep '/dev/root on / ' | grep -q 'squashfs' && exit 1
+mount | grep -Eq '^/dev/root ' || exit 1
+mount | grep -E '^/dev/root on / ' | grep -q 'squashfs' && exit 1
 smartctl -V 2>&1 | grep -q 'release 5.40' && exit 2
 exit 0

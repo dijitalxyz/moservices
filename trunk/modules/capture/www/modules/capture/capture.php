@@ -7,20 +7,20 @@ function getCaptureImage()
 global $mos;
 global $mosPath;
 
-	$src = '/modules/capture/noimage.png';
-	exec( "wget -q 'http://127.0.0.1/cgi-bin/IpodCGI.cgi?id=0&command=option_blue' -O /dev/null 2>/dev/null" );
-	$nn = '';
+	$s = '/modules/capture/noimage.png';
+	exec( "echo '*' >> /tmp/ir" );
+	exec( "sleep 1" );
 	if(( $ns = glob( '/tmp/nfs/*.bmp' )) !== false )
 	{
 		exec( 'rm -f /tmp/www/sc_*' );
 		foreach( $ns as $n )
 		{
-			$nn = 'sc_'. str_replace( '.bmp', '.jpg', basename( $n ));
-			exec( "$mos/bin/bmp2jpg -q 95  $n /tmp/www/$nn" );
+			$s = 'sc_'. str_replace( '.bmp', '.jpg', basename( $n ));
+			exec( "$mos/bin/bmp2jpg -q 95  $n /tmp/www/$s" );
 			unlink( $n );
 		}
 	}
-	return $nn;
+	return $s;
 }
 //
 // ------------------------------------

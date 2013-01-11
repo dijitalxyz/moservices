@@ -1,5 +1,5 @@
 [parole]
-	revision = 2
+	revision = 3
 	title = "Authorization"
 	role = patch
 	files = "www/modules/parole/"

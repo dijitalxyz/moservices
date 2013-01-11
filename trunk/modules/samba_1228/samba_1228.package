@@ -1,0 +1,12 @@
+[samba_1228]
+	revision= 2
+	title = "SAMBA daemon v3.0.8"
+	role = daemon
+	check = "port 139"
+	init = S12samba
+	backup = "samba/smb.conf"
+	config_edit = "samba/smb.conf"
+	env = 1228
+	files = "etc/init/S12samba etc/hotplug/after/block/S11samba lib/libsamba.so.0.0 lib/libsamba.so.0 lib/libsamba.so samba/"
+	require = "fhotplug"
+	size = 5352

@@ -1,4 +1,4 @@
--- Copyright (C) 2011 Anton Burdinuk
+-- Copyright (C) 2011-2012 Anton Burdinuk
 -- clark15b@gmail.com
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
@@ -188,6 +188,18 @@ function youtube_get_video_url(youtube_url)
 end
 
 plugins['youtube']={}
+--plugins.youtube.disabled=true
+plugins.youtube.name="YouTube"
+plugins.youtube.desc="<i>username</i>, favorites/<i>username</i>, playlist/<i>username</i>/<i>playlistname</i>, channel/<i>channelname</i>, search/<i>search_string</i>"..
+"<br/><b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured"
 plugins.youtube.sendurl=youtube_sendurl
 plugins.youtube.updatefeed=youtube_updatefeed
 plugins.youtube.getvideourl=youtube_get_video_url
+
+plugins.youtube.ui_config_vars=
+{
+    { "select", "youtube_fmt", "int" },
+    { "select", "youtube_region" }
+--    { "input", "cfg_and_form_input_variable_name" }
+--    { "select", "cfg_and_form_select_variable_name" }
+}

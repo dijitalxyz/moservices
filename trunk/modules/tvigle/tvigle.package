@@ -1,6 +1,0 @@
-[tvigle]
-	revision = 1
-	title = "Tvigle.RU"
-	role = rss
-	files = "www/modules/tvigle/"
-	size = 44

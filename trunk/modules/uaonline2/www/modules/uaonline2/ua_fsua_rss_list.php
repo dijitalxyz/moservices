@@ -143,7 +143,7 @@ class ua_rss_list extends ua_rss_list_const
 					}
 										
 			}	
-				
+		
 		cancelIdle();
 		setFocusItemIndex(itm_index);
 		setFocusMenuIndex(menu);
@@ -160,6 +160,7 @@ class ua_rss_list extends ua_rss_list_const
 	global $key_return;
 	global $ua_rss_keyboard_filename;
 	global $ua_favorites_filename;
+	global $built_in_keyb;
 	?>
 	<menu_template>
 	<displayTitle>
@@ -174,8 +175,20 @@ class ua_rss_list extends ua_rss_list_const
 		if (act == "search")
 			{
 			
-				rss = "<?=$ua_path_link.$ua_rss_keyboard_filename?>";
-				keyword = doModalRss(rss);
+				<?
+				if ($built_in_keyb == "1")
+				{
+					?>
+					keyword = getInput("Search", "doModal");	
+					<?
+				} else
+				{
+				?>
+					rss = "<?=$ua_path_link.$ua_rss_keyboard_filename?>";
+					keyword = doModalRss(rss);
+				<?
+				}
+				?>
 				cancelIdle();
 				if (keyword!=null)
 				{

@@ -12,6 +12,7 @@ require_once "tools/logger.inc";
 require_once "tools/http.inc";
 require_once "tools/parser.inc";
 require_once "tools/exceptions.inc";
+require_once "tools/httpSession.inc";
 
 class RhdProvider extends SeriesProvider {
 	
@@ -26,7 +27,8 @@ class RhdProvider extends SeriesProvider {
     protected $username;
     protected $password;
     protected $sessionVar = "PHPSESSID";
-
+	protected $session = null;
+	
 	public function init(Configuration &$cfg) {
 		parent::init($cfg);
 		$this->baseUrl = "http://ruhd.tv/";
@@ -36,8 +38,11 @@ class RhdProvider extends SeriesProvider {
             "User-Agent: Mozilla/5.0\r\n" .
             "Content-Type: application/x-www-form-urlencoded\r\n" .
             "Connection: Close\r\n");
-        $this->http->cookie = isset($_SESSION[$this->cookieName]) ?
-            $_SESSION[$this->cookieName] : "";
+
+		$this->session = new HttpSession();
+        $this->http->cookie = $this->session->exists($this->cookieName) ?
+            $this->session->get($this->cookieName) : "";
+
         $this->log  = Logger::getLogger(get_class());
     }
 
@@ -62,7 +67,7 @@ class RhdProvider extends SeriesProvider {
     	return isset($this->http->cookie) && $this->http->cookie != "";
     }
     public function forgetCookie() {
-        $_SESSION[$this->cookieName] = "";
+    	$this->session->delete($this->cookieName);
         $this->http->cookie = "";
     }
   	protected function login($username, $password) {
@@ -74,7 +79,7 @@ class RhdProvider extends SeriesProvider {
   		$authData = "login=$username&password=$password";
   		$url = $this->baseUrl;
         $reply = $this->http->sendPostRequest($url."?".$authData);
-        $_SESSION[$this->cookieName] = $this->http->cookie;
+        $this->session->set($this->cookieName,$this->http->cookie,86400);
     	return $reply != false;
     }
 

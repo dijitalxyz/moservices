@@ -28,12 +28,12 @@ case "$1" in
 	echo "Please, reboot device!"
 	;;
   copy)
-	cp $etc/irfake/irfake.conf $mos/irfake.conf
+	cp $etc/irfake/irfake.conf $mos/irfake/irfake.conf
 	;;
 
   save)
 	killall irfake4
-	cp $mos/irfake.conf $etc/irfake/irfake.conf
+	cp $mos/irfake/irfake.conf $etc/irfake/irfake.conf
 	$etc/irfake/irfake4 -R -f $etc/irfake/irfake.conf >/dev/null 2>&1 &
 	;;
   *)

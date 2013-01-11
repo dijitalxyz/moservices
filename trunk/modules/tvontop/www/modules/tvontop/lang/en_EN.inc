@@ -51,7 +51,9 @@ class Locale_en_EN extends Localization {
             'budget' => 'Budget',
             'images' => 'Images',
         	'new_version_title' => 'New version available.',
-        	'new_version_msg' => 'Version %1$d is available on http://tvontop.com. Please update.'
+        	'new_version_msg' => 'Version %1$d is available on http://tvontop.com. Please update.',
+        	'Best' => 'Best',
+        	'Loading video...' => 'Loading video...' 
         );
     }
 }

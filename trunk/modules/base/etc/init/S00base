@@ -7,7 +7,11 @@ mos=$etc/mos
 rc=$mos/etc/rc.init
 
 case "$1" in
-  start | stop | status)
+  start)
+	$mos/bin/rebootd >/dev/console 2>&1 &
+	;;
+
+  stop | status)
 	;;
 
   enable)
@@ -35,6 +39,9 @@ case "$1" in
 	# start S01Power foreground
 	[ -f $etc/rc.init/S01Power ] && mv $etc/rc.init/S01Power $etc/rc.init/S01Power.sh
 
+	# add all sleep patch
+	cp -a $rc/S02allSleep.sh $etc/rc.init/
+
 	# patching rcS
 
 	rcs=$etc/autorun.sh
@@ -54,6 +61,11 @@ case "$1" in
 		sed -i '/# moServices /{N;N;d}' $rcs
 		cp -a $rc/S03mosOnData.sh $etc/rc.init/
 	fi
+	if grep -q '/usr/share/bin/boot_fw' $rcs ; then
+		sed -i '/# bin.squash hack/{N;N;d}' $rcs
+		cp -a $rc/S04sskin.sh $etc/rc.init/
+	fi
+
 	sed -i '/# rc.init patch/{N;d}' $rcs
 
 	if grep -q 'swapon /mnt/rd/swap.img' $rcs ; then
@@ -74,7 +86,7 @@ case "$1" in
 /#export PATH /i\
 # mos3 section\
 pathmunge /usr/local/etc/mos/bin\
-#export LD_LIBRARY_PATH=/usr/local/etc/mos/lib:/lib\
+export LD_LIBRARY_PATH=/usr/local/etc/mos/lib:/lib\
 #
 ' $etc/profile
 	fi

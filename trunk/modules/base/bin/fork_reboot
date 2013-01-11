@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# reboot device
+#
+etc=/usr/local/etc
+mos=$etc/mos
+
+echo "$0 : stop GUI"
+killall -9 RootApp
+killall DvdPlayer
+while ps | grep -q '[dD]vdPlayer' ; do sleep 1 ; done
+killall gtalk
+
+sync
+echo 3 >/proc/sys/vm/drop_caches
+sleep 1
+
+echo "$0 : stop moServices"
+$mos/services stop
+
+echo "$0 : sleep all"
+$etc/rc.init/S02allSleep.sh stop
+
+echo "$0 : reboot"
+reboot &
+sleep 2
+reboot -f

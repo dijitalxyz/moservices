@@ -13,15 +13,15 @@ include ("ua_paths.inc.php");
 class ua_rss_cat_const
 {
 	// main items
-	const focusFontColor		=	'0:0:0';
+	const focusFontColor		=	'255:255:255';
 	const unFocusFontColor		=	'255:255:255';
 	const imageFocusBorder 		= 	'ua_focus_main.png';
 	const imageUnFocusBorder	= 	'ua_unfocus_main.png';
 	const backgroundColor 		=	'0:0:0';
 	const rowCount 				=	'5';
 	const columnCount 			=	'4';
-	const itemOffsetXPC			= 	'6';
-	const itemOffsetYPC			= 	'11';
+	const itemOffsetXPC			= 	'8';
+	const itemOffsetYPC			= 	'14';
 	const itemWidthPC			= 	'22';
 	const itemHeightPC			= 	'15';
 	const itemBackgroundColor 	= 	'0:0:0';
@@ -41,13 +41,13 @@ class ua_rss_cat_const
 	const text_header_align		=	'left'; // далее идут константы для текста заголовка
 	const text_header_redraw	=	'yes';
 	const text_header_lines		=	'1';
-	const text_header_offsetXPC	=	'27';
+	const text_header_offsetXPC	=	'28';
 	const text_header_offsetYPC	=	'2';
 	const text_header_widthPC	=	'90';
 	const text_header_heightPC	=	'10';
 	const text_header_fontSize	=	'20'; // размер шрифта заголовка
 	const text_header_backgroundColor	=	'-1:-1:-1';// фон 
-	const text_header_foregroundColor	=	'0:0:0'; //цвет шрыфта
+	const text_header_foregroundColor	=	'255:255:255'; //цвет шрыфта
 	
 	
 		
@@ -60,7 +60,7 @@ class ua_rss_cat_const
 	const text_footer_heightPC	=	'10';
 	const text_footer_fontSize	=	'20'; 
 	const text_footer_backgroundColor	=	'-1:-1:-1';
-	const text_footer_foregroundColor	=	'0:0:0'; 
+	const text_footer_foregroundColor	=	'255:255:255'; 
     
 	// название сайта (которое справа внизу)	
 	const text_site_footer_align		=	'left';
@@ -72,7 +72,7 @@ class ua_rss_cat_const
 	const text_site_footer_heightPC		=	'10';
 	const text_site_footer_fontSize		=	'20'; 
 	const text_site_footer_backgroundColor	=	'-1:-1:-1';
-	const text_site_footer_foregroundColor	=	'0:0:0'; 
+	const text_site_footer_foregroundColor	=	'255:255:255'; 
 	
 	// константы отображения итемов
 	
@@ -246,6 +246,7 @@ class ua_rss_main extends ua_rss_cat_const
 		global $filmix_rss_cat_filename;
 		global $ua_rss_update_filename;
 		global $ua_update_standalone;
+		global $ua_rss_history_filename;
 	?>
 	<onRefresh>
 		setRefreshTime(-1);    
@@ -258,7 +259,7 @@ class ua_rss_main extends ua_rss_cat_const
 				languageIndex = getStringArrayAt(dlok, 1);
 			}
 		
-		itemCount = 6;
+		itemCount = 7;
 		itemTitleArray = null;
 		itemImageArray = null;
 		itemlinkArray = null;
@@ -267,6 +268,9 @@ class ua_rss_main extends ua_rss_cat_const
 		itemTitleArray  = pushBackStringArray(itemTitleArray, "ИЗБРАННОЕ");
 		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_favorites.png");
 		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?=$ua_path_link.$ua_rss_favorites_filename?>");
+		itemTitleArray  = pushBackStringArray(itemTitleArray, "ИСТОРИЯ ПРОСМОТРОВ");
+		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_history.png");
+		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?=$ua_path_link.$ua_rss_history_filename?>");
 		if (languageIndex == "0") 
 			{
 				if (regionIndex == "0") 
@@ -421,13 +425,11 @@ class ua_rss_main extends ua_rss_cat_const
 		$this->showIdle();
 	?>
 	
-	<image  redraw="no" offsetXPC="<?= static::header_offsetXPC ?>" offsetYPC="<?= static::header_offsetYPC ?>" widthPC="<?= static::header_widthPC ?>" heightPC="<?= static::header_heightPC ?>">
-			<?= $ua_images_path.static::header ?>
-	</image>
-	
-	<image  redraw="no" offsetXPC="<?= static::footer_offsetXPC ?>" offsetYPC="<?= static::footer_offsetYPC ?>" widthPC="<?= static::footer_widthPC ?>" heightPC="<?= static::footer_heightPC ?>">
-			<?= $ua_images_path.static::footer ?>
-	</image>
+<backgroundDisplay>
+			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+					<?=$ua_images_path?>ua_background_main.png
+			</image>
+	</backgroundDisplay>
 	
 	<?php	
 	

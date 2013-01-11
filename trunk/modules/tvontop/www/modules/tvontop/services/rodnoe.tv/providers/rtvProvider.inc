@@ -20,6 +20,7 @@ class RtvProvider extends LiveTvProvider {
     protected $http;
     protected $lastError;
     protected $lastErrorMsg;
+    protected $session; 
 
     public function RtvProvider() {
 
@@ -35,9 +36,12 @@ class RtvProvider extends LiveTvProvider {
             "User-Agent: Mozilla/5.0\r\n" .
             "Content-Type: application/x-www-form-urlencoded\r\n" .
             "Connection: Close\r\n");
-        $this->http->cookie = isset($_SESSION[$this->cookieName]) ?
-            $_SESSION[$this->cookieName] : "";
-    }
+
+		$this->session = new HttpSession();
+
+ 		$this->http->cookie = $this->session->exists($this->cookieName) ?
+        					$this->session->get($this->cookieName) : "";
+	}
     
 	function getGroupList($objectId,$params) {
 		$rawObj = $this->getChannelsList();
@@ -156,7 +160,7 @@ class RtvProvider extends LiveTvProvider {
     }
 
     public function forgetCookie() {
-        $_SESSION[$this->cookieName] = "";
+        $this->session->set($this->cookieName,"");
         $this->http->cookie = "";
     }
 
@@ -207,7 +211,7 @@ class RtvProvider extends LiveTvProvider {
         }
 
         $this->log->debug("Login returned: " . $this->http->cookie);
-        $_SESSION[$this->cookieName] = $this->http->cookie;
+        $this->session->set($this->cookieName,$this->http->cookie);
         return true;
     }
 
@@ -216,7 +220,6 @@ class RtvProvider extends LiveTvProvider {
         $reply = $this->http->sendPostRequest($url);
         $this->forgetCookie();
     }
-
 
     protected function getData($url, $name) {
         $this->log->debug("Getting $name");
@@ -246,7 +249,6 @@ class RtvProvider extends LiveTvProvider {
         return false === $reply ? false : $this->parseChannelsList($reply);
     }
 
-   
     public function getEpg($id = null, $date = null) {
         $params = array();
         if (isset($id)) {

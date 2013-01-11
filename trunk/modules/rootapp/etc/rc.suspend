@@ -1,7 +1,2 @@
 #!/bin/sh
-init=/usr/local/etc/rc.init
-# reverse order
-list=$( ls $init | sed -n '1!G;h;$p' )
-for i in $list ; do
-	[ -x $init/$i ] && $init/$i stop
-done
+/usr/local/etc/rc.stop

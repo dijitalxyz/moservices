@@ -1,5 +1,5 @@
 [trans_1230]
-	revision = 0
+	revision = 2
 	title = "Transmission v2.73"
 	role = daemon
 	check = "port 9091"

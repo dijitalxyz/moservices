@@ -87,5 +87,8 @@ function gb_sendurl(gb_page_url,range)
 end
 
 plugins['giantbomb']={}
+plugins.giantbomb.name="Giant Bomb"
+plugins.giantbomb.desc="<i>channel</i>"..
+"<br/><b>Giant Bomb channels</b>: all, quicklook, review, feature, trailer, event, endurance, tang"
 plugins.giantbomb.sendurl=gb_sendurl
 plugins.giantbomb.updatefeed=gb_updatefeed

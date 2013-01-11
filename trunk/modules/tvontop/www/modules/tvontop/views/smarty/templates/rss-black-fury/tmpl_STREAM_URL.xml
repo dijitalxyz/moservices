@@ -1,1 +1,103 @@
-{$mediaObj->getParam(url)}
+<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!-- tmpl_STREAM_URL -->
+
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+
+<onRefresh>
+	postMessage(keyReturn);
+</onRefresh>
+
+<onExit>
+    setRefreshTime(-1);
+</onExit>
+
+<mediaDisplay name="photoView"
+    backgroundColor="255:170:0"
+    itemBackgroundColor="255:170:0"
+
+    viewAreaXPC="33"
+    viewAreaYPC="30"
+    viewAreaWidthPC="34"
+    viewAreaHeightPC="20"
+
+    itemOffsetXPC="99"
+    itemOffsetYPC="99"
+    itemWidthPC="1"
+    itemHeightPC="1"
+
+    itemGapXPC="0"
+    itemGapYPC="0"
+    rowCount="1"
+    columnCount="1"
+
+    idleImageXPC="34"
+    idleImageYPC="45"
+    idleImageWidthPC="32"
+    idleImageHeightPC="3"
+
+    sideTopHeightPC="0"
+    sideBottomHeightPC="0"
+    sideLeftWidthPC="0"
+    sideRightWidthPC="0"
+
+    drawItemText="no"
+    slidingItemText="no"
+    sliding="no" >
+	<onUserInput>
+        key = currentUserInput();
+        if (key == keyReturn) {
+			"false";
+			setRefreshTime(-1);
+		}
+		else if (key == keyEnter) {
+			"false";
+		} else {
+			"true";
+		}
+	</onUserInput>
+{* Idle images *}
+{for $i=0 to 9}
+    <idleImage>{$config->get(cfg_resources_home,Runtime)}img/progress/img0000{$i}.jpg</idleImage>
+{/for}
+{for $i=10 to 23}
+    <idleImage>{$config->get(cfg_resources_home,Runtime)}img/progress/img000{$i}.jpg</idleImage>
+{/for}
+    
+    <text offsetXPC="0.5" offsetYPC="18" widthPC="99" heightPC="81" backgroundColor="0:0:0" />
+    <text offsetXPC="1" offsetYPC="1" widthPC="98" heightPC="16" backgroundColor="255:170:0" >{$locale->msg('Loading video...')}</text>
+	<image offsetXPC="3" offsetYPC="20" widthPC="23" heightPC="50">{$config->get(cfg_resources_home,Runtime)}img/film.png</image>
+	<text offsetXPC="30"  offsetYPC="20" widthPC="60" heightPC="40" backgroundColor="0:0:0" foregroundColor="160:160:160" fontSize="14" align="justify"	lines="3" redraw="yes" >
+ 	<script>
+		envKey 		= "playedTitle";
+		executeScript("getEnvValue");
+ 		title = envValue;
+        if ("" == title ) {
+            "{$mediaObj->getParam(title)}";
+        } else {
+            title;
+        } title;
+        </script>
+	</text>
+
+</mediaDisplay>
+
+<channel>
+    <item>
+        <title></title>
+		<enclosure url="{$mediaObj->getParam(url)}" type="video/mp4" />
+    </item>
+</channel>
+<onEnter>
+    executeScript("platformInit");
+	postMessage(keyEnter); 
+    setRefreshTime(4000);
+</onEnter>
+
+</rss>
+
