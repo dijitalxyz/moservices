@@ -1,7 +1,8 @@
 [rootapp]
-	revision = 2
+	revision = 3
 	title = "Patched RootApp"
+	init=S42rootapp
 	role = patch
 	init = S42rootapp
-	files = "bin/RootApp etc/rc.suspend etc/rc.wakeup etc/S01Power etc/S10moServices etc/init/S42rootapp"
-	size = 340
+	files = "bin/RootApp etc/rc.suspend etc/rc.wakeup etc/init/S42rootapp"
+	size = 360

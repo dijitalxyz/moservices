@@ -1,7 +1,8 @@
 <?php
 require_once 'interfaces/provider.inc';
-require_once 'tools/cache.inc';
+//require_once 'tools/cache.inc';
 require_once 'tools/logger.inc';
+require_once 'tools/httpSession.inc';
 
 class CacheProvider extends Provider {
 
@@ -17,6 +18,8 @@ class CacheProvider extends Provider {
 	public 		$cacheClearIntervall 	= 3600;// 1 hour
 	//default TTL for objects. Better is to set TTL from provider
 	protected 	$defaultCacheTime = 300;//5 min.  
+	
+	protected 	$session = null;
 
 	//Session keys
 	public static $CACHE_CATALOG_KEY  	= "CACHE_CATALOG";
@@ -27,7 +30,8 @@ class CacheProvider extends Provider {
 		$this->log = Logger::getLogger(get_class());
 		$this->log->setFilepath("temp/log/cache.log"); 
 		$this->log->setDefaultLevel(10);
-		$this->cacheManager = new CacheManager();	
+//		$this->cacheManager = new CacheManager();
+		$this->session = new HttpSession();
 	}
 
 	function init(Configuration &$cfg) {
@@ -56,32 +60,35 @@ class CacheProvider extends Provider {
 			mkdir($this->savePath,0666,TRUE);
 		} 
 
-        if(!isset($_SESSION[self::$CACHE_CATALOG_KEY]) || true) {
+        if(!$this->session->exists(self::$CACHE_CATALOG_KEY)) {
+        	
 			if(file_exists($this->cachedObjectsFilePath)) {
-				$_SESSION[self::$CACHE_CATALOG_KEY] = parse_ini_file($this->cachedObjectsFilePath,false);
+				$this->session->set(self::$CACHE_CATALOG_KEY,parse_ini_file($this->cachedObjectsFilePath,false));
 			} else {
-				$_SESSION[self::$CACHE_CATALOG_KEY] = array();
+				$this->session->set(self::$CACHE_CATALOG_KEY,array());
 			}
 		}
-		if(!isset($_SESSION[self::$CACHE_CLEARED_KEY]) || time() - $_SESSION[self::$CACHE_CLEARED_KEY] > $this->cacheClearIntervall) {
+
+		if(!$this->session->exists(self::$CACHE_CLEARED_KEY) || 
+			time() - $this->session->get(self::$CACHE_CLEARED_KEY) > $this->cacheClearIntervall) {
 			$this->clearCache();
-			$_SESSION[self::$CACHE_CLEARED_KEY] = time();
+			$this->session->set(self::$CACHE_CLEARED_KEY,time());
 		} 
 		//TODO: check free space (disk_ free_ space)
     }
 
 	function clearCache() {
 		$this->log->debug("Clear cache");
-		if(isset($_SESSION[self::$CACHE_CATALOG_KEY])) {
+		if($this->session->exists(self::$CACHE_CATALOG_KEY)) {
 			$timestamp = time();
-			foreach ($_SESSION[self::$CACHE_CATALOG_KEY] as $cacheId => $expireDate) {
+			foreach ($this->session->get(self::$CACHE_CATALOG_KEY) as $cacheId => $expireDate) {
 				if($timestamp >= $expireDate) {
 					$this->deletefromCache($cacheId);
 				}
 			}
 			$this->saveCatalog();
 		}
-	}  
+	}
 
     function getCacheId($objectId, $type) {
     	$cacheId  = $this->config->get("currentService","Runtime") . "_";
@@ -98,7 +105,7 @@ class CacheProvider extends Provider {
     	return $this->savePath.$cacheId.".txt";
     }
 
-    function cacheObject($obj) {
+    function cacheObject($obj, $cacheId = null) {
     	$expireDate = $obj->getExpireDate();
     	$timestamp 	= time();
     	if($expireDate == 0 || ($expireDate > 0 && $expireDate <= $timestamp)) {
@@ -111,11 +118,13 @@ class CacheProvider extends Provider {
 			$expireDate  = $timestamp + $this->defaultCacheTime;
 		}
 
-		if(!isset($_SESSION[self::$CACHE_CATALOG_KEY])) {
-			$_SESSION[self::$CACHE_CATALOG_KEY] = array();
+		if(!$this->session->exists(self::$CACHE_CATALOG_KEY)) {
+			$this->session->set(self::$CACHE_CATALOG_KEY, array());
 		}
 
-		$cacheId = $this->getCacheId($obj->getId(), $obj->getType());
+		if(!isset($cacheId)) {
+			$cacheId = $this->getCacheId($obj->getId(), $obj->getType());
+		}
 		$strObj = serialize($obj);
 		//size if object
 		$size = strlen($strObj);
@@ -133,13 +142,17 @@ class CacheProvider extends Provider {
     }
 
 	function updateCatalog($cacheId, $expireDate) {
-		$_SESSION[self::$CACHE_CATALOG_KEY][$cacheId] = $expireDate;
+		$catalog = $this->session->get(self::$CACHE_CATALOG_KEY);
+		$catalog[$cacheId] = $expireDate;
+		//?? do we need this
+		$this->session->set(self::$CACHE_CATALOG_KEY,$catalog);
 		$this->saveCatalog();
 	}
 
 	function saveCatalog() {
 		$strCatalog = "";
-		foreach ($_SESSION[self::$CACHE_CATALOG_KEY] as $key => $expDate) {
+		$catalog = $this->session->get(self::$CACHE_CATALOG_KEY);
+		foreach ($catalog as $key => $expDate) {
 			$strCatalog .= $key."=".$expDate."\r\n";
 		}
 		file_put_contents ($this->cachedObjectsFilePath, $strCatalog);
@@ -154,22 +167,24 @@ class CacheProvider extends Provider {
 
     function saveToMemory($cacheId, $strObj) {
     	$this->log->debug("Cache Object [".$cacheId."] to session.");
-		$_SESSION[$cacheId] = $strObj;
+    	$this->session->set($cacheId,$strObj);
 		return "SESSION";
     }
 
     function getCachedObject($objId, $objectType) {
     	$obj = null;
     	$cacheId = $this->getCacheId($objId, $objectType);
-    	if(isset($_SESSION[self::$CACHE_CATALOG_KEY][$cacheId])) {
-    		$expireDate = $_SESSION[self::$CACHE_CATALOG_KEY][$cacheId];
+    	$catalog = $this->session->get(self::$CACHE_CATALOG_KEY);
+    	if(isset($catalog[$cacheId])) {
+    		$expireDate = $catalog[$cacheId];
     	}
 
     	if(isset($expireDate) && time() < $expireDate) {
     		//try to get obj from session
-    		if(isset($_SESSION[self::$CACHE_KEY][$cacheId])) {
+    		$cache = $this->session->get(self::$CACHE_KEY);
+    		if(isset($cache[$cacheId])) {
     			$this->log->debug("Object [".$cacheId."] found in session cache.");
-    			$strObj = $_SESSION[self::$CACHE_KEY][$cacheId];
+    			$strObj = $cache[$cacheId];
     		}
     		if(!isset($strObj) || "" == $strObj) {
 		   		$filename = $this->getCacheFilename($cacheId);
@@ -189,12 +204,15 @@ class CacheProvider extends Provider {
     }
     
     function deletefromCache($cacheId) {
-    	if(isset($_SESSION[self::$CACHE_CATALOG_KEY][$cacheId])) {
-    		unset($_SESSION[self::$CACHE_CATALOG_KEY][$cacheId]);
+    	$catalog = $this->session->get(self::$CACHE_CATALOG_KEY);
+    	if(isset($catalog[$cacheId])) {
+    		unset($catalog[$cacheId]);
     	}
-    	if(isset($_SESSION[self::$CACHE_KEY][$cacheId])) {
+    	$cache = $this->session->get(self::$CACHE_KEY);
+    	if(isset($cache[$cacheId])) {
     		$this->log->debug("Delete object [".$cacheId."] from session cache.");
-    		unset($_SESSION[self::$CACHE_KEY][$cacheId]);
+    		unset($cache[$cacheId]);
+    		$this->session->set(self::$CACHE_KEY,$cache);
     	}
 
    		$filename = $this->getCacheFilename($cacheId);
@@ -225,7 +243,7 @@ class CacheProvider extends Provider {
 		$newObj = $this->getSubprovider()->getObject($objectId, $params);
 		$this->log->info("done");
 		if(null != $newObj) {
-			$this->cacheObject($newObj);
+			$this->cacheObject($newObj,$cacheId);
 		}
 		return $newObj;
 	}

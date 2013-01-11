@@ -86,7 +86,7 @@ function rss_trans_content()
 		url = getStringArrayAt(urlArray , idx);
 	}
 	else
-	if (userInput == "<?= getRssCommand('left') ?>" || userInput == "<?= getRssCommand('menu') ?>" || userInput == "<?= getRssCommand('forward') ?>")
+	if (userInput == "<?= getRssCommand('left') ?>" || userInput == "<?= getRssCommand('menu') ?>" || userInput == "<?= getRssCommand('rewind') ?>")
 	{
 	        url = "<?= getMosUrl().'?page=rss_trans_menu' ?>";
 	}

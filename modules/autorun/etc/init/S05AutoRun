@@ -2,25 +2,34 @@
 #
 # execute autorun script on plugged drives
 #
+hot=/usr/local/etc/mos/etc/hotplug/after/block/S12autorun
+
 case "$1" in
   start)
-	#
-	# waiting for mount disks
-	#
-	/usr/local/etc/mos/bin/wait_mount && exit 1
+	for i in /tmp/hdd/volumes/HDD* /tmp/hddmedia/* /tmp/usbmounts/sd* ; do
+		[ -d $i ] || continue
 
-	for i in $( ls /tmp/usbmounts ) ; do
-		if [ -f /tmp/usbmounts/$i/autorun ] ; then
+		if [ -f $i/autorun ] ; then
 			cr=$( printf "\r" )
-			sed "s/$cr//" /tmp/usbmounts/$i/autorun > /tmp/autorun
+			sed "s/$cr//" $i/autorun > /tmp/autorun
 			chmod +x /tmp/autorun
 			/tmp/autorun
 			rm /tmp/autorun
 		fi
 	done
 	;;
-  stop|status|enable|disable)
+
+  enable)
+	chmod +x $hot
 	;;
+
+  disable)
+	chmod -x $hot
+	;;
+
+  stop|status)
+	;;
+
   *)
 	echo $"Usage: $0 {start|stop|status|enable|disable}"
 	;;

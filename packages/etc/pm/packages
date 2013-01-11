@@ -1,12 +1,3 @@
-[autorun]
-	revision = 1
-	title = "AutoRun"
-	role = patch
-	init = S05AutoRun
-	actions = "restart"
-	files = "etc/init/S05AutoRun"
-	size = 40
-
 [awk]
 	revision = 1
 	title = "GNU Awk 3.1.5"
@@ -14,74 +5,12 @@
 	files = "bin/awk"
 	size = 1272
 
-[base]
-	revision = 13
-	title = "moServices base"
-	role = package
-	init = S00base
-	files = "services bin/mos_remove bin/pm bin/wait_ip bin/wait_mount bin/wget etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop"
-	require = "libgccs busybox web core base2"
-	size = 408
-
-[base2]
-	revision = 1
-	title = "moServices base patch"
-	role = package
-	files = "base2.patch"
-	size = 32
-
-[bftpd]
-	revision = 1
-	title = "bFTPd FTP daemon v2.3"
-	role = daemon
-	check = "port 21"
-	init = S15bftpd
-	backup = "etc/bftpd.conf"
-	navy_title = "Explore FTP"
-	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
-	config_edit = "etc/bftpd.conf"
-	files = "bin/bftpd etc/bftpd.conf etc/init/S15bftpd"
-	size = 128
-
-[busybox]
-	revision= 4
-	title = "BusyBox v1.18.5"
-	role = package
-	files = "bin/bunzip2 bin/busybox.1.18.5 bin/bzip2 bin/gunzip bin/gzip bin/httpd bin/passwd bin/realpath bin/tar bin/telnetd bin/sort"
-	size = 1288
-
-[capture]
-	revision = 3
-	title = "Capture TV screen"
-	role = web
-	files = "bin/bmp2jpg www/modules/capture/"
-	size = 3696
-
-[core]
-	revision = 36
-	title = "moServices core"
-	role = core
-	init = S01core
-	backup = "etc/core.ini"
-	config_link = "?page=sets"
-	files = "etc/core.ini etc/init/S01core www/modules/core/ www/index.php www/favicon.ico"
-	size = 844
-
 [curl]
 	revision = 2
 	title = "cUrl 7.20.1"
 	role = package
 	files = "bin/curl"
 	size = 800
-
-[downloady]
-	revision = 1
-	title = "PHP Download manager v1.5"
-	role = web
-	navy_title = "Downloads"
-	navy_frame = "%mos%modules/downloady/dstatus.htm"
-	files = "www/modules/downloady/"
-	size = 132
 
 [fakeshell]
 	revision= 2
@@ -153,42 +82,6 @@
 	role = rss
 	files = "www/modules/ipla/"
 	size = 1044
-
-[iptvlist]
-	revision = 5
-	title = "IPTVList"
-	role = rss
-	navy_title = "IPTVList configuration"
-	navy_frame = "/modules/iptvlist/index.html"
-	backup = "www/modules/iptvlist/*.conf www/modules/iptvlist/*.m3u"
-	files = "www/modules/iptvlist/"
-	require = "rtmpdump"
-	size = 2476
-
-[irfake]
-	revision = 5
-	title = "IR Fake RC replacement v1.2.15r2"
-	role = patch
-	init = S41irfake
-	backup = "irfake/irfake.conf"
-	config_before = copy
-	config_after = save
-	config_edit = "irfake/irfake.conf"
-	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh etc/rc.init/S04powerkey.sh irfake/"
-	size = 160
-
-[irfake_3430]
-	revision = 1
-	title = "IR Fake RC replacement v1.2.15r2"
-	role = patch
-	init = S41irfake
-	backup = "irfake/irfake.conf"
-	config_before = copy
-	config_after = save
-	config_edit = "irfake/irfake.conf"
-	env = 3430
-	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh irfake/"
-	size = 140
 
 [itunes]
 	revision= 1
@@ -292,16 +185,6 @@
 	env = 1230
 	size = 360
 
-[libcurl_3430]
-	revision = 2
-	title = "lib CUrl 4.2.0"
-	role = package
-	files = "lib/libcurl.so lib/libcurl.so.4 lib/libcurl.so.4.2.0"
-	require = "libcrypto libssl libz"
-	check = "lib libcurl.so.4"
-	env = 3430
-	size = 360
-
 [libevent2_1228]
 	revision = 1
 	title = "Lib Event-2.0 5.0.1"
@@ -317,15 +200,6 @@
 	role = package
 	check = "lib lib/libevent-2.0.so.5"
 	env = 1230
-	files = "lib/libevent.so lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1"
-	size = 1600
-
-[libevent2_3430]
-	revision = 1
-	title = "Lib Event-2.0 5.0.1"
-	role = package
-	check = "lib lib/libevent-2.0.so.5"
-	env = 3430
 	files = "lib/libevent.so lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1"
 	size = 1600
 
@@ -597,17 +471,6 @@
 	files = "www/modules/myhit/"
 	size = 80
 
-
-	size = 20
-
-[parole]
-	revision = 2
-	title = "Authorization"
-	role = patch
-	files = "www/modules/parole/"
-	require = "busybox"
-	size = 72
-
 [php_1228]
 	revision = 3
 	title = "PHP v5.3.9"
@@ -634,14 +497,6 @@
 	files = "bin/php"
 	require = "libz libiconv libpng15 libjpeg libcrypto libssl libcurl libxml2"
 	size = 7188
-
-[pohdmenu]
-	revision = 2
-	title = "Home menu replacement for pohd skin"
-	init = S33pohdmenu
-	role = patch
-	files = "pohdmenu/ etc/init/S33pohdmenu"
-	size = 84
 
 [pshare]
 	revision= 2
@@ -692,14 +547,6 @@
 	files = "www/modules/repos/"
 	size = 64
 
-[rootapp]
-	revision = 2
-	title = "Patched RootApp"
-	role = patch
-	init = S42rootapp
-	files = "bin/RootApp etc/rc.suspend etc/rc.wakeup etc/S01Power etc/S10moServices etc/init/S42rootapp"
-	size = 340
-
 [rssex2]
 	revision = 15
 	title = "RSS Ex 2.0.11 r606"
@@ -712,33 +559,6 @@
 	files = "etc/init/S31rssex2 rssex2/ www/modules/rssex2/"
 	require = "awk httpd curl rtmpdump"
 	size = 14720
-
-[rtmpdump]
-	revision= 2
-	title = "RTMPDump v2.4"
-	role = package
-	files = "bin/rtmpdump"
-	size = 568
-
-[samba]
-	revision = 3
-	title = "SAMBA daemon v3.0.23c"
-	role = daemon
-	check = "port 139"
-	init = S12samba
-	backup = "samba/smb.conf"
-	config_edit = "samba/smb.conf"
-	files = "etc/init/S12samba etc/hotplug/after/block/S11samba samba/"
-	require = "fhotplug"
-	size = 6192
-
-[smarttool]
-	revision = 1
-	title = "SMART HDD Tool (smartctl 5.41)"
-	init = "S44libata"
-	role = web
-	files = "etc/init/S44libata libata/ bin/smartctl www/modules/smarttool/"
-	size = 1108
 
 [sovok]
 	revision = 9
@@ -758,15 +578,6 @@
 	files = "bin/sg_start bin/spindownd etc/init/S14spindown etc/S08SpinDown etc/spindown.conf www/modules/spindown/"
 	size = 376
 
-[sskin]
-	revision = 9
-	title = "Skin selector for amp revs"
-	role = patch
-	backup = "etc/sskin.conf"
-	config_link = "/?page=sskin_sets"
-	files = "bin/sskin etc/sskin.conf www/modules/sskin"
-	size = 164
-
 [status]
 	revision = 2
 	title ="System status"
@@ -774,14 +585,6 @@
 	files = "www/modules/status/"
 	require = "top"
 	size = 88
-
-[suspend]
-	revision = 1
-	title = "Suspend: reboot on wakeup"
-	role = patch
-	init = S09suspend
-	files = "etc/init/S07suspend etc/init/rc.init/S07suspend.sh"
-	size = 48
 
 [swp]
 	revision = 1
@@ -821,57 +624,6 @@
 	require = "libevent2 libcurl libz libssl libcrypto libgccs"
 	size = 3884
 
-[trans_1230]
-	revision = 0
-	title = "Transmission v2.73"
-	role = daemon
-	check = "port 9091"
-	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
-	env = 1230
-	files = "etc/init/S23trans trans/ www/modules/trans_1230/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 4812
-
-[trans_3430]
-	revision = 2
-	title = "Transmission v2.73"
-	role = daemon
-	check = "port 9091"
-	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
-	env = 3430
-	files = "etc/init/S23trans trans/ www/modules/trans_3430/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 4804
-
-[tvigle]
-	revision = 1
-	title = "Tvigle.RU"
-	role = rss
-	files = "www/modules/tvigle/"
-	size = 44
-
-[tvontop]
-	revision = 10
-	title = "TV on Top 1.1.4"
-	role = rss
-	files = "www/modules/tvontop/"
-	size = 3004
-
-[uaonline2]
-	revision = 19
-	title = "UA Online 2"
-	role = rss
-	backup = "www/modules/uaonline2/ua_favorites.conf www/modules/uaonline2/ua_settings.conf"
-	config_edit = "www/modules/uaonline2/ua_settings.conf"
-	navy_title = "UAOnline 2 Fav. Editor"
-	navy_frame = "http://%addr%/modules/uaonline2/index.php"
-	files = "www/modules/uaonline2/"
-	size = 1624
-
 [udpxy]
 	revision = 3
 	title = "UDP-to-HTTP Proxy v1.0b19-Chipmunk"
@@ -901,18 +653,6 @@
 	files = "bin/ushare etc/ushare.conf etc/init/S25uShare lib/libdlna.so lib/libdlna.so.0 lib/libdlna.so.0.2.3 lib/libupnp.so lib/libupnp.so.2 lib/libupnp.so.2.0.3"
 	require = "libgcc_s libz"
 	size = 5984
-
-[vsftpd]
-	revision = 1
-	title = "vsFTPd FTP daemon v2.2.2"
-	role = daemon
-	init = S15vsftpd
-	backup = "etc/vsftpd.conf"
-	navy_title = "Explore FTP"
-	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
-	config_edit = "etc/vsftpd.conf"
-	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
-	size = 308
 
 [weather]
 	revision = 6
@@ -952,13 +692,6 @@
 	require = "libgccs php"
 	size = 2168
 
-[wget]
-	revision = 1
-	title = "Wget 1.10.4"
-	role = package
-	files = "bin/wget"
-	size = 324
-
 [woowza]
 	revision = 3
 	title = "Woowza movies"
@@ -967,9 +700,149 @@
 	require = "busybox"
 	size = 116
 
-[xupnpd]
+[zswap]
+	revision = 2
+	title = "RAM zipped SWAP (compcache 0.6.2)"
+	role = patch
+	init = S43zswap
+	files = "etc/init/S43zswap zswap/"
+	size = 120
+
+[rtmpdump]
 	revision= 2
-	title = "xupnpd 1.0rc12"
+	title = "RTMPDump v2.4"
+	role = package
+	files = "bin/rtmpdump"
+	size = 568
+
+[libcurl_3430]
+	revision = 2
+	title = "lib CUrl 4.2.0"
+	role = package
+	files = "lib/libcurl.so lib/libcurl.so.4 lib/libcurl.so.4.2.0"
+	require = "libcrypto libssl libz"
+	check = "lib libcurl.so.4"
+	env = 3430
+	size = 360
+
+[libevent2_3430]
+	revision = 1
+	title = "Lib Event-2.0 5.0.1"
+	role = package
+	check = "lib lib/libevent-2.0.so.5"
+	env = 3430
+	files = "lib/libevent.so lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1"
+	size = 1600
+
+[suspend]
+	revision = 1
+	title = "Suspend: reboot on wakeup"
+	role = patch
+	init = S09suspend
+	files = "etc/init/S07suspend etc/init/rc.init/S07suspend.sh"
+	size = 48
+
+[trans_3430]
+	revision = 2
+	title = "Transmission v2.73"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	env = 3430
+	files = "etc/init/S23trans trans/ www/modules/trans_3430/"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 4804
+
+[base2]
+	revision = 1
+	title = "moServices base patch"
+	role = package
+	files = "base2.patch"
+	size = 32
+
+[pohdmenu]
+	revision = 2
+	title = "Home menu replacement for pohd skin"
+	init = S33pohdmenu
+	role = patch
+	files = "pohdmenu/ etc/init/S33pohdmenu"
+	size = 84
+
+[bftpd]
+	revision = 1
+	title = "bFTPd FTP daemon v2.3"
+	role = daemon
+	check = "port 21"
+	init = S15bftpd
+	backup = "etc/bftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/bftpd.conf"
+	env = 3430
+	files = "bin/bftpd etc/bftpd.conf etc/init/S15bftpd"
+	size = 128
+
+[iconmedia]
+	revision = 1
+	title = "IconBit media"
+	role = rss
+	files = "www/modules/iconmedia/"
+	size = 192
+
+[irfake_3430]
+	revision = 2
+	title = "IR Fake RC replacement v1.2.15r2"
+	role = patch
+	init = S41irfake
+	backup = "irfake/irfake.conf"
+	config_before = copy
+	config_after = save
+	config_edit = "irfake/irfake.conf"
+	env = 3430
+	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh irfake/"
+	size = 140
+
+[trans_1230]
+	revision = 2
+	title = "Transmission v2.73"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	env = 1230
+	files = "etc/init/S23trans trans/ www/modules/trans_1230/"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 4812
+
+[irfake]
+	revision = 7
+	title = "IR Fake RC replacement v1.2.15r3"
+	role = patch
+	init = S41irfake
+	backup = "irfake/irfake.conf"
+	config_before = copy
+	config_after = save
+	config_edit = "irfake/irfake.conf"
+	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh irfake/"
+	size = 156
+
+[iptvlist]
+	revision = 5
+	title = "IPTVList"
+	role = rss
+	navy_title = "IPTVList configuration"
+	navy_frame = "/modules/iptvlist/index.html"
+	backup = "www/modules/iptvlist/*.conf www/modules/iptvlist/*.m3u"
+	files = "www/modules/iptvlist/"
+	require = "rtmpdump"
+	size = 2460
+
+[xupnpd]
+	revision= 3
+	title = "xupnpd 1.0rc13"
 	role = daemon
 	check = "port 4044"
 	init = S35xupnpd
@@ -978,20 +851,216 @@
 	config_edit = "xupnpd/xupnpd.lua"
 	files = "xupnpd/ etc/init/S35xupnpd"
 	require = "libgcc_s"
-	size = 776
+	size = 948
+
+[rutor]
+	revision = 1
+	title = "Rutor 0.2"
+	role = rss
+	init="S37rutor"
+	files = "etc/init/S37rutor rutor/ www/modules/rutor/"
+	size = 788
+
+[capture]
+	revision = 4
+	title = "Capture TV screen"
+	role = web
+	init="S36capture.sh"
+	files = "bin/bmp2jpg etc/init/S36capture.sh www/modules/capture/"
+	size = 3752
+
+[smarttool]
+	revision = 1
+	title = "SMART HDD Tool (smartctl 5.41)"
+	init = "S44libata"
+	role = web
+	files = "etc/init/S44libata libata/ bin/smartctl www/modules/smarttool/"
+	size = 1108
+
+[autorun]
+	revision = 2
+	title = "AutoRun"
+	role = patch
+	init = S05AutoRun
+	actions = "restart"
+	files = "etc/init/S05AutoRun etc/hotplug/after/block/S12autorun"
+	size = 56
+
+[samba]
+	revision = 3
+	title = "SAMBA daemon v3.0.23c"
+	role = daemon
+	check = "port 139"
+	init = S12samba
+	backup = "samba/smb.conf"
+	config_edit = "samba/smb.conf"
+	files = "etc/init/S12samba etc/hotplug/after/block/S11samba samba/"
+	require = "fhotplug"
+	size = 6192
+
+[samba_1228]
+	revision= 2
+	title = "SAMBA daemon v3.0.8"
+	role = daemon
+	check = "port 139"
+	init = S12samba
+	backup = "samba/smb.conf"
+	config_edit = "samba/smb.conf"
+	env = 1228
+	files = "etc/init/S12samba etc/hotplug/after/block/S11samba lib/libsamba.so.0.0 lib/libsamba.so.0 lib/libsamba.so samba/"
+	require = "fhotplug"
+	size = 5352
+
+[uaonline2]
+	revision = 21
+	title = "UA Online 2"
+	role = rss
+	backup = "www/modules/uaonline2/ua_favorites.conf www/modules/uaonline2/ua_settings.conf"
+	config_edit = "www/modules/uaonline2/ua_settings.conf"
+	navy_title = "UAOnline 2 Fav. Editor"
+	navy_frame = "http://%addr%/modules/uaonline2/index.php"
+	files = "www/modules/uaonline2/"
+	size = 2044
+
+[vsftpd]
+	revision = 2
+	title = "vsFTPd FTP daemon v3.0.2 static"
+	role = daemon
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	size = 344
+
+[vsftpd_1228]
+	revision = 2
+	title = "vsFTPd FTP daemon v3.0.2 dynamic"
+	role = daemon
+	check = "port 21"
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	env = 1228
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	require = "libgccs"
+	size = 288
+
+[busybox]
+	revision= 5
+	title = "BusyBox v1.18.5"
+	role = package
+	files = "bin/bunzip2 bin/busybox.1.18.5 bin/bzip2 bin/gunzip bin/gzip bin/httpd bin/passwd bin/realpath bin/tar bin/telnetd bin/sort"
+	size = 1288
+
+[wget_1228]
+	revision = 1
+	title = "wget 1.14 dynamic"
+	check = wget
+	role = package
+	env = 1228
+	files = "bin/wget"
+	require = "libgccs libpcre"
+	size = 644
+
+[wget_1230]
+	revision = 1
+	title = "wget 1.14 static"
+	check = wget
+	role = package
+	env = 1230
+	files = "bin/wget"
+	size = 804
+
+[wget_3430]
+	revision = 1
+	title = "wget 1.14 static"
+	check = wget
+	role = package
+	env = 3430
+	files = "bin/wget"
+	size = 804
+
+[downloady]
+	revision = 2
+	title = "PHP Download manager v1.5"
+	role = web
+	navy_title = "Downloads"
+	navy_frame = "%mos%modules/downloady/dstatus.htm"
+	files = "www/modules/downloady/"
+	size = 132
+
+[tvontop]
+	revision = 11
+	title = "TV on Top 1.1.5"
+	role = rss
+	files = "www/modules/tvontop/"
+	size = 3316
+
+[vsftpd222]
+	revision = 1
+	title = "vsFTPd FTP daemon v2.2.2"
+	role = daemon
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	size = 312
+
+[rootapp]
+	revision = 3
+	title = "Patched RootApp"
+	init=S42rootapp
+	role = patch
+	init = S42rootapp
+	files = "bin/RootApp etc/rc.suspend etc/rc.wakeup etc/init/S42rootapp"
+	size = 360
 
 [youtube]
-	revision = 6
+	revision = 8
 	title = "YouTube"
 	role = rss
 	files = "www/modules/youtube/"
-	size = 92
+	size = 96
 
-[zswap]
-	revision = 2
-	title = "RAM zipped SWAP (compcache 0.6.2)"
+[core]
+	revision = 37
+	title = "moServices core"
+	role = core
+	init = S01core
+	backup = "etc/core.ini"
+	config_link = "?page=sets"
+	files = "etc/core.ini etc/init/S01core www/modules/core/ www/index.php www/favicon.ico"
+	size = 844
+
+[sskin]
+	revision = 10
+	title = "Skin selector for amp revs"
 	role = patch
-	init = S43zswap
-	files = "etc/init/S43zswap zswap/"
-	size = 120
+	backup = "etc/sskin.conf"
+	config_link = "/?page=sskin_sets"
+	files = "bin/sskin etc/sskin.conf www/modules/sskin"
+	size = 164
+
+[parole]
+	revision = 3
+	title = "Authorization"
+	role = patch
+	files = "www/modules/parole/"
+	require = "busybox"
+	size = 72
+
+[base]
+	revision = 16
+	title = "moServices base"
+	role = package
+	init = S00base
+	files = "services bin/mos_remove bin/pm bin/fork_reboot bin/rebootd bin/reboot.sh bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop"
+	require = "libgccs busybox web core wget base2"
+	size = 132
 

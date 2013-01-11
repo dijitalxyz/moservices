@@ -29,7 +29,7 @@ cfg.embedded=true
 cfg.debug=1
 
 -- external 'udpxy' url for multicast playlists (udp://@...)
---cfg.udpxy_url='http://127.0.0.1:8080'
+cfg.udpxy_url='http://127.0.0.1:8080'
 
 -- downstream interface for builtin multicast proxy (comment 'cfg.udpxy_url' for processing 'udp://@...' playlists)
 cfg.mcast_interface='br0'
@@ -43,15 +43,6 @@ cfg.user_agent='Mozilla/5.0'
 
 -- I/O timeout
 cfg.http_timeout=15
-
--- 'cfg.dlna_extras' enables DLNA extras
-cfg.dlna_extras=true
-
--- XBox360 compatible mode
-cfg.xbox360=false
-
--- WDTV Live compatible mode
-cfg.wdtv=false
 
 -- enables UPnP/DLNA notify when reload playlist
 cfg.dlna_notify=true
@@ -74,7 +65,7 @@ cfg.cache_size=8
 -- url cache item ttl (sec)
 cfg.cache_ttl=900
 
--- default mime type (mpeg, mpeg1, mpeg2, ts)
+-- default mime type (mpeg, mpeg_ts, mpeg1, mpeg2, ts, ...)
 cfg.default_mime_type='mpeg'
 
 -- feeds update interval (seconds, 0 - disabled)
@@ -87,8 +78,9 @@ cfg.feeds_fetch_length=false
 -- playlist (m3u file path or path with alias
 playlist=
 {
-    { './playlists/mozhay.m3u',             'Mozhay.tv' },
---    { './localmedia', 'Local Media Files', '127.0.0.1;192.168.1.1' }
+--    { './playlists/mozhay.m3u', 'Mozhay.tv' },
+--    { './localmedia', 'Local Media Files' }
+--    { './private', 'Private Media Files', '127.0.0.1;192.168.1.1' }  -- only for 127.0.0.1 and 192.168.1.1
 }
 
 -- feeds list (plugin, feed name, feed type)
@@ -98,6 +90,7 @@ feeds=
     { 'vimeo',          'channel/hdxs',         'HD Xtreme sports' },
     { 'vimeo',          'channel/mtb',          'Mountain Bike Channel' },
     { 'youtube',        'channel/top_rated',    'YouTube Top Rated' },
+--    { 'dreambox',       'http://192.168.0.1:8001/','Dreambox1' },
 --    { 'gametrailers',   'ps3/review',           'GT - PS3 - Review' },
 --    { 'gametrailers',   'ps3/preview',          'GT - PS3 - Preview' },
 --    { 'gametrailers',   'ps3/gameplay',         'GT - PS3 - Gameplay' },
@@ -107,7 +100,7 @@ feeds=
 }
 
 -- log ident, pid file end www root
-cfg.version='1.0-rc12'
+cfg.version='1.0-rc13'
 cfg.log_ident=arg[1] or 'xupnpd'
 cfg.pid_file='/var/run/'..cfg.log_ident..'.pid'
 cfg.www_root='./www/'
@@ -117,5 +110,7 @@ cfg.config_path='./config/'
 cfg.playlists_path='./playlists/'
 --cfg.feeds_path='/tmp/xupnpd-feeds/'
 cfg.ui_path='./ui/'
+cfg.drive=''                    -- reload playlists only if drive state=active/idle, example: cfg.drive='/dev/sda'
+cfg.profiles='./profiles/'      -- device profiles feature
 
 dofile('xupnpd_main.lua')

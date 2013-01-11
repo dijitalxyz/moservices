@@ -1,0 +1,6 @@
+[iconmedia]
+	revision = 1
+	title = "IconBit media"
+	role = rss
+	files = "www/modules/iconmedia/"
+	size = 192

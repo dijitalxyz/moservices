@@ -1,4 +1,4 @@
--- Copyright (C) 2011 Anton Burdinuk
+-- Copyright (C) 2011-2012 Anton Burdinuk
 -- clark15b@gmail.com
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
@@ -61,7 +61,7 @@ function vimeo_sendurl(vimeo_url,range)
     local url=vimeo_get_video_url(vimeo_url)
 
     if url==nil then
-        if cfg.debug>0 then print('Vimeo clip '..vimeo_id..' is not found') end
+        if cfg.debug>0 then print('Vimeo clip '..vimeo_url..' is not found') end
 
         plugin_sendfile('www/corrupted.mp4')
     else
@@ -81,7 +81,7 @@ function vimeo_get_video_url(vimeo_url)
     local clip_page=plugin_download(vimeo_url)
 
     if clip_page then
-        local sig,ts=string.match(clip_page,'"signature":"(%w+)","timestamp":(%w+),')
+        local ts,sig=string.match(clip_page,'"timestamp":(%w+),"signature":"(%w+)",')
         clip_page=nil
 
         if sig and ts then
@@ -94,6 +94,8 @@ function vimeo_get_video_url(vimeo_url)
 end
 
 plugins['vimeo']={}
+plugins.vimeo.name="Vimeo"
+plugins.vimeo.desc="<i>username</i>, channel/<i>channelname</i>, group/<i>groupname</i>, album/<i>album_id</i>"
 plugins.vimeo.sendurl=vimeo_sendurl
 plugins.vimeo.updatefeed=vimeo_updatefeed
 plugins.vimeo.getvideourl=vimeo_get_video_url

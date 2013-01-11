@@ -1052,7 +1052,7 @@ YAMJDisable = "true";
    <script>
       APName = "IMSAP";
       MenuType = "TopMenu";
-      MenuLink = "http://127.0.0.1/rss_iptv";
+      MenuLink = "http://127.0.0.1/?page=rss_iptv";
       menuCmd(APName, MenuType, MenuLink, BltType);
       null;
    </script>

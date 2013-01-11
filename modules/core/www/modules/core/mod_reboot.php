@@ -8,11 +8,11 @@ function reboot_actions( $act, $log )
 		{
 ?>
 <script type="text/javascript">
-	window.location.href='/';
+	window.location.href='<?= getMosUrl() ?>';
 </script>
 <?php
 		}
-		doCommand( 'reboot', $log );
+		exec( 'reboot.sh' );
 	}
 }
 
@@ -30,7 +30,7 @@ function reboot_body()
 	}
 	else
 	{
-		window.location.href='/';
+		window.location.href='<?= getMosUrl() ?>';
 	}
 </script>
 <?php

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>Watch.is</name>
+    <shortName>wch</shortName>
+    <displayName>Watch.is</displayName>
+    <description>Библиотека отечественных и зарубежных фильмов в отличном качестве.</description>
+    <keys>
+        <key name="keyUser1" params="?pl=wch&amp;amp;type=CHANGE_AUTH">Change account</key>
+        <key name="keyUser2" params="?pl=wch&amp;amp;type=GENRE_LIST" >Genres</key>
+        <key name="keyUser3" params="?pl=wch&amp;amp;type=MOVIE_LIST&amp;amp;moviesType=best" >Top</key>
+    </keys>
+    <provider class="WchProvider" />
+    <provider1 class="CacheProvider">
+    	<provider1 class="ImgCacheProvider" >
+    		
+	    </provider1>
+    </provider1>
+    <version>1.0.0</version>
+    <author>http://TVonTop.com</author>
+</service>

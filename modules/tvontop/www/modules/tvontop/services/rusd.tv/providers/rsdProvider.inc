@@ -16,13 +16,14 @@ class RsdProvider extends RhdProvider {
 		$this->baseUrl = "http://rusd.tv/";
       	$this->sectionName = $this->config->get("name", "Service");
         $this->cookieName = "RsdCookie";
-        $this->http->cookie = isset($_SESSION[$this->cookieName]) ?
-            $_SESSION[$this->cookieName] : "";		
+		$this->http->cookie = $this->session->exists($this->cookieName) ?
+            $this->session->get($this->cookieName) : "";
     }
-    
+
 	public function getIniFilename() {
 		return dirname(__FILE__) . "/../config.ini";
 	}
+
     protected function parseEpisodeLink($objectId, $xml) {
 		if(!isset($xml->item)) {
 			return null;

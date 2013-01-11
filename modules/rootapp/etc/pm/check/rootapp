@@ -5,7 +5,11 @@
 # returns 1 - not installable
 # returns 0 - installable
 #
-[ ! -f /usr/local/bin/RootApp ] && exit 1
-br=$( echo $( ls -l /usr/local/bin/RootApp ) | cut -d" " -f 5 )
-[ $br -eq 278836 ] && exit 2
+
+# check already patched
+grep -Eq '/usr/local/etc/rc\.' /usr/local/bin/RootApp && exit 2
+# check platform
+s=$( cat /sys/realtek_boards/cpu_id | sed 's/^.*\(.\)$/\1/' )
+[ "$s" == '2' ] || exit 1
+
 exit 0

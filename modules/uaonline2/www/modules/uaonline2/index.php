@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	WEB interface module v2.4
+	WEB interface module v2.6
 	------------------------------
 	Created by Sashunya 2012
 	wall9e@gmail.com			
@@ -78,12 +78,12 @@ if ($_REQUEST["operation"]=="fileman")
 {
 	if ($_REQUEST["type"]=="download")
 	{
-		if (!file_exists($download_path)) $fileman_path="/tmp/ramfs/volumes"; 
+		if (!file_exists($d_path)) $fileman_path="/tmp/ramfs/volumes"; 
 		else $fileman_path=$_REQUEST["d_path"];
 	}
 	if ($_REQUEST["type"]=="wget")
 	{
-		if (!file_exists($download_path)) $fileman_path="/";
+		if (!file_exists($d_path)) $fileman_path="/";
 		else $fileman_path=$_REQUEST["d_path"];
 	
 	}
@@ -162,6 +162,7 @@ if ($_REQUEST["operation"]=="ua_set")
 	if ($_REQUEST["setup"]=="save_settings")
 	{
 		$player_style=$_REQUEST["alt_player"];
+		$built_in_keyb=$_REQUEST["built_in_keyb"];
 		$hdpr1=$_REQUEST["hdp_r1"];
 		$exua_quality=$_REQUEST["ex_quality"];
 		$exua_region=$_REQUEST["ex_region"];
@@ -170,7 +171,9 @@ if ($_REQUEST["operation"]=="ua_set")
 		$uakino_decode=$_REQUEST["uakino_decode"];
 		$fsua_sort=$_REQUEST["fs_sort"];
 		$search_history=$_REQUEST["search_text"];
-		$download_path=$_REQUEST["download_path"];
+		$history_length=$_REQUEST["history_length"];
+		$d_path=$_REQUEST["download_path"];
+		$auto_path=$_REQUEST["auto_path"];
 		$ua_wget_path=$_REQUEST["wget_path"];
 		write_conf();
 		html_header();
@@ -187,6 +190,30 @@ if ($_REQUEST["operation"]=="ua_set")
 	
 		
 	// тут пошли переменные для установок
+	// автопуть для закачек
+		if ($auto_path=='1') 
+		{
+			$auto_path_on="checked"; 
+			$auto_path_off="";
+		}
+			else 
+		{
+			$auto_path_on=""; 
+			$auto_path_off="checked";
+		}
+	
+	// встроенная клавиатура
+		if ($built_in_keyb=='1') 
+		{
+			$built_in_keyb_on="checked"; 
+			$built_in_keyb_off="";
+		}
+			else 
+		{
+			$built_in_keyb_on=""; 
+			$built_in_keyb_off="checked";
+		}
+		
 	// альтернативный плеер
 	if ($player_style=='1') 
 		{
@@ -333,13 +360,55 @@ if ($_REQUEST["operation"]=="ua_set")
 					</tr>
 					<tr>
 						<td class="setup_td">
-							История поиска
+							Встроенная клавиатура (из прошивки)
 						</td>
 						<td class="setup_td">
-							 <p><input name="search_text" class="setup_enter_text" maxlength="90" size="50" value="<?=$search_history?>"></p>					
+							<p><input name="built_in_keyb" type="radio" value="1" <?=$built_in_keyb_on?>> вкл.</p>
+							<p><input name="built_in_keyb" type="radio" value="0" <?=$built_in_keyb_off?>> выкл. </p>
 						</td>
 					</tr>
 					<tr>
+						<td class="setup_td">
+							Кол-во фильмов в истории просмотров
+						</td>
+						<td class="setup_td">
+							<p><input onkeyup="this.value = this.value.replace (/\D/, '')" name="history_length" class="setup_enter_text" maxlength="2" size="4" value="<?=$history_length?>"></p>
+						</td>
+					</tr>
+					<tr>
+						<td class="setup_td">
+							История поиска
+						</td>
+						<td class="setup_td">
+							<p><input name="search_text" class="setup_enter_text" maxlength="90" size="50" value="<?=$search_history?>"></p>
+						</td>
+					</tr>
+					<tr>
+						<td class="setup_td">
+							Авто выбор папки для закачек
+						</td>
+						<td class="setup_td">
+							<p><input name="auto_path" type="radio" value="1" <?=$auto_path_on?>> вкл. </p>
+							<p><input name="auto_path" type="radio" value="0" <?=$auto_path_off?>> выкл. </p>
+<?php
+if ($auto_path=='1') 
+{
+	if (!$no_device)
+		{
+?>							
+							<p>Найдено устройство - <span class="device_path"><?=$download_path?></span> размером <span class="device_path"><?=format_fsize(down_path("size"))?></span></p>
+<?php
+		} else
+		{
+		?>
+							<p><span class="no_device_path">Устройств не найдено</span></p>
+		<?php
+		}
+}
+?>
+						</td>
+					</tr>
+					<tr <?php if ($auto_path=='1') {?>style="display:none;"<?php }?>>
 						<td class="setup_td">
 							Папка для закачек
 						</td>
@@ -363,7 +432,7 @@ if ($_REQUEST["operation"]=="ua_set")
 								<tr>
 									<td>
 										<p>
-											<input id="download" name="download_path" class="setup_enter_text" maxlength="90" size="50" value="<?=$download_path?>">
+											<input id="download" name="download_path" class="setup_enter_text" maxlength="90" size="50" value="<?=$d_path?>">
 										</p>	
 									</td>
 									<td>
@@ -751,6 +820,7 @@ function html_header()
 {
 global $ua_path_link2;
 global $xtreamer;
+global $ua_update_standalone;
 if ($ua_update_standalone)
 { 
 	$navbar=$ua_path_link2."js/navbar.js";

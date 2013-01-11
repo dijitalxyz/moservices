@@ -37,6 +37,16 @@
         </argumentList>
       </action>
       <action>
+         <name>X_GetFeatureList</name>
+         <argumentList>
+            <argument>
+               <name>FeatureList</name>
+               <direction>out</direction>
+               <relatedStateVariable>A_ARG_TYPE_FeatureList</relatedStateVariable>
+            </argument>
+         </argumentList>
+      </action>
+      <action>
          <name>Browse</name>
          <argumentList>
             <argument>
@@ -199,6 +209,10 @@
       <stateVariable sendEvents="no">
           <name>A_ARG_TYPE_SearchCriteria</name>
           <dataType>string</dataType>
+      </stateVariable>
+      <stateVariable sendEvents="no">
+         <name>A_ARG_TYPE_FeatureList</name>
+         <dataType>string</dataType>
       </stateVariable>
    </serviceStateTable>
 </scpd>

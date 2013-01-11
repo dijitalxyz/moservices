@@ -88,7 +88,6 @@
     forceFocusOnMenu="yes"
     autoSelectItem="no"
 
-
     focusBorderColor="{$config->get(focusBorderColor)}"
     unFocusBorderColor="{$config->get(unFocusBorderColor)}"
     focusFontColor="255:170:0"
@@ -159,14 +158,20 @@
                 redrawDisplay();
                 keyProcessed = "true";
             } else if ( userInput == keyEnter ) {
-                showIdle();
+                /*
                 executeScript("getStreamUrl");
-                /*cancelIdle();*/
+                
                 if (null != streamUrl &amp;&amp; "" != streamUrl &amp;&amp; "protected" != streamUrl) {
                     playItemURL(streamUrl,0);
                 }
                 keyProcessed = "true";
                 redrawDisplay();
+                */
+				envKey 		= "playedTitle";
+				index = getFocusItemIndex();
+				envValue = getItemInfo(index , "title");
+				executeScript("setEnvValue");
+                keyProcessed = "false";
             } else if ( userInput == keyRight ) {
                 keyProcessed = "true";
             } else if ( userInput == key2 ) {
@@ -211,7 +216,7 @@
             Add(getFocusItemIndex(),1) + "/" + getPageInfo("itemCount");
         </script>
     </text>
-    <text redraw="yes" offsetXPC="24" offsetYPC="87" widthPC="55" heightPC="6" fontSize="16" foregroundColor="255:255:255" backgroundColor="{$config->get(bgNormal)}">
+    <text redraw="yes" offsetXPC="25" offsetYPC="87" widthPC="55" heightPC="6" fontSize="16" foregroundColor="255:255:255" backgroundColor="{$config->get(bgNormal)}">
         <script>getItemInfo("title");</script>
     </text>
 <menuDisplay>
@@ -308,15 +313,6 @@
     link;
     </script>
 </link>
-<enclosure type="video/mp4" >
-<url>
-    <script>
-        link = "{$config->get(cfg_processing_url,Runtime)}&amp;id=" + getStringArrayAt(idArray , -1) + "&amp;type=STREAM_URL&amp;mode=redirect";
-        print("url: " + link);
-        link;
-    </script>
-</url>
-</enclosure>
 </item_template>
 
 <channel>

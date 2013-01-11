@@ -69,11 +69,7 @@ abstract class SeriesProvider extends Provider {
         	return $this->getSubtitle($objectId,$params);
         } else if ($objectType == self::$OBJ_STREAM_URL) {
         	return $this->getStreamUrl($objectId,$params);
-/*        } else if ($objectType == self::$OBJ_FAVORITES_ADD) {
-            return $this->addToFavorites($objectId, $params);
-        } else if ($objectType == self::$OBJ_FAVORITES_REMOVE) {
-            return $this->removeFromFavorites($objectId, $params);
-*/      }
+      }
 
         return parent::getObject($objectId, $params);
     }

@@ -17,13 +17,7 @@ class ua_rss_download extends ua_rss_download_const
 	{
 	global $ua_images_path;
 	?>
-	<image offsetXPC="<?= static::item_offsetXPC ?>" offsetYPC="<?= static::item_offsetYPC ?>" widthPC="<?= static::item_widthPC ?>" heightPC="<?= static::item_heightPC ?>" >
-      <?= $ua_images_path . static::item_image ?>
-    </image>
-	
-	<image offsetXPC="<?= static::menu_offsetXPC ?>" offsetYPC="<?= static::menu_offsetYPC ?>" widthPC="<?= static::menu_widthPC ?>" heightPC="<?= static::menu_heightPC ?>" >
-		<?= $ua_images_path . static::menu_image ?>
-    </image>
+
 				
 	<text  align="<?= static::text_header_align ?>" redraw="<?= static::text_header_redraw ?>" lines="<?= static::text_header_lines ?>" offsetXPC="<?= static::text_header_offsetXPC ?>" offsetYPC="<?= static::text_header_offsetYPC ?>" widthPC="<?= static::text_header_widthPC ?>" heightPC="<?= static::text_header_heightPC ?>" fontSize="<?= static::text_header_fontSize ?>" backgroundColor="<?= static::text_header_backgroundColor ?>" foregroundColor="<?= static::text_header_foregroundColor ?>">
 		Менеджер загрузок
@@ -32,11 +26,11 @@ class ua_rss_download extends ua_rss_download_const
 	<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
 		 	 
 	</text>
-	
+	<!--
 		<text redraw="no" offsetXPC="<?= static::status_header_offsetXPC ?>"  offsetYPC="<?= static::status_header_offsetYPC ?>" widthPC="<?= static::status_header_widthPC ?>" heightPC="<?= static::status_header_heightPC ?>" fontSize="<?= static::status_header_fontSize ?>" backgroundColor="<?= static::status_header_backgroundColor ?>" foregroundColor="<?= static::status_header_foregroundColor ?>">СТАТУС</text>
 		<text redraw="no" offsetXPC="<?= static::name_header_offsetXPC ?>"  offsetYPC="<?= static::status_header_offsetYPC ?>" widthPC="<?= static::name_header_widthPC ?>" heightPC="<?= static::status_header_heightPC ?>" fontSize="<?= static::status_header_fontSize ?>" backgroundColor="<?= static::status_header_backgroundColor ?>" foregroundColor="<?= static::status_header_foregroundColor ?>">ИМЯ ФАЙЛА</text>
 		<text redraw="no" offsetXPC="<?= static::done_header_offsetXPC ?>"  offsetYPC="<?= static::status_header_offsetYPC ?>" widthPC="<?= static::done_header_widthPC ?>" heightPC="<?= static::status_header_heightPC ?>" fontSize="<?= static::status_header_fontSize ?>" backgroundColor="<?= static::status_header_backgroundColor ?>" foregroundColor="<?= static::status_header_foregroundColor ?>">ВЫПОЛНЕНО</text>
-	
+	-->
 	<?php	
 		
 	}

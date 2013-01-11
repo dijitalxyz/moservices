@@ -139,6 +139,39 @@ class Service {
 		}
 	}
 
+	public function processRequest($op, $id, $params) {
+
+		$resultObj = null;
+		try {
+			if ($op == "get") {
+                $resultObj = $this->provider->getObject($id, $params);
+                $resultObj = $this->provider->postProcess($resultObj);
+            } else if ($op == "set") {
+                $resultObj = $this->provider->setObject($id, $params);
+			}            
+        } catch (AuthException $e) {
+            $resultObj = CommonProvider::getObject(
+                CommonProvider::$ID_AUTH_ERROR, 
+                array("message" => $e->getMessage()));
+            $resultObj->setParam("username", $this->provider->getUsername());
+            $resultObj->setParam("password", $this->provider->getPassword());
+        } catch (NetworkException $e) {
+            $resultObj = CommonProvider::getObject(
+                CommonProvider::$ID_ERROR,
+                array("message" => $e->getMessage()));
+        } catch (XmlParseException $e) {
+            $resultObj = CommonProvider::getObject(
+                CommonProvider::$ID_ERROR,
+                array("message" => $e->getMessage()));
+        } catch (Exception $e) {
+            $resultObj = CommonProvider::getObject(
+                CommonProvider::$ID_ERROR,
+                array("message" => $e->getMessage()));
+        }
+        
+        return $resultObj;
+    }	
+	//deprecated
 	public function draw($view, $op, $mode, $id, $params) {
 
 		$view->setLocale($this->provider->getLocale());

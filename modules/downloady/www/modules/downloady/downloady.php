@@ -160,16 +160,17 @@ class downloady {
 			$line = fgets($fp, 2048); // read a line
 
 			if($count == 1) { // URL
-				$tmp = explode(" ", $line, 2);
-				$res['url'] = trim($tmp[1]);
+				if(preg_match('/^--[0-9\-\s:]+?-- (.+)$/i', $line, $regs)){ // url
+					$res['url'] = trim($regs[1]);
+					}
 				} 
 			elseif(preg_match("/^\S+: ([0-9,\s]+)\(/", $line, $regs)){ // Length
 				$res['size'] = str_replace( array(' ', ','), '', $regs[1]);
 				}
-			elseif(preg_match("/^\s*=> [`\"](.*?)['\"]$/i", $line, $regs)){ // Destination file
+			elseif(preg_match("/^\s*=> [`'\"](.*?)[`'\"]$/i", $line, $regs)){ // Destination file
 				$res['savefile'] = $regs[1];
 				}
-			elseif(preg_match("/^[^:]+: [`\"](.*?)['\"]$/i", $line, $regs)){ // Destination file on newer wget
+			elseif(preg_match("/^[^:]+: [`'\"](.*?)[`'\"]$/i", $line, $regs)){ // Destination file on newer wget
 				$res['savefile'] = $regs[1];
 				}
 			elseif(preg_match("/^\s*([0-9]+[kmgte]) [,. ]{54}\s*([0-9]{1,3}%)?\s+([0-9.,]+\s*[kmgte](?:\/s)?)\s*([0-9dhms]*)/i", $line, $regs)){

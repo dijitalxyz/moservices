@@ -32,6 +32,12 @@ $nav_pages['rss_youtube_quality'] = array (
 	'load'	=> 'youtube.php'
 );
 
+$nav_pages['rss_youtube_keyboard'] = array (
+	'type'  => 'rss',
+	'module'=> 'youtube',
+	'load'	=> 'youtube.php'
+);
+
 $nav_pages['rss_youtube_cats'] = array (
 	'type'  => 'rss',
 	'module'=> 'youtube',

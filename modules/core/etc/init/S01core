@@ -77,10 +77,14 @@ $nav_rss["aaa"] = array (\
 		mos_url='http://127.0.0.1/'
 
 		orig='/usr/local/bin/scripts/menu.rss'
-		[ -f $spa/menu.rss ] && [ ! -L $spa/menu.rss ] && {
-			mv -f $spa/menu.rss $etc/menu_orig.rss
+		if [ -f $etc/menu_orig.rss ] ; then
 			orig=$etc/menu_orig.rss
-		}
+		else
+			[ -f $spa/menu.rss ] && [ ! -L $spa/menu.rss ] && {
+				mv -f $spa/menu.rss $etc/menu_orig.rss
+				orig=$etc/menu_orig.rss
+			}
+		fi
 		mkdir -p $spa
 		rm -f $spa/menu.rss
 		ln -s $mos/www/modules/core/rss/moMenu.rss $spa/menu.rss

@@ -1,6 +1,5 @@
 <?php
 require_once 'mediaObjects.inc';
-require_once 'tools/cache.inc';
 require_once 'tools/lang.inc';
 
 abstract class Provider {
@@ -117,6 +116,19 @@ abstract class Provider {
 
         // password is allowed to be null, it's not demo account case
         return $username == null;
+    }
+
+    public function getUsername() {
+    	if(null == $this->username && null != $this->getSubprovider()) {
+    		return $this->getSubprovider()->getUsername();
+    	}
+    	return $this->username;
+    }
+	public function getPassword() {
+    	if(null == $this->password && null != $this->getSubprovider()) {
+    		return $this->getSubprovider()->getPassword();
+    	}
+    	return $this->password;
     }
 }
 ?>

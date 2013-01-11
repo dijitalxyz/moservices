@@ -19,6 +19,8 @@ $nav_msg['youtube_this_week' ] = 'За неделю';
 $nav_msg['youtube_this_month'] = 'За месяц';
 $nav_msg['youtube_all_time'  ] = 'За всё время';
 
+$nav_msg['youtubeSearch'] = 'Поиск';
+
 $nav_msg['youtubeQuality'   ] = 'Качество видео';
 $nav_msg['youtubeLowQual'   ] = 'Низкое';
 $nav_msg['youtubeHighQual'  ] = 'Высокое';
@@ -69,5 +71,14 @@ $nav_msg['youtube_region_UG'] = 'Уганда';
 $nav_msg['youtube_region_US'] = ' Весь мир (все)';
 $nav_msg['youtube_region_YE'] = 'Йемен';
 $nav_msg['youtube_region_ZA'] = 'Южная Африка';
+
+$nav_msg['youtubeKeyboard'] = 'Клавиатура';
+$nav_msg['youtubeEmbKbrd'] = 'Встроенная';
+$nav_msg['youtubeRssKbrd'] = 'RSS';
+
+$nav_msg['youtubeMy'] = 'Мои подписки';
+$nav_msg['youtubeUsername'] = "Имя пользователя";
+
+$nav_msg['youtubeSubscription'] = 'Подписки ';
 
 ?>

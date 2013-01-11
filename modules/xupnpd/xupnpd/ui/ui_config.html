@@ -1,24 +1,27 @@
-<h3>Config</h3>
-<h4>VKontakte</h4>
+<h4>Plugins</h4>
 
-${vk_auth_link}
+<div class="controls controls-row">
+<div class="span4">VKontakte:</div>
+<div class="span4">${vk_auth_link}</div>
+</div>
+<br/>
 
-<a class="btn info" onclick="window.open(this.href,'newwin','width=450,scrollbars=yes,toolbar=no,menubar=no'); return false;" href="/ui/vk_status">status and help</a></a><br /><br />
-<h4>YouTube</h4>
 <form method=get action="/ui/apply">
 
-YouTube quality:<br>
-<select name=youtube_q id=youtube_q>
+<div class="controls controls-row">
+<div class="span4">YouTube quality:</div>
+<select class="span4" class="span4" name=youtube_fmt id=youtube_fmt>
 <option value=18>360p</option>
 <option selected value=22>720p</option>
 <option value=37>1080p</option>
 <option value=84>720p 3D</option>
 <option value=85>1080p 3D</option>
 </select>
+</div>
 
-<br><br>
-YouTube region:<br>
-<select name=youtube_r id=youtube_r>
+<div class="controls controls-row">
+<div class="span4">YouTube region:</div>
+<select class="span4" name=youtube_region id=youtube_region>
 <option selected value="*">*</option>
 <option value=AU>AU</option>
 <option value=BR>BR</option>
@@ -40,46 +43,122 @@ YouTube region:<br>
 <option value=TW>TW</option>
 <option value=US>US</option>
 </select>
+</div>
 
-<br><br>
-<h4>ivi.ru</h4>
-
-ivi.ru quality:<br>
-<select name=ivi_q id=ivi_q>
+<div class="controls controls-row">
+<div class="span4">ivi.ru quality:</div>
+<select class="span4" name=ivi_fmt id=ivi_fmt>
 <option value="MP4-lo">Low</option>
 <option selected value="MP4-hi">High</option>
 </select>
+</div>
 
-<br><br>
-<h4>AG.ru</h4>
-
-AG.ru quality:<br>
-<select name=ag_q id=ag_q>
+<div class="controls controls-row">
+<div class="span4">AG.ru quality:</div>
+<select class="span4" name=ag_fmt id=ag_fmt>
 <option selected value="MP4-lo">Standart</option>
 <option value="MP4-hi">VIP</option>
 </select>
+</div>
 
-<br><br><br>
+<hr/>
 
-<input class="btn primary" type=submit value=Apply>
-<a class='btn info' href='/ui'>Back</a>
+<h4>Common (restart needed)</h4>
+
+<div class="controls controls-row">
+<div class="span4">Device name:</div><input class="span4" type=text name=name id=name>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">* Device UUID (empty for dynamic): </div><input class="span4" type=text name=uuid id=uuid>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">Default mime type (<a href="/ui/mhelp">mpeg, mpeg_ts, ...</a>):</div>
+<input class="span4" type=text name=default_mime_type id=default_mime_type>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">SSDP announcement interface (LAN):</div><input class="span4" type=text name=ssdp_interface id=ssdp_interface>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">* SSDP announcement interval (sec):</div><input class="span4" type=text name=ssdp_notify_interval id=ssdp_notify_interval>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">* SSDP max age (sec):</div><input type=text class="span4" name=ssdp_max_age id=ssdp_max_age>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">HTTP Port:</div><input type=text class="span4" name=http_port id=http_port>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">* HTTP User-Agent:</div><input class="span4" type=text name=user_agent id=user_agent>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">* HTTP Timeout (sec):</div><input class="span4" type=text name=http_timeout id=http_timeout>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">IPTV multicast interface (WAN):</div><input class="span4" type=text name=mcast_interface id=mcast_interface>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">Proxy mode:</div>
+<select class="span4" name=proxy id=proxy>
+<option selected value="0">off</option>
+<option value="1">radio only</option>
+<option value="2">on</option>
+</select>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">DLNA Notify:</div>
+<select class="span4" name=dlna_notify id=dlna_notify>
+<option selected value="false">no</option>
+<option value="true">yes</option>
+</select>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">Groups:</div>
+<select class="span4" name=group id=group>
+<option selected value="false">no</option>
+<option value="true">yes</option>
+</select>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">Sort files:</div>
+<select class="span4" name=sort_files id=sort_files>
+<option selected value="false">no</option>
+<option value="true">yes</option>
+</select>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">* Feeds reload interval (sec, 0 for manual):</div><input class="span4" type=text name=feeds_update_interval id=feeds_update_interval>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">* Playlists reload interval (sec, 0 for manual):</div><input class="span4" type=text name=playlists_update_interval id=playlists_update_interval>
+</div>
+
+<div class="controls controls-row">
+<div class="span4">* Drive device name (/dev/sda, /dev/sdb, ...):</div><input class="span4" type=text name=drive id=drive>
+</div>
+
+<br/>
+<i>* Optional</i>
+
+<br/><br/><br/>
+
+<input class="btn btn-primary" type=submit value=Save>
+<a class='btn btn-primary' href='/ui/restart'>Restart</a>
+<a class='btn btn-info' href='/ui/plugins'>Plugins</a>
+<a class='btn btn-info' href='/ui/profiles'>Profiles</a>
+<a class='btn btn-info' href='/ui'>Back</a>
 </form>
-
-<script>
-    function set_select_selected(id,value)
-    {
-        var z=document.getElementById(id)
-        for(i=0;i<z.length;i++)
-        {
-            if(z.options[i].value==value)
-            {
-                z.options[i].selected=true;
-                break;
-            }
-        }
-    }
-    set_select_selected('youtube_q','${youtube_fmt}');
-    set_select_selected('youtube_r','${youtube_region}');
-    set_select_selected('ivi_q','${ivi_fmt}');
-    set_select_selected('ag_q','${ag_fmt}');
-</script>

@@ -1,3 +1,7 @@
+-- Copyright (C) 2011-2012 Anton Burdinuk
+-- clark15b@gmail.com
+-- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+
 ui_args=nil
 ui_data=nil
 
@@ -7,17 +11,17 @@ end
 
 function ui_error()
     http.send('<h2>Error occurred</h3>')
-    http.send('<br><a class="btn info" href="/ui">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui">Back</a>')
 end
 
 function ui_downloads()
     http.send('<h3>Downloads</h3>')
-    http.send('<br><table>')
+    http.send('<br/><table class="table">')
     for i,j in ipairs(playlist_data.elements[1].elements) do
         http.send(string.format('<tr><td><a href="/ui/%s.m3u">%s</a></td></tr>',j.name,j.name))
     end
     http.send('</table>')
-    http.send('<br><a class="btn info" href="/ui">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui">Back</a>')
 end
 
 function ui_download(name)
@@ -48,11 +52,11 @@ function ui_download(name)
     for i,j in ipairs(pls.elements) do
         local url=j.url or ''
         if j.path then
-            url=www_location..'/stream?s='..util.urlencode(j.objid)
+            url=string.format('%s/stream/%s.%s',www_location,j.objid,j.type)
         else
             if cfg.proxy>0 then
                 if cfg.proxy>1 or pls.mime[1]==2 then
-                    url=www_location..'/proxy?s='..util.urlencode(j.objid)
+                    url=string.format('%s/proxy/%s.%s',www_location,j.objid,j.type)
                 end
             end
         end
@@ -62,7 +66,7 @@ end
 
 function ui_playlists()
     http.send('<h3>Playlists</h3>')
-    http.send('<br><table>')
+    http.send('<br/><table class="table">')
 
     local d=util.dir(cfg.playlists_path)
     if d then
@@ -77,17 +81,17 @@ function ui_playlists()
 
     http.send('</table>')
 
-    http.send('<br><h3>Upload *.m3u file</h3>')
+    http.send('<br/><h3>Upload *.m3u file</h3>')
     http.send('<form method=post action="/ui/upload" enctype="multipart/form-data">')
     http.send('<input type=file name=m3ufile><br /><br />')
-    http.send('<input class="btn primary" type=submit value=Send>')
-    http.send('</form><hr>')
-    http.send('<br><a class="btn primary" href="/ui/reload">Reload</a> <a class="btn primary" href="/ui/reload_feeds?return_url=/ui/playlists">Reload feeds</a> <a class="btn info" href="/ui">Back</a>')
+    http.send('<input class="btn btn-primary" type=submit value=Send>')
+    http.send('</form><hr/>')
+    http.send('<br/><a class="btn btn-primary" href="/ui/reload">Reload</a> <a class="btn btn-primary" href="/ui/reload_feeds?return_url=/ui/playlists">Reload feeds</a> <a class="btn btn-info" href="/ui">Back</a>')
 end
 
 function ui_feeds()
     http.send('<h3>Feeds</h3>')
-    http.send('<br><table>')
+    http.send('<br/><table class="table">')
 
     for i,j in ipairs(feeds) do
         http.send(string.format('<tr><td>%s [<a href="/ui/remove_feed?id=%s">x</a>]</td></tr>\n',j[3],i))
@@ -96,45 +100,153 @@ function ui_feeds()
     http.send('</table>')
 
     http.send('<h3>Add feed</h3>')
+
     http.send('<form method=get action="/ui/add_feed">')
 
-    http.send('<div class="row"><div class="span8">')
+    http.send('<div class="controls controls-row"><div class="span2">Plugin</div><select class="span4" name="plugin">')
 
-    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="vkontakte">VKontakte</option><option value="gametrailers">GameTrailers</option><option value="giantbomb">Giant Bomb</option><option value="ag">AG.ru</option><option value="ivi">ivi.ru</option><option value="minaev">MinaevLive</option><option value="arjlover">arjlover.net</option><option value="orttv">1tv</option><option value="generic">Generic</option></select></div></div><br>')
+    for plugin_name,plugin in pairs(plugins) do
+        if plugin.name then
+            http.send(string.format('<option value="%s">%s</option>',plugin_name,plugin.name))
+        end
+    end
 
-    http.send('<div class="row"><div class="span2">Feed</div><div class="span4"><input name="feed"></div></div><br>')
+    http.send('</select></div>')
 
-    http.send('<div class="row"><div class="span2">Description</div><div class="span4"><input name="name"></div></div><br>')
+    http.send('<div class="controls controls-row"><div class="span2">Feed data</div><input class="span4" type="text" name="feed"><div class="span1"><a href="/ui/fhelp" target="_blank">?</a></div></div>')
 
-    http.send('</div><div class="span8"><b>Vimeo</b>: <i>username</i>, channel/<i>channelname</i>, group/<i>groupname</i>, ... <br><b>YouTube</b>: <i>username</i>, favorites/<i>username</i>, ...<br><br><a href="/ui/fhelp" target="_blank">more</a></div></div>')
+    http.send('<div class="controls controls-row"><div class="span2">Name</div><input class="span4" type="text" name="name"></div>')
 
-    http.send('<input class="btn primary" type=submit value=Add>')
-    http.send('</form><hr>')
+    http.send('<br/><input class="btn btn-primary" type=submit value=Add> <a class="btn btn-info" href="/ui/fhelp" target="_blank">Help</a>')
+    http.send('</form><hr/>')
 
-    http.send('<br><a class="btn primary" href="/ui/save_feeds">Save</a> <a class="btn primary" href="/ui/reload_feeds?return_url=/ui/feeds">Reload feeds</a> <a class="btn info" href="/ui">Back</a>')
+    http.send('<br/><a class="btn btn-primary" href="/ui/save_feeds">Save</a> <a class="btn btn-primary" href="/ui/reload_feeds?return_url=/ui/feeds">Reload feeds</a> <a class="btn btn-info" href="/ui">Back</a>')
 end
 
 function ui_fhelp()
-    http.send('<br><br><b>Vimeo</b>: <i>username</i>, channel/<i>channelname</i>, group/<i>groupname</i>, album/<i>album_id</i><br>')
-    http.send('<b>YouTube</b>: <i>username</i>, favorites/<i>username</i>, playlist/<i>username</i>/<i>playlistname</i>, channel/<i>channelname</i>, search/<i>search_string</i><br>')
-    http.send('<b>VKontakte</b>: my, group/<i>group_id</i>, group/<i>group_id</i>/<i>album_id</i>, user/<i>user_id</i>, user/<i>user_id</i>/<i>album_id</i>, search/<i>search_order</i>/<i>search_string</i>, search_hd/<i>search_order</i>/<i>search_string</i><br />')
-    http.send('<b>GameTrailers</b>: <i>platform</i>/<i>type</i><br/>')
-    http.send('<b>Giant Bomb</b>: <i>channel</i><br/>')
-    http.send('<b>AG.ru</b>: <i>channel</i><br/>')
-    http.send('<b>ivi.ru</b>: new, <i>serial_name</i> or genre/<i>genre</i><br/>')
-    http.send('<b>MinaevLive</b>: archive<br/>')
-    http.send('<b>arjlover.net</b>: multiki, film, filmiki<br/>')
-    http.send('<b>1tv</b>: <b>si</b> parameter from http://www.1tv.ru/sprojects/si=<i>5685</i><br/>')
-    http.send('<b>Generic</b>: <i>m3u_url</i><hr>')
 
-    http.send('<b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured.<hr>')
-    http.send('<b>VKontakte</b>: <a onclick="window.open(this.href,\'newwin\',\'width=450,scrollbars=yes,toolbar=no,menubar=no\'); return false;" href="/ui/vk_status">view groups, friends and plugin help</a>.<hr>')
-    http.send('<b>GameTrailers platforms</b>: all, ps3, xb360, wii, pc, psv, psp, ds, gba, ps2, gc, xbox, classic, mob.<br/><b>GameTrailers types</b>: all, review, preview, interview, gameplay, feature.<hr>')
-    http.send('<b>Giant Bomb channels</b>: all, quicklook, review, feature, trailer, event, endurance, tang.<hr>')
-    http.send('<b>AG.ru channels</b>: videos, videos/top100pop, videos/top100best, videos/selected_by_ag.<hr>')
-    http.send('<b>ivi.ru genres</b>: arthouse, boeviki, voennye, detective, detskiy, documentary, drama, comedy, korotkometrazhki, melodramy, zolotaya_klassika, adventures, sovetskoe_kino, thriller, horror, fantastika, erotika.')
+    http.send('<br/>')
+
+    for plugin_name,plugin in pairs(plugins) do
+        if plugin.name and plugin.desc then
+            http.send(string.format('<b>%s</b>: ',plugin.name))
+            http.send(plugin.desc)
+            http.send('<br/><br/>\n\n')
+        end
+    end
 end
 
+function ui_mhelp()
+
+    http.send('<br/><h3>MIME-Types</h3>\n<table class="table">\n<tr><th>File Type</th><th>MIME-Type</th><th>UPnP Proto</th><th>DLNA.ORG Profile</th></tr>\n')
+
+    for i,j in pairs(mime) do
+        if j then
+            local ext=string.match(j[5],'^(DLNA.ORG_PN=[%w_]+);')
+
+            http.send(string.format('<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>\n',i,j[3],j[4],ext or j[5]))
+        end
+    end
+
+    http.send('</table>\n\n<a class="btn btn-info" href="/ui/ehelp">DLNA Extras</a> <a class="btn btn-info" href="/ui/config">Back</a>')
+end
+
+function ui_ehelp()
+    http.send('<br/><h3>DLNA Extras</h3>\n<table class="table">\n<tr><th>Name</th><th>DLNA.ORG Extras</th></tr>\n')
+
+    for i,j in pairs(dlna_org_extras) do
+        http.send(string.format('<tr><td>%s</td><td>%s</td></tr>\n',i,j))
+    end
+
+    http.send('</table>\n\n<a class="btn btn-info" href="/ui/mhelp">Back</a>')
+end
+
+function ui_plugins()
+
+    if ui_args.n and ui_args.s then
+        local p=plugins[ui_args.n]
+
+        if p then
+            if ui_args.s=='on' then p.disabled=false elseif ui_args.s=='off' then p.disabled=true end
+            core.sendevent('plugin',ui_args.n,ui_args.s)
+        end
+    end
+
+    http.send('<br/><h3>Plugins</h3>\n<table class="table">\n<tr><th>Name</th><th>Status</th></tr>\n')
+
+    for i,j in pairs(plugins) do
+        if j.name then
+            local status
+            
+            if j.disabled==true then
+                status=string.format('<a href="/ui/plugins?n=%s&s=on">on</a> | <b>off</b>',util.urlencode(i))
+            else
+                status=string.format('<b>on</b> | <a href="/ui/plugins?n=%s&s=off">off</a>',util.urlencode(i))
+            end
+
+            http.send(string.format('<tr><td>%s</td><td>%s</td></tr>\n',j.name,status))
+        end
+    end
+
+    http.send('</table>\n\n<a class="btn btn-primary" href="/ui/plapply">Save</a> <a class="btn btn-info" href="/ui/config">Back</a>')
+end
+
+function ui_plapply()
+    local f=io.open(cfg.config_path..'postinit/plugins.lua','w')
+    if f then
+        for i,j in pairs(plugins) do
+            if j.name then
+                f:write(string.format('plugins["%s"].disabled=%s\n',i,tostring(j.disabled or false)))
+            end
+        end
+        f:close()
+    end
+
+    http.send('<h3>OK</h3>')
+    http.send('<br/><a class="btn btn-info" href="/ui/plugins">Back</a>')
+end
+
+
+function ui_profiles()
+
+    if ui_args.n and ui_args.s then
+        local p=profiles[ui_args.n]
+
+        if p then
+            if ui_args.s=='on' then p.disabled=false elseif ui_args.s=='off' then p.disabled=true end
+            core.sendevent('profile',ui_args.n,ui_args.s)
+        end
+    end
+
+    http.send('<br/><h3>Profiles</h3>\n<table class="table">\n<tr><th>Name</th><th>Status</th></tr>\n')
+
+    for i,j in pairs(profiles) do
+        local status
+            
+        if j.disabled==true then
+            status=string.format('<a href="/ui/profiles?n=%s&s=on">on</a> | <b>off</b>',util.urlencode(i))
+        else
+            status=string.format('<b>on</b> | <a href="/ui/profiles?n=%s&s=off">off</a>',util.urlencode(i))
+        end
+
+        http.send(string.format('<tr><td>%s</td><td>%s</td></tr>\n',j.desc,status))
+    end
+
+    http.send('</table>\n\n<a class="btn btn-primary" href="/ui/prapply">Save</a> <a class="btn btn-info" href="/ui/config">Back</a>')
+end
+
+function ui_prapply()
+    local f=io.open(cfg.config_path..'postinit/profiles.lua','w')
+    if f then
+        for i,j in pairs(profiles) do
+            f:write(string.format('profiles["%s"].disabled=%s\n',i,tostring(j.disabled or false)))
+        end
+        f:close()
+    end
+
+    http.send('<h3>OK</h3>')
+    http.send('<br/><a class="btn btn-info" href="/ui/profiles">Back</a>')
+end
 
 function ui_show()
     if ui_args.fname then
@@ -144,7 +256,7 @@ function ui_show()
 
             if pls then
                 http.send('<h3>'..pls.name..'</h3>')
-                http.send('<br><table>')
+                http.send('<br/><table class="table">')
                 for i,j in ipairs(pls.elements) do
                     http.send(string.format('<tr><td><a href="%s">%s</a></td></tr>',j.url,j.name))
                 end
@@ -153,7 +265,7 @@ function ui_show()
         end
     end
 
-    http.send('<br><a class="btn info" href="/ui/playlists">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui/playlists">Back</a>')
 end
 
 function ui_remove()
@@ -169,7 +281,7 @@ function ui_remove()
         end
     end
 
-    http.send('<br><a class="btn info" href="/ui/playlists">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui/playlists">Back</a>')
 end
 
 function ui_remove_feed()
@@ -180,7 +292,7 @@ function ui_remove_feed()
         http.send('<h3>Fail</h3>')
     end
 
-    http.send('<br><a class="btn info" href="/ui/feeds">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui/feeds">Back</a>')
 end
 
 function ui_add_feed()
@@ -192,7 +304,7 @@ function ui_add_feed()
         http.send('<h3>Fail</h3>')
     end
 
-    http.send('<br><a class="btn info" href="/ui/feeds">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui/feeds">Back</a>')
 end
 
 function save_feeds()
@@ -218,105 +330,79 @@ end
 function ui_save_feeds()
     if save_feeds() then http.send('<h3>OK</h3>') else http.send('<h3>Fail</h3>') end
 
-    http.send('<br><a class="btn info" href="/ui/feeds">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui/feeds">Back</a>')
 end
 
 function ui_reload()
     core.sendevent('reload')
     http.send('<h3>OK</h3>')
-    http.send('<br><a class="btn info" href="/ui/playlists">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui/playlists">Back</a>')
 end
 
 function ui_reload_feeds()
     update_feeds_async()
     http.send('<h3>OK</h3>')
-    http.send('<br><a class="btn info" href="'.. (ui_args.return_url or '/ui') ..'">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="'.. (ui_args.return_url or '/ui') ..'">Back</a>')
 end
 
 function ui_config()
-    http_vars.youtube_fmt=cfg.youtube_fmt
-    http_vars.youtube_region=cfg.youtube_region
-    http_vars.ivi_fmt=cfg.ivi_fmt
-    http_vars.ag_fmt=cfg.ag_fmt
-    local vk_name=plugins.vkontakte.vk_get_name()
-    if vk_name then
-        http_vars.vk_auth_link='You are signed as <b>'..vk_name..'</b> <a class="btn info" href="'..plugins.vkontakte.vk_api_request_auth(www_location)..'">sign-in as another user</a>'
-    else
-        http_vars.vk_auth_link='<a class="btn info" href="'..plugins.vkontakte.vk_api_request_auth(www_location)..'">VKontakte sign-in</a>'
+    for plugin_name,plugin in pairs(plugins) do
+        if plugin.ui_vars then
+            for i,var in ipairs(plugin.ui_vars) do
+                http_vars[ var[1] ]=var[2]
+            end
+        end
     end
+
+
     http.sendtfile(cfg.ui_path..'ui_config.html',http_vars)
+
+    http.send('<script>\n')
+    http.send('function set_select_value(id,value)\n')
+    http.send('    { var obj=document.getElementById(id); for(i=0;i<obj.length;i++) { if(obj.options[i].value==value) { obj.options[i].selected=true; break; } } }\n')
+    http.send('function set_input_value(id,value)\n')
+    http.send('    { var obj=document.getElementById(id); if(obj) { obj.value=value } }\n')
+                        
+    for plugin_name,plugin in pairs(plugins) do
+        if plugin.ui_config_vars then
+            for i,var in ipairs(plugin.ui_config_vars) do
+                http.send(string.format('set_%s_value("%s","%s");\n',var[1],var[2],tostring(cfg[ var[2] ])))
+            end
+        end
+    end
+
+    http.send('</script>\n')
+
 end
 
 function ui_apply()
     local f=io.open(cfg.config_path..'common.lua','w')
     if f then
-        f:write('cfg.youtube_fmt="',ui_args.youtube_q or '18','"\ncfg.ivi_fmt="',ui_args.ivi_q or 'MP4-lo','"\ncfg.ag_fmt="',ui_args.ag_q or 'MP4-lo','"\ncfg.youtube_region="',ui_args.youtube_r or '*','"\n')
+
+        for plugin_name,plugin in pairs(plugins) do
+            if plugin.ui_config_vars then
+                for i,var in ipairs(plugin.ui_config_vars) do
+                    local v=ui_args[ var[2] ]
+                    if var[3]=="int" or var[3]=="bool" then
+                        f:write(string.format('cfg["%s"]=%s\n',var[2],v or ''))
+                    else
+                        f:write(string.format('cfg["%s"]="%s"\n',var[2],v or ''))
+                    end
+                end
+            end
+        end
+
         f:close()
         core.sendevent('config')
     end
 
     http.send('<h3>OK</h3>')
-    http.send('<br><a class="btn info" href="/ui/config">Back</a>')
-end
-
-function ui_vk_landing()
-    http.send("<script>location.href = document.URL.replace('vk_landing', 'vk_update').replace('#', '?');</script>")
-end
-
-function ui_vk_update()
-    local f=io.open(cfg.config_path..'vkontakte.lua','w')
-    if f then
-        if ui_args.access_token and ui_args.secret and ui_args.user_id then
-            f:write('cfg.vk_api_access_token="',ui_args.access_token,'"\ncfg.vk_api_secret="',ui_args.secret,
-                '"\ncfg.vk_api_user_id="',ui_args.user_id,'"\n')
-            http.send('<h3>VKontakte sign-in OK</h3>')
-        else
-            f:write('cfg.vk_api_access_token=""\ncfg.vk_api_secret=""\ncfg.vk_api_user_id=""\n')
-            http.send('<h3>VKontakte sign-in FAILED</h3>')
-            http.send('Error: '..util.urldecode(ui_args.error)..'<br />Error description: '..util.urldecode(ui_args.error_description)..'<br />')
-        end
-        f:close()
-        core.sendevent('config')
-    else
-        http.send('<h3>Error opening config file</h3>')
-    end
-    http.send('<br><a class="btn info" href="/ui/config">Back</a>')
-end
-
-function ui_vk_status()
-    http.send('<h3>VKontakte Status</h3>')
-    local vk_name=plugins.vkontakte.vk_get_name()
-    if vk_name then
-        http.send('You are signed as <b>'..vk_name..'</b> <a class="btn info" href="'..plugins.vkontakte.vk_api_request_auth(www_location)..'">sign-in as another user</a>')
-        http.send('<h4>Groups</h4>')
-        http.send('<table width="400"><tr><th width="300">group name</th><th>groip id</th></tr>')
-        local vk_groups=plugins.vkontakte.vk_get_groups()
-        if vk_groups then
-            for group_id,group_name in pairs(vk_groups) do
-                http.send(string.format('<tr><td><a href="http://vkontakte.ru/club%s">%s</a></td><td>%s</td></tr>',group_id,group_name,group_id))
-            end
-        end
-        http.send('</table>')
-        http.send('<h4>Firiends</h4>')
-        http.send('<table width="400"><tr><th width="300">friend name</th><th>user id</th></tr>')
-        local vk_friends=plugins.vkontakte.vk_get_friends()
-        if vk_friends then
-            for user_id,user_name in pairs(vk_friends) do
-                http.send(string.format('<tr><td><a href="http://vkontakte.ru/id%s">%s</a></td><td>%s</td></tr>',user_id,user_name,user_id))
-            end
-        end
-        http.send('</table>')
-    else
-        http.send('You are not signed in.')
-        http.send('<a class="btn info" href="'..plugins.vkontakte.vk_api_request_auth(www_location)..'">VKontakte sign-in</a>')
-    end
-
-    http.send('<br><a class="btn primary" href="/ui/vk_status">Refresh</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui/config">Back</a>')
 end
 
 function ui_status()
     http.send('<h3>Status</h3>')
-    http.send('<br><table>')
+    http.send('<br/><table class="table">')
 
     for i,j in pairs(childs) do
         if j.status then
@@ -326,7 +412,7 @@ function ui_status()
 
     http.send('</table>')
 
-    http.send('<br><a class="btn primary" href="/ui/status">Refresh</a> <a class="btn info" href="/ui">Back</a>')
+    http.send('<br/><a class="btn btn-primary" href="/ui/status">Refresh</a> <a class="btn btn-info" href="/ui">Back</a>')
 end
 
 function ui_kill()
@@ -336,7 +422,7 @@ function ui_kill()
     else
         http.send('<h3>Fail</h3>')
     end
-    http.send('<br><a class="btn info" href="/ui/status">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui/status">Back</a>')
 end
 
 function ui_upload()
@@ -378,7 +464,7 @@ function ui_upload()
         end
     end
 
-    http.send('<br><a class="btn info" href="/ui/playlists">Back</a>')
+    http.send('<br/><a class="btn btn-info" href="/ui/playlists">Back</a>')
 end
 
 function ui_api_call(args)
@@ -431,6 +517,14 @@ function ui_api_call(args)
     end
 end
 
+function ui_restart()
+    if core.restart(cfg.pid_file,"./xupnpd") then http.send('<h3>Attempt to restart...</h3>') else http.send('<h3>Unable to restart.</h3>') end
+
+    http.send('<br/><form method=get action="/ui"><input class="btn btn-primary" type=submit value=OK></form>')
+
+    http.send('<script>setTimeout("document.forms[0].submit()",3000)</script>')
+end
+
 ui_actions=
 {
     ['main']            = { 'xupnpd', ui_main },
@@ -450,13 +544,25 @@ ui_actions=
     ['kill']            = { 'xupnpd - kill', ui_kill },
     ['upload']          = { 'xupnpd - upload', ui_upload },
     ['apply']           = { 'xupnpd - apply', ui_apply },
-    ['vk_landing']      = { 'xupnpd - vkontakte sign-in redirect', ui_vk_landing },
-    ['vk_update']       = { 'xupnpd - vkontakte sign-in result', ui_vk_update },
-    ['vk_status']       = { 'xupnpd - vkontakte status', ui_vk_status },
-    ['fhelp']           = { 'xupnpd - feeds help', ui_fhelp }
+    ['plugins']         = { 'xupnpd - plugins', ui_plugins },
+    ['plapply']         = { 'xupnpd - plugins apply', ui_plapply },
+    ['profiles']        = { 'xupnpd - profiles', ui_profiles },
+    ['prapply']         = { 'xupnpd - profiles apply', ui_prapply },
+    ['fhelp']           = { 'xupnpd - feeds help', ui_fhelp },
+    ['mhelp']           = { 'xupnpd - mimes help', ui_mhelp },
+    ['ehelp']           = { 'xupnpd - extras help', ui_ehelp },
+    ['restart']         = { 'xupnpd - restart', ui_restart }
 }
 
 function ui_handler(args,data,ip,url)
+    for plugin_name,plugin in pairs(plugins) do
+        if plugin.ui_actons then
+            for act_name,act in pairs(plugin.ui_actons) do
+                ui_actions[act_name]=act
+            end
+        end
+    end
+
     local action=string.match(url,'^/ui/(.+)$')
 
     if action=='style' then
@@ -489,3 +595,26 @@ function ui_handler(args,data,ip,url)
 
     http.sendtfile(cfg.ui_path..'ui_template.html',http_vars)
 end
+
+
+plugins["ui"]={}
+plugins.ui.ui_config_vars=
+{
+    { "input",  "ssdp_interface" },
+    { "input",  "ssdp_notify_interval", "int" },
+    { "input",  "ssdp_max_age", "int" },
+    { "input",  "http_port", "int" },
+    { "input",  "mcast_interface" },
+    { "select", "proxy", "int" },
+    { "input",  "user_agent" },
+    { "input",  "http_timeout", "int" },
+    { "select", "dlna_notify", "bool"},
+    { "select", "group", "bool" },
+    { "select", "sort_files", "bool" },
+    { "input",  "name" },
+    { "input",  "uuid" },
+    { "input",  "default_mime_type" },
+    { "input",  "feeds_update_interval", "int" },
+    { "input",  "playlists_update_interval", "int" },
+    { "input",  "drive" }
+}

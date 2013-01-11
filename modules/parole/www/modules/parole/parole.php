@@ -62,11 +62,11 @@ auth.require = (
 	{
 ?>
 <script type="text/javascript">
-	window.location.href='/';
+	window.location.href = '?page=reboot';
 </script>
 <?php
 	}
-	doCommand( 'reboot', $log );
+	else doCommand( 'reboot.sh', $log );
 
 }
 

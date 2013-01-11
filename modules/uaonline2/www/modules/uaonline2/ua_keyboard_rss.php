@@ -15,32 +15,22 @@ class ua_rss_keyb_const
 	const mainBackground		=   'ua_background.png';
 	const focusFontColor		=	'0:0:0';
 	const unFocusFontColor		=	'255:255:255';
-	const focusFontBackColor	=	'255:255:255';
-	const unFocusFontBackColor	=	'80:80:80';
+	const focusFontBackColor	=	'21:109:213';
+	const unFocusFontBackColor	=	'8:42:95';
 	
 	
-	const header				=   'ua_header.png';
-	const footer				=   'ua_footer.png';
-	const header_offsetXPC		=	'0';
-	const header_offsetYPC		=	'4.3';
-	const header_widthPC		=	'100';
-	const header_heightPC		=	'5.6';
-	const footer_offsetXPC		=	'0';
-	const footer_offsetYPC		=	'90.4';
-	const footer_widthPC		=	'100';
-	const footer_heightPC		=	'5.6';
 	
 	// верхний заголовок 
 	const text_header_align		=	'left'; // далее идут константы для текста заголовка
 	const text_header_redraw	=	'no';
 	const text_header_lines		=	'1';
-	const text_header_offsetXPC	=	'27';
+	const text_header_offsetXPC	=	'28';
 	const text_header_offsetYPC	=	'2';
 	const text_header_widthPC	=	'90';
 	const text_header_heightPC	=	'10';
 	const text_header_fontSize	=	'20'; // размер шрифта заголовка
 	const text_header_backgroundColor	=	'-1:-1:-1';// фон 
-	const text_header_foregroundColor	=	'0:0:0'; //цвет шрыфта
+	const text_header_foregroundColor	=	'255:255:255'; //цвет шрыфта
 	
 	
 	// нижний заголовок
@@ -53,7 +43,7 @@ class ua_rss_keyb_const
 	const text_footer_heightPC	=	'10';
 	const text_footer_fontSize	=	'19'; 
 	const text_footer_backgroundColor	=	'-1:-1:-1';
-	const text_footer_foregroundColor	=	'0:0:0'; 
+	const text_footer_foregroundColor	=	'255:255:255'; 
 	
 	// это бордюр и текстовое поле для вводимого текста
 	const descr_offsetXPC		=	'12';
@@ -369,13 +359,11 @@ class ua_rss_keyb extends ua_rss_keyb_const
 	<?php
 		$this->showIdle();
 	?>
-	<image  redraw="no" offsetXPC="<?= static::header_offsetXPC ?>" offsetYPC="<?= static::header_offsetYPC ?>" widthPC="<?= static::header_widthPC ?>" heightPC="<?= static::header_heightPC ?>">
-			<?= $ua_images_path.static::header ?>
-	</image>
-	
-	<image  redraw="no" offsetXPC="<?= static::footer_offsetXPC ?>" offsetYPC="<?= static::footer_offsetYPC ?>" widthPC="<?= static::footer_widthPC ?>" heightPC="<?= static::footer_heightPC ?>">
-			<?= $ua_images_path.static::footer ?>
-	</image>
+	<backgroundDisplay>
+			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+					<?=$ua_images_path?>ua_background_main.png
+			</image>
+	</backgroundDisplay>
 
 	
 	<?php	

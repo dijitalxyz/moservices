@@ -14,7 +14,7 @@
 class ua_rss_cat_const extends ua_rss_view_photo
 {
 	// main items
-	const focusFontColor		=	'0:0:0';
+	const focusFontColor		=	'255:255:255';
 	const unFocusFontColor		=	'255:255:255';
 	const imageFocusBorder 		= 	'ua_focus_main.png';
 	const imageUnFocusBorder	= 	'ua_unfocus_main.png';
@@ -22,23 +22,11 @@ class ua_rss_cat_const extends ua_rss_view_photo
 	const rowCount 				=	'5';
 	const columnCount 			=	'4';
 	const itemOffsetXPC			= 	'6';
-	const itemOffsetYPC			= 	'11';
+	const itemOffsetYPC			= 	'14';
 	const itemWidthPC			= 	'22';
 	const itemHeightPC			= 	'15';
 	const itemBackgroundColor 	= 	'0:0:0';
 
-	const header				=   'ua_header.png';
-	const footer				=   'ua_footer.png';
-	const header_offsetXPC		=	'0';
-	const header_offsetYPC		=	'4.3';
-	const header_widthPC		=	'100';
-	const header_heightPC		=	'5.6';
-	const footer_offsetXPC		=	'0';
-	const footer_offsetYPC		=	'90.4';
-	const footer_widthPC		=	'100';
-	const footer_heightPC		=	'5.6';
-
-	
 	const text_header_align		=	'left'; // далее идут константы для текста заголовка
 	const text_header_redraw	=	'yes';
 	const text_header_lines		=	'1';
@@ -48,10 +36,8 @@ class ua_rss_cat_const extends ua_rss_view_photo
 	const text_header_heightPC	=	'10';
 	const text_header_fontSize	=	'20'; // размер шрифта заголовка
 	const text_header_backgroundColor	=	'-1:-1:-1';// фон 
-	const text_header_foregroundColor	=	'0:0:0'; //цвет шрыфта
+	const text_header_foregroundColor	=	'255:255:255'; //цвет шрыфта
 	
-	
-		
 	const text_footer_align		=	'left';
 	const text_footer_redraw	=	'yes';
 	const text_footer_lines		=	'1';
@@ -61,17 +47,15 @@ class ua_rss_cat_const extends ua_rss_view_photo
 	const text_footer_heightPC	=	'10';
 	const text_footer_fontSize	=	'20'; 
 	const text_footer_backgroundColor	=	'-1:-1:-1';
-	const text_footer_foregroundColor	=	'0:0:0'; 
+	const text_footer_foregroundColor	=	'255:255:255'; 
     
 // название сайта (которое справа внизу)	
 	const image_site_footer_display_offsetXPC 	= '85';
 	const image_site_footer_display_offsetYPC 	= '90.3';
 	const image_site_footer_display_widthPC 	= '4';
-	const image_site_footer_display_heightPC	= '5.5';
+	const image_site_footer_display_heightPC	= '6';
 	const fsua_logo								= 'ua_fsua.png';
 	const exua_logo								= 'ua_exua_ukr.png';
-	const filmy_logo							= 'ua_filmy.net.ua.png';
-	const filmix_logo							= 'ua_filmix.png';
 	const uakino_logo							= 'ua_uakinonet.png';
 	
 	// константы отображения итемов

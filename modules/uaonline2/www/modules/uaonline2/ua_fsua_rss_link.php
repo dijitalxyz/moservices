@@ -56,6 +56,7 @@ class ua_rss_link extends ua_rss_link_const
 	
 	?>
 	<initialScript>
+		
 		pitemCount = 0;
 		ptitleArray = null;
 		plinkArray = null;
@@ -65,38 +66,87 @@ class ua_rss_link extends ua_rss_link_const
 		dlok = readStringFromFile( "<?=$tmp?>" );
 		if (dlok != null)
 			{
-				ds1 = getStringArrayAt(dlok, 1);
-				ds2 = getStringArrayAt(dlok, 2);
-				ds3 = getStringArrayAt(dlok, 3);
-				ds4 = getStringArrayAt(dlok, 4);
-				ds5 = getStringArrayAt(dlok, 5);
-				ds6 = getStringArrayAt(dlok, 6);
-				ds7 = getStringArrayAt(dlok, 7);
-				ds8 = getStringArrayAt(dlok, 8);
-				ds9 = getStringArrayAt(dlok, 9);
-				img = getStringArrayAt(dlok, 10);
-				name = getStringArrayAt(dlok, 0);
-				c = 11;
+				ds1 = getStringArrayAt(dlok, 2);
+				ds2 = getStringArrayAt(dlok, 3);
+				ds3 = getStringArrayAt(dlok, 4);
+				ds4 = getStringArrayAt(dlok, 5);
+				ds5 = getStringArrayAt(dlok, 6);
+				ds6 = getStringArrayAt(dlok, 7);
+				ds7 = getStringArrayAt(dlok, 8);
+				ds8 = getStringArrayAt(dlok, 9);
+				ds9 = getStringArrayAt(dlok, 10);
+				img = getStringArrayAt(dlok, 11);
+				name = getStringArrayAt(dlok, 1);
+				
+				c = 12;
 				pitemCount = getStringArrayAt(dlok, c); c += 1;
 				count = 0;
+				fav_idx = 0;
+				found = 0;
 				while( count != pitemCount )
 					{
 					ptitleArray = pushBackStringArray( ptitleArray, getStringArrayAt(dlok, c)); c += 1;
 					plinkArray = pushBackStringArray( plinkArray, getStringArrayAt(dlok, c)); c += 1;			
 					pdownlinkArray = pushBackStringArray( pdownlinkArray, getStringArrayAt(dlok, c)); c += 1;			
-					pdownameArray = pushBackStringArray( pdownameArray, getStringArrayAt(dlok, c)); c += 2;						
+					pdowname = getStringArrayAt(dlok, c);
+					pdownameArray = pushBackStringArray( pdownameArray, pdowname); c += 2;						
 					pbooklinkArray = pushBackStringArray( pbooklinkArray, getStringArrayAt(dlok, c)); c += 1;						
+					
 					count += 1;
+					cnt = 0;
+						if ( found == 0)
+						{
+							print ("histCount----------------------",histCount);
+							while( cnt != histCount )
+							{
+								histFiles=getStringArrayAt(historyFilesArray, cnt);
+								print ("histFiles----------------------",histFiles);
+								if (histFiles == pdowname) 
+								{
+									fav_idx = count;
+									found = 1;
+									
+								} else found = 0;
+								
+								cnt += 1;
+							}	
+						}
+					}
+					if (found == 1)
+					{
+					
+					page = 0;
+					i = 0;
+					while (i &lt; fav_idx)
+					{
+						i +=  20;
+						page += 1;
+					}
+					i -=20;
+					if (p == 1 ) itm_index=fav_idx-1; else itm_index = (i-fav_idx+1)*-1;
+					
+					print ("i----------------------",i);
+					print ("page----------------------",page);
+					print ("itm_index----------------------",itm_index);
+					
 					}
 			}	
-		countPage = getURL("<?=$ua_path_link?>ua_exua_parser.php?pitemCount="+pitemCount+"&amp;num=20");
+			countPage = 0;
+			i = 0;
+			while (i &lt; pitemCount)
+			{
+				i +=  20;
+				countPage += 1;
+			}
 		print ("countPage - "+countPage);
+		
 	</initialScript>
 	
 	<onRefresh>
 	setRefreshTime(-1);    
 	showIdle();
     
+	
 	
 	itemCount = 0;
 	titleArray = null;
@@ -230,8 +280,10 @@ class ua_rss_link extends ua_rss_link_const
 	global $ua_path_link;
 	global $ua_player_parser_filename;
 	global $xtreamer;
+	global $tmp;
 	?>
 	<onEnter>
+	site = 2;
 	returnFromLink=readStringFromFile("/tmp/env_returnFromLink_message");
 	returnFromList=readStringFromFile("/tmp/env_returnFromList_message");
 		if (returnFromLink == "1" || returnFromList == "1")
@@ -242,11 +294,23 @@ class ua_rss_link extends ua_rss_link_const
 	else
 	{ 
 	showIdle();
+	
+	
 	pstyle = getURL("<?=$ua_path_link.$ua_player_parser_filename.'?player_style=req'?>");
 	page = 1;
+	itm_index=0;
+	dlok = readStringFromFile( "<?=$tmp?>" );
+	if (dlok != null)
+		{
+			param = getStringArrayAt(dlok, 0);
+		}
+	<?
+		include ("ua_rss_historyfiles.inc.php");
+	?>
+	print ("param======================================================",param);
 	executeScript("initialScript");
 	cancelIdle();
-	itm_index=0;
+	
 	use_alt_player=readStringFromFile("/tmp/env_use_alt_player_message");
 		if (use_alt_player == "1")
 			{
@@ -274,6 +338,7 @@ class ua_rss_link extends ua_rss_link_const
 			}
 		?>	
 		writeStringToFile("/tmp/env_returnFromLink_message", "1");
+		writeStringToFile("/tmp/env_returnListIndex_message", listIndex);
 	</onExit>
 	<?php
 	}

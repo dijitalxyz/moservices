@@ -1,11 +1,11 @@
 [irfake]
-	revision = 5
-	title = "IR Fake RC replacement v1.2.15r2"
+	revision = 7
+	title = "IR Fake RC replacement v1.2.15r3"
 	role = patch
 	init = S41irfake
 	backup = "irfake/irfake.conf"
 	config_before = copy
 	config_after = save
 	config_edit = "irfake/irfake.conf"
-	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh etc/rc.init/S04powerkey.sh irfake/"
-	size = 160
+	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh irfake/"
+	size = 156

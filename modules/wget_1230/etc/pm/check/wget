@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Check for install:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+#
+wget -V 2>&1 | grep -q 'GNU Wget ' || exit 0
+wget -h | grep -q ' --background' || exit 0
+wget -h | grep -q ' --timeout'    || exit 0
+wget -h | grep -q ' --tries'      || exit 0
+wget -h | grep -q ' --limit-rate' || exit 0
+exit 2

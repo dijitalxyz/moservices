@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS bookmarks module v1.3
+	RSS bookmarks module v1.4
 	------------------------------
 	Created by Sashunya 2012	
 	wall9e@gmail.com			
@@ -28,13 +28,6 @@ class ua_rss_favorites  extends ua_rss_favorites2
 	{
 	global $ua_images_path;
 	?>
-	<image offsetXPC="<?= static::item_offsetXPC ?>" offsetYPC="<?= static::item_offsetYPC ?>" widthPC="<?= static::item_widthPC ?>" heightPC="<?= static::item_heightPC ?>" >
-      <?= $ua_images_path . static::item_image ?>
-    </image>
-	
-	<image offsetXPC="<?= static::menu_offsetXPC ?>" offsetYPC="<?= static::menu_offsetYPC ?>" widthPC="<?= static::menu_widthPC ?>" heightPC="<?= static::menu_heightPC ?>" >
-		<?= $ua_images_path . static::menu_image ?>
-    </image>
 	
 			
 	<text  align="<?= static::text_header_align ?>" redraw="<?= static::text_header_redraw ?>" lines="<?= static::text_header_lines ?>" offsetXPC="<?= static::text_header_offsetXPC ?>" offsetYPC="<?= static::text_header_offsetYPC ?>" widthPC="<?= static::text_header_widthPC ?>" heightPC="<?= static::text_header_heightPC ?>" fontSize="<?= static::text_header_fontSize ?>" backgroundColor="<?= static::text_header_backgroundColor ?>" foregroundColor="<?= static::text_header_foregroundColor ?>">
@@ -237,6 +230,8 @@ class ua_rss_favorites  extends ua_rss_favorites2
 	public function onEnters()
 	{
 	global $ua_path_link;
+	global $sites_logos_filename;
+	global $ua_images_foldername;
 	?>
 	<onEnter>
 	returnFromLink=readStringFromFile("/tmp/env_returnFromLink_message");
@@ -248,15 +243,20 @@ class ua_rss_favorites  extends ua_rss_favorites2
 			}
 		else
 	{
-		count=0;
-		fav_site_count=5;
 		sitelogoArray = null;
-		while( count != fav_site_count )
-				{		
-				link_site = getURL("<?=$ua_path_link.'ua_paths.inc.php?get_site_logo='?>"+count);
-				sitelogoArray = pushBackStringArray(sitelogoArray, link_site);
-				count += 1;
-				}
+		dlok = readStringFromFile( "<?=$sites_logos_filename?>" );
+		if (dlok != null)
+			{
+				c = 0;
+				itmCount = getStringArrayAt(dlok, c); c += 1;
+				count = 0;
+				while( count != itmCount )
+					{
+						logos = "<?=$ua_path_link.$ua_images_foldername?>"+getStringArrayAt(dlok, c);
+						sitelogoArray = pushBackStringArray(sitelogoArray, logos); c += 1;
+						count += 1;
+					}
+			}
 		itm_index=0;
 		menu=0;
 		setRefreshTime(1);    
@@ -287,7 +287,6 @@ class ua_rss_favorites  extends ua_rss_favorites2
 				type = getStringArrayAt( typeBookArray , idx );
 				link1 = getURL("<?=$ua_path_link.'ua_paths.inc.php?get_fav_site='?>"+site+"&amp;get_fav_type="+type);
 				link= link1+link2;
-				print("LINK=========",link);
 				jumpToLink("startLink");
 			</script>
 			null;

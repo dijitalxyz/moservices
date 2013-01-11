@@ -22,23 +22,8 @@ case "$1" in
 		sed -i 's/^\(.*\)\.\/RootApp DvdPlayer\(.*\)$/\1\/usr\/local\/etc\/RootApp DvdPlayer\2/' $etc/rcS
 
 		# adding RootApp scripts
-		mkdir -p $etc/rc.init
 		cp -a $mos/etc/rc.suspend $etc/
 		cp -a $mos/etc/rc.wakeup $etc/
-
-		cp -a $mos/etc/S01Power $etc/rc.init/
-		cp -a $mos/etc/S10moServices $etc/rc.init/
-
-		# add to rcS
-		if [ -f $etc/rcS ] ; then
-			# standard FW
-			sed -i 's/^\(\/usr\/local\/etc\/mos\/services.*\)$/#\1/' $etc/rcS
-			grep -q 'etc/rc.wakeup' $etc/rcS || echo "$etc/rc.wakeup" >> $etc/rcS
-		else
-			# Seagate FW
-			sed -i 's/^\(\/usr\/local\/etc\/mos\/services.*\)$/#\1/' $etc/autorun.sh
-			grep -q 'etc/rc.wakeup' $etc/autorun.sh ||  echo "$etc/rc.wakeup" >> $etc/autorun.sh
-		fi
 	fi
 	echo "Patched RootApp enabled"
 	echo "Please, reboot device!"
@@ -61,20 +46,8 @@ case "$1" in
 		rm -f /usr/local/etc/RootApp
 
 		# remove RootApp scripts
-		rm -Rf $etc/rc.init
 		rm -f $etc/rc.wakeup
 		rm -f $etc/rc.suspend
-
-		#remove from rcS
-		if [ -f $etc/rcS ] ; then
-			# standard FW
-			sed -i 's/^#\(\/usr\/local\/etc\/mos\/services.*\)$/\1/' $etc/rcS
-			sed -i '/etc\/rc\.wakeup/d' $etc/rcS
-		else
-			# Seagate FW
-			sed -i 's/^#\(\/usr\/local\/etc\/mos\/services.*\)$/\1/' $etc/autorun.sh
-			sed -i '/etc\/rc\.wakeup/d' $etc/autorun.sh
-		fi
 
 		echo "Patched RootApp disabled"
 		echo "Please, reboot device!"

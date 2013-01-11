@@ -1,0 +1,8 @@
+[wget_3430]
+	revision = 1
+	title = "wget 1.14 static"
+	check = wget
+	role = package
+	env = 3430
+	files = "bin/wget"
+	size = 804

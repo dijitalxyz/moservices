@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS threePartsView style module v1.2
+	RSS threePartsView style module v1.3
 	------------------------------
 	Created by Sashunya 2012	
 	wall9e@gmail.com			
@@ -53,6 +53,8 @@ class ua_rss_view
 		global $key_right;
 		global $key_return;
 		global $xtreamer;
+		global $key_pageup;
+		global $key_pagedown;
 	?>
 		<onUserInput>
 				<script>
@@ -89,6 +91,13 @@ class ua_rss_view
 					<?php
 					}
 					?>
+					if (userInput == "<?= $key_pageup ?>" || userInput == "<?= $key_pagedown ?>")
+					{
+						if (userInput == "<?= $key_pagedown ?>") { page+=1; itm_index=0;}
+						if (userInput == "<?= $key_pageup ?>" )  {if (page &gt;1) page-=1; itm_index=0;}
+						ret="true";
+						setRefreshTime(1);
+					}
 					}
 					if ( majorContext == "menu" )
 					{
@@ -183,13 +192,13 @@ class ua_rss_view
 		$this->showIdle();
 	?>
 	
-	<image  redraw="no" offsetXPC="<?= static::header_offsetXPC ?>" offsetYPC="<?= static::header_offsetYPC ?>" widthPC="<?= static::header_widthPC ?>" heightPC="<?= static::header_heightPC ?>">
-			<?= $ua_images_path.static::header ?>
-	</image>
+	<backgroundDisplay>
+			<image  redraw="no" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+					<?=$ua_images_path?>ua_background_items.png
+			</image>
+	</backgroundDisplay>
 	
-	<image  redraw="no" offsetXPC="<?= static::footer_offsetXPC ?>" offsetYPC="<?= static::footer_offsetYPC ?>" widthPC="<?= static::footer_widthPC ?>" heightPC="<?= static::footer_heightPC ?>">
-			<?= $ua_images_path.static::footer ?>
-	</image>
+	
 	
 	<?php	
 		// сюда вставить бордюры 

@@ -1,0 +1,7 @@
+[rutor]
+	revision = 1
+	title = "Rutor 0.2"
+	role = rss
+	init="S37rutor"
+	files = "etc/init/S37rutor rutor/ www/modules/rutor/"
+	size = 788

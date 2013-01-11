@@ -51,7 +51,9 @@ class Locale_ru_RU extends Localization {
             'images' => 'Картинки',
             'ktv_CHANNELGROUP_1_descr' => 'Каналы общего содержания: Первый, ORT International, Россия 1, РТР-Планета, НТВ, ТВЦ, РенТВ, ТНТ, СТС International, ДТВ, Домашний, 5 канал Петербург, World Fashion',
         	'new_version_title' => 'Доступна новая версия.',
-        	'new_version_msg' => 'Версия %1$s доступна для скачивания на http://tvontop.com. Пожалуйста обновите плагин.'
+        	'new_version_msg' => 'Версия %1$s доступна для скачивания на http://tvontop.com. Пожалуйста обновите плагин.',
+        	'Best' => 'Лучшие',
+        	'Loading video...' => 'Загрузка видео...'
         );
     }
 }

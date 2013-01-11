@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# description: reboot daemon
+#
+bin=/usr/local/etc/mos/bin
+
+while true ; do
+	if [ -f /tmp/reboot ] ; then
+		$bin/fork_reboot &
+		exit
+	fi
+	sleep 1
+done;

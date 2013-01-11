@@ -25,16 +25,7 @@ class global_const extends ua_rss_view
 	const imageParentFocus 		= 	'ua_parent_focus_category.bmp';
 	const imageUnFocus 			= 	'ua_unfocus_category.bmp';
 	const parentFocusFontColor	=	'101:101:101';
-	const header				=   'ua_header.png';
-	const footer				=   'ua_footer.png';
-	const header_offsetXPC		=	'0';
-	const header_offsetYPC		=	'4.3';
-	const header_widthPC		=	'100';
-	const header_heightPC		=	'5.6';
-	const footer_offsetXPC		=	'0';
-	const footer_offsetYPC		=	'90.4';
-	const footer_widthPC		=	'100';
-	const footer_heightPC		=	'5.6';
+	
 	
 
 	// текст заголовка
@@ -47,7 +38,7 @@ class global_const extends ua_rss_view
 	const text_header_heightPC	=	'10';
 	const text_header_fontSize	=	'20'; // размер шрифта заголовка
 	const text_header_backgroundColor	=	'-1:-1:-1';// фон 
-	const text_header_foregroundColor	=	'0:0:0'; //цвет шрыфта
+	const text_header_foregroundColor	=	'255:255:255'; //цвет шрыфта
 	
 	// текст подписи 
 	const text_footer_align		=	'left';
@@ -59,16 +50,15 @@ class global_const extends ua_rss_view
 	const text_footer_heightPC	=	'10';
 	const text_footer_fontSize	=	'20'; 
 	const text_footer_backgroundColor	=	'-1:-1:-1';
-	const text_footer_foregroundColor	=	'0:0:0'; 
+	const text_footer_foregroundColor	=	'255:255:255'; 
     
 	// название сайта (которое справа внизу)	
 	const image_site_footer_display_offsetXPC 	= '85';
 	const image_site_footer_display_offsetYPC 	= '90.3';
 	const image_site_footer_display_widthPC 	= '4';
-	const image_site_footer_display_heightPC	= '5.5';
+	const image_site_footer_display_heightPC	= '6';
 	const fsua_logo								= 'ua_fsua.png';
 	const exua_logo								= 'ua_exua_ukr.png';
-	const filmix_logo							= 'ua_filmix.png';
 	const uakino_logo							= 'ua_uakinonet.png';
 }
 class ua_rss_link_const extends global_const
@@ -76,10 +66,10 @@ class ua_rss_link_const extends global_const
 	
 	// items т.е отображение списка файлов фильма 
 	const itemBackgroundColor	=	'0:0:0';
-	const itemXPC				=	'31';
-	const itemYPC				=	'11'; 
-	const itemImageXPC			=	'31';
-	const itemImageYPC 			= 	'11' ;
+	const itemXPC				=	'27';
+	const itemYPC				=	'13'; 
+	const itemImageXPC			=	'27';
+	const itemImageYPC 			= 	'13' ;
 	const itemImageWidthPC		=	'0';
 	const itemImageHeightPC		=	'0';
 	const itemPerPage			=	'5';
@@ -89,21 +79,15 @@ class ua_rss_link_const extends global_const
 	
 	// menu т.е. меню слева
 	const menuXPC				=	'8';
-	const menuYPC				=	'11';
+	const menuYPC				=	'13';
 	const menuWidthPC			=	'15';
 	const menuHeightPC			=	'6';
 		
 	// description. Картинка бордюра и текст для описания фильма
-	const descr_offsetXPC		=	'30';
-	const descr_offsetYPC		=	'63';
-	const descr_widthPC			=	'64';
-	const descr_heightPC		=	'1';
-	const descr_image			=	'ua_border_descr.png';
-	
-	const text_descr_align		=	'left';
+	const text_descr_align		=	'justify';
 	const text_descr_redraw		=	'no';
 	const text_descr_lines		=	'1';
-	const text_descr_offsetXPC	=	'29';
+	const text_descr_offsetXPC	=	'28';
 	const text_descr_offsetYPC	=	'51.8';
 	const text_descr_widthPC	=	'67';
 	const text_descr_heightPC	=	'26';
@@ -112,35 +96,14 @@ class ua_rss_link_const extends global_const
 	const text_descr_foregroundColor	=	'255:255:255'; 
 	
 	
-	// item. Картинка бордюра для списка фильмов
-	const item_offsetXPC		=	'30';
-	const item_offsetYPC		=	'10';
-	const item_widthPC			=	'64';
-	const item_heightPC			=	'53';
-	const item_image			=	'ua_border_list.png';
-	
-	// poster. Картинка бордюра для постера и сам постер
-	const poster_offsetXPC			=	'7';
-	const poster_offsetYPC			=	'54';
-	const poster_widthPC			=	'17';
-	const poster_heightPC			=	'36';
-	const poster_image				=	'ua_border_menu.png';
-	
-	const image_poster_offsetXPC	=	'8';
+	const image_poster_offsetXPC	=	'7';
 	const image_poster_offsetYPC	=	'55';
 	const image_poster_widthPC		=	'15';
 	const image_poster_heightPC		=	'34';
 	
 	
-	// menu. Картинка бордюра для меню слева
-	const menu_offsetXPC		=	'7';
-	const menu_offsetYPC		=	'10';
-	const menu_widthPC			=	'17';
-	const menu_heightPC			=	'44';
-	const menu_image			=	'ua_border_menu.png';
-	
 	// itemdisplay. Константы для отображения списка фильмов
-	const unfocus_color			=	'101:101:101';
+	const unfocus_color			=	'255:255:255';
 	const focus_color			=	'255:255:255';
 	const itemdisplay_offsetXPC	=	'0';
 	const itemdisplay_offsetYPC	=	'0';
@@ -158,10 +121,10 @@ class ua_rss_list_const extends global_const
 	
 	// items т.е отображение списка файлов фильма 
 	const itemBackgroundColor	=	'0:0:0';
-	const itemXPC				=	'24';
-	const itemYPC				=	'11'; 
-	const itemImageXPC			=	'24';
-	const itemImageYPC 			= 	'11' ;
+	const itemXPC				=	'25';
+	const itemYPC				=	'13'; 
+	const itemImageXPC			=	'25';
+	const itemImageYPC 			= 	'13' ;
 	const itemImageWidthPC		=	'0';
 	const itemImageHeightPC		=	'0';
 	const itemPerPage			=	'5';
@@ -171,28 +134,13 @@ class ua_rss_list_const extends global_const
 	
 	// menu т.е. меню слева
 	const menuXPC				=	'7';
-	const menuYPC				=	'11';
+	const menuYPC				=	'13';
 	const menuWidthPC			=	'15';
 	const menuHeightPC			=	'8';
 	
-	
-	// item. Картинка бордюра для списка фильмов
-	const item_offsetXPC		=	'23';
-	const item_offsetYPC		=	'10';
-	const item_widthPC			=	'72';
-	const item_heightPC			=	'80';
-	const item_image			=	'ua_border_list.png';
-	
 		
-	// menu. Картинка бордюра для меню справа
-	const menu_offsetXPC		=	'6';
-	const menu_offsetYPC		=	'10';
-	const menu_widthPC			=	'17';
-	const menu_heightPC			=	'44';
-	const menu_image			=	'ua_border_menu.png';
-	
 	// itemdisplay. Константы для отображения списка фильмов
-	const unfocus_color			=	'101:101:101';
+	const unfocus_color			=	'255:255:255';
 	const focus_color			=	'255:255:255';
 	const itemdisplay_offsetXPC	=	'11';
 	const itemdisplay_offsetYPC	=	'2';
@@ -221,7 +169,7 @@ class ua_rss_download_const extends ua_rss_list_const
 	const down_item_image_display_heightPC	=	'85';
 	
 	const down_itemdisplay_offsetXPC	=	'11';
-	const down_itemdisplay_offsetYPC	=	'6';
+	const down_itemdisplay_offsetYPC	=	'7';
 	const down_itemdisplay_widthPC	=	'80';
 	const down_itemdisplay_heightPC	=	'90';
 	const down_itemdisplay_fontSize	=	'15'; // размер шрыфта

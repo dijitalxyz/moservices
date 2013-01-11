@@ -19,6 +19,8 @@ class ua_rss_view_photo
 	{
 		include("ua_rss_idle.inc.php");
 	}
+	
+	
 	// эта функция выводит секцию script (она для всех одинаковая) в itemDisplay 
 	// функция выводит список категорий
 	public function itemDisplay_script()
@@ -140,15 +142,13 @@ class ua_rss_view_photo
 	<?php
 		$this->showIdle();
 	?>
+	<backgroundDisplay>
+			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+					<?=$ua_images_path?>ua_background_main.png
+			</image>
+	</backgroundDisplay>
 	
-	<image  redraw="no" offsetXPC="<?= static::header_offsetXPC ?>" offsetYPC="<?= static::header_offsetYPC ?>" widthPC="<?= static::header_widthPC ?>" heightPC="<?= static::header_heightPC ?>">
-			<?= $ua_images_path.static::header ?>
-	</image>
-	
-	<image  redraw="no" offsetXPC="<?= static::footer_offsetXPC ?>" offsetYPC="<?= static::footer_offsetYPC ?>" widthPC="<?= static::footer_widthPC ?>" heightPC="<?= static::footer_heightPC ?>">
-			<?= $ua_images_path.static::footer ?>
-	</image>
-	
+		
 	<?php	
 	
 		$this->mediaDisplay_content();

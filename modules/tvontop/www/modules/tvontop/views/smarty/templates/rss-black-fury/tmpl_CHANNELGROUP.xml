@@ -113,7 +113,6 @@ Return:
         res = "true";
 
         if (0 == videoOn) {
-			
             if ( key == keyRight || key == keyDisplay) {
             	/* show EPG */
                 url = getItemInfo(-1, "epg_link");
@@ -122,7 +121,15 @@ Return:
                 streamlink = getItemInfo(-1, "link");
                 playItemURL(streamlink, 10, 128*1024);
             } else if ( key == keyEnter ) {
-                executeScript("videoStart");
+				{if {$config->get(enableOSD)} == "1"}
+                	executeScript("videoStart");
+				{else}
+					envKey 		= "playedTitle";
+					index = getFocusItemIndex();
+					envValue = getItemInfo(index , "title") + "&#10;" + getItemInfo(index , "description");
+					executeScript("setEnvValue");
+                	res = "false";
+                {/if}
             } else if ( key == keyPgUp ) {
                 setFocusItemIndex(0);
             } else if ( key == keyPgDn ) {
@@ -131,7 +138,6 @@ Return:
                 res = "false";
             }
         } else {
-
             if ( key == keyVStop || key == keyReturn ) {
                 executeScript("videoStop");
             } else if ( key == keyDisplay ) {
@@ -142,7 +148,6 @@ Return:
                     executeScript("osdHide");
                 }
             } else if (0 != osdPos &amp;&amp; ( key == keyUp || key == keyDown || key == keyLeft || key == keyRight || key == keyEnter || key == keyPgUp || key == keyPgDn )) {
-
                 /* show OSD if it's not shown yet and do nothing more */
                 executeScript("osdShow");
             } else if (0 == osdPos) {
@@ -251,7 +256,7 @@ Return:
                 </script>
             </widthPC>
         </text>
-        <text offsetXPC="19" offsetYPC="5" widthPC="68" heightPC="95" fontSize="13" backgroundColor="{$config->get(bgNormal)}">
+        <text offsetXPC="20" offsetYPC="5" widthPC="66.5" heightPC="95" fontSize="13" backgroundColor="{$config->get(bgNormal)}">
             <script>itemDescr;</script>
             <foregroundColor><script>itemFg;</script></foregroundColor>
             <backgroundColor><script>if (itemBg == bgNormal) "-1:-1:-1"; else itemBg;</script></backgroundColor>

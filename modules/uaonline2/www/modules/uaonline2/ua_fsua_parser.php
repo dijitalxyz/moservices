@@ -480,7 +480,7 @@ global $tmp;
 			}
 if ($single)
 {
-	$temps = $title." ".$title_name."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
+	$temps = $file."\n".$title." ".$title_name."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
 	$redirect = $ua_path_link2.$fsua_rss_link_filename;
 	//echo $temps;
 }
@@ -535,7 +535,7 @@ if ($final=="0")
 						$links=trim($links);
 						$temps.=$fs_title."\n".$ua_path_link.$fsua_parser_filename."?play=".$links."\n".$links."\n".$name."\n".$fs_title."\n".$ua_path_link.$fsua_parser_filename."?file=".$links."&fav_refresh=1\n";
 					}
-$temps = $title." ".$title_name."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
+$temps = $file."\n".$title." ".$title_name."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
 	
 	
 	
@@ -582,7 +582,7 @@ if (isset($_GET['final'])) $final = $_GET["final"];
 				exit;
 			}	
 			$redirect=get_data($s,$file,$final);
-			header('Location: '.$redirect); 
+			header('Location: '.$redirect."?param=".$file); 
 	
 }
  

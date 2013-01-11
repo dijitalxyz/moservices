@@ -3,17 +3,20 @@
 $developer_key = 'AI39si66A5mVc14wrUljOu4EkLrKJQRjhtqMJZZbnf5wZfRDtfE7xmPLHY2aRGMHuaKHyE655-FbHDZRNGKtfZ6CphHvhyHXMA';
 
 $youtube_config = array(
-	'feed'   => '',
-	'search' => '',
-	'cat'    => '',
-	'period' => 'all_time',
-	'region' => '',
-	'quality'=> 'lo',
-	'cats'   => array(),
+	'feed'		=> '',
+	'search'	=> '',
+	'my'		=> '',
+	'cat'		=> '',
+	'period'	=> 'all_time',
+	'region'	=> '',
+	'quality'	=> 'lo',
+	'keyboard'	=> 'rss',
+	'username'	=> '',
+	'cats'		=> array(),
 );
-if( is_file( '/usr/local/etc/dvdplayer/youtube.config.php' ) )
+if( is_file( $mos.'/www/modules/youtube/youtube.config.php' ) )
 {
-	include( '/usr/local/etc/dvdplayer/youtube.config.php' );
+	include( $mos.'/www/modules/youtube/youtube.config.php' );
 }
 
 $youtube_regions = array(
@@ -64,6 +67,14 @@ $youtube_feeds = array(
 );
 //
 // ------------------------------------
+function getYoutubeConfigParameter( $name )
+{
+global $youtube_config;
+
+	return $youtube_config[ $name ];
+}
+//
+// ------------------------------------
 function youtubeGetApi( $req )
 {
 global $developer_key;
@@ -82,9 +93,10 @@ global $developer_key;
 // ------------------------------------
 function youtubeSaveConfig()
 {
+global $mos;
 global $youtube_config;
 
-	file_put_contents( '/usr/local/etc/dvdplayer/youtube.config.php', '<?php $youtube_config = '.var_export( $youtube_config, true ).'; ?>' );
+	file_put_contents( $mos.'/www/modules/youtube/youtube.config.php', '<?php $youtube_config = '.var_export( $youtube_config, true ).'; ?>' );
 }
 //
 // ------------------------------------
@@ -123,6 +135,18 @@ global $youtube_feeds;
 		$quality = $_REQUEST['quality'];
 	}
 
+	$keyboard = $youtube_config['keyboard'];
+	if( isset( $_REQUEST['keyboard'] ))
+	{
+		$keyboard = $_REQUEST['keyboard'];
+	}
+
+	$username = $youtube_config['username'];
+	if( isset( $_REQUEST['username'] ))
+	{
+		$username = $_REQUEST['username'];
+	}
+
 	$period = $youtube_config['period'];
 	if( isset( $_REQUEST['period'] ))
 	{
@@ -136,17 +160,26 @@ global $youtube_feeds;
 		if( $cat == 'all' ) $cat = '';
 	}
 
-	$search = $youtube_config['search'];
+	$my     = $youtube_config['my'];
 	$feed   = $youtube_config['feed'];
+	$search = $youtube_config['search'];
 	if( isset( $_REQUEST['search'] ))
 	{
+		$my = '';
 		$feed = '';
 		$search = $_REQUEST['search'];
 	}
 	elseif( isset( $_REQUEST['feed'] ))
 	{
-		$search = '';
+		$my = '';
 		$feed = $_REQUEST['feed'];
+		$search = '';
+	}
+	elseif( isset( $_REQUEST['my'] ))
+	{
+		$my = 'yes';
+		$feed = '';
+		$search = '';
 	}
 
 	if( $search != '' )
@@ -154,6 +187,10 @@ global $youtube_feeds;
 		$request = 'videos?q='. urlencode( $search ) .'&v=2';
 
 		if( $cat != '' ) $request .= '&category='. $cat;
+	}
+	elseif( $my != '' )
+	{
+		$request = 'users/'. $username .'/newsubscriptionvideos?v=2';
 	}
 	else
 	{
@@ -173,12 +210,15 @@ global $youtube_feeds;
 		 if( $period != 'all_time' ) $request .= '&time='. $period;
 	}
 
-	$youtube_config['feed']    = $feed;
-	$youtube_config['search']  = $search;
-	$youtube_config['cat']     = $cat;
-	$youtube_config['period']  = $period;
-	$youtube_config['region']  = $region;
+	$youtube_config['feed']   = $feed;
+	$youtube_config['search'] = $search;
+	$youtube_config['cat']    = $cat;
+	$youtube_config['period'] = $period;
+	$youtube_config['region'] = $region;
 	$youtube_config['quality'] = $quality;
+	$youtube_config['keyboard'] = $keyboard;
+	$youtube_config['username'] = $username;
+	$youtube_config['my'] = $my;
 	youtubeSaveConfig();
 
 	$start = 1;
@@ -205,7 +245,7 @@ global $youtube_feeds;
 
 	// navigation
 	$min_page = 1;
-	$max_page = floor( $total / $itemsPerPage );
+	$max_page = floor( $total / $itemsPerPage ) + 1;
 	$page = floor( $start / $itemsPerPage ) + 1;
 
 	// generate list
@@ -214,31 +254,38 @@ global $youtube_feeds;
 	// top title
 	$s .= 'YouTube';
 
-	if( $feed <> '' )
+	if( $my <> '' )
 	{
-		if( $region <> '' )
-		 $s .= ' '. getMsg( 'youtube_region_'. $region );
-
-		$s .= ' - '. getMsg( 'youtube_'. $feed );
-
-		if( $youtube_feeds[ $feed ]['allowTime'] )
-		 if( $period != 'all_time' ) $s .= ' ('. getMsg( 'youtube_'.$period ) .')';
+		$s .= ' - '. getMsg( 'youtubeSubscription' ) . $username ;
 	}
 	else
 	{
-		$s .= ' - '. urldecode( $youtube_config['search'] );
+		if( $feed <> '' )
+		{
+			if( $region <> '' )
+			 $s .= ' '. getMsg( 'youtube_region_'. $region );
+
+			$s .= ' - '. getMsg( 'youtube_'. $feed );
+
+			if( $youtube_feeds[ $feed ]['allowTime'] )
+			 if( $period != 'all_time' ) $s .= ' ('. getMsg( 'youtube_'.$period ) .')';
+		}
+		else
+		{
+			$s .= ' - '. urldecode( $youtube_config['search'] );
+		}
+
+		if( $cat <> '' )
+		 $s .= ' - '. $youtube_config['cats'][ $cat ];
 	}
 
-	if( $cat <> '' )
-	 $s .= ' - '. $youtube_config['cats'][ $cat ];
-
-	if( $min_page !== $max_page ) $s .= ' ('. getMsg('coreRssPromptPage') . $page . getMsg('coreRssPromptFrom') . $max_page .')';
+	if( $min_page != $max_page ) $s .= ' ('. getMsg('coreRssPromptPage') . $page . getMsg('coreRssPromptFrom') . $max_page .')';
 
 	$s .= PHP_EOL ;
 
 	// bottom title
 	$s .=
-		getRssCommandPrompt('menu')   . getMsg('coreRssPromptMenu') .
+		'<< ' . getMsg('coreRssPromptMenu') .
 		getRssCommandPrompt('enter')  . getMsg('coreRssPromptWatch') .
 		PHP_EOL;
 
@@ -250,7 +297,11 @@ global $youtube_feeds;
 		$url .= '&feed='. $feed;
 		if( $cat <> '' ) $url .= '&cat='. $cat;
 	}
-	else $url .= '&search='. urlencode( $search );
+	elseif( $search != '' )
+	{
+		$url .= '&search='. urlencode( $search );
+	}
+	else $url .= '&my';
 
 	if( ( $page - 1 ) >= $min_page ) { $s .= $url.'&start='.(( $page - 2 ) * $itemsPerPage + 1 ).PHP_EOL; }
 	else $s .= "\n" ;
@@ -301,13 +352,30 @@ function youtubeGetStream( $id, $quality = 'lo' )
 	if( preg_match( '/yt.playerConfig\s*= \s*(.*?});/s' , $s, $ss ) > 0 )
 	{
 		$a = json_decode($ss[1], true);
+
 		if( isset( $a['args']['url_encoded_fmt_stream_map'] ))
 		{
 			$s = $a['args']['url_encoded_fmt_stream_map'];
 			$a = explode( ',', $s );
+
+
 			foreach( $a as $s )
-			 if( preg_match( '/itag=(\d*)&url=(.*?)&.*sig=(.*?)&/' , $s, $ss ) > 0 )
-			  $streams[ $ss[1] ] = urldecode( urldecode( $ss[2] )).'&signature='.$ss[3];
+{
+	$b = explode( '&', $s );
+	if( isset( $_REQUEST['debug'])) print_r( $b );
+
+	unset( $tag );
+	unset( $url );
+	unset( $sig );
+
+	foreach( $b as $p )
+	if(     strpos( $p, 'itag=' ) === 0 ) $tag = substr( $p, 5 );
+	elseif( strpos( $p, 'url='  ) === 0 ) $url = substr( $p, 4 );
+	elseif( strpos( $p, 'sig='  ) === 0 ) $sig = substr( $p, 4 );
+
+	if( isset( $tag, $url, $sig ))
+	 $streams[ $tag ] = urldecode( urldecode( $url )).'&signature='.$sig;
+}
 		}
 	}
 /*
@@ -408,10 +476,25 @@ global $youtube_feeds;
 		 );
 	}
 
+	if( $youtube_config['my'] != '' ) $cur = $i;
+
+	if( $youtube_config['username'] == '' )
+	$view->items[ $i++ ] = array(
+		'title'	=> getMsg('youtubeMy'),
+		'action'=> 'search',
+		'link'	=> getMosUrl().'?page=xml_youtube&amp;my&amp;username='
+	);
+	else
+	$view->items[ $i++ ] = array(
+		'title'	=> getMsg('youtubeMy'),
+		'action'=> 'ret',
+		'link'	=> getMosUrl().'?page=xml_youtube&amp;my'
+	);
+
 	if( $youtube_config['search'] != '' ) $cur = $i;
 
 	$view->items[ $i++ ] = array(
-		'title'	=> getMsg('coreCmSearch'),
+		'title'	=> getMsg('youtubeSearch'),
 		'action'=> 'search',
 		'link'	=> getMosUrl().'?page=xml_youtube&amp;search='
 	);
@@ -476,6 +559,16 @@ function rss_youtube_sets_content()
 			'title'	=> getMsg('youtubeQuality'),
 			'action'=> 'rss',
 			'link'	=> getMosUrl().'?page=rss_youtube_quality'
+		),
+		2 => array(
+			'title'	=> getMsg('youtubeKeyboard'),
+			'action'=> 'rss',
+			'link'	=> getMosUrl().'?page=rss_youtube_keyboard'
+		),
+		3 => array(
+			'title'	=> getMsg('youtubeUsername'),
+			'action'=> 'search',
+			'link'	=> getMosUrl().'?page=xml_youtube&amp;username='
 		),
 	);
 
@@ -545,6 +638,35 @@ global $youtube_config;
 
 	$view->currentItem = 0;
 	if( $youtube_config['quality'] == 'hi' ) $view->currentItem = 1;
+
+	$view->showRss();
+}
+//
+// ------------------------------------
+function rss_youtube_keyboard_content()
+{
+global $youtube_config;
+
+	include( 'rss_youtube_view_left.php' );
+	$view = new rssYouTubeLeftView;
+
+	$view->position = 2;
+
+	$view->items = array(
+		0 => array(
+			'title'	=> getMsg('youtubeEmbKbrd'),
+			'action'=> 'ret',
+			'link'	=> getMosUrl().'?page=xml_youtube&amp;keyboard=emb'
+		),
+		1 => array(
+			'title'	=> getMsg('youtubeRssKbrd'),
+			'action'=> 'ret',
+			'link'	=> getMosUrl().'?page=xml_youtube&amp;keyboard=rss'
+		)
+	);
+
+	$view->currentItem = 0;
+	if( $youtube_config['keyboard'] == 'rss' ) $view->currentItem = 1;
 
 	$view->showRss();
 }

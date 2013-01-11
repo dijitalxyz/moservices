@@ -31,22 +31,22 @@
                 <serviceType>urn:schemas-upnp-org:service:ContentDirectory:1</serviceType>
                 <serviceId>urn:upnp-org:serviceId:ContentDirectory</serviceId>
                 <SCPDURL>/cds.xml</SCPDURL>
-                <controlURL>/soap?s=cds</controlURL>
-                <eventSubURL>/soap?s=cds_event</eventSubURL>
+                <controlURL>/soap/cds</controlURL>
+                <eventSubURL>/event/cds</eventSubURL>
             </service>
             <service>
                 <serviceType>urn:schemas-upnp-org:service:ConnectionManager:1</serviceType>
                 <serviceId>urn:upnp-org:serviceId:ConnectionManager</serviceId>
                 <SCPDURL>/cms.xml</SCPDURL>
-                <controlURL>/soap?s=cms</controlURL>
-                <eventSubURL>/soap?s=cms_event</eventSubURL>
+                <controlURL>/soap/cms</controlURL>
+                <eventSubURL>/event/cms</eventSubURL>
             </service>
             <service>
                 <serviceType>urn:microsoft.com:service:X_MS_MediaReceiverRegistrar:1</serviceType>
                 <serviceId>urn:microsoft.com:serviceId:X_MS_MediaReceiverRegistrar</serviceId>
                 <SCPDURL>/msr.xml</SCPDURL>
-                <controlURL>/soap?s=msr</controlURL>
-                <eventSubURL>/soap?s=msr_event</eventSubURL>
+                <controlURL>/soap/msr</controlURL>
+                <eventSubURL>/event/msr</eventSubURL>
             </service>
         </serviceList>
         <presentationURL>/</presentationURL>

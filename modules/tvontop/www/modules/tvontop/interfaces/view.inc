@@ -22,6 +22,10 @@ abstract class View {
     	$this->locale = $locale;
     }
     
+    function supportDrawing() {
+    	return true;
+    }
+
 	abstract function drawObject(MediaObject $mediaObj,$mode);
 }
 ?>

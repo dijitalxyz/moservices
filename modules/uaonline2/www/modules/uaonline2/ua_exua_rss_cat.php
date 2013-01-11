@@ -248,6 +248,7 @@ class ua_rss_cat extends ua_rss_cat_const
 	global $ua_path_link;
 	global $ua_rss_keyboard_filename;
 	global $ua_rss_favorites_filename;
+	global $built_in_keyb;
 	?>
 
 	<searchLink>
@@ -263,8 +264,21 @@ class ua_rss_cat extends ua_rss_cat_const
 		<title><?=$this->search($this->language)?></title>
 			<onClick>
 				showIdle();
-				rss = "<?=$ua_path_link.$ua_rss_keyboard_filename?>";
-				keyword = doModalRss(rss);
+				<?
+				if ($built_in_keyb == "1")
+				{
+					?>
+					keyword = getInput("Search", "doModal");	
+					<?
+				} else
+				{
+				?>
+					rss = "<?=$ua_path_link.$ua_rss_keyboard_filename?>";
+					keyword = doModalRss(rss);
+				<?
+				}
+				?>
+				
 				cancelIdle();
 				if (keyword!=null)
 				{

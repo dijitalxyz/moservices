@@ -1,6 +1,8 @@
--- Copyright (C) 2011 Anton Burdinuk
+-- Copyright (C) 2011-2012 Anton Burdinuk
 -- clark15b@gmail.com
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+
+http.sendurl_buffer_size(32768,1);
 
 if cfg.daemon==true then core.detach() end
 
@@ -32,7 +34,7 @@ function load_plugins(path,what)
 
     if d then
         for i,j in ipairs(d) do
-            if string.find(j,'^[%w_]+%.lua$') then
+            if string.find(j,'^[%w_-]+%.lua$') then
                 if cfg.debug>0 then print(what..' \''..j..'\'') end
                 dofile(path..j)
             end
@@ -40,10 +42,26 @@ function load_plugins(path,what)
     end
 end
 
+
+-- options for profiles
+cfg.dev_desc_xml='/dev.xml'             -- UPnP Device Description XML
+cfg.upnp_container='object.container'   -- UPnP class for containers
+cfg.upnp_artist=false                   -- send <upnp:artist> / <upnp:actor> in SOAP response
+cfg.upnp_feature_list=''                -- X_GetFeatureList response body
+cfg.upnp_albumart=0                     -- 0: <upnp:albumArtURI>direct url</upnp:albumArtURI>, 1: <res>direct url<res>, 2: <upnp:albumArtURI>local url</upnp:albumArtURI>, 3: <res>local url<res>
+cfg.dlna_headers=true                   -- send TransferMode.DLNA.ORG and ContentFeatures.DLNA.ORG in HTTP response
+cfg.dlna_extras=true                    -- DLNA extras in headers and SOAP
+cfg.content_disp=false                  -- send Content-Disposition when streaming
+cfg.soap_length=true                    -- send Content-Length in SOAP response
+cfg.wdtv=false                          -- WDTV Live compatible mode
+
+
+
 update_id=1             -- system update_id
 
 subscr={}               -- event sessions (for UPnP notify engine)
 plugins={}              -- external plugins (YouTube, Vimeo ...)
+profiles={}             -- device profiles
 cache={}                -- real URL cache for plugins
 cache_size=0
 
@@ -52,11 +70,14 @@ if not cfg.feeds_path then cfg.feeds_path=cfg.playlists_path end
 -- create feeds directory
 if cfg.feeds_path~=cfg.playlists_path then os.execute('mkdir -p '..cfg.feeds_path) end
 
--- load config and plugins
+-- load config, plugins and profiles
 load_plugins(cfg.plugin_path,'plugin')
 load_plugins(cfg.config_path,'config')
 
 dofile('xupnpd_mime.lua')
+
+if cfg.profiles then load_plugins(cfg.profiles,'profile') end
+
 dofile('xupnpd_m3u.lua')
 dofile('xupnpd_ssdp.lua')
 dofile('xupnpd_http.lua')
@@ -66,7 +87,7 @@ function update_feeds_async()
     local num=0
     for i,j in ipairs(feeds) do
         local plugin=plugins[ j[1] ]
-        if plugin and plugin.updatefeed then
+        if plugin and plugin.disabled~=true and plugin.updatefeed then
             if plugin.updatefeed(j[2],j[3])==true then num=num+1 end
         end
     end
@@ -217,7 +238,7 @@ function reload_playlist()
         local t={}
 
         for i,j in pairs(subscr) do
-            if j.event=='cds_event' then
+            if j.event=='cds' then
                 table.insert(t, { ['callback']=j.callback, ['sid']=j.sid, ['seq']=j.seq } )
                 j.seq=j.seq+1
                 if j.seq>100000 then j.seq=0 end
@@ -253,6 +274,34 @@ function get_drive_state(drive)
 end
 
 
+function profile_change(user_agent)
+    if not user_agent or user_agent=='' then return end
+
+    for name,profile in pairs(profiles) do
+        local match=profile.match
+
+        if profile.disabled~=true and  match and match(user_agent) then
+
+            local options=profile.options
+            local mtypes=profile.mime_types
+
+            if options then for i,j in pairs(options) do cfg[i]=j end end
+
+            if mtypes then
+                if profile.replace_mime_types==true then
+                    mime=mtypes
+                else
+                    for i,j in pairs(mtypes) do mime[i]=j end
+                end
+            end
+
+            return name
+        end
+    end
+    return nil
+end
+
+
 -- event handlers
 events['SIGUSR1']=reload_playlist
 events['reload']=reload_playlist
@@ -265,19 +314,24 @@ events['status']=set_child_status
 events['config']=function() load_plugins(cfg.config_path,'config') cache={} cache_size=0 end
 events['remove_feed']=function(id) table.remove(feeds,tonumber(id)) end
 events['add_feed']=function(plugin,feed,name) table.insert(feeds,{[1]=plugin,[2]=feed,[3]=name}) end
+events['plugin']=function(name,status) if status=='on' then plugins[name].disabled=false else plugins[name].disabled=true end end
+events['profile']=function(name,status) if status=='on' then profiles[name].disabled=false else profiles[name].disabled=true end end
 
 events['update_playlists']=
 function(what,sec)
---    if get_drive_state('/dev/sda')=='active/idle' then
+    if cfg.drive and cfg.drive~='' then
+        if get_drive_state(cfg.drive)=='active/idle' then
+            reload_playlist()
+        end
+    else
         reload_playlist()
---    end
+    end
+
     core.timer(cfg.playlists_update_interval,what)
 end
 
 
 if cfg.embedded==true then print=function () end end
-
-print("start "..cfg.log_ident)
 
 -- start garbage collection system
 core.timer(300,'sys_gc')
@@ -293,6 +347,10 @@ end
 if cfg.playlists_update_interval>0 then
     core.timer(cfg.playlists_update_interval,'update_playlists')
 end
+
+load_plugins(cfg.config_path..'postinit/','postinit')
+
+print("start "..cfg.log_ident)
 
 core.mainloop()
 

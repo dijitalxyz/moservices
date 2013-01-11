@@ -24,19 +24,27 @@ class HttpTools {
         $header  = "Host: $host\r\n";
         $header .= $this->defaultHeaders;
         $header .= $headerExtra;
+        
+/*        
+$header  = "Accept: text/html,application/xhtml+xml,application/xml\r\n";
+$header .= "Accept-Charset: utf-8;\r\n";
+//$header .= "Accept-Encoding: gzip, deflate\r\n";
+
+$header .= "Cookie: uid=21533; username=tvontop; password=f91f26d787543ab6b143fd500d68c959; group_id=1; verification=56039253e2b0ee8733e2a07808608e8c; PHPSESSID=oc5dqu11rsgesdttff98b4ipp3\r\n";
+
+$header .= "Accept-Language: en-us,en;q=0.5\r\n";
+$header .= "Connection: keep-alive\r\n";
+$header .= "Host: watch.is\r\n";
+$header .= "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0.1) Gecko/20100101 Firefox/8.0.1\r\n";
+        */
         if (isset($this->cookie) && "" != $this->cookie) {
             $header .= $this->cookie . "\r\n";
         }
-        
 
-//		$opts = array('http' => array('proxy' => 'tcp://127.0.0.1:8080', 'request_fulluri' => true));
-//$context = stream_context_create($opts);
-        
         $context = stream_context_create(array(
             'http' => array(
                 'method'  => 'GET',
                 'header'  => $header)));
-
 
         $this->log->debug("GET ===>$url===>");
         $this->log->debug("GET ===>$header===>");
@@ -45,6 +53,17 @@ class HttpTools {
         return $response;
     }
 
+    function sendSimpleGetRequest($url, $headerExtra = "") {
+        $context = stream_context_create(array(
+            'http' => array(
+                'method'  => 'GET',
+        		'timeout' => 500,
+                'header'  => $header)));
+        $response = file_get_contents($url, false, null);
+
+        return $response;
+    }
+    
     function sendPostRequest($url, $headerExtra = "") {
         $parsedUrl = parse_url($url);
         $host   = $parsedUrl['host'];

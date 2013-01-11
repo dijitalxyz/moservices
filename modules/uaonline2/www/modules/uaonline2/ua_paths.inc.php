@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	configuration manager module v1.9
+	configuration manager module v2.0
 	------------------------------
 	Created by Sashunya 2012
 	wall9e@gmail.com			
@@ -29,6 +29,7 @@ $ua_images_path = $ua_path.$ua_images_foldername;
 $ua_wget_path = $ini->read('paths','ua_wget_path','');
 // линк на картинки категорий из репозитория
 $ua_images_category_path = "http://www.moservices.org/modules/uaonline2/images/";
+$sites_logos_filename = $tmpPath."/ua_sites.conf";
 //----------------------------------------------
 // все для апдейта
 $ua_update_url = 'http://www.moservices.org/mos3';
@@ -56,14 +57,33 @@ $fsua_rss_link_filename = 'ua_fsua_rss_link.php';
 
 $ua_rss_keyboard_filename = 'ua_keyboard_rss.php';
 $ua_rss_favorites_filename = 'ua_favorites_rss.php';
+$ua_rss_history_filename = 'ua_rss_history.php';
 $ua_favorites_filename = $confs_path.'ua_favorites.conf';
+if (!is_dir($confs_path."ua_history")) mkdir($confs_path."ua_history",0777,true);
+$ua_history_main_filename = $confs_path.'ua_history/ua_history_main.conf';
+$history_length = $ini->read('other','history_length',"20");
 $ua_rss_setup_filename = 'ua_rss_setup.php';
 $ua_setup_parser_filename = 'ua_setup_parser.php';
 $tmpfilename = 'ua_temp.tmp';
 
 $tmp = $ua_tmp_path.$tmpfilename;
 $tmp_down = $ua_tmp_path."ua_down.tmp";
-$download_path = $ini->read('downloads','path','/tmp/ramfs/volumes/C:/');
+$d_path = $ini->read('downloads','path','/tmp/ramfs/volumes/C:/');
+$auto_path = $ini->read('downloads','auto_path','1');
+$built_in_keyb = $ini->read('other','built_in_keyb','0');
+$no_device=false;
+if ($auto_path == "1") 
+{
+	$download_path = down_path("name"); 
+	if ($download_path =="none") 
+	{
+		$download_path = $d_path;
+		$no_device=true;
+	}
+	
+}
+else $download_path = $d_path;
+
 $download_log_filename = 'downlist';
 
 $ua_rss_download_filename = 'ua_download_rss.php';
@@ -96,6 +116,8 @@ if ($hdpr1=='1')
 	$key_return='return';
 	$key_enter='enter';
 	$key_display='video_frwd';
+	$key_pageup='pageup';
+	$key_pagedown='pagedown';
 }
 else
 {
@@ -109,6 +131,8 @@ if( is_dir('/sbin/www'))
 	$key_return='RET';
 	$key_display='DISPLAY';
 	$key_enter='ENTR';
+	$key_pageup='PG';
+	$key_pagedown='PD';
 }
 else
 {
@@ -120,6 +144,8 @@ else
 	$key_return='return';
 	$key_display='display';
 	$key_enter='enter';
+	$key_pageup='pageup';
+	$key_pagedown='pagedown';
 }
 	$key_pause='video_pause';
 	$key_play='video_play';
@@ -134,7 +160,7 @@ global $confs_path;
 global $ua_images_foldername;
 global $ua_tmp_path;
 global $ua_wget_path;
-global $download_path;
+global $d_path;
 global $exua_quality;
 global $exua_region;
 global $exua_lang;
@@ -144,13 +170,17 @@ global $fsua_sort;
 global $player_style;
 global $hdpr1;
 global $search_history;
+global $auto_path;
+global $history_length;
+global $built_in_keyb;
+
 $ini = new TIniFileEx($confs_path.'ua_settings.conf');
 $ini->write('paths','ua_images_foldername',$ua_images_foldername);
 $ini->write('paths','ua_tmp_path',$ua_tmp_path);
 $ini->write('paths','ua_wget_path',$ua_wget_path);
 
-$ini->write('downloads','path',$download_path);
-
+$ini->write('downloads','path',$d_path);
+$ini->write('downloads','auto_path',$auto_path);
 
 $ini->write('exua_setting','quality',$exua_quality);
 $ini->write('exua_setting','region',$exua_region);
@@ -163,6 +193,9 @@ $ini->write('player','style',$player_style);
 $ini->write('keys','HDP_R1_R3',$hdpr1);
 
 $ini->write('other','search_history',$search_history);
+$ini->write('other','history_length',$history_length);
+$ini->write('other','built_in_keyb',$built_in_keyb);
+
 
 $ini->updateFile(); // скидываем информацию в ini файл
 unset($ini);
@@ -412,7 +445,7 @@ if(isset($_GET["get_fav_site"]))
 		exit;
 	}
 
-	
+// функция проверки переключателя utf8 для uakino	
 function uakino_utf8_check($s)
 {
 global $uakino_decode;
@@ -420,4 +453,65 @@ if ($uakino_decode == "0") $s=utf8_decode($s);
 //if (LIBXML_VERSION >= 20632) $s=utf8_decode($s);
 return $s;
 }
+
+// функция переводит в тип human readable размер устройства
+function format_fsize($size){  
+	 $size = $size * 1024;
+	 $metrics[0] = 'байт';  
+	 $metrics[1] = 'КБ';  
+	 $metrics[2] = 'МБ';  
+	 $metrics[3] = 'ГБ';  
+	 $metrics[4] = 'ТБ';  
+	 $metric = 0;  
+	 while(floor($size/1024) > 0){  
+		 ++$metric;  
+		 $size /= 1024;  
+	 }  
+	 $ret =  round($size,1)." ".(isset($metrics[$metric])?$metrics[$metric]:'??');  
+	 return $ret;  
+ }  
+
+// функция ищет самый большой носитель для закачек
+function down_path($type)
+{
+	$res=shell_exec('df | grep \'sd?*\' | awk \'{print($2"\n"$4"\n"$6)}\'');
+	if ($res != "")
+	{
+		$res = explode("\n",$res);
+		$full_size=array();
+		$free_space=array();
+		$dev_name=array();
+		$i=0;
+		while ($i <= count($res) )
+		{
+			$full_size[]=$res[$i]; $i++;
+			$free_space[]=$res[$i]; $i++;
+			$dev_name[]=$res[$i]."/uaonline/"; $i++;
+		}
+		$device=$dev_name[0];
+		$size=$full_size[0];
+		if (count($full_size)>0)
+		{
+			foreach ($full_size as $id => $val)
+			{
+				if ($val>$size)	
+				{
+					$size=$val;
+					$device=$dev_name[$id];
+				}
+			}
+		}
+	if (!is_dir($device)) mkdir($device,0777,true);
+	if ($type == "name"	) return $device; else return $size;
+	
+	} else
+	return "none";
+}
+
+if(isset($_GET["del"])) 
+	{
+		unlink($confs_path.'ua_history/'.$_GET["del"].".conf");
+		exit;
+	}
+
 ?>

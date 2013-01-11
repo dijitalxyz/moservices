@@ -2,7 +2,7 @@
 /*	------------------------------
 	Ukraine online services 	
 	uakino.net parser
-	module v1.7
+	module v1.8
 	------------------------------
 	Created by Sashunya 2012	
 	wall9e@gmail.com			
@@ -218,12 +218,12 @@ if (isset($_GET['page'])){
 	}
 	if($page) {
 		$nt= $page-1;
-		$s=file_get_contents('http://uakino.net/search_result.php?search_id='.$search.'&search_type_id=search_videos');
 		
+		$s=file_get_contents('http://uakino.net/search_result.php?search_id='.$search.'&search_type_id=search_videos&offset='.$nt*30);
    }
 	else {
 		$page = 1;
-		$s=file_get_contents('http://uakino.net/search_result.php?search_id='.$search.'&search_type_id=search_videos&offset='.$nt*16);
+		$s=file_get_contents('http://uakino.net/search_result.php?search_id='.$search.'&search_type_id=search_videos');
 		
     }
 

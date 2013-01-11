@@ -3,6 +3,9 @@ require_once "tools/http.inc";
 require_once "tools/logger.inc";
 require_once "tools/parser.inc";
 require_once "tools/exceptions.inc";
+require_once "tools/httpSession.inc";
+
+
 
 define('E_UNKNOW_ERROR',            0);
 define('E_INCORRECT_REQUEST',       1);
@@ -54,8 +57,11 @@ class KtvConnection {
             "User-Agent: Mozilla/5.0\r\n" .
             "Content-Type: application/x-www-form-urlencoded\r\n" .
             "Connection: Close\r\n");
-		$this->http->cookie = isset($_SESSION[$this->cookieName]) ?
-		$_SESSION[$this->cookieName] : "";
+	
+		$this->session = new HttpSession();
+
+ 		$this->http->cookie = $this->session->exists($this->cookieName) ?
+        					$this->session->get($this->cookieName) : "";
 
 		//TODO: move it!move it!
 		$this->errMsg[E_INCORRECT_REQUEST]      = "Incorrect request";
@@ -158,7 +164,9 @@ class KtvConnection {
 		}
 
 		$this->log->debug("Login returned: " . $this->http->cookie);
-		$_SESSION[$this->cookieName] = $this->http->cookie;
+
+		$this->session->set($this->cookieName,$this->http->cookie);
+
 		return true;
 	}
 
@@ -168,7 +176,7 @@ class KtvConnection {
 		$this->forgetCookie();
 	}
 	public function forgetCookie() {
-		$_SESSION[$this->cookieName] = "";
+		$this->session->set($this->cookieName,"");
 		$this->http->cookie = "";
 	}
 }

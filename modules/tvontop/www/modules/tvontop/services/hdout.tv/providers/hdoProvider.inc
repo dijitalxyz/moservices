@@ -16,8 +16,11 @@ class HdoProvider extends RhdProvider {
 		$this->baseUrl = "http://hdout.tv/";
       	$this->sectionName = $this->config->get("name", "Service");
         $this->cookieName = "HdoCookie";
-        $this->http->cookie = isset($_SESSION[$this->cookieName]) ?
-            $_SESSION[$this->cookieName] : "";		
+        
+		$this->session = new HttpSession();
+
+ 		$this->http->cookie = $this->session->exists($this->cookieName) ?
+        					$this->session->get($this->cookieName) : "";
         $this->sessionVar = 'SID';
     }
     
