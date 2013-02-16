@@ -10,6 +10,7 @@ case "$1" in
   start|stop|status)
 	;;
   enable)
+	cat $target/sata_mars.ko | grep -q Virtual && echo "Lib ATA embedded.";exit 0
 	echo "Enabling Lib ATA..."
 	#copy files
 	[ ! -f $target/sata_mars.ko.orig ] && cp -f $target/libata.ko $target/libata.ko.orig

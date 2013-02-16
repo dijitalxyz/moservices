@@ -2,12 +2,13 @@
 
 /*	------------------------------
 	Ukraine online services 	
-	FS.UA parser module v1.7
+	FS.UA parser module v2.0
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2013	
 	wall9e@gmail.com			
 	------------------------------ */
 
+header( "Content-type: text/html; charset=utf-8" );
 // подключаем разные константы пути кнопки и т.п.
 include_once ("ua_paths.inc.php");
 
@@ -95,8 +96,9 @@ if (isset($_GET['search'])){
 								$name = $a->getAttribute('title');
 								$imgs = $a->getElementsByTagName('img');
 								foreach( $imgs as $img ) $image = $img->getAttribute('src');
-								$fav=$link; $link=$ua_path_link.$fsua_parser_filename."?file=".$link."&enter=1&final=0";
-								$temps.= $name."\n".$link."\n".$image."\n".$fav."?folder=0"."\nlist\n";		
+								$fav=$link; 
+								$link=$ua_path_link.$fsua_parser_filename."?file=".urlencode($link."?ajax&folder")."&img=".$image;
+								$temps.= $name."\n".$link."\n".$image."\n".$fav."?ajax&folder"."\nlist\n";		
 								//$tmp_array[$name]=array("link"=>$link, "image"=>$image);
 								$videocount++;
 							}
@@ -226,13 +228,16 @@ function get_img($img)
 		$name=$id;
 		foreach ($vid as $key=>$val)
 		{
-		if ($key=="link") 
-		{
-			if(!preg_match("/folder/", $val)) $val.="?folder=0";
-			$link=$ua_path_link.$fsua_parser_filename."?file=".$val."&enter=1&final=0"; 
-			$fav=$val;
-		}
-		if ($key=="image") $image=$val;
+			if ($key=="link") 
+			{
+				$link=$ua_path_link.$fsua_parser_filename."?file=".urlencode($val."?ajax&folder")."&name=".urlencode($name); 
+				$fav=$val."?ajax&folder";
+			}
+			if ($key=="image") 
+			{
+				$image=$val;
+				$link .="&img=".urlencode($image);
+			}
 		}
 		$temps.= $name."\n".$link."\n".$image."\n".$fav."\nlist\n";
 		$videocount++;
@@ -269,7 +274,59 @@ if (isset($_GET['view'])){
 	
  }
 
-function get_data($s,$file,$final,$header=false)
+ // тут берем грузим главную страницу с фильмом и берем постер и описание
+ function get_description($url)
+ {
+	$s=file_get_contents($url);
+	$doc = new DOMDocument();
+	libxml_use_internal_errors( true );
+	$doc->loadHTML($s);
+	$divs= $doc->getElementsByTagName('div');
+	foreach( $divs as $div )
+	if( $div->hasAttribute('class'))
+	{
+		// ПОСТЕР
+			if( $div->getAttribute('class') == 'poster-main' )
+				{
+					$imgs=$div->getElementsByTagName('img');
+					foreach( $imgs as $img ) 
+					{
+						$image=$img->getAttribute('src');
+						if ($image!="") break;
+					}
+				}
+			// ЗАГОЛОВОК
+			if( $div->getAttribute('class') == 'head m-themed' )
+				{
+					$hs=$div->getElementsByTagName('h1');
+					foreach( $hs as $h ) 
+					{
+						$title=trim(fix_str($h->textContent));
+						if ($title!="") break;
+					}
+				}
+			// описание фильма
+			if( $div->getAttribute('class') == 'item-info' )
+					{
+						$tds= $div->getElementsByTagName('td');
+						foreach( $tds as $td ) 
+						{
+							$temp_d=trim(fix_str($td->textContent));
+							if (strlen($temp_d)>0)
+							$ds .= " ".$temp_d." ";
+						}
+						$ds .=".";
+						$ds = trim($ds);
+						$ps=$div->getElementsByTagName('p');
+						foreach( $ps as $p ) $ds .= " ".$p->textContent." ";
+						$ds = fix_str($ds);
+					}
+	}
+ return array("title"=>$title,"poster"=>$image,"desc"=>$ds);
+ }
+ 
+// парсим сезоны, переводы, список файлов
+function get_data($file,$img,$nam,$header=false)
 {
 global $ua_path_link;
 global $fsua_parser_filename;
@@ -278,275 +335,147 @@ global $fsua_rss_link_filename;
 global $ua_path_link2;
 global $fsua_rss_list_filename;
 global $tmp;
-			
-			$fav_folder=true;
-			$temps = '';
-			$videocount=0;
-			$ds = '';
-			$filelst=array();
-			$folder = true;
-			$single=false;
-			$doc = new DOMDocument();
-			libxml_use_internal_errors( true );
-			$doc->loadHTML($s);
-			$divs= $doc->getElementsByTagName('div');
-			foreach( $divs as $div )
-			if( $div->hasAttribute('class'))
-			{
-				// ПОСТЕР
-					if( $div->getAttribute('class') == 'poster-main' )
-						{
-							$imgs=$div->getElementsByTagName('img');
-							foreach( $imgs as $img ) 
-							{
-								$image=$img->getAttribute('src');
-								if ($image!="") break;
-							}
-						}
-					// ЗАГОЛОВОК
-					if( $div->getAttribute('class') == 'head m-themed' )
-						{
-							$hs=$div->getElementsByTagName('h1');
-							foreach( $hs as $h ) 
-							{
-								$title=trim(fix_str($h->textContent));
-								if ($title!="") break;
-							}
-						}
-					// описание фильма
-					if( $div->getAttribute('class') == 'item-info' )
-							{
-								$tds= $div->getElementsByTagName('td');
-								foreach( $tds as $td ) 
-								{
-									$temp_d=trim(fix_str($td->textContent));
-									if (strlen($temp_d)>0)
-									$ds .= " ".$temp_d." ";
-								}
-								$ds .=".";
-								$ds = trim($ds);
-								$ps=$div->getElementsByTagName('p');
-								foreach( $ps as $p ) $ds .= " ".$p->textContent." ";
-								$ds = fix_str($ds);
-							}
-// получаем список файлов
-		if ($final=="0")
-			{
-				if( $div->getAttribute('class') == 'header' )
-				{		
-					$as_tit = $div->getElementsByTagName('a');
-					foreach( $as_tit as $a_tit )
-					{
-						$type_tit = $a_tit->getAttribute('class');
-						if( $type_tit == 'link-simple title' )
-						{
-							$title_link=get_digit_url(check_fs_url($a_tit->getAttribute('href')));
-							$main_link=get_digit_url($file);
-							if ($title_link==$main_link) $title_name = trim(fix_str($a_tit->textContent));; 
-						}
-					}
-				}
-				$folder_parse=false;
-				$season_parse=false;
-				
-			if( $div->getAttribute('class') == 'b-filelist' )
-							{
-								$uls=$div->getElementsByTagName('ul');
-								$m_current = false;
-								foreach( $uls as $ul )
-									if( $ul->hasAttribute('class'))
-									if( $ul->getAttribute('class') == 'filelist m-current') 
-									{	
-										$m_current=true;
-										break;
-									}
-									//echo $m_current;
-								foreach( $uls as $ul )
-									if( $ul->hasAttribute('class'))
-									{
-										if ($m_current) $check_filelist='filelist m-current'; else $check_filelist = 'filelist ';
-										
-										if( $ul->getAttribute('class') == $check_filelist)
-										{	
-											$lis = $ul->getElementsByTagName('li');
-											foreach( $lis as $li )
-											if( $li->hasAttribute('class'))
-											{
-												$li_class=$li->getAttribute('class');
-												if( $li_class == 'folder')
-												{	
-													$folder_parse=true;
-													$q_c=0;
-													$spans = $li->getElementsByTagName('span');
-													foreach( $spans as $span )
-														if( $span->getAttribute('class') == 'material-size' && $q_c<2 )
-															{
-																$qual.=" ".$span->textContent;
-																$q_c++;	
-															}
-													$divs2 = $li->getElementsByTagName('div');
-													foreach( $divs2 as $div2 )
-													{
-														if( $div2->hasAttribute('class'))
-														{
-															$class= $div2->getAttribute('class');
-															if( $class  == 'header' )
-																{		
-																	$season_parse=true;
-																	$as = $div2->getElementsByTagName('a');
-																	$file_list = false;	
-																	foreach( $as as $a )
-																	{
-																		$type = $a->getAttribute('class');
-																		if( $type == 'folder-filelist' ) $file_list = true;
-																		if( $type == 'link-simple title'  )
-																		{
-																			$link=check_fs_url($a->getAttribute('href'));
-																			$link=check_prefix(check_url2($file).$link);
-																			$name = trim(fix_str($a->textContent));
-																		} 
+//$file="http://fs.ua/item/i6odgT61l6CKZsTwmzpJmr7?ajax&folder";
+$s=file($file);
+//echo $s;
+preg_match("/(.*?)(?=\?ajax)/",$file,$out);
+$empty_link=$out[0];
+//echo $empty_link."<br>";
+$main_link=$empty_link."?ajax&folder=";			
+//echo $main_link."<br>";
+$temps = '';
+$videocount=0;
+$final = false;
+$perevod = false;
+$cont_arr=array();
+$season=false;
+$cnt_cont=0;
+$li_cnt=0;
+$folder=false;
+foreach ($s as $key=>$val)
+{
+	if (preg_match("/\<li\sclass\=\"folder\"\>/",$val))
+	{
+		$li_cnt++;
+	}
+	if (preg_match("/\<\/li\>/",$val) && !preg_match("/\<li\sclass\=\"b-transparent-area\"\>\<\/li\>/",$val))
+	{
+		$li_cnt--;
+	}
+	
+	
+	// тут получаем список линков на файлы
 
-																	}
-																	if ($file_list)
-																	{
-																		$fav=$link; $link=$ua_path_link.$fsua_parser_filename."?file=".$link."&enter=0&final=1"; 
-																		$temps.= $name." ".$qual."\n".$link."\n".$image."\n".$fav."\nlink\n";
-																	} else
-																	{
-																		$fav=$link; $link=$ua_path_link.$fsua_parser_filename."?file=".$link."&enter=0&final=0";
-																		$temps.= $name." ".$qual."\n".$link."\n".$image."\n".$fav."\nlist\n";
-																	}
-																	$videocount++;
-																	$qual="";
-																}
-														} else
-														{	
-															if (!$season_parse)
-															{
-																$as = $div2->getElementsByTagName('a');
-																foreach( $as as $a )
-																{
-																	$type = $a->getAttribute('class');
-																	if( $type == 'folder-filelist' )
-																		{
-																			$as = $div2->getElementsByTagName('a');
-																			foreach( $as as $a )
-																				{
-																					$type2=$a->getAttribute('class');
-																					if( $type2 == 'link-subtype title' || $type2 == 'link-subtype m-ru title' || $type2 == 'link-subtype m-ua title'|| $type2 == 'link-subtype m-en title' )
-																					{
-																						$link=check_fs_url(check_prefix(check_url2($file).$a->getAttribute('href')));
-																						$name = fix_str($a->textContent);
-																					}
-																				}
-																			$fav=$link; $link=$ua_path_link.$fsua_parser_filename."?file=".$link."&enter=0&final=1"; 
-																			$temps.= $name." ".$qual."\n".$link."\n".$image."\n".$fav."\nlink\n";
-																			$videocount++;
-																			$qual="";
-																		}
-																}
-															}
-														}	
-													}
-												}  
-												if (preg_match("/file/",$li_class) && !$folder_parse) 
-												{												
-													$as3 = $li->getElementsByTagName('a');
-													foreach( $as3 as $a3 )
-													{
-														$type3=$a3->getAttribute('class');
-														if ($type3 == "link-material")
-														{
-															$link=$a3->getAttribute('href');
-														}
-													}
-													$spans = $li->getElementsByTagName('span');
-													foreach( $spans as $span )
-														if ($span->hasAttribute('style'))
-														{
-																$name=$span->textContent;
-														}
-													$temps .= $name."\n".$ua_path_link.$fsua_parser_filename."?play=".$link."\n".$link."\n".$name."\n".$name."\n".$ua_path_link.$fsua_parser_filename."?file=".$link."&fav_refresh=1\n";	
-													$videocount++;
-													$single = true;
-												}
-												
-												
-											}	
-										}
-									}
-							} 
-			}			
-			}
-if ($single)
-{
-	$temps = $file."\n".$title." ".$title_name."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
-	$redirect = $ua_path_link2.$fsua_rss_link_filename;
-	//echo $temps;
+	if (!$folder && preg_match("/(?<=href\=\")(.*?)\"\sclass\=\"link-material\"\\s\>\<span\sstyle\=\"\"\>(.*?)(?=\<\/span\>)/",$val,$out))
+	{
+		$cont_arr[$out[1]]=array("name"=>$out[2],"type"=>"file");
+		
+	}
+
+	
+	// тут получаем список качества и переводов
+	if ($li_cnt==1 && preg_match("/link-subtype.*?\stitle/",$val))
+	{
+		preg_match("/(?<=parent_id\:\s\')(\d+)\'\}\".*?\>(.*?)(?=\<\/a\>)/",$val,$out);
+		//echo $out[2]."<br>";
+		$id=$main_link.$out[1];
+		$cont_arr[$id]=array("name"=>$out[2],"type"=>"perevod");
+		$fnd=true;
+		$folder=true;
+		//$cnt_cont++;
+		//$perevod=true;
+	}
+	// тут получаем список сезонов
+	if (preg_match("/link-simple\stitle/",$val))
+	{
+		preg_match("/(?<=parent_id\:\s)(\d+)(?=\})/",$val,$out);
+		$fnd=true;
+		$id=$main_link.$out[0];
+	} 
+	// тут получаем названия сезонов
+	if ($li_cnt==1 && $fnd && preg_match("/(?<=\s\<b\>)(.*?)(?=\<\/b\>)/",$val,$out))
+	{
+		$season = true;
+		$cont_arr[$id]=array("name"=>$out[0],"type"=>"season");
+		$folder=true;
+		//$cnt_cont++;
+	}
+	// тут берется информация о размере контента и качестве
+	if ($fnd && $material<2 && preg_match("/(?<=material-size\"\>)(.*?)(?=\<\/span\>)/",$val,$out))
+	{
+		$cont_arr[$id]["name"].=" (".$out[0].")";
+		$material++;
+		if ($season || $material==2) 
+		{
+			$fnd=false; 
+			$material=0;
+		}
+		
+	}
 }
-else
+//print_r($cont_arr);
+// тут результаты парсинга сохраняем в файл
+$final = false;
+foreach ($cont_arr as $key=>$val)
 {
-if ($final=="0")
+	if ($val["type"]=='file') 
+	{
+		$name=$val["name"];
+		$link=urlencode($key);
+		$temps .= ($videocount+1).".".fix_str($name)."\n".$ua_path_link.$fsua_parser_filename."?play=".$link."\n".$link."\n".$name."\n".$name."\n".$ua_path_link.$fsua_parser_filename."?file=".$link."&fav_refresh=1\n";	
+		$videocount++;
+		$final = true;
+	}
+	if ($val["type"]=='perevod' || $val["type"]=='season')  
+	{
+		if ($val["type"]=='perevod') 
+		{
+			$name=$val["name"];
+			$link=$key;
+			$fav=$link;
+			$link=$ua_path_link.$fsua_parser_filename."?file=".urlencode($link); 
+			$temps.= fix_str($name)."\n".$link."\n".$img."\n".$fav."\nlink\n";
+			$videocount++;
+		}
+		if ($val["type"]=='season') 
+		{
+			$name=$val["name"];
+			$link=$key;
+			$fav=$link;
+			$link=$ua_path_link.$fsua_parser_filename."?file=".urlencode($link)."&img=".urlencode($img)."&name=".urlencode($name);
+			$temps.= fix_str($name)."\n".$link."\n".$img."\n".$fav."\nlist\n";
+			$videocount++;
+		}
+		$final = false;
+	}
+}
+// тут сгружаем все данные в файл
+if ($final)			
 {
-	$temps = $title." ".$title_name."\n".$videocount."\n".$temps;
-	$redirect=$ua_path_link2.$fsua_rss_list_filename;
+	$desc=get_description($empty_link);
+	$title = $desc["title"];
+	$ds = $desc["desc"];
+	$image = $desc["poster"];
+	$temps = $file."\n".$title."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
+	$redirect = $ua_path_link2.$fsua_rss_link_filename;
 } else
 {
-// Тут парсим страницу на предмет файлов. ОТКЛЮЧЕНО. Лучше брать список файлов из файла (&flist)
-/* 
-	$uls=$doc->getElementsByTagName('ul');
-	foreach( $uls as $ul )
-		if( $ul->hasAttribute('class'))
-		if( $ul->getAttribute('class') == 'filelist m-current')
-			{
-				$lis = $ul->getElementsByTagName('li');
-				foreach( $lis as $li )
-					if( $li->hasAttribute('class'))
-						{
-							$li_class=$li->getAttribute('class');	
-							if( $li_class == 'file mpg' || $li_class == 'file mp4' || $li_class == 'file avi' || $li_class == 'file wmv' || $li_class == 'file mkv' || $li_class == 'file ts')
-								{
-									$as = $li->getElementsByTagName('a');
-									foreach( $as as $a )
-										{
-											$type = $a->getAttribute('class');
-											if( $type == 'link-material' )
-												{
-													$link=$a->getAttribute('href');
-													$name = trim(fix_str($a->textContent));
-												}
-										}
-									$videocount++;
-									$fs_title=$videocount.".".$name;
-									$temps.=$fs_title."\n".$ua_path_link.$fsua_parser_filename."?play=".urlencode($link)."\n".$link."\n".$name."\n".$fs_title."\n".$ua_path_link.$fsua_parser_filename."?file=".$link."&fav_refresh=1\n";
-							}
-						}
-			}
-	$temps = $title." ".$title_name."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
-	*/
-					
-					
-					$flist=file(check_prefix($file)."&flist");
-					foreach ($flist as $links)
-					{
-						$name=urldecode(trim(get_name($links)));
-						$videocount++;	
-						$fs_title=$videocount.".".$name;
-						$links=trim($links);
-						$temps.=$fs_title."\n".$ua_path_link.$fsua_parser_filename."?play=".$links."\n".$links."\n".$name."\n".$fs_title."\n".$ua_path_link.$fsua_parser_filename."?file=".$links."&fav_refresh=1\n";
-					}
-$temps = $file."\n".$title." ".$title_name."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
-	
-	
-	
-	
-	
-	$redirect = $ua_path_link2.$fsua_rss_link_filename;
+	$desc=get_description($empty_link);
+	$title = $desc["title"];
+	$temps = $nam." ".$title."\n".$videocount."\n".$temps;
+	$redirect=$ua_path_link2.$fsua_rss_list_filename;
 }
-}
+//echo $temps."<br>";
+//echo $redirect."<br>";
+
 file_put_contents( $tmp, $temps );
 if ($header)
-return array("image"=>$image, "title"=>$title." ".$title_name, "fav_folder"=>$fav_folder,"name1"=>$name1);
+{
+	$desc=get_description($empty_link);
+	$title = $desc["title"];
+	$image = $desc["poster"];
+	return array("image"=>$image, "title"=>$title);
+}
 else 
 return $redirect;
 }
@@ -556,34 +485,18 @@ return $redirect;
 // Парсим содержимое фильмов, сериалов (получаем линки на фильмы)
 //---------------------------------------------------------------------------------
 if(isset($_GET["file"])) {
-$file=$_GET["file"];
-if (isset($_GET['enter'])) {
-if ($_GET['enter']=='1') $enter = true;  else $enter=false;
-}
-if (isset($_GET['final'])) $final = $_GET["final"];
-
-
-				if ($main["fav_folder"]) $fav_arr[$num]["type"]="list"; else $fav_arr[$num]["type"]="link";
-				$fav_arr[$num]["poster"]=$main["image"];
-				$fav_arr[$num]["name"]=$main["title"].$main["name1"];
-
-
-			if ($enter) 
-			{
-			$file.="?folder=0";
-			$s=file_get_contents(check_prefix($file));
-			}
-			else $s=file_get_contents(check_prefix($file));
-			file_put_contents("/tmp/test.txt",$s);
-			if (isset($_GET["fav_refresh"])) 
-			{
-				$main=get_data($s,$file,$final,true);			
-				echo $main["title"].$main["name1"];
-				exit;
-			}	
-			$redirect=get_data($s,$file,$final);
-			header('Location: '.$redirect."?param=".$file); 
+if (isset($_GET["img"])) $image = urldecode($_GET["img"]);
+if (isset($_GET["name"])) $name = urldecode($_GET["name"]);
+$file=urldecode($_GET["file"]);
+if (isset($_GET["fav_refresh"])) 
+	{
+		$main=get_data($file,$image,$name,true);			
+		echo $main["title"].$main["name1"];
+		exit;
+	}	
 	
+$redirect=get_data($file,$image,$name);
+header('Location: '.$redirect."?param=".urlencode($file)); 
 }
  
 //---------------------------------------------------------------------------------

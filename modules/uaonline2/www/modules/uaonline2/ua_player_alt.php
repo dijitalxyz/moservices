@@ -214,6 +214,7 @@ class ua_player extends ua_player_const
 				{
 					name = getStringArrayAt(dlok, 1);
 					img = getStringArrayAt(dlok, 11);
+					param = getStringArrayAt(dlok, 0);
 					c = 12;
 				} else
 				{

@@ -1,5 +1,5 @@
 [base]
-	revision = 16
+	revision = 17
 	title = "moServices base"
 	role = package
 	init = S00base

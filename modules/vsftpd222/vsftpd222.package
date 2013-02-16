@@ -1,5 +1,5 @@
 [vsftpd222]
-	revision = 1
+	revision = 2
 	title = "vsFTPd FTP daemon v2.2.2"
 	role = daemon
 	init = S15vsftpd
@@ -8,4 +8,4 @@
 	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
 	config_edit = "etc/vsftpd.conf"
 	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
-	size = 312
+	size = 308

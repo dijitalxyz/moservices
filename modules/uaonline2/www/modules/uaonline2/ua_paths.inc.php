@@ -393,9 +393,9 @@ global $uakino_parser_filename;
 					if ($type=="parser")
 						$fav_site=$ua_path_link.$fsua_parser_filename."?file=";
 					if ($type=="link")
-						$fav_site=$ua_path_link.$fsua_parser_filename."?final=1&enter=0&file=";
+						$fav_site=$ua_path_link.$fsua_parser_filename."?file=";
 					if ($type=="list")
-						$fav_site=$ua_path_link.$fsua_parser_filename."?final=0&enter=0&file=";
+						$fav_site=$ua_path_link.$fsua_parser_filename."?file=";
 					break;
 				}
 		

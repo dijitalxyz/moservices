@@ -40,7 +40,9 @@ div.ssk_fw_list
 	padding:4px;
 	margin:0px;
 
-	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+	border-radius:0px 0px 5px 5px;
+	-moz-border-radius:0px 0px 5px 5px;
+	-webkit-border-radius:0px 0px 5px 5px;
 }
 
 div.ssk_card
@@ -56,7 +58,10 @@ div.ssk_card
 	background:white;
 
 	border:1px solid #ccc;
-	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 }
 
 div.ssk_card_alone
@@ -78,7 +83,8 @@ div.ssk_st_install
 
 div.ssk_st_noinstall
 {
-	background-color: #f4f4f4;
+/*	background-color: #f4f4f4;*/
+	background-color: #ddd;
 }
 
 div.ssk_update

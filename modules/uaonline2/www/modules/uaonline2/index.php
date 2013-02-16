@@ -671,6 +671,7 @@ if ($oper=="up"||$oper=="down"||$oper=="add_fav"
 				$link=$_REQUEST["fav_link"];
 				// проверяем, а что за ссылку мы ввели
 				$fav_arr[$num]['site']=check_site($link);
+				//echo check_site($link);
 			}
 		// EX.ua
 			if ($fav_arr[$num]['site']=='0')
@@ -693,20 +694,30 @@ if ($oper=="up"||$oper=="down"||$oper=="add_fav"
 			}
 			// fs.ua
 			if ($fav_arr[$num]['site']=='2')
-			{
-				include($ua_path.$fsua_parser_filename);
+			{	
+				
+				
+				
 				if(isset($_REQUEST["fav_link"])) 
 				{
-					$link=$_REQUEST["fav_link"];
-					if (!preg_match("/\?folder/",$link)) $link.="?folder=0";
-					preg_match("/(.*?)#/", $link,$out);
-					if ($out) $fav_arr[$num]["link"]=$out[1]; else $fav_arr[$num]["link"]=$link;
+				
+				$link=$_REQUEST["fav_link"];
+					
+					if (!preg_match("/\?ajax&folder/",$link)) $link.="?ajax&folder";
+					//preg_match("/(.*?)#/", $link,$out);
+					//if ($out) $fav_arr[$num]["link"]=$out[1]; else $fav_arr[$num]["link"]=$link;
+					$fav_arr[$num]["link"]=$link;
 				}
-				$s=file_get_contents(check_prefix($fav_arr[$num]['link']));
-				$main=get_data($s,$fav_arr[$num]['link'],"0",true);
-				if ($main["fav_folder"]) $fav_arr[$num]["type"]="list"; else $fav_arr[$num]["type"]="link";
+				
+				include($ua_path.$fsua_parser_filename);
+				
+				$s=check_prefix($fav_arr[$num]['link']);
+				$main=get_data($fav_arr[$num]['link'],'','',true);
+				//print_r($main);
+				//if ($main["fav_folder"]) $fav_arr[$num]["type"]="list"; else $fav_arr[$num]["type"]="link";
+				$fav_arr[$num]["type"]="list";
 				$fav_arr[$num]["poster"]=$main["image"];
-				$fav_arr[$num]["name"]=$main["title"].$main["name1"];
+				$fav_arr[$num]["name"]=$main["title"];
 				
 			}
 			//uakino.net

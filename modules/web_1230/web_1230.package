@@ -1,5 +1,5 @@
 [web_1230]
-	revision = 1
+	revision = 2
 	title = "Lighttpd web server v1.4.28"
 	role = package
 	backup = "etc/lighttpd.conf etc/lighttpd.plain"

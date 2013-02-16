@@ -9,8 +9,8 @@ case "$1" in
   start)
 	echo "Starting vsftpd service..."
 	grep -q 'root:/:/bin/sh' $etc/passwd || sed -i 's/root::\/bin/root:\/:\/bin/' $etc/passwd
-	grep -q 'ftp::1001:1001:ftp' $etc/passwd || echo "ftp::1001:1001:ftp:/tmp/usbmounts:/dev/null" >> $etc/passwd
-	$mos/bin/vsftpd $mos/etc/vsftpd.conf >/dev/null 2>&1 &
+	grep -Eq 'ftp:x*:1001:1001:ftp' $etc/passwd || echo "ftp:x:1001:1001:ftp:/tmp/usbmounts:/dev/null" >> $etc/passwd
+	nice -n 5 $mos/bin/vsftpd $mos/etc/vsftpd.conf >/dev/null 2>&1 &
 
 	# seagate fork
 	if [ -f $etc/autorun.sh ] ; then
@@ -23,7 +23,7 @@ case "$1" in
   stop)
 	echo "Shutting down vsftpd services..."
 	grep -q 'root:/:/bin/sh' $etc/passwd && sed -i 's/root:\/:\/bin/root::\/bin/' $etc/passwd
-	grep -q 'ftp::1001:1001:ftp' $etc/passwd  && sed -i '/ftp::1001:1001:ftp:/d' $etc/passwd
+	grep -Eq 'ftp:x*:1001:1001:ftp' $etc/passwd  && sed -i '/ftp:x*:1001:1001:ftp:/d' $etc/passwd
 	killall -9 vsftpd
 
 	# seagate fork

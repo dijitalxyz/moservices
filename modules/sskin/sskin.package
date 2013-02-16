@@ -1,5 +1,5 @@
 [sskin]
-	revision = 10
+	revision = 11
 	title = "Skin selector for amp revs"
 	role = patch
 	backup = "etc/sskin.conf"

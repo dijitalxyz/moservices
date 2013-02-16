@@ -16,7 +16,7 @@ function playlist_item_type(pls)
     else
         if pls.dlna_extras then extras=dlna_org_extras[pls.dlna_extras] end
         if not extras then extras=mtype[5] end
-        if pls.path and extras~='*' then extras=string.gsub(extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11') end
+        if pls.path and extras~='*' then extras=string.gsub(extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=01') end
     end
 
     return mtype,extras

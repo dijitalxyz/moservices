@@ -197,7 +197,7 @@ class ua_rss_favorites  extends ua_rss_favorites2
 			saveBookArray = null;
 			saveBookArray = pushBackStringArray(saveBookArray, itemCount);
 			count = 0;
-			if (site!="1")
+			if (site!="2")
 			{
 				if (site!="-1")
 				{ 
@@ -285,6 +285,12 @@ class ua_rss_favorites  extends ua_rss_favorites2
 				link2 = getStringArrayAt( linkBookArray , idx );
 				site = getStringArrayAt( siteBookArray , idx );
 				type = getStringArrayAt( typeBookArray , idx );
+				if (site == 2) 
+				{
+					image=getStringArrayAt(imageBookArray , idx );
+					titl=getStringArrayAt(titleBookArray , idx );
+					link2=urlEncode(link2)+"&amp;img="+image+"&amp;name="+urlEncode(titl);
+				}
 				link1 = getURL("<?=$ua_path_link.'ua_paths.inc.php?get_fav_site='?>"+site+"&amp;get_fav_type="+type);
 				link= link1+link2;
 				jumpToLink("startLink");

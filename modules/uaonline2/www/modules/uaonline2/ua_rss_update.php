@@ -169,6 +169,8 @@ if ($_REQUEST["update"]=="1")
 	$res=shell_exec("/tmp/ua_get/www/modules/uaonline2/ua_update.sh ".$ua_path." ".$param2." ".$ua_update_url);
 	//echo $res;
 	shell_exec("rm -r /tmp/ua_get");
+// 26/01/2013 тут прибиваем историю просмотров
+//	shell_exec("rm -r /usr/local/etc/dvdplayer/ua_history");		
 //	$ini = new TIniFileEx('/usr/local/etc/dvdplayer/ua_settings.conf');
 //	$ini->write('paths','ua_standalone','1');
 //	$ini->updateFile();
