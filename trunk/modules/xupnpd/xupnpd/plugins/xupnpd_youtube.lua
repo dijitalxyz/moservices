@@ -12,6 +12,7 @@
 
 cfg.youtube_fmt=22
 cfg.youtube_region='*'
+cfg.youtube_video_count=100
 
 youtube_api_url='http://gdata.youtube.com/feeds/mobile/'
 youtube_common='alt=json&start-index=1&max-results=50'  -- &racy=include&restriction=??
@@ -56,75 +57,92 @@ function youtube_updatefeed(feed,friendly_name)
     if tfeed[1]=='channel' then
         local region=''
         if cfg.youtube_region and cfg.youtube_region~='*' then region=cfg.youtube_region..'/' end
-        feed_urn='standardfeeds/'..region..tfeed[2]..'?'..youtube_common
+        feed_urn='standardfeeds/'..region..tfeed[2]..'?alt=json'
     elseif tfeed[1]=='favorites' then
-        feed_urn='users/'..tfeed[2]..'/favorites'..'?'..youtube_common
+        feed_urn='users/'..tfeed[2]..'/favorites'..'?alt=json'
     elseif tfeed[1]=='playlist' then
         local playlist_id=youtube_find_playlist(tfeed[2],tfeed[3])
 
         if not playlist_id then return false end
 
-        feed_urn='playlists/'..playlist_id..'?'..youtube_common
+        feed_urn='playlists/'..playlist_id..'?alt=json'
 
     elseif tfeed[1]=='search' then
-        feed_urn='videos?vq='..util.urlencode(tfeed[2])..'&'..youtube_common
+        feed_urn='videos?vq='..util.urlencode(tfeed[2])..'&alt=json'
     else
-        feed_urn='users/'..tfeed[1]..'/uploads?orderby=published&'..youtube_common
+        feed_urn='users/'..tfeed[1]..'/uploads?orderby=published&alt=json'
     end
 
     local feed_m3u_path=cfg.feeds_path..feed_name..'.m3u'
     local tmp_m3u_path=cfg.tmp_path..feed_name..'.m3u'
 
-    local feed_data=http.download(youtube_api_url..feed_urn)
+    local dfd=io.open(tmp_m3u_path,'w+')
 
-    if feed_data then
-        local x=json.decode(feed_data)
+    if dfd then
+        dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=youtube\n')
 
-        feed_data=nil
+        local start_index=1
+        local max_results=50
+        local count=0
 
-        if x and x.feed and x.feed.entry then
-            local dfd=io.open(tmp_m3u_path,'w+')
+        while(count<cfg.youtube_video_count) do
 
-            if dfd then
-                dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=youtube\n')
+            local url=youtube_api_url..feed_urn..'&start-index='..start_index..'&max-results='..max_results
 
-                for i,j in ipairs(x.feed.entry) do
-                    local title=j.title['$t']
+            if cfg.debug>0 then print('YouTube try url '..url) end
 
-                    local url=nil
-                    for ii,jj in ipairs(j.link) do
-                        if jj['type']=='text/html' then url=jj.href break end
-                    end
+            local feed_data=http.download(url)
 
-                    local logo=nil
-                    for ii,jj in ipairs(j['media$group']['media$thumbnail']) do
+            if not feed_data then break end
+
+            local x=json.decode(feed_data)
+
+            feed_data=nil
+
+            if not x or not x.feed or not x.feed.entry then break end
+
+            local n=0
+
+            for i,j in ipairs(x.feed.entry) do
+                local title=j.title['$t']
+
+                local url=nil
+                for ii,jj in ipairs(j.link) do
+                    if jj['type']=='text/html' then url=jj.href break end
+                end
+
+                local logo=nil
+
+                local thumb=j['media$group']['media$thumbnail']
+
+                if thumb then
+                    for ii,jj in ipairs(thumb) do
                         if tonumber(jj['width'])<480 then logo=jj.url break end
                     end
-
-                    if cfg.feeds_fetch_length==false then
-                        dfd:write('#EXTINF:0 logo=',logo,' ,',title,'\n',url,'\n')
-                    else
-                        dfd:write('#EXTINF:0 logo=',logo)
-                        local real_url=youtube_get_video_url(url)
-                        if real_url~=nil then
-                            local len=plugin_get_length(real_url)
-                            if len>0 then dfd:write(' length=',len) end
-                        end
-                        dfd:write(' ,',title,'\n',url,'\n')
-                    end
                 end
 
-                dfd:close()
+                if logo and title and url then
+                    dfd:write('#EXTINF:0 logo=',logo,' ,',title,'\n',url,'\n')
 
-                if util.md5(tmp_m3u_path)~=util.md5(feed_m3u_path) then
-                    if os.execute(string.format('mv %s %s',tmp_m3u_path,feed_m3u_path))==0 then
-                        if cfg.debug>0 then print('YouTube feed \''..feed_name..'\' updated') end
-                        rc=true
-                    end
-                else
-                    util.unlink(tmp_m3u_path)
+                    n=n+1
                 end
+
             end
+
+            if n<1 then break else count=count+n end
+
+            start_index=start_index+max_results
+        end
+
+        dfd:close()
+
+        if util.md5(tmp_m3u_path)~=util.md5(feed_m3u_path) then
+            if os.execute(string.format('mv %s %s',tmp_m3u_path,feed_m3u_path))==0 then
+                if cfg.debug>0 then print('YouTube feed \''..feed_name..'\' updated') end
+                rc=true
+            end
+        else
+            util.unlink(tmp_m3u_path)
         end
     end
 
@@ -188,7 +206,6 @@ function youtube_get_video_url(youtube_url)
 end
 
 plugins['youtube']={}
---plugins.youtube.disabled=true
 plugins.youtube.name="YouTube"
 plugins.youtube.desc="<i>username</i>, favorites/<i>username</i>, playlist/<i>username</i>/<i>playlistname</i>, channel/<i>channelname</i>, search/<i>search_string</i>"..
 "<br/><b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured"
@@ -199,7 +216,8 @@ plugins.youtube.getvideourl=youtube_get_video_url
 plugins.youtube.ui_config_vars=
 {
     { "select", "youtube_fmt", "int" },
-    { "select", "youtube_region" }
---    { "input", "cfg_and_form_input_variable_name" }
---    { "select", "cfg_and_form_select_variable_name" }
+    { "select", "youtube_region" },
+    { "input",  "youtube_video_count", "int" }
 }
+
+--youtube_updatefeed('channel/top_rated','')

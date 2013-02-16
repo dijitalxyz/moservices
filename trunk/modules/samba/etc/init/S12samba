@@ -3,7 +3,9 @@
 # description: Starts and stops the Samba smbd daemon
 #	       used to provide SMB network services.
 #
-mos=/usr/local/etc/mos/samba
+etc=/usr/local/etc
+bin=$etc/mos/bin
+mos=$etc/mos/samba
 
 stateSmb()
 {
@@ -70,6 +72,9 @@ case "$1" in
 	cp -a $mos/private /tmp/smb/
 
 	if ! stateSmb ; then
+
+		$bin/wait_ip && exit 1
+
 		echo 'Starting smbd services...'
 		$mos/smbd -D -s /tmp/smb/smb.conf -l /tmp/smb >/dev/null 2>&1 &
 	        echo 'Starting nmbd services...'

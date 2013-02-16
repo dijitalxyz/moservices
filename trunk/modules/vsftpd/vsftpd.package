@@ -1,5 +1,5 @@
 [vsftpd]
-	revision = 2
+	revision = 3
 	title = "vsFTPd FTP daemon v3.0.2 static"
 	role = daemon
 	init = S15vsftpd

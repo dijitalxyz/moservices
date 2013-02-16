@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS part keyboard module v1.2
+	RSS part keyboard module v1.2.1
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2013	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -360,7 +360,7 @@ class ua_rss_keyb extends ua_rss_keyb_const
 		$this->showIdle();
 	?>
 	<backgroundDisplay>
-			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			<image redraw="no" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
 					<?=$ua_images_path?>ua_background_main.png
 			</image>
 	</backgroundDisplay>

@@ -68,16 +68,22 @@ function ui_playlists()
     http.send('<h3>Playlists</h3>')
     http.send('<br/><table class="table">')
 
-    local d=util.dir(cfg.playlists_path)
-    if d then
-        table.sort(d)
-        for i,j in ipairs(d) do
-            if string.find(j,'.+%.m3u$') then
-                local fname=util.urlencode(j)
-                http.send(string.format('<tr><td><a href=\'/ui/show?fname=%s\'>%s</a> [<a href=\'/ui/remove?fname=%s\'>x</a>]</td></tr>\n',fname,j,fname))
+    function f(path,args)
+        local d=util.dir(path)
+        if d then
+            table.sort(d)
+            for i,j in ipairs(d) do
+                if string.find(j,'.+%.m3u$') then
+                    local fname=util.urlencode(j)
+                    http.send(string.format('<tr><td><a href=\'/ui/show?fname=%s&%s\'>%s</a> [<a href=\'/ui/remove?fname=%s&%s\'>x</a>]</td></tr>\n',fname,args,j,fname,args))
+                end
             end
         end
     end
+
+    f(cfg.playlists_path,'')
+
+    if cfg.feeds_path~=cfg.playlists_path then f(cfg.feeds_path,'feed=1') end
 
     http.send('</table>')
 
@@ -106,7 +112,7 @@ function ui_feeds()
     http.send('<div class="controls controls-row"><div class="span2">Plugin</div><select class="span4" name="plugin">')
 
     for plugin_name,plugin in pairs(plugins) do
-        if plugin.name then
+        if plugin.name and plugin.disabled~=true then
             http.send(string.format('<option value="%s">%s</option>',plugin_name,plugin.name))
         end
     end
@@ -128,7 +134,7 @@ function ui_fhelp()
     http.send('<br/>')
 
     for plugin_name,plugin in pairs(plugins) do
-        if plugin.name and plugin.desc then
+        if plugin.name and plugin.desc and plugin.disabled~=true then
             http.send(string.format('<b>%s</b>: ',plugin.name))
             http.send(plugin.desc)
             http.send('<br/><br/>\n\n')
@@ -252,7 +258,11 @@ function ui_show()
     if ui_args.fname then
         local real_name=util.urldecode(ui_args.fname)
         if string.find(real_name,'^[^-/\\]+%.m3u$') then
-            local pls=m3u.parse(cfg.playlists_path..real_name)
+
+            local path=cfg.playlists_path
+            if ui_args.feed=='1' then path=cfg.feeds_path end
+
+            local pls=m3u.parse(path..real_name)
 
             if pls then
                 http.send('<h3>'..pls.name..'</h3>')
@@ -272,7 +282,11 @@ function ui_remove()
     if ui_args.fname then
         local real_name=util.urldecode(ui_args.fname)
         if string.find(real_name,'^[^-/\\]+%.m3u$') then
-            if os.remove(cfg.playlists_path..real_name) then
+
+            local path=cfg.playlists_path
+            if ui_args.feed=='1' then path=cfg.feeds_path end
+
+            if os.remove(path..real_name) then
                 core.sendevent('reload')
                 http.send('<h3>OK</h3>')
             else
@@ -297,7 +311,7 @@ end
 
 function ui_add_feed()
     if ui_args.plugin and ui_args.feed then
-        if not ui_args.name or string.len(ui_args.name)==0 then ui_args.name=string.gsub(ui_args.feed,'/',' ') end
+        if not ui_args.name or string.len(ui_args.name)==0 then ui_args.name=ui_args.plugin..' '..string.gsub(ui_args.feed,'/',' ') end
         core.sendevent('add_feed',ui_args.plugin,ui_args.feed,ui_args.name)
         http.send('<h3>OK</h3>')
     else
@@ -376,17 +390,24 @@ function ui_config()
 end
 
 function ui_apply()
+
+    local args=util.parse_postdata(ui_data)
+
     local f=io.open(cfg.config_path..'common.lua','w')
     if f then
 
         for plugin_name,plugin in pairs(plugins) do
             if plugin.ui_config_vars then
                 for i,var in ipairs(plugin.ui_config_vars) do
-                    local v=ui_args[ var[2] ]
-                    if var[3]=="int" or var[3]=="bool" then
-                        f:write(string.format('cfg["%s"]=%s\n',var[2],v or ''))
+                    local v=args[ var[2] ]
+                    local t=var[3]
+
+                    if not v then if t=="int" then v=0 elseif t=="bool" then v=false else v="" end end
+
+                    if t=="int" or t=="bool" then
+                        f:write(string.format('cfg["%s"]=%s\n',var[2],tostring(v)))
                     else
-                        f:write(string.format('cfg["%s"]="%s"\n',var[2],v or ''))
+                        f:write(string.format('cfg["%s"]="%s"\n',var[2],v))
                     end
                 end
             end

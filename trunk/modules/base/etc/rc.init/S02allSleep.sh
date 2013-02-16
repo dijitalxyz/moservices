@@ -33,7 +33,7 @@ case "$1" in
 	echo "$0 : unplug USB"
 
 	for i in $( lsmod | cut -d ' ' -f 1 ) ; do
-		cat /lib/modules/2.6.12.6-VENUS/modules.usbmap | grep -qE '^'$i' ' && rmmod $i
+		cat /lib/modules/$( uname -r )/modules.usbmap | grep -qE '^'$i' ' && rmmod $i
 	done
 
 	echo "$0 : unload modules"

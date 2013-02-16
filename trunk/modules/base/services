@@ -11,7 +11,7 @@ init=$mos/etc/init
 # $2 - order: normal, reverse
 # $3 - wait 
 doInit() {
-	if [ $2 = "normal" ] ; then
+	if [ "$2" = "normal" ] ; then
 		list=$( ls $init )
 	else
 		list=$( ls $init | sed -n '1!G;h;$p' )
@@ -21,7 +21,7 @@ doInit() {
 		[ ! -f $init/$i ] && continue
 		[ ! -x $init/$i ] && continue
 
-		if [ $3 = "wait" ] ; then
+		if [ "$3" = "wait" ] ; then
 			$init/$i $1
 		else
 			case $i in

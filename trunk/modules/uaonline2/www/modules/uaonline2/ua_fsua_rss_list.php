@@ -210,7 +210,10 @@ class ua_rss_list extends ua_rss_list_const
 			bimage = getStringArrayAt(imageArray,idx);
 			bsitelink = 2;
 			btype = getStringArrayAt(typelinkArray,idx);
-			titleBookArray = pushBackStringArray(titleBookArray, btitle);
+			if (search_global==1 || view==1) 
+					titleBookArray = pushBackStringArray(titleBookArray, btitle); 
+				 else
+					titleBookArray = pushBackStringArray(titleBookArray, btitle+" "+title);
 			linkBookArray = pushBackStringArray(linkBookArray, blink);
 			imageBookArray = pushBackStringArray(imageBookArray, bimage);
 			typelinkBookArray = pushBackStringArray(typelinkBookArray, btype);
@@ -296,7 +299,7 @@ class ua_rss_list extends ua_rss_list_const
 		$en_sort=$_GET['en_sort'];
 		}
 	?>
-	param = "<?= $param?>";
+	param = "<?=urldecode($param)?>";
 	url1 = "<?= $url?>"+urlEncode(param)+"&amp;page=";
 	en_sort = "<?= $en_sort?>";
 	search_prefix="<?= $search_prefix?>";

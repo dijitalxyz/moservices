@@ -22,14 +22,16 @@ function get_myhit_content()
 {
 	if( ! isset( $_REQUEST['url'])) exit;
 
-	$url = 'http://my-hit.ru/'. $_REQUEST['url'];
+	$url = 'http://my-hit.ru'. $_REQUEST['url'];
 	$s = file_get_contents( $url );
-
+/*
 	if( preg_match( '#flashvars="([^"]*)"#', $s, $ss ) === false ) return;
 	parse_str( $ss[1], $a );
 	$s = $a['file'] .'?start=0&id='. $a['id'] .'&client=FLASH%20WIN%2011,0,1,152&version=4.2.90&width=640';
+*/
+	if( preg_match( "/url:\\s*'(.*?)'/", $s, $ss ) === false ) return;
 
-	header ( 'Location: ' .$s );
+	header ( 'Location: '. $ss[1] );
 }
 //
 // ------------------------------------
@@ -316,7 +318,7 @@ echo $link.PHP_EOL;
 
 	if( $desc <> '' )
 	{
-		$posX = 40;
+		$posX = 50;
 		$posY = 128;
 
 		$lineHeight = 26;

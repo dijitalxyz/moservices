@@ -200,4 +200,68 @@ function find_playlist_object(s)
     return pls
 end
 
+function rss_merge(new,old,max_num)
+
+    local tt={}
+
+    for i,j in ipairs(old) do tt[j.title]=j end
+    for i,j in ipairs(new) do if tt[j.title] then j.link=nil end end
+
+    tt={} local idx=1
+
+    for i,j in ipairs(new) do if idx>max_num then break end if j.link then tt[idx]=j idx=idx+1 end end
+
+    for i,j in ipairs(old) do if idx>max_num then break end tt[idx]=j idx=idx+1 end
+
+    return tt
+end
+
+function rss_parse_m3u(path)
+    local t={}
+
+    local x=m3u.parse(path)
+    if x and x.elements then
+        local idx=1
+        for i,j in ipairs(x.elements) do
+            t[idx]={ ['title']=j.name, ['link']=j.url, ['logo']=j.logo }
+            idx=idx+1
+        end
+    end
+
+    return t
+end
+
+function rss_parse_feed(url,logo_regexp)
+    local t={}
+
+    local feed_data=http.download(url)
+
+    if not feed_data then return t end
+
+    if not logo_regexp then logo_regexp='url="(.-)"' end
+
+    local x=xml.find('rss/channel',xml.decode(feed_data))
+
+    feed_data=nil
+
+    if x and x['@elements'] then
+        local idx=1
+        for i,j in ipairs(x['@elements']) do
+            if j['@name']=='item' then
+                local title=nil if j.title then title=j.title['@value'] end
+                local link =nil if j.link then link=j.link['@value'] end
+                local logo =nil if j.enclosure then logo=j.enclosure['@attr'] end
+
+                if logo then logo=string.match(logo,logo_regexp) end
+
+                if title and link then
+                    t[idx]={ ['title']=title, ['link']=link, ['logo']=logo }
+                    idx=idx+1
+                end
+            end
+        end
+    end
+    return t
+end
+
 reload_playlists()

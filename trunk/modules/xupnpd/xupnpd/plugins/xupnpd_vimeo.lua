@@ -2,14 +2,10 @@
 -- clark15b@gmail.com
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
--- username, channel/channelname, group/groupname, album/album_id
-function vimeo_updatefeed(feed,friendly_name)
-    local rc=false
+cfg.vimeo_video_count=100
 
-    local feed_url='http://vimeo.com/api/v2/'..feed..'/videos.json'
-    local feed_name='vimeo_'..string.gsub(feed,'/','_')
-    local feed_m3u_path=cfg.feeds_path..feed_name..'.m3u'
-    local tmp_m3u_path=cfg.tmp_path..feed_name..'.m3u'
+function vimeo_parse_feed(feed_url)
+    local t={}
 
     local feed_data=http.download(feed_url)
 
@@ -19,33 +15,51 @@ function vimeo_updatefeed(feed,friendly_name)
         feed_data=nil
 
         if x then
-            local dfd=io.open(tmp_m3u_path,'w+')
-            if dfd then
-                dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=vimeo\n')
+            local idx=1
+            for i,j in ipairs(x) do
+                t[idx]={ ['title']=j.title, ['link']=j.url, ['logo']=j.thumbnail_medium }
+                idx=idx+1
+            end
+        end
+    end
 
-                for i,j in ipairs(x) do
-                    if cfg.feeds_fetch_length==false then
-                        dfd:write('#EXTINF:0 logo=',j.thumbnail_medium,' ,',j.title,'\n',j.url,'\n')
-                    else
-                        dfd:write('#EXTINF:0 logo=',j.thumbnail_medium)
-                        local real_url=vimeo_get_video_url(j.url)
-                        if real_url~=nil then
-                            local len=plugin_get_length(real_url)
-                            if len>0 then dfd:write(' length=',len) end
-                        end
-                        dfd:write(' ,',j.title,'\n',j.url,'\n')
-                    end
-                end
-                dfd:close()
+    return t
+end
 
-                if util.md5(tmp_m3u_path)~=util.md5(feed_m3u_path) then
-                    if os.execute(string.format('mv %s %s',tmp_m3u_path,feed_m3u_path))==0 then
-                        if cfg.debug>0 then print('Vimeo feed \''..feed_name..'\' updated') end
-                        rc=true
-                    end
+-- username, channel/channelname, group/groupname, album/album_id
+function vimeo_updatefeed(feed,friendly_name)
+    local rc=false
+
+    local feed_url='http://vimeo.com/api/v2/'..feed..'/videos.json'
+    local feed_name='vimeo_'..string.gsub(feed,'/','_')
+    local feed_m3u_path=cfg.feeds_path..feed_name..'.m3u'
+    local tmp_m3u_path=cfg.tmp_path..feed_name..'.m3u'
+
+    local x=rss_merge(vimeo_parse_feed(feed_url),rss_parse_m3u(feed_m3u_path),cfg.vimeo_video_count)
+
+--    local x=vimeo_parse_feed(feed_url)
+
+    if x then
+        local dfd=io.open(tmp_m3u_path,'w+')
+        if dfd then
+            dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=vimeo\n')
+
+            for i,j in ipairs(x) do
+                if j.logo then
+                    dfd:write('#EXTINF:0 logo=',j.logo,' ,',j.title,'\n',j.link,'\n')
                 else
-                    util.unlink(tmp_m3u_path)
+                    dfd:write('#EXTINF:0 ,',j.title,'\n',j.link,'\n')
                 end
+            end
+            dfd:close()
+
+            if util.md5(tmp_m3u_path)~=util.md5(feed_m3u_path) then
+                if os.execute(string.format('mv %s %s',tmp_m3u_path,feed_m3u_path))==0 then
+                    if cfg.debug>0 then print('Vimeo feed \''..feed_name..'\' updated') end
+                    rc=true
+                end
+            else
+                util.unlink(tmp_m3u_path)
             end
         end
     end
@@ -99,3 +113,8 @@ plugins.vimeo.desc="<i>username</i>, channel/<i>channelname</i>, group/<i>groupn
 plugins.vimeo.sendurl=vimeo_sendurl
 plugins.vimeo.updatefeed=vimeo_updatefeed
 plugins.vimeo.getvideourl=vimeo_get_video_url
+
+plugins.vimeo.ui_config_vars=
+{
+    { "input",  "vimeo_video_count", "int" }
+}

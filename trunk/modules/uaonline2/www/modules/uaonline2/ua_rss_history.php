@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS history module v1.0
+	RSS history module v1.1
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2013
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -68,6 +68,8 @@ class ua_rss_favorites  extends ua_rss_favorites2
 						cnt += 1;
 						
 					}	
+					print("blink =======",blink);
+					print("bookLink =======",bookLink);
 				}
 				color;
 			</script>
@@ -115,20 +117,25 @@ class ua_rss_favorites  extends ua_rss_favorites2
 		if (dlok != null)
 			{
 				c = 0;
-				itemCount = getStringArrayAt(dlok, c); c += 1;
-				count = 0;
-				while( count != itemCount )
+				itemCount = getStringArrayAt(dlok, c);
+				count = itemCount;
+				c = (count*5)-4);
+				while( count != 0 )
 					{
-					linkBookArray = pushBackStringArray(linkBookArray, getStringArrayAt(dlok, c));  c += 1;
-					historyFilesListArray = pushBackStringArray(linkBookArray, getStringArrayAt(dlok, c));  c += 1;
-					titleBookArray = pushBackStringArray(titleBookArray, getStringArrayAt(dlok, c));  c += 1;
-					imageBookArray = pushBackStringArray(imageBookArray, getStringArrayAt(dlok, c));  c += 1;
-					siteBookArray = pushBackStringArray(siteBookArray, getStringArrayAt(dlok, c));  c += 1;
-					typeBookArray = pushBackStringArray(typeBookArray, "link");
-					count += 1;
+					linkBookArray = pushBackStringArray(linkBookArray, getStringArrayAt(dlok, c));  c -= -1;
+					historyFilesListArray = pushBackStringArray(linkBookArray, getStringArrayAt(dlok, c));  c -= -1;
+					titleBookArray = pushBackStringArray(titleBookArray, getStringArrayAt(dlok, c));  c -= -1;
+					imageBookArray = pushBackStringArray(imageBookArray, getStringArrayAt(dlok, c));  c -= -1;
+					siteBook=getStringArrayAt(dlok, c);
+					siteBookArray = pushBackStringArray(siteBookArray,siteBook );  c -= -1;
+					typeBookArray = pushBackStringArray(typeBookArray, "link"); 
+					count -= 1;
+					c = (count*5)-4;
 					}
+				
+			
+			
 			}
-		
 		cancelIdle();
 		tmp_index =itemCount-1;
 		if (itm_index &gt; tmp_index) itm_index = tmp_index;
@@ -280,7 +287,7 @@ class ua_rss_favorites  extends ua_rss_favorites2
 				site = getStringArrayAt( siteBookArray , idx );
 				type = getStringArrayAt( typeBookArray , idx );
 				link1 = getURL("<?=$ua_path_link.'ua_paths.inc.php?get_fav_site='?>"+site+"&amp;get_fav_type="+type);
-				link= link1+link2;
+				link= link1+urlEncode(link2);
 				jumpToLink("startLink");
 			</script>
 			null;

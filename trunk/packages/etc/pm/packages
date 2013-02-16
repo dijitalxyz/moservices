@@ -464,13 +464,6 @@
 	require = "fhotplug"
 	size = 408
 
-[myhit]
-	revision = 1
-	title = "MY-HIT.ru"
-	role = rss
-	files = "www/modules/myhit/"
-	size = 80
-
 [php_1228]
 	revision = 3
 	title = "PHP v5.3.9"
@@ -662,26 +655,6 @@
 	files = "www/modules/weather/"
 	size = 80
 
-[web_1228]
-	revision = 1
-	title = "Lighttpd web server v1.4.28 pcre"
-	role = package
-	files = "bin/lighttpd etc/init/S03web etc/lighttpd.conf etc/lighttpd.plain lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_proxy.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so"
-	require = "libgccs libpcre php"
-	backup = "etc/lighttpd.conf etc/lighttpd.plain"
-	env = 1228
-	size = 820
-
-[web_1230]
-	revision = 1
-	title = "Lighttpd web server v1.4.28"
-	role = package
-	backup = "etc/lighttpd.conf etc/lighttpd.plain"
-	env = 1230
-	files = "bin/lighttpd etc/init/S03web etc/lighttpd.conf lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_proxy.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so"
-	require = "libgccs php"
-	size = 544
-
 [web_3430]
 	revision = 1
 	title = "Lighttpd web server v1.4.28"
@@ -840,19 +813,6 @@
 	require = "rtmpdump"
 	size = 2460
 
-[xupnpd]
-	revision= 3
-	title = "xupnpd 1.0rc13"
-	role = daemon
-	check = "port 4044"
-	init = S35xupnpd
-	navy_title = "xupnpd web interface"
-	navy_frame = "http://%addr%:4044"
-	config_edit = "xupnpd/xupnpd.lua"
-	files = "xupnpd/ etc/init/S35xupnpd"
-	require = "libgcc_s"
-	size = 948
-
 [rutor]
 	revision = 1
 	title = "Rutor 0.2"
@@ -869,14 +829,6 @@
 	files = "bin/bmp2jpg etc/init/S36capture.sh www/modules/capture/"
 	size = 3752
 
-[smarttool]
-	revision = 1
-	title = "SMART HDD Tool (smartctl 5.41)"
-	init = "S44libata"
-	role = web
-	files = "etc/init/S44libata libata/ bin/smartctl www/modules/smarttool/"
-	size = 1108
-
 [autorun]
 	revision = 2
 	title = "AutoRun"
@@ -885,69 +837,6 @@
 	actions = "restart"
 	files = "etc/init/S05AutoRun etc/hotplug/after/block/S12autorun"
 	size = 56
-
-[samba]
-	revision = 3
-	title = "SAMBA daemon v3.0.23c"
-	role = daemon
-	check = "port 139"
-	init = S12samba
-	backup = "samba/smb.conf"
-	config_edit = "samba/smb.conf"
-	files = "etc/init/S12samba etc/hotplug/after/block/S11samba samba/"
-	require = "fhotplug"
-	size = 6192
-
-[samba_1228]
-	revision= 2
-	title = "SAMBA daemon v3.0.8"
-	role = daemon
-	check = "port 139"
-	init = S12samba
-	backup = "samba/smb.conf"
-	config_edit = "samba/smb.conf"
-	env = 1228
-	files = "etc/init/S12samba etc/hotplug/after/block/S11samba lib/libsamba.so.0.0 lib/libsamba.so.0 lib/libsamba.so samba/"
-	require = "fhotplug"
-	size = 5352
-
-[uaonline2]
-	revision = 21
-	title = "UA Online 2"
-	role = rss
-	backup = "www/modules/uaonline2/ua_favorites.conf www/modules/uaonline2/ua_settings.conf"
-	config_edit = "www/modules/uaonline2/ua_settings.conf"
-	navy_title = "UAOnline 2 Fav. Editor"
-	navy_frame = "http://%addr%/modules/uaonline2/index.php"
-	files = "www/modules/uaonline2/"
-	size = 2044
-
-[vsftpd]
-	revision = 2
-	title = "vsFTPd FTP daemon v3.0.2 static"
-	role = daemon
-	init = S15vsftpd
-	backup = "etc/vsftpd.conf"
-	navy_title = "Explore FTP"
-	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
-	config_edit = "etc/vsftpd.conf"
-	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
-	size = 344
-
-[vsftpd_1228]
-	revision = 2
-	title = "vsFTPd FTP daemon v3.0.2 dynamic"
-	role = daemon
-	check = "port 21"
-	init = S15vsftpd
-	backup = "etc/vsftpd.conf"
-	navy_title = "Explore FTP"
-	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
-	config_edit = "etc/vsftpd.conf"
-	env = 1228
-	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
-	require = "libgccs"
-	size = 288
 
 [busybox]
 	revision= 5
@@ -993,25 +882,6 @@
 	files = "www/modules/downloady/"
 	size = 132
 
-[tvontop]
-	revision = 11
-	title = "TV on Top 1.1.5"
-	role = rss
-	files = "www/modules/tvontop/"
-	size = 3316
-
-[vsftpd222]
-	revision = 1
-	title = "vsFTPd FTP daemon v2.2.2"
-	role = daemon
-	init = S15vsftpd
-	backup = "etc/vsftpd.conf"
-	navy_title = "Explore FTP"
-	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
-	config_edit = "etc/vsftpd.conf"
-	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
-	size = 312
-
 [rootapp]
 	revision = 3
 	title = "Patched RootApp"
@@ -1038,15 +908,6 @@
 	files = "etc/core.ini etc/init/S01core www/modules/core/ www/index.php www/favicon.ico"
 	size = 844
 
-[sskin]
-	revision = 10
-	title = "Skin selector for amp revs"
-	role = patch
-	backup = "etc/sskin.conf"
-	config_link = "/?page=sskin_sets"
-	files = "bin/sskin etc/sskin.conf www/modules/sskin"
-	size = 164
-
 [parole]
 	revision = 3
 	title = "Authorization"
@@ -1055,12 +916,151 @@
 	require = "busybox"
 	size = 72
 
+[uaonline2]
+	revision = 23
+	title = "UA Online 2"
+	role = rss
+	backup = "www/modules/uaonline2/ua_favorites.conf www/modules/uaonline2/ua_settings.conf"
+	config_edit = "www/modules/uaonline2/ua_settings.conf"
+	navy_title = "UAOnline 2 Fav. Editor"
+	navy_frame = "http://%addr%/modules/uaonline2/index.php"
+	files = "www/modules/uaonline2/"
+	size = 2008
+
+[myhit]
+	revision = 2
+	title = "MY-HIT.ru"
+	role = rss
+	files = "www/modules/myhit/"
+	size = 80
+
 [base]
-	revision = 16
+	revision = 17
 	title = "moServices base"
 	role = package
 	init = S00base
 	files = "services bin/mos_remove bin/pm bin/fork_reboot bin/rebootd bin/reboot.sh bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop"
 	require = "libgccs busybox web core wget base2"
 	size = 132
+
+[samba]
+	revision = 3
+	title = "SAMBA daemon v3.0.23c"
+	role = daemon
+	check = "port 139"
+	init = S12samba
+	backup = "samba/smb.conf"
+	config_edit = "samba/smb.conf"
+	files = "etc/init/S12samba etc/hotplug/after/block/S11samba samba/"
+	require = "fhotplug"
+	size = 6192
+
+[samba_1228]
+	revision= 2
+	title = "SAMBA daemon v3.0.8"
+	role = daemon
+	check = "port 139"
+	init = S12samba
+	backup = "samba/smb.conf"
+	config_edit = "samba/smb.conf"
+	env = 1228
+	files = "etc/init/S12samba etc/hotplug/after/block/S11samba lib/libsamba.so.0.0 lib/libsamba.so.0 lib/libsamba.so samba/"
+	require = "fhotplug"
+	size = 5352
+
+[sskin]
+	revision = 11
+	title = "Skin selector for amp revs"
+	role = patch
+	backup = "etc/sskin.conf"
+	config_link = "/?page=sskin_sets"
+	files = "bin/sskin etc/sskin.conf www/modules/sskin"
+	size = 164
+
+[vsftpd]
+	revision = 3
+	title = "vsFTPd FTP daemon v3.0.2 static"
+	role = daemon
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	size = 344
+
+[vsftpd222]
+	revision = 2
+	title = "vsFTPd FTP daemon v2.2.2"
+	role = daemon
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	size = 308
+
+[vsftpd_1228]
+	revision = 3
+	title = "vsFTPd FTP daemon v3.0.2 dynamic"
+	role = daemon
+	check = "port 21"
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	env = 1228
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	require = "libgccs"
+	size = 288
+
+[smarttool]
+	revision = 2
+	title = "SMART HDD Tool (smartctl 5.41)"
+	init = "S44libata"
+	role = web
+	files = "etc/init/S44libata libata/ bin/smartctl www/modules/smarttool/"
+	size = 696
+
+[web_1228]
+	revision = 2
+	title = "Lighttpd web server v1.4.28 pcre"
+	role = package
+	files = "bin/lighttpd etc/init/S03web etc/lighttpd.conf etc/lighttpd.plain lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_proxy.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so"
+	require = "libgccs libpcre php"
+	backup = "etc/lighttpd.conf etc/lighttpd.plain"
+	env = 1228
+	size = 820
+
+[web_1230]
+	revision = 2
+	title = "Lighttpd web server v1.4.28"
+	role = package
+	backup = "etc/lighttpd.conf etc/lighttpd.plain"
+	env = 1230
+	files = "bin/lighttpd etc/init/S03web etc/lighttpd.conf lib/mod_access.so lib/mod_accesslog.so lib/mod_alias.so lib/mod_auth.so lib/mod_cgi.so lib/mod_dirlisting.so lib/mod_fastcgi.so lib/mod_indexfile.so lib/mod_proxy.so lib/mod_redirect.so lib/mod_rewrite.so lib/mod_ssi.so lib/mod_staticfile.so lib/mod_status.so lib/mod_userdir.so lib/mod_webdav.so"
+	require = "libgccs php"
+	size = 544
+
+[xupnpd]
+	revision= 4
+	title = "xupnpd 1.01"
+	role = daemon
+	check = "port 4044"
+	init = S35xupnpd
+	navy_title = "xupnpd web interface"
+	navy_frame = "http://%addr%:4044"
+	config_edit = "xupnpd/xupnpd.lua"
+	files = "xupnpd/ etc/init/S35xupnpd"
+	require = "libgcc_s"
+	size = 1056
+
+[tvontop]
+	revision = 11
+	title = "TV on Top 1.1.5"
+	role = rss
+	files = "www/modules/tvontop/"
+	size = 3308
 

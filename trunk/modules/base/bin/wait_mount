@@ -4,11 +4,11 @@
 #
 i=60
 while [ $i -ne 0 ] ; do
-	s=$( mount | grep -E -e '^/dev/scsi/host' -e '^/dev/block/sd' -e '^/dev/sd' )
+	s=$( mount | grep -E -e '^/dev/ide/host' -e '^/dev/scsi/host' -e '^/dev/block/sd' -e '^/dev/sd' )
 	[ -n "$s" ] && break
 	sleep 5
 	let i-=1
 done
 [ -z "$s" ] && exit 0
-sleep 10
+sleep 5
 exit 1

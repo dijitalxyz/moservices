@@ -5,5 +5,5 @@
 # returns 1 - not installable
 # returns 0 - installable
 #
-ps | grep -q '[l]ighttpd' && exit 2
+ps | grep -q '[Ll]ighttpd' && exit 2
 exit 0

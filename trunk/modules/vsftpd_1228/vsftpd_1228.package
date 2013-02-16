@@ -1,5 +1,5 @@
 [vsftpd_1228]
-	revision = 2
+	revision = 3
 	title = "vsFTPd FTP daemon v3.0.2 dynamic"
 	role = daemon
 	check = "port 21"

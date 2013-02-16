@@ -253,7 +253,7 @@ class ua_rss_link extends ua_rss_link_const
 		}
 		else
 		if (act == "download") {
-			down_jump="<?=$ua_path_link.$ua_rss_download_filename ?>"+"?title=" + urlEncode(bdowname) + "&amp;downloadlink=" + urlEncode(bdownlink);
+			down_jump="<?=$ua_path_link.$ua_rss_download_filename ?>"+"?title=" + urlEncode(bdowname) + "&amp;downloadlink=" + bdownlink;
 			jumpToLink("download");
 		}
 		else
