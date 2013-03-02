@@ -2,21 +2,32 @@
 
 $developer_key = 'AI39si66A5mVc14wrUljOu4EkLrKJQRjhtqMJZZbnf5wZfRDtfE7xmPLHY2aRGMHuaKHyE655-FbHDZRNGKtfZ6CphHvhyHXMA';
 
+$youtube_default_feed = 'most_popular';
+
 $youtube_config = array(
-	'feed'		=> '',
-	'search'	=> '',
-	'my'		=> '',
+	'type'		=> 'feed',
+	'query'		=> $youtube_default_feed,
+	'id'		=> '',
 	'cat'		=> '',
 	'period'	=> 'all_time',
 	'region'	=> '',
 	'quality'	=> 'lo',
 	'keyboard'	=> 'rss',
 	'username'	=> '',
-	'cats'		=> array(),
 );
 if( is_file( $mos.'/www/modules/youtube/youtube.config.php' ) )
 {
 	include( $mos.'/www/modules/youtube/youtube.config.php' );
+}
+
+$youtube_lists = array(
+	'cats'		=> array(),
+	'subscriptions'	=> array(),
+	'playlists'	=> array(),
+);
+if( is_file( '/tmp/youtube.lists.php' ) )
+{
+	include( '/tmp/youtube.lists.php' );
 }
 
 $youtube_regions = array(
@@ -64,6 +75,34 @@ $youtube_feeds = array(
 	'recently_featured' => array(
 		'allowTime' => false
 	),
+	'on_the_web' => array(
+		'allowTime' => false
+	),
+);
+
+$youtube_default_feeds = array( 'most_popular', 'on_the_web' );
+
+$youtube_my_feeds = array(
+	'newsubscriptionvideos' => array(
+		'action' => 'ret',
+		'link' => '?page=xml_youtube&amp;type=my&amp;query=newsubscriptionvideos'
+	),
+	'subscriptions' => array(
+		'action' => 'rss',
+		'link' => '?page=rss_youtube_subscriptions'
+	),
+	'playlists' => array(
+		'action' => 'rss',
+		'link' => '?page=rss_youtube_playlists'
+	),
+	'uploads' => array(
+		'action' => 'ret',
+		'link' => '?page=xml_youtube&amp;type=my&amp;query=uploads'
+	),
+	'favorites' => array(
+		'action' => 'ret',
+		'link' => '?page=xml_youtube&amp;type=my&amp;query=favorites'
+	),
 );
 //
 // ------------------------------------
@@ -100,6 +139,14 @@ global $youtube_config;
 }
 //
 // ------------------------------------
+function youtubeSaveLists()
+{
+global $youtube_lists;
+
+	file_put_contents( '/tmp/youtube.lists.php', '<?php $youtube_lists = '.var_export( $youtube_lists, true ).'; ?>' );
+}
+//
+// ------------------------------------
 function youtubeDuration( $s )
 {
 	$m = (integer)($s/60);
@@ -117,6 +164,8 @@ function xml_youtube_content()
 {
 global $youtube_config;
 global $youtube_feeds;
+global $youtube_default_feed;
+global $youtube_lists;
 
 	$itemsPerPage = 15; //20;
 
@@ -145,6 +194,8 @@ global $youtube_feeds;
 	if( isset( $_REQUEST['username'] ))
 	{
 		$username = $_REQUEST['username'];
+		$youtube_config['type'] = 'my';
+		$youtube_config['query'] = 'newsubscriptionvideos';
 	}
 
 	$period = $youtube_config['period'];
@@ -160,66 +211,80 @@ global $youtube_feeds;
 		if( $cat == 'all' ) $cat = '';
 	}
 
-	$my     = $youtube_config['my'];
-	$feed   = $youtube_config['feed'];
-	$search = $youtube_config['search'];
-	if( isset( $_REQUEST['search'] ))
+	$id = $youtube_config['id'];
+	if( isset( $_REQUEST['id'] ))
 	{
-		$my = '';
-		$feed = '';
-		$search = $_REQUEST['search'];
-	}
-	elseif( isset( $_REQUEST['feed'] ))
-	{
-		$my = '';
-		$feed = $_REQUEST['feed'];
-		$search = '';
-	}
-	elseif( isset( $_REQUEST['my'] ))
-	{
-		$my = 'yes';
-		$feed = '';
-		$search = '';
+		$id = $_REQUEST['id'];
 	}
 
-	if( $search != '' )
+	$query = $youtube_config['query'];
+	if( isset( $_REQUEST['query'] ))
 	{
-		$request = 'videos?q='. urlencode( $search ) .'&v=2';
+		$query = $_REQUEST['query'];
+	}
+
+	$type = $youtube_config['type'];
+	if( isset( $_REQUEST['type'] ))
+	{
+		$type = $_REQUEST['type'];
+	}
+	elseif ( $type == '' )
+	{
+		$type = 'feed';
+		$query = $youtube_default_feed;
+	}
+
+	if( $type == 'my' )
+	{
+		if( $query == 'playlists' )
+		{
+			$request = 'playlists/'. $id;
+		}
+		elseif( $query == 'subscriptions' )
+		{
+			$request = 'users/'. $id .'/uploads';
+		}
+		else
+		 $request = 'users/'. $username .'/'. $query;
+
+		$request .= '?v=2';
+	}
+	elseif( $type == 'search' )
+	{
+		$request = 'videos?q='. urlencode( $query ) .'&v=2';
 
 		if( $cat != '' ) $request .= '&category='. $cat;
 	}
-	elseif( $my != '' )
+	else	// feed
 	{
-		$request = 'users/'. $username .'/newsubscriptionvideos?v=2';
-	}
-	else
-	{
-		if( $feed == '' ) $feed = 'recently_featured';
-
 		$request = 'standardfeeds/';
 
 		if( $region <> '' ) $request .= $region .'/';
 
-		$request .= $feed;
+		$request .= $query;
 
 		if( $cat != '' ) $request .= '_'. $cat;
 
 		$request .= '?v=2';
 
-		if( $youtube_feeds[ $feed ]['allowTime'] )
+		if( $youtube_feeds[ $query ]['allowTime'] )
 		 if( $period != 'all_time' ) $request .= '&time='. $period;
 	}
 
-	$youtube_config['feed']   = $feed;
-	$youtube_config['search'] = $search;
-	$youtube_config['cat']    = $cat;
-	$youtube_config['period'] = $period;
-	$youtube_config['region'] = $region;
-	$youtube_config['quality'] = $quality;
-	$youtube_config['keyboard'] = $keyboard;
-	$youtube_config['username'] = $username;
-	$youtube_config['my'] = $my;
+	$youtube_config = array(
+		'type'		=> $type,
+		'query'		=> $query,
+		'id'		=> $id,
+		'cat'		=> $cat,
+		'period'	=> $period,
+		'region'	=> $region,
+		'quality'	=> $quality,
+		'keyboard'	=> $keyboard,
+		'username'	=> $username,
+	);
 	youtubeSaveConfig();
+
+	if( isset( $_REQUEST['debug'])) print_r( $youtube_config );
 
 	$start = 1;
 	if( isset( $_REQUEST['start'] ))
@@ -254,29 +319,35 @@ global $youtube_feeds;
 	// top title
 	$s .= 'YouTube';
 
-	if( $my <> '' )
+	if( $type == 'my' )
 	{
-		$s .= ' - '. getMsg( 'youtubeSubscription' ) . $username ;
+		$s .= ' - ';
+		if( $query == 'subscriptions' )
+		 $s .= getMsg( 'youtube_channel' ) . $youtube_lists['subscriptions'][ $id ]['title'];
+		elseif( $query == 'playlists' )
+		 $s .= getMsg( 'youtube_playlist' ) . $youtube_lists['playlists'][ $id ]['title'];
+		else
+		 $s .= getMsg( 'youtube_'. $query ) . getMsg( 'youtube_of' ) . $username ;
 	}
 	else
 	{
-		if( $feed <> '' )
+		if( $type == 'feed' )
 		{
 			if( $region <> '' )
 			 $s .= ' '. getMsg( 'youtube_region_'. $region );
 
-			$s .= ' - '. getMsg( 'youtube_'. $feed );
+			$s .= ' - '. getMsg( 'youtube_'. $query );
 
-			if( $youtube_feeds[ $feed ]['allowTime'] )
+			if( $youtube_feeds[ $query ]['allowTime'] )
 			 if( $period != 'all_time' ) $s .= ' ('. getMsg( 'youtube_'.$period ) .')';
 		}
-		else
+		else // search
 		{
-			$s .= ' - '. urldecode( $youtube_config['search'] );
+			$s .= ' - '. urldecode( $youtube_config['query'] );
 		}
 
 		if( $cat <> '' )
-		 $s .= ' - '. $youtube_config['cats'][ $cat ];
+		 $s .= ' - '. $youtube_lists['cats'][ $cat ];
 	}
 
 	if( $min_page != $max_page ) $s .= ' ('. getMsg('coreRssPromptPage') . $page . getMsg('coreRssPromptFrom') . $max_page .')';
@@ -292,16 +363,18 @@ global $youtube_feeds;
 	// navs
 
 	$url = getMosUrl().'?page=xml_youtube';
-	if( $feed != '' )
+	if( $type == 'feed' )
 	{
-		$url .= '&feed='. $feed;
-		if( $cat <> '' ) $url .= '&cat='. $cat;
+		$url .= '&type=feed&query='. $query;
 	}
-	elseif( $search != '' )
+	elseif( $type == 'search' )
 	{
-		$url .= '&search='. urlencode( $search );
+		$url .= '&type=search&query='. urlencode( $query );
 	}
-	else $url .= '&my';
+	else	// my
+	{
+		$url .= '&type=my&query='. $query;
+	}
 
 	if( ( $page - 1 ) >= $min_page ) { $s .= $url.'&start='.(( $page - 2 ) * $itemsPerPage + 1 ).PHP_EOL; }
 	else $s .= "\n" ;
@@ -439,7 +512,7 @@ global $youtube_config;
 function rss_youtube_menu_content()
 {
 global $youtube_config;
-global $youtube_feeds;
+global $youtube_default_feeds;
 
 	include( 'rss_youtube_view_left.php' );
 	$view = new rssYouTubeLeftView;
@@ -447,65 +520,184 @@ global $youtube_feeds;
 	$view->items = array();
 
 	$i = 0;
-	$cur = 0;
+	$cur = -1;
 
-	$feed = $youtube_config['feed'];
+	$type  = $youtube_config['type'];
+	$query = $youtube_config['query'];
 
-	if( $feed != '' )
-	 if( $youtube_feeds[ $feed ]['allowTime'] )
-	  $view->items[ $i++ ] = array(
-		'title'	=> getMsg('youtubePeriod'),
-		'action'=> 'rss',
-		'link'	=> getMosUrl().'?page=rss_youtube_period'
-	  );
-
-	$view->items[ $i++ ] = array(
-		'title'	=> getMsg('youtubeCategories'),
-		'action'=> 'rss',
-		'link'	=> getMosUrl().'?page=rss_youtube_cats'
-	);
-
-	foreach( $youtube_feeds as $f => $item )
+	// default feeds
+	foreach( $youtube_default_feeds as $f )
 	{
-		if( $f == $feed ) $cur = $i;
+		if( $type == 'feed' && $f == $query ) $cur = $i;
 
-		 $view->items[ $i++ ] = array(
+		$view->items[ $i++ ] = array(
 			'title'	=> getMsg('youtube_'. $f ),
 			'action'=> 'ret',
-			'link'	=> getMosUrl().'?page=xml_youtube&amp;feed='. $f
-		 );
+			'link'	=> getMosUrl().'?page=xml_youtube&amp;type=feed&amp;query='. $f
+		);
 	}
 
-	if( $youtube_config['my'] != '' ) $cur = $i;
+	// more feeds
+	if( $type == 'feed' && $cur == -1) $cur = $i;
+
+	$view->items[ $i++ ] = array(
+		'title'	=> getMsg('youtube_more_feeds' ),
+		'action'=> 'rss',
+		'link'	=> getMosUrl().'?page=rss_youtube_more_feeds'
+	);
+
+	// my youtube
+	if( $type == 'my' ) $cur = $i;
 
 	if( $youtube_config['username'] == '' )
-	$view->items[ $i++ ] = array(
-		'title'	=> getMsg('youtubeMy'),
+	 $view->items[ $i++ ] = array(
+		'title'	=> getMsg('youtubeMyLogin'),
 		'action'=> 'search',
-		'link'	=> getMosUrl().'?page=xml_youtube&amp;my&amp;username='
-	);
+		'link'	=> getMosUrl().'?page=xml_youtube&amp;username='
+	 );
 	else
-	$view->items[ $i++ ] = array(
-		'title'	=> getMsg('youtubeMy'),
-		'action'=> 'ret',
-		'link'	=> getMosUrl().'?page=xml_youtube&amp;my'
-	);
+	 $view->items[ $i++ ] = array(
+		'title'	=> $youtube_config['username'] .'...',
+		'action'=> 'rss',
+		'link'	=> getMosUrl().'?page=rss_youtube_my'
+	 );
 
-	if( $youtube_config['search'] != '' ) $cur = $i;
+	// search
+	if( $type == 'search' ) $cur = $i;
 
 	$view->items[ $i++ ] = array(
 		'title'	=> getMsg('youtubeSearch'),
 		'action'=> 'search',
-		'link'	=> getMosUrl().'?page=xml_youtube&amp;search='
+		'link'	=> getMosUrl().'?page=xml_youtube&amp;type=search&amp;query='
 	);
 
+	// settings
 	$view->items[ $i++ ] = array(
-		'title'	=> getMsg('coreSettings'),
+		'title'	=> getMsg('youtubeSettings'),
 		'action'=> 'rss',
 		'link'	=> getMosUrl().'?page=rss_youtube_sets'
 	);
 
+	if( $cur == -1) $cur = 0;
 	$view->currentItem = $cur;
+
+	$view->showRss();
+}
+//
+// ====================================
+function rss_youtube_more_feeds_content()
+{
+global $youtube_config;
+global $youtube_default_feeds;
+global $youtube_feeds;
+
+	include( 'rss_youtube_view_left.php' );
+	$view = new rssYouTubeLeftView;
+
+	$view->position = 1;
+
+	$view->items = array();
+
+	$i = 0;
+	$cur = 0;
+
+	$type = $youtube_config['type'];
+	$query = $youtube_config['query'];
+
+	foreach( $youtube_feeds as $f => $item )
+	{
+		if( in_array( $f, $youtube_default_feeds )) continue;
+
+		if( $type == 'feed' && $f == $query ) $cur = $i;
+
+		 $view->items[ $i++ ] = array(
+			'title'	=> getMsg('youtube_'. $f ),
+			'action'=> 'ret',
+			'link'	=> getMosUrl().'?page=xml_youtube&amp;type=feed&amp;query='. $f
+		 );
+	}
+
+	$view->currentItem = $cur;
+
+	$view->showRss();
+}
+//
+// ====================================
+function rss_youtube_my_content()
+{
+global $youtube_config;
+global $youtube_my_feeds;
+
+	include( 'rss_youtube_view_left.php' );
+	$view = new rssYouTubeLeftView;
+
+	$view->position = 1;
+
+	$view->items = array();
+
+	$i = 0;
+	$cur = 0;
+
+	$type = $youtube_config['type'];
+	$query = $youtube_config['query'];
+
+	foreach( $youtube_my_feeds as $f => $item )
+	{
+		if( $type == 'my' && $f == $query ) $cur = $i;
+
+		 $view->items[ $i++ ] = array(
+			'title'	=> getMsg('youtube_'. $f ),
+			'action'=> $item['action'],
+			'link'	=> getMosUrl().$item['link']
+		 );
+	}
+
+	$view->items[] = array(
+		'title'	=> getMsg('youtubeChangeUser'),
+		'action'=> 'search',
+		'link'	=> getMosUrl().'?page=xml_youtube&amp;username='
+	);
+
+	$view->currentItem = $cur;
+
+	$view->showRss();
+}
+//
+// ------------------------------------
+function rss_youtube_sets_content()
+{
+	include( 'rss_youtube_view_left.php' );
+	$view = new rssYouTubeLeftView;
+
+	$view->position = 1;
+
+	$view->items = array(
+		array(
+			'title'	=> getMsg('youtubePeriod'),
+			'action'=> 'rss',
+			'link'	=> getMosUrl().'?page=rss_youtube_period'
+		),
+		array(
+			'title'	=> getMsg('youtubeCategories'),
+			'action'=> 'rss',
+			'link'	=> getMosUrl().'?page=rss_youtube_cats'
+		),
+		array(
+			'title'	=> getMsg('youtubeRegions'),
+			'action'=> 'rss',
+			'link'	=> getMosUrl().'?page=rss_youtube_region'
+		),
+		array(
+			'title'	=> getMsg('youtubeQuality'),
+			'action'=> 'rss',
+			'link'	=> getMosUrl().'?page=rss_youtube_quality'
+		),
+		array(
+			'title'	=> getMsg('youtubeKeyboard'),
+			'action'=> 'rss',
+			'link'	=> getMosUrl().'?page=rss_youtube_keyboard'
+		),
+	);
 
 	$view->showRss();
 }
@@ -519,7 +711,7 @@ global $youtube_periods;
 	include( 'rss_youtube_view_left.php' );
 	$view = new rssYouTubeLeftView;
 
-	$view->position = 1;
+	$view->position = 2;
 	$view->items = array();
 
 	$i = 0;
@@ -537,40 +729,6 @@ global $youtube_periods;
 	}
 
 	$view->currentItem = $cur;
-
-	$view->showRss();
-}
-//
-// ------------------------------------
-function rss_youtube_sets_content()
-{
-	include( 'rss_youtube_view_left.php' );
-	$view = new rssYouTubeLeftView;
-
-	$view->position = 1;
-
-	$view->items = array(
-		0 => array(
-			'title'	=> getMsg('youtubeRegions'),
-			'action'=> 'rss',
-			'link'	=> getMosUrl().'?page=rss_youtube_region'
-		),
-		1 => array(
-			'title'	=> getMsg('youtubeQuality'),
-			'action'=> 'rss',
-			'link'	=> getMosUrl().'?page=rss_youtube_quality'
-		),
-		2 => array(
-			'title'	=> getMsg('youtubeKeyboard'),
-			'action'=> 'rss',
-			'link'	=> getMosUrl().'?page=rss_youtube_keyboard'
-		),
-		3 => array(
-			'title'	=> getMsg('youtubeUsername'),
-			'action'=> 'search',
-			'link'	=> getMosUrl().'?page=xml_youtube&amp;username='
-		),
-	);
 
 	$view->showRss();
 }
@@ -676,6 +834,7 @@ function getYoutubeCategories()
 {
 global $nav_lang;
 global $youtube_config;
+global $youtube_lists;
 global $youtube_regions;
 
 	$lang = $nav_lang;
@@ -686,16 +845,16 @@ global $youtube_regions;
 
 	if( preg_match_all( '/<atom:category.*?<\/atom:category>/s', $s, $ss ) > 0 )
 	{
-		$youtube_config['cats'] = array();
+		$youtube_lists['cats'] = array();
 		foreach( $ss[0] as $a )
 		{
 			if( strpos( $a, 'yt:deprecated' ) ) continue;
 			if( preg_match( '/term=\'(.*?)\' label=\'(.*?)\'/s', $a, $aa ) > 0 )
-			 $youtube_config['cats'][ $aa[1] ] = $aa[2];
+			 $youtube_lists['cats'][ $aa[1] ] = $aa[2];
 		}
-		youtubeSaveConfig();
+		youtubeSaveLists();
 	}
-	return $youtube_config['cats'];
+	return $youtube_lists['cats'];
 }
 //
 // ------------------------------------
@@ -708,7 +867,7 @@ global $youtube_config;
 	include( 'rss_youtube_view_left.php' );
 	$view = new rssYouTubeLeftView;
 
-	$view->position = 1;
+	$view->position = 2;
 
 	$i = 0;
 	$cur = 0;
@@ -729,6 +888,122 @@ global $youtube_config;
 			'title'	=> $title,
 			'action'=> 'ret',
 			'link'	=> getMosUrl().'?page=xml_youtube&amp;cat='.$id
+		);
+	}
+
+	$view->currentItem = $cur;
+
+	$view->showRss();
+}
+//
+// ------------------------------------
+function getYoutubeSubscriptions()
+{
+global $youtube_config;
+global $youtube_lists;
+
+	$request = 'users/'. $youtube_config['username'] .'/subscriptions?ver=2&max-results=50&start-index=1';
+
+	// get feed
+	$s = youtubeGetApi( $request );
+	$ss=json_decode($s, true);
+
+	$youtube_lists['subscriptions'] = array();
+	foreach( $ss['feed']['entry'] as $item )
+	{
+		$id = $item['yt$username']['$t'];
+
+		$youtube_lists['subscriptions'][ $id ] = array(
+			'title' => str_replace( 'Activity of:', '', $item['title']['$t']),
+			'image' => $item['media$thumbnail']['url'],
+		);
+	}
+	youtubeSaveLists();
+
+	return $youtube_lists['subscriptions'];
+}
+//
+// ------------------------------------
+function getYoutubePlaylists()
+{
+global $youtube_config;
+global $youtube_lists;
+
+	$request = 'users/'. $youtube_config['username'] .'/playlists?ver=2&max-results=50&start-index=1';
+
+	// get feed
+	$s = youtubeGetApi( $request );
+	$ss=json_decode($s, true);
+
+	$youtube_lists['playlists'] = array();
+	foreach( $ss['feed']['entry'] as $item )
+	{
+		$id = $item['yt$playlistId']['$t'];
+
+		$youtube_lists['playlists'][ $id ] = array(
+			'title' => $item['title']['$t'],
+			'image' => $item['media$group']['media$thumbnail'][0],
+		);
+	}
+	youtubeSaveLists();
+
+	return $youtube_lists['playlists'];
+}
+//
+// ------------------------------------
+function rss_youtube_subscriptions_content()
+{
+global $youtube_config;
+
+	$items = getYoutubeSubscriptions();
+
+	include( 'rss_youtube_view_left.php' );
+	$view = new rssYouTubeLeftView;
+
+	$view->position = 2;
+
+	$i = 0;
+	$cur = 0;
+
+	foreach( $items as $id => $item )
+	{
+		if( $id == $youtube_config['id'] ) $cur = $i;
+
+		$view->items[ $i++ ] = array(
+			'title'	=> str_replace( 'Activity of:', '', $item['title']),
+			'action'=> 'ret',
+			'link'	=> getMosUrl().'?page=xml_youtube&amp;type=my&amp;query=subscriptions&amp;id='. $id
+		);
+	}
+
+	$view->currentItem = $cur;
+
+	$view->showRss();
+}
+//
+// ------------------------------------
+function rss_youtube_playlists_content()
+{
+global $youtube_config;
+
+	$items = getYoutubePlaylists();
+
+	include( 'rss_youtube_view_left.php' );
+	$view = new rssYouTubeLeftView;
+
+	$view->position = 2;
+
+	$i = 0;
+	$cur = 0;
+
+	foreach( $items as $id => $item )
+	{
+		if( $id == $youtube_config['id'] ) $cur = $i;
+
+		$view->items[ $i++ ] = array(
+			'title'	=> $item['title'],
+			'action'=> 'ret',
+			'link'	=> getMosUrl().'?page=xml_youtube&amp;type=my&amp;query=playlists&amp;id='. $id
 		);
 	}
 

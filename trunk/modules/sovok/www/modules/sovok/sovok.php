@@ -14,9 +14,10 @@ if( $c != 0 )
 	$offset = $offset + $c * (integer)$a[3] * 600;
 	$offset = $offset + $c * (integer)$a[4] * 60;
 
-	$tz = timezone_name_from_abbr( '', $offset, 1 );
-	date_default_timezone_set( $tz );
+	$tz = timezone_name_from_abbr( '', $offset, 0 );
 }
+else $tz = 'UTC';
+date_default_timezone_set( $tz );
 
 $sovok_config = array(
 	'login'  => 0,
@@ -31,6 +32,7 @@ if( is_file( $mos .'/www/modules/sovok/sovok.config.php' ) )
 $sovok_session = array(
 	'sid'     => '',
 	'sid_name'=> '',
+	'code'    => '',
 	'message' => '',
 	'gid'     => '',
 	'groups'  => array(),
@@ -78,7 +80,7 @@ function getSovokAPI( $req )
 {
 global $sovok_session;
 
-	$s = 'http://sovok.tv/api/json/'. $req;
+	$s = 'http://api.sovok.tv/v2.0/json/'. $req;
 
 	if( $sovok_session['sid'] == '' )
 	{
@@ -137,15 +139,36 @@ global $sovok_session;
 // ------------------------------------
 function get_sovok_content()
 {
+global $sovok_session;
+
 	if( ! isset( $_REQUEST['cid'])) return;
 	$cid = $_REQUEST['cid'];
 
 	header( "Content-type: text/plain" );
 
-	$s = getSovokAPI( 'get_url?cid='. $cid );
+	$code = $sovok_session['code'];
+	if( isset( $_REQUEST['code']))
+	{
+		$code = $_REQUEST['code'];
+		$sovok_session['code'] = $code;
+		saveSovokSession();
+	}
+
+	$req = 'get_url?cid='. $cid;
+	if( $code != '' ) $req .= '&protect_code=' . $code;
+
+	$s = getSovokAPI( $req );
 	$ss=json_decode($s, true);
 
+file_put_contents( '/tmp/sovok_get.log', '<?php $ss = '.var_export( $ss, true ).'; ?>' );
+
 	if( ! isset( $ss['url'] )) return;
+
+	if( $ss['url'] == 'protected' )
+	{
+		echo 'protected';
+		return;
+	}
 
 	if( preg_match( '#http[^ ]*#' , $ss['url'], $a ) > 0 )
 	{
@@ -248,11 +271,6 @@ if( isset( $_REQUEST['debug'])) header( "Content-type: text/plain" );
 
 if( isset( $_REQUEST['debug'])) print_r( $ss );
 
-	$ctime = time();
-
-	if( isset( $ss['servertime'] )) $stime = $ss['servertime'];
-	else $stime = $ctime;
-
 	if( isset( $ss['groups'] )) $sovok_session['groups'] = $ss['groups'];
 
 	$gid = $sovok_session['gid'];
@@ -285,7 +303,6 @@ if( isset( $_REQUEST['debug'])) print_r( $ss );
 
 		$s .= $item['name'] . "\n";
 		$s .= $item['id'] . "\n";
-//		$s .= 'http://www.moservices.org/modules/tvlogo/'. urlencode( $item['name'] ) .'.png' .PHP_EOL;
 		$s .= 'http://sovok.tv'. $item['icon'] .PHP_EOL;
 		$s .= $epg .PHP_EOL;
 	}
@@ -312,15 +329,17 @@ function rss_sovok_content()
 		const itemWidth		= 400;
 		const itemHeight	= 78;
 
+		const itemUnFocusBgColor = '0:0:0';
+
 		//
 		// ------------------------------------
 		public $fields = array(
 			0 => array(			// image
 				'type'   => 'image',
 				'posX'   => 10,
-				'posY'   => 15,
-				'width'  => 48,
-				'height' => 48,
+				'posY'   => 10,
+				'width'  => 70,
+				'height' => 40,
 				'image'  => '
 	<script>
 	  getStringArrayAt(imgArray, idx);
@@ -328,12 +347,12 @@ function rss_sovok_content()
 			),
 			1 => array(			// title
 				'type'    => 'text',
-				'posX'    => 58,
-				'posY'    => 10,
-				'width'   => 332,
+				'posX'    => 90,
+				'posY'    => 5,
+				'width'   => 300,
 				'height'  => 28,
 				'lines'   => 0,
-				'fontSize'=> 12,
+				'fontSize'=> 11,
 				'align'   => 'left',
 //				'bgColor' => '"100:100:100"',
 				'text'    => '
@@ -343,12 +362,12 @@ function rss_sovok_content()
 			),
 			2 => array(			// epg
 				'type'    => 'text',
-				'posX'    => 58,
-				'posY'    => 50,
-				'width'   => 332,
-				'height'  => 20,
-				'lines'   => 1,
-				'fontSize'=> 8,
+				'posX'    => 82,
+				'posY'    => 28,
+				'width'   => 298,
+				'height'  => 37,
+				'lines'   => 2,
+				'fontSize'=> 9,
 				'align'   => 'left',
 //				'bgColor' => '"100:100:100"',
 				'text'    => '
@@ -369,20 +388,22 @@ function rss_sovok_content()
 	drawState = getDrawingItemState();
 	if (drawState == "unfocus")
 	{
-		border = "<?= getSkinPath().static::imageUnFocus ?>";
 		color = "<?= static::unFocusFontColor ?>";
+		bgcolor = "<?= static::itemUnFocusBgColor ?>";
 	}
 	else
 	{
- 		border = "<?= getSkinPath().static::imageFocus ?>";
 		color = "<?= static::focusFontColor ?>";
+		bgcolor = "<?= static::itemFocusBgColor ?>";
 	}
       </script>
-      <image redraw="no" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
-        <script>
-            border;
-        </script>
-      </image>
+      <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" cornerRounding="4">
+	<backgroundColor>
+          <script>
+            bgcolor;
+          </script>
+	</backgroundColor>
+      </text>
 <?php
 			foreach( $this->fields as $info )
 			{

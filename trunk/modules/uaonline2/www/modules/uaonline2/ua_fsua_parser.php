@@ -258,19 +258,20 @@ if (isset($_GET['view'])){
 	if (isset($_GET['page'])){
 		$page = $_GET['page'];
 	}
-		
+	
 	if($page) {
 		$nt= $page-1;
         
-		$html = file_get_contents($url_prefix.$view."&view=list&page=".$nt."&sort=".$fsua_sort);
+		$html = file_get_contents($url_prefix.$view."?view=list&page=".$nt."&sort=".$fsua_sort);
 		
     }
 	else {
 		$page = 1;
-		$html = file_get_contents($url_prefix.$view."&view=list&sort=".$fsua_sort);
+		$html = file_get_contents($url_prefix.$view."?view=list&sort=".$fsua_sort);
 		
     }
-		echo get_film_list($html);
+
+	echo get_film_list($html);
 	
  }
 

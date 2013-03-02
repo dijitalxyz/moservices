@@ -36,10 +36,11 @@ case "$1" in
 		cat /lib/modules/$( uname -r )/modules.usbmap | grep -qE '^'$i' ' && rmmod $i
 	done
 
-	echo "$0 : unload modules"
-	for i in $( lsmod | cut -d ' ' -f 1 ) ; do
-		rmmod $i
-	done
+	echo "$0 : unload USB"
+	lsmod | grep -Eq '^ohci_hcd ' && rmmod ohci_hcd
+	lsmod | grep -Eq '^ehci_hcd ' && rmmod ehci_hcd
+	lsmod | grep -Eq '^xhci_hcd ' && rmmod xhci_hcd
+
 	;;
   *)
 	echo "Usage: $0 {start|stop}"

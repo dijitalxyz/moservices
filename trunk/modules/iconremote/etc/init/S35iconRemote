@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+src=/usr/local/etc/mos/iconremote/
+dst=/tmp/www
+
+case $1 in
+    start)
+	if [ -f /usr/share/bin/boot_fw.conf ] ; then
+		. /usr/share/bin/boot_fw.conf
+
+		if ! [ "$fw" == "hds42l" ] ; then
+			echo 'iconremote: Supports iconbit gui only'
+			exit 0
+		fi
+	else
+		if ! [ -f /usr/local/bin/scripts/iconbit-keyboard.rss ] ; then
+			echo 'iconremote: Supports iconbit fw only'
+			exit 0
+		fi
+	fi
+
+	rm -f $dst/cgi-bin/cmd.cgi
+	rm -Rf $dst/rc
+
+	ln -s $src/cmd.cgi $dst/cgi-bin/cmd.cgi
+	ln -s $src/ $dst/rc
+	;;
+
+    stop)
+	rm -f $dst/cgi-bin/cmd.cgi
+	rm -Rf $dst/rc
+	;;
+
+  status)
+	if [ -e /tmp/www/rc ]
+	then echo "iconremote running"
+	else echo "iconremote stopped"
+	fi
+	;;
+
+    *)
+	;;
+esac

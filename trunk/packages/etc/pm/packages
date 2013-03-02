@@ -553,13 +553,6 @@
 	require = "awk httpd curl rtmpdump"
 	size = 14720
 
-[sovok]
-	revision = 9
-	title = "Sovok.TV"
-	role = rss
-	files = "www/modules/sovok/"
-	size = 132
-
 [spindown]
 	revision = 2
 	title = "SpinDown service"
@@ -603,19 +596,6 @@
 	role = package
 	files = "bin/top"
 	size = 188
-
-[trans_1228]
-	revision = 1
-	title = "Transmission v2.50"
-	role = daemon
-	check = "port 9091"
-	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
-	env = 1228
-	files = "etc/init/S23trans trans/ www/modules/trans_1228/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 3884
 
 [udpxy]
 	revision = 3
@@ -715,19 +695,6 @@
 	files = "etc/init/S07suspend etc/init/rc.init/S07suspend.sh"
 	size = 48
 
-[trans_3430]
-	revision = 2
-	title = "Transmission v2.73"
-	role = daemon
-	check = "port 9091"
-	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
-	env = 3430
-	files = "etc/init/S23trans trans/ www/modules/trans_3430/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 4804
-
 [base2]
 	revision = 1
 	title = "moServices base patch"
@@ -777,19 +744,6 @@
 	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh irfake/"
 	size = 140
 
-[trans_1230]
-	revision = 2
-	title = "Transmission v2.73"
-	role = daemon
-	check = "port 9091"
-	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
-	env = 1230
-	files = "etc/init/S23trans trans/ www/modules/trans_1230/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 4812
-
 [irfake]
 	revision = 7
 	title = "IR Fake RC replacement v1.2.15r3"
@@ -820,30 +774,6 @@
 	init="S37rutor"
 	files = "etc/init/S37rutor rutor/ www/modules/rutor/"
 	size = 788
-
-[capture]
-	revision = 4
-	title = "Capture TV screen"
-	role = web
-	init="S36capture.sh"
-	files = "bin/bmp2jpg etc/init/S36capture.sh www/modules/capture/"
-	size = 3752
-
-[autorun]
-	revision = 2
-	title = "AutoRun"
-	role = patch
-	init = S05AutoRun
-	actions = "restart"
-	files = "etc/init/S05AutoRun etc/hotplug/after/block/S12autorun"
-	size = 56
-
-[busybox]
-	revision= 5
-	title = "BusyBox v1.18.5"
-	role = package
-	files = "bin/bunzip2 bin/busybox.1.18.5 bin/bzip2 bin/gunzip bin/gzip bin/httpd bin/passwd bin/realpath bin/tar bin/telnetd bin/sort"
-	size = 1288
 
 [wget_1228]
 	revision = 1
@@ -891,13 +821,6 @@
 	files = "bin/RootApp etc/rc.suspend etc/rc.wakeup etc/init/S42rootapp"
 	size = 360
 
-[youtube]
-	revision = 8
-	title = "YouTube"
-	role = rss
-	files = "www/modules/youtube/"
-	size = 96
-
 [core]
 	revision = 37
 	title = "moServices core"
@@ -916,32 +839,12 @@
 	require = "busybox"
 	size = 72
 
-[uaonline2]
-	revision = 23
-	title = "UA Online 2"
-	role = rss
-	backup = "www/modules/uaonline2/ua_favorites.conf www/modules/uaonline2/ua_settings.conf"
-	config_edit = "www/modules/uaonline2/ua_settings.conf"
-	navy_title = "UAOnline 2 Fav. Editor"
-	navy_frame = "http://%addr%/modules/uaonline2/index.php"
-	files = "www/modules/uaonline2/"
-	size = 2008
-
 [myhit]
 	revision = 2
 	title = "MY-HIT.ru"
 	role = rss
 	files = "www/modules/myhit/"
 	size = 80
-
-[base]
-	revision = 17
-	title = "moServices base"
-	role = package
-	init = S00base
-	files = "services bin/mos_remove bin/pm bin/fork_reboot bin/rebootd bin/reboot.sh bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop"
-	require = "libgccs busybox web core wget base2"
-	size = 132
 
 [samba]
 	revision = 3
@@ -1016,14 +919,6 @@
 	require = "libgccs"
 	size = 288
 
-[smarttool]
-	revision = 2
-	title = "SMART HDD Tool (smartctl 5.41)"
-	init = "S44libata"
-	role = web
-	files = "etc/init/S44libata libata/ bin/smartctl www/modules/smarttool/"
-	size = 696
-
 [web_1228]
 	revision = 2
 	title = "Lighttpd web server v1.4.28 pcre"
@@ -1063,4 +958,130 @@
 	role = rss
 	files = "www/modules/tvontop/"
 	size = 3308
+
+[autorun]
+	revision = 3
+	title = "AutoRun"
+	role = patch
+	init = S05AutoRun
+	actions = "restart"
+	files = "etc/init/S05AutoRun etc/hotplug/after/block/S12autorun"
+	require = "fhotplug"
+	size = 64
+
+[iconmenu]
+	revision = 3
+	title = "Home menu replacement for IconBit gui"
+	config_edit = "iconmenu/iconmenu.conf"
+	role = patch
+	init = "S34iconmenu.sh"
+	backup = "iconmenu/iconmenu.conf"
+	files = "etc/init/S34iconmenu.sh iconmenu/"
+	size = 1828
+
+[base]
+	revision = 18
+	title = "moServices base"
+	role = package
+	init = S00base
+	files = "services bin/mos_remove bin/pm bin/fork_reboot bin/rebootd bin/reboot.sh bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop"
+	require = "libgccs busybox web core wget base2"
+	size = 132
+
+[capture]
+	revision = 5
+	title = "Capture TV screen"
+	role = web
+	init="S36capture.sh"
+	files = "bin/bmp2jpg bin/captured etc/init/S36capture.sh www/modules/capture/"
+	size = 3756
+
+[busybox]
+	revision= 6
+	title = "BusyBox v1.18.5"
+	role = package
+	files = "bin/bunzip2 bin/busybox.1.18.5 bin/bzip2 bin/gunzip bin/gzip bin/httpd bin/mkfifo bin/passwd bin/realpath bin/tar bin/telnetd bin/sort"
+	size = 1288
+
+[sovok]
+	revision = 10
+	title = "Sovok.TV"
+	role = rss
+	files = "www/modules/sovok/"
+	size = 132
+
+[smarttool]
+	revision = 2
+	title = "SMART HDD Tool (smartctl 5.41)"
+	init = "S44libata"
+	role = web
+	files = "etc/init/S44libata libata/ bin/smartctl www/modules/smarttool/"
+	size = 696
+
+[trans_1228]
+	revision = 1
+	title = "Transmission v2.50"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	env = 1228
+	files = "etc/init/S23trans trans/ www/modules/trans_1228/"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 3884
+
+[trans_1230]
+	revision = 2
+	title = "Transmission v2.73"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	env = 1230
+	files = "etc/init/S23trans trans/ www/modules/trans_1230/"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 4812
+
+[trans_3430]
+	revision = 2
+	title = "Transmission v2.73"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	env = 3430
+	files = "etc/init/S23trans trans/ www/modules/trans_3430/"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 4804
+
+[iconremote]
+	revision = 3
+	title = "Web Remote control for Iconbit gui"
+	role = web
+	init = "S35iconRemote"
+	navy_title = "Iconbit Remote control"
+	navy_frame = "/rc"
+	files = "etc/init/S35iconRemote iconremote/"
+	size = 224
+
+[youtube]
+	revision = 11
+	title = "YouTube"
+	role = rss
+	files = "www/modules/youtube/"
+	size = 104
+
+[uaonline2]
+	revision = 24
+	title = "UA Online 2"
+	role = rss
+	backup = "www/modules/uaonline2/ua_favorites.conf www/modules/uaonline2/ua_settings.conf"
+	config_edit = "www/modules/uaonline2/ua_settings.conf"
+	navy_title = "UAOnline 2 Fav. Editor"
+	navy_frame = "http://%addr%/modules/uaonline2/index.php"
+	files = "www/modules/uaonline2/"
+	size = 2120
 

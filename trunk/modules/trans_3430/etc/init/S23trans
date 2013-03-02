@@ -118,7 +118,7 @@ start() {
 	"rpc-password": "1234",
 	"rpc-port": 9091,
 	"rpc-username": "torrent",
-	"rpc-whitelist": "127.0.0.1",
+	"rpc-whitelist": "*.*.*.*",
 	"rpc-whitelist-enabled": true,
 	"script-torrent-done-enabled": false, 
 	"script-torrent-done-filename": "",
@@ -149,15 +149,15 @@ start() {
 	echo $wch_dir > $mos/watch.dir
 
 	echo "Starting Transmission..."
-	$mos/transmission-daemon -a *.*.*.* -c $wch_dir -g $mos/home -p 9091 -t
-	sleep 1
-	$mos/transmission-remote 127.0.0.1:9091 -n torrent:1234 -t all -s >/dev/null 2>&1
+	$mos/transmission-daemon -c $wch_dir -g $mos/home -p 9091 -t
+#	sleep 1
+#	$mos/transmission-remote 127.0.0.1:9091 -n torrent:1234 -t all -s >/dev/null 2>&1
 }
 stop()
 {
 	echo "Stopping Transmission..."
-	$mos/transmission-remote 127.0.0.1:9091 -n torrent:1234 -t all -S >/dev/null 2>&1
-	sleep 1
+#	$mos/transmission-remote 127.0.0.1:9091 -n torrent:1234 -t all -S >/dev/null 2>&1
+#	sleep 1
 
 	killall transmission-daemon 2>/dev/null
 	i=60

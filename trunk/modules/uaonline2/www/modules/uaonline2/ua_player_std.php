@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS player standard module v1.0
+	RSS player standard module v1.1
 	------------------------------
-	Created by Sashunya 2012
+	Created by Sashunya 2013
 	wall9e@gmail.com			
 	----------------------------- */
 include ("ua_paths.inc.php");
@@ -34,9 +34,6 @@ class rss_player_std
 </onEnter>
 
 <onRefresh>
-    videoProgress = getPlaybackStatus();
-    playStatus    = getStringArrayAt(videoProgress, 3);
- 
 	postMessage("<?= $key_return ?>");
 		
 </onRefresh>
@@ -101,14 +98,21 @@ class rss_player_std
 		<idleImage><?= $ua_images_path ?>POPUP_LOADING_08.png</idleImage>
     
 </mediaDisplay>
-
+<item_template>
+		<onClick>
+			<script>
+				playItemURL("<?=$_GET["link"]?>", 0);
+			</script>	
+		</onClick>
+	</item_template>
 <channel>
     <title></title>
     <link></link>
-    <item>
-        <title>player</title>
-        <enclosure url="<?=$_GET["link"]?>" type="video/mp4" />
-    </item>
+	<itemSize>
+		<script>
+			1;
+		</script>
+    </itemSize>
 </channel>
 </rss>
 

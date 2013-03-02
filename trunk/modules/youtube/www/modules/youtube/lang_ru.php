@@ -1,5 +1,7 @@
 <?php
 
+$nav_msg['youtube_more_feeds'       ] = 'Ещё...';
+
 $nav_msg['youtube_top_rated'        ] = 'Лучшие оценки';
 $nav_msg['youtube_top_favorites'    ] = 'Лидеры в избранном';
 $nav_msg['youtube_most_viewed'      ] = 'Лидеры просмотров';
@@ -9,6 +11,10 @@ $nav_msg['youtube_most_recent'      ] = 'Последние добавления
 $nav_msg['youtube_most_discussed'   ] = 'Лидеры обсуждений';
 $nav_msg['youtube_most_responded'   ] = 'Лидеры по ответам';
 $nav_msg['youtube_recently_featured'] = 'Недавно добавленные';
+$nav_msg['youtube_on_the_web'       ] = 'Тренды YouTube';
+
+$nav_msg['youtubeSearch'  ] = 'Поиск';
+$nav_msg['youtubeSettings'] = 'Настройки...';
 
 $nav_msg['youtubeCategories'] = 'Категории';
 $nav_msg['youtubeAllCats'   ] = 'Все';
@@ -19,10 +25,9 @@ $nav_msg['youtube_this_week' ] = 'За неделю';
 $nav_msg['youtube_this_month'] = 'За месяц';
 $nav_msg['youtube_all_time'  ] = 'За всё время';
 
-$nav_msg['youtubeSearch'] = 'Поиск';
-
 $nav_msg['youtubeQuality'   ] = 'Качество видео';
 $nav_msg['youtubeLowQual'   ] = 'Низкое';
+$nav_msg['youtubeLowQual'   ] = 'Среднее';
 $nav_msg['youtubeHighQual'  ] = 'Высокое';
 
 $nav_msg['youtubeRegions'   ] = 'Регион';
@@ -76,9 +81,18 @@ $nav_msg['youtubeKeyboard'] = 'Клавиатура';
 $nav_msg['youtubeEmbKbrd'] = 'Встроенная';
 $nav_msg['youtubeRssKbrd'] = 'RSS';
 
-$nav_msg['youtubeMy'] = 'Мои подписки';
-$nav_msg['youtubeUsername'] = "Имя пользователя";
+$nav_msg['youtubeMyLogin' ] = 'Пользователь...';
+$nav_msg['youtubeChangeUser'] = 'Сменить пользователя';
 
-$nav_msg['youtubeSubscription'] = 'Подписки ';
+$nav_msg['youtube_channel' ] = 'Канал: ';
+$nav_msg['youtube_playlist'] = 'Плейлист: ';
+
+$nav_msg['youtube_of'] = ' ';
+
+$nav_msg['youtube_subscriptions'        ] = 'Подписки...';
+$nav_msg['youtube_playlists'            ] = 'Плейлисты...';
+$nav_msg['youtube_uploads'              ] = 'Мои видео';
+$nav_msg['youtube_newsubscriptionvideos'] = 'Новости подписок';
+$nav_msg['youtube_favorites'            ] = 'Избранное';
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS part keyboard module v1.2.1
+	RSS part keyboard module v1.2.2
 	------------------------------
 	Created by Sashunya 2013	
 	wall9e@gmail.com			
@@ -17,7 +17,17 @@ class ua_rss_keyb_const
 	const unFocusFontColor		=	'255:255:255';
 	const focusFontBackColor	=	'21:109:213';
 	const unFocusFontBackColor	=	'8:42:95';
-	
+
+	const header				=   'ua_header.png';
+	const footer				=   'ua_footer.png';
+	const header_offsetXPC		=	'0';
+	const header_offsetYPC		=	'0';
+	const header_widthPC		=	'100';
+	const header_heightPC		=	'13';
+	const footer_offsetXPC		=	'0';
+	const footer_offsetYPC		=	'87';
+	const footer_widthPC		=	'100';
+	const footer_heightPC		=	'13';	
 	
 	
 	// верхний заголовок 
@@ -359,11 +369,16 @@ class ua_rss_keyb extends ua_rss_keyb_const
 	<?php
 		$this->showIdle();
 	?>
-	<backgroundDisplay>
-			<image redraw="no" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
-					<?=$ua_images_path?>ua_background_main.png
-			</image>
-	</backgroundDisplay>
+
+	
+	<image  redraw="no" offsetXPC="<?= static::header_offsetXPC ?>" offsetYPC="<?= static::header_offsetYPC ?>" widthPC="<?= static::header_widthPC ?>" heightPC="<?= static::header_heightPC ?>">
+			<?= $ua_images_path.static::header ?>
+	</image>
+	
+	<image  redraw="no" offsetXPC="<?= static::footer_offsetXPC ?>" offsetYPC="<?= static::footer_offsetYPC ?>" widthPC="<?= static::footer_widthPC ?>" heightPC="<?= static::footer_heightPC ?>">
+			<?= $ua_images_path.static::footer ?>
+	</image>
+
 
 	
 	<?php	
