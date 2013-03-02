@@ -1,0 +1,9 @@
+[iconremote]
+	revision = 3
+	title = "Web Remote control for Iconbit gui"
+	role = web
+	init = "S35iconRemote"
+	navy_title = "Iconbit Remote control"
+	navy_frame = "/rc"
+	files = "etc/init/S35iconRemote iconremote/"
+	size = 224

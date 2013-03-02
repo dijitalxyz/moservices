@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Remote</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=2.0; user-scalable=no;"/>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script type="text/javascript">
+
+var xmlHttp;
+
+function createXMLHttpRequest() {
+	try{
+		xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+	}catch(e){
+		try{
+			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}catch(e2){
+			xmlHttp = false;
+		}
+	}
+	if(!xmlHttp && typeof XMLHttpRequest != "udefined")
+	{
+		xmlHttp = new XMLHttpRequest();
+	}
+}
+
+function sendCommand(cmd) {
+	createXMLHttpRequest();
+	xmlHttp.onreadystatechange = handleStateChange;
+	xmlHttp.open("GET", "/cgi-bin/cmd.cgi?" + cmd, true);
+	xmlHttp.send(null);
+}
+
+function handleStateChange() {
+	if (xmlHttp.readyState == 4) {
+		if (xmlHttp.status == 200) {
+		}
+	}
+}
+
+function setTD_png()
+{
+	document.getElementById("table1").rows[0].cells[0].innerHTML="<IMG border=0 src=image/R_1.png\>";
+	document.getElementById("table1").rows[0].cells[1].innerHTML="<IMG border=0 src=image/R_2.png\>";
+	document.getElementById("table1").rows[0].cells[2].innerHTML="<IMG border=0 src=image/R_3.png\>";
+	document.getElementById("table1").rows[0].cells[3].innerHTML="<IMG border=0 src=image/R_4.png\>";
+}
+
+function setTD(i){
+	setTD_png();
+	document.getElementById("table1").rows[0].cells[i-1].innerHTML="<IMG border=0 src=image/R_0"+i+".png\>";
+}
+
+function setTab(name,cursel,n){
+	setTD(cursel);
+	for(i=1;i<=n;i++){
+		var menu=document.getElementById(name+i);
+
+		var con=document.getElementById("con_"+name+"_"+i);
+		con.style.display=i==cursel?"block":"none";
+	}
+}
+</script>
+</head>
+<body background="image/Background.png">
+<div class="Contentbox">
+  <div style="position: absolute; width: 320px; left:0px;top:0px; z-index:1; display:block" id="con_one_1">
+  <img src="image/01.png" border="0"  usemap="#Map1">
+  <map name="Map1" id="Map1">
+    <area shape="rect"  coords="211, 221, 310, 305"  onclick="sendCommand('SETUP');"   title="Setup" />
+    <area shape="rect"  coords="110, 221, 209, 305"  onclick="sendCommand('DOWN');"   title="Down" />
+    <area shape="rect"  coords="9, 220, 108, 304"    onclick="sendCommand('MENU');"   title="Menu" />
+    <area shape="rect"  coords="211, 137, 310, 221"  onclick="sendCommand('RIGHT');"   title="Right" />
+    <area shape="rect"  coords="110, 137, 209, 221"  onclick="sendCommand('OK');"   title="Select" />
+    <area shape="rect"  coords="10, 136, 109, 220"   onclick="sendCommand('LEFT');"  title="Left" />
+	<area shape="rect"  coords="253, 0, 319, 41"   title="Home" href="../index.php" target="_top"  />
+    <area shape="rect"  coords="111, 53, 210, 137"   onclick="sendCommand('UP');"  title="Up" />
+    <area shape="rect"  coords="10, 53, 109, 137"    onclick="sendCommand('HOME');"  title="Guide" />
+    <area shape="rect"  coords="211, 52, 310, 136"   onclick="sendCommand('RETURN');" title="Return" />
+  </map>
+</div>
+<div style="position: absolute; width: 320px; left:0px;top:0px; z-index:1; display:none" id="con_one_2">
+<img src="image/05.png"  border="0" usemap="#Map2">
+<map name="Map2" id="Map2">
+<area shape="rect"  coords="253,0,319,41" title="Home" href="../index.php" target="_top"  />
+  <area shape="rect"  coords="211,238,310,298" onclick="sendCommand('ZOOM');" title="Zoom" />
+  <area shape="rect"  coords="10,238,109,298"  onclick="sendCommand('REPEAT');"  title="Repeat" />
+  <area shape="rect"  coords="110,238,209,298"  onclick="sendCommand('INFO');"  title="Info" />
+  <area shape="rect"  coords="211,178,310,238"  onclick="sendCommand('NEXT');"  title="Next" />
+  <area shape="rect"  coords="110,178,209,238"  onclick="sendCommand('STOP');"  title="Stop" />
+  <area shape="rect"  coords="10,178,109,238"   onclick="sendCommand('PREV');"  title="Prev" />
+  <area shape="rect"  coords="211,117,310,177"  onclick="sendCommand('FFWD');"  title="Fast forward" />
+  <area shape="rect"  coords="110,117,209,177"  onclick="sendCommand('PLAY');"      title="Play/Pause" />
+  <area shape="rect"  coords="10,117,109,177"  onclick="sendCommand('FRWD');"  title="Fast backward" />
+  <area shape="rect"  coords="211,57,310,117"  onclick="sendCommand('VOL+');"  title="Volume up" />
+  <area shape="rect"  coords="110,57,210,116"  onclick="sendCommand('VOL-');"  title="Volume down" />
+  <area shape="rect"  coords="10,57,109,117"  onclick="sendCommand('MUTE');"  title="Mute" />
+  
+</map>
+</div>
+<div style="position: absolute; width: 320px; left:0px;top:0px; z-index:1; display:none" id="con_one_3">
+<img src="image/03.png"  border="0" usemap="#Map3">
+<map name="Map3" id="Map3">
+<area shape="rect"  coords="253,0,319,41" title="Home" href="../index.php" target="_top"  />
+  <area shape="rect"  coords="211,238,310,298" onclick="sendCommand('GOTO');" title="GOTO" />
+  <area shape="rect"  coords="10,238,109,298"  onclick="sendCommand('A-B');"  title="A-B Repeat" />
+  <area shape="rect"  coords="110,238,209,298"  onclick="sendCommand('0');"  title="Zero" />
+  <area shape="rect"  coords="211,178,310,238"  onclick="sendCommand('9');"  title="Nine" />
+  <area shape="rect"  coords="110,178,209,238"   onclick="sendCommand('8');" title="Eight" />
+  <area shape="rect"  coords="10,178,109,238"   onclick="sendCommand('7');"  title="Seven" />
+  <area shape="rect"  coords="211,117,310,177"   onclick="sendCommand('6');"  title="Six" />
+  <area shape="rect"  coords="110,117,209,177"   onclick="sendCommand('5');"   title="Five" />
+  <area shape="rect"  coords="10,117,109,177"   onclick="sendCommand('4');"  title="Four" />
+  <area shape="rect"  coords="211,57,310,117"  onclick="sendCommand('3');"  title="Three" />
+  <area shape="rect"  coords="110,57,210,116"  onclick="sendCommand('2');"  title="Two" />
+  <area shape="rect"  coords="10,57,109,117"  onclick="sendCommand('1');"  title="One" />
+</map>
+</div>
+<div style="position: absolute; width: 320px; left:0px;top:0px; z-index:1; display:none" id="con_one_4">
+<img src="image/06.png"  border="0" usemap="#Map4">
+<map name="Map4" id="Map4">
+<area shape="rect"  coords="253,0,319,41" title="Home" href="../index.php" target="_top"  />
+
+  <area shape="rect"  coords="11,238,82,297"  onclick="sendCommand('RED');"  title="Red" />
+  <area shape="rect"  coords="86,238,159,297"  onclick="sendCommand('GREEN');"  title="Green" />
+  <area shape="rect"  coords="162,238,235,297"  onclick="sendCommand('YELLOW');"  title="Yellow" />
+  <area shape="rect"  coords="238,238,311,297"  onclick="sendCommand('BLUE');"  title="Blue" />
+
+  <area shape="rect"  coords="211,116,310,176"  onclick="sendCommand('SUBTITLE');"  title="Subtitle" />
+  <area shape="rect"  coords="111,117,210,177"  onclick="sendCommand('AUDIO');"  title="Audio" />
+  <area shape="rect"  coords="11,116,110,176"  onclick="sendCommand('16X9');"  title="16x9" />
+  <area shape="rect"  coords="11,56,110,116"  onclick="sendCommand('TVMODE');"  title="TV Mode" />
+  <area shape="rect"  coords="111,57,212,116"  onclick="sendCommand('TITLE');" title="Title" />
+  <area shape="rect"  coords="213,56,310,117"   onclick="sendCommand('EJECT');"  title="Eject" />
+</map>
+</div>
+</div>
+<div style="position: absolute; width: 320px;  z-index: 2; left: 0px; top: 300px" id="layer1">
+  <table border="0" width="320px" cellspacing="0" cellpadding="0" id="table1" >
+    <tr>
+      <td id="one1" onclick="setTab('one',1,4)"><img border="0" src="image/R_01.png" ></td>
+      <td id="one2" onclick="setTab('one',2,4)"><img border="0" src="image/R_2.png" ></td>
+      <td id="one3" onclick="setTab('one',3,4)"><img border="0" src="image/R_3.png" ></td>
+      <td id="one4" onclick="setTab('one',4,4)"><img border="0" src="image/R_4.png" ></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

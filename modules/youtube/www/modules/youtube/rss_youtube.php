@@ -7,6 +7,9 @@ function rss_youtube_content()
 	{
 		const itemWidth		= 400; //240;
 		const itemHeight	= 120; //160;
+
+		const itemUnFocusBgColor = '0:0:0';
+
 		//
 		// ------------------------------------
 		public $topTitle =
@@ -93,20 +96,22 @@ function rss_youtube_content()
 	drawState = getDrawingItemState();
 	if (drawState == "unfocus")
 	{
-		border = "<?= getSkinPath().static::imageUnFocus ?>";
 		color = "<?= static::unFocusFontColor ?>";
+		bgcolor = "<?= static::itemUnFocusBgColor ?>";
 	}
 	else
 	{
- 		border = "<?= getSkinPath().static::imageFocus ?>";
 		color = "<?= static::focusFontColor ?>";
+		bgcolor = "<?= static::itemFocusBgColor ?>";
 	}
       </script>
-      <image redraw="no" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
-        <script>
-            border;
-        </script>
-      </image>
+      <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" cornerRounding="10">
+	<backgroundColor>
+          <script>
+            bgcolor;
+          </script>
+	</backgroundColor>
+      </text>
 <?php
 			foreach( $this->fields as $info )
 			{

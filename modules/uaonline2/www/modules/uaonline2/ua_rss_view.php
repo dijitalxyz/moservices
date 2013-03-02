@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS threePartsView style module v1.3
+	RSS threePartsView style module v1.4
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2013	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -93,7 +93,7 @@ class ua_rss_view
 					?>
 					if (userInput == "<?= $key_pageup ?>" || userInput == "<?= $key_pagedown ?>")
 					{
-						if (userInput == "<?= $key_pagedown ?>") { page+=1; itm_index=0;}
+						if (userInput == "<?= $key_pagedown ?>") { page-=-1; itm_index=0;}
 						if (userInput == "<?= $key_pageup ?>" )  {if (page &gt;1) page-=1; itm_index=0;}
 						ret="true";
 						setRefreshTime(1);

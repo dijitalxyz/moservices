@@ -107,9 +107,11 @@ class ua_rss_favorites  extends ua_rss_favorites2
 		typeBookArray = null;
 		menuArray = null;
 		menucmdArray = null;
-		menuCount = 2;
+		menuCount = 3;
 		menuArray = pushBackStringArray( menuArray, "В избранное");
 		menucmdArray = pushBackStringArray( menucmdArray, "bookmark");
+		menuArray = pushBackStringArray( menuArray, "Удалить");
+		menucmdArray = pushBackStringArray( menucmdArray, "delete");
 		menuArray = pushBackStringArray( menuArray, "Выход");
 		menucmdArray = pushBackStringArray( menucmdArray, "exit");
 			
@@ -123,7 +125,7 @@ class ua_rss_favorites  extends ua_rss_favorites2
 				while( count != 0 )
 					{
 					linkBookArray = pushBackStringArray(linkBookArray, getStringArrayAt(dlok, c));  c -= -1;
-					historyFilesListArray = pushBackStringArray(linkBookArray, getStringArrayAt(dlok, c));  c -= -1;
+					historyFilesListArray = pushBackStringArray(historyFilesListArray, getStringArrayAt(dlok, c));  c -= -1;
 					titleBookArray = pushBackStringArray(titleBookArray, getStringArrayAt(dlok, c));  c -= -1;
 					imageBookArray = pushBackStringArray(imageBookArray, getStringArrayAt(dlok, c));  c -= -1;
 					siteBook=getStringArrayAt(dlok, c);
@@ -132,9 +134,6 @@ class ua_rss_favorites  extends ua_rss_favorites2
 					count -= 1;
 					c = (count*5)-4;
 					}
-				
-			
-			
 			}
 		cancelIdle();
 		tmp_index =itemCount-1;
@@ -180,6 +179,8 @@ class ua_rss_favorites  extends ua_rss_favorites2
 	global $key_return;
 	global $ua_rss_keyboard_filename;
 	global $ua_favorites_filename;
+	global $ua_history_main_filename;
+	global $confs_path;
 	?>
 	<menu_template>
 	<displayTitle>
@@ -221,6 +222,35 @@ class ua_rss_favorites  extends ua_rss_favorites2
 			writeStringToFile("<?=$ua_favorites_filename?>", saveBookArray);
 			setRefreshTime(1);
 		} 
+		if (act == "delete") 
+		{
+			histFileDel=getStringArrayAt(historyFilesListArray,idx)
+			linkBookArray = deleteStringArrayAt(linkBookArray, idx);
+			historyFilesListArray = deleteStringArrayAt(historyFilesListArray, idx);
+			titleBookArray = deleteStringArrayAt(titleBookArray, idx);
+			imageBookArray = deleteStringArrayAt(imageBookArray, idx);
+			siteBookArray = deleteStringArrayAt(siteBookArray, idx);
+			itemCount -=1;
+
+			saveBookArray = null;
+			saveBookArray = pushBackStringArray(saveBookArray, itemCount);
+			count = itemCount-1;
+			while( count != -1 )
+				{	
+					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(linkBookArray,count));
+					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(historyFilesListArray,count));
+					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(titleBookArray,count));
+					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(imageBookArray,count));
+					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(siteBookArray,count));
+					count -= 1;
+				}				
+			
+			writeStringToFile("<?=$confs_path."ua_history/"?>" +histFileDel+".conf", "");
+			writeStringToFile("<?=$ua_history_main_filename?>", saveBookArray);
+			setRefreshTime(1);
+		}
+		
+		
 		null;
 	</onClick>
 	</menu_template>

@@ -5,11 +5,12 @@
 etc=/usr/local/etc
 mos=$etc/mos
 rc=$etc/rcS
+daemon=$mos/bin/captured
 
 case "$1" in
   start)
 	mkdir -p /tmp/nfs
-	touch /tmp/ir
+	mkfifo /tmp/ir
 	;;
 
 stop)
@@ -17,32 +18,23 @@ stop)
 	;;
 
 status)
-	if [ -f /tmp/ir ]
+	if [ -e /tmp/ir ]
 	then echo "capture running"
 	else echo "capture stopped"
 	fi
 	;;
   enable)
-	echo "Enabling Capture..."
-
-	if ! cat $etc/rcS | grep -q 'tail -f /tmp/ir' ; then
-		sed -i '
-s/^[ 	]*\(.*RootApp DvdPlayer\&.*\)$/		tail -f \/tmp\/ir | \1/
-s/^[ 	]*\(.*\.\/DvdPlayer\&.*\)$/		tail -f \/tmp\/ir | \1/
+	cat $etc/rcS | grep -q $daemon || sed -ri '
+s!^([ 	]*)(.*RootApp DvdPlayer.*)$!\1'$daemon' | \2!
+s!^([ 	]*)(.*\./DvdPlayer.*)$!\1'$daemon' | \2!
 ' $etc/rcS
-	fi
+
 	echo "Please, reboot device!"
 	;;
 
   disable)
-	echo "Disabling capture..."
-	#check for already disabled
+	cat $etc/rcS | grep -q $daemon && sed -ri 's!^([ 	]*)'$daemon' \| (.*)$!\1\2!' $etc/rcS
 
-	if cat $etc/rcS | grep -q 'tail -f /tmp/ir' ; then
-		sed -i '
-s/^\([ 	]*\)tail -f \/tmp\/ir | \(.*\)$/\1\2/
-' $etc/rcS
-	fi
 	echo "Please, reboot device!"
 	;;
 

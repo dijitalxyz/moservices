@@ -10,7 +10,10 @@ case "$1" in
   start|stop|status)
 	;;
   enable)
-	cat $target/sata_mars.ko | grep -q Virtual && echo "Lib ATA embedded.";exit 0
+	if cat $target/sata_mars.ko | grep -q Virtual ; then
+		echo "Lib ATA embedded."
+		exit 0
+	fi
 	echo "Enabling Lib ATA..."
 	#copy files
 	[ ! -f $target/sata_mars.ko.orig ] && cp -f $target/libata.ko $target/libata.ko.orig
@@ -21,9 +24,11 @@ case "$1" in
 
   disable)
 	echo "Disabling Lib Ata..."
-	[ -f $target/libata.ko.orig ] && mv -f $target/libata.ko.orig $target/libata.ko
-	[ -f $target/sata_mars.ko.orig ] && mv -f $target/sata_mars.ko.orig $target/sata_mars.ko
-	echo "Please, reboot device!"
+	if [ -f $target/libata.ko.orig ] ; then
+		mv -f $target/libata.ko.orig $target/libata.ko
+		[ -f $target/sata_mars.ko.orig ] && mv -f $target/sata_mars.ko.orig $target/sata_mars.ko
+		echo "Please, reboot device!"
+	fi
 	;;
   *)
 	echo "Usage: $0 {start|stop|status|enable|disable}"

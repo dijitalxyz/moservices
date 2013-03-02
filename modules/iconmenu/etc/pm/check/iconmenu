@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Check for install:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+#
+if [ -f /usr/share/bin/boot_fw.conf ] ; then
+	. /usr/share/bin/boot_fw.conf
+
+	[ "$fw" == "hds42l" ] && exit 0
+else
+	[ -f /usr/local/bin/scripts/iconbit-keyboard.rss ] && exit 0
+fi
+exit 1

@@ -45,6 +45,11 @@ global $sovok_session;
 		else showInfo = 0;
 	}	
 
+	else if( input == "<?= getRssCommand('stop') ?>" )
+	{
+		postMessage( "<?= getRssCommand('return') ?>" );
+	}
+
 	else if( input == "<?= getRssCommand('play') ?>" )
 	{
 		vidProgress = getPlaybackStatus();
@@ -116,10 +121,9 @@ global $sovok_session;
 	startVideo = 1;
 	cPlayPause = 1;
 
-	setRefreshTime(10);
-
 	cTitle = "No channels";
 	cDesc1 = "Call to developers http://www.moservices.org/forum";
+	cDesc2 = "";
 
 	setRefreshTime(100);
   </onEnter>
@@ -130,14 +134,10 @@ global $sovok_session;
 	if (startVideo == 1)
 	{
 		playItemURL(-1, 1);
+		startVideo = 0;
+		showInfo = 1;
 
-		if( itemCount == 0 )
-		{
-			/* error */
-			startVideo = 0;
-			showInfo = 1;
-		}
-		else
+		if( itemCount != 0 )
 		{
 			showIdle;
 
@@ -146,10 +146,17 @@ global $sovok_session;
 			cId    = getItemInfo( currentItem, "id" );
 
 			cUrl = getUrl( "<?= getMosUrl().'?page=get_sovok' ?>&amp;cid=" + cId );
+
+			if( cUrl == "protected" )
+			{
+				cancelIdle;
+				code = doModalRss( "<?= getMosUrl().'?page=rss_keyboard' ?>" );
+
+				showIdle;
+				cUrl = getUrl( "<?= getMosUrl().'?page=get_sovok' ?>&amp;cid=" + cId + "&amp;code=" + code );
+			}
 			cancelIdle;
 
-			startVideo = 0;
-			showInfo = 1;
 			playItemURL(cUrl, 0, "mediaDisplay", "previewWindow");
 		}
 	}
@@ -158,7 +165,6 @@ global $sovok_session;
 	{
 		if( showInfo == 1 )
 		{
-			showIdle;
 			dlok = getUrl( "<?= getMosUrl().'?page=get_sovok_epg' ?>&amp;cid=" + cId );
 			if (dlok != null)
 			{
@@ -170,7 +176,6 @@ global $sovok_session;
 				cDesc1 = "";
 				cDesc2 = "";
 			}
-			cancelIdle;
 
 			startVideo = 2;
 			statusTimeout = 50;
@@ -196,6 +201,7 @@ global $sovok_session;
   <onExit>
 	setRefreshTime(-1);
 	playItemURL(-1, 1);
+	setReturnString( currentItem );
   </onExit>
 
 <?php
@@ -220,7 +226,7 @@ global $sovok_session;
 			$vh = static::viewAreaHeight;
 
 ?>
-  <mediaDisplay name="threePartsView"
+  <mediaDisplay name="onePartView"
    viewAreaXPC="0"
    viewAreaYPC="0"
    viewAreaWidthPC="100"

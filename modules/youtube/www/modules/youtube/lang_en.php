@@ -1,5 +1,7 @@
 <?php
 
+$nav_msg['youtube_more_feeds'       ] = 'More...';
+
 $nav_msg['youtube_top_rated'        ] = 'Top rated';
 $nav_msg['youtube_top_favorites'    ] = 'Top favorites';
 $nav_msg['youtube_most_viewed'      ] = 'Most viewed';
@@ -9,6 +11,10 @@ $nav_msg['youtube_most_recent'      ] = 'Most recent';
 $nav_msg['youtube_most_discussed'   ] = 'Most discussed';
 $nav_msg['youtube_most_responded'   ] = 'Most responded';
 $nav_msg['youtube_recently_featured'] = 'Recently featured';
+$nav_msg['youtube_on_the_web'       ] = 'YouTube trends';
+
+$nav_msg['youtubeSearch'  ] = 'Search';
+$nav_msg['youtubeSettings'] = 'Settings...';
 
 $nav_msg['youtubeCategories'] = 'Categories';
 $nav_msg['youtubeAllCats'   ] = 'All';
@@ -19,10 +25,9 @@ $nav_msg['youtube_this_week' ] = 'Per week';
 $nav_msg['youtube_this_month'] = 'Per month';
 $nav_msg['youtube_all_time'  ] = 'All time';
 
-$nav_msg['youtubeSearch'] = 'Search';
-
 $nav_msg['youtubeQuality'   ] = 'Video quality';
 $nav_msg['youtubeLowQual'   ] = 'Low';
+$nav_msg['youtubeMidQual'   ] = 'Middle';
 $nav_msg['youtubeHighQual'  ] = 'High';
 
 $nav_msg['youtubeRegions'   ] = 'Region';
@@ -76,9 +81,18 @@ $nav_msg['youtubeKeyboard'] = 'Keyboard';
 $nav_msg['youtubeEmbKbrd'] = 'Embedded';
 $nav_msg['youtubeRssKbrd'] = 'RSS';
 
-$nav_msg['youtubeMy'] = 'My subscriptions';
-$nav_msg['youtubeUsername'] = "User's name";
+$nav_msg['youtubeMyLogin'   ] = 'User...';
+$nav_msg['youtubeChangeUser'] = 'Change user';
 
-$nav_msg['youtubeSubscription'] = 'Subscriptions of ';
+$nav_msg['youtube_channel' ] = 'Channel: ';
+$nav_msg['youtube_playlist'] = 'Playlist: ';
+
+$nav_msg['youtube_of'] = ' of ';
+
+$nav_msg['youtube_subscriptions'        ] = 'Subscriptions...';
+$nav_msg['youtube_playlists'            ] = 'Playlists...';
+$nav_msg['youtube_uploads'              ] = 'Uploads';
+$nav_msg['youtube_newsubscriptionvideos'] = 'News of subscriptions';
+$nav_msg['youtube_favorites'            ] = 'Favorites';
 
 ?>

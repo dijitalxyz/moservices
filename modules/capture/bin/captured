@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# description: capture daemon
+#
+while true ; do cat /tmp/ir; done

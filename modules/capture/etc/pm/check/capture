@@ -5,11 +5,10 @@
 # returns 1 - not installable
 # returns 0 - installable
 #
-mos=/usr/local/etc/mos
-
-[ -f $mos/etc/pm.conf ] && . $mos/etc/pm.conf
-[ "$enviroment" == '3430' ] && exit 1
+rc=/usr/local/etc/rcS
 
 [ -e /tmp/ir ] && exit 1
+[ -f $rc ] || exit 1
+grep -q 'RootApp DvdPlayer' $rc || exit 1
 
 exit 0

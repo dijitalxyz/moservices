@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	fs.ua RSS category module v1.3
+	fs.ua RSS category module v1.4
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2013
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -44,8 +44,8 @@ class ua_rss_cat extends ua_rss_cat_const2
 						{
 							$link = $a->getAttribute('href');
 							$name = $a->textContent;
-							$cats[trim($name)." ЗАРУБЕЖНЫЕ"]=$link.'?fl=foreign';
-							$cats[trim($name)." НАШИ"]=$link.'?fl=our';
+							$cats[trim($name)." ЗАРУБЕЖНЫЕ"]=urlencode($link.'fl_foreign/');
+							$cats[trim($name)." НАШИ"]=urlencode($link.'fl_our/');
 						}
 						break;
 					}

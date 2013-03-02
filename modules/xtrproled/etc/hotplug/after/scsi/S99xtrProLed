@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+
+# check action
+stty -F /dev/tts/1 cs8 57600
+if [ "$ACTION" == 'add' ] ; then
+echo $DEVPATH | grep -q host0 && echo -en '\xfe\x42\x03\x01\xff' >/dev/tts/1
+echo $DEVPATH | grep -q host1 && echo -en '\xfe\x42\x02\x01\xff' >/dev/tts/1
+fi
+
+if [ "$ACTION" != 'add' ] ; then
+echo $DEVPATH | grep -q host0 && echo -en '\xfe\x42\x03\x00\xff' >/dev/tts/1
+echo $DEVPATH | grep -q host1 && echo -en '\xfe\x42\x02\x00\xff' >/dev/tts/1
+fi

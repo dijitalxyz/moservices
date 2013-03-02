@@ -14,6 +14,30 @@ $nav_pages['rss_youtube_menu'] = array (
 	'load'	=> 'youtube.php'
 );
 
+$nav_pages['rss_youtube_more_feeds'] = array (
+	'type'  => 'rss',
+	'module'=> 'youtube',
+	'load'	=> 'youtube.php'
+);
+
+$nav_pages['rss_youtube_my'] = array (
+	'type'  => 'rss',
+	'module'=> 'youtube',
+	'load'	=> 'youtube.php'
+);
+
+$nav_pages['rss_youtube_playlists'] = array (
+	'type'  => 'rss',
+	'module'=> 'youtube',
+	'load'	=> 'youtube.php'
+);
+
+$nav_pages['rss_youtube_subscriptions'] = array (
+	'type'  => 'rss',
+	'module'=> 'youtube',
+	'load'	=> 'youtube.php'
+);
+
 $nav_pages['rss_youtube_sets'] = array (
 	'type'  => 'rss',
 	'module'=> 'youtube',

@@ -8,15 +8,15 @@ global $mos;
 global $mosPath;
 
 	$s = '/modules/capture/noimage.png';
-	exec( "echo '*' >> /tmp/ir" );
+	exec( "echo -n '*' > /tmp/ir" );
 	exec( "sleep 1" );
 	if(( $ns = glob( '/tmp/nfs/*.bmp' )) !== false )
 	{
-		exec( 'rm -f /tmp/www/sc_*' );
+		exec( 'rm -f /tmp/www/sc_*.jpg' );
 		foreach( $ns as $n )
 		{
 			$s = 'sc_'. str_replace( '.bmp', '.jpg', basename( $n ));
-			exec( "$mos/bin/bmp2jpg -q 95  $n /tmp/www/$s" );
+			exec( "$mos/bin/bmp2jpg -q 80  $n /tmp/www/$s" );
 			unlink( $n );
 		}
 	}

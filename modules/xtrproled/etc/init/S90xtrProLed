@@ -1,0 +1,22 @@
+#!/bin/sh
+
+case "$1" in
+  start)
+	stty -F /dev/tts/1 cs8 57600 
+echo -en '\xfe\x42\x01\x01\xff' >/dev/tts/1
+echo -en '\xfe\x42\x04\x01\xff' >/dev/tts/1
+	;;
+  stop)
+	stty -F /dev/tts/1 cs8 57600 
+echo -en '\xfe\x45\x04\x01\xff' >/dev/tts/1
+echo -en '\xfe\x42\x01\x00\xff' >/dev/tts/1
+echo -en '\xfe\x42\x02\x00\xff' >/dev/tts/1
+echo -en '\xfe\x42\x03\x00\xff' >/dev/tts/1
+echo -en '\xfe\x42\x00\x00\xff' >/dev/tts/1
+	;;
+  *)
+	echo $"Usage: $0 {start|stop}"
+	;;
+esac
+
+exit $?
