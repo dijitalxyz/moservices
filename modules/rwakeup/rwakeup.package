@@ -1,0 +1,7 @@
+[rwakeup]
+	revision = 1
+	title = "Reboot on Wakeup"
+	role = patch
+	init = S51rWakeup
+	files = "etc/init/S51rWakeup"
+	size = 32

@@ -5,5 +5,10 @@
 # returns 1 - not installable
 # returns 0 - installable
 #
+mos=/usr/local/etc/mos
+
+# check for rootapp installed
+grep -q '\[rootapp\]' $mos/etc/pm/installed && exit 1
+
 [ -f /sbin/suspend ] && exit 0
-exit 2
+exit 1

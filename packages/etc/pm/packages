@@ -627,14 +627,6 @@
 	require = "libgcc_s libz"
 	size = 5984
 
-[weather]
-	revision = 6
-	title = "Weather Yahoo"
-	role = rss
-	config_edit = "www/modules/weather/weather.conf"
-	files = "www/modules/weather/"
-	size = 80
-
 [web_3430]
 	revision = 1
 	title = "Lighttpd web server v1.4.28"
@@ -687,14 +679,6 @@
 	files = "lib/libevent.so lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1"
 	size = 1600
 
-[suspend]
-	revision = 1
-	title = "Suspend: reboot on wakeup"
-	role = patch
-	init = S09suspend
-	files = "etc/init/S07suspend etc/init/rc.init/S07suspend.sh"
-	size = 48
-
 [base2]
 	revision = 1
 	title = "moServices base patch"
@@ -730,19 +714,6 @@
 	role = rss
 	files = "www/modules/iconmedia/"
 	size = 192
-
-[irfake_3430]
-	revision = 2
-	title = "IR Fake RC replacement v1.2.15r2"
-	role = patch
-	init = S41irfake
-	backup = "irfake/irfake.conf"
-	config_before = copy
-	config_after = save
-	config_edit = "irfake/irfake.conf"
-	env = 3430
-	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh irfake/"
-	size = 140
 
 [irfake]
 	revision = 7
@@ -811,15 +782,6 @@
 	navy_frame = "%mos%modules/downloady/dstatus.htm"
 	files = "www/modules/downloady/"
 	size = 132
-
-[rootapp]
-	revision = 3
-	title = "Patched RootApp"
-	init=S42rootapp
-	role = patch
-	init = S42rootapp
-	files = "bin/RootApp etc/rc.suspend etc/rc.wakeup etc/init/S42rootapp"
-	size = 360
 
 [core]
 	revision = 37
@@ -892,18 +854,6 @@
 	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
 	size = 344
 
-[vsftpd222]
-	revision = 2
-	title = "vsFTPd FTP daemon v2.2.2"
-	role = daemon
-	init = S15vsftpd
-	backup = "etc/vsftpd.conf"
-	navy_title = "Explore FTP"
-	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
-	config_edit = "etc/vsftpd.conf"
-	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
-	size = 308
-
 [vsftpd_1228]
 	revision = 3
 	title = "vsFTPd FTP daemon v3.0.2 dynamic"
@@ -939,19 +889,6 @@
 	require = "libgccs php"
 	size = 544
 
-[xupnpd]
-	revision= 4
-	title = "xupnpd 1.01"
-	role = daemon
-	check = "port 4044"
-	init = S35xupnpd
-	navy_title = "xupnpd web interface"
-	navy_frame = "http://%addr%:4044"
-	config_edit = "xupnpd/xupnpd.lua"
-	files = "xupnpd/ etc/init/S35xupnpd"
-	require = "libgcc_s"
-	size = 1056
-
 [tvontop]
 	revision = 11
 	title = "TV on Top 1.1.5"
@@ -968,16 +905,6 @@
 	files = "etc/init/S05AutoRun etc/hotplug/after/block/S12autorun"
 	require = "fhotplug"
 	size = 64
-
-[iconmenu]
-	revision = 3
-	title = "Home menu replacement for IconBit gui"
-	config_edit = "iconmenu/iconmenu.conf"
-	role = patch
-	init = "S34iconmenu.sh"
-	backup = "iconmenu/iconmenu.conf"
-	files = "etc/init/S34iconmenu.sh iconmenu/"
-	size = 1828
 
 [base]
 	revision = 18
@@ -1031,32 +958,6 @@
 	require = "libevent2 libcurl libz libssl libcrypto libgccs"
 	size = 3884
 
-[trans_1230]
-	revision = 2
-	title = "Transmission v2.73"
-	role = daemon
-	check = "port 9091"
-	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
-	env = 1230
-	files = "etc/init/S23trans trans/ www/modules/trans_1230/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 4812
-
-[trans_3430]
-	revision = 2
-	title = "Transmission v2.73"
-	role = daemon
-	check = "port 9091"
-	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
-	env = 3430
-	files = "etc/init/S23trans trans/ www/modules/trans_3430/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 4804
-
 [iconremote]
 	revision = 3
 	title = "Web Remote control for Iconbit gui"
@@ -1066,13 +967,6 @@
 	navy_frame = "/rc"
 	files = "etc/init/S35iconRemote iconremote/"
 	size = 224
-
-[youtube]
-	revision = 11
-	title = "YouTube"
-	role = rss
-	files = "www/modules/youtube/"
-	size = 104
 
 [uaonline2]
 	revision = 24
@@ -1084,4 +978,144 @@
 	navy_frame = "http://%addr%/modules/uaonline2/index.php"
 	files = "www/modules/uaonline2/"
 	size = 2120
+
+[rootapp]
+	revision = 4
+	title = "Patched RootApp"
+	init=S42rootapp
+	role = patch
+	init = S42rootapp
+	files = "bin/RootApp etc/rc.suspend etc/rc.wakeup etc/init/S42rootapp"
+	size = 360
+
+[suspend]
+	revision = 2
+	title = "Suspend: Reboot on wakeup"
+	role = patch
+	init = S09suspend
+	files = "etc/init/S09suspend etc/init/rc.init/S09suspend.sh"
+	size = 48
+
+[rbwakeup]
+	revision = 1
+	title = "Reboot on wakeup"
+	role = patch
+	init = S09rbwakeup
+	files = "etc/init/S09rbwakeup"
+	size = 40
+
+[vsftpd222]
+	revision = 2
+	title = "vsFTPd FTP daemon v2.2.2"
+	role = daemon
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	size = 308
+
+[irfake_3430]
+	revision = 2
+	title = "IR Fake RC replacement v1.2.15r2"
+	role = patch
+	init = S41irfake
+	backup = "irfake/irfake.conf"
+	config_before = copy
+	config_after = save
+	config_edit = "irfake/irfake.conf"
+	env = 3430
+	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh irfake/"
+	size = 140
+
+[apower]
+	revision = 1
+	title = "Actions on Power"
+	role = patch
+	check = sskin
+	init = S50aPower
+	config_link = "?page=apower_sets"
+	files = "etc/init/S50aPower etc/rc.init/S01aPower.sh www/modules/apower/"
+	size = 68
+
+[rwakeup]
+	revision = 1
+	title = "Reboot on Wakeup"
+	role = patch
+	init = S51rWakeup
+	files = "etc/init/S51rWakeup"
+	size = 32
+
+[trans_1230]
+	revision = 3
+	title = "Transmission v2.77"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	env = 1230
+	files = "etc/init/S23trans trans/ www/modules/trans_1230/"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 4828
+
+[trans_3430]
+	revision = 3
+	title = "Transmission v2.77"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/home/"
+	config_edit = "trans/home/settings.json"
+	env = 3430
+	files = "etc/init/S23trans trans/ www/modules/trans_3430/"
+	require = "libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 4824
+
+[nfsd]
+	revision= 1
+	title = "NFS daemon"
+	role = daemon
+	init = S12nfsd
+	files = "etc/init/S12nfsd etc/hotplug/after/block/S09nfsd"
+	require = "fhotplug"
+	size = 64
+
+[iconmenu]
+	revision = 8
+	title = "Home menu replacement for IconBit gui"
+	config_edit = "iconmenu/iconmenu.conf"
+	role = patch
+	init = "S34iconmenu.sh"
+	files = "etc/init/S34iconmenu.sh iconmenu/"
+	size = 1888
+
+[xupnpd]
+	revision= 3
+	title = "xupnpd 1.0rc13"
+	role = daemon
+	check = "port 4044"
+	init = S35xupnpd
+	navy_title = "xupnpd web interface"
+	navy_frame = "http://%addr%:4044"
+	config_edit = "xupnpd/xupnpd.lua"
+	files = "xupnpd/ etc/init/S35xupnpd"
+	require = "libgccs"
+	size = 948
+
+[youtube]
+	revision = 12
+	title = "YouTube"
+	role = rss
+	files = "www/modules/youtube/"
+	size = 108
+
+[weather]
+	revision = 7
+	title = "Weather Yahoo"
+	role = rss
+	config_edit = "www/modules/weather/weather.conf"
+	files = "www/modules/weather/"
+	size = 80
 

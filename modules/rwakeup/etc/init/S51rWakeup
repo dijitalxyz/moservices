@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# Enable/disable reboot on Wakeup
+#
+etc=/usr/local/etc
+
+case "$1" in
+  start | stop | status)
+	;;
+
+  enable)
+	if [ -f $etc/rc.wakeup ] ; then
+		sed -i 's!^'$etc/rc.start'$!reboot!' $etc/rc.wakeup
+	else
+		echo -e "#!/bin/sh\nreboot" > $etc/rc.wakeup
+		chmod +x $etc/rc.wakeup
+	fi
+	;;
+
+  disable)
+	if [ -f $etc/rc.wakeup ] ; then
+		sed -i 's!^reboot$!'$etc/rc.start'!' $etc/rc.wakeup
+	else
+		echo -e "#!/bin/sh\n$etc/rc.start" > $etc/rc.wakeup
+		chmod +x $etc/rc.wakeup
+	fi
+	;;
+  *)
+	echo "Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

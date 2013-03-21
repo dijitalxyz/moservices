@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+# start/stop nfs daemon
+#
+etc=/usr/local/etc
+
+reScan()
+{
+	exportfs -ua
+
+	IFS='
+'
+	for s in $( cat /proc/mounts ) ; do
+
+		IFS=$cIFS
+
+		echo $s | grep -q '^/dev/scsi/host' || continue
+
+		mt=$( echo $s | cut -d ' ' -f 2 )
+		fs=$( echo $s | cut -d ' ' -f 3 )
+
+		[ "$fs" == 'ext3' ] && exportfs -o rw,no_root_squash,no_subtree_check *:$mt
+	done
+}
+
+
+case "$1" in
+    start)
+	# S12nfs patch
+	if [ -f $etc/rc.init/S12nfs ] ; then
+		if [ -x $etc/rc.init/S12nfs ] ; then
+			ps | grep -Eq 'rc\.init/[sS]12nfs ' && killall -9 S12nfs
+			ps | grep -Eq '\[nfsd\]' && $etc/rc.init/S12nfs stop
+		fi
+		rm -f $etc/rc.init/S12nfs
+	fi
+
+	# start daemon
+	/etc/init.d/K60nfs start
+	reScan
+	;;
+
+    stop)
+	/etc/init.d/K60nfs stop
+	;;
+
+    status)
+	if ps | grep -Eq '\[nfsd\]'
+	then echo "nfsd running"
+	else echo "nfsd stopped"
+	fi
+	;;
+
+    rescan)
+	reScan
+	;;
+
+    *)
+	;;
+esac
+
+exit $?

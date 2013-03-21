@@ -1,6 +1,6 @@
 [youtube]
-	revision = 11
+	revision = 12
 	title = "YouTube"
 	role = rss
 	files = "www/modules/youtube/"
-	size = 104
+	size = 108

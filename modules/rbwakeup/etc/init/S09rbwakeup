@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# Enable/disable reboot on wakeup patch
+#
+etc=/usr/local/etc
+
+case "$1" in
+  start | stop | status)
+	;;
+
+  enable)
+	echo -e "#!/bin/sh\nreboot" > $etc/rc.wakeup
+	chmod +x $etc/rc.wakeup
+	;;
+
+  disable)
+	echo -e "#!/bin/sh\n$etc/rc.start" > $etc/rc.wakeup
+	chmod +x $etc/rc.wakeup
+	;;
+  *)
+	echo "Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

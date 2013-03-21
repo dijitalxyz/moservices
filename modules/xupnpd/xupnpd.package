@@ -1,6 +1,6 @@
 [xupnpd]
-	revision= 4
-	title = "xupnpd 1.01"
+	revision= 3
+	title = "xupnpd 1.0rc13"
 	role = daemon
 	check = "port 4044"
 	init = S35xupnpd
@@ -8,5 +8,5 @@
 	navy_frame = "http://%addr%:4044"
 	config_edit = "xupnpd/xupnpd.lua"
 	files = "xupnpd/ etc/init/S35xupnpd"
-	require = "libgcc_s"
-	size = 1056
+	require = "libgccs"
+	size = 948

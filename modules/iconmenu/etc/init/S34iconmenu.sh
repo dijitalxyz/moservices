@@ -5,6 +5,7 @@ mos=$etc/mos/iconmenu
 
 guide=/usr/local/bin/guide_menu/scripts/GuideMenu.rss
 home=/usr/local/bin/home_menu/scripts/HomeMenu.rss
+misc=/usr/local/bin/setup_menu/scripts/misc.rss
 
 case "$1" in
   start)
@@ -26,6 +27,10 @@ case "$1" in
 		[ -f $guide ] && mount -o bind $mos/GuideMenu.rss $guide
 	fi
 
+	if ! cat /proc/mounts | grep -q '/misc\.rss' ; then
+		[ -f $misc ] && mount -o bind $mos/misc.rss $misc
+	fi
+
 	if ! cat /proc/mounts | grep -q '/HomeMenu\.rss' ; then
 		[ -f $home ] && mount -o bind $mos/HomeMenu.rss $home
 	fi
@@ -36,11 +41,12 @@ case "$1" in
   stop)
 	cat /proc/mounts | grep -q '/GuideMenu\.rss'&& umount $guide
 	cat /proc/mounts | grep -q '/HomeMenu\.rss' && umount $home
+	cat /proc/mounts | grep -q '/misc\.rss' && umount $misc
 	rm -f /tmp/www/cgi-bin/getweather.cgi
 	;;
 
   status)
-	if cat /proc/mounts | grep -q '/HomeMenu\.rss'
+	if cat /proc/mounts | grep -Eq '/HomeMenu\.rss'
 	then echo "iconmenu running"
 	else echo "iconmenu stopped"
 	fi

@@ -1,25 +1,12 @@
 <h4>Plugins</h4>
 
-<form method=post action="/ui/apply">
-
 <div class="controls controls-row">
-	<div class="span4">VK.com:</div>
-	<div class="span4">${vk_auth_link}</div>
-</div>
-
-<div class="controls controls-row">
-	<div class="span4">VK.com private videos and groups workaround:</div>
-	<select class="span4" name=vk_private_workaround id=vk_private_workaround>
-		<option value="false">no</option>
-		<option selected value="true">yes</option>
-	</select>
-</div>
-
-<div class="controls controls-row">
-	<div class="span4">VK.com maximum videos (max 200):</div>
-	<input class="span4" type=text name=vk_video_count id=vk_video_count>
+<div class="span4">VKontakte:</div>
+<div class="span4">${vk_auth_link}</div>
 </div>
 <br/>
+
+<form method=get action="/ui/apply">
 
 <div class="controls controls-row">
 <div class="span4">YouTube quality:</div>
@@ -59,14 +46,6 @@
 </div>
 
 <div class="controls controls-row">
-<div class="span4">YouTube maximum videos:</div><input type=text class="span4" name=youtube_video_count id=youtube_video_count>
-</div>
-
-<div class="controls controls-row">
-<div class="span4">Vimeo maximum videos:</div><input type=text class="span4" name=vimeo_video_count id=vimeo_video_count>
-</div>
-
-<div class="controls controls-row">
 <div class="span4">ivi.ru quality:</div>
 <select class="span4" name=ivi_fmt id=ivi_fmt>
 <option value="MP4-lo">Low</option>
@@ -75,22 +54,11 @@
 </div>
 
 <div class="controls controls-row">
-<div class="span4">ivi.ru maximum videos:</div><input type=text class="span4" name=ivi_video_count id=ivi_video_count>
-</div>
-
-<div class="controls controls-row">
 <div class="span4">AG.ru quality:</div>
 <select class="span4" name=ag_fmt id=ag_fmt>
-<option selected value="200p">200p</option>
-<option value="400p">400p</option>
-<option value="400pd">400p 60fps</option>
-<option value="720p">720p</option>
-<option value="720pd">720p 60fps</option>
+<option selected value="MP4-lo">Standart</option>
+<option value="MP4-hi">VIP</option>
 </select>
-</div>
-
-<div class="controls controls-row">
-<div class="span4">GameTrailers maximum videos:</div><input type=text class="span4" name=gametrailers_video_count id=gametrailers_video_count>
 </div>
 
 <hr/>

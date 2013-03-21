@@ -1,0 +1,7 @@
+[rbwakeup]
+	revision = 1
+	title = "Reboot on wakeup"
+	role = patch
+	init = S09rbwakeup
+	files = "etc/init/S09rbwakeup"
+	size = 40

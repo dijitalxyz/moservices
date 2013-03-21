@@ -404,6 +404,19 @@ global $youtube_lists;
 	}
 
 }
+// ------------------------------------
+function parseUrlParameters( $s )
+{
+	$ss = explode( '&', $s );
+
+	$a = array();
+	foreach( $ss as $str )
+	{
+		list($p, $v) = explode( '=', $str );
+		$a[ $p ] = urldecode( $v );
+	}
+	return $a;
+}
 //
 // ====================================
 function youtubeGetStream( $id, $quality = 'lo' )
@@ -417,49 +430,26 @@ function youtubeGetStream( $id, $quality = 'lo' )
 	);
 	$context = stream_context_create($opts);
 
+	$s = file_get_contents( "http://www.youtube.com/get_video_info?video_id=$id&el=detailpage&ps=xl&eurl=&hl=en_US", false, $context);
 //	$s = file_get_contents( "http://www.youtube.com/get_video_info?video_id=$id&el=embedded&ps=default&hl=en_US", false, $context);
-	$s = file_get_contents( "http://www.youtube.com/watch?v=$id&feature=player_embedded", false, $context);
+//	$s = file_get_contents( "http://www.youtube.com/watch?v=$id&feature=player_embedded", false, $context);
 
+
+	$ps = parseUrlParameters( $s );
+	if( ! isset( $ps['url_encoded_fmt_stream_map'] )) return false;
+
+	$ss = explode( ',', $ps['url_encoded_fmt_stream_map'] );
 	$streams = array();
 
-	if( preg_match( '/yt.playerConfig\s*= \s*(.*?});/s' , $s, $ss ) > 0 )
+	foreach( $ss as $str )
 	{
-		$a = json_decode($ss[1], true);
-
-		if( isset( $a['args']['url_encoded_fmt_stream_map'] ))
-		{
-			$s = $a['args']['url_encoded_fmt_stream_map'];
-			$a = explode( ',', $s );
-
-
-			foreach( $a as $s )
-{
-	$b = explode( '&', $s );
-	if( isset( $_REQUEST['debug'])) print_r( $b );
-
-	unset( $tag );
-	unset( $url );
-	unset( $sig );
-
-	foreach( $b as $p )
-	if(     strpos( $p, 'itag=' ) === 0 ) $tag = substr( $p, 5 );
-	elseif( strpos( $p, 'url='  ) === 0 ) $url = substr( $p, 4 );
-	elseif( strpos( $p, 'sig='  ) === 0 ) $sig = substr( $p, 4 );
-
-	if( isset( $tag, $url, $sig ))
-	 $streams[ $tag ] = urldecode( urldecode( $url )).'&signature='.$sig;
-}
-		}
+		$s = parseUrlParameters( $str );
+		if( ! isset( $s['itag'] )) continue;
+		if( ! isset( $s['url']  )) continue;
+		if( ! isset( $s['sig']  )) continue;
+//		$streams[ $s['itag'] ] = urldecode( $s['url'] ).'&signature='.$s['sig'];
+		$streams[ $s['itag'] ] = $s['url'] .'&signature='. $s['sig'];
 	}
-/*
-	if( preg_match( '/url_encoded_fmt_stream_map=(.*?)&/s' , $s, $ss ) > 0 )
-	{
-		if( preg_match_all( '/url=(.*?)&.*?itag=(\d*)/' , urldecode( $ss[1] ).',', $ss ) > 0 )
-		 foreach( $ss[2] as $i => $itag )
-		  if( preg_match( '/([^;]*)/' , urldecode( $ss[1][ $i ] ), $a ) > 0 )
-		   $streams[ $itag ] = urldecode( $a[1] );
-	}
-*/
 	if( isset( $_REQUEST['debug'])) print_r( $streams );
 
 	// 45 - hd720 webm

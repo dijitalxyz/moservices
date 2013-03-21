@@ -8,6 +8,9 @@ case "$1" in
   start)
 	$mos/bin/wait_ip && exit 1
 	echo "Starting xupnpd service..."
+
+	[ -f /tmp/run/xupnpd-mipsel.pid ] && rm -f /tmp/run/xupnpd-mipsel.pid
+
 	cd $mos/xupnpd
 	./xupnpd-mipsel
 	;;

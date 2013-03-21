@@ -222,7 +222,7 @@ function rss_youtube_content()
 	{
 		showIdle();
 		url = getStringArrayAt(urlArray, i);
-		url = "<?= getMosUrl().'?page=get_youtube' ?>" + "&amp;id=" + url;
+		url = "<?= getMosUrl().'?page=get_youtube' ?>&amp;id=" + url;
 		playItemURL( url, 0 );
 		cancelIdle();
 		ret = "true";

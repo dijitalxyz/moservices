@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# rescan nfsd service
+#
+
+# check returned hotplug status
+[ $1 -ne 0 ] && exit
+
+sleep 5
+/usr/local/etc/mos/etc/init/S12nfsd rescan

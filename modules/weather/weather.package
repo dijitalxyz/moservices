@@ -1,5 +1,5 @@
 [weather]
-	revision = 6
+	revision = 7
 	title = "Weather Yahoo"
 	role = rss
 	config_edit = "www/modules/weather/weather.conf"

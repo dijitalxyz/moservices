@@ -1,2 +1,2 @@
 #!/bin/sh
-reboot
+/usr/local/etc/rc.start

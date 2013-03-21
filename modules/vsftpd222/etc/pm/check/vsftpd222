@@ -10,5 +10,5 @@ mos=/usr/local/etc/mos
 [ -f $mos/etc/pm.conf ] && . $mos/etc/pm.conf
 [ "$enviroment" == '3430' ] && exit 1
 
-netstat -ln | grep -q ':21 ' && exit 2
+netstat -ln | grep -q ':21 ' && exit 1
 exit 0
