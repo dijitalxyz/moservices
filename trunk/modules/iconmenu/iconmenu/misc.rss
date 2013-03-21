@@ -1,0 +1,1170 @@
+<?xml version = '1.0' ?>
+<rss version = "2.0" xmlns:dc = "http://purl.org/dc/elements/1.1/">
+
+<bookmark>Misc</bookmark>
+
+<onEnter>
+	pageTitle = getPageInfo("pageTitle");
+	print("page title is ", pageTitle);
+
+	changeCategory = getEnv("changeCategory");
+	if (changeCategory == "previous" || changeCategory == "next") {
+		postMessage("return");
+	}
+
+	disableDrawBackBuffer = getEnv("disableDrawBackBuffer");
+	if (disableDrawBackBuffer == "true") {
+		redrawDisplay("no");
+		if (changeCategory == "") {
+			setEnv("disableDrawBackBuffer", "false");
+		}
+	}
+
+	targetTitle = "$[MISC]";
+	itemTitleCount = getEnv("itemTitleCount");
+	itemTitleList = getEnv("itemTitleList");
+	itemTitleIndex = 0;
+	checkIndex = 0;
+	while (1) {
+		checkTitle = getStringArrayAt(itemTitleList, checkIndex);
+		if (checkTitle == targetTitle) {
+			itemTitleIndex = checkIndex;
+		}
+		checkIndex += 1;
+  		if (checkIndex == itemTitleCount){
+			break;
+  		}
+	}
+</onEnter>
+
+<mediaDisplay
+	name=onePartView
+	itemPerPage=7
+	viewAreaXPC=0
+	viewAreaYPC=0
+	viewAreaWidthPC=100
+	viewAreaHeightPC=100
+
+	itemXPC=27.4
+	itemYPC=37.5
+	itemWidthPC=60.8
+	itemHeightPC=6.3
+	itemImageXPC=27.4
+	itemImageYPC=37.5
+	itemImageWidthPC=60.8
+	itemImageHeightPC=6.3
+
+	imageFocus=""
+	imageUnFocus=""
+
+	sideColorRight=-1:-1:-1
+	sideColorLeft=-1:-1:-1
+	sideColorTop=-1:-1:-1
+	sideColorBottom=-1:-1:-1
+	backgroundColor=-1:-1:-1
+	focusBorderColor=-1:-1:-1
+	unFocusBorderColor=-1:-1:-1
+	itemBackgroundColor=-1:-1:-1
+
+	showHeader="no"
+	showDefaultInfo="no"
+
+	rollItems="no"
+	forceRedrawItems="yes"
+>
+
+<backgroundDisplay name="SetupMenuChild">
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+		./setup_menu/image/setup_bg.fsp
+	</image>
+	<text offsetXPC=23.5 offsetYPC=17.8 widthPC=20.9 heightPC=6.0 fontSize=20 align=left>
+		$[SETUP]
+	</text>
+	<image offsetXPC=10.1 offsetYPC=26.5 widthPC=80.5 heightPC=16.4>
+		<script>
+			if (initFlag == "$[ON]") {
+				"./setup_menu/image/setup_p2_box_top_1.fsp";
+			}
+			else if (itemTitleCount == 4) {
+				"./setup_menu/image/setup_p2_box_top_4.fsp";
+			}
+			else if (itemTitleCount == 5) {
+				"./setup_menu/image/setup_p2_box_top_5.fsp";
+			}
+			else {
+				"./setup_menu/image/setup_p2_box_top_6.fsp";
+			}
+		</script>
+	</image>
+	<image offsetXPC=10.1 offsetYPC=42.8 widthPC=80.5 heightPC=42.2>
+		./setup_menu/image/setup_p2_box_bottom.fsp
+	</image>
+</backgroundDisplay>
+
+<text offsetXPC=11.8 offsetYPC=29.9 widthPC=15.3 heightPC=6.0 fontSize=16 align=center backgroundColor=-1:-1:-1 foregroundColor=255:255:255 useBackgroundSurface="yes">
+	<script>
+		index = itemTitleIndex;
+		title = getStringArrayAt(itemTitleList, index);
+	</script>
+</text>
+<text offsetXPC=27.9 offsetYPC=29.9 widthPC=14.4 heightPC=6.0 fontSize=16 align=center backgroundColor=-1:-1:-1 foregroundColor=6:33:52 useBackgroundSurface="yes">
+	<script>
+		index = (itemTitleIndex + 1) % itemTitleCount;
+		title = getStringArrayAt(itemTitleList, index);
+	</script>
+</text>
+<text offsetXPC=42.9 offsetYPC=29.9 widthPC=14.4 heightPC=6.0 fontSize=16 align=center backgroundColor=-1:-1:-1 foregroundColor=6:33:52 useBackgroundSurface="yes">
+	<script>
+		index = (itemTitleIndex + 2) % itemTitleCount;
+		title = getStringArrayAt(itemTitleList, index);
+	</script>
+</text>
+<text offsetXPC=57.6 offsetYPC=29.9 widthPC=14.4 heightPC=6.0 fontSize=16 align=center backgroundColor=-1:-1:-1 foregroundColor=6:33:52 useBackgroundSurface="yes">
+	<script>
+		index = (itemTitleIndex + 3) % itemTitleCount;
+		title = getStringArrayAt(itemTitleList, index);
+	</script>
+</text>
+<text offsetXPC=72.3 offsetYPC=29.9 widthPC=14.4 heightPC=6.0 fontSize=16 align=center backgroundColor=-1:-1:-1 foregroundColor=6:33:52 useBackgroundSurface="yes">
+	<script>
+		if (itemTitleCount &gt; 4) {
+			index = (itemTitleIndex + 4) % itemTitleCount;
+			title = getStringArrayAt(itemTitleList, index);
+		}
+		else {
+			title = "";
+		}
+	</script>
+</text>
+
+<image offsetXPC=12.1 offsetYPC=37.2 widthPC=15.1 heightPC=43.9>
+	./setup_menu/image/misc_focus.fsp
+</image>
+
+<image offsetXPC=11.4 offsetYPC=84.7 widthPC=79.1 heightPC=7.6 useBackgroundSurface="yes">
+</image>
+
+<image>
+	<offsetXPC>
+		<script>
+			nextPos = hintIconX;
+			currPos = nextPos;
+			nextPos += hintIconWidth + hintGap;
+			currPos;
+		</script>
+	</offsetXPC>
+	<offsetYPC>
+		<script>
+			hintIconY;
+		</script>
+	</offsetYPC>
+	<widthPC>
+		<script>
+			hintIconWidth;
+		</script>
+	</widthPC>
+	<heightPC>
+		<script>
+			hintIconHeight;
+		</script>
+	</heightPC>
+	<script>
+		if (initFlag == "$[ON]") {
+			"";
+		}
+		else {
+			"./setup_menu/image/hint_left.fsp";
+		}
+	</script>
+</image>
+<image>
+	<offsetXPC>
+		<script>
+			currPos = nextPos;
+			nextPos += hintIconWidth + hintGap;
+			currPos;
+		</script>
+	</offsetXPC>
+	<offsetYPC>
+		<script>
+			hintIconY;
+		</script>
+	</offsetYPC>
+	<widthPC>
+		<script>
+			hintIconWidth;
+		</script>
+	</widthPC>
+	<heightPC>
+		<script>
+			hintIconHeight;
+		</script>
+	</heightPC>
+	<script>
+		if (initFlag == "$[ON]") {
+			"";
+		}
+		else {
+			"./setup_menu/image/hint_right.fsp";
+		}
+	</script>
+</image>
+<text fontSize=12 align=left useBackgroundSurface="yes">
+	<offsetXPC>
+		<script>
+			currPos = nextPos;
+			nextPos += hintMsgWidth + hintGap;
+			currPos;
+		</script>
+	</offsetXPC>
+	<offsetYPC>
+		<script>
+			hintMsgY;
+		</script>
+	</offsetYPC>
+	<widthPC>
+		<script>
+			hintMsgWidth;
+		</script>
+	</widthPC>
+	<heightPC>
+		<script>
+			hintMsgHeight;
+		</script>
+	</heightPC>
+	<script>
+		if (initFlag == "$[ON]") {
+			nextPos = hintIconX;
+			currPos = nextPos;
+			"";
+		}
+		else {
+			"$[CHANGE_CATEGORY]";
+		}
+	</script>
+</text>
+
+<image offsetXPC=11.4 offsetYPC=89.4 widthPC=1.3 heightPC=2.2>
+	<script>
+		if (initFlag == "$[ON]") {
+			"";
+		}
+		else {
+			"./setup_menu/image/setup_p2_point.fsp";
+		}
+	</script>
+</image>
+<text offsetXPC=13.7 offsetYPC=88.8 widthPC=70.4 heightPC=3.6 fontSize=12 align=left useBackgroundSurface="yes">
+	<script>
+		if (initFlag == "$[ON]") {
+			"";
+		}
+		else {
+			getPageInfo("pageTitle");
+		}
+	</script>
+</text>
+
+<scrollbar offsetXPC=90.2 offsetYPC=36.9 widthPC=0.4 heightPC=45.0 backgroundImage="./setup_menu/image/scroll_bar_01.fsp" foregroundImage="./setup_menu/image/scroll_bar_02.fsp" border=0 offset=0 direction="vertical" redraw="yes">
+	<totalSize>
+		<script>
+			getPageInfo("itemCount");
+		</script>
+	</totalSize>
+	<startIndex>
+		<script>
+			getFocusItemIndex();
+		</script>
+	</startIndex>
+</scrollbar>
+
+<!-- itemDisplay will draw widget inside the item area, item area is decided by mediaDisplay attributes -->
+<itemDisplay>
+	<!-- clear background -->
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 useBackgroundSurface="yes"/>
+	<!-- draw foreground -->
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+		<script>
+			image = "";
+			queryIndex = getQueryItemIndex();
+			focusIndex = getFocusItemIndex();
+			if (queryIndex == focusIndex) {
+				image = "./setup_menu/image/setup_p2_list_focus.fsp";
+			}
+			image;
+		</script>
+	</image>
+	<text offsetXPC=5 offsetYPC=5 widthPC=55 heightPC=90 align=left fontSize=16 backgroundColor=-1:-1:-1>
+		<foregroundColor>
+			<script>
+				fgcolor = "255:255:255";
+				queryIndex = getQueryItemIndex();
+				focusIndex = getFocusItemIndex();
+				if (queryIndex == focusIndex) {
+					fgcolor = "0:112:166";
+				}
+				fgcolor;
+			</script>
+		</foregroundColor>
+		<script>
+			getItemInfo("title");
+		</script>
+	</text>
+	<text offsetXPC=60 offsetYPC=5 widthPC=35 heightPC=90 align=right fontSize=14 backgroundColor=-1:-1:-1>
+		<foregroundColor>
+			<script>
+				fgcolor;
+			</script>
+		</foregroundColor>
+		<script>
+			value = "";
+			title = getItemInfo("title");
+			if( title == "$[KEY_TONE_VOLUME]" ) {
+				value = getCurrentSetting(title);
+			}else{
+				key = null;
+				if (title == "$[IMS_DTV]") {
+					key = "menu_dtv";
+				} else if (title == "$[IMS_FILE_MANAGER]") {
+					key = "menu_gbrowser";
+				} else if (title == "$[GBROWSER_MOVIE]") {
+					key = "menu_gmovie";
+				} else if (title == "$[GBROWSER_MUSIC]") {
+					key = "menu_gmusic";
+				} else if (title == "$[GBROWSER_PICTURE]") {
+					key = "menu_gpic";
+				} else if (title == "$[ims_vt_FAV]") {
+					key = "menu_fav";
+				} else if (title == "$[IMS_APP]") {
+					key = "menu_ims";
+				} else if (title == "$[IMS_IPTV]") {
+					key = "menu_iptv";
+				} else if (title == "$[IMS_WEB_BROWSER]") {
+					key = "menu_webkit";
+				} else if (title == "$[SETUP_MENU]") {
+					key = "menu_setup";
+				} else if (title == "$[POWER_OFF]") {
+					key = "menu_poweroff";
+				}
+				if(key != null) {
+					value = "$[ON]";
+					if (getFreeValueFromKey(key) == "$[OFF]") {
+						value = "$[OFF]";
+					}
+				}
+			}
+			value;
+		</script>
+	</text>	
+</itemDisplay>
+
+<onEnter>
+	hintIconX = 11.4;
+	hintIconY = 84.7;
+	hintIconWidth = 2.04;
+	hintIconHeight = 3.62;
+	hintGap = 0.9;
+	hintMsgY = 85.6;
+	hintMsgWidth = 17.2;
+	hintMsgHeight = 2.8;
+</onEnter>
+
+<onUserInput>
+	handle = "false";
+	userInput = currentUserInput();
+	if ("left" == userInput) {
+		redrawDisplay("no");
+		setEnv("disableDrawBackBuffer", "true");
+		setEnv("changeCategory", "previous");
+		handle = "return";
+	}
+	else if ("right" == userInput) {
+		redrawDisplay("no");
+		setEnv("disableDrawBackBuffer", "true");
+		setEnv("changeCategory", "next");
+		handle = "return";
+	}
+	handle;
+</onUserInput>
+
+</mediaDisplay>
+
+
+<channel>
+	<title>$[MISC]</title>
+	<link>rss_file://./setup_menu/scripts/misc.rss</link>
+
+
+<item>
+<title>$[VERSION_INFO]</title>
+<mediaDisplay>
+	<onEnter>
+		setFullScreenFade(64);
+
+		info = getVersionInfo();
+		popupHeader = "$[VERSION_INFO]";
+		popupMessageSize = 8;
+		popupMessages = info;
+		popupOptionSize = 0;
+		popupOptionWide = 1;
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[IP_CONFIG]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(isDeviceExist("ETH0") == "true" || isDeviceExist("WLAN0") == "true"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<mediaDisplay>
+	<onEnter>
+		setFullScreenFade(64);
+
+		popupHeader = "$[IP_CONFIG]";
+		popupMessageSize = 0;
+
+		if(isDeviceExist("ETH0") == "true"){
+			popupMessageSize += 5;
+			statusEth0 = checkDeviceStatus("ETH0");
+
+			ret = getMacAddressInfo("$[NET3POE_WIRED_INTERFACE]");
+			if( ret != NULL &amp;&amp; statusEth0 == "$[ON]") {
+				mac1 = "$[MAC_INFO]" + ": " + ret;
+			}
+			else {
+				mac1 = "$[MAC_INFO]" + ": " + "N/A";
+			}
+			ret = getWiredLanIpAddr("IP", "SINGLE");
+			if( ret != NULL &amp;&amp; statusEth0 == "$[ON]") {
+				ip1 = "$[NET_IP_ADDR]" + ": " + ret;
+			}
+			else {
+				ip1 = "$[NET_IP_ADDR]" + ": " + "N/A";
+			}
+			ret = getWiredLanIpAddr("SUBMASK", "SINGLE");
+			if( ret != NULL &amp;&amp; statusEth0 == "$[ON]") {
+				mask1 = "$[NET_SUB_MASK]" + ": " + ret;
+			}
+			else {
+				mask1 = "$[NET_SUB_MASK]" + ": " + "N/A";
+			}
+			ret = getWiredLanIpAddr("GATEWAY", "SINGLE");
+			if( ret != NULL &amp;&amp; statusEth0 == "$[ON]") {
+				gateway1 = "$[NET_DEF_GATEWAY]" + ": " + ret;
+			}
+			else {
+				gateway1 = "$[NET_DEF_GATEWAY]" + ": " + "N/A";
+			}
+
+			popupMessages = pushBackStringArray(popupMessages, "$[NET3POE_WIRED_INTERFACE]");
+			popupMessages = pushBackStringArray(popupMessages, mac1);
+			popupMessages = pushBackStringArray(popupMessages, ip1);
+			popupMessages = pushBackStringArray(popupMessages, mask1);
+			popupMessages = pushBackStringArray(popupMessages, gateway1);
+		}
+
+		if(isDeviceExist("WLAN0") == "true"){
+			popupMessageSize += 5;
+
+			ret = getMacAddressInfo("$[NET3POE_WIFI_INTERFACE]");
+			if( ret != NULL ) {
+				mac2 = "$[MAC_INFO]" + ": " + ret;
+			}
+			else {
+				mac2 = "$[MAC_INFO]" + ": " + "N/A";
+			}
+			ret = getWirelessIpAddr("IP", "SINGLE");
+			if( ret != NULL ) {
+				ip2 = "$[NET_IP_ADDR]" + ": " + ret;
+			}
+			else {
+				ip2 = "$[NET_IP_ADDR]" + ": " + "N/A";
+			}
+			ret = getWirelessIpAddr("SUBMASK", "SINGLE");
+			if( ret != NULL ) {
+				mask2 = "$[NET_SUB_MASK]" + ": " + ret;
+			}
+			else {
+				mask2 = "$[NET_SUB_MASK]" + ": " + "N/A";
+			}
+			ret = getWirelessIpAddr("GATEWAY", "SINGLE");
+			if( ret != NULL ) {
+				gateway2 = "$[NET_DEF_GATEWAY]" + ": " + ret;
+			}
+			else {
+				gateway2 = "$[NET_DEF_GATEWAY]" + ": " + "N/A";
+			}
+
+			popupMessages = pushBackStringArray(popupMessages, "$[NET3POE_WIFI_INTERFACE]");
+			popupMessages = pushBackStringArray(popupMessages, mac2);
+			popupMessages = pushBackStringArray(popupMessages, ip2);
+			popupMessages = pushBackStringArray(popupMessages, mask2);
+			popupMessages = pushBackStringArray(popupMessages, gateway2);
+		}
+
+		popupOptionSize = 0;
+		popupOptionWide = 2;
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[DIVX_REGISTER]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(IsItemDisasble("DivxDisable") == "false"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<mediaDisplay>
+	<onEnter>
+		setFullScreenFade(64);
+
+		regCode = getDivxRegisterCode();
+		if( regCode == NULL ) {
+			popupHeader = "$[DIVX_REGISTER]";
+			popupMessageSize = 1;
+			popupMessages = "$[DIVX_DEACTIVATE_REQUEST]";
+		}
+		else {
+			popupHeader = "$[DIVX_REGISTER]";
+			popupMessageSize = 1;
+			popupMessages = "$[REGISTRATION_CODE]" + " " + regCode;
+		}
+		popupOptionSize = 1;
+		popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+		popupOptionWide = 2;
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[DIVX_DEACTIVATE]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(IsItemDisasble("DivxDisable") == "false"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<mediaDisplay>
+	<onEnter>
+		setFullScreenFade(64);
+
+		activated = getDivxDeviceActivated();
+		if (activated == "true") {
+			popupHeader = "$[DIVX_DEACTIVATE]";
+			popupMessageSize = 1;
+			popupMessages = "$[DIVX_DEREGISTERING]";
+			popupOptionSize = 2;
+			popupOptions = pushBackStringArray(popupOptions, "$[YES]");
+			popupOptions = pushBackStringArray(popupOptions, "$[NO]");
+		}
+		else {
+			popupHeader = "$[DIVX_DEACTIVATE]";
+			popupMessageSize = 1;
+			popupMessages = "$[DEACITIVATE_CODE]" + " " + getDivxDeactivateCode();
+			popupOptionSize = 1;
+			popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+		}
+		popupOptionWide = 2;
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if (ret == "$[YES]") {
+			getDivxDeactivateCode();
+			doModalRss("rss_file://./setup_menu/scripts/dynamicPopup.rss");
+		}
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[NETFLIX_DEACTIVATE]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(IsItemDisasble("NetflixDisable") == "false"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<mediaDisplay>
+	<onEnter>
+		setFullScreenFade(64);
+
+		popupHeader = "$[NETFLIX_DEACTIVATE]";
+		popupMessageSize = 2;
+		popupMessages = pushBackStringArray(popupMessages, "$[NETFLIX_DEACTIVATION_REBOOT]" + " " + "$[NETFLIX_DEACTIVATION_CONFIRM]");
+		popupMessages = pushBackStringArray(popupMessages, "(ESN:" + getNetflixEsn() + ")");
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[YES]");
+		popupOptions = pushBackStringArray(popupOptions, "$[NO]");
+		popupOptionWide = 2;
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if (ret == "$[YES]") {
+			deactivateNetflix();
+		}
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[PARENTAL_CONTROL]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(isLoaderExist() == "true" || IsItemDisasble("DtvDisable") == "false"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<onClick>
+	<script>
+		link = "rss_file://./setup_menu/scripts/parentalCtrl.rss";
+		link;
+	</script>
+</onClick>
+</item>
+
+<!--
+<item>
+<title>$[SLIDE_SHOW_TIME]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[SLIDE_SHOW_TIME]";
+		popupOptionSize = 7;
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptions = pushBackStringArray(popupOptions, "$[2_SEC]");
+		popupOptions = pushBackStringArray(popupOptions, "$[5_SEC]");
+		popupOptions = pushBackStringArray(popupOptions, "$[10_SEC]");
+		popupOptions = pushBackStringArray(popupOptions, "$[30_SEC]");
+		popupOptions = pushBackStringArray(popupOptions, "$[1_MIN]");
+		popupOptions = pushBackStringArray(popupOptions, "$[2_MIN]");
+		popupOptionFocus = getCurrentSetting("$[SLIDE_SHOW_TIME]");
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setSlideShowTime(ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[KEN_BURNS]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[KEN_BURNS]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptionFocus = getCurrentSetting("$[KEN_BURNS]");
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setKenBurns(ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[SEAMLESS_PLAYBACK]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[SEAMLESS_PLAYBACK]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptionFocus = getCurrentSetting("$[SEAMLESS_PLAYBACK]");
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setSeamlessPlayback(ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[PICTURE_MUSIC]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[PICTURE_MUSIC]";
+		popupOptionSize = 3;
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptions = pushBackStringArray(popupOptions, "$[FOLDER]");
+		popupOptions = pushBackStringArray(popupOptions, "$[GBROWSER_LIST]");
+		popupOptionFocus = getCurrentSetting("$[PICTURE_MUSIC]");
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setBackgroundMusic(ret);
+		}
+	</script>
+</onClick>
+</item>
+
+
+
+<item>
+<title>Auto Subtitle</title>
+<onClick>
+	<script>
+		NULL;
+	</script>
+</onClick>
+</item>
+-->
+
+<!-- <item>
+<title>$[UPGRADE_ONLINE]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(isDeviceExist("ETH0") == "true" || isDeviceExist("WLAN0") == "true"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<onClick>
+	<script>
+		ret = doModalRss("rss_file://./setup_menu/scripts/onlineUpgradeProgress.rss");
+		null;
+	</script>
+</onClick>
+</item>
+-->
+
+<!--
+<item>
+<title>$[UPGRADE_USB]</title>
+<onClick>
+	<script>
+	    ret = doModalRss("rss_file://./setup_menu/scripts/usbUpgradeProgress.rss");
+		null;
+	</script>
+</onClick>
+</item> 
+
+<item>
+<title>$[DOWNLOAD_INSTALL_A]</title>
+<onClick>
+	<script>
+	    ret = doModalRss("rss_file://./setup_menu/scripts/install_aUpgradeProgress.rss");
+		null;
+	</script>
+</onClick>
+</item>
+-->
+
+<item>
+<title>$[KEY_TONE_VOLUME]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(IsItemDisasble("keyToneDisable")=="false"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[KEY_TONE_VOLUME]";
+		popupOptionSize = 6;
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptions = pushBackStringArray(popupOptions, "$[1]");
+		popupOptions = pushBackStringArray(popupOptions, "$[2]");
+		popupOptions = pushBackStringArray(popupOptions, "$[3]");
+		popupOptions = pushBackStringArray(popupOptions, "$[4]");
+		popupOptions = pushBackStringArray(popupOptions, "$[5]");			
+		popupOptionFocus = getCurrentSetting("$[KEY_TONE_VOLUME]");
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setKeyToneVolume(ret);
+		}
+	</script>
+</onClick>
+</item>
+<!--
+<item>
+<title>$[IMS_DTV]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(IsItemDisasble("IsAVinDisable") == "false"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[IMS_DTV]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_dtv") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_dtv", ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[IMS_FILE_MANAGER]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[IMS_FILE_MANAGER]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_gbrowser") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_gbrowser", ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[GBROWSER_MOVIE]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[GBROWSER_MOVIE]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_gmovie") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_gmovie", ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[GBROWSER_MUSIC]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[GBROWSER_MUSIC]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_gmusic") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_gmusic", ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[GBROWSER_PICTURE]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[GBROWSER_PICTURE]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_gpic") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_gpic", ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[ims_vt_FAV]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[ims_vt_FAV]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_fav") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_fav", ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[IMS_APP]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[IMS_APP]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_ims") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_ims", ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[IMS_IPTV]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(IsItemDisasble("ExtensionDisable") == "false"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[IMS_IPTV]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_iptv") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_iptv", ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[IMS_WEB_BROWSER]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(IsItemDisasble("WebKitDisable") == "false"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[IMS_WEB_BROWSER]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_webkit") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_webkit", ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[SETUP_MENU]</title>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[SETUP_MENU]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_setup") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_setup", ret);
+		}
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[POWER_OFF]</title>
+<disable>
+	<script>
+		isDisabled = "yes";
+		if(IsItemDisasble("IsPowerOffDisable") == "false"){
+			isDisabled = "no";
+		}
+		isDisabled;
+	</script>
+</disable>
+<mediaDisplay>
+	<onEnter>
+		popupHeader = "$[POWER_OFF]";
+		popupOptionSize = 2;
+		popupOptions = pushBackStringArray(popupOptions, "$[ON]");
+		popupOptions = pushBackStringArray(popupOptions, "$[OFF]");
+		popupOptionFocus = "$[ON]";
+		if (getFreeValueFromKey("menu_poweroff") == "$[OFF]") {
+			popupOptionFocus = "$[OFF]";
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			setFreeKeyValue("menu_poweroff", ret);
+		}
+	</script>
+</onClick>
+</item>
+-->
+</channel>
+</rss>

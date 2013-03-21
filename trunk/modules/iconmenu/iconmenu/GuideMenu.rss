@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
  
-<bookmark> Guide_Menu </bookmark>
+  <bookmark> Guide_Menu </bookmark>
 
-<onRefresh>
+  <onRefresh>
 	setRefreshTime(1000);
 	DBReady = IsDBReady();
 
 	if(DBReady != LastDBReady){
-		 redrawDisplay();
-    }
-    LastDBReady = DBReady;
-    
-</onRefresh>
+		redrawDisplay();
+	}
 
-<onExit>
+	LastDBReady = DBReady;
+  </onRefresh>
+
+  <onExit>
 	setRefreshTime(-1);
-</onExit>
+  </onExit>
 
-<mediaDisplay name=photoFocusView
+  <mediaDisplay name=photoFocusView
 
 	backgroundColor=-1:-1:-1
 
@@ -58,8 +58,8 @@
 	enableStretchBlt=no
 	circlingItems=no
 
-  slideItems=yes
-  stretchInFocus=yes
+	slideItems=yes
+	stretchInFocus=yes
 
 	showHeader = "no"
 	showDefaultInfo=no
@@ -71,387 +71,353 @@
 	AnimationDelay = 1
 	BackgroundDark = "no"
 
->
-<popupDialog>
-	<mediaDisplay>
-		<onEnter>
-			popupHeader = "$[IMS_APPINFO]";
-			popupOptionSize = 1;
-			popupOptions = pushBackStringArray(popupOptions, "$[OK]");
-			popupMessageSize = 1;
-			popupOptionWide = 1;
-			popupMessages = "$[IMS_APPWAIT]";
-			popupOptionFocus = "$[OK]"
-		</onEnter>
-	</mediaDisplay>
-</popupDialog>
-	<backgroundDisplay name=GuideMenuBackground>
-		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
-			<script>
-				BG_image = "/usr/local/etc/mos/iconmenu/images/GuideMenu_BG_half.fsp";
-			</script>
-		</image>
+  >
+    <popupDialog>
+      <mediaDisplay>
+	<onEnter>
+	popupHeader = "$[IMS_APPINFO]";
+	popupOptionSize = 1;
+	popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+	popupMessageSize = 1;
+	popupOptionWide = 1;
+	popupMessages = "$[IMS_APPWAIT]";
+	popupOptionFocus = "$[OK]"
+	</onEnter>
+      </mediaDisplay>
+    </popupDialog>
+
+    <popupDialog>
+      <mediaDisplay>
+	<onEnter>
+	popupHeader = "$[POWER_OFF]";
+	popupOptionSize = 2;
+	popupOptions = null;
+	popupOptions = pushBackStringArray(popupOptions, "$[YES]");
+	popupOptions = pushBackStringArray(popupOptions, "$[NO]");
+	popupOptionFocus = "$[NO]"
+	</onEnter>
+      </mediaDisplay>
+    </popupDialog>
+    <backgroundDisplay name=GuideMenuBackground>
+      <image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+	<script>
+		BG_image = "/usr/local/etc/mos/iconmenu/images/GuideMenu_BG_half.fsp";
+	</script>
+      </image>
 
 	<!--
-		 <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100"
-			fontSize="16" backgroundColor="3:30:81"/>
+	<text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100"
+		fontSize="16" backgroundColor="3:30:81"/>
 	-->
-	</backgroundDisplay>
+    </backgroundDisplay>
 
-	<BltRows>
-		<script>
-			if(EntryTimes &lt; 2){
-				500;
-			}
-			else{
-				120;
-			}
-		</script>
-	</BltRows>
+    <BltRows>
+      <script>
+	if(EntryTimes &lt; 2){
+		500;
+	}
+	else{
+		120;
+	}
+      </script>
+    </BltRows>
 
-	<BackgroundDark>
-		<script>
-			ret = "yes";
-			if(CurrentAP=="IMSAP"){
-				if(CurrentType=="Photo"){
-					ret = "no";
-				}else if(CurrentType=="Video"){
-					ret = "no";
-				}
-			}else if(CurrentAP=="VideoPlayback"){
-				ret = "no";
-			}else if(CurrentAP=="PhotoPlaybackAP"){
-				ret = "no";
-			}
-		</script>
-	</BackgroundDark>
+    <BackgroundDark>
+      <script>
+	ret = "yes";
+	if(CurrentAP=="IMSAP"){
+		if(CurrentType=="Photo"){
+			ret = "no";
+		}else if(CurrentType=="Video"){
+			ret = "no";
+		}
+	}else if(CurrentAP=="VideoPlayback"){
+		ret = "no";
+	}else if(CurrentAP=="PhotoPlaybackAP"){
+		ret = "no";
+	}
+      </script>
+    </BackgroundDark>
 
   <!-- the entry point of the view, you can set the initial focus here -->
   <!-- you can also use postMessage to do the initial operation on the focus item -->
-  <onEnter>
- 		CurAPName = getCurrentAPName();
- 		image_type = ".fsp";
- 		BG_image_type = ".fsp";
+    <onEnter>
+	CurAPName = getCurrentAPName();
+	image_type = ".fsp";
+	BG_image_type = ".fsp";
 
-		CurrentAP = getEnv("EntryStatusString1");
-		CurrentType = getEnv("EntryStatusString2");
-		PlayMusic = getEnv("EntryStatusString3");
-		CurrentSubType = getEnv("EntryStatusString4");
-		CurrentSubType5 = getEnv("EntryStatusString5");
-		CurrentSubType6 = getEnv("EntryStatusString6");
-		CurrentSubType7 = getEnv("EntryStatusString7");
-		IsAVinDisable = "yes";
-		GBrowserDisable = "no";
-		GMovieDisable = "no";
-		GMusicDisable = "no";
-		GPictureDisable = "no";
-		FavoritesDisable = "yes";
-		IMSDisable = "yes";
-		IPTVDisable = "yes";
-		WebKitDisable = "yes";
-		SetupDisable = "no";
+	CurrentAP = getEnv("EntryStatusString1");
+	CurrentType = getEnv("EntryStatusString2");
+	PlayMusic = getEnv("EntryStatusString3");
+	CurrentSubType = getEnv("EntryStatusString4");
+	CurrentSubType5 = getEnv("EntryStatusString5");
+	CurrentSubType6 = getEnv("EntryStatusString6");
+	CurrentSubType7 = getEnv("EntryStatusString7");
 
-/* pokrass added */
-		GlavTVDisable = "no";
-		TVonTopDisable = "no";
-		SaylerDisable = "no";
-		SovokDisable = "no";
-		FexDisable = "no";
-		YoutubeDisable = "no";
-		UAonlineDisable = "no";
-		WeatherDisable = "no";
-		TransDisable = "no";
-		IptvlistDisable = "no";
+
+	dlok = loadXMLFile("/usr/local/etc/mos/iconmenu/iconmenu.conf");
+	if(dlok != null)
+	{
+		webkit_ipad = getXMLText("webkit_ipad");
+		if( webkit_ipad == null || webkit_ipad == "")
+		 webkit_ipad = "no";
+
+		IsAVinDisable    = getXMLAttribute("servicesGuide","AVin","disable");
+		GBrowserDisable  = getXMLAttribute("servicesGuide","GBrowser","disable");
+		GMovieDisable    = getXMLAttribute("servicesGuide","GMovie","disable");
+		GMusicDisable    = getXMLAttribute("servicesGuide","GMusic","disable");
+		GPictureDisable  = getXMLAttribute("servicesGuide","GPicture","disable");
+		FavoritesDisable = getXMLAttribute("servicesGuide","Favorites","disable");
+		IMSDisable       = getXMLAttribute("servicesGuide","moMenu","disable");
+		IPTVDisable      = getXMLAttribute("servicesGuide","mediaCenter","disable");
+		WebKitDisable    = getXMLAttribute("servicesGuide","WebKit","disable");
+		SetupDisable     = getXMLAttribute("servicesGuide","Setup","disable");
+		PowerOffDisable  = getXMLAttribute("servicesGuide","PowerOff","disable");
+		OnMedDisable	 = getXMLAttribute("servicesGuide","OnlineMedia","disable");
+		YoutubeXLDisable = getXMLAttribute("servicesGuide","YoutubeXL","disable");
+	}	
+	else
+	{
+		IsAVinDisable    = "no";
+		GBrowserDisable  = "no";
+		GMovieDisable    = "no";
+		GMusicDisable    = "no";
+		GPictureDisable  = "no";
+		FavoritesDisable = "no";
+		IMSDisable       = "no";
+		IPTVDisable      = "no";
+		WebKitDisable    = "no";
+		YoutubeXLDisable = "no";
+		SetupDisable     = "no";
+		PowerOffDisable  = "no";
 		OnMedDisable = "no";
-		IconMedDisable = "no";
-		MediaportalDisable = "no";
-		RutorDisable = "no";
-		MyhitDisable = "no";
-/* end pokrass */
+	}
+	if(IsAVinDisable != "yes" &amp;&amp; IsItemDisasble("IsAVinDisable") == "true")
+	 IsAVinDisable = "yes";
+		
+	if(FavoritesDisable != "yes" &amp;&amp; IsItemDisasble("IsFavoritesDisable") == "true")
+	 FavoritesDisable = "yes";
 
-		if(IsItemDisasble("IsAVinDisable") == "false" &amp;&amp; getFreeValueFromKey("menu_dtv") != "$[OFF]"){
-			IsAVinDisable = "no";
-		}
-		
-		if(getFreeValueFromKey("menu_gbrowser") == "$[OFF]"){
-			GBrowserDisable = "yes";
-		}
-		
-		if(getFreeValueFromKey("menu_gmovie") == "$[OFF]"){
-			GMovieDisable = "yes";
-		}
-		
-		if(getFreeValueFromKey("menu_gmusic") == "$[OFF]"){
-			GMusicDisable = "yes";
-		}
-		
-		if(getFreeValueFromKey("menu_gpic") == "$[OFF]"){
-			GPictureDisable = "yes";
-		}
-		
-		if(IsItemDisasble("IsFavoritesDisable") == "false" &amp;&amp; getFreeValueFromKey("menu_fav") != "$[OFF]"){
-			FavoritesDisable = "no";
-		}
-		if(IsItemDisasble("NetworkDisable") == "false" &amp;&amp; getFreeValueFromKey("menu_ims") != "$[OFF]"){
-			IMSDisable = "no";
-		}
-		if(IsItemDisasble("ExtensionDisable") == "false" &amp;&amp; getFreeValueFromKey("menu_iptv") != "$[OFF]"){
-			IPTVDisable = "no";
-		}
-		if(IsItemDisasble("WebKitDisable") == "false" &amp;&amp; getFreeValueFromKey("menu_webkit") != "$[OFF]"){
-			WebKitDisable = "no";
-		}
-		if(getFreeValueFromKey("menu_setup") == "$[OFF]"){
-			SetupDisable = "yes";
-		}
+	if(IMSDisable != "yes" &amp;&amp; IsItemDisasble("NetworkDisable") == "true")
+	 IMSDisable = "yes";
+
+	if(WebKitDisable != "yes" &amp;&amp; IsItemDisasble("WebKitDisable") == "true")
+	 WebKitDisable = "yes";
+
+ 	if(YoutubeXLDisable != "yes" &amp;&amp; IsItemDisasble("YoutubeXLAPDisable") == "true")
+	 YoutubeXLDisable = "yes";
+
+/* farvoice added */
+	if(IPTVDisable != "yes"){
+		IPTVDisable = "no";
+		test = readStringFromFile("/tmp/app/REL_LOCALE");
+		if (test == null) IPTVDisable = "yes";
+	}
+/* end farvoice */
+
 /* pokrass added */
-		if(GlavTVDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/glavtv/def_rss.php");
-			if (test == null) GlavTVDisable = "yes";
-			else GlavTVDisable = "no";
-		}
-		if(TVonTopDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/tvontop/def_rss.php");
-			if (test == null) TVonTopDisable = "yes";
-			else TVonTopDisable = "no";
-		}
-		if(RutorDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/rutor/def_rss.php");
-			if (test == null) RutorDisable = "yes";
-			else RutorDisable = "no";
-		}
-		if(SaylerDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/mediarss/def_rss.php");
-			if (test == null) SaylerDisable = "yes";
-			else SaylerDisable = "no";
-		}
-		if(SovokDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/sovok/def_rss.php");
-			if (test == null) SovokDisable = "yes";
-			else SovokDisable = "no";
-		}
-		if(FexDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/fex/def_rss.php");
-			if (test == null) FexDisable = "yes";
-			else FexDisable = "no";
-		}
-		if(YoutubeDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/youtube/def_rss.php");
-			if (test == null) YoutubeDisable = "yes";
-			else YoutubeDisable = "no";
-		}		
-		if(UAonlineDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/uaonline2/def_rss.php");
-			if (test == null) UAonlineDisable = "yes";
-			else UAonlineDisable = "no";
-		}
-		if(WeatherDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/weather/def_rss.php");
-			if (test == null) WeatherDisable = "yes";
-			else WeatherDisable = "no";
-		}
-		if(TransDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/trans/watch.dir");
-			if (test == null) TransDisable = "yes";
-			else TransDisable = "no";
-		}
-		if(IptvlistDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/iptvlist/def_rss.php");
-			if (test == null) IptvlistDisable = "yes";
-			else IptvlistDisable = "no";
-		}
-		if(IconMedDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/iconmedia/def_rss.php");
-			if (test == null) IconMedDisable = "yes";
-			else IconMedDisable = "no";
-		}
+	GlavTVDisable	= "no";
+	TVonTopDisable	= "no";
+	SaylerDisable	= "no";
+	SovokDisable	= "no";
+	FexDisable	= "no";
+	YoutubeDisable	= "no";
+	UAonlineDisable	= "no";
+	WeatherDisable	= "no";
+	TransDisable	= "no";
+	IptvlistDisable	= "no";
+	IconMedDisable	= "no";
+	MediaportalDisable = "no";
+	RutorDisable	= "no";
+	MyhitDisable	= "no";
 
-		if(MediaportalDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/mediaportal/def_rss.php");
-			if (test == null) MediaportalDisable = "yes";
-			else MediaportalDisable = "no";
-		}
-		if(MyhitDisable == "no"){
-			test = readStringFromFile("/usr/local/etc/mos/www/modules/myhit/def_rss.php");
-			if (test == null) MyhitDisable = "yes";
-			else MyhitDisable = "no";
-		}
+	if(GlavTVDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/glavtv/def_rss.php");
+		if (test == null) GlavTVDisable = "yes";
+	}
+	if(TVonTopDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/tvontop/def_rss.php");
+		if (test == null) TVonTopDisable = "yes";
+	}
+	if(RutorDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/rutor/def_rss.php");
+		if (test == null) RutorDisable = "yes";
+	}
+	if(SaylerDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/mediarss/def_rss.php");
+		if (test == null) SaylerDisable = "yes";
+	}
+	if(SovokDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/sovok/def_rss.php");
+		if (test == null) SovokDisable = "yes";
+	}
+	if(FexDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/fex/def_rss.php");
+		if (test == null) FexDisable = "yes";
+	}
+	if(YoutubeDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/youtube/def_rss.php");
+		if (test == null) YoutubeDisable = "yes";
+	}		
+	if(UAonlineDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/uaonline2/def_rss.php");
+		if (test == null) UAonlineDisable = "yes";
+	}
+	if(WeatherDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/weather/def_rss.php");
+		if (test == null) WeatherDisable = "yes";
+	}
+	if(TransDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/trans/watch.dir");
+		if (test == null) TransDisable = "yes";
+	}
+	if(IptvlistDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/iptvlist/def_rss.php");
+		if (test == null) IptvlistDisable = "yes";
+	}
+	if(IconMedDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/iconmedia/def_rss.php");
+		if (test == null) IconMedDisable = "yes";
+	}
+	if(MediaportalDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/mediaportal/def_rss.php");
+		if (test == null) MediaportalDisable = "yes";
+	}
+	if(MyhitDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/myhit/def_rss.php");
+		if (test == null) MyhitDisable = "yes";
+	}
 /* end pokrass */
-		
-		FocusCnt = 0;
-		if(IsAVinDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(GBrowserDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(GMovieDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(GMusicDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(GPictureDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(FavoritesDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(IMSDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(IPTVDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(WebKitDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(SetupDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
+
+	FocusCnt = 0;
+	if(IsAVinDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(GBrowserDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(GMovieDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(GMusicDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(GPictureDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(FavoritesDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(IMSDisable == "no")		FocusCnt = FocusCnt + 1;
+	if(IPTVDisable == "no")		FocusCnt = FocusCnt + 1;
+	if(WebKitDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(YoutubeXLDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(SetupDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(PowerOffDisable == "no")	FocusCnt = FocusCnt + 1;
+
 /* pokrass added */
-		GlavTV = FocusCnt;
-		if(GlavTVDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(TVonTopDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(SaylerDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(UAonlineDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(SovokDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(FexDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(YoutubeDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(WeatherDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(TransDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(IptvlistDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(OnMedDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(IconMedDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(MediaportalDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(RutorDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(MyhitDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
+	if(GlavTVDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(TVonTopDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(SaylerDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(UAonlineDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(SovokDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(FexDisable == "no")		FocusCnt = FocusCnt + 1;
+	if(YoutubeDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(WeatherDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(TransDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(IptvlistDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(OnMedDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(IconMedDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(MediaportalDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(RutorDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(MyhitDisable == "no")	FocusCnt = FocusCnt + 1;
 /* end pokrass */
 
-		CurrentSel = FocusCnt / 2 ;
-		setParentFade(100);
-		
+	CurrentSel = FocusCnt / 2 ;
+	setParentFade(100);
 
-		setItemFocus(CurrentSel);
-		redrawDisplay();
+	setItemFocus(CurrentSel);
+	redrawDisplay();
 
-        EntryTimes = 1;
-        BltType = "NoBitBlt";
+	EntryTimes = 1;
+	BltType = "NoBitBlt";
 
-        DBReady = IsDBReady();
-        LastDBReady = DBReady;
-        setRefreshTime(1000);
+	DBReady = IsDBReady();
+	LastDBReady = DBReady;
+	setRefreshTime(1000);
 
-  </onEnter>
-	<onUserInput>
-	        userInput = currentUserInput();
+    </onEnter>
 
-		ret="false";
+    <onUserInput>
+        userInput = currentUserInput();
+	ret="false";
 
-		newIndex = "-1";
+	newIndex = "-1";
         
-		if("up" == userInput)
-		{
-			ret = "true";
-	        }
-		else if (userInput == "one") 	newIndex = 0;
-		else if (userInput == "two") 	newIndex = 1;
-		else if (userInput == "three")	newIndex = 2;
-		else if (userInput == "four")	newIndex = 3;
-		else if (userInput == "five")	newIndex = 4;
-		else if (userInput == "six")	newIndex = 5;
-		else if (userInput == "seven")	newIndex = 6;
-		else if (userInput == "eight")	newIndex = 7;
-		else if (userInput == "nine")	newIndex = 8;
-		else if (userInput == "zero")	newIndex = 9;
+	if("up" == userInput)
+	{
+		ret = "true";
+        }
+	else if (userInput == "one") 	newIndex = 0;
+	else if (userInput == "two") 	newIndex = 1;
+	else if (userInput == "three")	newIndex = 2;
+	else if (userInput == "four")	newIndex = 3;
+	else if (userInput == "five")	newIndex = 4;
+	else if (userInput == "six")	newIndex = 5;
+	else if (userInput == "seven")	newIndex = 6;
+	else if (userInput == "eight")	newIndex = 7;
+	else if (userInput == "nine")	newIndex = 8;
+	else if (userInput == "zero")	newIndex = 9;
 
-		if( newIndex !="-1" )
+	if( newIndex !="-1" )
+	{
+		if( newIndex &lt; FocusCnt )
 		{
-			if( newIndex &lt; FocusCnt )
-			{
-				setFocusItemIndex( newIndex );
-				redrawDisplay();
-				postMessage("enter");
-			}
-			ret = "true";
+			setFocusItemIndex( newIndex );
+			redrawDisplay();
+			postMessage("enter");
 		}
-		ret;
+		ret = "true";
+	}
+	ret;
     </onUserInput>
 
   <!-- over write user key mapping here -->
   <!-- return true means the event has been handled -->
   <!-- return false means the View will continue to handle the event -->
 
+    <text offsetXPC=0 offsetYPC=6.2 widthPC=100 heightPC=15 fontSize=17 foregroundColor=200:200:200 backgroundColor=-1:-1:-1 align=center redraw=yes useBackgroundSurface=yes>
+      <script>
+	focusIndex = getFocusItemIndex();
+	title= (focusIndex - -1 + ". ")  + getItemInfo(focusIndex,  "title");
+      </script>
+    </text>
 
-	<text offsetXPC=0 offsetYPC=6.2 widthPC=100 heightPC=13 fontSize=17 foregroundColor=200:200:200 backgroundColor=-1:-1:-1 align=center redraw=yes useBackgroundSurface=yes>
-		<script>
-			focusIndex = getFocusItemIndex();
-			title= (focusIndex - -1 + ". ")  + getItemInfo(focusIndex,  "title");
-		</script>
-	</text>
+    <text offsetXPC=5 offsetYPC=6.4 widthPC=30 heightPC=12 fontSize=14 foregroundColor=216:226:0 backgroundColor=-1:-1:-1 align=left tailDots=yes useBackgroundSurface=no redraw=yes>
+      <script>
+	getCurrentTimeInfo();
+      </script>
+    </text>
 
+    <itemDisplay>
 
-	<itemDisplay>
+      <image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=92>
+	<script>
+	queryIndex = getQueryItemIndex();
+	focusIndex = getFocusItemIndex();
+	lastSelectedIndex = getSelectedItemIndex();
+	thumbnail = getItemInfo("media:thumbnail");
+	ItemGroup = getItemInfo("group");
+	state = getDrawingItemState();
+	if(ItemGroup == "DB"){
+		if(DBReady == "false"){
+			thumbnail = thumbnail + "_gray";
+		}
+	}
+	if (queryIndex != focusIndex){
+		thumbnail = thumbnail;
+	}
+	thumbnail = thumbnail + image_type;
 
-		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=92>
-			<script>
-				queryIndex = getQueryItemIndex();
-				focusIndex = getFocusItemIndex();
-				lastSelectedIndex = getSelectedItemIndex();
-				thumbnail = getItemInfo("media:thumbnail");
-				ItemGroup = getItemInfo("group");
-				state = getDrawingItemState();
-				if(ItemGroup == "DB"){
-					if(DBReady == "false"){
-						thumbnail = thumbnail + "_gray";
-					}
-				}
-				if (queryIndex != focusIndex){
-					thumbnail = thumbnail;
-				}
-				thumbnail = thumbnail + image_type;
+	thumbnail;
 
-				thumbnail;
+	</script>
+      </image>
+    </itemDisplay>
 
-			</script>
-		</image>
-	</itemDisplay>
+  </mediaDisplay>
 
-</mediaDisplay>
-
-<channel>
-	<title> GuideMenu </title>
-	<link>./guide_menu/scripts/GuideMenu.rss</link>
+  <channel>
+    <title> GuideMenu </title>
+    <link>./guide_menu/scripts/GuideMenu.rss</link>
 
 <item>
 <title>$[IMS_DTV]</title>
@@ -624,9 +590,7 @@
 </onClick>
 </item>
 
-
-/* pokrass added */
-
+<!-- pokrass added -->
 
 <item>
 <title>IPTV List</title>
@@ -761,8 +725,6 @@
 </onClick>
 </item>
 
-
-
 <item>
 <title>YouTube</title>
 <disable>
@@ -777,6 +739,23 @@
 		MenuType = "TopMenu";
 		MenuLink = "http://127.0.0.1/?page=rss_youtube";
 		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>$[WEBKIT_YOUTUBE_XL]</title>
+<disable>
+	<script>
+		YoutubeXLDisable;
+	</script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/yxl </media:thumbnail>
+<onClick>
+	<script>
+		APName = "WebKitAP_youtubexl";
+		menuCmd(APName);
 		null;
 	</script>
 </onClick>
@@ -916,8 +895,7 @@
 </onClick>
 </item>
 
-
-/* end pokrass */
+<!-- end pokrass -->
 
 <item>
 <title>moServices</title>
@@ -929,16 +907,10 @@
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/moMenu </media:thumbnail>
 <onClick>
 	<script>
-		status = readStringFromFile("/tmp/share/appInit.dat");
-		if (status == "yes" || IPTVDisable == "yes") {
-			APName = "IMSAP";
-			MenuType = "TopMenu";
-			MenuLink = "rss_file://./scripts/menu.rss";
-			menuCmd(APName, MenuType, MenuLink, BltType);
-		} else {
-			rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
-			doModalRss(rss, "mediaDisplay", "popupDialog", 0);
-		}
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_menu";
+		menuCmd(APName, MenuType, MenuLink, BltType);
 		null;
 	</script>
 </onClick>
@@ -954,19 +926,13 @@
 </disable>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_IPTV </media:thumbnail>
 <onClick>
-	<script>
-		status = readStringFromFile("/tmp/share/appInit.dat");
-		if (status == "yes") {
-			APName = "IMSAP";
-			MenuType = "TopMenu";
-			MenuLink = "rss_file:///tmp/app/ims/mc-browser.rss";
-			menuCmd(APName, MenuType, MenuLink, BltType);
-		} else {
-			rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
-			doModalRss(rss, "mediaDisplay", "popupDialog", 0);
-		}
-		null;
-	</script>
+  <script>
+	APName = "IMSAP";
+	MenuType = "TopMenu";
+	MenuLink = "rss_file:///tmp/app/ims/mc-browser.rss";
+	menuCmd(APName, MenuType, MenuLink, BltType);
+	null;
+  </script>
 </onClick>
 </item>
 
@@ -980,7 +946,7 @@
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Webkit </media:thumbnail>
 <onClick>
 	<script>
-		setEnv("webkit_app", "webentry");
+		setEnv("use_ipad_useragent", webkit_ipad);
 		APName = "WebKitAP";
 		menuCmd(APName);
 		null;
@@ -1008,5 +974,25 @@
 </onClick>
 </item>
 
-</channel>
+<item>
+<title>$[POWER_OFF]</title>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Power </media:thumbnail>
+<disable>
+	<script>
+		PowerOffDisable;
+	</script>
+</disable>
+<onClick>
+	<script>
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		ret = doModalRss(rss, "mediaDisplay", "popupDialog", 1);
+		if (ret == "$[YES]") {
+			sendInternalCommand("power");
+		}
+		null;
+	</script>
+</onClick>
+</item>
+
+  </channel>
 </rss>

@@ -18,7 +18,7 @@
 	setRefreshTime(-1);
 </onExit>
 
-<mediaDisplay name=photoFocusView
+  <mediaDisplay name=photoFocusView
 
 	backgroundColor=-1:-1:-1
 
@@ -71,179 +71,172 @@
 	AnimationDelay = 1
 	BackgroundDark = "no"
 
->
-<popupDialog>
-	<mediaDisplay>
-		<onEnter>
-			popupHeader = "$[IMS_APPINFO]";
-			popupOptionSize = 1;
-			popupOptions = pushBackStringArray(popupOptions, "$[OK]");
-			popupMessageSize = 1;
-			popupOptionWide = 1;
-			popupMessages = "$[IMS_APPWAIT]";
-			popupOptionFocus = "$[OK]"
-		</onEnter>
-	</mediaDisplay>
-</popupDialog>
-<popupDialog>
-	<mediaDisplay>
-		<onEnter>
-			popupHeader = "$[POWER_OFF]";
-			popupOptionSize = 2;
-			popupOptions = null;
-			popupOptions = pushBackStringArray(popupOptions, "$[YES]");
-			popupOptions = pushBackStringArray(popupOptions, "$[NO]");
-			popupOptionFocus = "$[NO]"
-		</onEnter>
-	</mediaDisplay>
-</popupDialog>
-	<backgroundDisplay name=GuideMenuBackground>
-		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
-			<script>
-				BG_image = "/usr/local/etc/mos/iconmenu/images/HomeDock.png";
-			</script>
-		</image>
+  >
+    <popupDialog>
+      <mediaDisplay>
+        <onEnter>
+
+	popupHeader = "$[IMS_APPINFO]";
+	popupOptionSize = 1;
+	popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+	popupMessageSize = 1;
+	popupOptionWide = 1;
+	popupMessages = "$[IMS_APPWAIT]";
+	popupOptionFocus = "$[OK]"
+
+        </onEnter>
+      </mediaDisplay>
+    </popupDialog>
+    <popupDialog>
+      <mediaDisplay>
+	<onEnter>
+
+	popupHeader = "$[POWER_OFF]";
+	popupOptionSize = 2;
+	popupOptions = null;
+	popupOptions = pushBackStringArray(popupOptions, "$[YES]");
+	popupOptions = pushBackStringArray(popupOptions, "$[NO]");
+	popupOptionFocus = "$[NO]"
+
+	</onEnter>
+      </mediaDisplay>
+    </popupDialog>
+      <backgroundDisplay name=GuideMenuBackground>
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+	  <script>
+		BG_image = "/usr/local/etc/mos/iconmenu/images/HomeDock.png";
+	  </script>
+	</image>
 
 	<!--
-		 <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100"
-			fontSize="16" backgroundColor="3:30:81"/>
+	 <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100"
+		fontSize="16" backgroundColor="3:30:81"/>
 	-->
-	</backgroundDisplay>
+      </backgroundDisplay>
 
-	<BltRows>
-		<script>
-			if(EntryTimes &lt; 2){
-				500;
-			}
-			else{
-				120;
-			}
-		</script>
-	</BltRows>
+      <BltRows>
+	<script>
+	if(EntryTimes &lt; 2){
+		500;
+	}
+	else{
+		120;
+	}
+	</script>
+      </BltRows>
 
-	<BackgroundDark>
-		<script>
-			ret = "yes";
-			if(CurrentAP=="IMSAP"){
-				if(CurrentType=="Photo"){
-					ret = "no";
-				}else if(CurrentType=="Video"){
-					ret = "no";
-				}
-			}else if(CurrentAP=="VideoPlayback"){
-				ret = "no";
-			}else if(CurrentAP=="PhotoPlaybackAP"){
-				ret = "no";
-			}
-		</script>
-	</BackgroundDark>
+      <BackgroundDark>
+	<script>
+	ret = "yes";
+	if(CurrentAP=="IMSAP"){
+		if(CurrentType=="Photo"){
+			ret = "no";
+		}else if(CurrentType=="Video"){
+			ret = "no";
+		}
+	}else if(CurrentAP=="VideoPlayback"){
+		ret = "no";
+	}else if(CurrentAP=="PhotoPlaybackAP"){
+		ret = "no";
+	}
+	</script>
+      </BackgroundDark>
 
   <!-- the entry point of the view, you can set the initial focus here -->
   <!-- you can also use postMessage to do the initial operation on the focus item -->
-  <onEnter>
- 		CurAPName = getCurrentAPName();
- 		image_type = ".fsp";
- 		BG_image_type = ".fsp";
 
-		CurrentAP = getEnv("EntryStatusString1");
-		CurrentType = getEnv("EntryStatusString2");
-		PlayMusic = getEnv("EntryStatusString3");
-		CurrentSubType = getEnv("EntryStatusString4");
-		CurrentSubType5 = getEnv("EntryStatusString5");
-		CurrentSubType6 = getEnv("EntryStatusString6");
-		CurrentSubType7 = getEnv("EntryStatusString7");
+      <onEnter>
+	CurAPName = getCurrentAPName();
+	image_type = ".fsp";
+	BG_image_type = ".fsp";
 
-		IsAVinDisable = "yes";
-		GBrowserDisable = "no";
-		GMovieDisable = "no";
-		GMusicDisable = "no";
-		GPictureDisable = "no";
-		FavoritesDisable = "yes";
-		IMSDisable = "yes";
-		IPTVDisable = "yes";
-		WebKitDisable = "yes";
-		SetupDisable = "no";
-		PowerOffDisable = "yes";
+	CurrentAP = getEnv("EntryStatusString1");
+	CurrentType = getEnv("EntryStatusString2");
+	PlayMusic = getEnv("EntryStatusString3");
+	CurrentSubType = getEnv("EntryStatusString4");
+	CurrentSubType5 = getEnv("EntryStatusString5");
+	CurrentSubType6 = getEnv("EntryStatusString6");
+	CurrentSubType7 = getEnv("EntryStatusString7");
 
-		if(IsItemDisasble("IsAVinDisable") == "false" &amp;&amp; getFreeValueFromKey("menu_dtv") != "$[OFF]"){
-			IsAVinDisable = "no";
-		}
+	dlok = loadXMLFile("/usr/local/etc/mos/iconmenu/iconmenu.conf");
+	if(dlok != null)
+	{
+		webkit_ipad = getXMLText("webkit_ipad");
+		if( webkit_ipad == null || webkit_ipad == "")
+		 webkit_ipad = "no";
+
+		IsAVinDisable    = getXMLAttribute("servicesDock","AVin","disable");
+		GBrowserDisable  = getXMLAttribute("servicesDock","GBrowser","disable");
+		GMovieDisable    = getXMLAttribute("servicesDock","GMovie","disable");
+		GMusicDisable    = getXMLAttribute("servicesDock","GMusic","disable");
+		GPictureDisable  = getXMLAttribute("servicesDock","GPicture","disable");
+		FavoritesDisable = getXMLAttribute("servicesDock","Favorites","disable");
+		IMSDisable       = getXMLAttribute("servicesDock","moMenu","disable");
+		IPTVDisable      = getXMLAttribute("servicesDock","mediaCenter","disable");
+		WebKitDisable    = getXMLAttribute("servicesDock","WebKit","disable");
+		TransDisable     = getXMLAttribute("servicesDock","Transmission","disable");
+		SetupDisable     = getXMLAttribute("servicesDock","Setup","disable");
+		PowerOffDisable  = getXMLAttribute("servicesDock","PowerOff","disable");
+	}	
+	else
+	{
+		IsAVinDisable    = "no";
+		GBrowserDisable  = "no";
+		GMovieDisable    = "no";
+		GMusicDisable    = "no";
+		GPictureDisable  = "no";
+		FavoritesDisable = "no";
+		IMSDisable       = "no";
+		IPTVDisable      = "no";
+		WebKitDisable    = "no";
+		SetupDisable     = "no";
+		PowerOffDisable  = "no";
+		TransDisable     = "no";
+	}
+	if(IsAVinDisable != "yes" &amp;&amp; IsItemDisasble("IsAVinDisable") == "true")
+	 IsAVinDisable = "yes";
 		
-		if(getFreeValueFromKey("menu_gbrowser") == "$[OFF]"){
-			GBrowserDisable = "yes";
-		}
-		
-		if(getFreeValueFromKey("menu_gmovie") == "$[OFF]"){
-			GMovieDisable = "yes";
-		}
-		
-		if(getFreeValueFromKey("menu_gmusic") == "$[OFF]"){
-			GMusicDisable = "yes";
-		}
-		
-		if(getFreeValueFromKey("menu_gpic") == "$[OFF]"){
-			GPictureDisable = "yes";
-		}
-		
-		if(IsItemDisasble("IsFavoritesDisable") == "false" &amp;&amp; getFreeValueFromKey("menu_fav") != "$[OFF]"){
-			FavoritesDisable = "no";
-		}
-		if(IsItemDisasble("NetworkDisable") == "false" &amp;&amp; getFreeValueFromKey("menu_ims") != "$[OFF]"){
-			IMSDisable = "no";
-		}
-		if(IsItemDisasble("ExtensionDisable") == "false" &amp;&amp; getFreeValueFromKey("menu_iptv") != "$[OFF]"){
+	if(FavoritesDisable != "yes" &amp;&amp; IsItemDisasble("IsFavoritesDisable") == "true")
+	 FavoritesDisable = "yes";
+
+	if(IMSDisable != "yes" &amp;&amp; IsItemDisasble("NetworkDisable") == "true")
+	 IMSDisable = "yes";
+
+	if(WebKitDisable != "yes" &amp;&amp; IsItemDisasble("WebKitDisable") == "true")
+	 WebKitDisable = "yes";
+
+	if(TransDisable != "yes"){
+		TransDisable = "no";
+		test = readStringFromFile("/usr/local/etc/mos/trans/watch.dir");
+		if (test == null) TransDisable = "yes";
+	}
+
+/* farvoice added */
+		if(IPTVDisable != "yes"){
 			IPTVDisable = "no";
+			test = readStringFromFile("/tmp/app/REL_LOCALE");
+			if (test == null) IPTVDisable = "yes";
 		}
-		if(IsItemDisasble("WebKitDisable") == "false" &amp;&amp; getFreeValueFromKey("menu_webkit") != "$[OFF]"){
-			WebKitDisable = "no";
-		}
-		if(getFreeValueFromKey("menu_setup") == "$[OFF]"){
-			SetupDisable = "yes";
-		}
-		if (getFreeValueFromKey("menu_poweroff") != "$[OFF]"){
-			PowerOffDisable = "no";
-		} 
-		
-		FocusCnt = 0;
-		if(IsAVinDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(GBrowserDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(GMovieDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(GMusicDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(GPictureDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(FavoritesDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(IMSDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(IPTVDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(WebKitDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(SetupDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
-		if(PowerOffDisable == "no"){
-			FocusCnt = FocusCnt + 1;
-		}
+/* end farvoice */
+	FocusCnt = 0;
+	if(IsAVinDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(GBrowserDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(GMovieDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(GMusicDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(GPictureDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(FavoritesDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(IMSDisable == "no")		FocusCnt = FocusCnt + 1;
+	if(IPTVDisable == "no")		FocusCnt = FocusCnt + 1;
+	if(WebKitDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(TransDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(SetupDisable == "no")	FocusCnt = FocusCnt + 1;
+	if(PowerOffDisable == "no")	FocusCnt = FocusCnt + 1;
 
-		CurrentSel = FocusCnt / 2 ;
-		setParentFade(100);
-		
-		setItemFocus(CurrentSel);
-		redrawDisplay();
+	CurrentSel = FocusCnt / 2 ;
+	setParentFade(100);
+
+	setItemFocus(CurrentSel);
+	redrawDisplay();
 
         EntryTimes = 1;
         BltType = "NoBitBlt";
@@ -253,105 +246,92 @@
 
         setRefreshTime(1000);
 
-  </onEnter>
-	<onUserInput>
-        userInput = currentUserInput();
-        
+    </onEnter>
+
+    <onUserInput>
+	userInput = currentUserInput();
+	ret="false";
+
+	newIndex = "-1";
+
 	if("up" == userInput)
 	{
 		postMessage("return");
-		"true";
+		ret = "true";
 	}
 	else if("down" == userInput)
 	{
-		"true";
+		ret = "true";
         }
-	else
+	else if (userInput == "guide")	ret = "true";
+	else if (userInput == "down")	ret = "true";
+	else if (userInput == "edit")	ret = "true";
+	else if (userInput == "one") 	newIndex = 0;
+	else if (userInput == "two") 	newIndex = 1;
+	else if (userInput == "three")	newIndex = 2;
+	else if (userInput == "four")	newIndex = 3;
+	else if (userInput == "five")	newIndex = 4;
+	else if (userInput == "six")	newIndex = 5;
+	else if (userInput == "seven")	newIndex = 6;
+	else if (userInput == "eight")	newIndex = 7;
+	else if (userInput == "nine")	newIndex = 8;
+	else if (userInput == "zero")	newIndex = 9;
+
+	if( newIndex !="-1" )
 	{
-		"false";
-        }
-	        userInput = currentUserInput();
-
-		ret="false";
-
-		newIndex = "-1";
-        
-		if      (userInput == "guide")	ret = "true";
-		else if (userInput == "down")	ret = "true";
-		else if (userInput == "edit")	ret = "true";
-		else if (userInput == "up")
-	{
-		postMessage("return");
-		"true";
-	}
-		else if (userInput == "one") 	newIndex = 0;
-		else if (userInput == "two") 	newIndex = 1;
-		else if (userInput == "three")	newIndex = 2;
-		else if (userInput == "four")	newIndex = 3;
-		else if (userInput == "five")	newIndex = 4;
-		else if (userInput == "six")	newIndex = 5;
-		else if (userInput == "seven")	newIndex = 6;
-		else if (userInput == "eight")	newIndex = 7;
-		else if (userInput == "nine")	newIndex = 8;
-		else if (userInput == "zero")	newIndex = 9;
-
-		if( newIndex !="-1" )
+		if( newIndex &lt; FocusCnt )
 		{
-			if( newIndex &lt; FocusCnt )
-			{
-				setFocusItemIndex( newIndex );
-				redrawDisplay();
-				postMessage("enter");
-			}
-			ret = "true";
+			setFocusItemIndex( newIndex );
+			redrawDisplay();
+			postMessage("enter");
 		}
-		ret;
-    </onUserInput>
+		ret = "true";
+	}
+	ret;
+      </onUserInput>
 
   <!-- over write user key mapping here -->
   <!-- return true means the event has been handled -->
   <!-- return false means the View will continue to handle the event -->
 
+      <text offsetXPC=0 offsetYPC=6.2 widthPC=100 heightPC=15 fontSize=17 foregroundColor=200:200:0 backgroundColor=-1:-1:-1 align=center redraw=yes useBackgroundSurface=yes>
+        <script>
+	focusIndex = getFocusItemIndex();
+	title = getItemInfo(focusIndex, "title");
+        </script>
+      </text>
 
-	<text offsetXPC=0 offsetYPC=6.2 widthPC=100 heightPC=13 fontSize=17 foregroundColor=200:200:0 backgroundColor=-1:-1:-1 align=center redraw=yes useBackgroundSurface=yes>
-		<script>
-			focusIndex = getFocusItemIndex();
-			title = getItemInfo(focusIndex, "title");
-		</script>
-	</text>
+      <itemDisplay>
+        <image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=92>
+          <script>
 
+	queryIndex = getQueryItemIndex();
+	focusIndex = getFocusItemIndex();
+	lastSelectedIndex = getSelectedItemIndex();
+	thumbnail = getItemInfo("media:thumbnail");
+	ItemGroup = getItemInfo("group");
+	state = getDrawingItemState();
+	if(ItemGroup == "DB"){
+		if(DBReady == "false"){
+			thumbnail = thumbnail + "_gray";
+		}
+	}
+	if (queryIndex != focusIndex){
+		thumbnail = thumbnail;
+	}
+	thumbnail = thumbnail + image_type;
 
-	<itemDisplay>
+	thumbnail;
 
-		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=92>
-			<script>
-				queryIndex = getQueryItemIndex();
-				focusIndex = getFocusItemIndex();
-				lastSelectedIndex = getSelectedItemIndex();
-				thumbnail = getItemInfo("media:thumbnail");
-				ItemGroup = getItemInfo("group");
-				state = getDrawingItemState();
-				if(ItemGroup == "DB"){
-					if(DBReady == "false"){
-						thumbnail = thumbnail + "_gray";
-					}
-				}
-				if (queryIndex != focusIndex){
-					thumbnail = thumbnail;
-				}
-				thumbnail = thumbnail + image_type;
+	  </script>
+        </image>
+      </itemDisplay>
 
-				thumbnail;
+    </mediaDisplay>
 
-			</script>
-		</image>
-	</itemDisplay>
-
-</mediaDisplay>
-
-<channel>
-	<title> GuideMenu </title>
-	<link>./guide_menu/scripts/GuideMenu.rss</link>
+  <channel>
+    <title> GuideMenu </title>
+    <link>./guide_menu/scripts/GuideMenu.rss</link>
 
 <item>
 <title>$[IMS_DTV]</title>
@@ -524,9 +504,6 @@
 </onClick>
 </item>
 
-
-
-
 <item>
 <title>$[IMS_IPTV]</title>
 <disable>
@@ -536,19 +513,13 @@
 </disable>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_IPTV </media:thumbnail>
 <onClick>
-	<script>
-		status = readStringFromFile("/tmp/share/appInit.dat");
-		if (status == "yes") {
-			APName = "IMSAP";
-			MenuType = "TopMenu";
-			MenuLink = "rss_file:///tmp/app/ims/mc-browser.rss";
-			menuCmd(APName, MenuType, MenuLink, BltType);
-		} else {
-			rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
-			doModalRss(rss, "mediaDisplay", "popupDialog", 0);
-		}
-		null;
-	</script>
+  <script>
+	APName = "IMSAP";
+	MenuType = "TopMenu";
+	MenuLink = "rss_file:///tmp/app/ims/mc-browser.rss";
+	menuCmd(APName, MenuType, MenuLink, BltType);
+	null;
+  </script>
 </onClick>
 </item>
 
@@ -562,13 +533,34 @@
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Webkit </media:thumbnail>
 <onClick>
 	<script>
-		setEnv("webkit_app", "webentry");
+		setEnv("use_ipad_useragent", webkit_ipad);
 		APName = "WebKitAP";
 		menuCmd(APName);
 		null;
 	</script>
 </onClick>
 </item>
+
+<item>
+<title>Transmission</title>
+<disable>
+    <script>
+	TransDisable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/trans </media:thumbnail>
+<onClick>
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_trans";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+
 <item>
 <title>moServices</title>
 <disable>
@@ -579,16 +571,10 @@
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/moMenu </media:thumbnail>
 <onClick>
 	<script>
-		status = readStringFromFile("/tmp/share/appInit.dat");
-		if (status == "yes" || IPTVDisable == "yes") {
-			APName = "IMSAP";
-			MenuType = "TopMenu";
-			MenuLink = "rss_file://./scripts/menu.rss";
-			menuCmd(APName, MenuType, MenuLink, BltType);
-		} else {
-			rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
-			doModalRss(rss, "mediaDisplay", "popupDialog", 0);
-		}
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_menu";
+		menuCmd(APName, MenuType, MenuLink, BltType);
 		null;
 	</script>
 </onClick>
@@ -634,5 +620,5 @@
 </onClick>
 </item>
 
-</channel>
+  </channel>
 </rss>

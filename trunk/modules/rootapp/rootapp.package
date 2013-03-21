@@ -1,5 +1,5 @@
 [rootapp]
-	revision = 3
+	revision = 4
 	title = "Patched RootApp"
 	init=S42rootapp
 	role = patch

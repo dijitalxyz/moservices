@@ -6,10 +6,17 @@
 # returns 0 - installable
 #
 
+# get path to RootApp from rcS
+p=$( cat /usr/local/etc/rcS | sed -rn 's/^[ \t]*(.*?)RootApp DvdPlayer.*$/\1/p' )
+[ -z "$p" ] && exit 1
+
+[ "$p" == './' ] && p='/usr/local/bin/'
+
 # check already patched
-grep -Eq '/usr/local/etc/rc\.' /usr/local/bin/RootApp && exit 2
+grep -Eq '/usr/local/etc/rc\.' ${p}RootApp && exit 2
+
 # check platform
 s=$( cat /sys/realtek_boards/cpu_id | sed 's/^.*\(.\)$/\1/' )
-[ "$s" == '2' ] || exit 1
+[ "$s" == '2' ] || exit 0
 
-exit 0
+exit 1

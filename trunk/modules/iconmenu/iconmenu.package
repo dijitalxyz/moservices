@@ -1,9 +1,8 @@
 [iconmenu]
-	revision = 3
+	revision = 8
 	title = "Home menu replacement for IconBit gui"
 	config_edit = "iconmenu/iconmenu.conf"
 	role = patch
 	init = "S34iconmenu.sh"
-	backup = "iconmenu/iconmenu.conf"
 	files = "etc/init/S34iconmenu.sh iconmenu/"
-	size = 1828
+	size = 1888

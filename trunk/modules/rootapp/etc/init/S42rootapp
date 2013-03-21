@@ -19,14 +19,15 @@ case "$1" in
 		cp -af $mos/bin/RootApp /usr/local/etc/
 
 		# Patching rcS
-		sed -i 's/^\(.*\)\.\/RootApp DvdPlayer\(.*\)$/\1\/usr\/local\/etc\/RootApp DvdPlayer\2/' $etc/rcS
+		sed -ri 's!^(.*?)\.(/RootApp DvdPlayer.*)$!\1'$etc'\2!' $etc/rcS
 
 		# adding RootApp scripts
 		cp -a $mos/etc/rc.suspend $etc/
 		cp -a $mos/etc/rc.wakeup $etc/
+
+		echo "Patched RootApp enabled"
+		echo "Please, reboot device!"
 	fi
-	echo "Patched RootApp enabled"
-	echo "Please, reboot device!"
 	;;
 
   disable)
@@ -36,11 +37,9 @@ case "$1" in
 
 		# Stopping GUI
 		stopall
-		killall -9 RootApp
-		sleep 2
 
 		# Patching rcS
-		sed -i 's/^\(.*\)\/usr\/local\/etc\/RootApp DvdPlayer\(.*\)/\1\.\/RootApp DvdPlayer\2/' $etc/rcS
+		sed -ri 's!^(.*)'$etc'(/RootApp DvdPlayer.*)$!\1.\2!' $etc/rcS
 
 		# Removing files
 		rm -f /usr/local/etc/RootApp

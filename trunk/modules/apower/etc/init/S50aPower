@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Enable/disable actions on Power
+#
+etc=/usr/local/etc
+rc=$etc/mos/etc/rc.init
+
+case "$1" in
+  start | stop | status)
+	;;
+
+  enable)
+	cp -a $rc/S01aPower.sh $etc/rc.init/
+	;;
+
+  disable)
+	rm -f $etc/rc.init/S01aPower.sh
+	;;
+  *)
+	echo "Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

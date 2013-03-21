@@ -19,17 +19,6 @@ case "$1" in
 	cp -a $mos/etc/rc.start $etc/
 	cp -a $mos/etc/rc.stop $etc/
 
-	# rc.wakeup patch
-	if [ -f $etc/rc.wakeup ] ; then
-		echo -e "#!/bin/sh\nreboot" > $etc/rc.wakeup
-		chmod +x $etc/rc.wakeup
-	fi
-	# rc.suspend patch
-	if [ -f $etc/rc.suspend ] ; then
-		echo -e "#!/bin/sh\n$etc/rc.stop" > $etc/rc.suspend
-		chmod +x $etc/rc.suspend
-	fi
-
 	mkdir -p $etc/rc.init
 
 	# start moServices foreground

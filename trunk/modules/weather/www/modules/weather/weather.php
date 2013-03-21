@@ -10,6 +10,8 @@ global $mos;
 
 	$code = 'RSXX0063';
 	$temp = 'c';
+	$lang = 'core';
+
 	if( file_exists( $player ))
 	{
 		$lenta = simplexml_load_file($player,"SimpleXMLElement",LIBXML_NOERROR);
@@ -20,10 +22,12 @@ global $mos;
 		$table = file($config);
 		$code = trim($table[1]);
 		$temp = trim($table[3]);
+		$lang = trim($table[5]);
 	}
 
+	if( $lang == 'core' ) $lang = $nav_lang;
 
-	header ('Location: http://www.moservices.org/modules/weather/weather.php?city='. $code .'&temp='. $temp .'&lang='. $nav_lang );
+	header ('Location: http://www.moservices.org/modules/weather/weather.php?city='. $code .'&temp='. $temp .'&lang='. $lang );
 }
 
 ?>

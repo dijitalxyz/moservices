@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Check for install:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+#
+pm=/usr/local/etc/mos/etc/pm
+
+# check for rootapp installed
+grep -q '\[rootapp\]' $pm/installed && exit 0
+exit 1

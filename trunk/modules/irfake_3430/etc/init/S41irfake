@@ -24,7 +24,8 @@ case "$1" in
   disable)
 	echo "Disabling IRFake..."
 	sed -i '/# irfake patch/{N;N;N;N;d}' /usr/local/etc/rcS
-	killall irfake4
+	rm -f $etc/rc.init/S04irfake.sh
+
 	echo "Please, reboot device!"
 	;;
   copy)

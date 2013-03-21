@@ -15,8 +15,8 @@ case "$1" in
 	;;
 
   disable)
-	rm -f $etc/rc.init/S09suspend.sh
 	umount /sbin/suspend
+	rm -f $etc/rc.init/S09suspend.sh
 	;;
   *)
 	echo "Usage: $0 {start|stop|enable|disable|status}"

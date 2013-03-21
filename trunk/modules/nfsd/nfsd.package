@@ -1,0 +1,8 @@
+[nfsd]
+	revision= 1
+	title = "NFS daemon"
+	role = daemon
+	init = S12nfsd
+	files = "etc/init/S12nfsd etc/hotplug/after/block/S09nfsd"
+	require = "fhotplug"
+	size = 64

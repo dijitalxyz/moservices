@@ -1,16 +1,4 @@
-#EXTM3U name="Vimeo MTB Channel" type=mp4 plugin=vimeo
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/337/460/337460085_200.jpg ,Dark Summer
-http://vimeo.com/48921089
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/348/539/348539979_200.jpg ,Red Bull Four By Three Trailer
-http://vimeo.com/50557592
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/238/099/238099087_200.jpg ,Pedal-Driven: The Official Trailer
-http://vimeo.com/15471635
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/316/319/316319231_200.jpg ,GT Atherton Launch 2012
-http://vimeo.com/45484023
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/255/422/255422448_200.jpg ,Graham Aggassiz Profile
-http://vimeo.com/37197293
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/247/382/247382238_200.jpg ,Freeride Entertainment Demo Reel KWA Mix
-http://vimeo.com/36102077
+#EXTM3U name="Mountain Bike Channel" type=mp4 plugin=vimeo
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/279/397/2793974_200.jpg ,"BOOTLEG" see the full version http://vimeo.com/5701809
 http://vimeo.com/3383453
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/229/329/229329100_200.jpg ,Specialized Hunter Lone Wolf
@@ -39,3 +27,15 @@ http://vimeo.com/24788253
 http://vimeo.com/22562897
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/126/072/126072299_200.jpg ,Lettenbach on 29 inch
 http://vimeo.com/19826777
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/131/558/131558495_200.jpg ,Louis Reboul-8mm edit
+http://vimeo.com/20568469
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/133/246/133246514_200.jpg ,3 Minute Gaps Fairclough
+http://vimeo.com/20801156
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/132/213/132213672_200.jpg ,A Hill in Spain
+http://vimeo.com/20601448
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/129/600/129600362_200.jpg ,The Hunt
+http://vimeo.com/20306725
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/121/684/121684937_200.jpg ,Steve Smith rides Devinci
+http://vimeo.com/19228414
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/110/000/110000543_200.jpg ,Erster Eindruck: Alutech Fanes Enduro Prototyp
+http://vimeo.com/17646579

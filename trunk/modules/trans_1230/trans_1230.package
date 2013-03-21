@@ -1,6 +1,6 @@
 [trans_1230]
-	revision = 2
-	title = "Transmission v2.73"
+	revision = 3
+	title = "Transmission v2.77"
 	role = daemon
 	check = "port 9091"
 	init = S23trans
@@ -9,4 +9,4 @@
 	env = 1230
 	files = "etc/init/S23trans trans/ www/modules/trans_1230/"
 	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 4812
+	size = 4828
