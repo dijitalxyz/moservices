@@ -8,5 +8,5 @@
 	config_after = save
 	config_edit = "irfake/irfake.conf"
 	env = 3430
-	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh irfake/"
+	files = "etc/init/S41irfake etc/rc.init/S04irfake.sh irfake/"
 	size = 140

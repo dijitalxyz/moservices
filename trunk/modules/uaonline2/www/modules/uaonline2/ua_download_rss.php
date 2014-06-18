@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	Download manager RSS part module v1.0
+	Download manager RSS part module v1.2
 	------------------------------
-	Created by Sashunya 2011	
+	Created by Sashunya 2013	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -16,6 +16,8 @@ class ua_rss_download extends ua_rss_download_const
 	public function mediaDisplay_content()
 	{
 	global $ua_images_path;
+	global $ua_path_link;
+	global $ua_images_foldername;
 	?>
 
 				
@@ -31,6 +33,18 @@ class ua_rss_download extends ua_rss_download_const
 		<text redraw="no" offsetXPC="<?= static::name_header_offsetXPC ?>"  offsetYPC="<?= static::status_header_offsetYPC ?>" widthPC="<?= static::name_header_widthPC ?>" heightPC="<?= static::status_header_heightPC ?>" fontSize="<?= static::status_header_fontSize ?>" backgroundColor="<?= static::status_header_backgroundColor ?>" foregroundColor="<?= static::status_header_foregroundColor ?>">ИМЯ ФАЙЛА</text>
 		<text redraw="no" offsetXPC="<?= static::done_header_offsetXPC ?>"  offsetYPC="<?= static::status_header_offsetYPC ?>" widthPC="<?= static::done_header_widthPC ?>" heightPC="<?= static::status_header_heightPC ?>" fontSize="<?= static::status_header_fontSize ?>" backgroundColor="<?= static::status_header_backgroundColor ?>" foregroundColor="<?= static::status_header_foregroundColor ?>">ВЫПОЛНЕНО</text>
 	-->
+	<scrollbar offsetXPC=93 offsetYPC=13 widthPC=2.26 heightPC=75.0 backgroundImage="<?=$ua_path_link.$ua_images_foldername?>ua_scroll_bar_01.png" foregroundImage="<?=$ua_path_link.$ua_images_foldername?>ua_scroll_bar_02.png" border=7 offset=0 direction="vertical" redraw="yes">
+		<totalSize>
+			<script>
+				getPageInfo("itemCount");
+			</script>
+		</totalSize>
+		<startIndex>
+			<script>
+				getFocusItemIndex();
+			</script>
+		</startIndex>
+	</scrollbar>
 	<?php	
 		
 	}
@@ -92,6 +106,11 @@ class ua_rss_download extends ua_rss_download_const
 		pidpercentArray = null;
 		pidstateArray = null;       	
 		pidnumArray = null;       	
+	if (down == 1)
+	{
+		dlok = getURL(url_down);
+		down = 0;
+	} 
 	dlok = getURL(url);
 	if (dlok != null) dlok = readStringFromFile( dlok );
 	if (dlok != null)
@@ -182,12 +201,16 @@ class ua_rss_download extends ua_rss_download_const
 			}
 	else
 	{ 	
-
+	
+	
 	<?php
-		if (isset($_GET['display'])){ 
-			$url=$ua_path_link.$ua_download_parser_filename."?display=1";
-			?>
+		$url=$ua_path_link.$ua_download_parser_filename."?display=1";
+		?>
 			url = "<?= $url?>";
+		<?
+		if (isset($_GET['display'])){ 
+			?>
+			down = 0;
 			<?php
 			
 			}
@@ -197,7 +220,9 @@ class ua_rss_download extends ua_rss_download_const
 			$link  = $_GET["downloadlink"];
 			$url=$ua_path_link.$ua_download_parser_filename."?title=";
 			?>
-				url = "<?= $url?>"+urlEncode("<?= $title?>")+"&amp;downloadlink="+urlEncode("<?= $link?>");
+				down = 1;
+				url_down = "<?= $url?>"+urlEncode("<?= $title?>")+"&amp;downloadlink="+urlEncode("<?= $link?>");
+				
 			<?php
 		}
 		?>

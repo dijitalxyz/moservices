@@ -45,7 +45,7 @@ setReturnString( "" );
     itemImageYPC=0
 	itemImageWidthPC = 0
     itemImageHeightPC = 0
-    itemPerPage=10
+    itemPerPage=20
 
 	
 	imageFocus = ""
@@ -113,7 +113,6 @@ setReturnString( "" );
 
 	if ("return" == userInput)
 	{
- handle = "false";
     	}
     	else if ("left" == userInput || "right" == userInput)
     	{
@@ -130,6 +129,26 @@ setReturnString( "" );
     		handle = "true";
 		postMessage("return");
     	}
+    	else if ( "video_play" == userInput ) 
+    	{
+    		handle = "true";
+    	}
+    	else if ( "video_stop" == userInput ) 
+    	{
+    		handle = "true";
+    	}
+    	else if ( "video_pause" == userInput ) 
+    	{
+    		handle = "true";
+    	}
+    	else if ( "video_ffwd" == userInput ) 
+    	{
+    		handle = "true";
+    	}
+    	else if ( "video_frwd" == userInput ) 
+    	{
+    		handle = "true";
+    	}
 	handle;
 </onUserInput>
 
@@ -143,6 +162,11 @@ setReturnString( "" );
 		</script>
 	</title>
 	<link><?= getMosUrl().'?page=' ?>rss_deleteconfirm</link>
+
+<item>
+	<title><?= getMsg( 'iptvProgramGuide' ) ?></title>
+	<action>display</action>
+</item>
 
 <item>
 	<title><?= getMsg( 'iptvStartRec' ) ?></title>

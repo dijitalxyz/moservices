@@ -3,5 +3,5 @@
 	title = "Suspend: Reboot on wakeup"
 	role = patch
 	init = S09suspend
-	files = "etc/init/S09suspend etc/init/rc.init/S09suspend.sh"
+	files = "etc/init/S09suspend etc/rc.init/S09suspend.sh"
 	size = 48

@@ -1,0 +1,13 @@
+[aria2_3430]
+	revision = 2
+	title = "Aria2 v1.17.0"
+	role = daemon
+	init = S23aria
+	backup = "etc/aria2c.conf"
+	config_edit = "etc/aria2c.conf"
+	navy_title = "Aria2 Web Gui"
+	navy_frame = "/modules/aria2_3430/old.html"
+	env = 3430
+	files = "bin/aria2c etc/init/S23aria etc/hotplug/after/block/S14aria etc/aria2c.conf www/modules/aria2_3430/"
+	require = "fhotplug libcares libsqlite3 libssl libcrypto libxml2 libiconv libz libgccs"
+	size = 6052

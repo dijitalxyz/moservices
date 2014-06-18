@@ -1,17 +1,7 @@
 <?php
-//require_once 'interfaces/view.inc';
-//require_once 'interfaces/service.inc';
-
-//require_once 'tools/config.inc';
-//require_once 'loader.inc';
-//require_once 'tools/logger.inc';
-//require_once 'tools/lang.inc';
-//require_once 'tools/sysinfo.inc';
-//require_once 'tools/statistic.inc';
+error_reporting ( E_ERROR );
 require_once 'dispatcher.inc';
 
-//sleep(10);
-//die(0);
 /*migrate from 2.0.1*/
 $oldCfg = getcwd() . '/config.ini';
 $newCfg = getcwd() . '/config.ini.new';
@@ -61,7 +51,6 @@ $cfg->set('cfg_realpath', dirname($_SERVER["SCRIPT_FILENAME"])."/" , Configurati
 
 $lastPopupDate = $cfg->get('lastVersionPopup', Configuration::$CUSTOM_SECTION);
 $currentDate = date("Y-m-d");
-
 
 $dispatcher->dispatchRequest($pl, $_GET);
 

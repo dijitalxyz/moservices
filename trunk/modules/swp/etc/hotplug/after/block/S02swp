@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# run swap
+#
+
+# check returned hotplug status
+[ $1 -ne 0 ] && exit
+
+# check action
+[ "$ACTION" != 'add' ] && exit
+
+sleep 5
+/usr/local/etc/mos/etc/init/S02swp start
+	

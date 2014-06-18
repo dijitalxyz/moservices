@@ -148,13 +148,29 @@ makePack()
 			tar xjf $dst/$1.tar.bz2 -C $tmp $1.package
 			h=$( getParameterFromFile $tmp/$1.package revision )
 			s=$( getParameterFromList $1 revision )
-			if [ $h -ne $s ] ; then
+			if ! [ "$h" == "$s" ] ; then
 				echo "Backup package $1 revision $h..."
 				mv $dst/$1.tar.bz2 $backup/$1_$h.tar.bz2
 			fi
 		fi
 
 		echo "Make package $1..."
+
+		# make check sum
+		p=$PWD
+		cd $proj/$1
+		rm -f $dst/$1.md5
+
+		h=$( find $( getParameterFromList $1 files ) -type f )
+
+		cIFS=$IFS
+		IFS='
+'
+		for a in $h ; do
+			md5sum $a >> $dst/$1.md5
+		done
+		IFS=$cIFS
+		cd $p
 
 		# files, required
 		mkFileFromParameter $1 files files
@@ -289,6 +305,7 @@ remakePacks()
 	pm make $1 $src
 	extractPack $1
 	rm -f $src/$1.tar.bz2
+	rm -f $src/$1.md5
 	makePack $1
 	makePackages
 }
@@ -341,6 +358,42 @@ local mods
 
 	makePackages
 }
+
+# =====================================
+# make md5 files to packages
+# -------------------------------------
+# $1 - package name(s)
+#
+makeMd5()
+{
+	mods=$1
+	[ "$1" == 'all' ] && mods='*'
+
+	for m in $proj/$mods ; do
+		[ -d $m ] || continue
+
+		mod=$( basename $m )
+
+		echo "Make md5 for $mod..."
+
+		# make check sum
+		p=$PWD
+		cd $m
+		rm -f $dst/$mod.md5
+
+		h=$( find $( getParameterFromList $mod files ) -type f )
+
+		cIFS=$IFS
+		IFS='
+'
+		for a in $h ; do
+			md5sum $a >> $dst/$mod.md5
+		done
+		IFS=$cIFS
+		cd $p
+	done
+}
+
 # =====================================
 # $1 - source
 # $2 - project
@@ -377,9 +430,22 @@ case "$1" in
 	setValues $PWD $2
 	sed -nr 's/\[(.*)\]/\1/p' $pm/packages
 	;;
-
+  md5)
+	setValues $PWD $3 $4
+	makeMd5 $2
+	;;
+  clone)
+	setValues $PWD $PWD
+	m=$( echo $2 | cut -d '_' -f 1 )
+	m=${m}_$3
+	p=$proj/$m
+	mkdir -p $p
+	cp -a $proj/$2/* $p/
+	mv $p/$2.package $p/$m.package
+	sed -ri 's/^\[.*\]$/['$m']/;s/^(.*env *= *).*$/\1'$3'/' $p/$m.package
+	;;
   *)
-	echo 'moServices repository Manager rev1 (http://www.moservices.org)
+	echo 'moServices repository Manager r2 (http://www.moservices.org)
 Usage: repo <action> ...
 Avaiable:
 	make|c    <package>|all	[project] [repository]
@@ -389,6 +455,8 @@ Avaiable:
 	remove|d  <package>	[project] [repository]
 	packages|p		[project] [repository]
 	list			[project]
+	md5       <package>|all	[project] [repository]
+	clone     <package> <new env>
 
 default paths:
 source      $PWD

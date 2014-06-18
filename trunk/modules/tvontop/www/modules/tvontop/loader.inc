@@ -90,8 +90,15 @@ class Loader {
             $file = "$dir/$entry/service.xml";
             if (0 !== strpos($entry, '.') && is_readable($file)) {
                 $descriptor = simplexml_load_file($file);
-                $service = new Service($descriptor, "$dir/$entry");
-                $services[$service->getShortName()] = $service;
+                if(isset( $descriptor->service)) {
+					foreach ($descriptor->service as $serviceDescriptor) {
+						$service = new Service($serviceDescriptor, "$dir/$entry");
+	                	$services[$service->getShortName()] = $service;	
+					}
+                } else {
+	                $service = new Service($descriptor, "$dir/$entry");
+	                $services[$service->getShortName()] = $service;	
+                }
             }
         }
         return $services;

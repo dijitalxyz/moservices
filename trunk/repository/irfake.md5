@@ -1,0 +1,5 @@
+97ae9a82ce61f66fc10187b6f7e852c8  etc/init/S41irfake
+07f66040405dd576494ee732d1de611d  etc/rc.init/S04irfake.sh
+fee4c83ff145ed677b5b0dd47e101f93  irfake/venus_ir_new.ko
+a8b2a70b56819de8a3b29c6cbe3ba4f1  irfake/irfake4
+fcf79c6937671d8ba8c37ba50fd2c617  irfake/irfake.conf

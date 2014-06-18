@@ -14,4 +14,8 @@ $nav_msg[ 'fexDelMark'  ] = 'Удалить из закладок';
 
 $nav_msg[ 'fexSearchRezult'] = ' - Результаты поиска: ';
 
+$nav_msg['fexKeyboard'] = 'Клавиатура';
+$nav_msg['fexKbdEmb'] = 'Встроенная';
+$nav_msg['fexKbdRss'] = 'RSS';
+
 ?>

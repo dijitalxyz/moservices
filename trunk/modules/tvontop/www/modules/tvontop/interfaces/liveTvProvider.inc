@@ -15,6 +15,9 @@ abstract class LiveTvProvider extends Provider {
 	public static $OBJ_CHANNEL       = "CHANNEL";
 	public static $OBJ_EPG           = "EPG";
 	public static $OBJ_PROGRAMM      = "PROGRAM";
+    public static $OBJ_MOVIE_LIST = "MOVIE_LIST";
+	public static $OBJ_MOVIE      = "MOVIE";
+    public static $OBJ_SEARCH     = "SEARCH";
 
 	abstract protected function getGroupList($objectId,$params);
 	abstract protected function getChannelGroup($objectId,$params);

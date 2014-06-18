@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	configuration manager module v2.0
+	configuration manager module v2.2
 	------------------------------
-	Created by Sashunya 2012
+	Created by Sashunya 2014
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -25,6 +25,7 @@ $ua_path_link3 = "http://".$_SERVER["SERVER_ADDR"]."/";
 $ua_images_foldername =  $ini->read('paths','ua_images_foldername',"images/");
 $ua_tmp_path = $ini->read('paths','ua_tmp_path','/tmp/');
 $ua_images_path = $ua_path.$ua_images_foldername;
+$ua_full_description = 'ua_rss_full_description.php';
 // путь к WGET
 $ua_wget_path = $ini->read('paths','ua_wget_path','');
 // линк на картинки категорий из репозитория
@@ -65,12 +66,16 @@ $history_length = $ini->read('other','history_length',"20");
 $ua_rss_setup_filename = 'ua_rss_setup.php';
 $ua_setup_parser_filename = 'ua_setup_parser.php';
 $tmpfilename = 'ua_temp.tmp';
+$tmpdescr = $ua_tmp_path.'ua_full_descr.tmp';
+$goto_time = $ua_tmp_path.'ua_goto.tmp';
 
 $tmp = $ua_tmp_path.$tmpfilename;
 $tmp_down = $ua_tmp_path."ua_down.tmp";
 $d_path = $ini->read('downloads','path','/tmp/ramfs/volumes/C:/');
 $auto_path = $ini->read('downloads','auto_path','1');
 $built_in_keyb = $ini->read('other','built_in_keyb','0');
+$position = $ini->read('other','save_position','0');
+$screensaver = $ini->read('other','screen_saver','0');
 $no_device=false;
 if ($auto_path == "1") 
 {
@@ -92,11 +97,11 @@ $ua_download_parser_filename = 'ua_download_parser.php';
 $exua_quality = $ini->read('exua_setting','quality','1');
 $exua_region = $ini->read('exua_setting','region','0');
 $exua_lang = $ini->read('exua_setting','language','0');
+$exua_posters = $ini->read('exua_setting','posters','1');
 $ua_sort = $ini->read('uakino','sort','date');
-$uakino_decode = $ini->read('uakino','decode_strings','0');
+$uakino_decode = $ini->read('uakino','decode_strings','1');
 $fsua_sort = $ini->read('fsua','sort','rating');
 
-$search_history = $ini->read('other','search_history','');
 
 $player_style=$ini->read('player','style','0');
 
@@ -173,6 +178,9 @@ global $search_history;
 global $auto_path;
 global $history_length;
 global $built_in_keyb;
+global $position;
+global $screensaver;
+global $exua_posters;
 
 $ini = new TIniFileEx($confs_path.'ua_settings.conf');
 $ini->write('paths','ua_images_foldername',$ua_images_foldername);
@@ -185,6 +193,8 @@ $ini->write('downloads','auto_path',$auto_path);
 $ini->write('exua_setting','quality',$exua_quality);
 $ini->write('exua_setting','region',$exua_region);
 $ini->write('exua_setting','language',$exua_lang);
+$ini->write('exua_setting','posters',$exua_posters);
+
 $ini->write('uakino','sort',$ua_sort);
 $ini->write('uakino','decode_strings',$uakino_decode);
 $ini->write('fsua','sort',$fsua_sort);
@@ -192,9 +202,11 @@ $ini->write('fsua','sort',$fsua_sort);
 $ini->write('player','style',$player_style);
 $ini->write('keys','HDP_R1_R3',$hdpr1);
 
-$ini->write('other','search_history',$search_history);
+
 $ini->write('other','history_length',$history_length);
 $ini->write('other','built_in_keyb',$built_in_keyb);
+$ini->write('other','save_position',$position);
+$ini->write('other','screen_saver',$screensaver);
 
 
 $ini->updateFile(); // скидываем информацию в ini файл
@@ -304,7 +316,7 @@ return preg_replace($search, $replace, $s);
 }
 
 // делит описалово на строки
-function descr_split($desc,$len=79)
+function descr_split($desc,$len=79,$cnt=9)
 {
 $d=explode(' ',$desc);
 $ds="";
@@ -319,7 +331,7 @@ foreach ($d as $dd)
 			if (strlen(utf8_decode($tmp2))<=$len) $tmp_ds.=" ".$dd; else
 			{
 				$ds .=trim($tmp_ds); $tmp_ds=$dd; $count++;
-				if ($count == 9) 
+				if ($count == $cnt) 
 				{
 					return $ds;	
 					break;
@@ -331,9 +343,9 @@ foreach ($d as $dd)
 		
 	}
 $ds .=trim($tmp_ds);
-if ($count<9)
+if ($count<$cnt)
 	{
-		while ($count<8)
+		while ($count<$cnt-1)
 		{
 			$count++;
 			$ds.= "\n";
@@ -342,19 +354,37 @@ if ($count<9)
 	}
 }
 
+
+// функция обрезает строку до нужного кол-ва символов
+function get_short_text($text,$len=79)
+{
+	return iconv_substr($text, 0, $len, 'UTF-8');
+}
+
+
 // правка линков для воспроизведения 
 function check_link($url)
 {
-		// check for redirect
-		$fp = fopen( $url, 'r' );
-		$meta_data = stream_get_meta_data( $fp );
-		$s = implode( "\n", $meta_data['wrapper_data'] );
-		if( preg_match( '/[Ll]ocation:\s*(.*)/' , $s, $ss ) > 0 )
-		$url = $ss[1];
-		$url = dirname( $url ) .'/'. urlencode( basename( $url ));
+		$mov = true;
+		while ($mov) 
+		{
+			// check for redirect
+			$fp = fopen( $url, 'r' );
+			$meta_data = stream_get_meta_data( $fp );
+			//echo $meta_data['wrapper_data'][0]."<br>";
+			if (preg_match('/HTTP\/1\.1\s*30[12]\s*[Mm]oved/',$meta_data['wrapper_data'][0],$ss)) $mov = true; else $mov=false;
+			//if (preg_match('/HTTP(.*)200/',$meta_data[0],$ss)) $mov = false;
+			//print_r($meta_data);
+			$s = implode( "\n", $meta_data['wrapper_data'] );
+			if( preg_match( '/[Ll]ocation:\s*(.*)/' , $s, $ss ) > 0 )
+			$url = $ss[1];
+			$url = dirname( $url ) .'/'. urlencode( basename( $url ));
+			fclose($fp);
+			//echo $url."---<br>";
 		//readfile($url);
-		header ( 'Location: '. $url );
-		//header('Location: http://127.0.0.1/modules/uaonline2/test2.sh?link='. $url );
+		}
+		//return $url;
+		header ( 'Location: '. $url );	
 		
 }
 
@@ -512,6 +542,10 @@ if(isset($_GET["del"]))
 	{
 		unlink($confs_path.'ua_history/'.$_GET["del"].".conf");
 		exit;
+	}
+if(isset($_GET["clear"]))	
+	{
+		$res=shell_exec('rm -r '.$confs_path.'ua_history');
 	}
 
 ?>

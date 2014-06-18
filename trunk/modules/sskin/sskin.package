@@ -1,8 +1,8 @@
 [sskin]
-	revision = 11
+	revision = 14
 	title = "Skin selector for amp revs"
 	role = patch
 	backup = "etc/sskin.conf"
 	config_link = "/?page=sskin_sets"
 	files = "bin/sskin etc/sskin.conf www/modules/sskin"
-	size = 164
+	size = 172

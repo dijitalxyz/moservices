@@ -12,18 +12,18 @@
 {$rootUrl = $config->get(cfg_processing_url,Runtime)}
 
 {$select = "{$mediaObj->getParam(select)}"}
+
+{$key_title_select = $locale->msg('Favorites')}
+{$selectUrl = "{$rootUrl}&amp;id=favorites&amp;select=favorites"}
+
 {if $select == "new"}
     {$titleExtra = " - {$locale->msg('Last added')}"}
-    {$key_title_select = $locale->msg('Favorites')}
-    {$selectUrl = "{$rootUrl}&amp;select=favorites"}
 {elseif $select == "favorites"}
     {$titleExtra = " - {$locale->msg('Favorites')}"}
     {$key_title_select = $locale->msg('All')}
     {$selectUrl = $rootUrl}
 {else}
     {$titleExtra = " - {$locale->msg('All')}"}
-    {$key_title_select = $locale->msg('Favorites')}
-    {$selectUrl = "{$rootUrl}&amp;select=favorites"}
 {/if}
 
 <!-- Hot keys definition -->
@@ -35,7 +35,7 @@
 {$hotKeys[2]["title"] = "{$locale->msg('Remove from favorites')}"}
 {$hotKeys[2]["url"]   = "{$rootUrl}&amp;op=set&amp;id=\" + getItemInfo(getFocusItemIndex(),\"id\") + \"&amp;update=favorites_remove"}
 {$hotKeys[3]["title"] = "{$locale->msg('Last added')}"}
-{$hotKeys[3]["url"]   = "{$rootUrl}&amp;op=get&amp;select=new"}
+{$hotKeys[3]["url"]   = "{$rootUrl}&amp;op=get&amp;id=new&amp;select=new"}
 
 {$infoBgColor = "255:255:255"}
 {$infoFgColor = "30:30:30"}

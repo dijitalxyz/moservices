@@ -1,0 +1,415 @@
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- 
+##################################################################################
+# © IconBIT 2012                                                                 #
+##################################################################################
+-->
+
+<script>	
+	mediaServer = "http://127.0.0.1:9999/";
+	RSSmedia = mediaServer + "rss/";	
+	currentPlay = 0;	
+	itemSize = 0;
+</script>
+
+<onEnter>
+	timeStamp = 0;
+	startVideo = 0;	
+	currentLink = getEnv("MC_PLAYLIST");
+	currentURL = getEnv("MC_URL");	
+	currentProtocol = null;
+	itemTitleArray = null;
+	itemLinkArray = null;
+	itemTypeArray = null;
+	itemSubTypeArray = null;
+	itemURLArray = null;
+	itemProtocolArray = null;
+	itemSize = 0;
+	currentPlay = 0;	
+	dlok = loadXMLFile(RSSmedia + currentLink);
+	if (dlok != null) {
+		iSize = getXMLElementCount("playlist", "item");
+		print("itemSize = ", iSize);
+		if (iSize &gt; 0) {
+			itemCount = 0;		
+			while(1) {
+				itemType  = getXMLText("playlist", "item", itemCount, "type");
+				if (itemType != "folder" &amp;&amp; itemType != "playlist") {
+					itemTypeArray  = pushBackStringArray(itemTypeArray, itemType);
+					itemSubType  = getXMLText("playlist", "item", itemCount, "subtype");
+					itemSubTypeArray  = pushBackStringArray(itemSubTypeArray, itemSubType);
+					itemURL  = getXMLText("playlist", "item", itemCount, "url");
+					itemURLArray  = pushBackStringArray(itemURLArray, itemURL);					
+					itemLink  = getXMLText("playlist", "item", itemCount, "link");
+					itemLinkArray  = pushBackStringArray(itemLinkArray, itemLink);
+					itemTitle  = getXMLText("playlist", "item", itemCount, "title");
+					itemTitleArray  = pushBackStringArray(itemTitleArray, itemTitle);
+					itemProtocol  = getXMLText("playlist", "item", itemCount, "protocol");
+					itemProtocolArray  = pushBackStringArray(itemProtocolArray, itemProtocol);
+					if (itemURL == currentURL  &amp;&amp; currentURL != "none" &amp;&amp; currentPlay == 0)
+						currentPlay = itemSize;
+					itemSize += 1;				
+				}
+				itemCount += 1;
+				if(itemCount == iSize)
+					break;
+			}
+		}
+	}	
+	if(itemSize == 0)
+		postMessage("return");
+	else {
+		player_action = null;
+		counterInfo = -1;
+		time_elapsed = null;
+		time_all = null;
+		track_time = null;
+		pauseVideo = -1;
+		currentPlay-=1;
+		setRefreshTime(100);
+	}
+</onEnter>
+
+<onExit>
+	unsetEnv("MC_PLAYLIST");
+	unsetEnv("MC_URL");
+	playItemURL(-1, 1);
+	setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+	vidProgress = getPlaybackStatus();
+	bufProgress = getCachedStreamDataSize(0, 262144);
+	playElapsed = getStringArrayAt(vidProgress, 0);
+	playTime = getStringArrayAt(vidProgress, 1);
+	playStatus = getStringArrayAt(vidProgress, 3);
+	print("Media status =", vidProgress);
+	
+	if (player_action != null) {
+		setRefreshTime(1000);
+		if (player_action == "display") {
+			if (counterInfo &gt;= 0) {
+				updatePlaybackProgress("delete", "mediaDisplay", "progressBar");
+				counterInfo = -1;
+				track_time = null;
+			} else {
+				counterInfo = 5;
+			}
+		} else if (player_action == "left" &amp;&amp; playStatus != 0) {
+			if (counterInfo == -1) {
+				track_time = playElapsed;
+			} else {
+				track_time -= 30;
+				if(track_time &lt; 0) {
+					track_time = 0;
+				}
+			}
+			counterInfo = 5;
+		} else if (player_action == "right" &amp;&amp; playStatus != 0) {
+			if (counterInfo == -1) {
+				track_time = playElapsed;
+			} else {
+				track_time -= -30;
+				if(track_time &gt; playTime) {
+					track_time = playTime;
+				}
+			}
+			counterInfo = 5;
+		} else if (player_action == "enter" &amp;&amp; track_time != null &amp;&amp; playStatus != 0) {
+			fromstart = track_time;
+			playAtTime(track_time);
+			counterInfo = 5;
+		} else if (player_action == "goto" &amp;&amp; player_state == "video_play") {
+			if (player_action_percent &gt;= 0 &amp;&amp; player_action_percent &lt; 100) {
+				at_time = Integer(player_action_percent * playTime / 100);
+				fromstart = at_time;
+				playAtTime(at_time);
+			}
+		} else if (player_action == "video_stop" || player_action == "return") {
+			if (counterInfo &gt;= 0 &amp;&amp; player_action == "return") {
+				updatePlaybackProgress("delete", "mediaDisplay", "progressBar");
+				counterInfo = -1;
+				track_time = null;
+			} else if (player_state == "video_play") {
+				playItemURL(-1, 1);
+			} else {
+				postMessage("return");
+			}
+		} else if (player_action == "pagedown") {
+			playItemURL(-1, 1);
+		} else if (player_action == "pageup") {
+			currentPlay-=2;
+			if(currentPlay &lt; -1) {
+				currentPlay = -1;
+			}
+			playItemURL(-1, 1);
+		}
+		player_action = null;
+	}
+	
+	if(playStatus == 0) {
+		setRefreshTime(1000);
+		currentPlay+=1;
+		if (currentPlay &gt;= itemSize) {
+			postMessage("return");
+		} else {
+			counterInfo = 5;			
+			url = getStringArrayAt(itemURLArray, currentPlay);
+			link = getStringArrayAt(itemLinkArray, currentPlay);
+			proto = getStringArrayAt(itemProtocolArray, currentPlay);
+			type = getStringArrayAt(itemTypeArray, currentPlay);
+			subtype = getStringArrayAt(itemSubTypeArray, currentPlay);
+			loading = "true";			
+			if (subtype == "keyword") {
+				ret = doModalRSS("/tmp/app/ims/mc-kb.rss");
+				if (ret == null) {
+					loading = "false";
+				} else {
+					link += ret;
+					url += ret;
+				}
+			}
+			if (loading == "true") {
+				if (type == "list") {
+					loading = "false";
+					dlok = loadXMLFile("http://127.0.0.1:9999/rss/"+link);
+					if (dlok != null) {
+						type = "stream";
+						proto = "none";
+						link = "/tmp/videopls.m3u";
+						strUrlArray = null;			
+						listSize = getXMLElementCount("playlist", "item");
+						if(listSize &gt; 0) {
+							listCount = 0;
+							while(1) {
+								if(listSize == 1) {
+									link1 = getXMLText("playlist", "item", "link");
+									type1 = getXMLText("playlist", "item", "type");
+									proto1 = getXMLText("playlist", "item", "protocol");
+								} else {
+									link1 = getXMLText("playlist", "item", itemCount, "link");
+									type1 = getXMLText("playlist", "item", itemCount, "type");
+									proto1 = getXMLText("playlist", "item", itemCount, "protocol");
+								}
+								if (type1 == "udpxy")
+									urlPlay = "http://"+udphostOption+"/udp/"+link1;
+								else if (proto1 == "none")
+									urlPlay = link1;
+								else if (proto1 == "http")
+									urlPlay = proto1+"://"+link1;
+								else
+									urlPlay = mediaServer+proto1+"/"+link1;
+								strUrlArray = pushBackStringArray(strUrlArray, urlPlay);
+								listCount += 1;
+								if(listCount == listSize) break;
+							}
+							loading = "true";
+						}
+						writeStringToFile(link, strUrlArray);
+					}
+				}
+				if (loading == "true") {
+					if (type == "udpxy")
+						currentPlayURL = "http://"+udphostOption+"/udp/"+link;
+					else if (proto == "none")
+						currentPlayURL = link;
+					else if (proto == "http")
+						currentPlayURL = proto+"://"+link;
+					else
+						currentPlayURL = mediaServer+proto+"/"+link;
+					playItemURL(currentPlayURL, 10, "mediaDisplay", "previewWindow");
+				}
+			}			
+			pauseVideo = 0;
+		}
+	}
+
+	if (counterInfo &gt; 0) {
+		if (playStatus == 2) {
+			x = Integer(playElapsed / 60);
+			h = Integer(playElapsed / 3600);
+			s = playElapsed - (x * 60);m = x - (h * 60);
+			if(h &lt; 10) time_elapsed = "0" + sprintf("%s:", h); else time_elapsed = sprintf("%s:", h);
+			if(m &lt; 10)  time_elapsed += "0";time_elapsed += sprintf("%s:", m);
+			if(s &lt; 10)  time_elapsed += "0";time_elapsed += sprintf("%s", s);
+			print("time_elapsed =", time_elapsed);
+			if(time_all == null) {
+				x = Integer(playTime / 60);
+				h = Integer(playTime / 3600);
+				s = playTime - (x * 60);m = x - (h * 60);
+				if(h &lt; 10) time_all = "0" + sprintf("%s:", h); else time_all = sprintf("%s:", h);
+				if(m &lt; 10)  time_all += "0";time_all += sprintf("%s:", m);
+				if(s &lt; 10)  time_all += "0";time_all += sprintf("%s", s);
+				print("time_all =", time_all);
+			}
+		}
+		if (track_time != null) {
+			x = Integer(track_time / 60);
+			h = Integer(track_time / 3600);
+			s = track_time - (x * 60);m = x - (h * 60);
+			if(h &lt; 10) time_user = "0" + sprintf("%s:", h); else time_user = sprintf("%s:", h);
+			if(m &lt; 10)  time_user += "0";time_user += sprintf("%s:", m);
+			if(s &lt; 10)  time_user += "0";time_user += sprintf("%s", s);
+		}
+		counterInfo -= 1;
+		updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+	} else if (counterInfo == 0) {
+		updatePlaybackProgress("delete", "mediaDisplay", "progressBar");
+		counterInfo = -1;
+		track_time = null;
+	}
+</onRefresh>
+
+<mediaDisplay name=onePartView
+		viewAreaXPC=0
+		viewAreaYPC=0
+		viewAreaWidthPC=100
+		viewAreaHeightPC=100
+
+		sideColorLeft=-1:-1:-1
+		sideColorRight=-1:-1:-1
+
+        itemPerPage=5
+
+		itemImageXPC = 4.1
+		itemImageYPC = 7
+		itemImageWidthPC = 91.79
+		itemImageHeightPC = 42.75
+
+		itemXPC = 4
+		itemYPC = 15
+		itemWidthPC = 92
+		itemHeightPC = 12
+		itemGapYPC=7
+		itemBackgroundColor=-1:-1:-1
+
+	showHeader = "no"
+	showDefaultInfo=no
+
+	DoAnimation = "no"
+	AnimationType = 1
+	AnimationStep = 26
+	AnimationDelay = 1
+	BackgroundDark = "no"
+	rollItems=no
+	slidingItemText=yes
+	backgroundColor=0:0:0
+
+	idleImageXPC=83.12
+	idleImageYPC=89.58
+	idleImageWidthPC=3.1
+	idleImageHeightPC=5.5
+  >
+  <idleImage> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage> image/POPUP_LOADING_06.png </idleImage>
+	<idleImage> image/POPUP_LOADING_07.png </idleImage>
+	<idleImage> image/POPUP_LOADING_08.png </idleImage>
+	<previewWindow windowColor=0:0:0 offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 refill=yes></previewWindow>
+	<progressBar backgroundColor=0:0:0 offsetXPC=0 offsetYPC=85 widthPC=100 heightPC=15>
+		<text redraw=yes offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=1 fontSize=14 backgroundColor=100:100:100></text>
+		<text redraw=yes align=center offsetXPC=10 offsetYPC=5 widthPC=80 heightPC=40 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=200:200:0>
+			<script>getStringArrayAt(itemTitleArray, currentPlay);</script>
+		</text>
+		<!-- <bar offsetXPC=20 offsetYPC=50 heightPC=10 barColor=20:20:20 progressColor=200:200:200 bufferColor=63:100:127>
+			<widthPC>
+				<script>if (playStatus == 1) "60"; else "0";</script>
+			</widthPC>
+		</bar> -->
+		<text redraw=yes offsetXPC=20 offsetYPC=50 heightPC=10 backgroundColor=50:50:50>
+			<widthPC>
+				<script>if (playStatus == 2) "60"; else "0";</script>
+			</widthPC>
+		</text>
+		<text redraw=yes offsetXPC=20 offsetYPC=50 heightPC=10 backgroundColor=150:150:150>
+			<widthPC>
+				<script>if (playStatus == 2) Integer(playElapsed / playTime * 60); else "0";</script>
+			</widthPC>
+		</text>
+		<text redraw=yes offsetYPC=46 heightPC=18 backgroundColor=200:0:0>
+			<offsetXPC>
+				<script>if (playStatus == 2 &amp;&amp; track_time != null) (19.85+(track_time / playTime * 60)); else "0";</script>
+			</offsetXPC>
+			<widthPC>
+				<script>if (playStatus == 2 &amp;&amp; track_time != null) "0.3"; else "0";</script>
+			</widthPC>
+		</text>
+		<text redraw=yes align=right offsetXPC=4.5 offsetYPC=48 widthPC=15 heightPC=15 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>
+				ret = null;
+				if (playStatus == 2) {
+					ret = time_elapsed;
+					if (track_time != null) {
+						ret += "/" + time_user;
+					}
+				}
+				ret;
+			</script>
+		</text>
+		<text redraw=yes offsetXPC=80.5 offsetYPC=48 widthPC=12 heightPC=15 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>if (playStatus == 2 &amp;&amp; time_all != "00:00:00") time_all; else null;</script>
+		</text>
+		<!-- <text offsetXPC=5 align=center offsetYPC=70 widthPC=90 heightPC=15 fontSize=10 backgroundColor=-1:-1:-1 foregroundColor=100:100:100><?= $video_copyright_overlay ?></text> -->
+		<destructor offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" color="-1:-1:-1">
+		</destructor>
+	</progressBar>
+<onUserInput>
+input = currentUserInput();
+writeStringToFile("/tmp/lastkey.dat", input);
+ret = "true";
+str = null;
+if (input=="return") {
+	if (playStatus == 2 &amp;&amp; player_state == "video_play") {
+		player_action = input;
+		setRefreshTime(1);
+	} else {
+		if (playStatus == 2) {
+			playItemURL(-1,1);
+		}
+		ret = "false";
+	}
+} else if (input == "guide" || input == "setup") {
+	setVoutDisplay("false", 0, 0);
+	pauseVideo = 1;
+	ret = "false";
+} else if(input=="video_play"&amp;&amp;pauseVideo==1) {
+	setVoutDisplay("true");
+	pauseVideo = 0;
+	ret = "false";
+} else if (input=="video_play"&amp;&amp;pauseVideo==0) {
+	pauseVideo = 1;
+	postMessage("video_pause");
+} else if (input=="video_pause") {
+	pauseVideo = 1;
+	ret = "false";
+} else if (input == "display" || input == "left" || input == "right" || input == "video_stop") {
+	player_action = input;
+	setRefreshTime(1);	
+} else if (input == "enter" &amp;&amp; track_time != null) {
+	player_action = "enter";
+	setRefreshTime(1);
+} else if(input == "video_completed") {
+	playItemURL(-1,1);
+} else if (input == "video_volume_up" || input == "video_volume_down") {
+	ret = "false";
+} else if (input == "zoom") {
+	ret = "false";
+} else if (input == "pagedown" || input == "pageup") {
+	player_action = input;
+	setRefreshTime(1);
+}
+ret;
+</onUserInput>
+
+</mediaDisplay>
+
+<channel>
+	<title></title>
+	<link></link>
+
+</channel>
+</rss>

@@ -1,6 +1,7 @@
 [youtube]
-	revision = 12
+	revision = 18
 	title = "YouTube"
 	role = rss
 	files = "www/modules/youtube/"
-	size = 108
+	logo = "modules/youtube/youtube.png"
+	size = 124

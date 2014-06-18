@@ -1,10 +1,39 @@
 <?php
 
+require_once 'detectfw.php';
+
+define("last_playlist","/tmp/iptv_lastlist.dat");
+define("epgenabledconf","/usr/local/etc/mos/www/modules/iptvlist/epg_enabled.conf");
+
+//==================================================================
+//==================================================================
+function ricallback($buffer)
+{
+  return "";
+}
+
+
+//==================================================================
+//==================================================================
 function rss_iptv_content()
 {
 	header( "Content-type: text/plain" );
 	echo '<?xml version="1.0" encoding="UTF8" ?>'.PHP_EOL;
 	echo '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">'.PHP_EOL;
+
+	require("iptvlist_timezone.php");	
+
+	$ctime_arr = getdate( time() );
+
+	if (file_exists(epgenabledconf)) 
+	{
+		$epgenabled = file_get_contents(epgenabledconf);
+		$epgenabled = trim( str_replace('\r', '', str_replace('\n', '', $epgenabled)) );
+	} 
+	else 
+	{
+		$epgenabled="1";
+	} 
 
 ?>
 
@@ -25,11 +54,42 @@ function rss_iptv_content()
 <popupDialog>
 </popupDialog>
 
+<initTimer>
+	msCounter = 0;
+	secCounter = <?= $ctime_arr['seconds'] ?>;
+	minCounter = <?= $ctime_arr['minutes'] ?>;
+	hourCounter = <?= $ctime_arr['hours'] ?>;
+
+	calibrateTime = 600000;
+</initTimer>
+
+<updateTimeString>
+	if ( hourCounter &lt; 10 )
+	{
+		hourString = "0" + hourCounter;
+	}
+	else
+	{
+		hourString = hourCounter;
+	}
+
+	if ( minCounter &lt; 10 )
+	{
+		minString = "0" + minCounter;
+	}
+	else
+	{
+		minString = minCounter;
+	}
+/*	
+	timeString = "" + hourString + ":" + minString + ":" + secCounter + " - " + EPGListExpireHour + ":" + EPGListExpireMinute + " / " + calibrateTime;
+*/
+	timeString = "" + hourString + ":" + minString;
+
+</updateTimeString>
 
 <readIndex>
-	path = getStoragePath("tmp");
-	path = path + "iptv_index.dat";
-
+	path = "/tmp/iptv_index.dat";
 	chIndex = 0 + readStringFromFile(path);
 	
 	if ( chIndex == null )
@@ -49,10 +109,19 @@ function rss_iptv_content()
 </readIndex>
 
 <writeIndex>
-	path = getStoragePath("tmp");
-	path = path + "iptv_index.dat";
-	writeStringToFile(path,chIndex);
+	path = "/tmp/iptv_index.dat";
+	writeStringToFile(path, chIndex);
 </writeIndex>
+
+<enableEPG>
+	EPGEnabled = "1";		
+	getCSVFromURL( "<?= getMosUrl() ?>modules/iptvlist/saveepgenabled.php?val=1" );
+</enableEPG>
+
+<disableEPG>
+	EPGEnabled = "0";
+	getCSVFromURL( "<?= getMosUrl() ?>modules/iptvlist/saveepgenabled.php?val=0" );
+</disableEPG>
 
 <ReloadList>
 	path = "/tmp/iptv_playlist.txt";
@@ -62,13 +131,44 @@ function rss_iptv_content()
 	listName = getStringArrayAt( favLinkArray, 0 );
 	isRecordings = listName == "Recordings";
 	favLinkArray = deleteStringArrayAt( favLinkArray, 0 );
+
+	if ( ( listName == "Recordings" ) || ( EPGEnabled != "1" ) )
+	{
+		EPGData = "";
+
+		EPGListExpireHour = 100;
+		EPGListExpireMinute = 0;
+	}
+	else
+	{
+		path = "/tmp/epg_list.txt";
+		EPGData = readStringFromFile( path );
+
+		EPGListExpireHour = 0 + getStringArrayAt( EPGData, 1 );
+		EPGListExpireMinute = 0 + getStringArrayAt( EPGData, 2 );
+	}
+
    	redrawDisplay();
 </ReloadList>
 
 <BuildFavList>
-	getCSVFromURL( "<?= getMosUrl() ?>modules/iptvlist/loadlist.php" );
+	getCSVFromURL( "<?= getMosUrl() ?>modules/iptvlist/loadlist.php?msgEPGNotAvail=" + urlEncode( "<?= getMsg( 'iptvEPGNotAvailable' ) ?>" ) );
     executeScript("ReloadList");
+
+myDebugTrace = "list rebuilt,expire time:" + EPGListExpireHour + ":" + EPGListExpireMinute;
+executeScript("saveDebug");
+
 </BuildFavList>
+
+<updateCurrentTime>
+	 curTimeArr = getCSVFromURL( "<?= getMosUrl() ?>modules/iptvlist/gettime.php" );
+	hourCounter = 0 + getStringArrayAt( curTimeArr, 0 );
+	minCounter = 0 + getStringArrayAt( curTimeArr, 1 );
+	secCounter = 0 + getStringArrayAt( curTimeArr, 2 );
+	msCounter = 0;
+	calibrateTime = 600000;
+	executeScript("updateTimeString");
+</updateCurrentTime>
 
 
 <moveItemUp>
@@ -187,32 +287,112 @@ function rss_iptv_content()
 	} 
 </renameItem>
 
-<onEnter>
-	actionPending = 0;
-	pageSize = 13;
-    showIdle();
+<saveUrl>
+       	focusIndex = 0 + getFocusItemIndex();
 
-    prepareAnimation();
+	path = "/tmp/iptv_url.dat";
+
+	tmp = null;
+
+	podUrl = getStringArrayAt(favLinkArray, focusIndex * 3 );		
+	tmp = pushBackStringArray( tmp, podUrl );	
+
+	chIndex1 = 0 + focusIndex + 1;
+	podUrl = " " + chIndex1 + ". " + podUrl;
+
+	tmp = pushBackStringArray( tmp, podUrl );	
+
+	podUrl = getStringArrayAt( favLinkArray, focusIndex * 3 + 1 );		
+	tmp = pushBackStringArray( tmp, podUrl );	
+	
+	podUrl = getStringArrayAt( favLinkArray, focusIndex * 3 + 2 );		
+	tmp = pushBackStringArray( tmp, podUrl );	
+
+	tmp = pushBackStringArray( tmp, listName );	
+
+	writeStringToFile(path,tmp);
+
+	chIndex = focusIndex;
+	executeScript("writeIndex");
+</saveUrl>
+
+<saveDebug>
+	path="/tmp/iptv_debug.txt";
+	writeStringToFile(path, readStringFromFile(path) + "&#13;" + myDebugTrace );
+</saveDebug>
+
+<script>
+	myDebugTrace = "constuctor";
+	executeScript("saveDebug");
+</script>
+
+<onEnter>
+
+	myDebugTrace = "onEnter";
+	executeScript("saveDebug");
+
+	myDebugTrace = "reenter:" + reenter;
+	executeScript("saveDebug");
+
+	if ( reenter != 1 )
+	{
+    		prepareAnimation();
+
+   		executeScript("initTimer");
+   		executeScript("updateTimeString");
+
+		EPGEnabled = "<?= $epgenabled ?>";
+    		showIdle();
+
+		pageSize = 13;
+
+
+    		executeScript("BuildFavList");
+
+		firstTime = 1;
+	}
+
+
+	executeScript("readIndex");
+
+	actionPending = 0;
 /*
     setEnv("isInMyFav", "yes");    
 */
-    bProcessing = "false";
-    print("[MyFavorites - onEnter()] start init.");
-    executeScript("BuildFavList");
-    executeScript("readIndex");
-    NetTryAgain = "false";
+    	print("[MyFavorites - onEnter()] start init.");
+    	NetTryAgain = "false";
 	setEnv("Net_userID", "");
 	setEnv("Net_Password", "");	    
 	setEnv("Net_SavePSW", "no");	
 	setEnv("Net_Cancel", "0");	  
 	setEnv("currrentIdx", 0);  
-    setFocusItemIndex(chIndex);
-    setRefreshTime(1000);
+
+    	setFocusItemIndex(chIndex);
+
+    	setRefreshTime(10000);
+	period = 10000;
+
+	if ( reenter == 1 )
+	{
+		/*
+		Returned from iptvplay.rss
+		*/
+
+		executeScript("updateCurrentTime");
+
+		myDebugTrace = "actualizing time:" + hourCounter + ":" + minCounter + ",expire: "+ EPGListExpireHour + ":" + EPGListExpireMinute;
+		executeScript("saveDebug");
+
+		executeScript("checkEPGExpire");
+	}
+
+	reenter = 1;
+
 </onEnter>
 
 <onExit>
     cancelIdle();
-/*    executeScript("ReleaseFavList"); */
+    executeScript("ReleaseFavList");
     if(bProcessing == "false")
     	setEnv("isIPTVReturn", "yes");
     print("[MyFavorites - onExit()] exit.");
@@ -224,7 +404,73 @@ function rss_iptv_content()
     redrawDisplay();
 </onExit>
 
+<checkEPGExpire>
+	if ( listName != "Recordings" )
+	{
+		if ( hourCounter &gt; EPGListExpireHour )
+		{
+   			showIdle();
+			executeScript("ReloadList");
+   			cancelIdle();
+		}
+	
+		if ( hourCounter == EPGListExpireHour )
+		{
+			if ( minCounter &gt;= EPGListExpireMinute )
+			{
+
+myDebugTrace = "rebuilding list" + EPGListExpireHour + ":" + EPGListExpireMinute;
+executeScript("saveDebug");
+
+	   			showIdle();
+   				executeScript("BuildFavList");
+	   			cancelIdle();
+
+			}
+		}
+	}
+</checkEPGExpire>
+
 <onRefresh>
+		msCounter += period;
+
+		while ( msCounter &gt; 1000 )
+		{
+			msCounter -= 1000;
+
+			secCounter += 1;
+			if ( secCounter == 60 )
+			{
+				secCounter = 0;
+
+				minCounter += 1;
+				if ( minCounter == 60 )
+				{
+
+					minCounter = 0;
+					hourCounter += 1;
+					if ( hourCounter == 24 )
+					{
+						hourCounter = 0;
+					}
+
+				}
+
+				executeScript("updateTimeString");
+				executeScript("checkEPGExpire");
+			}
+			executeScript("updateTimeString");
+   		}
+
+	calibrateTime -= period;
+	if ( calibrateTime &lt; 0 )
+	{
+		executeScript("updateCurrentTime");
+	}
+
+    setRefreshTime(10000);
+	period = 10000;
+
 	if ( actionPending == 1 )
 	{
 		actionPending = 0;
@@ -267,6 +513,8 @@ function rss_iptv_content()
 			rss="<?= getMosUrl().'?page=' ?>rss_help4";
 		}
       	mret = doModalRss(rss,"mediaDisplay", "popupDialog", 0 );
+	executeScript("updateTimeString");
+	executeScript("checkEPGExpire");
 	}
 	else if ( actionPending == 7 )
 	{
@@ -283,11 +531,14 @@ function rss_iptv_content()
 		    	setFocusItemIndex(0);
     			cancelIdle();
 		}            
+		executeScript("updateTimeString");
+		executeScript("checkEPGExpire");
 	}
 	else if ( actionPending == 8 )
 	{
 		actionPending = 0;
 		rss="<?= getMosUrl().'?page=' ?>rss_addtofavorites";
+   		cancelIdle();
    		mret = doModalRss(rss,"mediaDisplay", "popupDialog", 0 );
 
 		if ( mret == "true" )
@@ -297,12 +548,17 @@ function rss_iptv_content()
 			getCSVFromURL( "<?= getMosUrl() ?>modules/iptvlist/savelist.php?favorite=" + focusIndex );
     			cancelIdle();
 		}            
+		executeScript("updateTimeString");
+		executeScript("checkEPGExpire");
 	}
 	else if ( actionPending == 9 )
 	{
 		actionPending = 0;
 		rss="<?= getMosUrl().'?page=' ?>rss_alreadyfavorites";
+   		cancelIdle();
    		mret = doModalRss(rss,"mediaDisplay", "popupDialog", 0 );
+		executeScript("updateTimeString");
+		executeScript("checkEPGExpire");
 	}
 	else if ( actionPending == 10 )
 	{
@@ -316,6 +572,7 @@ function rss_iptv_content()
 		{
 			rss="<?= getMosUrl().'?page=' ?>rss_sidemenu4";
 		}
+   		cancelIdle();
       		mret = doModalRss(rss,"mediaDisplay", "popupDialog", 0 );
 
 		if ( mret != "" )
@@ -326,11 +583,30 @@ function rss_iptv_content()
 	    		executeScript("handleUserInput");
 			cancelIdle();
 		}
+		executeScript("updateTimeString");
+		executeScript("checkEPGExpire");
+
+	}
+	else if ( actionPending == 11 )
+	{
+		actionPending = 0;
+
+    		executeScript("saveUrl");
+   		cancelIdle();
+
+		rss="<?= getMosUrl().'?page=' ?>rss_epg";
+      		mret = doModalRss(rss,"mediaDisplay", "popupDialog", 0 );
+
+		if ( mret == "true" )
+		{
+		    executeScript("BuildFavList");
+		}
+
+		executeScript("updateCurrentTime");
+		executeScript("checkEPGExpire");
 
 	}
 
-
-    setRefreshTime(1000);
 </onRefresh>
 
 <handleUserInput>
@@ -363,12 +639,41 @@ function rss_iptv_content()
 			redrawDisplay();
             ret = "true";
         }
-        else if ((userInput == "up") || (userInput == "down"))
+        else if (userInput == "up")
         {
             if (favLinkCount &lt; 1)
             {
                 ret = "true";
             }
+			else
+			{
+		       	focusIndex = 0 + getFocusItemIndex();			
+				if ( focusIndex == 0 )
+				{
+					setFocusItemIndex( favLinkCount - 1 );
+					redrawDisplay();
+	                ret = "true";
+				}
+
+			}
+        }
+        else if (userInput == "down")
+        {
+            if (favLinkCount &lt; 1)
+            {
+                ret = "true";
+            }
+			else
+			{
+		       	focusIndex = 0 + getFocusItemIndex();			
+				if ( focusIndex == ( favLinkCount - 1 ) )
+				{
+					setFocusItemIndex( 0 );
+					redrawDisplay();
+	                ret = "true";
+				}
+
+			}
         }
         else if(userInput == "video_play")  
         {
@@ -392,6 +697,7 @@ function rss_iptv_content()
 			actionPending = 2;
 			showIdle();
     			setRefreshTime(1);
+				period = 1;
           		ret = "true";
 		}
 	}
@@ -402,6 +708,7 @@ function rss_iptv_content()
 			actionPending = 1;
 			showIdle();
     			setRefreshTime(1);
+				period = 1;
           		ret = "true";
 		}
         }
@@ -410,6 +717,7 @@ function rss_iptv_content()
 		showIdle();
 		actionPending = 10;
 		setRefreshTime(1);
+		period = 1;
           	ret = "true";
 	}	
 	else if (userInput == "movepagedown")
@@ -419,6 +727,7 @@ function rss_iptv_content()
 			actionPending = 4;
 			showIdle();
     			setRefreshTime(1);
+			period = 1;
           		ret = "true";
 		}
         }
@@ -429,6 +738,7 @@ function rss_iptv_content()
 			actionPending = 3;
 			showIdle();
     			setRefreshTime(1);
+			period = 1;
           		ret = "true";
 		}
         }
@@ -442,38 +752,58 @@ function rss_iptv_content()
 			{
 				rss="<?= getMosUrl().'?page=' ?>rss_deleteconfirm";
 			}
+
            	mret = doModalRss(rss,"mediaDisplay", "popupDialog", 0 );
+		executeScript("updateTimeString");
+		executeScript("checkEPGExpire");
 
 			if ( mret == "true" )
 			{
-				actionPending = 5;
 				showIdle();
-    			setRefreshTime(1);
+				actionPending = 5;
+	    			setRefreshTime(1);
+				period = 1;
 			}            
 
           	ret = "true";
         }
         else if(userInput == "return")  
         {
-		ret = "false";
+          	ret = "false";
         }
         else if(userInput == "display")  
         {
-		/*
-		todo
-		*/	
-          	ret = "true";
+		if ( listName == "Recordings" )
+		{       
+			showIdle();
+			actionPending = 6;
+    			setRefreshTime(1);
+			period = 1;
+ 	         	ret = "true";
+		}
+		else
+		{
+			showIdle();
+			actionPending = 11;
+    			setRefreshTime(1);
+			period = 1;
+          		ret = "true";
+		}
 	}
         else if(userInput == "help")  
         {
 			showIdle();
 			actionPending = 6;
+    			setRefreshTime(1);
+			period = 1;
           	ret = "true";
         }
 		else if ( (userInput == "menu") || (userInput =="option_yellow" ) )
 		{
 			showIdle();
 			actionPending = 7;
+	    			setRefreshTime(1);
+				period = 1;
           	ret = "true";
 		}
 		else if (userInput == "video_stop")
@@ -482,11 +812,15 @@ function rss_iptv_content()
 			{
 				showIdle();
 				actionPending = 8;
+	    			setRefreshTime(1);
+				period = 1;
 			}
 			else 
 			{
 				showIdle();
 				actionPending = 9;
+	    			setRefreshTime(1);
+				period = 1;
 			}
           	ret = "true";
 		}
@@ -496,6 +830,9 @@ function rss_iptv_content()
 			if ( listName == "Recordings" )
 			{       
 				ret = getInput("Rename video", "doModal");
+				executeScript("updateTimeString");
+				executeScript("checkEPGExpire");
+
 				if( ret != NULL ) 
 				{
 					if( ret != "" ) 
@@ -509,12 +846,27 @@ function rss_iptv_content()
 			{
 				rss="<?= getMosUrl().'?page=' ?>rss_norename";
    				mret = doModalRss(rss,"mediaDisplay", "popupDialog", 0 );
+				executeScript("updateTimeString");
+				executeScript("checkEPGExpire");
 			}
           	ret = "true";
 		}
 
-/*
+else if (userInput == "epgEnable")  
+{
+    	executeScript("enableEPG");
+    	executeScript("BuildFavList");
+	redrawDisplay();
+}
+else if (userInput == "epgDisable")  
+{
+    	executeScript("disableEPG");
+    	executeScript("BuildFavList");
+	redrawDisplay();
+}
 
+
+/*
 		favLinkArray = userInput;
 		redrawDisplay();
 */
@@ -543,33 +895,15 @@ function rss_iptv_content()
             if (favLinkCount &gt; 0)
             {
 
-        	path = getStoragePath("tmp");
-			path = path + "iptv_url.dat";
-
-			tmp = null;
-
-			podUrl = getStringArrayAt(favLinkArray, focusIndex * 3 );		
-			tmp = pushBackStringArray( tmp, podUrl );	
-
-			chIndex1 = 0 + focusIndex + 1;
-           	podUrl = " " + chIndex1 + ". " + podUrl;
-
-			tmp = pushBackStringArray( tmp, podUrl );	
-
-			podUrl = getStringArrayAt( favLinkArray, focusIndex * 3 + 1 );		
-			tmp = pushBackStringArray( tmp, podUrl );	
-	
-			podUrl = getStringArrayAt( favLinkArray, focusIndex * 3 + 2 );		
-			tmp = pushBackStringArray( tmp, podUrl );	
-
-			tmp = pushBackStringArray( tmp, listName );	
-
-			writeStringToFile(path,tmp);
-
-			chIndex = focusIndex;
-	    	executeScript("writeIndex");
+	    	executeScript("saveUrl");
 
 			jumpToLink( "playLink_OSD" );
+
+
+
+			executeScript("updateCurrentTime");
+			executeScript("checkEPGExpire");
+
 			null;
                 }
     </onClick>
@@ -646,7 +980,7 @@ function rss_iptv_content()
     
     <text offsetXPC=16.49 offsetYPC=8.82 widthPC=59.61 heightPC=5.05 fontSize=17 useBackgroundSurface=yes redraw=no backgroundColor=-1:-1:-1>
         <script>
-            titleStr = hint = "<?= getMsg( 'iptvTitle' ) ?> - " + listName;
+            titleStr = hint = "<?= getMsg( 'iptvTitle1' ) ?>" + listName;
         </script>
     </text>
     
@@ -709,7 +1043,7 @@ function rss_iptv_content()
     <!-- background image -->
     <backgroundDisplay name="MyFavoritsBackground">
 		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
-			/usr/local/etc/mos/www/modules/iptvlist/images/IMAGE_TV_BG.png
+            <?= detectFirmware( '/usr/local/etc/mos/www/modules/iptvlist/images/IMAGE_TV_BG.png', '/usr/local/etc/mos/www/modules/iptvlist/images/iconbitBG.png' ) ?>
 		</image>
     </backgroundDisplay>
     
@@ -725,7 +1059,7 @@ function rss_iptv_content()
 		</script>
 	</image>
 
-	<text offsetXPC=30.94 offsetYPC=85.10 widthPC=51.87 heightPC=4.72 fontSize=10 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=no>
+	<text offsetXPC=<?= detectFirmware( '30.94', '31.94' ) ?> offsetYPC=<?= detectFirmware( '85.10', '85.40' ) ?> widthPC=51.87 heightPC=4.72 fontSize=10 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=no>
 		<script>
 			hint = "";
 			if(favLinkCount &gt; 0) 
@@ -744,23 +1078,50 @@ function rss_iptv_content()
 		</script>
 	</image>
 
-	<text offsetXPC=30.94 offsetYPC=90.97 widthPC=58 heightPC=4.72 fontSize=10 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=no>
+	<text offsetXPC=<?= detectFirmware( '30.94', '31.94' ) ?> offsetYPC=90.97 widthPC=58 heightPC=4.72 fontSize=10 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=no>
 		<script>
 		    hint = "<?= getMsg( 'iptvShowActionsMenu' ) ?>";
 			hint;
 		</script>
 	</text>
 
-    <image offsetXPC=48.4 offsetYPC=90.97 widthPC=2.5 heightPC=4.3 useBackgroundSurface=yes redraw=no>
+    <image offsetXPC=<?= detectFirmware( '48.4', '48.7' ) ?> offsetYPC=90.97 widthPC=2.5 heightPC=4.3 useBackgroundSurface=yes redraw=no>
 		<script>
 			icon = "/usr/local/etc/mos/www/modules/iptvlist/images/notes.png";
 			icon;
 		</script>
 	</image>
 
-	<text offsetXPC=50.94 offsetYPC=90.97 widthPC=58 heightPC=4.72 fontSize=10 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=no>
+	<text offsetXPC=<?= detectFirmware( '50.94', '51.94' ) ?> offsetYPC=<?= detectFirmware( '90.97', '90.97' ) ?> widthPC=58 heightPC=4.72 fontSize=10 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=no>
 		<script>
 		    hint = "<?= getMsg( 'iptvSelectPlaylist' ) ?>";
+			hint;
+		</script>
+	</text>
+
+    <image offsetXPC=48.4 offsetYPC=85.42 heightPC=4.3 useBackgroundSurface=yes redraw=no>
+		<widthPC>
+			<script>
+				if ( isRecordings ) {s= 0;} else {s = 2.5;};
+				s;
+			</script>
+		</widthPC>
+		<script>
+			icon = "/usr/local/etc/mos/www/modules/iptvlist/images/display.png";
+			icon;
+		</script>
+	</image>
+
+	<text offsetXPC=<?= detectFirmware( '50.94', '51.94' ) ?> offsetYPC=<?= detectFirmware( '85.10', '85.40' ) ?> widthPC=58 heightPC=4.72 fontSize=10 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=no>
+		<script>
+			if ( isRecordings )
+			{
+				hint = "";
+			}
+			else	
+			{
+		    		hint = "<?= getMsg( 'iptvProgramGuide' ) ?>";
+			}
 			hint;
 		</script>
 	</text>
@@ -780,7 +1141,7 @@ function rss_iptv_content()
 		</script>
 	</image>
 
-	<text offsetXPC=68.94 offsetYPC=90.97 heightPC=4.72 fontSize=10 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=no>
+	<text offsetXPC=<?= detectFirmware( '68.94', '69.94' ) ?> offsetYPC=90.97 heightPC=4.72 fontSize=10 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=no>
 		<widthPC>
 			<script>
 				if ( isRecordings ) {s= 58;} else {s = 0;};
@@ -793,16 +1154,158 @@ function rss_iptv_content()
 		</script>
 	</text>
 
-	<text offsetXPC=84.2 offsetYPC=87.5 widthPC=11 heightPC=4.72 fontSize=7 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=right tailDots=no useBackgroundSurface=yes redraw=no>
+	<text offsetXPC=84.2 offsetYPC=87.5 widthPC=11 heightPC=4.72 fontSize=7 foregroundColor=100:100:100 backgroundColor=-1:-1:-1 align=right tailDots=no useBackgroundSurface=yes redraw=no>
 		<script>
 			hint = "";
 			if(favLinkCount &gt; 0 ) 
 			{
-			    hint = "iptvlist v1.2.3 by hax";
+			    hint = "iptvlist v1.5 by hax";
 			}
 			hint;
 		</script>
 	</text>
+
+
+	<!-- EPG begin -->
+
+	<text offsetXPC=<?= detectFirmware( '50', '50' ) ?> offsetYPC=<?= detectFirmware( '25', '25' ) ?> widthPC=38 heightPC=4.72 fontSize=13 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=yes>
+		<script>
+			if ( EPGData == "" )
+			{
+				hint = "";
+			}
+			else
+			{
+				hint = timeString;
+			}
+			hint;
+		</script>
+	</text>
+
+
+	<text offsetXPC=<?= detectFirmware( '50', '50' ) ?> offsetYPC=<?= detectFirmware( '30', '30' ) ?> widthPC=38 heightPC=4.72 fontSize=13 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=no>
+		<script>
+			if ( EPGData == "" )
+			{
+				hint = "";
+			}
+			else
+			{
+				hint = "<?= getMsg( 'iptvEPGNow' ) ?>";
+			}
+			hint;
+		</script>
+	</text>
+
+
+	<text offsetXPC=<?= detectFirmware( '50', '50' ) ?> offsetYPC=<?= detectFirmware( '36', '36' ) ?> widthPC=38 heightPC=4.72 fontSize=11 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=yes>
+		<script>
+			if ( EPGData == "" )
+			{
+				hint = "";
+			}
+			else
+			{
+				focusIndex = 0 + getFocusItemIndex();
+				hint = getStringArrayAt( EPGData, focusIndex * 7 + 3);
+			}
+			hint;
+		</script>
+	</text>
+
+
+	<text offsetXPC=<?= detectFirmware( '50', '50' ) ?> offsetYPC=<?= detectFirmware( '40', '40' ) ?> widthPC=38 heightPC=4.72 fontSize=11 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=yes>
+		<script>
+			if ( EPGData == "" )
+			{
+				hint = "";
+			}
+			else
+			{
+				focusIndex = 0 + getFocusItemIndex();
+				hint = getStringArrayAt( EPGData, focusIndex * 7 + 3 + 1 );
+			}
+			hint;
+		</script>
+	</text>
+
+	<text offsetXPC=<?= detectFirmware( '50', '50' ) ?> offsetYPC=<?= detectFirmware( '44', '44' ) ?> widthPC=38 heightPC=4.72 fontSize=11 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=yes>
+		<script>
+			if ( EPGData == "" )
+			{
+				hint = "";
+			}
+			else
+			{
+				focusIndex = 0 + getFocusItemIndex();
+				hint = getStringArrayAt( EPGData, focusIndex * 7 + 3 + 2 );
+			}
+			hint;
+		</script>
+	</text>
+
+	<text offsetXPC=<?= detectFirmware( '50', '50' ) ?> offsetYPC=<?= detectFirmware( '48', '48' ) ?> widthPC=38 heightPC=4.72 fontSize=11 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=yes>
+		<script>
+			if ( EPGData == "" )
+			{
+				hint = "";
+			}
+			else
+			{
+				focusIndex = 0 + getFocusItemIndex();
+				hint = getStringArrayAt( EPGData, focusIndex * 7 + 3 + 3 );
+			}
+			hint;
+		</script>
+	</text>
+
+	<text offsetXPC=<?= detectFirmware( '50', '50' ) ?> offsetYPC=<?= detectFirmware( '52', '52' ) ?> widthPC=38 heightPC=4.72 fontSize=11 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=yes>
+		<script>
+			if ( EPGData == "" )
+			{
+				hint = "";
+			}
+			else
+			{
+				focusIndex = 0 + getFocusItemIndex();
+				hint = getStringArrayAt( EPGData, focusIndex * 7 + 3 + 4 );
+			}
+			hint;
+		</script>
+	</text>
+
+	<text offsetXPC=<?= detectFirmware( '50', '50' ) ?> offsetYPC=<?= detectFirmware( '56', '56' ) ?> widthPC=38 heightPC=4.72 fontSize=11 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=yes>
+		<script>
+			if ( EPGData == "" )
+			{
+				hint = "";
+			}
+			else
+			{
+				focusIndex = 0 + getFocusItemIndex();
+				hint = getStringArrayAt( EPGData, focusIndex * 7 + 3 + 5 );
+			}
+			hint;
+		</script>
+	</text>
+
+	<text offsetXPC=<?= detectFirmware( '50', '50' ) ?> offsetYPC=<?= detectFirmware( '60', '60' ) ?> widthPC=38 heightPC=4.72 fontSize=11 foregroundColor=255:255:255 backgroundColor=-1:-1:-1 align=left tailDots=no useBackgroundSurface=yes redraw=yes>
+		<script>
+			if ( EPGData == "" )
+			{
+				hint = "";
+			}
+			else
+			{
+				focusIndex = 0 + getFocusItemIndex();
+				hint = getStringArrayAt( EPGData, focusIndex * 7 + 3 + 6 );
+			}
+			hint;
+		</script>
+	</text>
+
+
+	<!-- EPG end -->
 		
 	<!-- input -->
 	<onUserInput>

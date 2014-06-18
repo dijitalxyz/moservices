@@ -1,9 +1,9 @@
 [apower]
-	revision = 1
+	revision = 4
 	title = "Actions on Power"
 	role = patch
 	check = sskin
 	init = S50aPower
 	config_link = "?page=apower_sets"
 	files = "etc/init/S50aPower etc/rc.init/S01aPower.sh www/modules/apower/"
-	size = 68
+	size = 80

@@ -1,0 +1,8 @@
+[libsqlite3_3430]
+	revision = 1
+	title = "lib SQLite3 0.8.6"
+	role = package
+	files = "lib/libsqlite3.so lib/libsqlite3.so.0 lib/libsqlite3.so.0.8.6"
+	check = "lib libsqlite3.so.0"
+	env = 3430
+	size = 740

@@ -9,9 +9,9 @@ $nav_rss['services'] = array (
 
 $nav_rss["aaa"] = array (
 	"module"=> "core",
-	"rss"	=> "http://127.0.0.1/media/sda1/scripts/Xtreamering/index_orig.php",
-	"icon"  => "rss/images/xTreamering.png",
-	"title" => "xTreamering"
+	"rss"	=> "rss_file:///usr/local/bin/scripts/menu.rss",
+	"icon"  => "rss/images/OnlineMedia.png",
+	"title" => "Online Media"
 );
 
 ?>

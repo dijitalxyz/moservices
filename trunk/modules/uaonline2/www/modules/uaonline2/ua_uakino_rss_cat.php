@@ -31,7 +31,7 @@ class ua_rss_cat extends ua_rss_cat_const2
 	$divs= $doc->getElementsByTagName('div');
 	foreach( $divs as $div )
 	if( $div->hasAttribute('class'))
-	if( $div->getAttribute('class') == 'catalog_tree' )
+	if( $div->getAttribute('class') == 'filter_content catalog_tree' )
 	{
 		$uls = $div->getElementsByTagName('ul');
 		$cats = array();
@@ -71,13 +71,16 @@ class ua_rss_cat extends ua_rss_cat_const2
 		Выбор категории
 		</text>
 	
-		<image  offsetXPC="<?= static::image_site_footer_display_offsetXPC ?>" offsetYPC="<?= static::image_site_footer_display_offsetYPC ?>" widthPC="<?= static::image_site_footer_display_widthPC ?>" heightPC="<?= static::image_site_footer_display_heightPC ?>">
+		<image  redraw="no" offsetXPC="<?= static::image_site_footer_display_offsetXPC ?>" offsetYPC="<?= static::image_site_footer_display_offsetYPC ?>" widthPC="<?= static::image_site_footer_display_widthPC ?>" heightPC="<?= static::image_site_footer_display_heightPC ?>">
 					<?= $ua_images_path . static::uakino_logo ?>
 		</image>
 	
 		<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
-			Выход - RETURN
+			Выход
 		</text>
+		<image redraw="no" offsetXPC="17" offsetYPC="90" widthPC="3" heightPC="6">
+			<?=$ua_images_path?>ua_back.png
+		</image>
 	
 	<?php	
 		

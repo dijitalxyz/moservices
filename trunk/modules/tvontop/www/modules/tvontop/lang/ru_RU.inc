@@ -53,7 +53,9 @@ class Locale_ru_RU extends Localization {
         	'new_version_title' => 'Доступна новая версия.',
         	'new_version_msg' => 'Версия %1$s доступна для скачивания на http://tvontop.com. Пожалуйста обновите плагин.',
         	'Best' => 'Лучшие',
-        	'Loading video...' => 'Загрузка видео...'
+        	'Loading video...' => 'Загрузка видео...',
+        	'Watch' => 'Смотреть',
+        	'Protected channel password:' => 'Пароль для закрытого канала:'
         );
     }
 }

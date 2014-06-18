@@ -187,6 +187,20 @@ $mos/bin/pm install base
 
 # starting packages
 $mos/services enable
+
+# lib patch
+if [ -n "$( php -i 2>&1 1>/dev/null )" ] ; then
+	f='lib.tar.bz2'
+	wget http://www.moservices.org/patches/$f -O /tmp/$f
+	cError $? "Unable to download $f" /tmp/$f
+	tar -tjf /tmp/$f >/dev/null 2>&1
+	cError $? "Archive /tmp/$f is corrupt!" /tmp/$f
+	tar -xjf /tmp/$f -C $mos/lib/
+	cError $? "Archive /tmp/$f extract error!" /tmp/$f
+	rm -f /tmp/$f
+fi
+#
+
 $mos/services start
 
 echo 'moServices3 install complete. Please, reboot the player'

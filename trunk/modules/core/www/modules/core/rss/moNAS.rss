@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+  <onEnter>
+    setRefreshTime(10);
+  </onEnter>
+
+  <onRefresh>
+    setRefreshTime(-1);
+    doModalRss("http://127.0.0.1/cgi-bin/rss");
+    postMessage("return");
+  </onRefresh>
+
+<mediaDisplay name="onePartView"
+  backgroundColor="0:0:0"
+  sideLeftWidthPC="0"
+  sideRightWidthPC="0"
+  sideColorLeft="0:0:0"
+  sideColorRight="0:0:0"
+  showHeader="no"
+  showDefaultInfo="no"
+/>
+</rss>

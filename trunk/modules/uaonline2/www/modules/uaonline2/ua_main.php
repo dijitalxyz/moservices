@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS main menu module v2.6
+	RSS main menu module v2.4
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2014	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -17,14 +17,14 @@ class ua_rss_cat_const
 	const unFocusFontColor		=	'255:255:255';
 	const imageFocusBorder 		= 	'ua_focus_main.png';
 	const imageUnFocusBorder	= 	'ua_unfocus_main.png';
-	const backgroundColor 		=	'0:0:0';
-	const rowCount 				=	'5';
-	const columnCount 			=	'4';
+	const backgroundColor 		=	'-1:-1:-1';
+	const rowCount 				=	'3';
+	const columnCount 			=	'3';
 	const itemOffsetXPC			= 	'8';
-	const itemOffsetYPC			= 	'14';
-	const itemWidthPC			= 	'22';
-	const itemHeightPC			= 	'15';
-	const itemBackgroundColor 	= 	'0:0:0';
+	const itemOffsetYPC			= 	'20';
+	const itemWidthPC			= 	'28';
+	const itemHeightPC			= 	'20';
+	const itemBackgroundColor 	= 	'-1:-1:-1';
 
 	const header				=   'ua_header.png';
 	const footer				=   'ua_footer.png';
@@ -81,17 +81,17 @@ class ua_rss_cat_const
 	const items_border_widthPC			= '100';
 	const items_border_heightPC			= '100';
 	
-	const items_offsetXPC				= '3.3333'; 
+	const items_offsetXPC				= '38'; 
 	const items_offsetYPC				= '8.3333'; 
-	const items_widthPC					= '33.3333'; 
-	const items_heightPC				= '83.3333';
+	const items_widthPC					= '25'; 
+	const items_heightPC				= '55';
 
-	const items_text_align				= 'left'; 
+	const items_text_align				= 'center'; 
 	const items_text_lines				= '2'; 
-	const items_text_offsetXPC			= '40'; 
-	const items_text_offsetYPC			= '20'; 
-	const items_text_widthPC			= '62'; 
-	const items_text_heightPC			= '42'; 
+	const items_text_offsetXPC			= '0'; 
+	const items_text_offsetYPC			= '75'; 
+	const items_text_widthPC			= '100'; 
+	const items_text_heightPC			= '44'; 
 	const items_text_fontSize			= '12'; 
 	const items_text_backgroundColor	= '-1:-1:-1';
 	
@@ -117,15 +117,15 @@ class ua_rss_main extends ua_rss_cat_const
 		 <script>
 			idx = getQueryItemIndex();
 			drawState = getDrawingItemState();
-			if (drawState == "unfocus")
-				{
-					border = "<?= $ua_images_path.static::imageUnFocusBorder ?>";
-					color = "<?= static::unFocusFontColor ?>";
-				}
-			else
+			if (drawState == "focus")
 				{
 					border = "<?= $ua_images_path.static::imageFocusBorder ?>";
 					color = "<?= static::focusFontColor ?>";
+				}
+			else
+				{
+					border = "<?= $ua_images_path.static::imageUnFocusBorder ?>";
+					color = "<?= static::unFocusFontColor ?>";
 				}
       </script>
 	
@@ -196,9 +196,12 @@ class ua_rss_main extends ua_rss_cat_const
 			</script>
 		</text>
 	
-			<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
-		 ВЫХОД - RETURN
-	</text>
+		<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
+		 Выход
+		</text>
+		<image redraw="no" offsetXPC="17" offsetYPC="90" widthPC="3" heightPC="6">
+			<?=$ua_images_path?>ua_back.png
+		</image>
 	
 	<?php	
 	}
@@ -219,15 +222,27 @@ class ua_rss_main extends ua_rss_cat_const
 		global $key_return;
 	?>
 	<onEnter>
+		screenSaverStatus=getScreenSaverStatus();
 		data=readStringFromFile("/tmp/env_return_message");
 		if (data=="return") 
 		{
 			postMessage("<?= $key_return ?>");
 			writeStringToFile("/tmp/env_return_message", "");
 		}
+		returnFromList=readStringFromFile("/tmp/env_returnFromList_message");
+		if (returnFromList == "1")
+			{
+				writeStringToFile("/tmp/env_returnFromList_message", "");
+				index = idx;
+			} else
+			{
+				index=0;
+			}
 		setRefreshTime(1); 
-		index=0;
 	</onEnter>
+	<onExit>
+		SetScreenSaverStatus(screenSaverStatus);
+	</onExit>
 	<?php
 	}
 
@@ -247,19 +262,21 @@ class ua_rss_main extends ua_rss_cat_const
 		global $ua_rss_update_filename;
 		global $ua_update_standalone;
 		global $ua_rss_history_filename;
+		global $ua_rss_keyboard_filename;
 	?>
 	<onRefresh>
 		setRefreshTime(-1);    
 		showIdle();
-		dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?load=1"?>");
+		dlok = getURL("<?=$ua_path_link.$ua_setup_parser_filename."?oper=load"?>");
 		
 		if (dlok != null)
 			{
 				regionIndex = getStringArrayAt(dlok, 0);
 				languageIndex = getStringArrayAt(dlok, 1);
+				screensaverIndex = getStringArrayAt(dlok, 7);
 			}
 		
-		itemCount = 7;
+		itemCount = 8;
 		itemTitleArray = null;
 		itemImageArray = null;
 		itemlinkArray = null;
@@ -268,9 +285,7 @@ class ua_rss_main extends ua_rss_cat_const
 		itemTitleArray  = pushBackStringArray(itemTitleArray, "ИЗБРАННОЕ");
 		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_favorites.png");
 		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?=$ua_path_link.$ua_rss_favorites_filename?>");
-		itemTitleArray  = pushBackStringArray(itemTitleArray, "ИСТОРИЯ ПРОСМОТРОВ");
-		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_history.png");
-		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?=$ua_path_link.$ua_rss_history_filename?>");
+		
 		if (languageIndex == "0") 
 			{
 				if (regionIndex == "0") 
@@ -314,31 +329,36 @@ class ua_rss_main extends ua_rss_cat_const
 				itemlinkArray  = pushBackStringArray(itemlinkArray, "<?= $ua_path_link.$exua_rss_cat_filename."?lang=e"?>");	
 			}
 		
-		
-		
-		
-		itemTitleArray  = pushBackStringArray(itemTitleArray, "UAKINO.NET");
-		itemTitleArray  = pushBackStringArray(itemTitleArray, "FS.UA");
 		itemTitleArray  = pushBackStringArray(itemTitleArray, "МЕНЕДЖЕР ЗАГРУЗОК");
-		itemTitleArray  = pushBackStringArray(itemTitleArray, "НАСТРОЙКИ");
-		
-
-		
-		
-		
-		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_uakinonet.png");
-		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_fsua.png");
 		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_download_manager.png");
-		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_setup.png");
-		
-
-		
-		
-		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?= $ua_path_link.$uakino_rss_cat_filename?>");
-		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?= $ua_path_link.$fsua_rss_cat_filename?>");
 		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?=$ua_path_link.$ua_rss_download_filename."?display=1"?>");
+		
+		itemTitleArray  = pushBackStringArray(itemTitleArray, "ПОИСК");
+		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_search.png");
+		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?=$ua_path_link."ua_search_global_rss.php"?>");
+			
+		itemTitleArray  = pushBackStringArray(itemTitleArray, "BRB.TO");
+		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_fsua.png");
+		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?= $ua_path_link.$fsua_rss_cat_filename?>");
+		
+		itemTitleArray  = pushBackStringArray(itemTitleArray, "НАСТРОЙКИ");
+		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_setup.png");
 		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?=$ua_path_link.$ua_rss_setup_filename?>");
 		
+		itemTitleArray  = pushBackStringArray(itemTitleArray, "ИСТОРИЯ ПРОСМОТРОВ");
+		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_history.png");
+		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?=$ua_path_link.$ua_rss_history_filename?>");
+		
+		itemTitleArray  = pushBackStringArray(itemTitleArray, "UAKINO.NET");
+		itemImageArray  = pushBackStringArray(itemImageArray, "<?=$ua_images_path ?>ua_uakinonet.png");
+		itemlinkArray  = pushBackStringArray(itemlinkArray, "<?= $ua_path_link.$uakino_rss_cat_filename?>");
+		
+		
+		
+
+		
+		
+
 		<?php
 		if ($ua_update_standalone)
 			{
@@ -351,6 +371,7 @@ class ua_rss_main extends ua_rss_cat_const
 			}
 		?>
 	
+		if ( screensaverIndex == "1") SetScreenSaverStatus("yes"); else SetScreenSaverStatus("no");
 		setFocusItemIndex(index);
 		redrawDisplay();
 	</onRefresh>
@@ -361,15 +382,42 @@ class ua_rss_main extends ua_rss_cat_const
 	public function channel()
 	{
 	global $ua_path;
+	global $built_in_keyb;
+	global $ua_path_link;
+	global $ua_rss_keyboard_filename;
 	
 	?>
 	<item_template>
-		<link>
+		<onClick>
 			<script>
 				idx = getFocusItemIndex();
 				url = getStringArrayAt(itemlinkArray,idx);
+				if (idx == 3)
+				{
+				<?
+				if ($built_in_keyb == "1")
+				{
+					?>
+					keyword = getInput("Search", "doModal");	
+					<?
+				} else
+				{
+				?>
+					rss = "<?=$ua_path_link.$ua_rss_keyboard_filename?>";
+					keyword = doModalRss(rss);
+				<?
+				}
+				?>
+				if (keyword!=null)
+				{
+					writeStringToFile("/tmp/ua_temp.tmp", keyword);
+					url = "<?=$ua_path_link."ua_search_global_rss.php"?>";
+				} else	url=null;
+				}
+				
+				url;
 			</script>
-		</link>
+		</onClick>		
 	</item_template>	
 
 	<channel>
@@ -414,6 +462,15 @@ class ua_rss_main extends ua_rss_cat_const
 		drawItemText		= "no"
 		forceFocusOnItem	= "yes"
 		
+		enableStretchBlt=no
+		circlingItems=no
+		BackgroundDark=no
+		forceRedrawItems=yes
+		slideItems=no
+    	stretchInFocus=no
+		DoAnimation=no
+		drawItemBorder=no
+		
 		showHeader			= "no"
 		showDefaultInfo		= "no"
 		idleImageXPC		="88"
@@ -425,7 +482,7 @@ class ua_rss_main extends ua_rss_cat_const
 		$this->showIdle();
 	?>
 	
-<backgroundDisplay>
+<backgroundDisplay name=UaMenuBackground>
 			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
 					<?=$ua_images_path?>ua_background_main.png
 			</image>

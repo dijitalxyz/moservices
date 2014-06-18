@@ -5,11 +5,15 @@ require_once 'tools/lang.inc';
 abstract class Provider {
 
 	public static $OBJ_STREAM_URL   = "STREAM_URL";
+	public static $OBJ_PROTECTED_STREAM_URL   = "PROTECTED_STREAM_URL";
 	public static $OBJ_CHANGE_AUTH  = "CHANGE_AUTH";
 	public static $UNKNOWN_REQUEST  = "UNKNOWN_REQUEST";
 
 	public static $OBJ_ERROR   		= "ERROR";
 	public static $OBJ_MESSAGE   	= "MESSAGE";
+	
+	public static $OBJ_KEYBOARD			= "KEYBOARD";
+	public static $OBJ_KEY_LOCALE		= "KEY_LOCALE";
 
 	/* Add other object types here*/
 	//dynamicaly defined key binding
@@ -56,7 +60,7 @@ abstract class Provider {
         	$this->locale = $lang->getLocale($this->getDefaultLocale());
         }
         $this->loadAuthData();
-        if (null != $this->getSubprovider()) {
+        if (null !== $this->getSubprovider()) {
         	$this->getSubprovider()->init($cfg);
         }
     }

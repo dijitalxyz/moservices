@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Check for install libgcc_s:
+# Check for install libraries:
 # returns 2 - embedded
 # returns 1 - not installable
 # returns 0 - installable

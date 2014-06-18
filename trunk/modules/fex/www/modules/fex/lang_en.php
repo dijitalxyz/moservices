@@ -14,4 +14,8 @@ $nav_msg[ 'fexDelMark'  ] = 'Remove from bookmarks';
 
 $nav_msg[ 'fexSearchRezult'] = ' - Search: ';
 
+$nav_msg['fexKeyboard'] = 'Keyboard';
+$nav_msg['fexKbdEmb'] = 'Embedded';
+$nav_msg['fexKbdRss'] = 'RSS';
+
 ?>

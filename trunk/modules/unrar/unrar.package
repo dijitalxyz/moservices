@@ -1,0 +1,6 @@
+[unrar]
+	revision = 1
+	title = "unrar 3.90"
+	role = util
+	files = "bin/unrar"
+	size = 572

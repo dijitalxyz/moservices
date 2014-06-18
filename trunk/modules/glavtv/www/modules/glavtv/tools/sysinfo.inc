@@ -2,7 +2,7 @@
 class SysInfo {
 
     public static function getMac() {
-        $dump = exec('/sbin/ifconfig | grep thern');
+        $dump = exec('/sbin/ifconfig | grep thern | grep eth');
         return preg_match('/..:..:..:..:..:../', $dump, $mac) ?
             $mac[0] : '--:--:--:--:--:--';
     }
@@ -15,11 +15,19 @@ class SysInfo {
         return false !== stripos(php_uname(), 'windows');
     }
 
+    public static function isOldPlatform($platform = null) {
+        $platform = empty($platform) ? self::getPlatform() : $platform;
+        $new = in_array($platform, array('118x', 'iconbit'));
+        return ! $new;
+    }
+
     public static function getPlatform() {
         $ext = self::getPlatformExt();
         if (self::isDevEnvironment()) {
             return '118x';
         } else if (false !== stripos($ext, 'prodigy')) {
+            return '118x';
+        } else if (false !== stripos($ext, 'sidewinder3')) {
             return '118x';
         } else if (false !== stripos($ext, 'xtreamer')) {
             return 'xtreamer';

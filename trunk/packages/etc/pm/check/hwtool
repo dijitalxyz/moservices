@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Check for install:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+#
+if [ -f /usr/local/sbin/gpio ] ; then
+	[ -e $mos/gpio ] || ln -s /usr/local/sbin/gpio /usr/local/etc/mos/bin/gpio
+	[ -e $mos/hwinfo ] || ln -s /usr/local/sbin/hwinfo /usr/local/etc/mos/bin/hwinfo
+	exit 2
+fi
+exit 0

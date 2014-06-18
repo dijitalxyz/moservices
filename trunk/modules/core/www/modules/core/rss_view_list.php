@@ -63,10 +63,6 @@ class rssSkinListView extends rssSkinList
    focusBorderColor = "<?= static::focusBorderColor ?>"
    unFocusBorderColor = "<?= static::unFocusBorderColor ?>"
 
-   imageFocus=""
-   imageParentFocus=""
-   imageUnFocus=""
-
    idleImageXPC="<?= round( static::idleImageX/$vw*100, 4) ?>"
    idleImageYPC="<?= round( static::idleImageY/$vh*100, 4) ?>"
    idleImageWidthPC="<?= round( static::idleImageWidth/$vw*100, 4) ?>"

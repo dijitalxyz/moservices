@@ -1,0 +1,7 @@
+[filin]
+	revision = 1.1
+	title = "FiLin.tV"
+	role = rss
+	files = "www/modules/filin/ www/modules/core/rss/skins/default/filin/"
+	logo = "modules/filin/filin.png"
+	size = 252

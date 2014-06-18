@@ -69,6 +69,7 @@ $nav_msg[ 'coreRole_patch'  ] = 'Patches';
 $nav_msg[ 'coreRole_package'] = 'Packages';
 $nav_msg[ 'coreRole_web'    ] = 'Web modules';
 $nav_msg[ 'coreRole_rss'    ] = 'RSS modules';
+$nav_msg[ 'coreRole_util'   ] = 'Utilites';
 
 $nav_msg[ 'coreSt_disable'  ] = 'Disabled';
 $nav_msg[ 'coreSt_embeded'  ] = 'Embeded';

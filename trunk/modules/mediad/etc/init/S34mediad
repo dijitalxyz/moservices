@@ -1,0 +1,77 @@
+#!/bin/sh
+#
+# description: Starts and stops IconBit MediaCenter
+#
+etc=/usr/local/etc
+mos=$etc/mos
+mediad=$mos/mediad
+
+cgi=/tmp/www/cgi-bin
+[ -d '/sbin/www' ] && cgi='/sbin/www/cgi-bin'
+
+case "$1" in
+  start)
+	echo "Starting Mediad..."
+
+	# making files dirs e.t.c.
+	[ ! -d $cgi ] && mkdir -p $cgi
+	cp -a $mediad/webui/cgi-bin/mediaui.cgi $cgi/
+	rm -f /tmp/app
+	ln -s $mediad /tmp/app
+
+	if ! [ -f $etc/playlist/mc-link.m3u ] ; then
+		mkdir -p $etc/playlist
+		tar -xjf /tmp/app/ims/playlist.tar.bz2 -C $etc/playlist/
+	fi
+
+	# etc hack
+	$mos/bin/iconhack
+
+	# libs hack
+	. $mos/etc/pm.conf
+	[ "$enviroment" == '1228' ] && [ -d $mediad/lib/09301 ] && mv $mediad/lib/09301 $mediad/lib/09301.off
+
+	# inet config
+	[ ! -f $mos/etc/inetd.conf ] && cp /etc/inetd.conf $mos/etc
+	sed -i '/^9999/d' $mos/etc/inetd.conf
+	echo '9999	stream	tcp	nowait	root	/tmp/app/bin/mediad	mediad /tmp/mediad.log' >> $mos/etc/inetd.conf
+	killall -9 inetd
+	inetd $mos/etc/inetd.conf
+
+	# init mediad
+	/tmp/app/bin/mediad --init
+	;;
+
+  stop)
+	echo "Stopping Mediad..."
+
+	# inet config
+	sed -i '/^9999/d' $mos/etc/inetd.conf
+
+	killall -9 inetd
+	inetd $mos/etc/inetd.conf
+
+	# remove files dirs
+	rm -f $cgi/mediaui.cgi
+	rm -f /tmp/app
+	;;
+
+  status)
+	if netstat -nl | grep -q ':9999 ' ; then
+	  echo "Mediad is running"
+	else
+	  echo "Mediad is stopped"
+	fi
+	;;
+
+  enable)
+	;;
+
+  disable)
+		rm -Rf $etc/playlist
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+esac
+
+exit $?

@@ -8,15 +8,45 @@ function rss_trans_content()
 	{
 		const itemHeight = 80;
 
-		public $itemImage = '';
-		public $itemTitle = '';
+		const itemUnFocusBgColor = '0:0:0';
+		const itemFocusBgColor   = '255:255:255';
 
+		const focusFontColor	   = '0:0:0';
+		const unFocusFontColor	   = '255:255:255';
+		const parentFocusFontColor = '160:160:160';
+	//
+	// ------------------------------------
+	public function showItemDisplay()
+	{
 
-		function showMoreItemDisplay()
-		{
 ?>
-      <text align="left" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="40"
-       fontSize="14" backgroundColor="-1:-1:-1">
+    <itemDisplay>
+      <script>
+	idx = getQueryItemIndex();
+	drawState = getDrawingItemState();
+	if (drawState == "unfocus")
+	{
+		bgcolor = "<?= static::itemUnFocusBgColor ?>";
+		color   = "<?= static::unFocusFontColor ?>";
+		dscolor = "<?= static::parentFocusFontColor ?>";
+	}
+	else
+	{
+		bgcolor = "<?= static::itemFocusBgColor ?>";
+		color   = "<?= static::focusFontColor ?>";
+		dscolor = "<?= static::focusFontColor ?>";
+	}
+      </script>
+      <text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
+	<backgroundColor>
+          <script>
+            bgcolor;
+          </script>
+	</backgroundColor>
+      </text>
+
+      <text align="left" offsetXPC="1" offsetYPC="10" widthPC="98" heightPC="30"
+       fontSize="13" backgroundColor="-1:-1:-1">
 	<foregroundColor>
           <script>
             color;
@@ -27,11 +57,11 @@ function rss_trans_content()
 	</script>
       </text>
 
-      <text align="left" offsetXPC="1" offsetYPC="45" widthPC="50" heightPC="45"
-       fontSize="12" backgroundColor="-1:-1:-1">
+      <text align="left" offsetXPC="1" offsetYPC="55" widthPC="50" heightPC="35"
+       fontSize="10" backgroundColor="-1:-1:-1">
 	<foregroundColor>
           <script>
-            color;
+            dscolor;
           </script>
 	</foregroundColor>
         <script>
@@ -39,11 +69,11 @@ function rss_trans_content()
 	</script>
       </text>
 
-      <text align="right" offsetXPC="50" offsetYPC="45" widthPC="46" heightPC="45"
-       fontSize="12" backgroundColor="-1:-1:-1">
+      <text align="right" offsetXPC="50" offsetYPC="55" widthPC="46" heightPC="35"
+       fontSize="10" backgroundColor="-1:-1:-1">
 	<foregroundColor>
           <script>
-            color;
+            dscolor;
           </script>
 	</foregroundColor>
         <script>
@@ -68,9 +98,10 @@ function rss_trans_content()
 	  getStringArrayAt(barArray, idx);
 	</script>
       </image>
+    </itemDisplay>
 <?php
 		}
-	// ----------------
+		// ----------------
 		function showOnUserInput()
 		{
 ?>
@@ -107,9 +138,26 @@ function rss_trans_content()
 		url = doModalRss(url);
 		if( url != null &amp;&amp; url != "" )
 		{
-			moUrl = url;
+			if( url == "open" )
+			{
+				fav = Favorites_Initialize();
+				device = Favorites_GetStorageId(0);
+				idx = Favorites_GetItemIdxOfXml(0);
+				browsetype = Favorites_GetBrowseType(0);
+				linkPath = Favorites_GetURL(0);
+				launchRet = Favorites_LaunchLink(device, idx, browsetype, linkPath);
+				if (launchRet != "true")
+				{
+					Favorites_PromptLaunchErr();
+				}
+				Favorites_Release();
+			}
+			else
+			{
+				moUrl = url;
+				setRefreshTime(1);
+			}
 		}
-		setRefreshTime(1);
 		ret = "true";
 	}
 	ret;
@@ -201,7 +249,7 @@ function rss_trans_content()
 	$view->topTitle = 'Transmission';
 
 	$view->bottomTitle = 
-		getRssCommandPrompt('menu')  . getMsg( 'coreRssPromptMenu' )
+		getRssCommandPrompt('rewind')  . getMsg( 'coreRssPromptMenu' )
 	.' '.	getRssCommandPrompt('enter') . getMsg( 'coreRssPromptActs' )
 	.' '.	getRssCommandPrompt('play')  . getMsg( 'coreRssPromptResume' )
 	;

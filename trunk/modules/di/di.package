@@ -1,0 +1,6 @@
+[di]
+	revision = 6
+	title = "Digital Imported Radios"
+	role = rss
+	files = "www/modules/di/"
+	size = 144

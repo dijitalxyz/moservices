@@ -80,6 +80,6 @@ keyUser4 = blue;
 
 <writeLog>
 	log = log + msg + "&#10;";
-    writeStringToFile("/data/apps/TVonTop/log/rss_log.txt",log);
+    writeStringToFile("/data/dvdplayer/apps/TVonTop/log/rss_log.txt",log);
 </writeLog>
 {/if}

@@ -150,7 +150,7 @@ function rss_services_content()
 	</script>';
 
 	$view->bottomTitle = 
-		getRssCommandPrompt('menu')  . getMsg( 'coreRssPromptMenu' ).'   '.
+		getRssCommandPrompt('rewind')  . getMsg( 'coreRssPromptMenu' ).'   '.
 		getRssCommandPrompt('enter') . getMsg( 'coreRssPromptActs' );
 
 	$view->showRss();

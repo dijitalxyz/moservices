@@ -21,28 +21,6 @@
 	files = "www/modules/fakeshell/"
 	size = 52
 
-[fex]
-	revision = 6
-	title = "fex.net / ex.ua"
-	role = rss
-	files = "www/modules/fex/"
-	size = 144
-
-[fhotplug]
-	revision = 1
-	title = "Fork hotplug"
-	role = package
-	init = S00hotplug.sh
-	files = "bin/fork_hotplug etc/init/S00hotplug.sh"
-	size = 40
-
-[glavtv]
-	revision = 2
-	title = "GlavTV"
-	role = rss
-	files = "www/modules/glavtv/"
-	size = 1432
-
 [gmonitor]
 	revision = 1
 	title ="System monitoring"
@@ -96,14 +74,6 @@
 	files = "etc/init/S21itunes itunes/"
 	size = 752
 
-[ivi]
-	revision = 5
-	title = "ivi.ru"
-	role = rss
-	files = "www/modules/ivi/"
-	require = "curl"
-	size = 104
-
 [keys]
 	revision = 2
 	title = "RSS Keys"
@@ -138,15 +108,6 @@
 	env = 3430
 	size = 36
 
-[libcrypto_1228]
-	revision = 2
-	title = "lib Crypto 1.0.0"
-	role = package
-	files = "lib/libcrypto.so.1 lib/libcrypto.so.1.0.0"
-	check = "lib libcrypto.so.1"
-	env = 1228
-	size = 1704
-
 [libcrypto_1230]
 	revision = 2
 	title = "lib Crypto 1.0.0"
@@ -155,15 +116,6 @@
 	check = "lib libcrypto.so.1"
 	env = 1230
 	size = 1660
-
-[libcrypto_3430]
-	revision = 2
-	title = "lib Crypto 1.0.0"
-	role = package
-	files = "lib/libcrypto.so lib/libcrypto.so.1 lib/libcrypto.so.1.0.0"
-	check = "lib libcrypto.so.1"
-	env = 3430
-	size = 1728
 
 [libcurl_1228]
 	revision = 2
@@ -185,33 +137,6 @@
 	env = 1230
 	size = 360
 
-[libevent2_1228]
-	revision = 1
-	title = "Lib Event-2.0 5.0.1"
-	role = package
-	check = "lib lib/libevent-2.0.so.5"
-	env = 1228
-	files = "lib/libevent.so lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1"
-	size = 1472
-
-[libevent2_1230]
-	revision = 1
-	title = "Lib Event-2.0 5.0.1"
-	role = package
-	check = "lib lib/libevent-2.0.so.5"
-	env = 1230
-	files = "lib/libevent.so lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.0.1 lib/libevent_core.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.0.1 lib/libevent_extra.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.0.1 lib/libevent_pthreads.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.0.1"
-	size = 1600
-
-[libgccs_1228]
-	revision = 1
-	title = "lib gcc_s 1.0.0"
-	role = package
-	env = 1228
-	check = "libgcc"
-	files = "lib/libgcc_s.so lib/libgcc_s.so.1"
-	size = 100
-
 [libgccs_1230]
 	revision = 1
 	title = "lib gcc_s 1"
@@ -230,15 +155,6 @@
 	files = "lib/libgcc_s.so lib/libgcc_s.so.1"
 	size = 112
 
-[libiconv_1228]
-	revision= 2
-	title = "lib iConv v2.5.1"
-	role = package
-	files = "lib/libiconv.so lib/libiconv.so.2 lib/libiconv.so.2.5.1"
-	check = "lib libiconv.so.2"
-	env = 1228
-	size = 944
-
 [libiconv_1230]
 	revision= 2
 	title = "lib iConv v2.5.1"
@@ -246,15 +162,6 @@
 	files = "lib/libiconv.so lib/libiconv.so.2 lib/libiconv.so.2.5.1"
 	check = "lib libiconv.so.2"
 	env = 1230
-	size = 940
-
-[libiconv_3430]
-	revision= 2
-	title = "lib iConv v2.5.1"
-	role = package
-	files = "lib/libiconv.so lib/libiconv.so.2 lib/libiconv.so.2.5.1"
-	check = "lib libiconv.so.2"
-	env = 3430
 	size = 940
 
 [libjpeg_1228]
@@ -323,15 +230,6 @@
 	require = "libz"
 	size = 316
 
-[libssl_1228]
-	revision = 1
-	title = "lib SSL 1.0.0"
-	role = package
-	check = "lib libssl.so.1"
-	env = 1228
-	files = "lib/libssl.so lib/libssl.so.1 lib/libssl.so.1.0.0"
-	size = 356
-
 [libssl_1230]
 	revision = 1
 	title = "lib SSL 1.0.0"
@@ -341,51 +239,6 @@
 	files = "lib/libssl.so lib/libssl.so.1 lib/libssl.so.1.0.0"
 	size = 352
 
-[libssl_3430]
-	revision = 1
-	title = "lib SSL 1.0.0"
-	role = package
-	check = "lib libssl.so.1"
-	env = 3430
-	files = "lib/libssl.so lib/libssl.so.1 lib/libssl.so.1.0.0"
-	size = 392
-
-[libxml2_1228]
-	revision = 2
-	title = "lib XML2 2.7.8"
-	role = package
-	check = "lib libxml2.so.2"
-	env = 1228
-	files = "lib/libxml2.so lib/libxml2.so.2 lib/libxml2.so.2.7.8"
-	size = 1432
-
-[libxml2_1230]
-	revision = 2
-	title = "lib XML2 2.7.8"
-	role = package
-	check = "lib libxml2.so.2"
-	env = 1230
-	files = "lib/libxml2.so lib/libxml2.so.2 lib/libxml2.so.2.7.8"
-	size = 1424
-
-[libxml2_3430]
-	revision = 2
-	title = "lib XML2 2.8.0"
-	role = package
-	check = "lib libxml2.so.2"
-	env = 3430
-	files = "lib/libxml2.so lib/libxml2.so.2 lib/libxml2.so.2.8.0"
-	size = 1428
-
-[libz_1228]
-	revision = 2
-	title = "Lib Zip v1.2.5"
-	role = package
-	check = "lib libz.so.1"
-	env = 1228
-	files = "lib/libz.so lib/libz.so.1 lib/libz.so.1.2.5"
-	size = 112
-
 [libz_1230]
 	revision = 2
 	title = "Lib Zip v1.2.5"
@@ -393,15 +246,6 @@
 	check = "lib libz.so.1"
 	env = 1230
 	files = "lib/libz.so lib/libz.so.1 lib/libz.so.1.2.5"
-	size = 112
-
-[libz_3430]
-	revision = 2
-	title = "Lib Zip v1.2.7"
-	role = package
-	check = "lib libz.so.1"
-	env = 3430
-	files = "lib/libz.so lib/libz.so.1 lib/libz.so.1.2.7"
 	size = 112
 
 [mediaportal]
@@ -440,16 +284,6 @@
 	init = S47mosondrive
 	files = "etc/services_drive etc/init/S47mosondrive"
 	size = 44
-
-[mounts]
-	revision = 5
-	title = "Mounts"
-	role = daemon
-	init = S10mounts
-	backup = "etc/mounts.ini etc/mounts.list"
-	config_link = "?page=mount_sets"
-	files = "etc/mounts.ini etc/mounts.list etc/init/S10mounts www/modules/mounts/"
-	size = 76
 
 [mpcs]
 	revision = 1
@@ -522,16 +356,6 @@
 	files = "bin/rdate etc/rdate.conf etc/init/S11rdate"
 	size = 52
 
-[remount]
-	revision = 3
-	title = "Remount drives"
-	role = patch
-	init = S06Remount
-	actions = "restart"
-	files = "etc/init/S06Remount etc/hotplug/after/block/S10remount"
-	require = "fhotplug"
-	size = 64
-
 [repos]
 	revision = 1
 	title = "Manage repositories"
@@ -552,33 +376,6 @@
 	files = "etc/init/S31rssex2 rssex2/ www/modules/rssex2/"
 	require = "awk httpd curl rtmpdump"
 	size = 14720
-
-[spindown]
-	revision = 2
-	title = "SpinDown service"
-	role = daemon
-	init = S14spindown
-	backup = "etc/spindown.conf"
-	actions = "down"
-	config_edit = "etc/spindown.conf"
-	files = "bin/sg_start bin/spindownd etc/init/S14spindown etc/S08SpinDown etc/spindown.conf www/modules/spindown/"
-	size = 376
-
-[status]
-	revision = 2
-	title ="System status"
-	role = web
-	files = "www/modules/status/"
-	require = "top"
-	size = 88
-
-[swp]
-	revision = 1
-	title = "Swap on drive"
-	role = patch
-	init = S02swp
-	files = "etc/init/S02swp"
-	size = 32
 
 [telnetd]
 	revision = 1
@@ -708,44 +505,6 @@
 	files = "bin/bftpd etc/bftpd.conf etc/init/S15bftpd"
 	size = 128
 
-[iconmedia]
-	revision = 1
-	title = "IconBit media"
-	role = rss
-	files = "www/modules/iconmedia/"
-	size = 192
-
-[irfake]
-	revision = 7
-	title = "IR Fake RC replacement v1.2.15r3"
-	role = patch
-	init = S41irfake
-	backup = "irfake/irfake.conf"
-	config_before = copy
-	config_after = save
-	config_edit = "irfake/irfake.conf"
-	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh irfake/"
-	size = 156
-
-[iptvlist]
-	revision = 5
-	title = "IPTVList"
-	role = rss
-	navy_title = "IPTVList configuration"
-	navy_frame = "/modules/iptvlist/index.html"
-	backup = "www/modules/iptvlist/*.conf www/modules/iptvlist/*.m3u"
-	files = "www/modules/iptvlist/"
-	require = "rtmpdump"
-	size = 2460
-
-[rutor]
-	revision = 1
-	title = "Rutor 0.2"
-	role = rss
-	init="S37rutor"
-	files = "etc/init/S37rutor rutor/ www/modules/rutor/"
-	size = 788
-
 [wget_1228]
 	revision = 1
 	title = "wget 1.14 dynamic"
@@ -783,16 +542,6 @@
 	files = "www/modules/downloady/"
 	size = 132
 
-[core]
-	revision = 37
-	title = "moServices core"
-	role = core
-	init = S01core
-	backup = "etc/core.ini"
-	config_link = "?page=sets"
-	files = "etc/core.ini etc/init/S01core www/modules/core/ www/index.php www/favicon.ico"
-	size = 844
-
 [parole]
 	revision = 3
 	title = "Authorization"
@@ -800,13 +549,6 @@
 	files = "www/modules/parole/"
 	require = "busybox"
 	size = 72
-
-[myhit]
-	revision = 2
-	title = "MY-HIT.ru"
-	role = rss
-	files = "www/modules/myhit/"
-	size = 80
 
 [samba]
 	revision = 3
@@ -833,42 +575,6 @@
 	require = "fhotplug"
 	size = 5352
 
-[sskin]
-	revision = 11
-	title = "Skin selector for amp revs"
-	role = patch
-	backup = "etc/sskin.conf"
-	config_link = "/?page=sskin_sets"
-	files = "bin/sskin etc/sskin.conf www/modules/sskin"
-	size = 164
-
-[vsftpd]
-	revision = 3
-	title = "vsFTPd FTP daemon v3.0.2 static"
-	role = daemon
-	init = S15vsftpd
-	backup = "etc/vsftpd.conf"
-	navy_title = "Explore FTP"
-	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
-	config_edit = "etc/vsftpd.conf"
-	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
-	size = 344
-
-[vsftpd_1228]
-	revision = 3
-	title = "vsFTPd FTP daemon v3.0.2 dynamic"
-	role = daemon
-	check = "port 21"
-	init = S15vsftpd
-	backup = "etc/vsftpd.conf"
-	navy_title = "Explore FTP"
-	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
-	config_edit = "etc/vsftpd.conf"
-	env = 1228
-	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
-	require = "libgccs"
-	size = 288
-
 [web_1228]
 	revision = 2
 	title = "Lighttpd web server v1.4.28 pcre"
@@ -889,47 +595,6 @@
 	require = "libgccs php"
 	size = 544
 
-[tvontop]
-	revision = 11
-	title = "TV on Top 1.1.5"
-	role = rss
-	files = "www/modules/tvontop/"
-	size = 3308
-
-[autorun]
-	revision = 3
-	title = "AutoRun"
-	role = patch
-	init = S05AutoRun
-	actions = "restart"
-	files = "etc/init/S05AutoRun etc/hotplug/after/block/S12autorun"
-	require = "fhotplug"
-	size = 64
-
-[base]
-	revision = 18
-	title = "moServices base"
-	role = package
-	init = S00base
-	files = "services bin/mos_remove bin/pm bin/fork_reboot bin/rebootd bin/reboot.sh bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop"
-	require = "libgccs busybox web core wget base2"
-	size = 132
-
-[capture]
-	revision = 5
-	title = "Capture TV screen"
-	role = web
-	init="S36capture.sh"
-	files = "bin/bmp2jpg bin/captured etc/init/S36capture.sh www/modules/capture/"
-	size = 3756
-
-[busybox]
-	revision= 6
-	title = "BusyBox v1.18.5"
-	role = package
-	files = "bin/bunzip2 bin/busybox.1.18.5 bin/bzip2 bin/gunzip bin/gzip bin/httpd bin/mkfifo bin/passwd bin/realpath bin/tar bin/telnetd bin/sort"
-	size = 1288
-
 [sovok]
 	revision = 10
 	title = "Sovok.TV"
@@ -945,19 +610,6 @@
 	files = "etc/init/S44libata libata/ bin/smartctl www/modules/smarttool/"
 	size = 696
 
-[trans_1228]
-	revision = 1
-	title = "Transmission v2.50"
-	role = daemon
-	check = "port 9091"
-	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
-	env = 1228
-	files = "etc/init/S23trans trans/ www/modules/trans_1228/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 3884
-
 [iconremote]
 	revision = 3
 	title = "Web Remote control for Iconbit gui"
@@ -967,129 +619,6 @@
 	navy_frame = "/rc"
 	files = "etc/init/S35iconRemote iconremote/"
 	size = 224
-
-[uaonline2]
-	revision = 24
-	title = "UA Online 2"
-	role = rss
-	backup = "www/modules/uaonline2/ua_favorites.conf www/modules/uaonline2/ua_settings.conf"
-	config_edit = "www/modules/uaonline2/ua_settings.conf"
-	navy_title = "UAOnline 2 Fav. Editor"
-	navy_frame = "http://%addr%/modules/uaonline2/index.php"
-	files = "www/modules/uaonline2/"
-	size = 2120
-
-[rootapp]
-	revision = 4
-	title = "Patched RootApp"
-	init=S42rootapp
-	role = patch
-	init = S42rootapp
-	files = "bin/RootApp etc/rc.suspend etc/rc.wakeup etc/init/S42rootapp"
-	size = 360
-
-[suspend]
-	revision = 2
-	title = "Suspend: Reboot on wakeup"
-	role = patch
-	init = S09suspend
-	files = "etc/init/S09suspend etc/init/rc.init/S09suspend.sh"
-	size = 48
-
-[rbwakeup]
-	revision = 1
-	title = "Reboot on wakeup"
-	role = patch
-	init = S09rbwakeup
-	files = "etc/init/S09rbwakeup"
-	size = 40
-
-[vsftpd222]
-	revision = 2
-	title = "vsFTPd FTP daemon v2.2.2"
-	role = daemon
-	init = S15vsftpd
-	backup = "etc/vsftpd.conf"
-	navy_title = "Explore FTP"
-	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
-	config_edit = "etc/vsftpd.conf"
-	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
-	size = 308
-
-[irfake_3430]
-	revision = 2
-	title = "IR Fake RC replacement v1.2.15r2"
-	role = patch
-	init = S41irfake
-	backup = "irfake/irfake.conf"
-	config_before = copy
-	config_after = save
-	config_edit = "irfake/irfake.conf"
-	env = 3430
-	files = "etc/init/S41irfake etc/rc.init/S03irfake.sh irfake/"
-	size = 140
-
-[apower]
-	revision = 1
-	title = "Actions on Power"
-	role = patch
-	check = sskin
-	init = S50aPower
-	config_link = "?page=apower_sets"
-	files = "etc/init/S50aPower etc/rc.init/S01aPower.sh www/modules/apower/"
-	size = 68
-
-[rwakeup]
-	revision = 1
-	title = "Reboot on Wakeup"
-	role = patch
-	init = S51rWakeup
-	files = "etc/init/S51rWakeup"
-	size = 32
-
-[trans_1230]
-	revision = 3
-	title = "Transmission v2.77"
-	role = daemon
-	check = "port 9091"
-	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
-	env = 1230
-	files = "etc/init/S23trans trans/ www/modules/trans_1230/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 4828
-
-[trans_3430]
-	revision = 3
-	title = "Transmission v2.77"
-	role = daemon
-	check = "port 9091"
-	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
-	env = 3430
-	files = "etc/init/S23trans trans/ www/modules/trans_3430/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 4824
-
-[nfsd]
-	revision= 1
-	title = "NFS daemon"
-	role = daemon
-	init = S12nfsd
-	files = "etc/init/S12nfsd etc/hotplug/after/block/S09nfsd"
-	require = "fhotplug"
-	size = 64
-
-[iconmenu]
-	revision = 8
-	title = "Home menu replacement for IconBit gui"
-	config_edit = "iconmenu/iconmenu.conf"
-	role = patch
-	init = "S34iconmenu.sh"
-	files = "etc/init/S34iconmenu.sh iconmenu/"
-	size = 1888
 
 [xupnpd]
 	revision= 3
@@ -1104,13 +633,6 @@
 	require = "libgccs"
 	size = 948
 
-[youtube]
-	revision = 12
-	title = "YouTube"
-	role = rss
-	files = "www/modules/youtube/"
-	size = 108
-
 [weather]
 	revision = 7
 	title = "Weather Yahoo"
@@ -1118,4 +640,1013 @@
 	config_edit = "www/modules/weather/weather.conf"
 	files = "www/modules/weather/"
 	size = 80
+
+[mounts]
+	revision = 5
+	title = "Mounts"
+	role = daemon
+	init = S10mounts
+	backup = "etc/mounts.ini etc/mounts.list"
+	config_link = "?page=mount_sets"
+	files = "etc/mounts.ini etc/mounts.list etc/init/S10mounts www/modules/mounts/"
+	size = 80
+
+[vsftpd]
+	revision = 4
+	title = "vsFTPd FTP daemon v3.0.2 static"
+	role = daemon
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	size = 344
+
+[vsftpd222]
+	revision = 3
+	title = "vsFTPd FTP daemon v2.2.2"
+	role = daemon
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	size = 308
+
+[vsftpd_1228]
+	revision = 4
+	title = "vsFTPd FTP daemon v3.0.2 dynamic"
+	role = daemon
+	check = "port 21"
+	init = S15vsftpd
+	backup = "etc/vsftpd.conf"
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	config_edit = "etc/vsftpd.conf"
+	env = 1228
+	files = "bin/vsftpd etc/vsftpd.conf etc/init/S15vsftpd"
+	require = "libgccs"
+	size = 288
+
+[rootapp]
+	revision = 5
+	title = "Patched RootApp"
+	init=S42rootapp
+	role = patch
+	init = S42rootapp
+	files = "bin/RootApp etc/rc.suspend etc/rc.wakeup etc/init/S42rootapp"
+	size = 360
+
+[irfake]
+	revision = 7
+	title = "IR Fake RC replacement v1.2.15r3"
+	role = patch
+	init = S41irfake
+	backup = "irfake/irfake.conf"
+	config_before = copy
+	config_after = save
+	config_edit = "irfake/irfake.conf"
+	files = "etc/init/S41irfake etc/rc.init/S04irfake.sh irfake/"
+	size = 156
+
+[irfake_3430]
+	revision = 2
+	title = "IR Fake RC replacement v1.2.15r2"
+	role = patch
+	init = S41irfake
+	backup = "irfake/irfake.conf"
+	config_before = copy
+	config_after = save
+	config_edit = "irfake/irfake.conf"
+	env = 3430
+	files = "etc/init/S41irfake etc/rc.init/S04irfake.sh irfake/"
+	size = 140
+
+[rwakeup]
+	revision = 1
+	title = "Reboot on Wakeup"
+	role = patch
+	init = S51rWakeup
+	files = "etc/init/S51rWakeup"
+	size = 32
+
+[suspend]
+	revision = 2
+	title = "Suspend: Reboot on wakeup"
+	role = patch
+	init = S09suspend
+	files = "etc/init/S09suspend etc/rc.init/S09suspend.sh"
+	size = 48
+
+[wakelan]
+	revision = 1
+	title = "Wake up NAS over LAN"
+	role = daemon
+	init = S38wakelan
+	actions = "restart"
+	backup = "etc/wakelan.conf"
+	config_edit = "etc/wakelan.conf"
+	files = "bin/wakelan etc/wakelan.conf etc/init/S38wakelan"
+	size = 56
+
+[swp]
+	revision = 2
+	title = "Swap on drive"
+	role = patch
+	init = S02swp
+	files = "etc/init/S02swp etc/hotplug/after/block/S02swp"
+	require = "fhotplug"
+	size = 56
+
+[busybox]
+	revision= 6
+	title = "BusyBox v1.18.5"
+	role = package
+	files = "bin/bunzip2 bin/busybox.1.18.5 bin/bzip2 bin/gunzip bin/gzip bin/httpd bin/mkfifo bin/passwd bin/realpath bin/tar bin/telnetd bin/sort bin/sysctl"
+	size = 1288
+
+[glavtv]
+	revision = 2
+	title = "GlavTV"
+	role = rss
+	files = "www/modules/glavtv/"
+	config_edit = "www/modules/glavtv/cfg/config.ini"
+	size = 1440
+
+[libevent2_1230]
+	revision = 2
+	title = "Lib Event-2.0 5.1.7"
+	role = package
+	check = "lib lib/libevent-2.0.so.5"
+	env = 1230
+	files = "lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.1.7 lib/libevent.so lib/libevent_core-2.0.so.5 lib/libevent_core-2.0.so.5.1.7 lib/libevent_core.so lib/libevent_extra-2.0.so.5 lib/libevent_extra-2.0.so.5.1.7 lib/libevent_extra.so lib/libevent_openssl-2.0.so.5 lib/libevent_openssl-2.0.so.5.1.7 lib/libevent_openssl.so lib/libevent_pthreads-2.0.so.5 lib/libevent_pthreads-2.0.so.5.1.7 lib/libevent_pthreads.so"
+	size = 624
+
+[rodina]
+	revision = 0
+	title = "Rodina.TV"
+	role = rss
+	files = "www/modules/rodina/"
+	size = 188
+
+[libncursesw_1228]
+	revision = 1
+	title = "Lib NcursesW 5.9"
+	role = package
+	check = "lib lib/libncursesw.so.5"
+	env = 1228
+	files = "lib/libncursesw.so lib/libncursesw.so.5 lib/libncursesw.so.5.9"
+	size = 360
+
+[libncursesw_1230]
+	revision = 1
+	title = "Lib NcursesW 5.9"
+	role = package
+	check = "lib lib/libncursesw.so.5"
+	env = 1230
+	files = "lib/libncursesw.so lib/libncursesw.so.5 lib/libncursesw.so.5.9"
+	size = 340
+
+[libncursesw_3430]
+	revision = 1
+	title = "Lib NcursesW 5.9"
+	role = package
+	check = "lib lib/libncursesw.so.5"
+	env = 3430
+	files = "lib/libncursesw.so lib/libncursesw.so.5 lib/libncursesw.so.5.9"
+	size = 340
+
+[xterm]
+	revision = 1
+	title = "xTerminal"
+	role = package
+	files = "share/terminfo/x/"
+	size = 44
+
+[libslang_1228]
+	revision = 1
+	title = "Lib Slang 2.1.4"
+	role = package
+	check = "lib lib/libslang.so.2"
+	env = 1228
+	files = "lib/libslang.so lib/libslang.so.2 lib/libslang.so.2.1.4"
+	size = 872
+
+[libslang_1230]
+	revision = 1
+	title = "Lib Slang 2.1.4"
+	role = package
+	check = "lib lib/libslang.so.2"
+	env = 1230
+	files = "lib/libslang.so lib/libslang.so.2 lib/libslang.so.2.1.4"
+	size = 848
+
+[libglib2_1228]
+	revision = 1
+	title = "Lib GLib-2.0 0.2400.2"
+	role = package
+	check = "lib lib/libglib-2.0.so.0"
+	env = 1228
+	files = "lib/libglib-2.0.so lib/libglib-2.0.so.0 lib/libglib-2.0.so.0.2400.2 lib/libgmodule-2.0.so lib/libgmodule-2.0.so.0 lib/libgmodule-2.0.so.0.2400.2"
+	require = "libpcre1 libintl libiconv libgccs"
+	size = 992
+
+[libglib2_1230]
+	revision = 1
+	title = "Lib GLib-2.0 0.2400.2"
+	role = package
+	check = "lib lib/libglib-2.0.so.0"
+	env = 1230
+	files = "lib/libglib-2.0.so lib/libglib-2.0.so.0 lib/libglib-2.0.so.0.2400.2 lib/libgmodule-2.0.so lib/libgmodule-2.0.so.0 lib/libgmodule-2.0.so.0.2400.2"
+	require = "libpcre1 libintl libiconv libgccs"
+	size = 964
+
+[libpcre1_1228]
+	revision = 1
+	title = "Lib Pcre 1.0.1"
+	role = package
+	check = "lib lib/libpcre.so.1"
+	env = 1228
+	files = "lib/libpcre.so.1 lib/libpcre.so.1.0.1"
+	size = 268
+
+[libpcre1_1230]
+	revision = 1
+	title = "Lib Pcre 1.0.1"
+	role = package
+	check = "lib lib/libpcre.so.1"
+	env = 1230
+	files = "lib/libpcre.so.1 lib/libpcre.so.1.0.1"
+	size = 264
+
+[libintl_1230]
+	revision = 1
+	title = "Lib Intl 8.1.1"
+	role = package
+	check = "lib lib/libintl.so.8"
+	env = 1230
+	files = "lib/libintl.so lib/libintl.so.8 lib/libintl.so.8.1.1"
+	require = "libiconv libgccs"
+	size = 72
+
+[libintl_3430]
+	revision = 1
+	title = "Lib Intl 8.1.1"
+	role = package
+	check = "lib lib/libintl.so.8"
+	env = 3430
+	files = "lib/libintl.so lib/libintl.so.8 lib/libintl.so.8.1.1"
+	require = "libiconv libgccs"
+	size = 168
+
+[libglib2_3430]
+	revision = 1
+	title = "Lib GLib-2.0 0.2400.2"
+	role = package
+	check = "lib lib/libglib-2.0.so.0"
+	env = 3430
+	files = "lib/libglib-2.0.so lib/libglib-2.0.so.0 lib/libglib-2.0.so.0.2400.2 lib/libgmodule-2.0.so lib/libgmodule-2.0.so.0 lib/libgmodule-2.0.so.0.2400.2"
+	require = "libpcre1 libintl libiconv libgccs"
+	size = 960
+
+[libslang_3430]
+	revision = 1
+	title = "Lib Slang 2.1.4"
+	role = package
+	check = "lib lib/libslang.so.2"
+	env = 3430
+	files = "lib/libslang.so lib/libslang.so.2 lib/libslang.so.2.1.4"
+	size = 820
+
+[libpcre1_3430]
+	revision = 1
+	title = "Lib Pcre 1.0.1"
+	role = package
+	check = "lib lib/libpcre.so.1"
+	env = 3430
+	files = "lib/libpcre.so.1 lib/libpcre.so.1.0.1"
+	size = 264
+
+[autorun]
+	revision = 4
+	title = "AutoRun"
+	role = patch
+	init = S05AutoRun
+	actions = "restart"
+	files = "etc/init/S05AutoRun etc/hotplug/after/block/S12autorun"
+	require = "fhotplug"
+	size = 64
+
+[remount]
+	revision = 4
+	title = "Remount drives"
+	role = patch
+	init = S06Remount
+	actions = "restart"
+	files = "etc/init/S06Remount etc/hotplug/after/block/S10remount"
+	require = "fhotplug"
+	size = 64
+
+[nano_1228]
+	revision = 2
+	title = "Nano text editor v2.3.1"
+	role = util
+	init = S39nano
+	env = 1228
+	files = "bin/nano bin/rnano etc/init/S39nano etc/.nanorc share/nano/"
+	require = "xterm libintl libiconv libncursesw libgccs"
+	size = 420
+
+[nano_1230]
+	revision = 2
+	title = "Nano text editor v2.3.1"
+	role = util
+	init = S39nano
+	env = 1230
+	files = "bin/nano bin/rnano etc/init/S39nano etc/.nanorc share/nano/"
+	require = "xterm libintl libiconv libncursesw libgccs"
+	size = 416
+
+[nano_3430]
+	revision = 2
+	title = "Nano text editor v2.3.1"
+	role = util
+	init = S39nano
+	env = 3430
+	files = "bin/nano bin/rnano etc/init/S39nano etc/.nanorc share/nano/"
+	require = "xterm libintl libiconv libncursesw libgccs"
+	size = 416
+
+[htop_1228]
+	revision = 1
+	title = "HTop v1.0.2"
+	role = util
+	init = S37htop
+	env = 1228
+	files = "bin/htop etc/init/S37htop"
+	require = "xterm libncursesw libgccs"
+	size = 200
+
+[htop_1230]
+	revision = 1
+	title = "HTop v1.0.2"
+	role = util
+	init = S37htop
+	env = 1230
+	files = "bin/htop etc/init/S37htop"
+	require = "xterm libncursesw libgccs"
+	size = 176
+
+[htop_3430]
+	revision = 1
+	title = "HTop v1.0.2"
+	role = util
+	init = S37htop
+	env = 3430
+	files = "bin/htop etc/init/S37htop"
+	require = "xterm libncursesw libgccs"
+	size = 176
+
+[spindown]
+	revision = 4
+	title = "SpinDown service"
+	role = daemon
+	init = S14spindown
+	backup = "etc/spindown.conf"
+	actions = "down"
+	config_edit = "etc/spindown.conf"
+	files = "bin/sg_start bin/spindownd etc/init/S14spindown etc/rc.init/S08SpinDown etc/spindown.conf www/modules/spindown/"
+	size = 380
+
+[tvontop]
+	revision = 12
+	title = "TV on Top 1.1.6"
+	role = rss
+	files = "www/modules/tvontop/"
+	size = 3452
+
+[libcares_1230]
+	revision = 1
+	title = "lib Cares 2.0.0"
+	role = package
+	files = "lib/libcares.so lib/libcares.so.2 lib/libcares.so.2.0.0"
+	check = "lib libcares.so.2"
+	env = 1230
+	size = 100
+
+[libcares_3430]
+	revision = 1
+	title = "lib Cares 2.0.0"
+	role = package
+	files = "lib/libcares.so lib/libcares.so.2 lib/libcares.so.2.0.0"
+	check = "lib libcares.so.2"
+	env = 3430
+	size = 100
+
+[libsqlite3_1230]
+	revision = 1
+	title = "lib SQLite3 0.8.6"
+	role = package
+	files = "lib/libsqlite3.so lib/libsqlite3.so.0 lib/libsqlite3.so.0.8.6"
+	check = "lib libsqlite3.so.0"
+	env = 1230
+	size = 752
+
+[libsqlite3_3430]
+	revision = 1
+	title = "lib SQLite3 0.8.6"
+	role = package
+	files = "lib/libsqlite3.so lib/libsqlite3.so.0 lib/libsqlite3.so.0.8.6"
+	check = "lib libsqlite3.so.0"
+	env = 3430
+	size = 740
+
+[pureftpd_3430]
+	revision = 1
+	title = "Pure FTP daemon v1.0.36"
+	role = daemon
+	init = S15pureftpd
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	env = 3430
+	files = "bin/pure-ftpd etc/init/S15pureftpd"
+	require = "libiconv"
+	size = 160
+
+[libcrypto_3430]
+	revision = 3
+	title = "lib Crypto 1.0.0"
+	role = package
+	files = "lib/libcrypto.so lib/libcrypto.so.1 lib/libcrypto.so.1.0.0"
+	check = "lib libcrypto.so.1"
+	env = 3430
+	size = 1736
+
+[libiconv_3430]
+	revision= 3
+	title = "lib iConv v2.5.0"
+	role = package
+	files = "lib/libiconv.so lib/libiconv.so.2 lib/libiconv.so.2.5.0"
+	check = "lib libiconv.so.2"
+	env = 3430
+	size = 1028
+
+[libssl_3430]
+	revision = 2
+	title = "lib SSL 1.0.0"
+	role = package
+	check = "lib libssl.so.1"
+	env = 3430
+	files = "lib/libssl.so lib/libssl.so.1 lib/libssl.so.1.0.0"
+	size = 388
+
+[libxml2_3430]
+	revision = 3
+	title = "lib XML2 2.8.0"
+	role = package
+	check = "lib libxml2.so.2"
+	env = 3430
+	files = "lib/libxml2.so lib/libxml2.so.2 lib/libxml2.so.2.8.0"
+	size = 1420
+
+[libz_3430]
+	revision = 3
+	title = "Lib Zip v1.2.7"
+	role = package
+	check = "lib libz.so.1"
+	env = 3430
+	files = "lib/libz.so lib/libz.so.1 lib/libz.so.1.2.7"
+	size = 124
+
+[libxml2_1230]
+	revision = 3
+	title = "lib XML2 2.8.0"
+	role = package
+	check = "lib libxml2.so.2"
+	env = 1230
+	files = "lib/libxml2.so lib/libxml2.so.2 lib/libxml2.so.2.8.0"
+	size = 1424
+
+[base]
+	revision = 20
+	title = "moServices base"
+	role = package
+	init = S00base
+	files = "services bin/mos_remove bin/pm bin/fork_reboot bin/rebootd bin/reboot.sh bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/S02allSleep.sh etc/rc.init/S03mosOnData.sh etc/rc.init/S03mosOnRoot.sh etc/rc.init/S05sskin.sh etc/rc.init/S10moServices.sh etc/rc.start etc/rc.stop"
+	require = "libgccs busybox web core wget base2"
+	size = 132
+
+[libintl_1228]
+	revision = 1
+	title = "Lib Intl 8.1.1"
+	role = package
+	check = "lib lib/libintl.so.8"
+	env = 1228
+	files = "lib/libintl.so lib/libintl.so.8 lib/libintl.so.8.1.1"
+	require = "libiconv libgccs"
+	size = 76
+
+[libiconv_1228]
+	revision= 3
+	title = "lib iConv v2.5.1"
+	role = package
+	files = "lib/libiconv.so lib/libiconv.so.2 lib/libiconv.so.2.5.1"
+	check = "lib libiconv.so.2"
+	env = 1228
+	size = 1040
+
+[libcares_1228]
+	revision = 1
+	title = "lib Cares 2.0.0"
+	role = package
+	files = "lib/libcares.so lib/libcares.so.2 lib/libcares.so.2.0.0"
+	check = "lib libcares.so.2"
+	env = 1228
+	size = 104
+
+[libssl_1228]
+	revision = 2
+	title = "lib SSL 1.0.0"
+	role = package
+	check = "lib libssl.so.1"
+	env = 1228
+	files = "lib/libssl.so lib/libssl.so.1 lib/libssl.so.1.0.0"
+	size = 392
+
+[libcrypto_1228]
+	revision = 3
+	title = "lib Crypto 1.0.0"
+	role = package
+	files = "lib/libcrypto.so.1 lib/libcrypto.so.1.0.0"
+	check = "lib libcrypto.so.1"
+	env = 1228
+	size = 1784
+
+[libsqlite3_1228]
+	revision = 1
+	title = "lib SQLite3 0.8.6"
+	role = package
+	files = "lib/libsqlite3.so lib/libsqlite3.so.0 lib/libsqlite3.so.0.8.6"
+	check = "lib libsqlite3.so.0"
+	env = 1228
+	size = 764
+
+[libxml2_1228]
+	revision = 4
+	title = "lib XML2 2.8.0"
+	role = package
+	check = "lib libxml2.so.2"
+	env = 1228
+	files = "lib/libxml2.so lib/libxml2.so.2 lib/libxml2.so.2.8.0"
+	size = 1436
+
+[libz_1228]
+	revision = 3
+	title = "Lib Zip v1.2.7"
+	role = package
+	check = "lib libz.so.1"
+	env = 1228
+	files = "lib/libz.so lib/libz.so.1 lib/libz.so.1.2.7"
+	size = 124
+
+[cecd_1228]
+	revision= 1
+	title = "HDMI CEC daemon 0.5.1"
+	role = daemon
+	init = S07cecd
+	config_edit = "etc/cecd.conf"
+	files = "bin/cecd etc/cec-dev.ko etc/cecd.conf etc/init/S07cecd"
+	env = 1228
+	size = 152
+
+[cecd_1230]
+	revision= 1
+	title = "HDMI CEC daemon 0.5.1"
+	role = daemon
+	init = S07cecd
+	config_edit = "etc/cecd.conf"
+	files = "bin/cecd etc/cecd.conf etc/init/S07cecd"
+	env = 1230
+	size = 120
+
+[cecd_3430]
+	revision= 2
+	title = "HDMI CEC daemon 0.5.1"
+	role = daemon
+	init = S07cecd
+	config_edit = "etc/cecd.conf"
+	files = "bin/cecd etc/cec-dev.ko etc/cecd.conf etc/init/S07cecd"
+	env = 3430
+	size = 152
+
+[status]
+	revision = 3
+	title ="System status"
+	role = web
+	files = "www/modules/status/"
+	size = 80
+
+[xio_1228]
+	revision = 1
+	title = "eXended input output kernel module"
+	role = package
+	init = S001xio.sh
+	env = 1228
+	files = "etc/x_io.ko etc/init/S001xio.sh"
+	size = 48
+
+[xio_1230]
+	revision = 1
+	title = "eXended input output kernel module"
+	role = package
+	init = S001xio.sh
+	env = 1230
+	files = "etc/x_io.ko etc/init/S001xio.sh"
+	size = 40
+
+[xio_3430]
+	revision = 1
+	title = "eXended input output kernel module"
+	role = package
+	init = S001xio.sh
+	env = 3430
+	files = "etc/x_io.ko etc/init/S001xio.sh"
+	size = 40
+
+[hwtool]
+	revision = 1
+	title = "Hardware tool for RTD"
+	role = util
+	files = "bin/gpio bin/hwinfo"
+	require = "xio"
+	size = 156
+
+[libgccs_1228]
+	revision = 2
+	title = "lib gcc_s 1.0.0"
+	role = package
+	env = 1228
+	check = "libgcc"
+	files = "lib/libgcc_s.so lib/libgcc_s.so.1"
+	size = 112
+
+[libevent2_1228]
+	revision = 2
+	title = "Lib Event-2.0 5.1.7"
+	role = package
+	check = "lib lib/libevent-2.0.so.5.1.7"
+	env = 1228
+	files = "lib/libevent-2.0.so.5 lib/libevent-2.0.so.5.1.7"
+	size = 320
+
+[aria2_1228]
+	revision = 2
+	title = "Aria2 v1.17.0"
+	role = daemon
+	init = S23aria
+	backup = "etc/aria2c.conf"
+	config_edit = "etc/aria2c.conf"
+	navy_title = "Aria2 Web Gui"
+	navy_frame = "/modules/aria2_1228/old.html"
+	env = 1228
+	files = "bin/aria2c etc/init/S23aria etc/hotplug/after/block/S14aria etc/aria2c.conf www/modules/aria2_1228/"
+	require = "fhotplug libintl libcares libsqlite3 libssl libcrypto libxml2 libiconv libz libgccs"
+	size = 7108
+
+[aria2_1230]
+	revision = 2
+	title = "Aria2 v1.17.0"
+	role = daemon
+	init = S23aria
+	backup = "etc/aria2c.conf"
+	config_edit = "etc/aria2c.conf"
+	navy_title = "Aria2 Web Gui"
+	navy_frame = "/modules/aria2_1230/old.html"
+	env = 1230
+	files = "bin/aria2c etc/init/S23aria etc/hotplug/after/block/S14aria etc/aria2c.conf www/modules/aria2_1230/"
+	require = "fhotplug libcares libsqlite3 libssl libcrypto libxml2 libiconv libz libgccs"
+	size = 6052
+
+[aria2_3430]
+	revision = 2
+	title = "Aria2 v1.17.0"
+	role = daemon
+	init = S23aria
+	backup = "etc/aria2c.conf"
+	config_edit = "etc/aria2c.conf"
+	navy_title = "Aria2 Web Gui"
+	navy_frame = "/modules/aria2_3430/old.html"
+	env = 3430
+	files = "bin/aria2c etc/init/S23aria etc/hotplug/after/block/S14aria etc/aria2c.conf www/modules/aria2_3430/"
+	require = "fhotplug libcares libsqlite3 libssl libcrypto libxml2 libiconv libz libgccs"
+	size = 6052
+
+[nfsd]
+	revision= 3
+	title = "NFS daemon"
+	role = daemon
+	init = S12nfsd
+	files = "etc/init/S12nfsd etc/hotplug/after/block/S09nfsd"
+	require = "fhotplug"
+	size = 64
+
+[iconmedia]
+	revision = 2
+	title = "IconBit media"
+	role = rss
+	init="S38iconmedia"
+	files = "etc/init/S38iconmedia www/modules/iconmedia/"
+	require = "iconhack"
+	size = 208
+
+[iconhack]
+	revision = 2
+	title = "IconBIT hack"
+	role = package
+	files = "bin/iconhack"
+	require = "busybox"
+	size = 40
+
+[mediad]
+	revision = 4
+	title = "Iconbit MediaCenter 1.8.7"
+	role = rss
+	init = S34mediad
+	files = "etc/init/S34mediad mediad/ www/modules/mediad/"
+	require = "iconhack"
+	size = 5604
+
+[iptvlist]
+	revision = 8
+	title = "IPTVList v1.5"
+	role = rss
+	navy_title = "IPTVList configuration"
+	navy_frame = "/modules/iptvlist/index.html"
+	backup = "www/modules/iptvlist/*.conf www/modules/iptvlist/*.m3u"
+	files = "www/modules/iptvlist/"
+	require = "rtmpdump"
+	size = 2420
+
+[fex]
+	revision = 7
+	title = "fex.net / ex.ua"
+	role = rss
+	files = "www/modules/fex/"
+	size = 148
+
+[yify]
+	revision = 4
+	title = "Yify.tv"
+	role = rss
+	files = "www/modules/yify/"
+	size = 112
+
+[fhotplug]
+	revision = 2
+	title = "Fork hotplug"
+	role = package
+	init = S00hotplug.sh
+	files = "bin/fork_hotplug etc/init/S00hotplug.sh"
+	size = 40
+
+[unrar]
+	revision = 1
+	title = "unrar 3.90"
+	role = util
+	files = "bin/unrar"
+	size = 572
+
+[youtube]
+	revision = 18
+	title = "YouTube"
+	role = rss
+	files = "www/modules/youtube/"
+	logo = "modules/youtube/youtube.png"
+	size = 124
+
+[ivi]
+	revision = 10
+	title = "ivi.ru"
+	role = rss
+	files = "www/modules/ivi/"
+	logo = "modules/ivi/ivi.png"
+	size = 124
+
+[shoutcast]
+	revision = 4
+	title = "SHOUTcast"
+	role = rss
+	files = "www/modules/shoutcast/"
+	size = 148
+
+[capture]
+	revision = 7
+	title = "Capture TV screen"
+	role = web
+	init="S36capture.sh"
+	files = "bin/bmp2jpg bin/captured etc/init/S36capture.sh www/modules/capture/"
+	size = 3912
+
+[apower]
+	revision = 4
+	title = "Actions on Power"
+	role = patch
+	check = sskin
+	init = S50aPower
+	config_link = "?page=apower_sets"
+	files = "etc/init/S50aPower etc/rc.init/S01aPower.sh www/modules/apower/"
+	size = 80
+
+[core]
+	revision = 48
+	title = "moServices core"
+	role = core
+	init = S01core
+	backup = "etc/core.ini"
+	config_link = "?page=sets"
+	files = "etc/core.ini etc/unicgi etc/init/S01core www/modules/core/ www/index.php www/favicon.ico"
+	size = 880
+
+[trans_1228]
+	revision = 5
+	title = "Transmission v2.82"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/settings.json"
+	config_before = copy
+	config_after = save
+	config_edit = "trans/settings.json"
+	env = 1228
+	files = "etc/init/S23trans etc/hotplug/after/block/S14trans trans/ www/modules/trans_1228/"
+	require = "fhotplug libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 2932
+
+[trans_1230]
+	revision = 7
+	title = "Transmission v2.82"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/settings.json"
+	config_before = copy
+	config_after = save
+	config_edit = "trans/settings.json"
+	env = 1230
+	files = "etc/init/S23trans etc/hotplug/after/block/S14trans trans/ www/modules/trans_1230/"
+	require = "fhotplug libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 4868
+
+[trans_3430]
+	revision = 6
+	title = "Transmission v2.82"
+	role = daemon
+	check = "port 9091"
+	init = S23trans
+	backup = "trans/settings.json"
+	config_before = copy
+	config_after = save
+	config_edit = "trans/settings.json"
+	env = 3430
+	files = "etc/init/S23trans etc/hotplug/after/block/S14trans trans/ www/modules/trans_3430/"
+	require = "fhotplug libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 4860
+
+[uaonline2]
+	revision = 46
+	title = "UA Online 2"
+	role = rss
+	backup = "www/modules/uaonline2/ua_favorites.conf www/modules/uaonline2/ua_settings.conf"
+	config_edit = "www/modules/uaonline2/ua_settings.conf"
+	navy_title = "UAOnline 2 Fav. Editor"
+	navy_frame = "http://%addr%/modules/uaonline2/index.php"
+	files = "www/modules/uaonline2/"
+	size = 3588
+
+[onlinerecord]
+	revision = 2
+	title = "Online-Record.RU"
+	role = rss
+	files = "www/modules/onlinerecord/"
+	logo = "modules/onlinerecord/onlinerec.png"
+	config_link = "?page=onlinerec_sets"
+	size = 220
+
+[peerstv]
+	revision = 3
+	title = "Peers.TV"
+	role = rss
+	files = "www/modules/peerstv/"
+	logo = "modules/peerstv/peerstv.png"
+	config_link = "?page=peerstv_sets"
+	size = 180
+
+[iconmenu]
+	revision = 32
+	title = "Home menu replacement"
+	config_link = "?page=iconmenu_sets"
+	role = patch
+	init = "S34iconmenu.sh"
+	files = "etc/init/S34iconmenu.sh etc/hotplug/after/block/S15iconmenu iconmenu/ www/modules/iconmenu"
+	require = "fhotplug"
+	size = 2936
+
+[mc_1228]
+	revision = 3
+	title = "Midnight Commander v4.8.8"
+	role = util
+	init = S38mc
+	env = 1228
+	files = "bin/mc bin/mcdiff bin/mcedit bin/mcview etc/.mc/ etc/init/S38mc etc/mc/ libexec/mc/ share/mc/"
+	require = "xterm libslang libglib2 libpcre1 libintl libiconv libgccs"
+	size = 2688
+
+[mc_1230]
+	revision = 3
+	title = "Midnight Commander v4.8.8"
+	role = util
+	init = S38mc
+	env = 1230
+	files = "bin/mc bin/mcdiff bin/mcedit bin/mcview etc/.mc/ etc/init/S38mc etc/mc/ libexec/mc/ share/mc/"
+	require = "xterm libslang libglib2 libpcre1 libintl libiconv libgccs"
+	size = 2640
+
+[mc_3430]
+	revision = 3
+	title = "Midnight Commander v4.8.8"
+	role = util
+	init = S38mc
+	env = 3430
+	files = "bin/mc bin/mcdiff bin/mcedit bin/mcview etc/.mc/ etc/init/S38mc etc/mc/ libexec/mc/ share/mc/"
+	require = "xterm libslang libglib2 libpcre1 libintl libiconv libgccs"
+	size = 2640
+
+[di]
+	revision = 6
+	title = "Digital Imported Radios"
+	role = rss
+	files = "www/modules/di/"
+	size = 144
+
+[videomore]
+	revision = 1.1
+	title = "Videomore.ru"
+	role = rss
+	files = "www/modules/videomore/"
+	logo = "www/modules/videomore/videomore.png"
+	size = 176
+
+[radio_top50]
+	revision = 4
+	title = "radio_top50"
+	role = rss
+	config_link = "?page=radio_top50_sets"
+	navy_title = "RadioTop editor"
+	navy_frame = "/modules/radio_top50/redaktor/redaktor_radio_top50.php"
+	files = "www/modules/radio_top50/"
+	size = 268
+
+[futurevideo]
+	revision = 2.11
+	title = "Futurevideo"
+	role = rss
+	files = "www/modules/futurevideo/"
+	logo = "modules/futurevideo/futurevideo.png"
+	size = 168
+
+[sskin]
+	revision = 14
+	title = "Skin selector for amp revs"
+	role = patch
+	backup = "etc/sskin.conf"
+	config_link = "/?page=sskin_sets"
+	files = "bin/sskin etc/sskin.conf www/modules/sskin"
+	size = 172
+
+[filin]
+	revision = 1.1
+	title = "FiLin.tV"
+	role = rss
+	files = "www/modules/filin/ www/modules/core/rss/skins/default/filin/"
+	logo = "modules/filin/filin.png"
+	size = 252
+
+[serialutv]
+	revision = 2.3
+	title = "Serialu.tv"
+	role = rss
+	files = "www/modules/serialutv/ www/modules/core/rss/skins/default/serialutv/"
+	logo = "modules/serialutv/serialutv.png"
+	size = 236
+
+[imgtools_1228]
+	revision = 1
+	title = "Image tools"
+	role = util
+	env = 1228
+	files = "bin/mksquashfs bin/mkyaffs2image"
+	require = "libz"
+	size = 212
 

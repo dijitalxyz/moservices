@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services>
+	<service>
+	    <name>Rodina.TV</name>
+	    <shortName>rod</shortName>
+	    <displayName>Родина.ТВ</displayName>
+		<logo>rodina.png</logo>
+	    <description>
+	        Русскоязычное Интернет Телевидение. 140 каналов включая HD и 14 дней архива.
+	    </description>
+	    <keys>
+	        <key name="keyUser1" params="?pl=rod&amp;amp;type=CHANGE_AUTH">Change account</key>
+	    </keys>
+	    <provider class="ImgCacheProvider" >
+		    <provider class="TimeSyncProvider">
+		        <provider class="RodProvider" />
+		    </provider>
+		</provider>
+	    <version>1.0.1</version>
+	    <author>http://TVonTop.com</author>
+	</service>
+	<service>
+	    <name>Rodina.TV Video</name>
+	    <shortName>rom</shortName>
+	    <displayName>Родина.ТВ Видеотека</displayName>
+	    <logo>rodina_vod.png</logo>
+	    <description>
+	        Постоянно пополняемая коллекция из нескольких тысяч фильмов, в прекрасном качестве и отсортированных по жанрам. 
+	    </description>
+	    <keys>
+	        <key name="keyUser1" params="?pl=rod&amp;amp;type=CHANGE_AUTH">Change account</key>
+	        <key name="keyUser2" params="?pl=rom&amp;amp;type=GENRE_LIST" >Genres</key>
+	    </keys>
+		<provider class="CacheProvider">
+		    <provider class="ImgCacheProvider" >
+			    <provider class="TimeSyncProvider">
+			        <provider class="RomProvider" />
+			    </provider>
+			</provider>
+	    </provider>
+	    <version>1.0.1</version>
+	    <author>http://TVonTop.com</author>
+	</service>
+</services>

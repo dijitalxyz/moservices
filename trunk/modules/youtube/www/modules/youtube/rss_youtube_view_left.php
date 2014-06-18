@@ -72,6 +72,18 @@ class rssYouTubeLeftView extends rssSkinLeftView
 ?>
   <onEnter>
 	cancelIdle();
+<?php
+
+	if( $this->position == 0 )
+	if( getMosOption('sdk_version') > 3 )
+	{
+
+?>
+	setParentFade(96);
+<?php
+	}
+
+?>
 	setFocusItemIndex( <?= $this->currentItem ?> );
   </onEnter>
 <?php

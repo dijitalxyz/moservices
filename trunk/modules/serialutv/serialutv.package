@@ -1,0 +1,7 @@
+[serialutv]
+	revision = 2.3
+	title = "Serialu.tv"
+	role = rss
+	files = "www/modules/serialutv/ www/modules/core/rss/skins/default/serialutv/"
+	logo = "modules/serialutv/serialutv.png"
+	size = 236

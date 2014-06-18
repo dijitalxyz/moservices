@@ -1,0 +1,8 @@
+[mediad]
+	revision = 4
+	title = "Iconbit MediaCenter 1.8.7"
+	role = rss
+	init = S34mediad
+	files = "etc/init/S34mediad mediad/ www/modules/mediad/"
+	require = "iconhack"
+	size = 5604

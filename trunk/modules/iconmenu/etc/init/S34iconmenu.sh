@@ -2,51 +2,51 @@
 #
 etc=/usr/local/etc
 mos=$etc/mos/iconmenu
-
-guide=/usr/local/bin/guide_menu/scripts/GuideMenu.rss
-home=/usr/local/bin/home_menu/scripts/HomeMenu.rss
-misc=/usr/local/bin/setup_menu/scripts/misc.rss
-
+#
+# =====================================
+# $1 - what
+#
+hUmount()
+{
+	while cat /proc/mounts | grep -q $1 ; do
+		umount $1
+	done
+}
+# =====================================
+# $1 - where
+# $2 - what
+#
+hMount()
+{
+	if [ -f $1 ] ; then
+		hUmount $1
+		mount -o bind $2 $1
+	fi
+}
+# =====================================
+# main
+#
 case "$1" in
   start)
-	if [ -f /usr/share/bin/boot_fw.conf ] ; then
-		. /usr/share/bin/boot_fw.conf
-
-		if ! [ "$fw" == "hds42l" ] ; then
-			echo 'iconmenu: Supports iconbit gui only'
-			exit 0
-		fi
-	else
-		if ! [ -f /usr/local/bin/scripts/iconbit-keyboard.rss ] ; then
-			echo 'iconmenu: Supports iconbit fw only'
-			exit 0
-		fi
-	fi
-
-	if ! cat /proc/mounts | grep -q '/GuideMenu\.rss' ; then
-		[ -f $guide ] && mount -o bind $mos/GuideMenu.rss $guide
-	fi
-
-	if ! cat /proc/mounts | grep -q '/misc\.rss' ; then
-		[ -f $misc ] && mount -o bind $mos/misc.rss $misc
-	fi
-
-	if ! cat /proc/mounts | grep -q '/HomeMenu\.rss' ; then
-		[ -f $home ] && mount -o bind $mos/HomeMenu.rss $home
-	fi
+	hMount /usr/local/bin/home_menu/scripts/HomeMenu_noDB.rss   $mos/HomeMenu.rss
+	hMount /usr/local/bin/guide_menu/scripts/GuideMenu_noDB.rss $mos/GuideMenu.rss
+	hMount /usr/local/bin/home_menu/scripts/HomeMenu.rss   $mos/HomeMenu.rss
+	hMount /usr/local/bin/guide_menu/scripts/GuideMenu.rss $mos/GuideMenu.rss
 
 	cp -a $mos/getweather.cgi /tmp/www/cgi-bin/getweather.cgi
 	;;
 
   stop)
-	cat /proc/mounts | grep -q '/GuideMenu\.rss'&& umount $guide
-	cat /proc/mounts | grep -q '/HomeMenu\.rss' && umount $home
-	cat /proc/mounts | grep -q '/misc\.rss' && umount $misc
+	hUmount /usr/local/bin/home_menu/scripts/HomeMenu_noDB.rss
+	hUmount /usr/local/bin/guide_menu/scripts/GuideMenu_noDB.rss
+	hUmount /usr/local/bin/home_menu/scripts/HomeMenu.rss
+	hUmount /usr/local/bin/guide_menu/scripts/GuideMenu.rss
+
 	rm -f /tmp/www/cgi-bin/getweather.cgi
 	;;
 
   status)
-	if cat /proc/mounts | grep -Eq '/HomeMenu\.rss'
+	if cat /proc/mounts | grep -Eq '/HomeMenu'
 	then echo "iconmenu running"
 	else echo "iconmenu stopped"
 	fi

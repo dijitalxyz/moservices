@@ -36,6 +36,15 @@ case "$1" in
 		# STANDBY_CMD_MUTE_OFF
 		echo -en '\xf9\xfe' >/dev/tts/1
 		;;
+	  mele1283)
+		# set mute 2 off
+		/usr/local/sbin/03 102 1
+		stty -F /dev/tts/1 cs8 9600 
+		# STANDBY_CMD_SYSTEM_ON
+		echo -en '\xf0\xfe' >/dev/tts/1
+		# STANDBY_CMD_MUTE_OFF
+		echo -en '\xf9\xfe' >/dev/tts/1
+		;;
 	  xtr)
 		# switch on Green Led
 		stty -F /dev/tts/1 cs8 57600
@@ -74,6 +83,13 @@ case "$1" in
 		/usr/local/sbin/03 76 0
 		# red led on
 		/usr/local/sbin/03 67 1
+		# Power Off
+		stty -F /dev/tts/1 cs8 9600 
+		echo -en '\xf5\xfe' >/dev/tts/1
+		;;
+	  mele1283)
+		# set mute 2 on
+		/usr/local/sbin/03 102 0
 		# Power Off
 		stty -F /dev/tts/1 cs8 9600 
 		echo -en '\xf5\xfe' >/dev/tts/1

@@ -1,7 +1,22 @@
 #!/tmp/www/cgi-bin/php
 <?php
 
+//==================================================================
+//==================================================================
+function gtcallback($buffer)
+{
+  return "";
+}
+
+//==================================================================
+//==================================================================
+
 define("settings","/usr/local/etc/mos/www/modules/iptvlist/settings.conf");
+
+ob_start("gtcallback");
+require_once 'iptvlist_timezone.php';
+ob_end_flush();
+
 
 if (file_exists(settings)) 
 {
@@ -33,17 +48,23 @@ else
 	$udpproxy="http://127.0.0.1:8080/";
 } 
 
+$tz = date_default_timezone_get();
+
 $doc = new DomDocument('1.0');
 $root = $doc->createElement('root');
 $root = $doc->appendChild($root);
 
 $child = $doc->createElement( "version" );
 $child = $root->appendChild($child);
-$child->setAttribute('value', "1");
+$child->setAttribute('value', "3");
 
 $child = $doc->createElement( "UDPProxy" );
 $child = $root->appendChild($child);
 $child->setAttribute('value', $udpproxy);
+
+$child = $doc->createElement( "Timezone" );
+$child = $root->appendChild($child);
+$child->setAttribute('value', $tz );
 
 $child = $doc->createElement( "Recordings" );
 $child = $root->appendChild($child);
@@ -53,7 +74,7 @@ $child = $doc->createElement( "playlists" );
 $child = $root->appendChild($child);
 
 
-if (file_exists("Favorites.m3u") == false) 
+if ( file_exists("Favorites.m3u") == false ) 
 {
 	$fv = "#EXTM3U\n";
 	$fv .= "#EXTINF:0,Favorites.m3u - dummy link\n";
@@ -81,6 +102,15 @@ if (file_exists("Favorites.m3u") == false)
 
 		$content = file_get_contents($filename);
 		$child1->setAttribute('value', $content);
+
+		$urlFileName = $filename.".url";
+		
+		if ( file_exists( $urlFileName ) == true ) 
+		{
+			$content = file_get_contents( $urlFileName );
+			$child1->setAttribute( 'url', $content );
+		}
+ 
 	}
 
 

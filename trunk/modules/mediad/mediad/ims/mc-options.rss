@@ -1,0 +1,685 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<bookmark>mc_options</bookmark>
+
+<onEnter>
+	showIdle();
+</onEnter>
+
+<onEnter>
+	itemTitleList = null;
+	itemTitleIndex = 0;
+	itemTitleCount = 1;
+	itemTitleArray = null;
+	locale = readStringFromFile("/tmp/app/REL_LOCALE");
+	if (locale == "ru")	{
+		pageTitle = "Медиацентр (Настройки)";
+		pageChange = "Сменить категорию";
+		itemTitleList = pushBackStringArray(itemTitleList, "Параметры");
+		itemTitleArray1 = pushBackStringArray(itemTitleArray, "Окно предпросмотра");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV версия IGMP");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV интерфейс");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV без UDP фильтрации");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV кеширование");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV предв. кеширование");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV таймаут (сек.)");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "FTP сортировка файлов и папок");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "FTP кеширование списка");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "FTP менеджер загрузок");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "FTP одновременных загрузок");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "Полноэкранный просмотр");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "Расширенный список каналов");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "UDPXY адрес");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "Планировщик записи");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "Сбросить настройки");
+		on = "Вкл.";
+		off = "Выкл.";
+		auto = "Авто";
+		eth = "Кабель";
+		wlan = "WiFi";
+	} else {
+		pageTitle = "Mediacenter (Preferences)";
+		pageChange = "Change category";
+		itemTitleList = pushBackStringArray(itemTitleList, "Options");
+		itemTitleArray1 = pushBackStringArray(itemTitleArray, "Preview window");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV IGMP version");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV interface");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV disable UDP filter");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV cache");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV cache prev.");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "IPTV timeout (sec.)");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "FTP sorting files and folders");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "FTP caching list");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "FTP downloader");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "FTP maximum downloads");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "Fullscreen");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "Extented channels list");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "UDPXY host");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "Schedule");
+		itemTitleArray = pushBackStringArray(itemTitleArray, "Default settings");
+		on = "On";
+		off = "Off";
+		auto = "Auto";
+		eth = "Lan";
+		wlan = "WiFi";
+	}
+	itemIdArray = null;
+	itemSize = 15;
+	itemIdArray1 = pushBackStringArray(itemIdArray, "view");
+	itemIdArray = pushBackStringArray(itemIdArray, "mcast_igmp");
+	itemIdArray = pushBackStringArray(itemIdArray, "mcast_if");
+	itemIdArray = pushBackStringArray(itemIdArray, "udplite");
+	itemIdArray = pushBackStringArray(itemIdArray, "iptv_cache");
+	itemIdArray = pushBackStringArray(itemIdArray, "iptv_precache");
+	itemIdArray = pushBackStringArray(itemIdArray, "iptv_timeout");
+	itemIdArray = pushBackStringArray(itemIdArray, "ftpsort");
+	itemIdArray = pushBackStringArray(itemIdArray, "ftpcache");
+	itemIdArray = pushBackStringArray(itemIdArray, "download");
+	itemIdArray = pushBackStringArray(itemIdArray, "dlmax");
+	itemIdArray = pushBackStringArray(itemIdArray, "stdvideo");
+	itemIdArray = pushBackStringArray(itemIdArray, "channeltvg");
+	itemIdArray = pushBackStringArray(itemIdArray, "udphost");
+	itemIdArray = pushBackStringArray(itemIdArray, "schedule");
+	itemIdArray = pushBackStringArray(itemIdArray, "default");
+	mediaServer = "http://127.0.0.1:9999/";
+	executeScript("refreshList");
+	setFocusItemIndex(0);
+	setItemFocus(0);
+	redrawDisplay();
+</onEnter>
+
+<mediaDisplay
+	name=onePartView
+	itemPerPage=7
+	viewAreaXPC=0
+	viewAreaYPC=0
+	viewAreaWidthPC=100
+	viewAreaHeightPC=100
+
+	itemXPC=12.4
+	itemYPC=37.5
+	itemWidthPC=75.8
+	itemHeightPC=6.3
+	itemImageXPC=27.4
+	itemImageYPC=37.5
+	itemImageWidthPC=60.8
+	itemImageHeightPC=6.3
+
+	imageFocus=""
+	imageUnFocus=""
+
+	sideColorRight=-1:-1:-1
+	sideColorLeft=-1:-1:-1
+	sideColorTop=-1:-1:-1
+	sideColorBottom=-1:-1:-1
+	backgroundColor=-1:-1:-1
+	focusBorderColor=-1:-1:-1
+	unFocusBorderColor=-1:-1:-1
+	itemBackgroundColor=-1:-1:-1
+
+	showHeader="no"
+	showDefaultInfo="no"
+
+	rollItems="no"
+	forceRedrawItems="yes"
+	idleImageXPC=83.12
+	idleImageYPC=89.58
+	idleImageWidthPC=3.1
+	idleImageHeightPC=5.5
+>
+<idleImage> image/POPUP_LOADING_01.png </idleImage>
+<idleImage> image/POPUP_LOADING_02.png </idleImage>
+<idleImage> image/POPUP_LOADING_03.png </idleImage>
+<idleImage> image/POPUP_LOADING_04.png </idleImage>
+<idleImage> image/POPUP_LOADING_05.png </idleImage>
+<idleImage> image/POPUP_LOADING_06.png </idleImage>
+<backgroundDisplay name="SetupMenuChild">
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+		/tmp/app/ims/mc-image/setup_bg.png
+	</image>
+	<image offsetXPC=10.1 offsetYPC=26.5 widthPC=80.5 heightPC=16.4>
+		/tmp/app/ims/mc-image/setup_p2_box_top_1.png
+	</image>
+	<image offsetXPC=10.1 offsetYPC=42.8 widthPC=80.5 heightPC=42.2>
+		/tmp/app/ims/mc-image/setup_p2_box_bottom.png
+	</image>
+</backgroundDisplay>
+
+<text offsetXPC=12.5 offsetYPC=17.8 widthPC=70 heightPC=6.0 fontSize=20 align=left>
+	<script>pageTitle;</script>
+</text>
+
+<text offsetXPC=11.8 offsetYPC=29.9 widthPC=15.3 heightPC=6.0 fontSize=16 align=center backgroundColor=-1:-1:-1 foregroundColor=255:255:255 useBackgroundSurface="yes">
+	<script>getStringArrayAt(itemTitleList, itemTitleIndex);</script>
+</text>
+<!--<text offsetXPC=27.9 offsetYPC=29.9 widthPC=14.4 heightPC=6.0 fontSize=16 align=center backgroundColor=-1:-1:-1 foregroundColor=6:33:52 useBackgroundSurface="yes">
+	<script>
+		index = (itemTitleIndex + 1) % itemTitleCount;
+		title = getStringArrayAt(itemTitleList, index);
+	</script>
+</text>
+<text offsetXPC=42.9 offsetYPC=29.9 widthPC=14.4 heightPC=6.0 fontSize=16 align=center backgroundColor=-1:-1:-1 foregroundColor=6:33:52 useBackgroundSurface="yes">
+	<script>
+		index = (itemTitleIndex + 2) % itemTitleCount;
+		title = getStringArrayAt(itemTitleList, index);
+	</script>
+</text>
+ 
+<text offsetXPC=57.6 offsetYPC=29.9 widthPC=14.4 heightPC=6.0 fontSize=16 align=center backgroundColor=-1:-1:-1 foregroundColor=6:33:52 useBackgroundSurface="yes">
+	<script>
+		index = (itemTitleIndex + 3) % itemTitleCount;
+		title = getStringArrayAt(itemTitleList, index);
+	</script>
+</text>
+<text offsetXPC=72.3 offsetYPC=29.9 widthPC=14.4 heightPC=6.0 fontSize=16 align=center backgroundColor=-1:-1:-1 foregroundColor=6:33:52 useBackgroundSurface="yes">
+	<script>
+		if (itemTitleCount &gt; 4) {
+			index = (itemTitleIndex + 4) % itemTitleCount;
+			title = getStringArrayAt(itemTitleList, index);
+		}
+		else {
+			title = "";
+		}
+	</script>
+</text> -->
+
+<!-- <image offsetXPC=12.1 offsetYPC=37.2 widthPC=15.1 heightPC=43.9>
+	/tmp/app/ims/mc-image/system_focus.png
+</image> -->
+
+<image offsetXPC=11.4 offsetYPC=84.7 widthPC=79.1 heightPC=7.6 useBackgroundSurface="yes">
+</image>
+
+<image>
+	<offsetXPC>
+		<script>
+			nextPos = hintIconX;
+			currPos = nextPos;
+			nextPos += hintIconWidth + hintGap;
+			currPos;
+		</script>
+	</offsetXPC>
+	<offsetYPC>
+		<script>
+			hintIconY;
+		</script>
+	</offsetYPC>
+	<widthPC>
+		<script>
+			hintIconWidth;
+		</script>
+	</widthPC>
+	<heightPC>
+		<script>
+			hintIconHeight;
+		</script>
+	</heightPC>
+	<script>
+		"/tmp/app/ims/mc-image/hint_left.png";
+	</script>
+</image>
+<image>
+	<offsetXPC>
+		<script>
+			currPos = nextPos;
+			nextPos += hintIconWidth + hintGap;
+			currPos;
+		</script>
+	</offsetXPC>
+	<offsetYPC>
+		<script>
+			hintIconY;
+		</script>
+	</offsetYPC>
+	<widthPC>
+		<script>
+			hintIconWidth;
+		</script>
+	</widthPC>
+	<heightPC>
+		<script>
+			hintIconHeight;
+		</script>
+	</heightPC>
+	<script>
+		"/tmp/app/ims/mc-image/hint_right.png";
+	</script>
+</image>
+<!--<text fontSize=12 align=left useBackgroundSurface="yes">
+	<offsetXPC>
+		<script>
+			currPos = nextPos;
+			nextPos += hintMsgWidth + hintGap;
+			currPos;
+		</script>
+	</offsetXPC>
+	<offsetYPC>
+		<script>
+			hintMsgY;
+		</script>
+	</offsetYPC>
+	<widthPC>
+		<script>
+			hintMsgWidth;
+		</script>
+	</widthPC>
+	<heightPC>
+		<script>
+			hintMsgHeight;
+		</script>
+	</heightPC>
+	<script>pageChange;</script>
+</text>
+
+ <image offsetXPC=11.4 offsetYPC=89.4 widthPC=1.3 heightPC=2.2>
+	<script>
+		if (initFlag == "$[ON]") {
+			"";
+		}
+		else {
+			"/tmp/app/ims/mc-image/setup_p2_point.png";
+		}
+	</script>
+</image> -->
+<text redraw=yes offsetXPC=17.4 offsetYPC=84.8 widthPC=70.4 heightPC=3.6 fontSize=12 align=left useBackgroundSurface="yes" foregroundColor=200:200:200>
+	<script>
+		pageChange;
+	</script>
+</text>
+<text redraw=yes offsetXPC=11.4 offsetYPC=90 widthPC=70.4 heightPC=3.6 fontSize=12 align=left useBackgroundSurface="yes" foregroundColor=200:200:0>
+	<script>
+		infoText;
+	</script>
+</text>
+
+<scrollbar offsetXPC=90.2 offsetYPC=36.9 widthPC=0.4 heightPC=45.0 backgroundImage="/tmp/app/ims/mc-image/scroll_bar_01.png" foregroundImage="/tmp/app/ims/mc-image/scroll_bar_02.png" border=0 offset=0 direction="vertical" redraw="yes">
+	<totalSize>
+		<script>
+			getPageInfo("itemCount");
+		</script>
+	</totalSize>
+	<startIndex>
+		<script>
+			getFocusItemIndex();
+		</script>
+	</startIndex>
+</scrollbar>
+
+<!-- itemDisplay will draw widget inside the item area, item area is decided by mediaDisplay attributes -->
+<itemDisplay>
+	<!-- clear background -->
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 useBackgroundSurface="yes"/>
+	<!-- draw foreground -->
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+		<script>
+			image = "";
+			queryIndex = getQueryItemIndex();
+			focusIndex = getFocusItemIndex();
+			if (queryIndex == focusIndex) {
+				image = "/tmp/app/ims/mc-image/setup_p2_list_focus.png";
+			}
+			image;
+		</script>
+	</image>
+	<text offsetXPC=5 offsetYPC=5 widthPC=50 heightPC=90 align=left fontSize=16 backgroundColor=-1:-1:-1>
+		<foregroundColor>
+			<script>
+				fgcolor = "255:255:255";
+				queryIndex = getQueryItemIndex();
+				focusIndex = getFocusItemIndex();
+				if (queryIndex == focusIndex) {
+					fgcolor = "200:200:200";
+				}
+				fgcolor;
+			</script>
+		</foregroundColor>
+		<script>
+			getStringArrayAt(itemTitleArray, -1);
+		</script>
+	</text>
+	<text offsetXPC=55 offsetYPC=5 widthPC=40 heightPC=90 align=right fontSize=14 backgroundColor=-1:-1:-1>
+		<foregroundColor>
+			<script>
+				fgcolor;
+			</script>
+		</foregroundColor>
+		<script>
+			id = getStringArrayAt(itemIdArray, -1);
+			status = getStringArrayAt(itemStatusArray, -1);
+			if(status == "on")
+				status = on;
+			else if(status == "off")
+				status = off;
+			else if(status == "auto")
+				status = auto;
+			else if(status == "eth")
+				status = eth;
+			else if(status == "wlan")
+				status = wlan;
+			else if(status == "left")
+				status = "Слева";
+			else if(status == "right")
+				status = "Справа";
+			status;
+		</script>
+	</text>
+</itemDisplay>
+
+<onEnter>
+	hintIconX = 11.4;
+	hintIconY = 84.7;
+	hintIconWidth = 2.04;
+	hintIconHeight = 3.62;
+	hintGap = 0.9;
+	hintMsgY = 85.6;
+	hintMsgWidth = 17.2;
+	hintMsgHeight = 2.8;
+</onEnter>
+
+<onUserInput>
+	handle = "false";
+	userInput = currentUserInput();
+	if ("right" == userInput) {
+		handle = "true";
+	} else if ("left" == userInput) {
+		handle = "true";
+	} else if ("display" == userInput) {
+		executeScript("refreshList");
+		redrawDisplay("item");
+		hideIdle();
+		handle = "true";
+	}
+	handle;
+</onUserInput>
+
+</mediaDisplay>
+
+<refreshList>
+	itemStatusArray = null;
+	dlok = loadXMLFile(mediaServer + "option/");
+	if (dlok != null) {
+		status = getXMLText("option", 0, "view");
+		itemStatusArray1 = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "mcast_igmp");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "mcast_if");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "udplite");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "iptv_cache");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "iptv_precache");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "iptv_timeout");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "ftpsort");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "ftpcache");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "download");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "dlmax");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "stdvideo");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "channeltvg");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "udphost");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		status = getXMLText("option", 0, "schedule");
+		itemStatusArray = pushBackStringArray(itemStatusArray, status);
+		itemStatusArray = pushBackStringArray(itemStatusArray, "");
+	}
+</refreshList>
+
+<item_template>
+<mediaDisplay>
+	<onEnter>
+		id = getEnv("MC_OP_ID");
+		popupHeader = getEnv("MC_OP_HEADER");
+		popupOptionFocus = getEnv("MC_OP_STATUS");
+		locale = readStringFromFile("/tmp/app/REL_LOCALE");
+		if (locale == "ru") {
+			if (id == "view") {
+				popupOptions = pushBackStringArray(popupOptions, "Слева");
+				popupOptions = pushBackStringArray(popupOptions, "Справа");
+				popupOptionSize = 2;
+				if(popupOptionFocus == "left")
+					popupOptionFocus = "Слева";
+				else if(popupOptionFocus == "right")
+					popupOptionFocus = "Справа";
+			} else if (id == "mcast_igmp") {
+				popupOptions = pushBackStringArray(popupOptions, "1");
+				popupOptions = pushBackStringArray(popupOptions, "2");
+				popupOptions = pushBackStringArray(popupOptions, "3");
+				popupOptionSize = 3;
+			} else if (id == "mcast_if") {
+				popupOptions = pushBackStringArray(popupOptions, "Авто");
+				popupOptions = pushBackStringArray(popupOptions, "Кабель");
+				popupOptions = pushBackStringArray(popupOptions, "WiFi");
+				popupOptionSize = 3;
+				if(popupOptionFocus == "eth")
+					popupOptionFocus = "Кабель";
+				else if(popupOptionFocus == "wlan")
+					popupOptionFocus = "WiFi";
+				else
+					popupOptionFocus = "Авто";
+			} else if (id == "udplite") {
+				popupOptions = pushBackStringArray(popupOptions, "Выкл.");
+				popupOptions = pushBackStringArray(popupOptions, "Вкл.");
+				popupOptionSize = 2;
+				if(popupOptionFocus == "on")
+					popupOptionFocus = "Вкл.";
+				else
+					popupOptionFocus = "Выкл.";
+			} else if (id == "iptv_cache") {
+				popupOptions = pushBackStringArray(popupOptions, "Выкл.");
+				popupOptions = pushBackStringArray(popupOptions, "64K");
+				popupOptions = pushBackStringArray(popupOptions, "128K");
+				popupOptions = pushBackStringArray(popupOptions, "256K");
+				popupOptions = pushBackStringArray(popupOptions, "512K");
+				popupOptions = pushBackStringArray(popupOptions, "1M");
+				popupOptions = pushBackStringArray(popupOptions, "2M");
+				popupOptionSize = 7;
+				if(popupOptionFocus == "off") popupOptionFocus = "Выкл.";
+			} else if (id == "iptv_precache") {
+				popupOptions = pushBackStringArray(popupOptions, "Выкл.");
+				popupOptions = pushBackStringArray(popupOptions, "512K");
+				popupOptions = pushBackStringArray(popupOptions, "1M");
+				popupOptions = pushBackStringArray(popupOptions, "2M");
+				popupOptions = pushBackStringArray(popupOptions, "3M");
+				popupOptions = pushBackStringArray(popupOptions, "4M");
+				popupOptionSize = 6;
+				if(popupOptionFocus == "off") popupOptionFocus = "Выкл.";
+			} else if (id == "iptv_timeout") {
+				popupOptions = pushBackStringArray(popupOptions, "1");
+				popupOptions = pushBackStringArray(popupOptions, "3");
+				popupOptions = pushBackStringArray(popupOptions, "5");
+				popupOptions = pushBackStringArray(popupOptions, "10");
+				popupOptions = pushBackStringArray(popupOptions, "15");
+				popupOptions = pushBackStringArray(popupOptions, "30");
+				popupOptionSize = 6;
+			} else if (id == "ftpsort" || id == "stdvideo" || id == "channeltvg" || id == "schedule" || id == "download") {
+				popupOptions = pushBackStringArray(popupOptions, "Выкл.");
+				popupOptions = pushBackStringArray(popupOptions, "Вкл.");
+				popupOptionSize = 2;
+				if(popupOptionFocus == "on")
+					popupOptionFocus = "Вкл.";
+				else
+					popupOptionFocus = "Выкл.";
+			} else if (id == "ftpcache") {
+				popupOptions = pushBackStringArray(popupOptions, "Выкл.");
+				popupOptions = pushBackStringArray(popupOptions, "RAM");
+				popupOptions = pushBackStringArray(popupOptions, "HDD");
+				popupOptionSize = 3;
+				if (popupOptionFocus == "off")
+					popupOptionFocus = "Выкл.";
+				else if (popupOptionFocus == "HDD")
+					popupOptionFocus = "HDD";
+				else
+					popupOptionFocus = "RAM";
+			} else if (id == "dlmax") {
+				popupOptions = pushBackStringArray(popupOptions, "1");
+				popupOptions = pushBackStringArray(popupOptions, "2");
+				popupOptions = pushBackStringArray(popupOptions, "3");
+				popupOptions = pushBackStringArray(popupOptions, "4");
+				popupOptions = pushBackStringArray(popupOptions, "5");
+				popupOptionSize = 5;
+			}
+		} else {
+			if (id == "view") {
+				popupOptions = pushBackStringArray(popupOptions, "Left");
+				popupOptions = pushBackStringArray(popupOptions, "Right");
+				popupOptionSize = 2;
+				if(popupOptionFocus == "left")
+					popupOptionFocus = "Left";
+				else if(popupOptionFocus == "right")
+					popupOptionFocus = "Right";
+			} else if (id == "mcast_igmp") {
+				popupOptions = pushBackStringArray(popupOptions, "1");
+				popupOptions = pushBackStringArray(popupOptions, "2");
+				popupOptions = pushBackStringArray(popupOptions, "3");
+				popupOptionSize = 3;
+			} else if (id == "mcast_if") {
+				popupOptions = pushBackStringArray(popupOptions, "Auto");
+				popupOptions = pushBackStringArray(popupOptions, "Eth");
+				popupOptions = pushBackStringArray(popupOptions, "WiFi");
+				popupOptionSize = 3;
+				if(popupOptionFocus == "eth")
+					popupOptionFocus = "eth";
+				else if(popupOptionFocus == "wlan")
+					popupOptionFocus = "WiFi";
+				else
+					popupOptionFocus = "Auto";
+			} else if (id == "udplite") {
+				popupOptions = pushBackStringArray(popupOptions, "Off");
+				popupOptions = pushBackStringArray(popupOptions, "On");
+				popupOptionSize = 2;
+				if(popupOptionFocus == "on")
+					popupOptionFocus = "On";
+				else
+					popupOptionFocus = "Off";
+			} else if (id == "iptv_cache") {
+				popupOptions = pushBackStringArray(popupOptions, "Off");
+				popupOptions = pushBackStringArray(popupOptions, "64K");
+				popupOptions = pushBackStringArray(popupOptions, "128K");
+				popupOptions = pushBackStringArray(popupOptions, "256K");
+				popupOptions = pushBackStringArray(popupOptions, "512K");
+				popupOptions = pushBackStringArray(popupOptions, "1M");
+				popupOptions = pushBackStringArray(popupOptions, "2M");
+				popupOptionSize = 7;
+				if(popupOptionFocus == "off") popupOptionFocus = "Off";
+			} else if (id == "iptv_precache") {
+				popupOptions = pushBackStringArray(popupOptions, "Off");
+				popupOptions = pushBackStringArray(popupOptions, "512K");
+				popupOptions = pushBackStringArray(popupOptions, "1M");
+				popupOptions = pushBackStringArray(popupOptions, "2M");
+				popupOptions = pushBackStringArray(popupOptions, "3M");
+				popupOptions = pushBackStringArray(popupOptions, "4M");
+				popupOptionSize = 6;
+				if(popupOptionFocus == "off") popupOptionFocus = "Off";
+			} else if (id == "iptv_timeout") {
+				popupOptions = pushBackStringArray(popupOptions, "1");
+				popupOptions = pushBackStringArray(popupOptions, "3");
+				popupOptions = pushBackStringArray(popupOptions, "5");
+				popupOptions = pushBackStringArray(popupOptions, "10");
+				popupOptions = pushBackStringArray(popupOptions, "15");
+				popupOptions = pushBackStringArray(popupOptions, "30");
+				popupOptionSize = 6;
+			} else if (id == "ftpsort" || id == "stdvideo" || id == "channeltvg" || id == "schedule" || id == "download") {
+				popupOptions = pushBackStringArray(popupOptions, "Off");
+				popupOptions = pushBackStringArray(popupOptions, "On");
+				popupOptionSize = 2;
+				if(popupOptionFocus == "on")
+					popupOptionFocus = "On";
+				else
+					popupOptionFocus = "Off";
+			} else if (id == "ftpcache") {
+				popupOptions = pushBackStringArray(popupOptions, "Off");
+				popupOptions = pushBackStringArray(popupOptions, "RAM");
+				popupOptions = pushBackStringArray(popupOptions, "HDD");
+				popupOptionSize = 3;
+				if (popupOptionFocus == "off")
+					popupOptionFocus = "Off";
+				else if (popupOptionFocus == "HDD")
+					popupOptionFocus = "HDD";
+				else
+					popupOptionFocus = "RAM";
+			} else if (id == "dlmax") {
+				popupOptions = pushBackStringArray(popupOptions, "1");
+				popupOptions = pushBackStringArray(popupOptions, "2");
+				popupOptions = pushBackStringArray(popupOptions, "3");
+				popupOptions = pushBackStringArray(popupOptions, "4");
+				popupOptions = pushBackStringArray(popupOptions, "5");
+				popupOptionSize = 5;
+			}
+		}
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		idx = getFocusItemIndex();
+		id = getStringArrayAt(itemIdArray, idx);
+		title = getStringArrayAt(itemTitleArray, idx);
+		status = getStringArrayAt(itemStatusArray, idx);
+		ret = null;
+		if (id == "udphost") {
+			ret = getInput("Enter text", "doModal");
+		} else if (id == "default") {
+			pg = getUrl(mediaServer + "optiondef/");
+			executeScript("refreshList");
+			redrawDisplay("item");
+		} else {
+			setEnv("MC_OP_ID", id);
+			setEnv("MC_OP_HEADER", title);
+			setEnv("MC_OP_STATUS", status);
+			rss = "rss_file:///tmp/app/ims/mc-dynamicPopup.rss";
+			ret = doModalRss(rss);
+			unsetEnv("MC_OP_ID");
+			unsetEnv("MC_OP_HEADER");
+			unsetEnv("MC_OP_STATUS");
+		}
+		if (ret != null) {
+			if (id == "view") {
+				if(ret == "Справа" || ret == "Right")
+					ret = "right";
+				else
+					ret = "left";
+			} else if (id == "ftpsort" || id == "stdvideo" || id == "channeltvg" || id == "schedule" || id == "download" || id == "udplite") {
+				if(ret == on)
+					ret = "on";
+				else
+					ret = "off";
+			} else if (id == "ftpcache" || id == "iptv_cache" || id == "iptv_precache") {
+				if(ret == off)
+					ret = "off";
+			} else if (id == "mcast_if") {
+				if(ret == auto)
+					ret = "auto";
+				else if(ret == eth)
+					ret = "eth";
+				else if(ret == wlan)
+					ret = "wlan";
+			}
+			pg = getUrl(mediaServer+"optionset/"+id+","+ret);
+			executeScript("refreshList");
+			redrawDisplay("item");
+			hideIdle();
+		}
+		null;
+	</script>
+</onClick>
+</item_template>
+
+
+<channel>
+	<title>Mediacenter Preferences</title>
+	<link>rss_file:///tmp/app/ims/mc-options.rss</link>
+	<itemSize>
+		<script>
+			itemSize;
+		</script>
+	</itemSize>
+</channel>
+</rss>

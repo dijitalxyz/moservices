@@ -1,0 +1,6 @@
+[shoutcast]
+	revision = 4
+	title = "SHOUTcast"
+	role = rss
+	files = "www/modules/shoutcast/"
+	size = 148

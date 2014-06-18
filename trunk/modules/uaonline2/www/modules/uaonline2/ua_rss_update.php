@@ -2,9 +2,9 @@
 
 /*	------------------------------
 	Ukraine online services 2	
-	RSS update module ver.1.2
+	RSS update module ver.1.3
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2013	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -16,10 +16,9 @@ include ("ua_paths.inc.php");
 	
 class ua_rss_setup_const 
 {
-	const imageFocus 			= 	'ua_focus_category.bmp';
-	const imageParentFocus 		= 	'ua_parent_focus_category.bmp';
-	const imageUnFocus 			= 	'ua_unfocus_category.bmp';
-	const background_image		=   'ua_setup_border.png';
+	const imageFocus 			= 	'ua_focus_main.png';
+	const imageUnFocus 			= 	'ua_unfocus_main.png';
+	const background_image		=   'ua_update_bkgd.png';
 }
 class ua_rss_setup extends ua_rss_setup_const 
 {
@@ -40,7 +39,7 @@ public function showDisplay($header1,$header2,$items)
 <bookmark>dialog</bookmark>
 
 <onEnter>
-cancelIdle();
+showIdle();
 checkIndex = 0;
 subMenuString = null;
 subMenuValue = null;
@@ -58,30 +57,34 @@ setFocusItemIndex(0);
 redrawDisplay();
 </onEnter>
 
+<onExit>
+cancelIdle();
+writeStringToFile("/tmp/env_returnFromList_message", "1");
+</onExit>
 
 <mediaDisplay name="onePartView"
  	
- viewAreaXPC=37
+ viewAreaXPC=34
  viewAreaYPC=45
  viewAreaWidthPC=35
- viewAreaHeightPC=25
- sideColorRight=-1:-1:-1
- sideColorLeft=-1:-1:-1
- sideColorTop=-1:-1:-1
- sideColorBottom=-1:-1:-1 
+ viewAreaHeightPC=30
+ sideColorRight=0:0:0
+ sideColorLeft=0:0:0
+ sideColorTop=0:0:0
+ sideColorBottom=0:0:0 
  backgroundColor=0:0:0
- focusBorderColor=-1:-1:-1
- unFocusBorderColor=-1:-1:-1
+ focusBorderColor=0:0:0
+ unFocusBorderColor=0:0:0
  itemBackgroundColor=0:0:0
  showHeader="no"
  showDefaultInfo="no"
  itemPerPage=2
  itemWidthPC=30
  itemXPC=34
- itemHeightPC=30
+ itemHeightPC=25
  itemImageWidthPC=0
  itemImageHeightPC=0
- itemYPC=37
+ itemYPC=42
  itemImageXPC=0
  itemImageYPC=30
  idleImageXPC		="88"
@@ -97,18 +100,38 @@ redrawDisplay();
 			<?=$ua_images_path.static::background_image?>
 	</image>
 </backgroundDisplay>
-<text align="center" lines="1" offsetXPC="1" offsetYPC="3" widthPC="98" heightPC="20" fontSize="16" backgroundColor="0:0:0">
+<text align="center" lines="1" offsetXPC="4" offsetYPC="4" widthPC="94" heightPC="20" fontSize="16" backgroundColor="0:0:0">
 <?=$header1?></text>
-<text align="center" lines="1" offsetXPC="1" offsetYPC="20" widthPC="98" heightPC="20" fontSize="16" backgroundColor="0:0:0">
+<text align="center" lines="1" offsetXPC="4" offsetYPC="21" widthPC="94" heightPC="20" fontSize="16" backgroundColor="0:0:0">
 <?=$header2?></text>
 
 <itemDisplay>
-	<text offsetXPC=0 offsetYPC=0 widthPC=95 heightPC=90 align=center fontSize=16 backgroundColor=-1:-1:-1 >
-		<foregroundColor><script> fgcolor = "101:101:101"; if (getFocusItemIndex() == getQueryItemIndex()) { fgcolor = "255:255:255"; } fgcolor; </script></foregroundColor>
+
+	
+	<script>
+			idx = getQueryItemIndex();
+			drawState = getDrawingItemState();
+			if (drawState == "unfocus")
+				{
+					border = "<?= $ua_images_path.static::imageUnFocus?>";
+					color = "255:255:255";
+				}
+			else
+				{
+					border = "<?= $ua_images_path.static::imageFocus?>";
+					color = "255:255:255";
+				}
+      </script>
+	  		<image redraw="no" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
+			<script>
+				border;
+			</script>
+		</image>
+		
+			<text offsetXPC=0 offsetYPC=0 widthPC=95 heightPC=90 align=center fontSize=16 backgroundColor=-1:-1:-1 >
+		<foregroundColor><script> color; </script></foregroundColor>
 		<script> getStringArrayAt(subMenuString, getQueryItemIndex()); </script>
 	</text>
-	
-	
 </itemDisplay>
 
 	
@@ -169,12 +192,6 @@ if ($_REQUEST["update"]=="1")
 	$res=shell_exec("/tmp/ua_get/www/modules/uaonline2/ua_update.sh ".$ua_path." ".$param2." ".$ua_update_url);
 	//echo $res;
 	shell_exec("rm -r /tmp/ua_get");
-// 26/01/2013 тут прибиваем историю просмотров
-//	shell_exec("rm -r /usr/local/etc/dvdplayer/ua_history");		
-//	$ini = new TIniFileEx('/usr/local/etc/dvdplayer/ua_settings.conf');
-//	$ini->write('paths','ua_standalone','1');
-//	$ini->updateFile();
-//	unset($ini);
 	
 	
 	if(preg_match("/OK/", $res))

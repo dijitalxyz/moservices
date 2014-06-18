@@ -4,14 +4,58 @@
   <bookmark> Guide_Menu </bookmark>
 
   <onRefresh>
-	setRefreshTime(1000);
+	setRefreshTime(-1);
+
 	DBReady = IsDBReady();
 
-	if(DBReady != LastDBReady){
-		redrawDisplay();
+	if(AndroidDisable == "no")
+	{
+		AndroidReadyFlag = IsAndroidSystemReady();
+	}
+	else AndroidReadyFlag = "false";
+
+	isRedraw = 0;
+
+	if(DBReady != LastDBReady)
+	{
+		isRedraw = 1;
+		LastDBReady = DBReady;
 	}
 
-	LastDBReady = DBReady;
+	/* get time */
+	s = getTimeDate();
+	t = getStringArrayAt(s, 2); if( t &lt; 10 ) t = "0" + t; d = t + ".";
+	t = getStringArrayAt(s, 1); if( t &lt; 10 ) t = "0" + t; d = d + t + " ";
+	t = getStringArrayAt(s, 3); if( t &lt; 10 ) t = "0" + t; d = d + t + ":";
+	t = getStringArrayAt(s, 4); if( t &lt; 10 ) t = "0" + t; d = d + t;
+	if( d != st_time )
+	{
+		st_time = d;
+		isRedraw = 1;
+	}
+
+	/* VFD time */
+	if(fw == "mele" || fw == "inext" )
+	{
+		t = getStringArrayAt(s, 3); if( t &lt; 10 ) t = "0" + t; d = t + ":";
+		t = getStringArrayAt(s, 4); if( t &lt; 10 ) t = "0" + t; d = d + t + " ";
+
+		if( d != vfd_time )
+		{
+			vfd_time = d;
+			if(fw == "mele")	MeleVFDShow(vfd_time);
+			else	sekatorSWF_vfdShowMessage(vfd_time);
+		}
+	}
+
+	if( isRedraw == 1 )
+	{
+		isRedraw == 0;
+		redrawDisplay();		
+	}
+
+	setRefreshTime(10000);
+	null;
   </onRefresh>
 
   <onExit>
@@ -75,12 +119,12 @@
     <popupDialog>
       <mediaDisplay>
 	<onEnter>
-	popupHeader = "$[IMS_APPINFO]";
+	popupHeader = "Информация";
 	popupOptionSize = 1;
 	popupOptions = pushBackStringArray(popupOptions, "$[OK]");
 	popupMessageSize = 1;
 	popupOptionWide = 1;
-	popupMessages = "$[IMS_APPWAIT]";
+	popupMessages = "Пожалуйста подождите, идёт инициализация модулей!";
 	popupOptionFocus = "$[OK]"
 	</onEnter>
       </mediaDisplay>
@@ -98,10 +142,56 @@
 	</onEnter>
       </mediaDisplay>
     </popupDialog>
+
+
+    <popupDialog>
+      <mediaDisplay>
+	<onEnter>
+	popupHeader = "$[IMS_ANDROID]";
+	popupOptionSize = 1;
+	popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+	popupMessageSize = 1;
+	popupOptionWide = 1;
+	popupMessages = "$[LOADING_ANDROID]";
+	popupOptionFocus = "$[OK]"
+	</onEnter>
+      </mediaDisplay>
+    </popupDialog>
+
+    <popupDialog>
+      <mediaDisplay>
+	<onEnter>
+	popupHeader = "$[IMS_ANDROID]";
+	popupOptionSize = 1;
+	popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+	popupMessageSize = 1;
+	popupOptionWide = 1;
+	popupMessages = "$[LOAD_ANDROID_FAILED]";
+	popupOptionFocus = "$[OK]"
+	</onEnter>
+      </mediaDisplay>
+    </popupDialog>
+
+    <popupDialog>
+      <mediaDisplay>
+	<onEnter>
+	popupHeader = "$[IMS_ANDROID]";
+	popupOptionSize = 1;
+	popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+	popupMessageSize = 1;
+	popupOptionWide = 1;
+	popupMessages = "$[ANDROID_INFO_NOTSTARTED]";
+	popupOptionFocus = "$[OK]"
+	</onEnter>
+      </mediaDisplay>
+    </popupDialog>
+
+
     <backgroundDisplay name=GuideMenuBackground>
       <image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
 	<script>
 		BG_image = "/usr/local/etc/mos/iconmenu/images/GuideMenu_BG_half.fsp";
+
 	</script>
       </image>
 
@@ -111,70 +201,46 @@
 	-->
     </backgroundDisplay>
 
-    <BltRows>
-      <script>
-	if(EntryTimes &lt; 2){
-		500;
-	}
-	else{
-		120;
-	}
-      </script>
-    </BltRows>
-
-    <BackgroundDark>
-      <script>
-	ret = "yes";
-	if(CurrentAP=="IMSAP"){
-		if(CurrentType=="Photo"){
-			ret = "no";
-		}else if(CurrentType=="Video"){
-			ret = "no";
-		}
-	}else if(CurrentAP=="VideoPlayback"){
-		ret = "no";
-	}else if(CurrentAP=="PhotoPlaybackAP"){
-		ret = "no";
-	}
-      </script>
-    </BackgroundDark>
-
   <!-- the entry point of the view, you can set the initial focus here -->
   <!-- you can also use postMessage to do the initial operation on the focus item -->
     <onEnter>
-	CurAPName = getCurrentAPName();
+	BltType = "NoBitBlt";
+
 	image_type = ".fsp";
-	BG_image_type = ".fsp";
 
-	CurrentAP = getEnv("EntryStatusString1");
-	CurrentType = getEnv("EntryStatusString2");
-	PlayMusic = getEnv("EntryStatusString3");
-	CurrentSubType = getEnv("EntryStatusString4");
-	CurrentSubType5 = getEnv("EntryStatusString5");
-	CurrentSubType6 = getEnv("EntryStatusString6");
-	CurrentSubType7 = getEnv("EntryStatusString7");
+	vfd_time = null;
 
+	DBReady = IsDBReady();
+	LastDBReady = DBReady;
 
 	dlok = loadXMLFile("/usr/local/etc/mos/iconmenu/iconmenu.conf");
 	if(dlok != null)
 	{
-		webkit_ipad = getXMLText("webkit_ipad");
+		webkit_ipad = getXMLText("config","webkit_ipad");
 		if( webkit_ipad == null || webkit_ipad == "")
 		 webkit_ipad = "no";
 
-		IsAVinDisable    = getXMLAttribute("servicesGuide","AVin","disable");
-		GBrowserDisable  = getXMLAttribute("servicesGuide","GBrowser","disable");
-		GMovieDisable    = getXMLAttribute("servicesGuide","GMovie","disable");
-		GMusicDisable    = getXMLAttribute("servicesGuide","GMusic","disable");
-		GPictureDisable  = getXMLAttribute("servicesGuide","GPicture","disable");
-		FavoritesDisable = getXMLAttribute("servicesGuide","Favorites","disable");
-		IMSDisable       = getXMLAttribute("servicesGuide","moMenu","disable");
-		IPTVDisable      = getXMLAttribute("servicesGuide","mediaCenter","disable");
-		WebKitDisable    = getXMLAttribute("servicesGuide","WebKit","disable");
-		SetupDisable     = getXMLAttribute("servicesGuide","Setup","disable");
-		PowerOffDisable  = getXMLAttribute("servicesGuide","PowerOff","disable");
-		OnMedDisable	 = getXMLAttribute("servicesGuide","OnlineMedia","disable");
-		YoutubeXLDisable = getXMLAttribute("servicesGuide","YoutubeXL","disable");
+		fw = getXMLText("config","fw");
+		if( fw == null || fw == "")
+		fw = "default";
+
+		IsAVinDisable    = getXMLAttribute("config","servicesGuide","DTV","disable");
+		GBrowserDisable  = getXMLAttribute("config","servicesGuide","GBrowser","disable");
+		GMovieDisable    = getXMLAttribute("config","servicesGuide","GMovie","disable");
+		GMusicDisable    = getXMLAttribute("config","servicesGuide","GMusic","disable");
+		GPictureDisable  = getXMLAttribute("config","servicesGuide","GPicture","disable");
+		FavoritesDisable = getXMLAttribute("config","servicesGuide","Favorites","disable");
+		MoMenuDisable    = getXMLAttribute("config","servicesGuide","moMenu","disable");
+		IPTVDisable      = getXMLAttribute("config","servicesGuide","mediaCenter","disable");
+		IMCDisable      = getXMLAttribute("config","servicesGuide","mediaCenter2","disable");
+		WebKitDisable    = getXMLAttribute("config","servicesGuide","WebKit","disable");
+		SetupDisable     = getXMLAttribute("config","servicesGuide","Setup","disable");
+		PowerOffDisable  = getXMLAttribute("config","servicesGuide","PowerOff","disable");
+		TransDisable     = getXMLAttribute("config","servicesGuide","Transmission","disable");
+		AriaDisable      = getXMLAttribute("config","servicesGuide","Aria","disable");
+		OnMedDisable	 = getXMLAttribute("config","servicesGuide","OnlineMedia","disable");
+ 		AndroidDisable   = getXMLAttribute("config","servicesGuide","Android","disable");
+ 		WebBrowserDisable = getXMLAttribute("config","servicesGuide","AndroidBrowser","disable");
 	}	
 	else
 	{
@@ -184,36 +250,58 @@
 		GMusicDisable    = "no";
 		GPictureDisable  = "no";
 		FavoritesDisable = "no";
-		IMSDisable       = "no";
+		MoMenuDisable    = "no";
 		IPTVDisable      = "no";
+		IMCDisable       = "no";
 		WebKitDisable    = "no";
-		YoutubeXLDisable = "no";
 		SetupDisable     = "no";
+		TransDisable	 = "no";
+		AriaDisable	 = "no";
+		OnMedDisable	 = "no";
 		PowerOffDisable  = "no";
-		OnMedDisable = "no";
+ 		AndroidDisable   = "no";
+		WebBrowserDisable = "no";
 	}
-	if(IsAVinDisable != "yes" &amp;&amp; IsItemDisasble("IsAVinDisable") == "true")
-	 IsAVinDisable = "yes";
+
+	if(IsAVinDisable != "yes")
+	 if( IsItemDisasble("IsAVinDisable") == "true" &amp;&amp; IsItemDisasble("DtvDisable") == "true" )
+	  IsAVinDisable = "yes";
 		
 	if(FavoritesDisable != "yes" &amp;&amp; IsItemDisasble("IsFavoritesDisable") == "true")
 	 FavoritesDisable = "yes";
 
-	if(IMSDisable != "yes" &amp;&amp; IsItemDisasble("NetworkDisable") == "true")
-	 IMSDisable = "yes";
+	if(OnMedDisable != "yes" &amp;&amp; IsItemDisasble("NetworkDisable") == "true")
+	 OnMedDisable = "yes";
 
 	if(WebKitDisable != "yes" &amp;&amp; IsItemDisasble("WebKitDisable") == "true")
 	 WebKitDisable = "yes";
 
- 	if(YoutubeXLDisable != "yes" &amp;&amp; IsItemDisasble("YoutubeXLAPDisable") == "true")
-	 YoutubeXLDisable = "yes";
+ 	if(AndroidDisable != "yes")
+	{
+		if (getCurrentSetting("$[IMS_ANDROID]") == "$[OFF]" || IsItemDisasble("IsAndroidDisable") == "true")
+		{
+			AndroidDisable = "yes";
+			WebBrowserDisable = "yes";
+		}
+ 	}
 
-/* farvoice added */
-	if(IPTVDisable != "yes"){
-		IPTVDisable = "no";
-		test = readStringFromFile("/tmp/app/REL_LOCALE");
+	if(PowerOffDisable != "yes")
+	 if( IsItemDisasble("PowerOffDisable") == "true" &amp;&amp; IsItemDisasble("IsPowerOffDisable") != "false" )
+	  PowerOffDisable = "yes";
+
+	if(IPTVDisable == "no")
+	{
+		test = readStringFromFile("/tmp/app/ims/mc-browser.rss");
 		if (test == null) IPTVDisable = "yes";
 	}
-/* end farvoice */
+
+	if(IMCDisable == "no")
+	{
+		test = readStringFromFile("/tmp/app/mediacenter/share/view/video.xml");
+		if (test == null) IMCDisable = "yes";
+	}
+/* end pokrass */
+
 
 /* pokrass added */
 	GlavTVDisable	= "no";
@@ -222,14 +310,21 @@
 	SovokDisable	= "no";
 	FexDisable	= "no";
 	YoutubeDisable	= "no";
+	SHOUTCastDisable = "no";
+	DIRadioDisable	= "no";
+	top50Disable	= "no";
+	yifyDisable	= "no";
 	UAonlineDisable	= "no";
 	WeatherDisable	= "no";
-	TransDisable	= "no";
 	IptvlistDisable	= "no";
 	IconMedDisable	= "no";
 	MediaportalDisable = "no";
 	RutorDisable	= "no";
 	MyhitDisable	= "no";
+	RodinaDisable	= "no";
+	peerstvDisable	= "no";
+	OnlinerecordDisable = "no";
+	IVIDisable	= "no";
 
 	if(GlavTVDisable == "no"){
 		test = readStringFromFile("/usr/local/etc/mos/www/modules/glavtv/def_rss.php");
@@ -259,6 +354,22 @@
 		test = readStringFromFile("/usr/local/etc/mos/www/modules/youtube/def_rss.php");
 		if (test == null) YoutubeDisable = "yes";
 	}		
+	if(SHOUTCastDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/shoutcast/def_rss.php");
+		if (test == null) SHOUTCastDisable = "yes";
+	}	
+	if(DIRadioDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/di/def_rss.php");
+		if (test == null) DIRadioDisable = "yes";
+	}
+	if(top50Disable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/radio_top50/def_rss.php");
+		if (test == null) top50Disable = "yes";
+	}	
+	if(yifyDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/yify/def_rss.php");
+		if (test == null) yifyDisable = "yes";
+	}
 	if(UAonlineDisable == "no"){
 		test = readStringFromFile("/usr/local/etc/mos/www/modules/uaonline2/def_rss.php");
 		if (test == null) UAonlineDisable = "yes";
@@ -270,6 +381,10 @@
 	if(TransDisable == "no"){
 		test = readStringFromFile("/usr/local/etc/mos/trans/watch.dir");
 		if (test == null) TransDisable = "yes";
+	}
+	if(AriaDisable == "no")	{
+		test = readStringFromFile("/tmp/aria_run");
+		if (test == null) AriaDisable = "yes";
 	}
 	if(IptvlistDisable == "no"){
 		test = readStringFromFile("/usr/local/etc/mos/www/modules/iptvlist/def_rss.php");
@@ -287,65 +402,59 @@
 		test = readStringFromFile("/usr/local/etc/mos/www/modules/myhit/def_rss.php");
 		if (test == null) MyhitDisable = "yes";
 	}
+	if(RodinaDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/rodina/def_rss.php");
+		if (test == null) RodinaDisable = "yes";
+	}
+	if(peerstvDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/peerstv/def_rss.php");
+		if (test == null) peerstvDisable = "yes";
+	}
+	if(OnlinerecordDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/onlinerecord/def_rss.php");
+		if (test == null) OnlinerecordDisable = "yes";
+	}
+	if(IVIDisable == "no"){
+		test = readStringFromFile("/usr/local/etc/mos/www/modules/ivi/def_rss.php");
+		if (test == null) IVIDisable = "yes";
+	}
 /* end pokrass */
 
-	FocusCnt = 0;
-	if(IsAVinDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(GBrowserDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(GMovieDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(GMusicDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(GPictureDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(FavoritesDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(IMSDisable == "no")		FocusCnt = FocusCnt + 1;
-	if(IPTVDisable == "no")		FocusCnt = FocusCnt + 1;
-	if(WebKitDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(YoutubeXLDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(SetupDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(PowerOffDisable == "no")	FocusCnt = FocusCnt + 1;
+	CurrentSel = getPageInfo( "itemCount" ) / 2 ;
 
-/* pokrass added */
-	if(GlavTVDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(TVonTopDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(SaylerDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(UAonlineDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(SovokDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(FexDisable == "no")		FocusCnt = FocusCnt + 1;
-	if(YoutubeDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(WeatherDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(TransDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(IptvlistDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(OnMedDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(IconMedDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(MediaportalDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(RutorDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(MyhitDisable == "no")	FocusCnt = FocusCnt + 1;
-/* end pokrass */
-
-	CurrentSel = FocusCnt / 2 ;
 	setParentFade(100);
 
 	setItemFocus(CurrentSel);
 	redrawDisplay();
 
-	EntryTimes = 1;
-	BltType = "NoBitBlt";
-
-	DBReady = IsDBReady();
-	LastDBReady = DBReady;
 	setRefreshTime(1000);
-
     </onEnter>
 
     <onUserInput>
         userInput = currentUserInput();
+
+print( "key=" + userInput );
+
 	ret="false";
 
 	newIndex = "-1";
         
-	if("up" == userInput)
+	if      (userInput == "up")	ret = "true";
+	else if (userInput == "edit")	ret = "true";
+	else if (userInput == "menu")	ret = "true";
+
+	else if (userInput == "display") 
 	{
+		if( IsItemDisasble("IsFavoritesDisable") != "true" )
+		{
+			APName = "IMSAP";
+			MenuType = "MyFavorites";
+			MenuLink = "rss_file://./scripts/myfavorites_list.rss";
+			menuCmd(APName, MenuType, MenuLink, BltType);
+		}
 		ret = "true";
-        }
+	}
+
 	else if (userInput == "one") 	newIndex = 0;
 	else if (userInput == "two") 	newIndex = 1;
 	else if (userInput == "three")	newIndex = 2;
@@ -359,7 +468,7 @@
 
 	if( newIndex !="-1" )
 	{
-		if( newIndex &lt; FocusCnt )
+		if( newIndex &lt; getPageInfo("itemCount") )
 		{
 			setFocusItemIndex( newIndex );
 			redrawDisplay();
@@ -383,7 +492,7 @@
 
     <text offsetXPC=5 offsetYPC=6.4 widthPC=30 heightPC=12 fontSize=14 foregroundColor=216:226:0 backgroundColor=-1:-1:-1 align=left tailDots=yes useBackgroundSurface=no redraw=yes>
       <script>
-	getCurrentTimeInfo();
+	st_time;
       </script>
     </text>
 
@@ -391,28 +500,22 @@
 
       <image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=92>
 	<script>
-	queryIndex = getQueryItemIndex();
-	focusIndex = getFocusItemIndex();
-	lastSelectedIndex = getSelectedItemIndex();
-	thumbnail = getItemInfo("media:thumbnail");
-	ItemGroup = getItemInfo("group");
-	state = getDrawingItemState();
+
+	query = getQueryItemIndex();
+
+	thumbnail = getItemInfo(query, "media:thumbnail");
+	ItemGroup = getItemInfo(query, "group");
+
 	if(ItemGroup == "DB"){
 		if(DBReady == "false"){
 			thumbnail = thumbnail + "_gray";
 		}
 	}
-	if (queryIndex != focusIndex){
-		thumbnail = thumbnail;
-	}
-	thumbnail = thumbnail + image_type;
-
-	thumbnail;
+	thumbnail + image_type;
 
 	</script>
       </image>
     </itemDisplay>
-
   </mediaDisplay>
 
   <channel>
@@ -468,9 +571,10 @@
 <title>$[GBROWSER_MOVIE]</title>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Movie </media:thumbnail>
 <disable>
-	<script>
-		GMovieDisable;
-	</script>
+  <script>
+    if( DBReady == "true" ) GMovieDisable;
+    else "yes";
+  </script>
 </disable>
 <group> DB </group>
 <onClick>
@@ -503,9 +607,10 @@
 <title>$[GBROWSER_MUSIC]</title>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Music </media:thumbnail>
 <disable>
-	<script>
-		GMusicDisable;
-	</script>
+  <script>
+    if( DBReady == "true" ) GMusicDisable;
+    else "yes";
+  </script>
 </disable>
 <group> DB </group>
 <onClick>
@@ -540,9 +645,10 @@
 <title>$[GBROWSER_PICTURE]</title>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Photo </media:thumbnail>
 <disable>
-	<script>
-		GPictureDisable;
-	</script>
+  <script>
+    if( DBReady == "true" ) GPictureDisable;
+    else "yes";
+  </script>
 </disable>
 <group> DB </group>
 <onClick>
@@ -669,6 +775,25 @@
 </item>
 
 <item>
+<title>Rodina.TV</title>
+<disable>
+    <script>
+	RodinaDisable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/rodina </media:thumbnail>
+<onClick>
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_rodina";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
 <title>Sovok.TV</title>
 <disable>
     <script>
@@ -688,6 +813,63 @@
 </item>
 
 <item>
+<title>Peers.TV</title>
+<disable>
+    <script>
+	peerstvDisable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/peerstv </media:thumbnail>
+<onClick>
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_peerstv";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>Online-Record.RU</title>
+<disable>
+    <script>
+	OnlinerecordDisable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/lealta </media:thumbnail>
+<onClick>
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_lealta";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>IVI.RU</title>
+<disable>
+    <script>
+	IVIDisable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/ivi</media:thumbnail>
+<onClick>
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_ivi";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
 <title>fex.net/ex.ua</title>
 <disable>
     <script>
@@ -700,6 +882,25 @@
 		APName = "IMSAP";
 		MenuType = "TopMenu";
 		MenuLink = "http://127.0.0.1/?page=rss_fex";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>Yify.TV</title>
+<disable>
+    <script>
+	yifyDisable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/yify </media:thumbnail>
+<onClick>
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_yify";
 		menuCmd(APName, MenuType, MenuLink, BltType);
 		null;
 	</script>
@@ -745,17 +946,57 @@
 </item>
 
 <item>
-<title>$[WEBKIT_YOUTUBE_XL]</title>
+<title>SHOUTCast</title>
 <disable>
-	<script>
-		YoutubeXLDisable;
-	</script>
+    <script>
+	SHOUTCastDisable;
+    </script>
 </disable>
-<media:thumbnail> /usr/local/etc/mos/iconmenu/images/yxl </media:thumbnail>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/shoutcast </media:thumbnail>
 <onClick>
 	<script>
-		APName = "WebKitAP_youtubexl";
-		menuCmd(APName);
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_shoutcast";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>Digital Imported</title>
+<disable>
+    <script>
+	DIRadioDisable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/di </media:thumbnail>
+<onClick>
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_di";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+<item>
+<title>Radio Top50</title>
+<disable>
+    <script>
+	top50Disable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/top50 </media:thumbnail>
+<onClick>
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_radio_top50";
+		menuCmd(APName, MenuType, MenuLink, BltType);
 		null;
 	</script>
 </onClick>
@@ -858,6 +1099,26 @@
 </item>
 
 <item>
+<title>Aria</title>
+<disable>
+    <script>
+	AriaDisable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/aria </media:thumbnail>
+<onClick>
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_aria";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
+
+<item>
 <title>Погода</title>
 <disable>
     <script>
@@ -876,49 +1137,12 @@
 </onClick>
 </item>
 
-<item>
-<title>$[IMS_APP]</title>
-<disable>
-    <script>
-	OnMedDisable;
-    </script>
-</disable>
-<media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Internet </media:thumbnail>
-<onClick>
-	<script>
-		APName = "IMSAP";
-		MenuType = "TopMenu";
-		MenuLink = "/usr/local/bin/scripts/menu.rss";
-		menuCmd(APName, MenuType, MenuLink, BltType);
-		null;
-	</script>
-</onClick>
-</item>
+
 
 <!-- end pokrass -->
 
 <item>
-<title>moServices</title>
-<disable>
-	<script>
-		IMSDisable;
-	</script>
-</disable>
-<media:thumbnail> /usr/local/etc/mos/iconmenu/images/moMenu </media:thumbnail>
-<onClick>
-	<script>
-		APName = "IMSAP";
-		MenuType = "TopMenu";
-		MenuLink = "http://127.0.0.1/?page=rss_menu";
-		menuCmd(APName, MenuType, MenuLink, BltType);
-		null;
-	</script>
-</onClick>
-</item>
-
-
-<item>
-<title>$[IMS_IPTV]</title>
+<title>Media Center</title>
 <disable>
 	<script>
 		IPTVDisable;
@@ -930,6 +1154,73 @@
 	APName = "IMSAP";
 	MenuType = "TopMenu";
 	MenuLink = "rss_file:///tmp/app/ims/mc-browser.rss";
+	menuCmd(APName, MenuType, MenuLink, BltType);
+	null;
+  </script>
+</onClick>
+</item>
+
+<item>
+<title>Media Center v2</title>
+<disable>
+	<script>
+		IMCDisable;
+	</script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_MediaCenter </media:thumbnail>
+<onClick>
+	<script>
+		status = readStringFromFile("/tmp/share/appInit.dat");
+		if (status == "yes") {
+			APName = "IMSAP";
+			MenuType = "TopMenu";
+			MenuLink = "http://127.0.0.1:8881/?cmd=rss&amp;url=home";
+			menuCmd(APName, MenuType, MenuLink, BltType);
+		} else {
+			rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+			doModalRss(rss, "mediaDisplay", "popupDialog", 0);
+		}
+		null;
+	</script>
+</onClick>
+</item>
+
+
+<item>
+<title>$[IMS_APP]</title>
+<disable>
+    <script>
+	OnMedDisable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Internet </media:thumbnail>
+<onClick>
+
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "rss_file://./scripts/menu.rss";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+
+</onClick>
+</item>
+
+
+<item>
+<title>moServices</title>
+<disable>
+  <script>
+	MoMenuDisable;
+  </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/moMenu </media:thumbnail>
+<onClick>
+  <script>
+	APName = "IMSAP";
+	MenuType = "TopMenu";
+	MenuLink = "http://127.0.0.1/?page=rss_menu";
 	menuCmd(APName, MenuType, MenuLink, BltType);
 	null;
   </script>
@@ -953,6 +1244,73 @@
 	</script>
 </onClick>
 </item>
+
+
+<item>
+<title>$[IMS_ANDROID]</title>
+<group>ANDROID</group>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Android </media:thumbnail>
+<disable>
+  <script>
+	AndroidDisable;
+  </script>
+</disable>
+<onClick>
+  <script>
+	if(AndroidReadyFlag == "true"){
+		APName = "AndroidAP";
+    		menuCmd(APName);
+	}
+	else if (getCurrentSetting("$[IMS_ANDROID]") == "$[OFF]") {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 4);
+	}
+	else if (AndroidReadyFlag == "false") {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 2);
+	}
+	else {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 3);
+	}
+	null;
+  </script>
+</onClick>
+</item>
+
+<item>
+<title>Android $[IMS_WEB_BROWSER]</title>
+<group>ANDROID</group>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Android_WebBrowser </media:thumbnail>
+<disable>
+  <script>
+	WebBrowserDisable;
+  </script>
+</disable>
+<onClick>
+  <script>
+	if(AndroidReadyFlag == "true"){
+		APName = "AndroidAP";
+		type = "WebBrowser";
+		menuCmd(APName, type);
+	}
+	else if (getCurrentSetting("$[IMS_ANDROID]") == "$[OFF]") {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 4);
+	}
+	else if (AndroidReadyFlag == "false") {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 2);
+	}
+	else {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 3);
+	}
+    	null;
+	</script>
+</onClick>
+</item>
+
 
 <item>
 <title>$[SETUP_MENU]</title>

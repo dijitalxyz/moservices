@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# description: Enable and disable HTop
+#
+etc=/usr/local/etc
+mos=$etc/mos
+
+# -------------------------------------
+# $1 - name
+# $2 - value
+#
+changeEnv()
+{
+	if ! grep -q 'export '$1'="'$2'"' $etc/profile ; then
+		if grep -q $1'=' $etc/profile ; then
+			sed -ri 's!^.*'$1'=.*$!export '$1'="'$2'"!' $etc/profile
+		else
+			sed -i '
+/#export PATH /i\
+export '$1'="'$2'"
+' $etc/profile
+		fi
+	fi
+}
+# -------------------------------------
+#
+case "$1" in
+    start | stop | status | disable)
+	;;
+
+    enable)
+	# change term in profile
+	changeEnv TERMINFO $mos/share/terminfo
+	changeEnv TERM 'xterm-256color'
+	;;
+  *)
+	echo "Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

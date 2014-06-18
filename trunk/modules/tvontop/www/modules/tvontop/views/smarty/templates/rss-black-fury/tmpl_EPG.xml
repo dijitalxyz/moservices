@@ -234,7 +234,7 @@ Return:
             </script>
         </image>
         <text offsetXPC="15" offsetYPC="5" widthPC="85" heightPC="95" fontSize="13">
-            <script>getItemInfo("title") + " " + getItemInfo("description");</script>
+            <script>getItemInfo("title");</script>
             <foregroundColor><script>itemFg;</script></foregroundColor>
             <backgroundColor><script>itemBg;</script></backgroundColor>
         </text>
@@ -254,10 +254,9 @@ Return:
         <title>{$child->title}</title>
         <humanTime>{date('H:i', $child->getParam("start"))}</humanTime>
         <description>{$child->getParam("descr")}</description>
-        <link>{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->getParent()->getParam("channel_id")}&amp;gmt={$child->getParam("start")}&amp;type=STREAM_URL</link>
+        <link>{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->getParent()->getParam("channel_id")}&amp;pid={$child->getParam("pid")}&amp;type=STREAM_URL</link>
         <start>{$child->getParam("start")}</start>
     </item>
-
     {/foreach}
 </channel>
 </rss>

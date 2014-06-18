@@ -1,7 +1,6 @@
 [status]
-	revision = 2
+	revision = 3
 	title ="System status"
 	role = web
 	files = "www/modules/status/"
-	require = "top"
-	size = 88
+	size = 80

@@ -1,0 +1,644 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- 
+##################################################################################
+# © IconBIT 2012                                                                 #
+##################################################################################
+-->
+
+<script>
+	elapsedTime = "";
+	loadingStatus = 0;
+	checkStatus = 1;
+	showLoading = 0;
+	record = 0;
+	showInfo = 0;
+	changeChannel = 0;
+	channelStr = "";
+	channelCount = 0;
+	
+	mediaServer = "http://127.0.0.1:9999/";
+	RSSmedia = mediaServer + "rss/";
+	executeScript("loadOption");
+	
+	currentPlay = 0;
+	previousPlay = -1;
+	
+	channelStr = "";
+	
+	choicePlay = -1;
+	choiceStr = "";
+	
+	currentAction = 0;	
+	elapsedChange = 1;	
+	currentPaused = 0;
+	
+	itemSize = 0;
+</script>
+
+<onEnter>	
+	timeStamp = 0;
+	startVideo = 0;
+	
+	currentLink = getEnv("MC_PLAYLIST");
+	currentURL = getEnv("MC_URL");	
+	currentProtocol = null;
+	currentImage = null;
+	
+	itemTitleArray = null;
+	itemLinkArray = null;
+	itemTypeArray = null;
+	itemSubTypeArray = null;
+	itemURLArray = null;
+	itemImageArray = null;
+	itemProtocolArray = null;
+	itemEPGArray = null;
+	itemSize = 0;
+	currentPlay = 0;
+	
+	tvgurl = null;		
+	dlok = loadXMLFile(RSSmedia + currentLink);
+	if (dlok != null) {
+		tvgurl = getXMLAttribute("playlist", "tvgurl");
+		iSize = getXMLElementCount("playlist", "item");
+		print("itemSize = ", iSize);
+		if (iSize &gt; 0) {
+			itemCount = 0;		
+			while(1) {
+				itemType  = getXMLText("playlist", "item", itemCount, "type");
+				if (itemType != "folder" &amp;&amp; itemType != "playlist" &amp;&amp; itemType != "rss") {
+					itemTypeArray  = pushBackStringArray(itemTypeArray, itemType);
+					itemSubType  = getXMLText("playlist", "item", itemCount, "subtype");
+					itemSubTypeArray  = pushBackStringArray(itemSubTypeArray, itemSubType);
+					itemTitle  = getXMLText("playlist", "item", itemCount, "title");
+					print("itemTitle = ", itemTitle);
+					itemTitle = "" + (itemSize + 1) + ". " + itemTitle;
+					itemTitleArray  = pushBackStringArray(itemTitleArray, itemTitle);
+					itemURL  = getXMLText("playlist", "item", itemCount, "url");
+					itemURLArray  = pushBackStringArray(itemURLArray, itemURL);
+					itemImage  = getXMLText("playlist", "item", itemCount, "image");
+					itemImageArray  = pushBackStringArray(itemImageArray, itemImage);					
+					itemLink  = getXMLText("playlist", "item", itemCount, "link");
+					itemLinkArray  = pushBackStringArray(itemLinkArray, itemLink);
+					itemProtocol  = getXMLText("playlist", "item", itemCount, "protocol");
+					itemProtocolArray  = pushBackStringArray(itemProtocolArray, itemProtocol);
+					itemEPG  = getXMLText("playlist", "item", itemCount, "epg");
+					itemEPGArray  = pushBackStringArray(itemEPGArray, itemEPG);
+					if (itemURL == currentURL  &amp;&amp; currentURL != "none" &amp;&amp; currentPlay == 0)
+						currentPlay = itemSize;
+					itemSize += 1;			
+				}
+				itemCount += 1;
+				if(itemCount == iSize)
+					break;
+			}
+		}
+	}
+	
+	if (tvgurl != null &amp;&amp; tvgurl != "none") {
+		dlok = loadXMLFile("http://127.0.0.1:9999/jtvinit/" + tvgurl);
+		if (dlok != null) {			
+			state = getXMLText("return", 0, "value");
+			if (state != "success")
+				tvgurl = null;
+		} else {
+			tvgurl = null;
+		}
+	}
+		
+	if(itemSize == 0)
+		postMessage("return");
+	else {
+		currentTitle = getStringArrayAt(itemTitleArray, currentPlay);
+		currentURL = getStringArrayAt(itemURLArray, currentPlay);
+		currentLink = getStringArrayAt(itemLinkArray, currentPlay);
+		currentProtocol = getStringArrayAt(itemProtocolArray, currentPlay);
+		currentImage = getStringArrayAt(itemImageArray, currentPlay);
+		currentType = getStringArrayAt(itemTypeArray, currentPlay);
+		currentSubType = getStringArrayAt(itemSubTypeArray, currentPlay);
+		startVideo = 1;
+		currentPlay -= -1;
+		previousPlay = currentPlay;
+		setRefreshTime(100);
+	}
+	screenSaver = GetScreenSaverStatus();    
+    SetScreenSaverStatus("no");
+	SwitchViewer(0);
+	SwitchViewer(7);
+</onEnter>
+
+<onExit>
+	SetScreenSaverStatus(screenSaver);
+	unsetEnv("MC_PLAYLIST");
+	unsetEnv("MC_URL");
+	playItemURL(-1, 1);
+	setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+	vidProgress = getPlaybackStatus();	
+	bufProgress = getCachedStreamDataSize(0, 262144);
+	playElapsed = getStringArrayAt(vidProgress, 0);
+	playStatus = getStringArrayAt(vidProgress, 3);
+	print("Media status =", vidProgress);
+	if(checkStatus != 0 &amp;&amp; loadingStatus == 0) {
+		loadingStatus = 1;
+		checkStatus = 0;
+	}
+	loadingStatus = 0;
+	if (startVideo == 1) {
+		setRefreshTime(1000);
+		showLoading = 1;
+		startVideo = 0;
+		timeStamp += 1;
+		currentPaused = 0;
+		subContinue = "true";
+		if (currentSubType == "keyword") {
+			ret = doModalRSS("/tmp/app/ims/mc-kb.rss");
+			if (ret == null) {
+				subContinue = "false";
+			} else {
+				currentLink += ret;
+				currentURL += ret;
+			}
+		}
+		if (subContinue == "true") {
+			if (currentType == "list") {
+				dlok = loadXMLFile("http://127.0.0.1:9999/rss/"+currentLink);
+				if (dlok != null) {
+					currentType = "stream";
+					currentProtocol = "none";
+					currentLink = "/tmp/videopls.m3u";
+					strUrlArray = null;			
+					listSize = getXMLElementCount("playlist", "item");
+					if(listSize &gt; 0) {
+						listCount = 0;
+						while(1) {
+							curact = currentAction;
+							if(listSize == 1) {
+								link = getXMLText("playlist", "item", "link");
+								type = getXMLText("playlist", "item", "type");
+								proto = getXMLText("playlist", "item", "protocol");
+							} else {
+								link = getXMLText("playlist", "item", itemCount, "link");
+								type = getXMLText("playlist", "item", itemCount, "type");
+								proto = getXMLText("playlist", "item", itemCount, "protocol");
+							}
+							if ((proto == "none" || type == "rssex" || proto == "ftp") &amp;&amp; curact == 1)
+								curact == 0;
+							if (type == "udpxy" &amp;&amp; curact == 0)
+								urlPlay = "http://"+udphostOption+"/udp/"+link;
+							else if (type == "udpxy" &amp;&amp; curact == 1)
+								urlPlay = mediaServer+"rec/http/"+udphostOption+"/udp/"+link;
+							else if (proto == "none")
+								urlPlay = link;
+							else if (proto == "http" &amp;&amp; curact == 0)
+								urlPlay = proto+"://"+link;
+							else if (curact == 1)
+								urlPlay = mediaServer+"rec/"+proto+"/"+link;
+							else
+								urlPlay = mediaServer+proto+"/"+link;
+							strUrlArray = pushBackStringArray(strUrlArray, urlPlay);
+							listCount += 1;
+							if(listCount == listSize) break;
+						}
+						writeStringToFile(currentLink, strUrlArray);
+						currentPlayURL = currentLink;
+						playItemURL(currentPlayURL, 10, "mediaDisplay", "previewWindow");
+					}
+				}
+			} else {
+				if ((currentProtocol == "none" || currentType == "rssex" || currentProtocol == "ftp") &amp;&amp; currentAction == 1)
+					currentAction == 0;
+				if (currentType == "udpxy" &amp;&amp; currentAction == 0)
+					currentPlayURL = "http://"+udphostOption+"/udp/"+currentLink;
+				else if (currentType == "udpxy" &amp;&amp; currentAction == 1)
+					currentPlayURL = mediaServer+"rec/http/"+udphostOption+"/udp/"+currentLink;
+				else if (currentType == "rssex" &amp;&amp; currentAction == 0)
+					currentPlayURL = "http://127.0.0.1/cgi-bin/translate?stream,"+currentProtocol+"://"+currentLink;
+				else if (currentProtocol == "none" &amp;&amp; currentAction == 0)
+					currentPlayURL = currentLink;
+				else if (currentProtocol == "http" &amp;&amp; currentAction == 0)
+					currentPlayURL = currentProtocol+"://"+currentLink;
+				else if (currentAction == 1)
+					currentPlayURL = mediaServer+"rec/"+currentProtocol+"/"+currentLink;
+				else
+					currentPlayURL = mediaServer+currentProtocol+"/"+currentLink;
+				play_url = currentPlayURL;
+				if (currentAction == 0 &amp;&amp; (currentProtocol == "udp" || currentProtocol == "rtp")) {
+					play_url += " fileCache=/tmp/videoCachefile cacheSize=3";
+				}
+				playItemURL(play_url, 10, "mediaDisplay", "previewWindow");
+			}
+		}
+	} else
+	{			
+		if (playElapsed != 0)
+		{
+			x = Integer(playElapsed / 60);
+			h = Integer(playElapsed / 3600);
+			s = playElapsed - (x * 60);
+			m = x - (h * 60);
+			if(h &lt; 10)
+				elapsedTime = "0" + sprintf("%s:", h);
+			else
+				elapsedTime = sprintf("%s:", h);
+			if(m &lt; 10)  elapsedTime += "0";
+			elapsedTime += sprintf("%s:", m);
+			if(s &lt; 10)  elapsedTime += "0";
+			elapsedTime += sprintf("%s", s);
+			print("elapsedTime =", elapsedTime);
+			if (startVideo == 0)
+			{
+				startVideo = 2;
+				statusCounter = 0;
+				statusTimeout = 60;
+				updatePlaybackProgress("delete", "mediaDisplay", "progressBar");
+			}
+			else if(startVideo == 2)
+			{
+				statusCounter += 1;
+				print("statusCounter =", statusCounter);
+				if (statusCounter &gt;= statusTimeout)
+				{
+					statusCounter = 0;
+					checkStatus = 1;
+				}
+			}
+		}
+		else if (playStatus == 0)
+		{
+			print("Media quit, return!");
+		}
+		else
+		{
+			print("no playing yet, update buffer progress ", bufProgress);
+		}
+	}
+	if(showInfo == 1)
+		updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+
+	if(channelStr != "") {
+		idx = Integer(channelStr);
+		channelStr = "";
+		if(idx &gt; 0 &amp;&amp; idx &lt;= itemSize) {
+			setRefreshTime(-1);
+			elapsedTime = "00:00:00";
+			playItemURL(-1, 1);
+			currentURL = getStringArrayAt(itemURLArray, idx - 1);
+			currentImage = getStringArrayAt(itemImageArray, idx - 1);
+			currentLink = getStringArrayAt(itemLinkArray, idx - 1);
+			currentType = getStringArrayAt(itemTypeArray, idx - 1);
+			currentSubType = getStringArrayAt(itemSubTypeArray, idx - 1);
+			currentTitle = getStringArrayAt(itemTitleArray, idx - 1);
+			currentProtocol = getStringArrayAt(itemProtocolArray, idx - 1);
+			startVideo = 1;
+			setRefreshTime(100);
+			previousPlay = currentPlay;
+			currentPlay = idx;
+			choicePlay = -1;
+			choiceStr = "";
+			currentAction = 0;
+		}
+	}	
+</onRefresh>
+
+<mediaDisplay name=threePartsView sideLeftWidthPC="0" sideRightWidthPC="0" headerImageWidthPC="0" selectMenuOnRight="no" 	autoSelectMenu="no" autoSelectItem="no" itemImageHeightPC="0" itemImageWidthPC="0" itemXPC="4" itemYPC="22" itemWidthPC="41"  itemHeightPC="6.5" capXPC="4" capYPC="22" capWidthPC="41" capHeightPC="7" itemBackgroundColor="0:0:0" itemPerPage="10" itemGap="0" bottomYPC="90" infoYPC="85" infoXPC="10" backgroundColor=-1:-1:-1 showHeader="no" showDefaultInfo="no" imageFocus="" sliding="no" idleImageXPC=83.12 idleImageYPC=89.58 idleImageWidthPC=3.1 idleImageHeightPC=5.5>
+	<idleImage> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage> image/POPUP_LOADING_06.png </idleImage>
+	<idleImage> image/POPUP_LOADING_07.png </idleImage>
+	<idleImage> image/POPUP_LOADING_08.png </idleImage>
+	<previewWindow windowColor=0:0:0 offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 refill=yes></previewWindow>	
+	<progressBar backgroundColor=-1:-1:-1 offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+		<image redraw="yes" offsetXPC=10 offsetYPC=80 widthPC=80 heightPC=10 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>/tmp/app/ims/mc_infobg.png</image>
+		<image redraw="yes" offsetXPC="11.2" offsetYPC="81.5" widthPC="5" heightPC="7">
+			<script>if (currentImage == "/tmp/app/ims/else.png") "/tmp/app/ims/logo128.png"; else currentImage;</script>
+		</image>
+		<text redraw=yes offsetXPC=16.5 offsetYPC=81 widthPC=64.5 heightPC=5 fontSize=16 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>currentTitle;</script>
+		</text>
+		<text redraw=yes offsetXPC=16.5 offsetYPC="85" widthPC=64.5 heightPC=5 fontSize=12 backgroundColor="-1:-1:-1" foregroundColor="170:170:170">
+			<script>currentURL;</script>
+		</text>
+		<bar offsetXPC=75 offsetYPC=87 widthPC=14 heightPC=1 barColor=0:0:0 progressColor=200:200:200 bufferColor=200:200:200 />
+		<image offsetXPC="75" offsetYPC="81" widthPC="3" heightPC="5">
+			<script>if (playStatus == 2) "/tmp/app/ims/mc_action_" + currentAction + ".png"; else null;</script>
+		</image>
+		<text redraw="yes" offsetXPC="80" offsetYPC="81" widthPC="10" heightPC="5" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+			<script>if (playStatus == 2) elapsedTime; else "--:--:--";</script>
+		</text>
+		<destructor offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" color="-1:-1:-1">
+		</destructor>
+	</progressBar>
+	<itemDisplay>
+		<image offsetXPC="11.8" offsetYPC="0" widthPC="88" heightPC="100">
+			<script>
+				idx1 = getFocusItemIndex();
+				idx2 = getQueryItemIndex();
+				if (idx1 == idx2)
+					"/tmp/app/ims/focus.bmp";
+				else
+					"";
+			</script>
+		</image>
+		<image offsetXPC="2" offsetYPC="5" widthPC="9.2" heightPC="90" backgroundColor="-1:-1:-1">
+			<script>
+				getStringArrayAt(itemImageArray , -1);
+			</script>
+		</image>
+		<text offsetXPC=12.5 offsetYPC=0 widthPC=86 heightPC=100 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>
+				getStringArrayAt(itemTitleArray, -1);
+			</script>
+		</text>
+	</itemDisplay>
+	<onUserInput>
+		input = currentUserInput();
+		print("*************************",input);
+		ret = "false";
+		str = null;
+		if (input == "display") {
+			if(showInfo == 0)
+				showInfo = 1;
+			else
+			{
+				showInfo = 0;
+				choicePlay = -1;
+				choiceStr = "";
+			}
+			ret = "true";
+		}
+		else if (input == "setup") {
+			doModalRSS("/tmp/app/ims/mc-options.rss");
+			executeScript("loadOption");
+			ret = "true";
+		}
+		else if (input == "zero" &amp;&amp; channelStr == "") {
+			if (channeltvgOption == "on") {
+				setEnv("MC_URL", currentURL);
+				ret = doModalRSS("/tmp/app/ims/mc-channels.rss");
+				if (ret != null) {
+					count = 0;
+					while(count &lt; itemSize) {
+						url = getStringArrayAt(itemURLArray, count);
+						if (url == ret) {
+							setRefreshTime(-1);
+							elapsedTime = "00:00:00";
+							playItemURL(-1, 1);				
+							currentURL = getStringArrayAt(itemURLArray, count);
+							currentLink = getStringArrayAt(itemLinkArray, count);
+							currentTitle = getStringArrayAt(itemTitleArray, count);
+							currentProtocol = getStringArrayAt(itemProtocolArray, count);
+							currentImage = getStringArrayAt(itemImageArray, count);
+							currentType = getStringArrayAt(itemTypeArray, count);
+							currentSubType = getStringArrayAt(itemSubTypeArray, count);
+							startVideo = 1;
+							setRefreshTime(100);
+							previousPlay = currentPlay;
+							currentPlay = count + 1;
+							choicePlay = -1;
+							choiceStr = "";
+							currentAction = 0;
+							elapsedChange = 2;
+							break;
+						}
+						count += 1;
+					}
+				}
+			}
+			else
+			{
+				writeStringToFile("/tmp/chlist.dat", itemTitleArray);
+				writeStringToFile("/tmp/chimage.dat", itemImageArray);
+				writeStringToFile("/tmp/chsize.dat", itemSize);
+				writeStringToFile("/tmp/chfocus.dat", currentPlay - 1);
+				ret = doModalRSS("/tmp/app/ims/mc-popup.rss");
+				if (ret != null)
+				{
+					count = 0;
+					while(count &lt; itemSize)
+					{
+						title = getStringArrayAt(itemTitleArray, count);
+						if (title == ret)
+						{
+							setRefreshTime(-1);
+							elapsedTime = "00:00:00";
+							playItemURL(-1, 1);				
+							currentURL = getStringArrayAt(itemURLArray, count);
+							currentLink = getStringArrayAt(itemLinkArray, count);
+							currentTitle = getStringArrayAt(itemTitleArray, count);
+							currentProtocol = getStringArrayAt(itemProtocolArray, count);
+							currentImage = getStringArrayAt(itemImageArray, count);
+							currentType = getStringArrayAt(itemTypeArray, count);
+							currentSubType = getStringArrayAt(itemSubTypeArray, count);
+							startVideo = 1;
+							setRefreshTime(100);
+							previousPlay = currentPlay;
+							currentPlay = count + 1;
+							choicePlay = -1;
+							choiceStr = "";
+							currentAction = 0;
+							elapsedChange = 2;
+							break;
+						}
+						count += 1;
+					}
+				}
+			}
+			ret = "true";
+		}
+		else if (input == "right")
+		{
+			setRefreshTime(-1);
+			elapsedTime = "00:00:00";
+			playItemURL(-1, 1);
+			currentURL = getStringArrayAt(itemURLArray, currentPlay - 1);
+			currentLink = getStringArrayAt(itemLinkArray, currentPlay - 1);
+			currentAction = 1;
+			currentTitle = getStringArrayAt(itemTitleArray, currentPlay - 1);
+			currentProtocol = getStringArrayAt(itemProtocolArray, currentPlay - 1);
+			currentImage = getStringArrayAt(itemImageArray, currentPlay - 1);
+			currentType = getStringArrayAt(itemTypeArray, currentPlay - 1);
+			currentSubType = getStringArrayAt(itemSubTypeArray, currentPlay - 1);
+			startVideo = 1;
+			setRefreshTime(100);
+			choicePlay = -1;
+			choiceStr = "";
+			ret = "true";
+		}
+		else if (input == "enter")
+		{
+			setRefreshTime(-1);
+			elapsedTime = "00:00:00";
+			playItemURL(-1, 1);
+			currentURL = getStringArrayAt(itemURLArray, currentPlay - 1);
+			currentLink = getStringArrayAt(itemLinkArray, currentPlay - 1);
+			currentAction = 0;
+			currentTitle = getStringArrayAt(itemTitleArray, currentPlay - 1);
+			currentProtocol = getStringArrayAt(itemProtocolArray, currentPlay - 1);
+			currentImage = getStringArrayAt(itemImageArray, currentPlay - 1);
+			currentType = getStringArrayAt(itemTypeArray, currentPlay - 1);
+			currentSubType = getStringArrayAt(itemSubTypeArray, currentPlay - 1);
+			startVideo = 1;
+			setRefreshTime(100);
+			choicePlay = -1;
+			choiceStr = "";
+			ret = "true";
+		}
+		else if (input == "video_stop" || input == "video_play" || input == "video_pause")
+		{
+			if ( currentPaused == 0)
+			{
+				currentPaused = 1;
+				postMessage("video_pause");
+			} else {
+				currentPaused = 0;
+				postMessage("video_play");
+			}
+			ret = "true";
+		}
+		else if (input == "pageup" || input == "pagedown")
+		{
+			idx = currentPlay;
+			if( input == "pageup" )
+				idx -= 1;
+			else
+				idx -= -1;				
+			if ( idx &lt; 1)
+				idx = itemSize;
+			else if (idx &gt; itemSize )
+				idx = 1;				
+			setRefreshTime(-1);
+			elapsedTime = "00:00:00";
+			playItemURL(-1, 1);				
+			currentURL = getStringArrayAt(itemURLArray, idx - 1);
+			currentLink = getStringArrayAt(itemLinkArray, idx - 1);
+			currentTitle = getStringArrayAt(itemTitleArray, idx - 1);
+			currentProtocol = getStringArrayAt(itemProtocolArray, idx - 1);
+			currentImage = getStringArrayAt(itemImageArray, idx - 1);
+			currentType = getStringArrayAt(itemTypeArray, idx - 1);
+			currentSubType = getStringArrayAt(itemSubTypeArray, idx - 1);
+			startVideo = 1;
+			setRefreshTime(100);
+			previousPlay = currentPlay;
+			currentPlay = idx;
+			choicePlay = -1;
+			choiceStr = "";
+			currentAction = 0;
+			elapsedChange = 2;
+		}
+		else if (input == "video_ffwd" || input == "guide") {
+			itemEPG = getStringArrayAt(itemEPGArray, currentPlay - 1);
+			if (itemEPG != "" &amp;&amp; itemEPG != null) {
+				setEnv("MC_EPGURL", itemEPG);
+				if (currentType == "udpxy")
+					currentUrlForSchedule = "http://"+udphostOption+"/udp/"+currentLink;
+				else if (currentType == "rssex")
+					currentUrlForSchedule = "http://127.0.0.1/cgi-bin/translate?stream,"+currentProtocol+"://"+currentLink;
+				else
+					currentUrlForSchedule = currentProtocol+"://"+currentLink;
+				setEnv("MC_PLAYURL", currentUrlForSchedule);
+				doModalRSS("/tmp/app/ims/mc-epg.rss");
+			}
+			ret = "true";
+		}
+		else if (input == "video_frwd") {
+			doModalRSS("/tmp/app/ims/mc-schedule.rss");
+			ret = "true";
+		}
+		else if (input == "up")
+		{
+			postMessage("video_volume_up");
+			ret = "true";
+		}
+		else if (input == "down")
+		{
+			postMessage("video_volume_down");
+			ret = "true";
+		}
+		else if (input == "video_search")
+		{
+			postMessage("video_audio");
+			ret = "true";
+		}
+		else if (input == "left")
+		{
+			idx = previousPlay;
+			setRefreshTime(-1);
+			elapsedTime = "00:00:00";
+			playItemURL(-1, 1);				
+			currentURL = getStringArrayAt(itemURLArray, idx - 1);
+			currentLink = getStringArrayAt(itemLinkArray, idx - 1);
+			currentTitle = getStringArrayAt(itemTitleArray, idx - 1);
+			currentProtocol = getStringArrayAt(itemProtocolArray, idx - 1);
+			currentImage = getStringArrayAt(itemImageArray, idx - 1);
+			currentType = getStringArrayAt(itemTypeArray, idx - 1);
+			currentSubType = getStringArrayAt(itemSubTypeArray, idx -1);
+			startVideo = 1;
+			setRefreshTime(100);
+			previousPlay = currentPlay;
+			currentPlay = idx;
+			choicePlay = -1;
+			choiceStr = "";
+			currentAction = 0;
+			elapsedChange = 2;
+			ret = "true";
+		}
+		else if (input == "one")
+			str = "1";
+		else if (input == "two")
+			str = "2";
+		else if (input == "three")
+			str = "3";			
+		else if (input == "four")
+			str = "4";
+		else if (input == "five")
+			str = "5";
+		else if (input == "six")
+			str = "6";
+		else if (input == "seven")
+			str = "7";
+		else if (input == "eight")
+			str = "8";
+		else if (input == "nine")
+			str = "9";
+		else if (input == "zero" &amp;&amp; channelStr != "")
+			str = "0";
+			
+		if (str != null) {
+			setEnv("MC_NUMBER", str);
+			number = doModalRSS("/tmp/app/ims/mc-number.rss");
+			if (number != null) {
+				channelStr = number;
+				setRefreshTime(1);
+			}
+			ret = "true";
+		}
+			
+		ret;
+	</onUserInput>
+</mediaDisplay>
+
+<loadOption>
+	dlok = loadXMLFile(mediaServer + "option/");
+	if (dlok != null) {
+		channeltvgOption = getXMLText("option", 0, "channeltvg");
+		udphostOption = getXMLText("option", 0, "udphost");
+	}
+</loadOption>
+
+<channel>
+	<title>Mediacenter - TV player</title>
+	<link>/tmp/app/ims/mc-tv.rss</link>	
+	<itemSize>
+		<script>
+			itemSize;
+		</script>
+	</itemSize>
+</channel>
+</rss>;

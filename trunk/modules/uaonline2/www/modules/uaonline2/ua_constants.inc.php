@@ -2,9 +2,9 @@
 /*	------------------------------
 	Ukraine online services 	
 	RSS constants for threePartsView style 
-	module v1.1
+	module v1.2
 	------------------------------
-	Created by Sashunya 2011	
+	Created by Sashunya 2014	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice  & others 
@@ -17,7 +17,7 @@
 class global_const extends ua_rss_view
 {
 // main
-	const backgroundColor 		=	'0:0:0';
+	const backgroundColor 		=	'-1:-1:-1';
 	const focusFontColor		=	'255:255:255';
 	const unFocusFontColor		=	'101:101:101';
 // это картинки баров
@@ -32,7 +32,7 @@ class global_const extends ua_rss_view
 	const text_header_align		=	'left'; // далее идут константы для текста заголовка
 	const text_header_redraw	=	'no';
 	const text_header_lines		=	'1';
-	const text_header_offsetXPC	=	'27';
+	const text_header_offsetXPC	=	'28';
 	const text_header_offsetYPC	=	'2';
 	const text_header_widthPC	=	'70';
 	const text_header_heightPC	=	'10';
@@ -65,7 +65,7 @@ class ua_rss_link_const extends global_const
 {
 	
 	// items т.е отображение списка файлов фильма 
-	const itemBackgroundColor	=	'0:0:0';
+	const itemBackgroundColor	=	'-1:-1:-1';
 	const itemXPC				=	'27';
 	const itemYPC				=	'13'; 
 	const itemImageXPC			=	'27';
@@ -78,13 +78,13 @@ class ua_rss_link_const extends global_const
 	const itemGap				=	'0';
 	
 	// menu т.е. меню слева
-	const menuXPC				=	'8';
+	const menuXPC				=	'6.5';
 	const menuYPC				=	'13';
 	const menuWidthPC			=	'15';
 	const menuHeightPC			=	'6';
 		
 	// description. Картинка бордюра и текст для описания фильма
-	const text_descr_align		=	'justify';
+	const text_descr_align		=	'left';
 	const text_descr_redraw		=	'no';
 	const text_descr_lines		=	'1';
 	const text_descr_offsetXPC	=	'28';
@@ -120,15 +120,15 @@ class ua_rss_list_const extends global_const
 {
 	
 	// items т.е отображение списка файлов фильма 
-	const itemBackgroundColor	=	'0:0:0';
-	const itemXPC				=	'25';
+	const itemBackgroundColor	=	'-1:-1:-1';
+	const itemXPC				=	'25.5';
 	const itemYPC				=	'13'; 
-	const itemImageXPC			=	'25';
+	const itemImageXPC			=	'25.5';
 	const itemImageYPC 			= 	'13' ;
 	const itemImageWidthPC		=	'0';
 	const itemImageHeightPC		=	'0';
 	const itemPerPage			=	'5';
-	const itemWidthPC			=	'70';
+	const itemWidthPC			=	'67';
 	const itemHeightPC 			= 	'15';
 	const itemGap				=	'0';
 	
@@ -156,6 +156,22 @@ class ua_rss_list_const extends global_const
 	const item_image_display_heightPC	=	'85';
 
 	
+}
+
+class ua_rss_favorites_const extends ua_rss_list_const
+{
+	const image_play_footer_display_offsetXPC 	= '25';
+	const image_play_footer_display_offsetYPC 	= '90';
+	const image_play_footer_display_widthPC 	= '3';
+	const image_play_footer_display_heightPC	= '6';
+	const play_pause							= 'ua_play_pause_button.png';
+	const text_play_footer_display_offsetXPC 	= '8';
+	const text_play_footer_display_offsetYPC 	= '88';
+	const text_play_footer_display_widthPC 		= '95';
+	const text_play_footer_display_heightPC		= '10';
+	const text_play_footer_fontSize				= '20'; 
+	const text_play_footer_backgroundColor	=	'-1:-1:-1';
+	const text_play_footer_foregroundColor	=	'255:255:255'; 
 }
 
 class ua_rss_download_const extends ua_rss_list_const

@@ -1,6 +1,15 @@
 <?php
 
 // ------------------------------------
+function getMosOption( $name )
+{
+global $nav_options;
+
+	if( isset( $nav_options[ $name ] )) return $nav_options[ $name ];
+	return '';
+}
+
+// ------------------------------------
 function getMosUrl()
 {
 global $mos_url;

@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	WEB simple file manager module v1.1
+	WEB simple file manager module v1.2
 	------------------------------
-	Created by Sashunya 2012
+	Created by Sashunya 2014
 	wall9e@gmail.com			
 	Some code was used from Kelkos
 	------------------------------ */
@@ -213,7 +213,7 @@ $form_name='view_dir';
 <meta charset="utf-8">
 <title>Simple File Manager</title>
 <link rel="shortcut icon" href="<?=$ua_path_link2."images/uaonline2.ico"?>" />
-<link rel="stylesheet" type="text/css" href="<?=$ua_path_link2."css/ua_web_fav.css"?>">
+<link rel="stylesheet" type="text/css" href="<?=$ua_path_link2."css/index.css"?>">
 </head>
 <script language="javascript">
 function sel_all(){
@@ -262,7 +262,7 @@ function changeListFolder(nameList) {
 			</tr>
 	</table>
 	</div>
-	<div class="content">	
+	<div class="content fm_content">	
 	<table class="setup_table" border=0 width="57%">
 			
 <?
@@ -271,7 +271,7 @@ for($i=0; $i<count ($dir_db); $i++)
 //выводим каталоги
 ?>
 	<tr class="fileman_dir_td" onmouseover="this.className='fileman_dir_td_hl';" onmouseout="this.className='fileman_dir_td';">
-		<td><input type="checkbox"  id="cheks" name="del[]" value="<?=$dir_db[$i] ?>"></td>
+		<td><input type="checkbox"  id="cheks_<?=$i?>" class="example_check" name="del[]" value="<?=$dir_db[$i] ?>/"/hidden><label for="cheks_<?=$i?>"></label></td>
 		<td width="77%"><a class="fileman_dir_a" href="<?=$_SERVER["PHP_SELF"]?>?add_path=<?=$_REQUEST['add_path'].$dir_db[$i] ?>"><?=$dir_db[$i] ?></a></td>
 		<td width="23%">Папка</td>
 	</tr>

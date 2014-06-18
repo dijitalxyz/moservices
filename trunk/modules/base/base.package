@@ -1,8 +1,8 @@
 [base]
-	revision = 18
+	revision = 20
 	title = "moServices base"
 	role = package
 	init = S00base
-	files = "services bin/mos_remove bin/pm bin/fork_reboot bin/rebootd bin/reboot.sh bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/ etc/rc.start etc/rc.stop"
+	files = "services bin/mos_remove bin/pm bin/fork_reboot bin/rebootd bin/reboot.sh bin/wait_ip bin/wait_mount etc/init/S00base etc/pm/check/lib etc/pm/check/port etc/rc.init/S02allSleep.sh etc/rc.init/S03mosOnData.sh etc/rc.init/S03mosOnRoot.sh etc/rc.init/S05sskin.sh etc/rc.init/S10moServices.sh etc/rc.start etc/rc.stop"
 	require = "libgccs busybox web core wget base2"
 	size = 132

@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -63,13 +63,13 @@ class TransmissionRPC
   public $url = '';
 
   /**
-   * If your Transmission RPC requires authentication, supply username here
+   * If your Transmission RPC requires authentication, supply username here 
    * @var string
    */
   public $username = '';
 
   /**
-   * If your Transmission RPC requires authentication, supply password here
+   * If your Transmission RPC requires authentication, supply password here 
    * @var string
    */
   public $password = '';
@@ -79,18 +79,22 @@ class TransmissionRPC
    * @var bool
    */
   public $return_as_array = false;
-//  public $return_as_array = true;
 
   /**
    * Print debugging information, default is off
    * @var bool
    */
   public $debug = false;
-//  public $debug = true;
+
+  /**
+   * Transmission RPC version
+   * @var int
+   */
+  protected $rpc_version = 0;
 
   /**
    * Transmission uses a session id to prevent CSRF attacks
-   * @var string
+   * @var string 
    */
   protected $session_id = '';
 
@@ -100,19 +104,27 @@ class TransmissionRPC
    */
   private $default_context_opts = array( 'http' => array(
                                            'user_agent'  => self::HTTP_UA,
-                                           //  'timeout' => '5',  // Don't want to be too slow
-                                           'ignore_errors' => true,  // Leave the error parsing/handling to the code
+                                           //  'timeout' => '5',	// Don't want to be too slow
+                                           'ignore_errors' => true,	// Leave the error parsing/handling to the code
                                          )
                                        );
 
   /**
    * Constants for torrent status
    */
-  const TR_STATUS_CHECK_WAIT = 1;
-  const TR_STATUS_CHECK      = 2;
-  const TR_STATUS_DOWNLOAD   = 4;
-  const TR_STATUS_SEED       = 8;
-  const TR_STATUS_STOPPED    = 16;
+  const TR_STATUS_STOPPED       = 0;
+  const TR_STATUS_CHECK_WAIT    = 1;
+  const TR_STATUS_CHECK         = 2;
+  const TR_STATUS_DOWNLOAD_WAIT = 3;
+  const TR_STATUS_DOWNLOAD      = 4;
+  const TR_STATUS_SEED_WAIT     = 5;
+  const TR_STATUS_SEED          = 6;
+
+  const RPC_LT_14_TR_STATUS_CHECK_WAIT = 1;
+  const RPC_LT_14_TR_STATUS_CHECK      = 2;
+  const RPC_LT_14_TR_STATUS_DOWNLOAD   = 4;
+  const RPC_LT_14_TR_STATUS_SEED       = 8;
+  const RPC_LT_14_TR_STATUS_STOPPED    = 16;
 
   /**
    * Start one or more torrents
@@ -121,7 +133,7 @@ class TransmissionRPC
    */
   public function start ( $ids )
   {
-    if ( !is_array( $ids ) ) $ids = array( $ids );  // Convert $ids to an array if only a single id was passed
+    if ( !is_array( $ids ) ) $ids = array( $ids );	// Convert $ids to an array if only a single id was passed
     $request = array( "ids" => $ids );
     return $this->request( "torrent-start", $request );
   }
@@ -133,7 +145,7 @@ class TransmissionRPC
    */
   public function stop ( $ids )
   {
-    if ( !is_array( $ids ) ) $ids = array( $ids );  // Convert $ids to an array if only a single id was passed
+    if ( !is_array( $ids ) ) $ids = array( $ids );	// Convert $ids to an array if only a single id was passed
     $request = array( "ids" => $ids );
     return $this->request( "torrent-stop", $request );
   }
@@ -145,7 +157,7 @@ class TransmissionRPC
    */
   public function reannounce ( $ids )
   {
-    if ( !is_array( $ids ) ) $ids = array( $ids );  // Convert $ids to an array if only a single id was passed
+    if ( !is_array( $ids ) ) $ids = array( $ids );	// Convert $ids to an array if only a single id was passed
     $request = array( "ids" => $ids );
     return $this->request( "torrent-reannounce", $request );
   }
@@ -157,13 +169,13 @@ class TransmissionRPC
    */
   public function verify ( $ids )
   {
-    if ( !is_array( $ids ) ) $ids = array( $ids );  // Convert $ids to an array if only a single id was passed
+    if ( !is_array( $ids ) ) $ids = array( $ids );	// Convert $ids to an array if only a single id was passed
     $request = array( "ids" => $ids );
     return $this->request( "torrent-verify", $request );
   }
 
   /**
-   * Get information on torrents in transmission, if the ids parameter is
+   * Get information on torrents in transmission, if the ids parameter is 
    * empty all torrents will be returned. The fields array can be used to return certain
    * fields. Default fields are: "id", "name", "status", "doneDate", "haveValid", "totalSize".
    * See https://trac.transmissionbt.com/browser/trunk/doc/rpc-spec.txt for available fields
@@ -173,8 +185,8 @@ class TransmissionRPC
    */
   public function get ( $ids = array(), $fields = array() )
   {
-    if ( !is_array( $ids ) ) $ids = array( $ids );  // Convert $ids to an array if only a single id was passed
-    if ( count( $fields ) == 0 ) $fields = array( "id", "name", "status", "doneDate", "haveValid", "totalSize" );  // Defaults
+    if ( !is_array( $ids ) ) $ids = array( $ids );	// Convert $ids to an array if only a single id was passed
+    if ( count( $fields ) == 0 ) $fields = array( "id", "name", "status", "doneDate", "haveValid", "totalSize" );	// Defaults
     $request = array(
       "fields" => $fields,
       "ids" => $ids
@@ -208,8 +220,8 @@ class TransmissionRPC
   public function set ( $ids = array(), $arguments = array() )
   {
     // See https://trac.transmissionbt.com/browser/trunk/doc/rpc-spec.txt for available fields
-    if ( !is_array( $ids ) ) $ids = array( $ids );  // Convert $ids to an array if only a single id was passed
-    if ( !isset( $arguments['ids'] ) ) $arguments['ids'] = $ids;  // Any $ids given in $arguments overrides the method parameter
+    if ( !is_array( $ids ) ) $ids = array( $ids );	// Convert $ids to an array if only a single id was passed
+    if ( !isset( $arguments['ids'] ) ) $arguments['ids'] = $ids;	// Any $ids given in $arguments overrides the method parameter
     return $this->request( "torrent-set", $arguments );
   }
 
@@ -279,7 +291,7 @@ class TransmissionRPC
    */
   public function remove ( $ids, $delete_local_data = false )
   {
-    if ( !is_array( $ids ) ) $ids = array( $ids );  // Convert $ids to an array if only a single id was passed
+    if ( !is_array( $ids ) ) $ids = array( $ids );	// Convert $ids to an array if only a single id was passed
     $request = array(
       "ids" => $ids,
       "delete-local-data" => $delete_local_data
@@ -296,7 +308,7 @@ class TransmissionRPC
    */
   public function move ( $ids, $target_location, $move_existing_data = true )
   {
-    if ( !is_array( $ids ) ) $ids = array( $ids );  // Convert $ids to an array if only a single id was passed
+    if ( !is_array( $ids ) ) $ids = array( $ids );	// Convert $ids to an array if only a single id was passed
     $request = array(
       "ids" => $ids,
       "location" => $target_location,
@@ -343,16 +355,33 @@ class TransmissionRPC
    */  
   public function getStatusString ( $intstatus )
   {
-    if( $intstatus == self::TR_STATUS_CHECK_WAIT )
-      return "Waiting to verify local files";
-    if( $intstatus == self::TR_STATUS_CHECK )
-      return "Verifying local files";
-    if( $intstatus == self::TR_STATUS_DOWNLOAD )
-      return "Downloading";
-    if( $intstatus == self::TR_STATUS_SEED )
-      return "Seeding";
-    if( $intstatus == self::TR_STATUS_STOPPED )
-      return "Stopped";
+    if($this->rpc_version < 14){
+      if( $intstatus == self::RPC_LT_14_TR_STATUS_CHECK_WAIT )
+        return "Waiting to verify local files";
+      if( $intstatus == self::RPC_LT_14_TR_STATUS_CHECK )
+        return "Verifying local files";
+      if( $intstatus == self::RPC_LT_14_TR_STATUS_DOWNLOAD )
+        return "Downloading";
+      if( $intstatus == self::RPC_LT_14_TR_STATUS_SEED )
+        return "Seeding";
+      if( $intstatus == self::RPC_LT_14_TR_STATUS_STOPPED )
+        return "Stopped";
+    }else{
+      if( $intstatus == self::TR_STATUS_CHECK_WAIT )
+        return "Waiting to verify local files";
+      if( $intstatus == self::TR_STATUS_CHECK )
+        return "Verifying local files";
+      if( $intstatus == self::TR_STATUS_DOWNLOAD )
+        return "Downloading";
+      if( $intstatus == self::TR_STATUS_SEED )
+        return "Seeding";
+      if( $intstatus == self::TR_STATUS_STOPPED )
+        return "Stopped";
+      if( $intstatus == self::TR_STATUS_SEED_WAIT )
+        return "Queued for seeding";
+      if( $intstatus == self::TR_STATUS_DOWNLOAD_WAIT )
+        return "Queued for download";
+    }
     return "Unknown";
   }
 
@@ -372,16 +401,16 @@ class TransmissionRPC
    */  
   protected function cleanRequestData ( $array )
   {
-    if ( !is_array( $array ) || count( $array ) == 0 ) return null;  // Nothing to clean
-    setlocale( LC_NUMERIC, 'en_US.utf8' );  // Override the locale - if the system locale is wrong, then 12.34 will encode as 12,34 which is invalid JSON
+    if ( !is_array( $array ) || count( $array ) == 0 ) return null;	// Nothing to clean
+    setlocale( LC_NUMERIC, 'en_US.utf8' );	// Override the locale - if the system locale is wrong, then 12.34 will encode as 12,34 which is invalid JSON
     foreach ( $array as $index => $value )
     {
-      if( is_object( $value ) ) $array[$index] = $value->toArray();  // Convert objects to arrays so they can be JSON encoded
-      if( is_array( $value ) ) $array[$index] = $this->cleanRequestData( $value );  // Recursion
-      if( empty( $value ) && $value != 0 ) unset( $array[$index] );  // Remove empty members
-      if( is_numeric( $value ) ) $array[$index] = $value+0;  // Force type-casting for proper JSON encoding (+0 is a cheap way to maintain int/float/etc)
-      if( is_bool( $value ) ) $array[$index] = ( $value ? 1 : 0);  // Store boolean values as 0 or 1
-      if( is_string( $value ) ) $array[$index] = utf8_encode( $value );  // Make sure all data is UTF-8 encoded for Transmission
+      if( is_object( $value ) ) $array[$index] = $value->toArray();	// Convert objects to arrays so they can be JSON encoded
+      if( is_array( $value ) ) $array[$index] = $this->cleanRequestData( $value );	// Recursion
+      if( empty( $value ) && $value != 0 ) unset( $array[$index] );	// Remove empty members
+      if( is_numeric( $value ) ) $array[$index] = $value+0;	// Force type-casting for proper JSON encoding (+0 is a cheap way to maintain int/float/etc)
+      if( is_bool( $value ) ) $array[$index] = ( $value ? 1 : 0);	// Store boolean values as 0 or 1
+      if( is_string( $value ) ) $array[$index] = utf8_encode( $value );	// Make sure all data is UTF-8 encoded for Transmission
     }
     return $array;
   }
@@ -403,12 +432,12 @@ class TransmissionRPC
     {
       if( is_array( $array[$index] ) || is_object( $array[$index] ) )
       {
-        $array[$index] = $this->cleanResultObject( $array[$index] );  // Recursion
+        $array[$index] = $this->cleanResultObject( $array[$index] );	// Recursion
       }
       if ( strstr( $index, '-' ) )
       {
         $valid_index = str_replace( '-', '_', $index );
-        $array[$valid_index] = $array[$index];
+        $array[$valid_index] = $array[$index]; 
         unset( $array[$index] );
         $index = $valid_index;
       }
@@ -422,7 +451,7 @@ class TransmissionRPC
 
   /**
    * The request handler method handles all requests to the Transmission client
-   *
+   * 
    * @param string method The request method to use
    * @param array arguments The request arguments
    * @returns array The request result
@@ -435,7 +464,7 @@ class TransmissionRPC
     if ( !is_array( $arguments ) )
       throw new TransmissionRPCException( 'Arguments must be given as array', TransmissionRPCException::E_INVALIDARG );
     
-    $arguments = $this->cleanRequestData( $arguments );  // Sanitize input
+    $arguments = $this->cleanRequestData( $arguments );	// Sanitize input
     
     // Grab the X-Transmission-Session-Id if we don't have it already
     if( !$this->session_id )
@@ -450,7 +479,7 @@ class TransmissionRPC
     $data = json_encode( $data );
     
     // performs the HTTP POST
-    $contextopts = $this->default_context_opts;  // Start with the defaults
+    $contextopts = $this->default_context_opts;	// Start with the defaults
     $contextopts['http']['method'] = 'POST';
     $contextopts['http']['header'] = 'Content-type: application/json'."\r\n".
                                      'X-Transmission-Session-Id: '.$this->session_id."\r\n";
@@ -463,8 +492,8 @@ class TransmissionRPC
     if( $this->debug ) echo "TRANSMISSIONRPC_DEBUG:: request( method=$method, ...):: Stream context created with options:" .
                             PHP_EOL . print_r( $contextopts, true );
     
-    $context  = stream_context_create( $contextopts );  // Create the context for this request
-    if ( $fp = fopen( $this->url, 'r', false, $context ) ) {  // Open a filepointer to the data, and use fgets to get the result
+    $context  = stream_context_create( $contextopts );	// Create the context for this request
+    if ( $fp = fopen( $this->url, 'r', false, $context ) ) {	// Open a filepointer to the data, and use fgets to get the result
       $response = '';
       while( $row = fgets( $fp ) ) {
         $response.= trim( $row )."\n";
@@ -486,7 +515,7 @@ class TransmissionRPC
     elseif( substr( $stream_meta['wrapper_data'][0], 9, 3 ) == "409" )
       throw new TransmissionRPCException( "Invalid X-Transmission-Session-Id. Please try again after calling GetSessionID().", TransmissionRPCException::E_SESSIONID );
     
-    return $this->return_as_array ? json_decode( $response, true ) : $this->cleanResultObject( json_decode( $response ) );  // Return the sanitized result
+    return $this->return_as_array ? json_decode( $response, true ) : $this->cleanResultObject( json_decode( $response ) );	// Return the sanitized result
   }
 
   /**
@@ -501,7 +530,7 @@ class TransmissionRPC
       throw new TransmissionRPCException( "Class must be initialized before GetSessionID() can be called.", TransmissionRPCException::E_INVALIDARG );
     
     // Setup the context
-    $contextopts = $this->default_context_opts;  // Start with the defaults
+    $contextopts = $this->default_context_opts;	// Start with the defaults
     
     // Make sure it's blank/empty (reset)
     $this->session_id = null;
@@ -513,8 +542,8 @@ class TransmissionRPC
     if( $this->debug ) echo "TRANSMISSIONRPC_DEBUG:: GetSessionID():: Stream context created with options:".
                             PHP_EOL . print_r( $contextopts, true );
     
-    $context  = stream_context_create( $contextopts );  // Create the context for this request
-    if ( ! $fp = @fopen( $this->url, 'r', false, $context ) )  // Open a filepointer to the data, and use fgets to get the result
+    $context  = stream_context_create( $contextopts );	// Create the context for this request
+    if ( ! $fp = @fopen( $this->url, 'r', false, $context ) )	// Open a filepointer to the data, and use fgets to get the result
       throw new TransmissionRPCException( 'Unable to connect to '.$this->url, TransmissionRPCException::E_CONNECTION );
     
     // Check the response (headers etc)
@@ -526,7 +555,7 @@ class TransmissionRPC
       throw new TransmissionRPCException( "Timed out connecting to {$this->url}", TransmissionRPCException::E_CONNECTION );
     if( substr( $stream_meta['wrapper_data'][0], 9, 3 ) == "401" )
       throw new TransmissionRPCException( "Invalid username/password.", TransmissionRPCException::E_AUTHENTICATION );
-    elseif( substr( $stream_meta['wrapper_data'][0], 9, 3 ) == "409" )  // This is what we're hoping to find
+    elseif( substr( $stream_meta['wrapper_data'][0], 9, 3 ) == "409" )	// This is what we're hoping to find
     {
       // Loop through the returned headers and extract the X-Transmission-Session-Id
       foreach( $stream_meta['wrapper_data'] as $header )
@@ -539,7 +568,7 @@ class TransmissionRPC
           break;
         }
       }
-      if( ! $this->session_id ) {  // Didn't find a session_id
+      if( ! $this->session_id ) {	// Didn't find a session_id
         throw new TransmissionRPCException( "Unable to retrieve X-Transmission-Session-Id", TransmissionRPCException::E_SESSIONID );
       }
     } else {
@@ -571,6 +600,9 @@ class TransmissionRPC
     
     // Reset X-Transmission-Session-Id so we (re)fetch one
     $this->session_id = null;
+
+    // Get the Transmission RPC_version
+    $this->rpc_version = self::sget()->arguments->rpc_version;
   }
 }
 

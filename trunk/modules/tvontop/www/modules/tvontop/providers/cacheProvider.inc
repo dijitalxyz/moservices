@@ -1,6 +1,5 @@
 <?php
 require_once 'interfaces/provider.inc';
-//require_once 'tools/cache.inc';
 require_once 'tools/logger.inc';
 require_once 'tools/httpSession.inc';
 
@@ -18,7 +17,7 @@ class CacheProvider extends Provider {
 	public 		$cacheClearIntervall 	= 3600;// 1 hour
 	//default TTL for objects. Better is to set TTL from provider
 	protected 	$defaultCacheTime = 300;//5 min.  
-	
+
 	protected 	$session = null;
 
 	//Session keys
@@ -30,7 +29,6 @@ class CacheProvider extends Provider {
 		$this->log = Logger::getLogger(get_class());
 		$this->log->setFilepath("temp/log/cache.log"); 
 		$this->log->setDefaultLevel(10);
-//		$this->cacheManager = new CacheManager();
 		$this->session = new HttpSession();
 	}
 
@@ -61,14 +59,12 @@ class CacheProvider extends Provider {
 		} 
 
         if(!$this->session->exists(self::$CACHE_CATALOG_KEY)) {
-        	
 			if(file_exists($this->cachedObjectsFilePath)) {
 				$this->session->set(self::$CACHE_CATALOG_KEY,parse_ini_file($this->cachedObjectsFilePath,false));
 			} else {
 				$this->session->set(self::$CACHE_CATALOG_KEY,array());
 			}
 		}
-
 		if(!$this->session->exists(self::$CACHE_CLEARED_KEY) || 
 			time() - $this->session->get(self::$CACHE_CLEARED_KEY) > $this->cacheClearIntervall) {
 			$this->clearCache();

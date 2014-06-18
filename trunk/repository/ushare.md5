@@ -1,0 +1,5 @@
+797e743789ecddd46d8701d8ddd54e2b  bin/ushare
+1f4921dc285ba3f4e2e1acf8437a064d  etc/ushare.conf
+05f4e0a6357830f709885d53f818f0e3  etc/init/S25uShare
+ae572a55664c3fda34e23a1a2e3bfeca  lib/libdlna.so.0.2.3
+ec4ff5d9ef9c638f4f7999f39f4ea230  lib/libupnp.so.2.0.3

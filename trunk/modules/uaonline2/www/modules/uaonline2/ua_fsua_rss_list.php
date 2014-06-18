@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	FS.UA RSS list module v1.2
+	FS.UA RSS list module v1.4
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2014	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -282,6 +282,7 @@ class ua_rss_list extends ua_rss_list_const
 			$view=0;	
 		 if   (isset($_GET['view'])) {
 			$param=$_GET['view'];
+			$name=$_GET['name'];
 			$url=$ua_path_link."ua_fsua_parser.php?view=";
 			$search_global="0";
 			$view=1;
@@ -298,9 +299,11 @@ class ua_rss_list extends ua_rss_list_const
 		if   (isset($_GET['en_sort'])) {
 		$en_sort=$_GET['en_sort'];
 		}
+		
 	?>
 	param = "<?=urldecode($param)?>";
-	url1 = "<?= $url?>"+urlEncode(param)+"&amp;page=";
+	nam = "<?=urlencode($name)?>";
+	url1 = "<?= $url?>"+urlEncode(param)+"&amp;name="+nam+"&amp;page=";
 	en_sort = "<?= $en_sort?>";
 	search_prefix="<?= $search_prefix?>";
 	search_global="<?= $search_global?>";
@@ -309,8 +312,7 @@ class ua_rss_list extends ua_rss_list_const
 	page = 1;
 	search=0;
 	nosearch=0;
-	print("!!!!!!!!___"+param);
-	print("!!!!!!!!___"+url1);
+	fsua=1;
 	setRefreshTime(1);    
 	itm_index=0;
 	menu=0;

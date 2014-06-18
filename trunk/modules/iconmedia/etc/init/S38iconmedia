@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# description: Enable and disable IconMedia
+#
+case "$1" in
+  start)
+	/usr/local/etc/mos/bin/iconhack
+	;;
+
+  stop|status|enable|disable)
+	;;
+
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

@@ -31,29 +31,32 @@ class ua_rss_view_photo
 		 <script>
 			idx = getQueryItemIndex();
 			drawState = getDrawingItemState();
-			if (drawState == "unfocus")
-				{
-					border = "<?= $ua_images_path.static::imageUnFocusBorder ?>";
-					color = "<?= static::unFocusFontColor ?>";
-				}
-			else
+			if (drawState == "focus")
 				{
 					border = "<?= $ua_images_path.static::imageFocusBorder ?>";
 					color = "<?= static::focusFontColor ?>";
 				}
+			else
+				{
+					border = "<?= $ua_images_path.static::imageUnFocusBorder ?>";
+					color = "<?= static::unFocusFontColor ?>";
+				}
       </script>
 	
-		<image redraw="no" offsetXPC="<?= static::items_border_offsetXPC ?>" offsetYPC="<?= static::items_border_offsetYPC ?>" widthPC="<?= static::items_border_widthPC ?>" heightPC="<?= static::items_border_heightPC ?>">
+		<image redraw="no" offsetXPC="<?= static::items_border_offsetXPC ?>" offsetYPC="<?= static::items_border_offsetYPC ?>" widthPC="<?= static::items_border_widthPC ?>" heightPC="<?= static::items_border_heightPC ?> " useBackgroundSurface=no >
 			<script>
 				border;
 			</script>
 		</image>
-		<image offsetXPC="<?= static::items_offsetXPC ?>" offsetYPC="<?= static::items_offsetYPC ?>" widthPC="<?= static::items_widthPC ?>" heightPC="<?= static::items_heightPC ?>" >
+		
+		
+		<image redraw="no" offsetXPC="<?= static::items_offsetXPC ?>" offsetYPC="<?= static::items_offsetYPC ?>" widthPC="<?= static::items_widthPC ?>" heightPC="<?= static::items_heightPC ?>" useBackgroundSurface=no >
 			<script>
 				getItemInfo( idx, "image" );
 			</script>
 		</image>
-		<text align="<?= static::items_text_align ?>" lines="<?= static::items_text_lines ?>" offsetXPC="<?= static::items_text_offsetXPC ?>" offsetYPC="<?= static::items_text_offsetYPC ?>" widthPC="<?= static::items_text_widthPC ?>" heightPC="<?= static::items_text_heightPC ?>" fontSize="<?= static::items_text_fontSize ?>" backgroundColor="<?= static::items_text_backgroundColor ?>">
+		
+		<text redraw="no" align="<?= static::items_text_align ?>" lines="<?= static::items_text_lines ?>" offsetXPC="<?= static::items_text_offsetXPC ?>" offsetYPC="<?= static::items_text_offsetYPC ?>" widthPC="<?= static::items_text_widthPC ?>" heightPC="<?= static::items_text_heightPC ?>" fontSize="<?= static::items_text_fontSize ?>" backgroundColor="<?= static::items_text_backgroundColor ?>" useBackgroundSurface=no>
 			<foregroundColor>
 				<script>
 					color;
@@ -86,7 +89,9 @@ class ua_rss_view_photo
 								ret="true";
 							}
 				}
+				
 				ret;
+				
 			</script>
 		</onUserInput>
 	<?php
@@ -100,6 +105,9 @@ class ua_rss_view_photo
 		itemCount = getPageInfo( "itemCount" );
 		writeStringToFile("/tmp/env_returnFromList_message", "");
 	</onEnter>
+	<onExit>
+		writeStringToFile("/tmp/env_returnFromList_message", "1");
+	</onExit>
 	<?php
 	}
 	
@@ -120,17 +128,27 @@ class ua_rss_view_photo
 		sideColorTop		= "0:0:0"
 		rowCount			= "<?= static::rowCount ?>"
 		columnCount			= "<?= static::columnCount ?>"
+		
+				
 		itemOffsetXPC		= "<?= static::itemOffsetXPC ?>"
 		itemOffsetYPC		= "<?= static::itemOffsetYPC ?>"
 		itemWidthPC			= "<?= static::itemWidthPC ?>"
 		itemHeightPC		= "<?= static::itemHeightPC ?>"
-		itemGapXPC			= "0"
-		itemGapYPC			= "0"
+		itemGapXPC			= "1"
+		itemGapYPC			= "1"
 		itemBackgroundColor = "<?= static::itemBackgroundColor ?>"
 		sliding				= "no"
 		rollItems			= "no"
 		drawItemText		= "no"
 		forceFocusOnItem	= "yes"
+		enableStretchBlt=no
+		circlingItems=no
+		BackgroundDark=no
+		forceRedrawItems=yes
+		slideItems=no
+    	stretchInFocus=no
+		DoAnimation=no
+		drawItemBorder=no
 		
 		showHeader			= "no"
 		showDefaultInfo		= "no"
@@ -142,8 +160,8 @@ class ua_rss_view_photo
 	<?php
 		$this->showIdle();
 	?>
-	<backgroundDisplay>
-			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+	<backgroundDisplay name=MainMenuBackground>
+			<image  redraw="no" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
 					<?=$ua_images_path?>ua_background_main.png
 			</image>
 	</backgroundDisplay>

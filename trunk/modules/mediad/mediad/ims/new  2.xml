@@ -1,0 +1,20 @@
+<item>
+<title>IPTV</title>
+<disable>
+	<script>
+		IMSDisable;
+	</script>
+</disable>
+<imagePath> home_menu/image/Home_IPTV </imagePath>
+<onClick>
+	<script>
+		setEnv("MC_PLAYLIST", "/usr/local/etc/playlist/default.m3u");
+		setEnv("MC_URL", "none");
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "rss_file:///tmp/app/ims/mc-tv.rss";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>

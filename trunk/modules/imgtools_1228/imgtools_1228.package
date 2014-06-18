@@ -1,0 +1,8 @@
+[imgtools_1228]
+	revision = 1
+	title = "Image tools"
+	role = util
+	env = 1228
+	files = "bin/mksquashfs bin/mkyaffs2image"
+	require = "libz"
+	size = 212

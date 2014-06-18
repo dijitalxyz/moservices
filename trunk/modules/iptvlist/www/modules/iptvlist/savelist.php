@@ -111,5 +111,8 @@ if ( $favorite != -1 )
 	file_put_contents( "Favorites.m3u", $fv );
 }
 
+include_once("epglist.php");
+createEPGList( $m3uFileName );
+
 echo "done";
 ?>

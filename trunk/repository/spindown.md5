@@ -1,0 +1,11 @@
+679f6d32a014440fc88e4d8b4293ee31  bin/sg_start
+904d95d1d0b1816d1a2da5fc83d9febb  bin/spindownd
+e96bf10ca6e3ae67c21cc4a7c8818057  etc/init/S14spindown
+3076321a845532dfbc409b5e95823f73  etc/rc.init/S08SpinDown
+ff3746fa9fe1b71ea3ca5f80d4834614  etc/spindown.conf
+6734ec01cfead4d33d3411485b134a76  www/modules/spindown/lang_en.php
+1b87854cb99156d79c5b9b79988b08fe  www/modules/spindown/spindown.png
+c6786d6aa542661648f42fa050b5452d  www/modules/spindown/def_rss.php
+e9f252ec9fe2151ed5ec5e45f4186da5  www/modules/spindown/def_pages.php
+363757c9cc69d43c55f7bff8a558b5ac  www/modules/spindown/spindown.php
+bed1fcd1315a41d542dcd9bc9c7d1355  www/modules/spindown/lang_ru.php

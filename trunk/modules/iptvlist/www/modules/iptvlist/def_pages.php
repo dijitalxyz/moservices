@@ -2,6 +2,12 @@
 
 // define pages
 
+$nav_pages['iptvlist'] = array (
+	'title'	=> 'IPTVList Config',
+	'module'=> 'iptvlist',
+	'load'	=> 'getindex.php'
+);
+
 $nav_pages['rss_addtofavorites'] = array (
 	'type'  => 'rss',
 	'module'=> 'iptvlist',
@@ -102,6 +108,12 @@ $nav_pages['rss_sidemenu4'] = array (
 	'type'  => 'rss',
 	'module'=> 'iptvlist',
 	'load'	=> 'rss_sidemenu4.php'
+);
+
+$nav_pages['rss_epg'] = array (
+	'type'  => 'rss',
+	'module'=> 'iptvlist',
+	'load'	=> 'rss_epg.php'
 );
 
 ?>

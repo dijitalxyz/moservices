@@ -1,0 +1,9 @@
+[nano_3430]
+	revision = 2
+	title = "Nano text editor v2.3.1"
+	role = util
+	init = S39nano
+	env = 3430
+	files = "bin/nano bin/rnano etc/init/S39nano etc/.nanorc share/nano/"
+	require = "xterm libintl libiconv libncursesw libgccs"
+	size = 416

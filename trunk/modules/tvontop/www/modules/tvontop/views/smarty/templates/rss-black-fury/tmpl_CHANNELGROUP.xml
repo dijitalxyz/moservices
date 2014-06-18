@@ -54,6 +54,11 @@ Return:
     executeScript("getValue");
     stop = value;
 
+    name = "has_archive";
+    position = 4;
+    executeScript("getValue");
+    has_archive = value;
+
 	executeScript("getTime");
     
     percent = null;
@@ -245,20 +250,24 @@ Return:
             <foregroundColor><script>itemFg;</script></foregroundColor>
             <backgroundColor><script>itemBg;</script></backgroundColor>
         </text>
-        <text offsetXPC="20" offsetYPC="5" widthPC="66" heightPC="95" backgroundColor="64:64:64">
+        <text offsetXPC="20" offsetYPC="5" widthPC="60" heightPC="95" backgroundColor="64:64:64">
             <widthPC>
                 <script>
                     if (null != itemPercent &amp;&amp; itemBg == bgNormal) {
-                        itemPercent * 66 / 100;
+                        itemPercent * 62 / 100;
                     } else {
                         0;
                     }
                 </script>
             </widthPC>
         </text>
-        <text offsetXPC="20" offsetYPC="5" widthPC="66.5" heightPC="95" fontSize="13" backgroundColor="{$config->get(bgNormal)}">
+        <text offsetXPC="20" offsetYPC="5" widthPC="62.5" heightPC="95" fontSize="13" backgroundColor="{$config->get(bgNormal)}">
             <script>itemDescr;</script>
             <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>if (itemBg == bgNormal) "-1:-1:-1"; else itemBg;</script></backgroundColor>
+        </text>
+        <text  align="center" offsetXPC="82" offsetYPC="5" widthPC="4.5" heightPC="95" fontSize="13" backgroundColor="{$config->get(bgNormal)}" foregroundColor="255:0:0"  >
+            <script>getItemInfo("has_archive");</script>
             <backgroundColor><script>if (itemBg == bgNormal) "-1:-1:-1"; else itemBg;</script></backgroundColor>
         </text>
     </itemDisplay>
@@ -290,6 +299,7 @@ Return:
         <category>{$child->getParent()->title}</category>
         <color>{$child->getParent()->getParam(color)}</color>
         <epg_link>{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type=EPG</epg_link>
+		<has_archive>{if $child->getParam(has_archive)==1}[R]{/if}</has_archive>
     </item>
     {/foreach}
 </channel>

@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	EX.ua RSS link module v1.7
+	EX.ua RSS link module v1.9
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2014	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -82,7 +82,8 @@ class ua_rss_link extends ua_rss_link_const
 				ds9 = getStringArrayAt(dlok, 9);
 				name = getStringArrayAt(dlok, 0);
 				img = getStringArrayAt(dlok, 10);
-				c = 11;
+				poster = getStringArrayAt(dlok, 11);
+				c = 12;
 				pitemCount = getStringArrayAt(dlok, c); c += 1;
 				count = 0;
 				fav_idx = 0;
@@ -179,7 +180,7 @@ class ua_rss_link extends ua_rss_link_const
 	
 		menuArray = null;
 		menucmdArray = null;
-		menuCount = 4;
+		menuCount = 5;
 		if ( page &lt; countPage ){
 			menuArray = pushBackStringArray( menuArray, "След.страница");
 			menucmdArray = pushBackStringArray( menucmdArray, "next");
@@ -212,6 +213,8 @@ class ua_rss_link extends ua_rss_link_const
 		menucmdArray = pushBackStringArray( menucmdArray, "manager");
 	 	menuArray = pushBackStringArray( menuArray, "Плеер");
 		menucmdArray = pushBackStringArray( menucmdArray, "player_style");
+		menuArray = pushBackStringArray( menuArray, "Описание");
+		menucmdArray = pushBackStringArray( menucmdArray, "description");
 		
 		setFocusItemIndex(itm_index);
 		setFocusMenuIndex(menu);
@@ -229,6 +232,7 @@ class ua_rss_link extends ua_rss_link_const
 	global $ua_favorites_filename;
 	global $ua_rss_download_filename;
 	global $ua_player_parser_filename;
+	global $ua_full_description;
 	include ("ua_rss_download_rss_link.inc.php");
 	?>
 	<menu_template>
@@ -272,6 +276,10 @@ class ua_rss_link extends ua_rss_link_const
 		if (act == "manager") {
 			down_jump="<?=$ua_path_link.$ua_rss_download_filename."?display=1"?>";
 			jumpToLink("download");
+		}
+		else
+		if (act == "description") {
+			doModalRss("<?=$ua_path_link.$ua_full_description?>");
 		}
 		else
 		{
@@ -326,6 +334,8 @@ class ua_rss_link extends ua_rss_link_const
 	executeScript("initialScript");
 	
 	menu=0;
+	checkElapsed = 0;
+	playElapsed = 0;
 	use_alt_player=readStringFromFile("/tmp/env_use_alt_player_message");
 		if (use_alt_player == "1")
 			{

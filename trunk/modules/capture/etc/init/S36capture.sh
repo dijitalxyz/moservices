@@ -27,13 +27,18 @@ status)
 	cat $etc/rcS | grep -q $daemon || sed -ri '
 s!^([ 	]*)(.*RootApp DvdPlayer.*)$!\1'$daemon' | \2!
 s!^([ 	]*)(.*\./DvdPlayer.*)$!\1'$daemon' | \2!
-' $etc/rcS
+/\/etc\/dvdplayer\/script\/run_tail/a\
+	'$daemon' > /dev/null &
+	' $etc/rcS
 
 	echo "Please, reboot device!"
 	;;
 
   disable)
-	cat $etc/rcS | grep -q $daemon && sed -ri 's!^([ 	]*)'$daemon' \| (.*)$!\1\2!' $etc/rcS
+	cat $etc/rcS | grep -q $daemon && sed -ri '
+s!^([ 	]*)'$daemon' \| (.*)$!\1\2!
+/\/mos\/bin\/captured > \/dev\/null/d
+	' $etc/rcS
 
 	echo "Please, reboot device!"
 	;;

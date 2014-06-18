@@ -15,22 +15,22 @@ class ua_rss_cat_const extends ua_rss_view_photo
 {
 	// main items
 	const focusFontColor		=	'255:255:255';
-	const unFocusFontColor		=	'255:255:255';
+	const unFocusFontColor		=	'200:200:200';
 	const imageFocusBorder 		= 	'ua_focus_main.png';
 	const imageUnFocusBorder	= 	'ua_unfocus_main.png';
-	const backgroundColor 		=	'0:0:0';
+	const backgroundColor 		=	'-1:-1:-1';
 	const rowCount 				=	'5';
 	const columnCount 			=	'4';
 	const itemOffsetXPC			= 	'6';
 	const itemOffsetYPC			= 	'14';
 	const itemWidthPC			= 	'22';
-	const itemHeightPC			= 	'15';
-	const itemBackgroundColor 	= 	'0:0:0';
+	const itemHeightPC			= 	'14';
+	const itemBackgroundColor 	= 	'-1:-1:-1';
 
 	const text_header_align		=	'left'; // далее идут константы для текста заголовка
-	const text_header_redraw	=	'yes';
+	const text_header_redraw	=	'no';
 	const text_header_lines		=	'1';
-	const text_header_offsetXPC	=	'27';
+	const text_header_offsetXPC	=	'28';
 	const text_header_offsetYPC	=	'2';
 	const text_header_widthPC	=	'90';
 	const text_header_heightPC	=	'10';
@@ -39,7 +39,7 @@ class ua_rss_cat_const extends ua_rss_view_photo
 	const text_header_foregroundColor	=	'255:255:255'; //цвет шрыфта
 	
 	const text_footer_align		=	'left';
-	const text_footer_redraw	=	'yes';
+	const text_footer_redraw	=	'no';
 	const text_footer_lines		=	'1';
 	const text_footer_offsetXPC	=	'8';
 	const text_footer_offsetYPC	=	'88';

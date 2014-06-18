@@ -153,6 +153,26 @@ define("logfile","/tmp/iptv_downl");
 if(isset( $_GET["downloadlink"]) ) 
 {
 		$fileName=sanitize_file_name( $_GET["title"] )."_".date( "d.m.Y_H.i.s", time() ).".mpg";
+
+
+		if ( isset( $_GET["EPGName"] ) )
+		{
+			$EPGName = $_GET["EPGName"];
+			
+			if ( !is_null( $EPGName ) )
+			{
+				if ( strpos( $EPGName, ':' ) == 2 )
+				{
+					$EPGName = substr( $EPGName, 6 );
+
+					if ( strlen( $EPGName ) > 2 )
+					{				
+						$fileName = sanitize_file_name( $EPGName )."_".date( "d.m.Y_H.i.s", time() ).".mpg";
+					}
+				}
+			}
+		}
+
 		$outputfile = "'".$path . $fileName . "'";
 		$downloadfile = $_GET["downloadlink"];				
 

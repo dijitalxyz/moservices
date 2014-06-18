@@ -1,0 +1,130 @@
+<?xml version="1.0" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+  <mediaDisplay name="onePartView"
+   viewAreaXPC="0"
+   viewAreaYPC="0"
+   viewAreaWidthPC="100"
+   viewAreaHeightPC="100"
+
+   backgroundColor="20:20:20"
+
+   sideLeftWidthPC="0"
+   sideRightWidthPC="0"
+   sideColorLeft="0:0:0"
+   sideColorRight="0:0:0"
+
+   showHeader="no"
+   showDefaultInfo="no"
+
+   idleImageXPC="45.5882"
+   idleImageYPC="42.1875"
+   idleImageWidthPC="8.8235"
+   idleImageHeightPC="15.625"
+  >
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle01.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle02.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle03.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle04.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle05.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle06.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle07.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle08.png</idleImage>
+  </mediaDisplay>
+
+  <onEnter>
+	/* TimeZone */
+
+	dlok = loadXMLFile("/usr/local/etc/mos/iconmenu/iconmenu.conf");
+	if(dlok != null)
+	{
+		tzone = getXMLText("config","timeinfo","timezone");
+		settz =  "asshole";
+
+		if (tzone == "+12") 		settz =  "+12 $[WELLINGTON]";
+		else if (tzone == "+11.5") 	settz =  "+11.5";
+		else if (tzone == "+11") 	settz =  "+11 $[MELBOWRNE]";
+		else if (tzone == "+10.5") 	settz =  "+10.5";
+		else if (tzone == "+10") 	settz =  "+10 $[SYDNEY]";
+		else if (tzone == "+9.5") 	settz =  "+9.5";
+		else if (tzone == "+9") 	settz =  "+9 $[TOKEY]";
+		else if (tzone == "+8.5") 	settz =  "+8.5";
+		else if (tzone == "+8") 	settz =  "+8 $[BEIJING]";
+		else if (tzone == "+7.5") 	settz =  "+7.5";
+		else if (tzone == "+7") 	settz =  "+7 $[BANGKOK]";
+		else if (tzone == "+6.5") 	settz =  "+6.5";
+		else if (tzone == "+6") 	settz =  "+6 $[BANGLADESH]";
+		else if (tzone == "+5.5") 	settz =  "+5.5";
+		else if (tzone == "+5") 	settz =  "+5 $[NEW_DELHI]";
+		else if (tzone == "+4.5") 	settz =  "+4.5";
+		else if (tzone == "+4") 	settz =  "+4 $[MOSCOW]";
+		else if (tzone == "+3.5") 	settz =  "+3.5";
+		else if (tzone == "+3") 	settz =  "+3 $[RIYADH]";
+		else if (tzone == "+2.5") 	settz =  "+2.5";
+		else if (tzone == "+2") 	settz =  "+2 $[CAIRO]";
+		else if (tzone == "+1.5") 	settz =  "+1.5";
+		else if (tzone == "+1") 	settz =  "+1 $[ROME]";
+		else if (tzone == "+0.5") 	settz =  "+0.5";
+		else if (tzone == "0")		settz =  "GMT $[LONDOM]";
+		else if (tzone == "-0.5") 	settz =  "-0.5";
+		else if (tzone == "-1") 	settz =  "-1 $[AZONES]";
+		else if (tzone == "-1.5") 	settz =  "-1.5";
+		else if (tzone == "-2")		settz =  "-2 $[MID_ATLANTIC]";
+		else if (tzone == "-2.5")	settz =  "-2.5";
+		else if (tzone == "-3") 	settz =  "-3 $[BRAZILIA]";
+		else if (tzone == "-3.5") 	settz =  "-3.5";
+		else if (tzone == "-4") 	settz =  "-4 $[NEW_YORK]";
+		else if (tzone == "-4.5") 	settz =  "-4.5";
+		else if (tzone == "-5") 	settz =  "-5 $[CHICAGO]";
+		else if (tzone == "-5.5") 	settz =  "-5.5";
+		else if (tzone == "-6") 	settz =  "-6 $[SALT_LAKE_CITY]";
+		else if (tzone == "-6.5") 	settz =  "-6.5";
+		else if (tzone == "-7") 	settz =  "-7 $[LOS_ANGELES]";
+		else if (tzone == "-7.5") 	settz =  "-7.5";
+		else if (tzone == "-8") 	settz =  "-8 $[PACIFIC_TIME]";
+		else if (tzone == "-8.5") 	settz =  "-8.5";
+		else if (tzone == "-9") 	settz =  "-9 $[HONOLULU]";
+		else if (tzone == "-9.5") 	settz =  "-9.5";
+		else if (tzone == "-10") 	settz =  "-10 $[HAWAII]";
+		else if (tzone == "-10.5") 	settz =  "-10.5";
+		else if (tzone == "-11") 	settz =  "-11 $[SAMOA]";
+		else if (tzone == "-11.5") 	settz =  "-11.5";
+		else if (tzone == "-12") 	settz =  "-12 $[ENIWETOK]";
+
+		if( settz != "asshole" )
+		{
+			setTimeZone(settz);
+			if (IsItemDisasble("IsAndroidDisable") == "false")
+			 android_send_sync_timezone_current();
+		}
+	}
+
+	showIdle();
+	setRefreshTime(1000);
+  </onEnter>
+
+  <onRefresh>
+	setRefreshTime(-1);
+
+	s = getURL("http://127.0.0.1/?page=im_status");
+	if ( s != null &amp;&amp; s != "" )
+	{
+		postMessage( "return" );
+	}
+	setRefreshTime(1000);
+	null;
+  </onRefresh>
+
+  <onExit>
+	setRefreshTime(-1);
+	cancelIdle();
+  </onExit>
+
+  <channel>
+    <itemSize>
+      <script>
+	0;
+      </script>
+    </itemSize>
+  </channel>
+</rss>

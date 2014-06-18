@@ -1,0 +1,9 @@
+8f37b90b2e0b05957aac8b693fe37cf7  mpcs/mpcs.sid
+336a1deac568fb5e8fee9cc8eaf8b193  mpcs/mpcs.guess
+da720b27a212085de9d8fd1587274998  mpcs/mpcs.server
+d37df8cd8fe0cde534264c97ea759454  mpcs/mpcs-linux
+49d6e6c09e738ed7cae7cd90019c48f1  mpcs/mpcs.user
+d41d8cd98f00b204e9800998ecf8427e  mpcs/mpcs.srvid
+9275e9d03fe204b8c341deb528958055  mpcs/mpcs.conf
+01f8e3afaab68be10548ae6e201bd905  etc/init/S18mpcs
+8598759c5e64764b9f753f3e72959bb2  etc/hotplug/after/usb-serial/S10mpcs

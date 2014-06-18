@@ -31,6 +31,11 @@ $nav_options = array_merge(
 	parse_ini_file( $mos.'/etc/core.ini', false ),
 	parse_ini_file( $mos.'/etc/pm.conf', false )
 );
+
+// get SDK version
+if( file_exists( '/tmp/CGI_request' )) $nav_options['sdk_version'] = 4;
+else $nav_options['sdk_version'] = 3;
+
 // define language
 $nav_lang = 'en';
 if( isset( $nav_options['language'] )) $nav_lang = $nav_options['language'];
@@ -77,6 +82,25 @@ if( $ntype == 'html' )
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>moServices - <?= $nav_title ?></title>
+<?php
+	$a = substr( exec( 'cat /sys/realtek_boards/cpu_id' ), -1 );
+	$u = 'http://www.moservices.org/modules/icons/';
+	if( $a == '2' ) $u .= 'mars';
+	elseif( $a == '3' ) $u .= 'jupiter';
+	elseif( $a == '4' ) $u .= 'saturn';
+	else $u = '';
+	if( $u != '' )
+	{
+
+?>
+<link href="<?= $u ?>/apple-touch-icon.png" rel="apple-touch-icon" />
+<link href="<?= $u ?>/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76" />
+<link href="<?= $u ?>/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120" />
+<link href="<?= $u ?>/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
+<?php
+	}
+
+?>
 <link rel="shortcut icon" href="favicon.ico" />
 <script src="modules/core/js/navbar.js" type="text/javascript" charset="utf-8"></script>
 <script src="modules/core/js/log.js" type="text/javascript" charset="utf-8"></script>

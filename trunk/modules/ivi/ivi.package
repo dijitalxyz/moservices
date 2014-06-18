@@ -1,7 +1,7 @@
 [ivi]
-	revision = 5
+	revision = 10
 	title = "ivi.ru"
 	role = rss
 	files = "www/modules/ivi/"
-	require = "curl"
-	size = 104
+	logo = "modules/ivi/ivi.png"
+	size = 124

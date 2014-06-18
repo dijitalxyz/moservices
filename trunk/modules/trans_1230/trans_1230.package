@@ -1,12 +1,14 @@
 [trans_1230]
-	revision = 3
-	title = "Transmission v2.77"
+	revision = 7
+	title = "Transmission v2.82"
 	role = daemon
 	check = "port 9091"
 	init = S23trans
-	backup = "trans/home/"
-	config_edit = "trans/home/settings.json"
+	backup = "trans/settings.json"
+	config_before = copy
+	config_after = save
+	config_edit = "trans/settings.json"
 	env = 1230
-	files = "etc/init/S23trans trans/ www/modules/trans_1230/"
-	require = "libevent2 libcurl libz libssl libcrypto libgccs"
-	size = 4828
+	files = "etc/init/S23trans etc/hotplug/after/block/S14trans trans/ www/modules/trans_1230/"
+	require = "fhotplug libevent2 libcurl libz libssl libcrypto libgccs"
+	size = 4868

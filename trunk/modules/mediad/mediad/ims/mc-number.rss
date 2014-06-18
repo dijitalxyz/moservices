@@ -1,0 +1,100 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- 
+##################################################################################
+# © IconBIT 2012                                                                 #
+##################################################################################
+-->
+
+<onEnter>
+	number = getEnv("MC_NUMBER");
+	numberCount = 1;
+	setRefreshTime(2000);
+</onEnter>
+
+<onExit>
+	unsetEnv("MC_NUMBER");
+	setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+	setReturnString(number);
+	postMessage("return");
+</onRefresh>
+
+<mediaDisplay name=onePartView forceRedrawItems=yes sideLeftWidthPC=0 sideRightWidthPC=0 viewAreaXPC=8 viewAreaYPC=10 viewAreaWidthPC=15 viewAreaHeightPC=10 sideColorRight=-1:-1:-1 sideColorLeft=-1:-1:-1 sideColorTop=-1:-1:-1 sideColorBottom=-1:-1:-1 backgroundColor=-1:-1:-1  focusBorderColor=-1:-1:-1 unFocusBorderColor=-1:-1:-1 itemBackgroundColor=-1:-1:-1 showHeader="no" showDefaultInfo="no" itemPerPage=14 itemWidthPC=90 itemXPC=5 itemHeightPC=6.5 itemImageWidthPC=0 itemImageHeightPC=0 itemYPC=8 itemImageXPC=0 itemImageYPC=0 imageFocus=null DoAnimation="yes" AnimationType=2 AnimationStep=26 AnimationDelay=1 BackgroundDark="no" rollItems=no	slidingItemText=yes idleImageXPC=83.12 idleImageYPC=89.58 idleImageWidthPC=3.1 idleImageHeightPC=5.5>
+	<idleImage> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage> image/POPUP_LOADING_06.png </idleImage>
+	<idleImage> image/POPUP_LOADING_07.png </idleImage>
+	<idleImage> image/POPUP_LOADING_08.png </idleImage>
+	<backgroundDisplay name=mcNumberBackground>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>/tmp/app/ims/mc_chinfo.png</image>
+	</backgroundDisplay>
+	
+	<text align=center offsetXPC=10 offsetYPC=10 widthPC=80 heightPC=80 fontSize=22 backgroundColor=-1:-1:-1 foregroundColor=200:200:200 redraw=yes>
+		<script>number;</script>
+	</text>
+	
+	<onUserInput>
+		input = currentUserInput();
+		print("*************************",input);
+		ret = "false";
+		str = null;
+		if (input == "guide" || input == "setup") {
+			postMessage("return");
+			ret = "true";
+		}
+		else if (input == "one")
+			str = "1";
+		else if (input == "two")
+			str = "2";
+		else if (input == "three")
+			str = "3";			
+		else if (input == "four")
+			str = "4";
+		else if (input == "five")
+			str = "5";
+		else if (input == "six")
+			str = "6";
+		else if (input == "seven")
+			str = "7";
+		else if (input == "eight")
+			str = "8";
+		else if (input == "nine")
+			str = "9";
+		else if (input == "zero")
+			str = "0";
+			
+		if (str != null) {
+			number += str;
+			numberCount += 1;
+			if (numberCount &gt;= 3) {
+				redrawDisplay();
+				setRefreshTime(100);
+			} else {
+				redrawDisplay();
+				setRefreshTime(2000);
+			}
+			ret = "true";
+		}
+		ret;
+	</onUserInput>
+
+</mediaDisplay>
+
+
+<channel>
+	<title>Number menu</title>
+	<link>/tmp/app/ims/mc-number.rss</link>
+
+	<itemSize>
+		<script>subMenuSize;</script>
+	</itemSize>
+
+</channel>
+</rss>

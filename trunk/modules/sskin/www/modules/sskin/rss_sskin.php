@@ -36,7 +36,7 @@ function rss_sskin_content()
 		if( ( ( i - -1 ) % <?= $this->_rowCount ?> ) == 0 ) ret = "true";
 	}
 
-	else if (userInput == "<?= getRssCommand('menu') ?>" || userInput == "<?= getRssCommand('rewind') ?>")
+	else if (userInput == "<?= getRssCommand('menu') ?>" || userInput == "menu" || userInput == "<?= getRssCommand('rewind') ?>")
 	{
 	        url = "<?= getMosUrl().'?page=rss_sskin_menu' ?>";
 		url = doModalRss(url);

@@ -1,0 +1,3 @@
+d98c8adbd6b6d7dab1af2085badf92a0  etc/init/S43zswap
+9ac2a6af44303e5a8f6c7008d6edd668  zswap/ramzswap.ko
+fd9325271367ff70682064228e836d53  zswap/rzscontrol

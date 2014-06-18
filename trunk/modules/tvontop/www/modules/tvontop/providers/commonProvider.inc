@@ -14,7 +14,7 @@ class CommonProvider {
 			$obj = new MediaObject("0", self::$ID_AUTH_DEMO_CONFIRM);
 			$obj->setParam("message", "Вы пользуетесь пробным доступом. Введите свои данные или подтвердите пробный доступ кнопкой \"Вход\".");
 		} else if(self::$ID_ERROR == $objectId ) {
-			$obj = new MediaObject("0", self::$OBJ_ERROR, "Error");
+			$obj = new MediaObject("0", self::$ID_ERROR, "Error");
 			$obj->setParam("descr", self::getParam($params, "message"));
 		} else if(self::$ID_CHANGE_AUTH == $objectId ) {
 			$obj = new MediaObject("0", self::$ID_CHANGE_AUTH);

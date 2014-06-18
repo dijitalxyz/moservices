@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# description: prepare etc for iconbit services
+#
+busybox --help | grep -q 'v1.18.5' || alias df='busybox.1.18.5 df'
+
+if [ -d /system/etc ] ; then
+	# android
+	etc=/system/etc
+else
+	etc=/etc
+fi
+
+# etc hack
+if ! [ -f $etc/app.conf ] ; then
+
+	# check etc filesystem
+	part=$(  echo $( df $etc | tail -n 1 ) | cut -d ' ' -f 6 )
+	fs=$( cat /proc/mounts | grep " $part " | cut -d ' ' -f 3 )
+
+	rm=no
+	if [ "$fs" == 'yaffs2' ] ; then
+
+		cat /proc/mounts | grep " $part " | grep -q ' ro' && rm=yes
+		mount -o remount,rw $part
+
+	elif ! [ "$fs" == 'ramfs' ] ; then
+
+		cat /proc/mounts | grep " $etc " && umount $etc
+		rm -Rf /tmp/etc
+		mkdir /tmp/etc
+		cp -a $etc/* /tmp/etc/
+		mount /tmp/etc $etc
+	fi
+
+	[ -f $etc/ICONBIT_COPYRIGHT ] || touch $etc/ICONBIT_COPYRIGHT
+	[ -f $etc/RELEASE_LOCALE ]    || echo -n 'ru' >> $etc/RELEASE_LOCALE
+	[ -f $etc/RELEASE_VERSION ]   || echo -n '2.02' >> $etc/RELEASE_VERSION
+	[ -f $etc/VENDOR_NAME ]       || echo -n 'IconBIT' >> $etc/VENDOR_NAME
+	[ -f $etc/app.conf ]          || echo '# iconbit' >> $etc/app.conf
+
+	sync
+
+	[ "$rm" == 'yes' ] && mount -o remount,ro $part
+		
+fi

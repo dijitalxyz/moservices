@@ -1,0 +1,64 @@
+
+[input-def]
+0=*
+
+[cmdline]
+0=ls -1
+1=ldd mc 
+2=
+
+[Dir Hist New Right Panel]
+0=/usr/local/etc/mos
+1=/tmp/usbmounts/sda2/work/mc_1228_488/mc-4.8.8_1228_02.05.2013_v3.tar/utar://mos
+2=/tmp/usbmounts/sda2/work/mc_1228_488/mc-4.8.8_1228_02.05.2013_v3.tar/utar://
+3=/tmp/usbmounts/sda1/Videos/Movies
+4=/tmp/usbmounts/sda2/optware
+5=/tmp/usbmounts/sda2/optware/bin
+6=/tmp/usbmounts/sda2/work/mc_1228_488
+7=/tmp/usbmounts/sda2/work
+8=/tmp/usbmounts/sda2
+9=/tmp/usbmounts/sda1/Videos/Serials
+10=/usr/local/etc
+11=/usr/local
+12=/usr
+13=/sbin
+14=/
+15=/tmp
+16=/tmp/usbmounts
+17=/tmp/usbmounts/sda1/download
+18=/tmp/usbmounts/sda1/torrent/Атомный лес
+19=/tmp/usbmounts/sda1/torrent/.home
+20=/tmp/usbmounts/sda1/torrent
+21=/tmp/usbmounts/sda1/Videos
+22=/tmp/usbmounts/sda1
+
+[Dir Hist New Left Panel]
+0=/usr/local/etc/rc.init
+1=/tmp/usbmounts/sda2/work/mc_1228_488/lib_1228_02.05.2013.tar/utar://
+2=/tmp/usbmounts/sda2/work/mc_1228_488/mc-4.8.8_1228_02.05.2013_v3.tar/utar://mos
+3=/tmp/usbmounts/sda2/work/mc_1228_488/mc-4.8.8_1228_02.05.2013_v3.tar/utar://
+4=/tmp/usbmounts/sda2/work/mc_1228_488
+5=/tmp/usbmounts/sda2/work
+6=/tmp/usbmounts/sda2
+7=/tmp/usbmounts
+8=/tmp
+9=/tmp/www
+10=/tmp/www/modules/rssengine
+11=/tmp/www/modules/capture
+12=/tmp/www/modules
+13=/tmp/www/modules/core
+14=/usr/local/etc
+
+[mini_input]
+0=half type name | size | perm
+
+[user-fmt-input]
+0=half type name | size | perm
+
+[inpmc.fm.mkdir]
+0=.mc
+
+[input2]
+0=/usr/local/etc/mos/
+1=/tmp/usbmounts/sda1/Videos/
+2=/usr/local/etc/mos/etc/.mc

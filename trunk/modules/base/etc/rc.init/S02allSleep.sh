@@ -30,16 +30,19 @@ case "$1" in
 		umount $i
 	done;
 
-	echo "$0 : unplug USB"
+	if uname -r | grep -q '2.6.12.6' ; then
 
-	for i in $( lsmod | cut -d ' ' -f 1 ) ; do
-		cat /lib/modules/$( uname -r )/modules.usbmap | grep -qE '^'$i' ' && rmmod $i
-	done
+		echo "$0 : unplug USB"
 
-	echo "$0 : unload USB"
-	lsmod | grep -Eq '^ohci_hcd ' && rmmod ohci_hcd
-	lsmod | grep -Eq '^ehci_hcd ' && rmmod ehci_hcd
-	lsmod | grep -Eq '^xhci_hcd ' && rmmod xhci_hcd
+		for i in $( lsmod | cut -d ' ' -f 1 ) ; do
+			cat /lib/modules/$( uname -r )/modules.usbmap | grep -qE '^'$i' ' && rmmod $i
+		done
+
+		echo "$0 : unload USB"
+		lsmod | grep -Eq '^ohci_hcd ' && rmmod ohci_hcd
+		lsmod | grep -Eq '^ehci_hcd ' && rmmod ehci_hcd
+		lsmod | grep -Eq '^xhci_hcd ' && rmmod xhci_hcd
+	fi
 
 	;;
   *)

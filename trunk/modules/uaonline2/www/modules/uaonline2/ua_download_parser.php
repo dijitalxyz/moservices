@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	Download manager parser part module v1.0
+	Download manager parser part module v1.3
 	------------------------------
-	Created by Sashunya 2011	
+	Created by Sashunya 2013	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -109,9 +109,9 @@ if (isset($_GET["display"]))  {
 
 
 // Starting download --------------------------------------------
-if(isset($_GET["downloadlink"]) && isset($_GET["title"])  ) {
-		$outputfile = "'".$download_path . $_GET["title"]."'";
-		$name = $_GET["title"];
+if(isset($_GET["downloadlink"]) && isset($_GET["title"]) && !$no_device ) {
+		$name=urldecode($_GET["title"]);
+		$outputfile = "\"".$download_path . $name."\"";
 		$downloadfile = $_GET["downloadlink"];				
 		//file_put_contents("/tmp/usbmounts/sda1/scripts/uaonline/temp.txt", $name."\n".$downloadfile."\n", FILE_APPEND | LOCK_EX);
 		// checking is the current download is started if yes - exit
@@ -139,6 +139,7 @@ if(isset($_GET["downloadlink"]) && isset($_GET["title"])  ) {
 		// getting size of the download
 		$header=get_headers ($downloadfile,1);
 		$len = $header["Content-Length"];
+		if (is_array($len)) $len = $len[1]; //patch ;-) 01.12.13
 		// waiting for 5 seconds to close connection
                 sleep(5);
 		// starting download using wget with low priority
@@ -162,9 +163,8 @@ if(isset($_GET["downloadlink"]) && isset($_GET["title"])  ) {
 			file_put_contents(logfile, $log);
 			}
 		if (!$resume){file_put_contents(logfile, $pids."\n", FILE_APPEND | LOCK_EX);}	
-        	}	
-		    	
-		echo display();
+        	}
+		
 }
 //--------------------------------------------------------
 
@@ -203,20 +203,5 @@ file_put_contents(logfile, '');
 unset($op);
 exec("killall wget", $op);
 }
-}
-if (isset($_GET["start_buffer"]))
-{
-	$downloadfile=$_GET["start_buffer"];
-	file_put_contents("/tmp/usbmounts/sda1/temp.txt", $downloadfile, FILE_APPEND | LOCK_EX);
-	$command ="nice -n 10 wget -O /tmp/usbmounts/sda1/temp.tmp '".$downloadfile."' > /dev/null 2>&1 & echo $!";
-    unset($op);
-	exec($command, $op);
-	exec("ln -s /tmp/usbmounts/sda1/temp.tmp /tmp/www/temp.tmp", $op);
-	echo $op[0];
-	sleep(10);
-}
-if (isset($_GET["stop_buffer"]))
-{
-	exec("kill".$_GET["stop_buffer"], $op);
 }
 ?>

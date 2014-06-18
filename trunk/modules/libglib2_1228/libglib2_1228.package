@@ -1,0 +1,9 @@
+[libglib2_1228]
+	revision = 1
+	title = "Lib GLib-2.0 0.2400.2"
+	role = package
+	check = "lib lib/libglib-2.0.so.0"
+	env = 1228
+	files = "lib/libglib-2.0.so lib/libglib-2.0.so.0 lib/libglib-2.0.so.0.2400.2 lib/libgmodule-2.0.so lib/libgmodule-2.0.so.0 lib/libgmodule-2.0.so.0.2400.2"
+	require = "libpcre1 libintl libiconv libgccs"
+	size = 992

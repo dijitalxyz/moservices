@@ -1,7 +1,8 @@
 [swp]
-	revision = 1
+	revision = 2
 	title = "Swap on drive"
 	role = patch
 	init = S02swp
-	files = "etc/init/S02swp"
-	size = 32
+	files = "etc/init/S02swp etc/hotplug/after/block/S02swp"
+	require = "fhotplug"
+	size = 56

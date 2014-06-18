@@ -1,0 +1,7 @@
+[videomore]
+	revision = 1.1
+	title = "Videomore.ru"
+	role = rss
+	files = "www/modules/videomore/"
+	logo = "www/modules/videomore/videomore.png"
+	size = 176

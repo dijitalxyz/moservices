@@ -84,6 +84,7 @@ class SmartyView extends View {
 				//-------------------------------------!!! no variable changes after this point
 				$smrt = new Smarty();
 				$smrt->debugging = $this->config->get("smarty_debug","templates");
+				//$smrt->compile_check = $this->config->get("compile_check","templates");
 				
 				$tempDir = $this->config->get("temp_dir","", "temp/");
 				$smrt->setCompileDir($this->config->get("compile_dir","templates", $tempDir. "templates_c"));

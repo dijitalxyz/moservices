@@ -1,5 +1,5 @@
 [remount]
-	revision = 3
+	revision = 4
 	title = "Remount drives"
 	role = patch
 	init = S06Remount

@@ -1,8 +1,9 @@
 [iconmenu]
-	revision = 8
-	title = "Home menu replacement for IconBit gui"
-	config_edit = "iconmenu/iconmenu.conf"
+	revision = 32
+	title = "Home menu replacement"
+	config_link = "?page=iconmenu_sets"
 	role = patch
 	init = "S34iconmenu.sh"
-	files = "etc/init/S34iconmenu.sh iconmenu/"
-	size = 1888
+	files = "etc/init/S34iconmenu.sh etc/hotplug/after/block/S15iconmenu iconmenu/ www/modules/iconmenu"
+	require = "fhotplug"
+	size = 2936

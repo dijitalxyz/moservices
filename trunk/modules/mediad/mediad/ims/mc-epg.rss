@@ -1,0 +1,232 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<bookmark>dialog</bookmark>
+
+<onEnter>
+	retval = null;
+	locale = readStringFromFile("/tmp/app/REL_LOCALE");
+	if (locale == "ru")	{
+		MC_TITLE = "Телепрограмма";
+	} else {
+		MC_TITLE = "TV program";
+	}
+	epgurl = getEnv("MC_EPGURL");
+	executeScript("refreshProgram");
+	prepareAnimation();
+</onEnter>
+
+<onExit>
+	unsetEnv("MC_EPGURL");
+	unsetEnv("MC_PLAYURL");
+	setRefreshTime(-1);
+</onExit>
+
+
+<mediaDisplay name=onePartView forceRedrawItems=yes viewAreaXPC=5 viewAreaYPC=65 viewAreaWidthPC=90 viewAreaHeightPC=30 sideColorRight=-1:-1:-1 sideColorLeft=-1:-1:-1 sideColorTop=-1:-1:-1 sideColorBottom=-1:-1:-1 backgroundColor=-1:-1:-1  focusBorderColor=-1:-1:-1 unFocusBorderColor=-1:-1:-1 itemBackgroundColor=-1:-1:-1 showHeader="no" showDefaultInfo="no" itemPerPage=5 itemWidthPC=92 itemXPC=4 itemHeightPC=15 itemImageWidthPC=0 itemImageHeightPC=0 itemYPC=20 itemImageXPC=0 itemImageYPC=0 imageFocus=null DoAnimation="yes" AnimationType=2 AnimationStep=26 AnimationDelay=1 BackgroundDark="no" rollItems=no	slidingItemText=yes idleImageXPC=83.12 idleImageYPC=89.58 idleImageWidthPC=3.1 idleImageHeightPC=5.5>
+	<idleImage> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage> image/POPUP_LOADING_06.png </idleImage>
+	<idleImage> image/POPUP_LOADING_07.png </idleImage>
+	<idleImage> image/POPUP_LOADING_08.png </idleImage>
+	<backgroundDisplay name=mcProgramBG>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>/tmp/app/ims/tvprogram.png</image>
+	</backgroundDisplay>
+	<text align=left offsetXPC=4 offsetYPC=5 widthPC=45 heightPC=10 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=120:120:120>
+		<script>MC_TITLE;</script>
+	</text>
+	<text align=right offsetXPC=50 offsetYPC=5 widthPC=45 heightPC=10 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=120:120:120>
+		<script>timeInfo;</script>
+	</text>
+	<text align=left offsetXPC=1 offsetYPC=90 widthPC=10 heightPC=10 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=120:120:120>
+		<script>retval;</script>
+	</text>
+	<itemDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 useBackgroundSurface=yes />
+		<text offsetXPC=0 offsetYPC=0 widthPC=15 heightPC=100 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=200:200:0>
+			<script>
+				getStringArrayAt(subTime1String, -1);
+			</script>
+		</text>
+		<text offsetXPC=15 offsetYPC=0 heightPC=100 backgroundColor=33:33:33>
+			<widthPC>
+				<script>
+					idx = getQueryItemIndex();
+					if (idx == focus)
+						"70";
+					else
+						"0";
+				</script>
+			</widthPC>
+		</text>
+		<text offsetXPC=15 offsetYPC=0 heightPC=100 backgroundColor=55:55:55>
+			<widthPC>
+				<script>
+					idx = getQueryItemIndex();
+					if (idx == focus)
+						percent * 70 / 100;
+					else
+						"0";
+				</script>
+			</widthPC>
+		</text>
+		<text offsetXPC=15 offsetYPC=0 widthPC=78 heightPC=100 fontSize=14 backgroundColor=-1:-1:-1>
+			<foregroundColor>
+				<script>
+					idx = getQueryItemIndex();
+					idx1 = getFocusItemIndex();
+					if (idx == focus)
+						"255:225:0";
+					else if (idx == idx1)
+						"200:0:0";
+					else
+						"200:200:200";
+				</script>
+			</foregroundColor>
+			<script>
+				getStringArrayAt(subTitleString, -1);
+			</script>
+		</text>
+		<text align=right offsetXPC=91 offsetYPC=0 widthPC=8 heightPC=100 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=200:200:0>
+			<script>
+				getStringArrayAt(subTime2String, -1);
+			</script>
+		</text>
+	</itemDisplay>
+	<onUserInput>
+		handled = "false";
+		userInput = currentUserInput();
+		focusIndex = getFocusItemIndex();
+		if ("enter" == userInput) {
+			postMessage("return");
+			handled = "true";
+		}
+		else if ("left" == userInput || "right" == userInput) {
+			postMessage("return");
+			handled = "true";
+		}
+		else if (userInput == "video_frwd" || userInput == "video_ffwd")
+		{
+			postMessage("return");
+			handled = "true";
+		}
+		else if (userInput == "zero")
+		{
+			executeScript("addSchedule");
+			handled = "true";
+		}
+		else if (userInput == "pagedown")
+		{
+			idx = getFocusItemIndex();
+			idx -= -7;
+			if (idx &gt;= subMenuSize)
+				idx = subMenuSize - 1;
+			setFocusItemIndex(idx);
+			setItemFocus(idx);
+			redrawDisplay("item");
+			handled = "true";
+		}
+		else if (userInput == "pageup")
+		{
+			idx = getFocusItemIndex();
+			idx -= 7;
+			if (idx &lt; 0)
+				idx = 0;
+			setFocusItemIndex(idx);
+			setItemFocus(idx);
+			redrawDisplay("item");
+			handled = "true";
+		}
+		else if (userInput == "display")
+		{
+			executeScript("refreshProgram");
+			handled = "true";
+		}
+		handled;
+	</onUserInput>
+
+</mediaDisplay>
+
+<refreshProgram>
+	subTitleString = null;
+	subTime1String = null;
+	subTime2String = null;
+	subSTime1String = null;
+	subSTime2String = null;
+	subMenuSize = 0;
+	focus = 0;
+	percent = 0;
+	timeInfo = null;
+	rss = "http://127.0.0.1:9999/rss/" + urlEncode(epgurl);
+	dlok = loadXMLFile(rss);
+	if (dlok != null) {
+		timeInfo = getXMLAttribute("response", "time");
+		subMenuSize = getXMLElementCount("response", "item");
+		print("subMenuSize = ", subMenuSize);
+		if (subMenuSize &gt; 0) {
+			itemCount = 0;
+			while(1) {
+				title = getXMLText("response", "item", itemCount, "title");
+				subTitleString = pushBackStringArray(subTitleString, title);
+				time1 = getXMLText("response", "item", itemCount, "time1");
+				subTime1String = pushBackStringArray(subTime1String, time1);
+				time2 = getXMLText("response", "item", itemCount, "time2");
+				subTime2String = pushBackStringArray(subTime2String, time2);
+				stime1 = getXMLText("response", "item", itemCount, "s_time1");
+				subSTime1String = pushBackStringArray(subSTime1String, stime1);
+				stime2 = getXMLText("response", "item", itemCount, "s_time2");
+				subSTime2String = pushBackStringArray(subSTime2String, stime2);
+				prcnt = getXMLText("response", "item", itemCount, "prcnt");
+				focused = getXMLText("response", "item", itemCount, "focused");
+				if (focused &gt; 0) {
+					focus = itemCount;
+					percent = prcnt;
+					time1Str = time1;
+					time2Str = time2;
+				}
+				itemCount += 1;
+				if (itemCount == subMenuSize)
+					break;
+			}
+		}
+	}
+	if (subMenuSize == 0 || subMenuSize == null)
+		postMessage("return");
+	else {
+		setFocusItemIndex(focus);
+		setItemFocus(focus);
+		redrawDisplay();
+	}
+</refreshProgram>
+
+<addSchedule>
+	idx = getFocusItemIndex();
+	title = getStringArrayAt(subTitleString, idx);
+	time1 = getStringArrayAt(subSTime1String, idx);
+	time2 = getStringArrayAt(subSTime2String, idx);
+	url = getEnv("MC_PLAYURL");
+	if (url != null) {
+		q = "title="+title+"&amp;time1="+time1+"&amp;time2="+time2+"&amp;url="+url;
+		rt = getUrl("http://127.0.0.1:9997/add/?"+urlEncode(q));
+		if (rt == "hello")
+			retval = "+";
+		else
+			retval = "-";
+	} else
+		retval = "-";
+	redrawDisplay();
+</addSchedule>
+
+<channel>
+	<title>Popup menu</title>
+	<link>/tmp/app/ims/mc-epg.rss</link>
+
+	<itemSize>
+		<script>subMenuSize;</script>
+	</itemSize>
+
+</channel>
+</rss>

@@ -10,6 +10,10 @@ case "$1" in
 	;;
 
   enable)
+	[ -f $etc/rc.init/S01Power.sh ] && rm -f $etc/rc.init/S01Power.sh
+	[ -f $etc/rc.init/S02gpioHD2 ] && rm -f $etc/rc.init/S02gpioHD2
+	[ -f $etc/rc.init/S02gpioXTreamer ] && rm -f $etc/rc.init/S02gpioXTreamer
+
 	cp -a $rc/S01aPower.sh $etc/rc.init/
 	;;
 

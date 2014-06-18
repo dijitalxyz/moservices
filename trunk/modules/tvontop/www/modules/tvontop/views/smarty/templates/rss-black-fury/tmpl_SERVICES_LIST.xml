@@ -57,7 +57,6 @@
         url = null;
 
         currentItem = getPageInfo("focusItemIndex");
-		/*setEnv("{$mediaObj->type}_startIndex", currentItem - 1);*/
 		envKey 		= "{$mediaObj->type}_startIndex";
 		envValue	= currentItem - 1;
         executeScript("setEnvValue");
@@ -171,7 +170,6 @@
 
 <onEnter>
     executeScript("platformInit");
-    /*startIndex = getEnv("{$mediaObj->type}_startIndex");*/
 	envKey 		= "{$mediaObj->type}_startIndex";
 	executeScript("getEnvValue");
 	startIndex = envValue;

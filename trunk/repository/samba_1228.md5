@@ -1,0 +1,9 @@
+ab5988ee643949f103b890690bbb64b0  etc/init/S12samba
+91f59295d805d53a5fdaaf5dc9314158  etc/hotplug/after/block/S11samba
+aac76cfaed83241aec72c856a43f5fd1  lib/libsamba.so.0.0
+ca15c20f8e8e362a2e94bfb1543a0e60  samba/smb.conf
+9ea698b600bfc05a02a3ef01688012b7  samba/nmbd
+cf451470b58d39e1d5514267e98544e3  samba/smbd
+dc5711372ebd54829797e5acdec02ccb  samba/smbpasswd
+7232ecb6d62da86fb04c444031cd5bd8  samba/private/secrets.tdb
+53ee30054f7cd92f8d3785c4114c3c6f  samba/private/smbpasswd

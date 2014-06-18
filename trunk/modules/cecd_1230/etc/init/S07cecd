@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# description: Starts and stops the cec daemon
+#
+etc=/usr/local/etc
+mos=$etc/mos
+
+cecdStatus()
+{
+	ps | grep -v 'S07cecd' | grep -q '[cC]ecd'
+}
+
+
+case "$1" in
+  start)
+	cecdStatus && exit 0
+
+	if ! [ -e /dev/cec/0 ] ; then
+		echo "CEC kernel module not found. Exiting..."
+		exit 1
+	fi
+
+	echo "Starting cecd service..."
+	$mos/bin/cecd -s -c $mos/etc/cecd.conf >/dev/console 2>&1
+	;;
+
+  stop)
+	echo "Shutting down cecd services..."
+	cecdStatus && killall -9 cecd
+	;;
+
+  status)
+	if cecdStatus
+	then echo 'cecd running'
+	else echo 'cecd stopped'
+	fi
+	;;
+
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

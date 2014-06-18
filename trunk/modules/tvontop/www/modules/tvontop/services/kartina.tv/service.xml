@@ -1,26 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service>
-    <name>Kartina.TV</name>
-    <shortName>ktv</shortName>
-    <displayName>Картина.ТВ</displayName>
-    <description>
-        Русскоязычное Интернет Телевидение.
-        Сегодня сетку вещания KARTINA.TV составляют более
-        100 телевизионных каналов. В пакет входят центральные
-        российские телеканалы, популярные, развлекательные и
-        музыкальные программы, а также несколько детских,
-        документальных и интернациональных каналов из стран СНГ.
-    </description>
-    <keys>
-        <key name="keyUser1" params="?pl=ktv&amp;amp;type=CHANGE_AUTH">Change account</key>
-    </keys>
-	<provider class="CacheProvider">
-	    <provider class="ImgCacheProvider" >
-		    <provider class="TimeSyncProvider">
-		        <provider class="KtvProvider" />
+<services>
+	<service>
+	    <name>Kartina.TV</name>
+	    <shortName>ktv</shortName>
+	    <displayName>Картина.ТВ</displayName>
+	    <description>
+	        Русскоязычное Интернет Телевидение.
+	        Сегодня сетку вещания KARTINA.TV составляют более
+	        100 телевизионных каналов. В пакет входят центральные
+	        российские телеканалы, популярные, развлекательные и
+	        музыкальные программы, а также несколько детских,
+	        документальных и интернациональных каналов из стран СНГ.
+	    </description>
+	    <keys>
+	        <key name="keyUser1" params="?pl=ktv&amp;amp;type=CHANGE_AUTH">Change account</key>
+	    </keys>
+		<provider class="CacheProvider">
+		    <provider class="ImgCacheProvider" >
+			    <provider class="TimeSyncProvider">
+			        <provider class="KtvProvider" />
+			    </provider>
+			</provider>
+	    </provider>
+	    <version>1.0.1</version>
+	    <author>http://TVonTop.com</author>
+	</service>
+	<service>
+	    <name>Kartina.TV</name>
+	    <shortName>klb</shortName>
+	    <displayName>Картина.ТВ Видеотека</displayName>
+	    <logo>logo_klb.png</logo>
+	    <description>
+	        Видиотека различных фильмов и передач.
+	        Видеотека будет постепенно (и постоянно) наполняться фильмами
+	        различных жанров, и возможно, также популярными сериалами.
+	        Пока мы еще не составили точную программу. Качество изображения
+	        будет сопоставимо с Кинозалами (возможно, часть материала будет в HD).
+	    </description>
+	    <keys>
+	        <key name="keyUser1" params="?pl=ktv&amp;amp;type=CHANGE_AUTH">Change account</key>
+	        <key name="keyUser2" params="?pl=klb&amp;amp;type=GENRE_LIST" >Genres</key>
+	    </keys>
+	    <provider class="CacheProvider">
+	    	<provider class="ImgCacheProvider" >
+	    		<provider class="KlbProvider" />
 		    </provider>
-		</provider>
-    </provider>
-    <version>1.0.1</version>
-    <author>http://TVonTop.com</author>
-</service>
+	    </provider>
+	    <version>1.0.0</version>
+	    <author>http://TVonTop.com</author>
+	</service>
+</services>

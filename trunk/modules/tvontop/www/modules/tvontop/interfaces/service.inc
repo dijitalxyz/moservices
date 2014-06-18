@@ -33,7 +33,10 @@ class Service {
             				((string) $descriptor->hidden == "true");
         if (! isset($this->logo) || "" == $this->logo) {
             $this->logo = "$dir/logo.png";
+        } else {
+        	$this->logo = "$dir/$this->logo";
         }
+        
         if(isset($descriptor->keys )) {
         	$this->keys			= array();
         	$this->keysDescr	= array();

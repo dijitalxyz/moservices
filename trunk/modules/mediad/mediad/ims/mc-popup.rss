@@ -1,0 +1,130 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- 
+##################################################################################
+# © IconBIT 2012                                                                 #
+##################################################################################
+-->
+
+<onEnter>
+	locale = readStringFromFile("/tmp/app/REL_LOCALE");
+	if (locale == "ru")
+	{
+		MC_PTITLE = "Каналы";
+	}
+	else
+	{
+		MC_PTITLE = "Channels";
+	}
+	subMenuString = readStringFromFile("/tmp/chlist.dat");
+	subMenuImage = readStringFromFile("/tmp/chimage.dat");
+	subMenuSize = readStringFromFile("/tmp/chsize.dat");
+	focus = readStringFromFile("/tmp/chfocus.dat");
+	if (focus == null) focus = 0;
+	checkIndex = 0;
+	setFocusItemIndex(focus);
+	setItemFocus(focus);
+	redrawDisplay();
+	prepareAnimation();
+</onEnter>
+
+
+
+<mediaDisplay name=onePartView forceRedrawItems=yes sideLeftWidthPC=0 sideRightWidthPC=0 viewAreaXPC=65 viewAreaYPC=10 viewAreaWidthPC=28.3 viewAreaHeightPC=84.3 sideColorRight=-1:-1:-1 sideColorLeft=-1:-1:-1 sideColorTop=-1:-1:-1 sideColorBottom=-1:-1:-1 backgroundColor=-1:-1:-1  focusBorderColor=-1:-1:-1 unFocusBorderColor=-1:-1:-1 itemBackgroundColor=-1:-1:-1 showHeader="no" showDefaultInfo="no" itemPerPage=14 itemWidthPC=90 itemXPC=5 itemHeightPC=6.5 itemImageWidthPC=0 itemImageHeightPC=0 itemYPC=8 itemImageXPC=0 itemImageYPC=0 imageFocus=null DoAnimation="yes" AnimationType=2 AnimationStep=26 AnimationDelay=1 BackgroundDark="no" rollItems=no	slidingItemText=yes idleImageXPC=83.12 idleImageYPC=89.58 idleImageWidthPC=3.1 idleImageHeightPC=5.5>
+	<idleImage> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage> image/POPUP_LOADING_06.png </idleImage>
+	<idleImage> image/POPUP_LOADING_07.png </idleImage>
+	<idleImage> image/POPUP_LOADING_08.png </idleImage>
+	<backgroundDisplay name=mcChannelBG>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>/tmp/app/ims/mc_chbg.png</image>
+	</backgroundDisplay>
+	<text align=center offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=10 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+		<script>MC_PTITLE;</script>
+	</text>
+	<itemDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 useBackgroundSurface=yes />
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			<script>
+				idx1 = getFocusItemIndex();
+				idx2 = getQueryItemIndex();
+				if (idx1 == idx2)
+					"/tmp/app/ims/mc_focus.png";
+				else
+					"";
+			</script>
+		</image>
+		<image offsetXPC=2 offsetYPC=20 widthPC=8 heightPC=60>
+			<script>
+				getStringArrayAt(subMenuImage, -1);
+			</script>
+		</image>
+		<text offsetXPC=12 offsetYPC=5 widthPC=85 heightPC=90 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>
+				getStringArrayAt(subMenuString, -1);
+			</script>
+		</text>
+	</itemDisplay>
+
+
+<onUserInput>
+	handled = "false";
+	userInput = currentUserInput();
+	focusIndex = getFocusItemIndex();
+	if ("enter" == userInput) {
+		data = getStringArrayAt(subMenuString, focusIndex);
+		setReturnString(data);
+		postMessage("return");
+		handled = "true";
+	}
+	else if ("left" == userInput || "right" == userInput || "zero" == userInput) {
+		postMessage("return");
+		handled = "true";
+	}
+	else if (userInput == "video_frwd" || userInput == "video_ffwd")
+	{
+		postMessage("return");
+		handled = "true";
+	}
+	else if (userInput == "pagedown")
+	{
+		idx = getFocusItemIndex();
+		idx -= -14;
+		if (idx &gt;= subMenuSize)
+			idx = subMenuSize - 1;
+		setFocusItemIndex(idx);
+		setItemFocus(idx);
+		redrawDisplay("item");
+		handled = "true";
+	}
+	else if (userInput == "pageup")
+	{
+		idx = getFocusItemIndex();
+		idx -= 14;
+		if (idx &lt; 0)
+			idx = 0;
+		setFocusItemIndex(idx);
+		setItemFocus(idx);
+		redrawDisplay("item");
+		handled = "true";
+	}
+	handled;
+</onUserInput>
+
+</mediaDisplay>
+
+
+<channel>
+	<title>Popup menu</title>
+	<link>/tmp/app/ims/mc-popup.rss</link>
+
+	<itemSize>
+		<script>subMenuSize;</script>
+	</itemSize>
+
+</channel>
+</rss>

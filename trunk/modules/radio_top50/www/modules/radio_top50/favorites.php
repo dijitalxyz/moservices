@@ -1,0 +1,167 @@
+<?php $favorites_table = array (
+  1 => 
+  array (
+    'id' => '40b59b8e435f9ce9875551602d9d230d',
+    'name' => 'РУССКИЙ ХИТ',
+    'logo' => 'http://guzei.com/online_radio/logo/12734.gif',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=11478',
+    'bitrate' => ' : 48Kbps : aacp : ',
+    'city' => 'Москва',
+    'language' => 'Русский',
+    'genre' => 'Поп',
+  ),
+  2 => 
+  array (
+    'id' => '421dbc600abebeb13e6393895011598e',
+    'name' => 'Радио РУССКИЕ Песни',
+    'logo' => 'http://guzei.com/online_radio/logo/13803.png',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=13001',
+    'bitrate' => ' : 48Kbps : aacp : ',
+    'city' => 'Москва',
+    'language' => 'Русский',
+    'genre' => 'Поп',
+  ),
+  3 => 
+  array (
+    'id' => '52ea48216ee2b81fd04df57294ce56c5',
+    'name' => 'Радио Рекорд',
+    'logo' => 'http://guzei.com/online_radio/logo/2756.png',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=11940',
+    'bitrate' => ' : 64Kbps : aacp : ',
+    'city' => 'Санкт-Петербург',
+    'language' => 'Русский',
+    'genre' => 'Танцевальный / Клубный',
+  ),
+  4 => 
+  array (
+    'id' => '601a292f76e4c389d7a980c8aa0d843f',
+    'name' => 'Sky.FM - Best of the 80s',
+    'logo' => 'http://guzei.com/online_radio/logo/2565.png',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=2565',
+    'bitrate' => ' : 96Kbps : mp3 : ',
+    'city' => 'Нью-Йорк',
+    'language' => 'Английский',
+    'genre' => 'Ретро',
+  ),
+  5 => 
+  array (
+    'id' => '2984baed9088722f3e144cf8c4deeb0b',
+    'name' => 'Гоп FM',
+    'logo' => 'http://guzei.com/online_radio/logo/10982.png',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=9997',
+    'bitrate' => ' : 32Kbps : aacp : ',
+    'city' => 'Санкт-Петербург',
+    'language' => 'Русский',
+    'genre' => 'Поп',
+  ),
+  6 => 
+  array (
+    'id' => '732e40abc798c930c3eed747e6d35d57',
+    'name' => 'Радио Шторм',
+    'logo' => 'http://guzei.com/online_radio/logo/6655.gif',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=6443',
+    'bitrate' => ' : 64Kbps : aacp : ',
+    'city' => 'Москва',
+    'language' => 'Русский',
+    'genre' => 'Поп',
+  ),
+  7 => 
+  array (
+    'id' => '771b53b5d692b788b86956fcf21e24bf',
+    'name' => '1.FM - Amsterdam Trance Radio',
+    'logo' => 'http://guzei.com/online_radio/logo/7129.png',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=6832',
+    'bitrate' => ' : 64Kbps : aacp : ',
+    'city' => 'Калифорния',
+    'language' => 'Английский',
+    'genre' => 'Танцевальный / Клубный',
+  ),
+  8 => 
+  array (
+    'id' => 'c0f83d4c21fa8c139e756388535ed917',
+    'name' => 'Ретро ФМ',
+    'logo' => 'http://guzei.com/online_radio/logo/909.png',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=910',
+    'bitrate' => '256Kbps',
+    'city' => 'Москва',
+    'language' => '',
+    'genre' => 'genre',
+  ),
+  9 => 
+  array (
+    'id' => '30ce4b990f8abb51d4824131d0955f90',
+    'name' => 'Хит ФМ',
+    'logo' => 'http://www.rusyadayiz.biz/images/radyo_hit.jpg',
+    'link' => 'http://hit.fmtuner.ru/',
+    'bitrate' => '96',
+    'city' => '',
+    'language' => '',
+    'genre' => 'поп',
+  ),
+  10 => 
+  array (
+    'id' => '18ee3926d564a879d082b9f311b9a726',
+    'name' => '16 Bit FM - i.d.e.a. channel',
+    'logo' => 'http://guzei.com/online_radio/logo/3137.png',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=3137',
+    'bitrate' => '',
+    'city' => '',
+    'language' => '',
+    'genre' => '',
+  ),
+  11 => 
+  array (
+    'id' => 'd7eab24ac2d7dbe505579cf8e9bb5b62',
+    'name' => 'HitFM',
+    'logo' => 'http://www.rusyadayiz.biz/images/radyo_hit.jpg',
+    'link' => 'http://online-hitfm.tavrmedia.ua:7000/HitFM/',
+    'bitrate' => '',
+    'city' => '',
+    'language' => '',
+    'genre' => '',
+  ),
+  12 => 
+  array (
+    'id' => 'f619556acba77af3b212b901e374ad3e',
+    'name' => 'Auto 128',
+    'logo' => '',
+    'link' => 'http://81.19.85.204:80/auto128.mp3',
+    'bitrate' => '',
+    'city' => '',
+    'language' => '',
+    'genre' => '',
+  ),
+  13 => 
+  array (
+    'id' => 'd0d05a350917603b514bdf12bfb5ea5f',
+    'name' => 'Авторадио',
+    'logo' => 'http://nskradiotv.ucoz.ru/_nw/7/67331100.png',
+    'link' => 'http://cast.avtoradio.ua/avtoradio',
+    'bitrate' => '',
+    'city' => '',
+    'language' => '',
+    'genre' => '',
+  ),
+  14 => 
+  array (
+    'id' => 'fabb37ca8d7d86c2a46de1bcd0fde748',
+    'name' => 'Дорожное Радио',
+    'logo' => 'http://guzei.com/online_radio/logo/1229.png',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=1229',
+    'bitrate' => '32Kbps',
+    'city' => 'Санкт-Петербург',
+    'language' => '',
+    'genre' => 'Поп',
+  ),
+  15 => 
+  array (
+    'id' => '09b54f9df94d4e9f65fa7685584f4610',
+    'name' => 'Юнитон',
+    'logo' => 'http://guzei.com/online_radio/logo/273.gif',
+    'link' => 'http://guzei.com/online_radio/listen.php?online_radio_id=273',
+    'bitrate' => '56Kbps',
+    'city' => 'Новосибирск',
+    'language' => 'Русский',
+    'genre' => 'Поп',
+  ),
+); ?>

@@ -1,0 +1,278 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!--  common defines -->
+{include file="{$config->get(activeTemplate,Runtime)}scripts/commons.tpl"}
+
+{$platformScripts="{$config->get(activeTemplate,Runtime)}scripts/{$config->get(platform)}.tpl"}
+{if file_exists($platformScripts)}
+    {include file=$platformScripts}
+{/if}
+<onRefresh>
+	postMessage(keyReturn);
+</onRefresh>
+<onEnter>
+  	executeScript("platformInit");
+    rows = 7;
+    cols = 8;
+
+    layoutCols  = 5;
+    specialRows = 5;
+
+    maxHistoryLength = 25;
+    path = "{$config->get(cfg_home,Runtime)}{$config->get(activeTemplate,Runtime)}keyboard/";
+    url  = "{$config->get(cfg_root_url,Runtime)}";
+
+    bgControl = "110:85:70";
+    bgSpecial = "40:40:40";
+    bgNormal  = "80:80:80";
+    bgFocus   = "255:170:0";
+
+    fgNormal  = "200:200:200";
+    fgFocus   = "255:255:255";
+
+    localeArray  = null;
+{foreach $mediaObj->getChildren() as $child}
+    localeArray  = pushBackStringArray(localeArray, "{$child->getId()}");
+{/foreach}
+    localeIdx    = -1;
+
+    layoutArray  = null;
+    specialArray = null;
+    specialIdx   = -1;
+
+    inputArray   = null;
+    inputText    = "";
+
+    executeScript("switchLayout");
+    executeScript("switchSpecialKeys");
+    executeScript("loadHistory");
+</onEnter>
+
+<getArrayLength>
+    length = 0;
+    while (null != array &amp;&amp; null != getStringArrayAt(array, length)) {
+        length = Add(length, 1);
+    }
+</getArrayLength>
+
+<switchLayout>
+    localeIdx = Add(localeIdx, 1);
+    locale = getStringArrayAt(localeArray, localeIdx);
+    if (null == locale) {
+        localeIdx = 0;
+        locale = getStringArrayAt(localeArray, localeIdx);
+    }
+    layoutArray = getUrl(path + "layout_" + locale + ".txt");*/
+</switchLayout>
+
+<switchSpecialKeys>
+    fullArray = getUrl(path + "special_keys.txt");
+
+    pageSize = specialRows * (cols - layoutCols);
+    specialIdx = Add(specialIdx, 1);
+    if (null == getStringArrayAt(fullArray, pageSize * specialIdx)) {
+        specialIdx = 0;
+    }
+
+    specialArray = null;
+    idx = 0;
+    while (idx &lt; pageSize) {
+        value = getStringArrayAt(fullArray, Add(idx, pageSize * specialIdx));
+        if (null == value) {
+            value = "";
+        }
+        specialArray = pushBackStringArray(specialArray, value);
+        idx = Add(idx, 1);
+    }
+
+    specialArray = pushBackStringArray(specialArray, "&#8596;");
+    specialArray = pushBackStringArray(specialArray, "&#8660;");
+    specialArray = pushBackStringArray(specialArray, " ? ");
+    specialArray = pushBackStringArray(specialArray, "OK");
+    specialArray = pushBackStringArray(specialArray, "__");
+    specialArray = pushBackStringArray(specialArray, " X ");
+</switchSpecialKeys>
+
+<backspace>
+    array = inputArray;
+    executeScript("getArrayLength");
+    if (length &gt; 0 &amp;&amp; inputArray != null) {
+        inputArray = deleteStringArrayAt(inputArray, length - 1);
+        inputText = "";
+        while (length &gt; 0) {
+            length -= 1;
+            inputText = getStringArrayAt(inputArray, length) + inputText;
+        }
+    }
+</backspace>
+
+<clearAll>
+    inputText = "";
+    inputArray = null;
+</clearAll>
+
+<onComplete>
+ 	url = "http://{$smarty.server.HTTP_HOST|escape:'html'}{$smarty.server.REQUEST_URI|escape:'html'}&amp;pkey=" + urlEncode(inputText);
+	jumpToLink("rssLink");
+    setRefreshTime(100);
+</onComplete>
+
+
+<mediaDisplay name="photoView"
+    showHeader="no"
+    showDefaultInfo="no"
+    drawItemText="no"
+
+    sliding="no"
+    rollItems="no"
+
+    viewAreaXPC="25"
+    viewAreaYPC="12"
+    viewAreaWidthPC="50"
+    viewAreaHeightPC="76"
+
+    rowCount="7"
+    columnCount="8"
+
+    itemOffsetXPC="3.8"
+    itemOffsetYPC="19"
+    itemWidthPC="9.3"
+    itemHeightPC="8.6"
+    itemGapXPC="2.2"
+    itemGapYPC="2.3"
+
+    sideTopHeightPC="0"
+    sideColorBottom="0:0:0"
+    sideColorTop="0:0:0"
+    backgroundColor="0:0:0"
+    itemBorderColor="0:0:0"
+
+    idleImageXPC="4.5"
+    idleImageYPC="76"
+    idleImageWidthPC="10"
+    idleImageHeightPC="16">
+
+    <onUserInput>
+        key = currentUserInput();
+        res = "true";
+print("key =",key);
+print("key0 =",key0);
+
+        idx = getFocusItemIndex();
+        row = idx % rows;
+        col = idx / rows;
+
+        if (key == keyDisplay) {
+            executeScript("switchLayout");
+        } else if (key == key0) {
+            executeScript("switchSpecialKeys");
+        } else if (key == keyPgUp) {
+            executeScript("backspace");
+        } else if (key == keyVStop) {
+            executeScript("clearAll");
+        } else if (key == keyVPlay) {
+            executeScript("onComplete");
+        } else if (key == keyUp &amp;&amp; Add(row, 0) == 0) {
+            setFocusItemIndex(Add(idx, rows) - 1);
+        } else if (key == keyDown &amp;&amp; Add(row, 1) == rows) {
+            setFocusItemIndex(Add(idx, 1) - rows);
+        } else if (key == keyLeft &amp;&amp; Add(col, 0) == 0) {
+            setFocusItemIndex(Add(idx, (cols - 1) * rows));
+        } else if (key == keyRight &amp;&amp; Add(col, 1) == cols) {
+            setFocusItemIndex(idx - (cols - 1) * rows);
+        } else {
+            res = "false";
+        }
+
+        if (res == "true") {
+            redrawDisplay();
+        }
+        res;
+    </onUserInput>
+
+	<text offsetXPC="0.7"    offsetYPC="0.7"    widthPC="98.6" heightPC="6.5" backgroundColor="40:40:40" fontSize="12" >{$mediaObj->getTitle()}</text>
+
+    <text offsetXPC="0"    offsetYPC="0"    widthPC="100" heightPC="0.5" backgroundColor="60:60:60" />
+    <text offsetXPC="0"    offsetYPC="0"    widthPC="0.5" heightPC="100" backgroundColor="60:60:60" />
+    <text offsetXPC="99.5" offsetYPC="0"    widthPC="0.5" heightPC="100" backgroundColor="60:60:60" />
+    <text offsetXPC="0"    offsetYPC="99.5" widthPC="100" heightPC="0.5" backgroundColor="60:60:60" />
+
+    <text offsetXPC="4.3" offsetYPC="8.8" widthPC="91.4" heightPC="9.4" backgroundColor="60:60:60" />
+    <text redraw="yes" offsetXPC="4.5" offsetYPC="9" widthPC="91" heightPC="9" fontSize="18" backgroundColor="30:30:30" foregroundColor="200:200:200">
+        <script>inputText + "_";</script>
+    </text>
+
+    <itemDisplay>
+        <text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" fontSize="20" backgroundColor="40:40:40" foregroundColor="200:200:200" cornerRounding="5">
+            <script>
+                if (getFocusItemIndex() == getQueryItemIndex()) {
+                    itemBg = bgFocus;
+                    itemFg = fgFocus;
+                } else {
+                    itemBg = getItemInfo("bg");
+                    itemFg = fgNormal;
+                }
+                getItemInfo("title");
+            </script>
+            <foregroundColor><script>itemFg;</script></foregroundColor>
+            <backgroundColor><script>itemBg;</script></backgroundColor>
+        </text>
+    </itemDisplay>
+    {call getIdleImages}
+</mediaDisplay>
+
+<item_template>
+    <title>
+        <script>
+            idx = getQueryItemIndex();
+            row = idx % rows;
+            col = idx / rows;
+
+            if (col &gt;= layoutCols) {
+                array = specialArray;
+                localCols = cols - layoutCols;
+                col -= layoutCols;
+                if (row &gt;= specialRows) {
+                    bg = bgControl;
+                } else {
+                    bg = bgSpecial;
+                }
+            } else {
+                array = layoutArray;
+                localCols = layoutCols;
+                bg = bgNormal;
+            }
+            idx = Add(row * localCols, col);
+            getStringArrayAt(array, idx);
+        </script>
+    </title>
+    <bg><script>bg;</script></bg>
+
+    <onClick>
+        value = getItemInfo("title");
+        if (value == "__") {
+            value = " ";
+        } else if (value == " ? ") {
+            value = "HELP!";
+        }
+
+        if (value == "&#8596;") {
+            executeScript("switchLayout");
+        } else if (value == "&#8660;") {
+            executeScript("switchSpecialKeys");
+        } else if (value == "OK") {
+            executeScript("onComplete");
+        } else if (value == " X ") {
+            executeScript("backspace");
+        } else if (null != value &amp;&amp; "" != value) {
+            inputText += value;
+            inputArray = pushBackStringArray(inputArray, value);
+        }
+        null;
+    </onClick>
+</item_template>
+{call getRssLink}
+<channel>
+    <itemSize><script>7*8;</script></itemSize>
+</channel>
+</rss>

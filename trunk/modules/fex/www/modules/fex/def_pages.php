@@ -55,6 +55,12 @@ $nav_pages['rss_fex_start'] = array (
 	'module'=> 'fex',
 	'load'	=> 'fex.php'
 );
+
+$nav_pages['rss_fex_keyboard'] = array (
+	'type'  => 'rss',
+	'module'=> 'fex',
+	'load'	=> 'fex.php'
+);
 // = XML pages ========================
 
 $nav_pages['xml_fex'] = array (
