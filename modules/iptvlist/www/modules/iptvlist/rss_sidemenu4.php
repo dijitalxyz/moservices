@@ -43,7 +43,7 @@ setReturnString( "" );
     itemImageYPC=0
 	itemImageWidthPC = 0
     itemImageHeightPC = 0
-    itemPerPage=10
+    itemPerPage=20
 
 	
 	imageFocus = ""
@@ -111,7 +111,6 @@ setReturnString( "" );
 
 	if ("return" == userInput)
 	{
- handle = "false";
     	}
     	else if ("left" == userInput || "right" == userInput)
     	{
@@ -164,7 +163,7 @@ setReturnString( "" );
 </item>
 
 <item>
-	<title><?= getMsg( 'iptvDelSel' ) ?></title>
+	<title><?= getMsg( 'iptvDelSelVid' ) ?></title>
 	<action>option_green</action>
 </item>
 

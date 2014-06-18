@@ -44,6 +44,7 @@
 			}
 		histCount = 0;
 		historyFilesArray = null;
+		historyElapsedArray = null;
 		if (currentHistFile != "")
 		{
 			dlok = readStringFromFile( "<?=$confs_path."ua_history/"?>" + currentHistFile);	
@@ -54,8 +55,8 @@
 					count = 0;
 					while( count != histCount )
 						{
-							historyFilesArray = pushBackStringArray(historyFilesArray, getStringArrayAt(dlok, c));  
-							c += 1;
+							historyFilesArray = pushBackStringArray(historyFilesArray, getStringArrayAt(dlok, c)); c += 1; 
+							historyElapsedArray = pushBackStringArray(historyElapsedArray, getStringArrayAt(dlok, c)); c += 1; 
 							count += 1;
 						}
 				}

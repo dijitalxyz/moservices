@@ -1,0 +1,7 @@
+[hwtool]
+	revision = 1
+	title = "Hardware tool for RTD"
+	role = util
+	files = "bin/gpio bin/hwinfo"
+	require = "xio"
+	size = 156

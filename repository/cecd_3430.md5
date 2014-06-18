@@ -1,0 +1,4 @@
+c5c9ab2e5cda5ab167952382890a68ee  bin/cecd
+d17b2b21d17b5476a9966b271d7cb66c  etc/cec-dev.ko
+3e414d1c033a86a7594da2c96d62ecdf  etc/cecd.conf
+2114c268f80cd539b6c6358a4fcd2c96  etc/init/S07cecd

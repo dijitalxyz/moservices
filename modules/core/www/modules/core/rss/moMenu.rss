@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <mediaDisplay name="photoView"
+
+   viewAreaXPC="0"
+   viewAreaYPC="0"
+   viewAreaWidthPC="100"
+   viewAreaHeightPC="100"
+
+   backgroundColor="0:0:0"
+
+   sideTopHeightPC="0"
+   sideBottomHeightPC="0"
+
+   sideColorBottom="0:0:0"
+   sideColorTop="0:0:0"
+
+   rowCount="5"
+   columnCount="4"
+
+   itemOffsetXPC="5.8824"
+   itemOffsetYPC="10.9375"
+   itemWidthPC="22.0588"
+   itemHeightPC="15.625"
+
+   itemGapXPC="0"
+   itemGapYPC="0"
+
+   itemBackgroundColor="0:0:0"
+
+   sliding="no"
+   rollItems="no"
+   drawItemText="no"
+   forceFocusOnItem="yes"
+
+   showHeader="no"
+   showDefaultInfo="no"
+
+   idleImageXPC="45.5882"
+   idleImageYPC="42.1875"
+   idleImageWidthPC="8.8235"
+   idleImageHeightPC="15.625"
+  >
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle01.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle02.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle03.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle04.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle05.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle06.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle07.png</idleImage>
+    <idleImage>/usr/local/etc/mos/www/modules/core/rss/images/idle08.png</idleImage>
+    <image offsetXPC="0" offsetYPC="3.125" widthPC="100" heightPC="5.2083" >
+      /usr/local/etc/mos/www/modules/core/rss/skins/default/focus_left.png 
+    </image>
+    <text align="left" offsetXPC="3.6765" offsetYPC="3.125" widthPC="92.6471" heightPC="5.2083"
+     fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="0:0:0">
+	<script>
+	  pageTitle;
+	</script> 
+    </text>
+    <image offsetXPC="0" offsetYPC="91.6667" widthPC="100" heightPC="5.2083" >
+      /usr/local/etc/mos/www/modules/core/rss/skins/default/focus_left.png 
+    </image>
+    <itemDisplay>
+      <script>
+	idx = getQueryItemIndex();
+	drawState = getDrawingItemState();
+	if (drawState == "unfocus")
+	{
+		border = "/usr/local/etc/mos/www/modules/core/rss/skins/default/unfocus.png";
+		color = "255:255:255";
+	}
+	else
+	{
+		border = "/usr/local/etc/mos/www/modules/core/rss/skins/default/focus_h_tile.png";
+		color = "0:0:0";
+	}
+      </script>
+      <image redraw="no" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
+        <script>
+            border;
+        </script>
+      </image>
+      <image offsetXPC="3.3333" offsetYPC="8.3333" widthPC="33.3333" heightPC="83.3333" >
+	<script>
+	  getStringArrayAt(imgArray, idx);
+	</script>
+      </image>
+      <text align="left" lines="2" offsetXPC="40" offsetYPC="20" widthPC="56.6667" heightPC="41.6667" 
+       fontSize="14" backgroundColor="-1:-1:-1">
+	<foregroundColor>
+          <script>
+            color;
+          </script>
+	</foregroundColor>
+	<script>
+	  getStringArrayAt(nameArray, idx);
+	</script>
+      </text>
+    </itemDisplay>
+    <onUserInput>
+	ret = "false";
+	i = getFocusItemIndex();
+	userInput = currentUserInput();
+
+	if (userInput == "up")
+	{
+		if( ( i % 5 ) == 0 ) ret = "true";
+	}
+	else if (userInput == "down")
+	{
+		if( ( ( i - -1 ) % 5 ) == 0 ) ret = "true";
+	}
+	ret;
+    </onUserInput>
+  </mediaDisplay>
+
+  <script>
+	moUrl = "http://127.0.0.1/?page=xml_menu";
+	savedItem = 0;
+  </script>
+
+  <onEnter>
+	setRefreshTime(10);
+  </onEnter>
+
+  <onRefresh>
+	setRefreshTime(-1);
+	showIdle();
+	itemCount = 0;
+
+	dlok = getURL( moUrl );
+	if (dlok != null) dlok = readStringFromFile( dlok );
+	if (dlok != null)
+	{
+		c = 0;
+		pageTitle = getStringArrayAt(dlok, c); c += 1;
+		itemCount = getStringArrayAt(dlok, c); c += 1;
+
+		nameArray = null;
+		imgArray  = null;
+		urlArray  = null;
+
+		count = 0;
+		while( count != itemCount )
+		{
+			nameArray = pushBackStringArray( nameArray, getStringArrayAt(dlok, c)); c += 1;
+			imgArray  = pushBackStringArray( imgArray,  getStringArrayAt(dlok, c)); c += 1;
+			urlArray  = pushBackStringArray( urlArray,  getStringArrayAt(dlok, c)); c += 1;
+
+			count += 1;
+		}
+	}
+	if( itemCount == 0 )
+	{
+		setFocusItemIndex( 0 );
+	}
+	else if( savedItem &gt; ( itemCount - 1 ))
+	{
+		setFocusItemIndex( itemCount - 1 );
+	}
+	else setFocusItemIndex( savedItem );
+
+	cancelIdle();
+	redrawDisplay();
+  </onRefresh>
+
+  <onExit>
+	setRefreshTime(-1);
+  </onExit>
+
+  <item_template>
+    <link>
+      <script>
+	savedItem = getFocusItemIndex();
+	url = getStringArrayAt(urlArray , savedItem);
+      </script>
+    </link>
+  </item_template>
+  <channel>
+    <itemSize>
+      <script>
+	itemCount;
+      </script>
+    </itemSize>
+  </channel>
+</rss>

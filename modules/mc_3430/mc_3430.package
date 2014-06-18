@@ -1,0 +1,9 @@
+[mc_3430]
+	revision = 3
+	title = "Midnight Commander v4.8.8"
+	role = util
+	init = S38mc
+	env = 3430
+	files = "bin/mc bin/mcdiff bin/mcedit bin/mcview etc/.mc/ etc/init/S38mc etc/mc/ libexec/mc/ share/mc/"
+	require = "xterm libslang libglib2 libpcre1 libintl libiconv libgccs"
+	size = 2640

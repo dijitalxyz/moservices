@@ -1,0 +1,42 @@
+#!/bin/sh
+start(){
+	echo "Starting unicgi..."
+	rm -rf /tmp/www/unicgi
+	ln -s /tmp/package/unicgi /tmp/www/unicgi
+	ln -s /tmp/www/unicgi/cgi-bin/UniCGI.cgi /tmp/www/cgi-bin/UniCGI.cgi
+	echo "unicgi started"
+	return 0;
+}
+
+stop(){
+	rm -rf /tmp/www/unicgi
+	return 0;
+}
+
+status(){
+	if [ -f /tmp/www/unicgi/home.html ] && [ -f /tmp/www/cgi-bin/UniCGI.cgi ]; then
+		echo "running";
+		return 0;
+	else
+		echo "stopped";
+		return 0;
+	fi;
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	status)
+		status
+		;;
+	*)
+      	echo $"Usage: $0 {start|stop|status}"
+		exit 1
+esac
+
+exit $?
+

@@ -1,6 +1,8 @@
 [iconmedia]
-	revision = 1
+	revision = 2
 	title = "IconBit media"
 	role = rss
-	files = "www/modules/iconmedia/"
-	size = 192
+	init="S38iconmedia"
+	files = "etc/init/S38iconmedia www/modules/iconmedia/"
+	require = "iconhack"
+	size = 208

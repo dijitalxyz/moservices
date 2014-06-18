@@ -17,15 +17,17 @@ class KtvProvider extends LiveTvProvider {
     
     public static $TTL_CATEGORY  		= 86400;	//24 Hours
     public static $TTL_CATEGORY_LIST  	= 86400;	//24 Hours
-    public static $TTL_CHANNEL  		= 3000; 	//5Min
+    public static $TTL_CHANNEL  		= 300; 	//5Min
     public static $TTL_EPG  			= 1209600;	//14 days;
 
     protected $ktvConnection;
+    protected 		$session;
 
     public function KtvProvider() {
         $this->sectionName = "Kartina.TV";
 		$this->log = Logger::getLogger(get_class());
         $this->ktvConnection = new KtvConnection($this);
+        $this->session = new HttpSession();
     }
 
     protected function getGroupList($objectId,$params) {
@@ -108,10 +110,19 @@ class KtvProvider extends LiveTvProvider {
 	}
 	
 	protected function getStreamUrl($objectId,$params) {
-		$gmt   = isset($params['gmt'])   ? $params['gmt']  : null;
+		//program id (gmt-timestamp)
+		$gmt   = isset($params['pid'])   ? $params['pid']  : null;
+		//handle protected password
 		$pkey   = isset($params['pkey']) ? $params['pkey'] : null;
-		if(null == $pkey && $this->config->get("allow_erotic") == true) {
-			$pkey = $this->config->get("password", $this->sectionName);
+		if(null == $pkey) {
+			if($this->config->get("allow_erotic") == true) {
+				$pkey = $this->config->get("pkey");
+			} else {
+				$pkey_ttl = $this->session->get("pkey_ttl");
+				if(isset($pkey_ttl) && $pkey_ttl > time()) {
+					$pkey = $this->session->get("pkey");	
+				}
+			}
 		}
 
 		$url = "/get_url?cid=$objectId";
@@ -125,11 +136,28 @@ class KtvProvider extends LiveTvProvider {
 		$reply = $this->ktvConnection->getData($url, "URL of stream $objectId");
 		$url = false === $reply ? false : (string) $reply->url;
 		if($url != false) {
-			$url = preg_replace('/(rtsp|http)(\/ts|)([^ "]*).*/s', '$1$3', $url);
-			$so = new MediaObject($objectId, self::$OBJ_STREAM_URL);
-			//url should expire immediatly
-			$so->setExpireDate(0);
-			$so->setParam("url", $url);
+			//handle protected streams
+			if("protected" == $url) {
+				$so = new MediaObject($objectId, self::$OBJ_PROTECTED_STREAM_URL,"Keyboard");
+				//should expire immediatly
+				$so->setExpireDate(0);
+				$so->setParam("special_keys", "special_keys.txt");
+				$localeObj = new MediaObject("de", self::$OBJ_KEY_LOCALE,"de");
+				$localeObj->setParam("layout", "layout_de.txt");
+				$so->addChild($localeObj);
+			} else {
+				//save pkey in session
+				if (isset($pkey)) {
+					$pkey_lifetime = $this->config->get("pkey_lifetime");
+					$this->session->set("pkey_ttl", time() + $pkey_lifetime);
+					$this->session->set("pkey", $pkey);
+				}
+				$url = preg_replace('/(rtsp|http)(\/ts|)([^ "]*).*/s', '$1$3', $url);
+				$so = new MediaObject($objectId, self::$OBJ_STREAM_URL);
+				//url should expire immediatly
+				$so->setExpireDate(0);
+				$so->setParam("url", $url);
+			}
 			return $so;
 		}
 		return false;
@@ -253,6 +281,7 @@ class KtvProvider extends LiveTvProvider {
 
         $program = new MediaObject((int) $xml->ut_start, self::$OBJ_PROGRAMM,$split[0]);
         $program->setParam('start',(int) $xml->ut_start);
+        $program->setParam('pid',(int) $xml->ut_start);
         $program->setParam('descr',$split[1]);
         return $program;
     }

@@ -1,0 +1,6 @@
+[xterm]
+	revision = 1
+	title = "xTerminal"
+	role = package
+	files = "share/terminfo/x/"
+	size = 44

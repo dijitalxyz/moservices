@@ -1,0 +1,9 @@
+[libintl_1230]
+	revision = 1
+	title = "Lib Intl 8.1.1"
+	role = package
+	check = "lib lib/libintl.so.8"
+	env = 1230
+	files = "lib/libintl.so lib/libintl.so.8 lib/libintl.so.8.1.1"
+	require = "libiconv libgccs"
+	size = 72

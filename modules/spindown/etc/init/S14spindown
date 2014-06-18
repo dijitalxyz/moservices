@@ -24,7 +24,7 @@ case "$1" in
   enable)
 	# add to rc.init
 	if [ -d /usr/local/etc/rc.init ] ; then
-		cp -a $mos/etc/S08SpinDown /usr/local/etc/rc.init/
+		cp -a $mos/etc/rc.init/S08SpinDown /usr/local/etc/rc.init/
 	fi
 	;;
 
@@ -35,9 +35,12 @@ case "$1" in
 	;;
   down)
 	# shootdown drives
-	for i in $( ls -1 /dev | sed -n '/^sd.$/p' ) ; do
+	devs=/dev
+	[ -d /dev/block ] && devs=/dev/block
 
-	  $mos/bin/sg_start --stop /dev/$i
+	for i in $( ls -1 $devs | sed -n '/^sd.$/p' ) ; do
+
+	  $mos/bin/sg_start --stop $devs/$i
 
 	  # mark drive as down
 	  [ -f /tmp/spindown.stat.new ] && sleep 5

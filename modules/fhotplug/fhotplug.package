@@ -1,5 +1,5 @@
 [fhotplug]
-	revision = 1
+	revision = 2
 	title = "Fork hotplug"
 	role = package
 	init = S00hotplug.sh

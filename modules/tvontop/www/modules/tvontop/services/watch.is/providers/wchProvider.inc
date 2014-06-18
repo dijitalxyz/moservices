@@ -166,7 +166,7 @@ class WchProvider extends VodProvider {
 				}
 			}
 		}
-		return $this->parseMovieList($objectId, $page, $nums, $genreName, $reply);
+		return $this->parseMovieList($objectId, $page, $nums, $genre, $genreName, $reply);
 	}
 
 	protected function search($objectId, $params) {
@@ -194,13 +194,23 @@ class WchProvider extends VodProvider {
 	}
 
 	protected function getStreamUrl($objectId, $params) {
+		$hd = false;
+		if(substr($objectId,0,3) == "HD_") {
+			$objectId = substr($objectId, 3);
+			$hd = true; 
+		}
+		
 		$url = $this->baseUrl."watch/".$objectId;
 		$reply = $this->getData($url, "movie info");
 		if(false !== $reply ) {
 			$so = new MediaObject($objectId, Provider::$OBJ_STREAM_URL);
 			//url should expire immediatly
 			$so->setExpireDate(0);
-			$streamUrl = (string)$reply->video;
+			if($hd && isset($reply->hdvideo)) {
+				$streamUrl = (string)$reply->hdvideo;
+			} else {
+			 	$streamUrl = (string)$reply->video;
+			}
 			//$so->setParam("url", (string)$reply->video);
 			$so->setParam("url", $streamUrl);
 			return $so;
@@ -224,7 +234,7 @@ class WchProvider extends VodProvider {
 		return $genreList;
 	}
 
-	protected function parseMovieList($objectId, $page, $perPage, $genreName, $xml, $search = null) {
+	protected function parseMovieList($objectId, $page, $perPage, $genre, $genreName, $xml, $search = null) {
 		if (null != $search) {
 			$type = self::$OBJ_SEARCH;
 			$movieList = new MediaObject($objectId, self::$OBJ_MOVIE_LIST,
@@ -330,10 +340,15 @@ class WchProvider extends VodProvider {
 			$movie->setParam("length", "$length " . $this->locale->msg("min"));
 		}
 		$video = new MediaObject((string)$xml->id, Provider::$OBJ_STREAM_URL,   $this->locale->msg("Смотреть"));
-//		$video->setParam("descr", $movie->getTitle());
 		//no live for stream url
 		$video->setTtl(0);
 		$movie->addChild($video);
+		if(isset($xml->hdvideo)) {
+			$video = new MediaObject("HD_".(string)$xml->id, Provider::$OBJ_STREAM_URL,   $this->locale->msg("Смотреть") . " " . $this->locale->msg("HD"));
+			//no live for stream url
+			$video->setTtl(0);
+			$movie->addChild($video);
+		}
 		return $movie;
 	}
 

@@ -149,7 +149,7 @@
     {$lines  = $height / $diffY + 1}
 
     <text align="justify" offsetXPC="35.1" offsetYPC="{$offY}" widthPC="63.1" heightPC="{$height}" fontSize="14"
-        backgroundColor="{$infoBgColor}" foregroundColor="{$valueFgColor}" lines="{$lines}">{$mediaObj->getParam(descr)}</text>
+        backgroundColor="{$infoBgColor}" foregroundColor="{$valueFgColor}" lines="{$lines}">{$mediaObj->getParam(descr)|escape:'html'}</text>
     <itemDisplay>
         <script>
         	{call calculateItemColors}
@@ -169,7 +169,7 @@
         </text>
     </itemDisplay>
     <!-- turn off idle images -->
-	<idleImage></idleImage>
+{call disableIdleImages}
 </mediaDisplay>
 
 {call getRssLink}
@@ -178,8 +178,8 @@
 {foreach $mediaObj->getChildren() as $child}
 {$link = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
     <item>
-        <title>{$child->title}</title>
-        <description>{$child->getParam(descr)}</description>
+        <title>{$child->title|escape:'html'}</title>
+        <description>{$child->getParam(descr)|escape:'html'}</description>
         <link>{$link}</link>
     </item>
 {/foreach}

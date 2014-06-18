@@ -1,6 +1,6 @@
 [tvontop]
-	revision = 11
-	title = "TV on Top 1.1.5"
+	revision = 12
+	title = "TV on Top 1.1.6"
 	role = rss
 	files = "www/modules/tvontop/"
-	size = 3308
+	size = 3452

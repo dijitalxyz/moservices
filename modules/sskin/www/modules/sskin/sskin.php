@@ -3,6 +3,210 @@
 $fws  = array();
 $fmem = 0;
 
+
+// ------------------------------------
+function analizeSkin( $w, $m, $s )
+{
+global $mos;
+global $fws;
+
+		$fws[ $m ]['skins'][ $s ]['status'] = 'install';
+
+		if( file_exists( "$w$m/$m.$s.ini" ))
+		{
+			$a = array();
+			$a = parse_ini_file( "$w$m/$m.$s.ini", false );
+			$fws[ $m ]['skins'][ $s ]['title'] = $a['title'];
+			$fws[ $m ]['skins'][ $s ]['irev' ] = $a['revision'];
+			$fws[ $m ]['skins'][ $s ]['ilen' ] = $a['size']*1024;
+		}
+		else
+		{
+			$fws[ $m ]['skins'][ $s ]['title'] = $s;
+			$fws[ $m ]['skins'][ $s ]['irev' ] = 1;
+			$fws[ $m ]['skins'][ $s ]['ilen' ] = filesize($f);
+		}
+		if( ! file_exists( "$mos/www/modules/sskin/skins/$m.$s.png"))
+		 if( file_exists( "$w$m/$m.$s.png"))
+		  exec( "cp -a $w$m/$m.$s.png $mos/www/modules/sskin/skins/" );
+
+		$fws[ $m ]['count'] += 1;
+}
+// ------------------------------------
+function getSkinsList()
+{
+global $mos;
+global $fws;
+global $fmem;
+
+	$cpu_id   = file_get_contents( '/sys/realtek_boards/cpu_id' );
+	$board_id = file_get_contents( '/sys/realtek_boards/board_id' );
+
+	$s = exec( 'free | grep "Mem:"' );
+	$s = preg_replace( '| +|', ' ', $s );
+	$a = explode( " ", $s);
+	$ram = $a[1];
+
+	$srev = trim( @file_get_contents( '/etc/system_svn_version' ));
+
+	$fws  = array();
+
+	// make list of fws and skins
+	$f = $mos.'/www/modules/sskin/skins/skins.ini';
+	if( file_exists( $f ))
+	{
+		// load avaiable skins
+
+		$ss = array();
+		$ss = parse_ini_file( $f, true );
+
+		foreach( $ss as $skin => $item )
+		{
+			if( isset( $item['cpu'] )
+			&& strpos( $item['cpu'], $cpu_id ) === false ) continue; 
+
+			if( isset( $item['board'] )
+			&& strpos( $item['board'], $board_id ) === false ) continue; 
+
+			if( isset( $item['ram'] )
+			&& $item['ram'] > $ram ) continue; 
+
+			if( isset( $item['system'] )
+			&& $item['system'] > $srev ) continue; 
+
+			if( $item['role'] == 'fw' )
+			{
+				$fws[ $skin ]['title'] = $item['title'];
+				$fws[ $skin ]['arev']  = $item['revision'];
+				$fws[ $skin ]['alen']  = $item['size']*1024;
+				$fws[ $skin ]['status']= 'noinstall';
+			}
+			else
+			{
+				$fw = $item['fw'];
+
+				if( ! isset( $fws[ $fw ]['status'] )) $fws[ $fw ]['status']= 'disable';
+
+				$a = explode( '_', $skin);
+				$fws[ $fw ]['skins'][ $a[1] ] = array(
+					'title' => $item['title'],
+					'arev'  => $item['revision'],
+					'alen'  => $item['size']*1024,
+					'status'=> 'noinstall'
+				);
+			}
+		}
+	}
+
+	// find installed skins
+	$w = '/usr/share/bin/';
+	$d = opendir( $w );
+	while ( $m = readdir( $d ) )
+	{
+		if(( $m == '.' )or( $m == '..' )) continue;
+		if( ! is_dir( $w.$m )) continue;
+
+		$fws[ $m ]['status'] = 'install';
+		$fws[ $m ]['count'] = 0;
+
+		if( file_exists( "$w$m/$m.ini" ))
+		{
+			$a = array();
+			$a = parse_ini_file( "$w$m/$m.ini", false );
+			$fws[ $m ]['title' ] = $a['title'];
+			$fws[ $m ]['irev'  ] = $a['revision'];
+			$fws[ $m ]['ilen'  ] = $a['size']*1024;
+		}
+		else
+		{
+			$title = $m;
+			if( file_exists( $w.$m.'/fw_desc.txt' ))
+			 $title = file_get_contents( $w.$m.'/fw_desc.txt' );
+
+			$fws[ $m ]['title' ] = $title;
+			$fws[ $m ]['irev'  ] = 1;
+
+			// calculate size
+			$a = exec( "echo $( du -s $w$m ) | cut -d' ' -f1" );
+			$a -= exec( "echo $( du -s $w$m/res.* ) | cut -d' ' -f1" );
+
+			$fws[ $m ]['ilen'] = $a*1024;
+		}
+
+		$g = glob( $w.$m.'/res.*.squash' );
+
+		if( $g !== false && count( $g ) > 0 )
+		foreach( $g as $f )
+		{
+			$a = explode( '.', basename( $f ));
+			$s = $a[1];
+
+			analizeSkin( $w, $m, $s );
+		}
+		else
+		{
+			// without resources
+			analizeSkin( $w, $m, 'default' );
+		}
+	}
+
+	// find active skin
+	if( file_exists( "$w/boot_fw.conf" ))
+	{
+		$a = array();
+		$a = parse_ini_file( "$w/boot_fw.conf", false );
+		$fws[ $a['fw'] ]['status'] = 'active';
+		$fws[ $a['fw'] ]['skins'][ $a['skin'] ]['status'] = 'active';
+	}
+
+	// calculate avaiable memory
+	$a = exec( " echo $( df | grep -E '^/dev/root.*/$' )|cut -d' ' -f4" );
+	$fmem = $a * 1024;
+
+	// calculate real length of skin
+	foreach( $fws as $fw => $pfw )
+	{
+		$stf  = $pfw[ 'status' ];
+
+		if( $stf == 'disable' ) continue;
+
+		if( empty( $pfw['skins'] ) || count( $pfw['skins'] ) == 0 )
+		{
+			// noskin fw
+			$fws[ $fw ]['skins']['default'] = array(
+				'title' => 'Default',
+				'irev'  => $pfw['irev'],
+				'ilen'  => 0,
+				'status'=> $pfw['status'],
+			);
+			$pfw = $fws[ $fw ];
+		}
+
+		foreach( $pfw['skins'] as $skin => $pskin )
+		{
+			$sts  = $pskin[ 'status' ];
+
+			if( $stf == 'noinstall' )
+			{
+				$len = $pfw['alen'] + $pskin['alen'];
+			}
+			elseif( $sts == 'noinstall' )
+			{
+				$len = $pskin['alen'];
+			}
+			elseif( $pfw['count'] > 1 )
+			{
+				$len = $pskin['ilen'];
+			}
+			else
+			{
+				$len = $pfw['ilen'] + $pskin['ilen'];
+			}
+			$fws[ $fw ]['skins'][ $skin ]['len' ] = $len;
+		}
+	}
+}
+//
 // ------------------------------------
 function sskin_actions( $act, $log )
 {
@@ -110,16 +314,21 @@ global $fmem;
 <b><?= getMsg('coreFreeMem').getHumanValue( $fmem ) ?></b>
 </div>
 <?php
-/*
-echo "<pre>";
-print_r( $fws );
-echo "</pre>";
-*/
+
+if( isset( $_REQUEST['debug'] ))
+{
+	echo "<pre>";
+	print_r( $fws );
+	echo "</pre>";
+}
+
 	ksort( $fws );
 
 	foreach( $fws as $fw => $pfw )
 	{
 		$stf  = $pfw[ 'status' ];
+
+		if( $stf == 'disable' ) continue;
 
 ?>
 <div class="ssk_fw">
@@ -151,23 +360,26 @@ echo "</pre>";
 					'url'	=> "?page=sskin&fw=$fw&skin=$skin&act=install"
 				);
 			}
-			elseif( $sts != 'active' )
+			else
 			{
-				$menu["$fw.$skin"]['items']['select'] = array (
-					'type'	=> 'item',
-					'title' => getMsg( 'sskinSelect' ),
-					'url'	=> "?page=sskin&fw=$fw&skin=$skin&act=select"
-				);
+				if( $sts != 'active' )
+				{
+					$menu["$fw.$skin"]['items']['select'] = array (
+						'type'	=> 'item',
+						'title' => getMsg( 'sskinSelect' ),
+						'url'	=> "?page=sskin&fw=$fw&skin=$skin&act=select"
+					);
 
-				$url = "?page=sskin&act=delete&fw=$fw";
-				if( $pfw['count'] > 1 )
-				 $url .= "&skin=$skin";
+					$url = "?page=sskin&act=delete&fw=$fw";
+					if( $pfw['count'] > 1 )
+					 $url .= "&skin=$skin";
 
-				$menu["$fw.$skin"]['items']['delete'] = array (
-					'type'	=> 'item',
-					'title' => getMsg( 'coreCm_delete' ),
-					'url'	=> $url
-				);
+					$menu["$fw.$skin"]['items']['delete'] = array (
+						'type'	=> 'item',
+						'title' => getMsg( 'coreCm_delete' ),
+						'url'	=> $url
+					);
+				}
 
 				if( ( isset( $pskin['arev'] ))
 				  &&( $pskin['arev'] <> $pskin['irev'] )
@@ -212,11 +424,11 @@ echo "</pre>";
 			{
 				echo "<div class=\"ssk_update\">\n";
 
-				if( $sts <> 'active' )
-				{
+//				if( $sts <> 'active' )
+//				{
 					echo "<a href=\"?page=sskin&fw=$fw&skin=$skin&act=update\" title=\"".getMsg( 'coreCm_update' )."\">".$pskin['arev']."</a>\n";
-				}
-				else echo $pskin['arev']."\n";
+//				}
+//				else echo $pskin['arev']."\n";
 				echo "</div>\n";
 			}
 
@@ -236,11 +448,11 @@ echo "</pre>";
 		{
 			echo "<div class=\"ssk_update\">\n";
 
-			if( $stf <> 'active' )
-			{
+//			if( $stf <> 'active' )
+//			{
 				echo "<a href=\"?page=sskin&fw=$fw&act=update\" title=\"".getMsg( 'coreCm_update' )."\">".$pfw['arev']."</a>\n";
-			}
-			else echo $pfw['arev']."\n";
+//			}
+//			else echo $pfw['arev']."\n";
 			echo "</div>\n";
 		}
 
@@ -256,152 +468,6 @@ echo "</pre>";
 }
 
 // ------------------------------------
-function getSkinsList()
-{
-global $mos;
-global $fws;
-global $fmem;
-
-	$fws  = array();
-
-	// make list of fws and skins
-	$f = $mos.'/www/modules/sskin/skins/skins.ini';
-	if( file_exists( $f ))
-	{
-		// load avaiable skins
-
-		$ss = array();
-		$ss = parse_ini_file( $f, true );
-
-		foreach( $ss as $skin => $item )
-		{
-			if( $item['role'] == 'fw' )
-			{
-				$fws[ $skin ]['title'] = $item['title'];
-				$fws[ $skin ]['arev']  = $item['revision'];
-				$fws[ $skin ]['alen']  = $item['size']*1024;
-				$fws[ $skin ]['status']= 'noinstall';
-			}
-			else
-			{
-				$fw = $item['fw'];
-				$a = explode( '_', $skin);
-				$fws[ $fw ]['skins'][ $a[1] ] = array(
-					'title' => $item['title'],
-					'arev'  => $item['revision'],
-					'alen'  => $item['size']*1024,
-					'status'=> 'noinstall'
-				);
-			}
-		}
-	}
-
-	// find installed skins
-	$w = '/usr/share/bin/';
-	$d = opendir( $w );
-	while ( $m = readdir( $d ) )
-	{
-		if(( $m == '.' )or( $m == '..' )) continue;
-		if( ! is_dir( $w.$m )) continue;
-
-		$fws[ $m ]['status'] = 'install';
-		$fws[ $m ]['count' ] = 0;
-
-		if( file_exists( "$w$m/$m.ini" ))
-		{
-			$a = array();
-			$a = parse_ini_file( "$w$m/$m.ini", false );
-			$fws[ $m ]['title' ] = $a['title'];
-			$fws[ $m ]['irev'  ] = $a['revision'];
-			$fws[ $m ]['ilen'  ] = $a['size']*1024;
-		}
-		else
-		{
-			$title = $m;
-			if( file_exists( $w.$m.'/fw_desc.txt' ))
-			 $title = file_get_contents( $w.$m.'/fw_desc.txt' );
-
-			$fws[ $m ]['title' ] = $title;
-			$fws[ $m ]['irev'  ] = 1;
-
-			$a = exec( "echo $( du -s $w$m ) | cut -d' ' -f1" );
-			$a -= exec( "echo $( du -s $w$m/res.* ) | cut -d' ' -f1" );
-
-			$fws[ $m ]['ilen'] = $a*1024;
-		}
-
-		foreach( glob( $w.$m.'/res.*.squash' ) as $f )
-		{
-			$a = explode( '.', basename( $f ));
-			$s = $a[1];
-
-			$fws[ $m ]['skins'][ $s ]['status'] = 'install';
-
-			if( file_exists( "$w$m/$m.$s.ini" ))
-			{
-				$a = array();
-				$a = parse_ini_file( "$w$m/$m.$s.ini", false );
-				$fws[ $m ]['skins'][ $s ]['title'] = $a['title'];
-				$fws[ $m ]['skins'][ $s ]['irev' ] = $a['revision'];
-				$fws[ $m ]['skins'][ $s ]['ilen' ] = $a['size']*1024;
-			}
-			else
-			{
-				$fws[ $m ]['skins'][ $s ]['title'] = $s;
-				$fws[ $m ]['skins'][ $s ]['irev' ] = 1;
-				$fws[ $m ]['skins'][ $s ]['ilen' ] = filesize($f);
-			}
-			if( ! file_exists( "$mos/www/modules/sskin/skins/$m.$s.png"))
-			 if( file_exists( "$w$m/$m.$s.png"))
-			  exec( "cp -a $w$m/$m.$s.png $mos/www/modules/sskin/skins/" );
-
-			$fws[ $m ]['count' ] += 1;
-		}
-	}
-
-	// find active skin
-	if( file_exists( "$w/boot_fw.conf" ))
-	{
-		$a = array();
-		$a = parse_ini_file( "$w/boot_fw.conf", false );
-		$fws[ $a['fw'] ]['status'] = 'active';
-		$fws[ $a['fw'] ]['skins'][ $a['skin'] ]['status'] = 'active';
-	}
-
-	// calculate avaiable memory
-	$a = exec( " echo $( df | grep -E '^/dev/root.*/$' )|cut -d' ' -f4" );
-	$fmem = $a * 1024;
-
-	// calculate real length of skin
-	foreach( $fws as $fw => $pfw )
-	{
-		$stf  = $pfw[ 'status' ];
-
-		foreach( $pfw['skins'] as $skin => $pskin )
-		{
-			$sts  = $pskin[ 'status' ];
-
-			if( $stf == 'noinstall' )
-			{
-				$len = $pfw['alen'] + $pskin['alen'];
-			}
-			elseif( $sts == 'noinstall' )
-			{
-				$len = $pskin['alen'];
-			}
-			elseif( $pfw['count'] > 1 )
-			{
-				$len = $pskin['ilen'];
-			}
-			else
-			{
-				$len = $pfw['ilen'] + $pskin['ilen'];
-			}
-			$fws[ $fw ]['skins'][ $skin ]['len' ] = $len;
-		}
-	}
-}
-// ------------------------------------
 function sskin_body()
 {
 	getSkinsList();
@@ -415,12 +481,16 @@ global $mos;
 global $fws;
 global $fmem;
 
+	header( "Content-type: text/plain; charset=utf-8" );
+
 	getSkinsList();
 
 	$skins = array();
 
 	foreach( $fws as $fw => $pfw )
 	{
+		if( $pfw['status'] == 'disable' ) continue;
+
 		foreach( $pfw['skins'] as $skin => $pskin )
 		{
 			$skins["$fw.$skin"] = array(
@@ -444,10 +514,15 @@ global $fmem;
 		$s .= getMosUrl().'?page=rss_sskin_actions&fw='.$item['fw'].'&skin='.$item['skin']. PHP_EOL;
 	}
 
+if( isset( $_REQUEST['debug'] ))
+{
+	echo "$s";
+}
+else
+{
 	file_put_contents( '/tmp/put.dat', $s );
-
-	header( "Content-type: text/plain" );
 	echo "/tmp/put.dat";
+}
 }
 //
 // ====================================

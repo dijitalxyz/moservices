@@ -1,0 +1,6 @@
+[yify]
+	revision = 4
+	title = "Yify.tv"
+	role = rss
+	files = "www/modules/yify/"
+	size = 112

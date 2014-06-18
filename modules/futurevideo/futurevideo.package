@@ -1,0 +1,7 @@
+[futurevideo]
+	revision = 2.11
+	title = "Futurevideo"
+	role = rss
+	files = "www/modules/futurevideo/"
+	logo = "modules/futurevideo/futurevideo.png"
+	size = 168

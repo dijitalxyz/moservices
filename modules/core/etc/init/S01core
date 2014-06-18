@@ -2,36 +2,26 @@
 #
 # description: Starts and stops the core of moServices
 #
+
+# Replace IMS menu to moMenu
+mosReplace=yes
+
 etc=/usr/local/etc
 mos=$etc/mos
+
 dvs=$etc/dvdplayer
 spa=$dvs/savedrss/scripts
-xtr='/tmp/usbmounts/sda1/scripts/Xtreamering'
+
 menu=$mos/www/modules/core/def_rss.php
+more=$mos/www/modules/core/rss
 
-symdir()
+dst='/tmp/www'
+#
+# -------------------------------------
+doXtreamer()
 {
-	local sr=$1
-	local ds=$2
-	local j=
-
-	[ ! -d $ds ] && mkdir -p $ds
-	for j in $sr/* ; do
-		j=$(echo $j | sed "s/.*\//\//")
-		if [ -f $sr$j ] ; then
-			ln -s "$sr$j" "$ds$j"
-		elif [ -d $sr$j ] ; then
-			symdir "$sr$j" "$ds$j"
-		fi
-	done
-}
-
-case "$1" in
-  start)
-	if [ -d /sbin/www ] ; then
-		# xTreamer FW
-		mos_url='http://127.0.0.1/mos/'
-
+	case "$1" in
+	  start)
 		# present hdds ?
 		if ! $mos/bin/wait_mount ; then
 			# present xTreamering ?
@@ -39,21 +29,22 @@ case "$1" in
 			for i in $( ls /tmp/usbmounts ) ; do
 				if [ -f /tmp/usbmounts/$i/scripts/Xtreamering/index.php ] ; then
 					xtr=/tmp/usbmounts/$i/scripts/Xtreamering
+					mount -o remount,rw /tmp/usbmounts/$i
 					break
 				fi
 			done
-			if [ -n $xtr ] ; then
+			if [ -n "$xtr" ] ; then
 				[ ! -f $xtr/index_orig.php ] && mv -f $xtr/index.php $xtr/index_orig.php
 
 				# redirect to rss_menu
 				echo '<?php
 header("HTTP/1.1 301 Moved Permanently");
-header("Location: http://".$_SERVER['HTTP_HOST']."/mos/?page=rss_menu");
+header("Location: http://".$_SERVER["HTTP_HOST"]."/mos/?page=rss_menu");
 exit();
 ?>' > $xtr/index.php
 
 				# add orig menu to rss_menu
-				sed -i '
+				grep -q 'Xtreamering/index_orig.php' $menu || sed -i '
 /\$nav_rss\["aaa"\] = array/{N;N;N;N;N;N;d}
 /\?>/i\
 $nav_rss["aaa"] = array (\
@@ -67,84 +58,9 @@ $nav_rss["aaa"] = array (\
 			fi
 		fi
 		# set cmdset
-		sed -ir 's/^([ \t]*commands[ \t]*=[ \t]*).*$/\1xtreamer/' $mos/etc/core.ini
-
-		dst='/sbin/www/mos'
-	else
-		# Standard FW
-		sleep 10
-
-		mos_url='http://127.0.0.1/'
-
-		orig='/usr/local/bin/scripts/menu.rss'
-		if [ -f $etc/menu_orig.rss ] ; then
-			orig=$etc/menu_orig.rss
-		else
-			[ -f $spa/menu.rss ] && [ ! -L $spa/menu.rss ] && {
-				mv -f $spa/menu.rss $etc/menu_orig.rss
-				orig=$etc/menu_orig.rss
-			}
-		fi
-		mkdir -p $spa
-		rm -f $spa/menu.rss
-		ln -s $mos/www/modules/core/rss/moMenu.rss $spa/menu.rss
-
-		# Asus HD2 patch
-		nas=/usr/local/bin/scripts/nas/nasSetup.rss
-		if [ -L $nas ] ; then
-			[ ! -f $nas.orig ] && mv -f $nas $nas.orig
-			ln -s $mos/www/modules/core/rss/moServices.rss $nas
-		else
-			if [ -f $nas ] ; then
-				mount | grep -q $nas || mount -o bind $mos/www/modules/core/rss/moServices.rss $nas
-			fi
-		fi
-
-		# add orig menu to rss_menu
-		sed -i '
-/\$nav_rss\["aaa"\] = array/{N;N;N;N;N;N;d}
-/\?>/i\
-$nav_rss["aaa"] = array (\
-	"module"=> "core",\
-	"rss"	=> "rss_file://'$orig'",\
-	"icon"  => "rss/images/OnlineMedia.png",\
-	"title" => "Online Media"\
-);\
-
-' $menu
-		# set cmdset
-		sed -ir 's/^([ \t]*commands[ \t]*=[ \t]*).*$/\1sdk/' $mos/etc/core.ini
-
-		dst='/tmp/www'
-
-		# remove symlink to www root
-		if [ -L $dst ] ; then
-			symlink=$(ls -la $dst | sed 's/.*-> //')
-			rm -f $dst
-			symdir $symlink $dst
-		fi
-	fi
-
-	# copy www files
-	[ ! -d $dst ] && mkdir $dst
-	cp -a $mos/www/index.php $dst
-	cp -a $mos/www/favicon.ico $dst
-	[ -e $dst/modules ] && rm -f $dst/modules
-	ln -s $mos/www/modules/ $dst/modules
-
-	sync
-
-	if [ ! -d /sbin/www ] ; then
-		$mos/bin/php -q $dst/index.php page=rss_menu > $mos/www/modules/core/rss/moMenu.rss &
-		$mos/bin/php -q $dst/index.php page=rss_services > $mos/www/modules/core/rss/moServices.rss &
-	fi
-	;;
-
-  stop)
-	sed -i '/\$nav_rss\["aaa"\] = array/{N;N;N;N;N;N;d}' $menu
-	if [ -d /sbin/www ] ; then
-		# xTreamer FW
-
+		grep -Eq 'commands.*xtreamer' $mos/etc/core.ini || sed -ir 's/^([ \t]*commands[ \t]*=[ \t]*).*$/\1xtreamer/' $mos/etc/core.ini
+		;;
+	  stop)
 		# present xTreamering ?
 		xtr='';
 		for i in $( ls /tmp/usbmounts ) ; do
@@ -158,21 +74,126 @@ $nav_rss["aaa"] = array (\
 		[ -f $xtr/index.php ] && \
 		[ -f $xtr/index_orig.php ] && \
 		mv -f $xtr/index_orig.php $xtr/index.php
-		dst='/sbin/www/mos'
+		;;
+	  *)
+		;;
+	esac
+	dst='/sbin/www/mos'
+}
+#
+# =====================================
+case "$1" in
+  start)
+	if [ -d /sbin/www ] ; then
+
+		doXtreamer start
 	else
 		# Standard FW
-		if [ -f $etc/menu_orig.rss ] ; then
-			mv -f $etc/menu_orig.rss $spa/menu.rss
+
+		# unicgi patch
+		uni=''
+		for i in $etc /usr/local/bin /usr/local/bin/Resource ; do
+			if [ -f $i/package/script/unicgi ] ; then
+				if grep -Eq 'rm -rf /var/www$' $i/package/script/unicgi ; then
+					uni="$( realpath $i/package/script/unicgi )"
+					break
+				fi
+			fi
+		done
+		if [ -n "$uni" ] ; then
+			mount -o bind $mos/etc/unicgi $uni
+		fi
+
+		# find and replace default IMS
+		orig='/usr/local/bin/scripts/menu.rss'
+		if [ "$mosReplace" == 'yes' ] ; then
+			if [ -f $etc/menu_orig.rss ] ; then
+				orig=$etc/menu_orig.rss
+			else
+				if [ -f $spa/menu.rss ] ; then
+
+					if [ -L $spa/menu.rss ] ; then
+						if ! [ "$( readlink $spa/menu.rss )" == "$more/moMenu.rss" ] ; then
+							ln -s $( readlink $spa/menu.rss ) $etc/menu_orig.rss
+							rm -f $spa/menu.rss
+							orig=$etc/menu_orig.rss
+						fi
+					else
+						mv -f $spa/menu.rss $etc/menu_orig.rss
+						orig=$etc/menu_orig.rss
+					fi
+				fi
+			fi
+			mkdir -p $spa
+
+			[ -f $spa/menu.rss ] && \
+			[ "$( readlink $spa/menu.rss )" != "$more/moMenu.rss" ] && \
+			rm -f $spa/menu.rss
+
+			[ -f $spa/menu.rss ] || ln -s $more/moMenu.rss $spa/menu.rss
+
 		else
-			rm -Rf $dvs/savedrss
-			rm -f $etc/menu_default.rss
+			if [ -f $spa/menu.rss ] ; then
+
+				if [ -L $spa/menu.rss ] ; then
+					if [ "$( readlink $spa/menu.rss )" == "$more/moMenu.rss" ] ; then
+						rm -f $spa/menu.rss
+						[ -f $etc/menu_orig.rss ] && mv $etc/menu_orig.rss $spa/menu.rss
+					fi
+				fi
+				orig=$spa/menu.rss
+			fi
 		fi
 
 		# Asus HD2 patch
 		nas=/usr/local/bin/scripts/nas/nasSetup.rss
 		if [ -L $nas ] ; then
-			[ -f $nas.orig ] && mv -f $nas.orig $nas
+			[ ! -f $nas.orig ] && mv -f $nas $nas.orig
+			[ -f $nas ] && [ "$( readlink $spa/menu.rss )" != "$more/moServices.rss" ] && rm -f $nas
+			[ ! -f $nas ] && ln -s $more/moServices.rss $nas
 		else
+			if [ -f $nas ] ; then
+				mount | grep -q $nas || mount -o bind $more/moServices.rss $nas
+			fi
+		fi
+
+		# add orig menu to rss_menu
+		grep -q "$orig" $menu || sed -i '
+/\$nav_rss\["aaa"\] = array/{N;N;N;N;N;N;d}
+/\?>/i\
+$nav_rss["aaa"] = array (\
+	"module"=> "core",\
+	"rss"	=> "rss_file://'$orig'",\
+	"icon"  => "rss/images/OnlineMedia.png",\
+	"title" => "Online Media"\
+);\
+
+' $menu
+		# set cmdset
+		grep -Eq 'commands.*sdk' $mos/etc/core.ini || sed -ir 's/^([ \t]*commands[ \t]*=[ \t]*).*$/\1sdk/' $mos/etc/core.ini
+
+		dst='/tmp/www'
+	fi
+
+	# copy www files
+	[ ! -d $dst ] && mkdir $dst
+	cp -a $mos/www/index.php $dst
+	cp -a $mos/www/favicon.ico $dst
+	[ -e $dst/modules ] && rm -f $dst/modules
+	ln -s $mos/www/modules/ $dst/modules
+	sync
+	;;
+
+  stop)
+	if [ -d /sbin/www ] ; then
+
+		doXtreamer stop
+	else
+		# Standard FW
+
+		# Asus HD2 patch
+		nas=/usr/local/bin/scripts/nas/nasSetup.rss
+		if ! [ -L $nas ] ; then
 			mount | grep -q $nas && umount $nas
 		fi
 
@@ -181,9 +202,6 @@ $nav_rss["aaa"] = array (\
 	rm -f $dst/index.php
 	rm -f $dst/favicon.ico
 	rm -f $dst/modules
-
-	rm -f $mos/www/modules/core/rss/moMenu.rss
-	rm -f $mos/www/modules/core/rss/moServices.rss
 	;;
 
   status | enable | disable)

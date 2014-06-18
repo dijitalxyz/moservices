@@ -1,12 +1,16 @@
 #EXTM3U
+#EXTINF:0,Zeitgeist
+http://192.168.6.1/files/Zeitgeist_I.avi
+#EXTINF:0,Zeitgeist: Moving Forward
+http://192.168.6.1/files/Zeitgeist_Moving_Forward.avi
 #EXTINF:0,MMS - BBC News
 mms://rmv8.bbc.net.uk/news/olmedia/n5ctrl/tvseq/od/bbc1/bb/wm/video/click_bb.wmv
 #EXTINF:0,Active Channel (United Kingdom)
 rtmp://d1yolrx8wdti.rtmphost.com/simulcast&swfUrl=http://www.theactivechannel.com/flash/flowplayer.rtmp.swf&pageUrl=http://www.theactivechannel.com/live/&playpath=livestream&live=1
-#EXTINF:0,RTE ONE (Ireland)
-rtmpe://fmsod.rte.ie/live/&swfUrl=http://www.rte.ie/player/assets/player_454.swf&pageUrl=http://www.rte.ie/&playpath=rte1&app=live/&flashVer=WIN10,3,183,10
 #EXTINF:0,Pentagon Channel (US)
 rtmp://cp114761.live.edgefcs.net:443/live/&swfUrl=http://www.pentagonchannel.mil/swf/flvPlayer.swf&pageUrl=http://www.pentagonchannel.mil/library.html&playpath=tpc-live_1@44263&app=live
+#EXTINF:0,RTE ONE (Ireland)
+rtmpe://fmsod.rte.ie/live/&swfUrl=http://www.rte.ie/player/assets/player_454.swf&pageUrl=http://www.rte.ie/&playpath=rte1&app=live/&flashVer=WIN10,3,183,10
 #EXTINF:0,RTE 2 TWO (Ireland)
 rtmpe://fmsod.rte.ie/live/&swfUrl=http://www.rte.ie/player/assets/player_454.swf&pageUrl=http://www.rte.ie/&playpath=rte2&app=live/&flashVer=WIN10,3,183,10
 #EXTINF:0,Ideal Extra (UK)

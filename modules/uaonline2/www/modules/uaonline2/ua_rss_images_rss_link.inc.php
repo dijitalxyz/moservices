@@ -14,17 +14,24 @@
       <?= $ua_images_path . static::descr_image ?>
     </image>
 	*/
+	global $ua_images_foldername;
+	global $ua_path_link;
 ?>
+		<scrollbar offsetXPC=93 offsetYPC=13 widthPC=2.26 heightPC=50 backgroundImage="<?=$ua_path_link.$ua_images_foldername?>ua_scroll_bar_01.png" foregroundImage="<?=$ua_path_link.$ua_images_foldername?>ua_scroll_bar_02.png" border=7 offset=0 direction="vertical" redraw="yes">
+		<totalSize>
+			<script>
+				getPageInfo("itemCount");
+			</script>
+		</totalSize>
+		<startIndex>
+			<script>
+				getFocusItemIndex();
+			</script>
+		</startIndex>
+	</scrollbar>
 	
 	
-
-
-	
-
-
-
-	
-	<image  offsetXPC="<?= static::image_poster_offsetXPC ?>" offsetYPC="<?= static::image_poster_offsetYPC ?>" widthPC="<?= static::image_poster_widthPC ?>" heightPC="<?= static::image_poster_heightPC ?>">
+	<image redraw="yes" offsetXPC="<?= static::image_poster_offsetXPC ?>" offsetYPC="<?= static::image_poster_offsetYPC ?>" widthPC="<?= static::image_poster_widthPC ?>" heightPC="<?= static::image_poster_heightPC ?>">
 			<script> img;</script>
 	</image>
 

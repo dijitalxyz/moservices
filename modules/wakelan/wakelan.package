@@ -1,0 +1,10 @@
+[wakelan]
+	revision = 1
+	title = "Wake up NAS over LAN"
+	role = daemon
+	init = S38wakelan
+	actions = "restart"
+	backup = "etc/wakelan.conf"
+	config_edit = "etc/wakelan.conf"
+	files = "bin/wakelan etc/wakelan.conf etc/init/S38wakelan"
+	size = 56

@@ -1,0 +1,9 @@
+[cecd_1230]
+	revision= 1
+	title = "HDMI CEC daemon 0.5.1"
+	role = daemon
+	init = S07cecd
+	config_edit = "etc/cecd.conf"
+	files = "bin/cecd etc/cecd.conf etc/init/S07cecd"
+	env = 1230
+	size = 120

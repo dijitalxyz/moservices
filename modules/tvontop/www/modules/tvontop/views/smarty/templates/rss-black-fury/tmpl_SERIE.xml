@@ -13,23 +13,74 @@
 {$thumbHeight = 15}
 
 <showSeason>
+	if(selectedSeason == null || selectedSeason == "" || selectedSeason &lt; 0) {
+		selectedSeason  = 0;
+		print("selectedSeason: ",selectedSeason);
+	} 
     {$curSeason=0}
     {foreach $mediaObj->getChildren() as $season}
     if(selectedSeason == {$curSeason}) {
             titleArray  = "{foreach $season->getChildren() as $serie}{$serie->title}&#10;{/foreach}";
             idArray  = "{foreach $season->getChildren() as $serie}{$serie->id}&#10;{/foreach}";
-            print("titile array =", titleArray);
+            print("title array =", titleArray);
             print("idArray =", idArray);
             itemSize = {$season->getChildCount()};
             seasonThumb = "{$season->getParam(thumbnail)}";
-            seasonThumbRatio = {$season->getParam(thumbnail_ratio)};
+            seasonThumbRatio = "{$season->getParam(thumbnail_ratio)}";
         {$curSeason = $curSeason +1}
 }
     {/foreach}
+	print("redrawDisplay");
     redrawDisplay();
-    setFocusItemIndex(0);
     setFocusMenuIndex(selectedSeason);
+	if(lastMenuIndex == selectedSeason) {
+		setFocusItemIndex(lastItemIndex);
+	} else {
+		setFocusItemIndex(0);
+	}
 </showSeason>
+
+<saveCurrentItem>
+	id = "{$config->get(currentService,Runtime)}_{$mediaObj->type}_{$mediaObj->id}";
+
+	envKey 	 = id + "_MenuIndex";
+	envValue = getFocusMenuIndex();
+    executeScript("setEnvValue");
+
+	envKey 	 = id + "_ItemIndex";
+	envValue = getFocusItemIndex();
+	executeScript("setEnvValue");
+</saveCurrentItem>
+<loadCurrentItem>
+	id = "{$config->get(currentService,Runtime)}_{$mediaObj->type}_{$mediaObj->id}";
+
+	envKey 		= id + "_MenuIndex";
+	executeScript("getEnvValue");
+	lastMenuIndex = envValue;
+	
+	if(lastMenuIndex == null) {
+		print("lastMenuIndex == null");
+	}
+	if(lastMenuIndex == "" || lastMenuIndex &lt; 0) {
+		print("lastMenuIndex == EMPTY");
+	}
+	if(lastMenuIndex &lt; 0) {
+		print("lastMenuIndex &lt; 0");
+	}
+	
+	if(lastMenuIndex == null || lastMenuIndex == "" || lastMenuIndex &lt; 0) {
+		lastMenuIndex  = -1;
+		print("lastMenuIndex: ",lastMenuIndex);
+	} 	
+
+	envKey 		= id + "_ItemIndex";
+	executeScript("getEnvValue");
+	lastItemIndex = envValue;
+	if(lastItemIndex == null || lastItemIndex == "" || lastItemIndex &lt; 0) {
+		lastItemIndex  = -1;
+		print("lastItemIndex: ",lastItemIndex);
+	} 	
+</loadCurrentItem>
 
 <onEnter>
     executeScript("doInit");
@@ -38,8 +89,18 @@
     menuArray="{foreach $mediaObj->getChildren() as $season}{$season->title}&#10;{/foreach}";
     menuCount="{$mediaObj->getChildCount()-1}";
     /*TODO: save last viewed season/episode*/
-    selectedSeason = 0;
+    executeScript("loadCurrentItem");
+    if(lastMenuIndex &lt; 0) {
+    	selectedSeason = 0;
+    } else {
+    	selectedSeason = lastMenuIndex;
+    }
+    print("selectedSeason :",selectedSeason);
     executeScript("showSeason");
+    if(lastMenuIndex &gt;= 0) {
+    	postMessage(keyRight);
+    }
+
 </onEnter>
 
 <mediaDisplay name="threePartsView"
@@ -124,6 +185,7 @@
                     }
                 }
                 selectedSeason = selectedMenu;
+                /*lastItemIndex = 0;*/
                 executeScript("showSeason");
                 keyProcessed = "true";
             } else if ( userInput == keyEnter ) {
@@ -133,6 +195,12 @@
             } else if ( userInput == keyRight ) {
                 /*Hack: send double keyRight to select item*/
                 postMessage(keyRight);
+                if(lastMenuIndex == getFocusMenuIndex()) {
+	                print("Select item: ", lastItemIndex);
+					setFocusItemIndex(lastItemIndex);
+				} else {
+					setFocusItemIndex(0);
+				}
                 redrawDisplay();
                 keyProcessed = "false";
             }
@@ -158,19 +226,15 @@
                 redrawDisplay();
                 keyProcessed = "true";
             } else if ( userInput == keyEnter ) {
-                /*
-                executeScript("getStreamUrl");
-                
-                if (null != streamUrl &amp;&amp; "" != streamUrl &amp;&amp; "protected" != streamUrl) {
-                    playItemURL(streamUrl,0);
-                }
-                keyProcessed = "true";
-                redrawDisplay();
-                */
-				envKey 		= "playedTitle";
+            	/* Save played title for video start dialog */
+ 				envKey 		= "playedTitle";
 				index = getFocusItemIndex();
 				envValue = getItemInfo(index , "title");
 				executeScript("setEnvValue");
+
+				/* Save last indexes */
+				executeScript("saveCurrentItem");
+
                 keyProcessed = "false";
             } else if ( userInput == keyRight ) {
                 keyProcessed = "true";

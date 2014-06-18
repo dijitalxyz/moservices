@@ -7,7 +7,7 @@
 # Author: consros 2011                                                      #
 # Author: stalker 2011                                                      #
 #############################################################################
-require_once 'services/ruhd.tv/providers/rhdProvider.inc';
+require_once 'rhdProvider.inc';
 
 class HdoProvider extends RhdProvider {
 	
@@ -84,11 +84,57 @@ class HdoProvider extends RhdProvider {
     protected function getNewSeriesList($objectId,$params) {
     	$url = $this->baseUrl."List/new/XML/";
 	 	$reply = $this->getData($url, "favorite series list");
-        return false === $reply ? false : $this->parseSeriesList($reply);
+        return false === $reply ? false : $this->parseNewSeriesList($reply);
+    }
+
+	protected function parseNewSeriesList($xml) {
+		$resultObj = new MediaObject($this->config->get("name", "Service").(string)$xml->url, self::$OBJ_SERIES_LIST,$this->config->get("displayName", "Service"));
+
+		if(isset($xml->fp) && isset($xml->fp->episodesbyday)) {
+			foreach ($xml->fp->episodesbyday->day as $xmlDay) {
+				$day = (string)$xmlDay->attributes()->val;
+				$result = $xmlDay->xpath("seriesday/seriesitem/item");
+	
+		        while(list( , $serie) = each($result)) {
+		        	$child = new MediaObject((string)$serie->id_series, self::$OBJ_SERIE, (string)$serie->title." (".$day.")" );
+					$child->setTtl(0);
+					$child->setParam("etitle",  	(string)$serie->etitle);
+					$child->setParam("descr", 		ParserTools::removeHtmlTags((string)$serie->info));
+					$child->setParam("mark", 		(string)$serie->mark);
+					
+					$child->setParam("thumbnail", 	$this->baseUrl."static/c/hd/s/".(string)$serie->mark.".jpg");
+					//set thumbnail as img because of different image sizes on ruhd
+					$child->setParam("img", 		$child->getParam("thumbnail"));
+					$child->setParam("isclosed",	(string)$serie->isclosed);
+	
+					$child->setTtl(0);//uncomplete objects here
+					$resultObj->addChild($child);
+					unset($child); 
+		        }
+			}
+			
+/*			foreach ($xml->fp->serieslist->item as $serie) {
+				$child = new MediaObject((string)$serie->id_series, self::$OBJ_SERIE, (string)$serie->title);
+				$child->setParam("etitle",  	(string)$serie->etitle);
+				$child->setParam("descr", 		ParserTools::removeHtmlTags((string)$serie->info));
+				$child->setParam("mark", 		(string)$serie->mark);
+				
+				$child->setParam("thumbnail", 	$this->baseUrl."static/c/hd/s/".(string)$serie->mark.".jpg");
+				//set thumbnail as img because of different image sizes on ruhd
+				$child->setParam("img", 		$child->getParam("thumbnail"));
+				$child->setParam("isclosed",	(string)$serie->isclosed);
+
+				$child->setTtl(0);//uncomplete objects here
+				$resultObj->addChild($child);
+				unset($child); 
+			}
+*/
+		}
+		return $resultObj;
     }
 
 	protected function parseSeriesList($xml) {
-		$resultObj = new MediaObject($this->config->get("name", "Service"), self::$OBJ_SERIES_LIST,$this->config->get("displayName", "Service"));
+		$resultObj = new MediaObject($this->config->get("name", "Service").(string)$xml->url, self::$OBJ_SERIES_LIST,$this->config->get("displayName", "Service"));
 		if(isset($xml->fp) && isset($xml->fp->serieslist)) {
 			foreach ($xml->fp->serieslist->item as $serie) {
 				$child = new MediaObject((string)$serie->id_series, self::$OBJ_SERIE, (string)$serie->title);
@@ -100,6 +146,8 @@ class HdoProvider extends RhdProvider {
 				//set thumbnail as img because of different image sizes on ruhd
 				$child->setParam("img", 		$child->getParam("thumbnail"));
 				$child->setParam("isclosed",	(string)$serie->isclosed);
+
+				$child->setTtl(0);//uncomplete objects here
 				$resultObj->addChild($child);
 				unset($child); 
 			}

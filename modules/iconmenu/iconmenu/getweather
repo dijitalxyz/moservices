@@ -1,5 +1,19 @@
 #!/bin/sh
 [ -z "$1" ] && exit
 
-wget "$1" -O /tmp/weather.dat.tmp >/dev/null 2>&1
-[ $? -eq 0 ] && mv -f /tmp/weather.dat.tmp /tmp/weather.dat
+mos=/usr/local/etc/mos
+
+export LD_LIBRARY_PATH=$mos/lib:/lib:$LD_LIBRARY_PATH
+export PATH=$mos/bin:$PATH
+
+export QUERY_STRING='url='"$1"
+export REQUEST_URI='/modules/iconmenu/weather.php?'"$QUERY_STRING"
+export SCRIPT_FILENAME='/tmp/www/modules/iconmenu/weather.php'
+export SCRIPT_NAME='/modules/iconmenu/weather.php'
+
+php
+# $mos/www/modules/iconmenu/weather.php 'url='"$1"'&debug'
+# >/tmp/weather.log 2>&1
+
+#wget "$1" -O /tmp/weather.dat.tmp >/dev/null 2>&1
+#[ $? -eq 0 ] && mv -f /tmp/weather.dat.tmp /tmp/weather.dat

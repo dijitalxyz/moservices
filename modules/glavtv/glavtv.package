@@ -3,4 +3,5 @@
 	title = "GlavTV"
 	role = rss
 	files = "www/modules/glavtv/"
-	size = 1432
+	config_edit = "www/modules/glavtv/cfg/config.ini"
+	size = 1440

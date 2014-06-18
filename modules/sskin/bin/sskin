@@ -8,7 +8,6 @@ shr=/usr/share/bin
 
 nfw=$2
 nskin=$3
-[ -z "$nfw" ] && exit 0
 
 # read fw config
 fw=''
@@ -57,14 +56,50 @@ getFile()
 }
 
 # -------------------------------------
+unSquash()
+{
+	[ ! -e $1 ] && return
+
+	mv $1 "_$1"
+	mkdir /tmp/$1
+	mount "_$1" /tmp/$1
+	cp -af /tmp/$1 ./
+	umount /tmp/$1
+	rm -Rf /tmp/$1
+}
+
+# -------------------------------------
+stopAll()
+{
+	stopall
+	killall udhcpc
+	killall captured
+	killall cat
+	for i in $( cat /proc/mounts | grep -e '\.rss ' -e '/usr/local/bin' | cut -d" " -f2 | sed -n '1!G;h;$p' ); do umount $i; done
+}
+
+# -------------------------------------
 # main
 #
+[ -z "$nfw" ] && {
+	echo "Usage: sskin {change|delete|get|update|us} <gui_name> [<skin_name>]"
+	exit 0
+}
+
 case "$1" in
 
   change)
-	[ -z "$nskin" ] && exit 0
+	[ -z "$nskin" ] && nskin='default'
 
-	[ "$nfw" = "$fw" ] && [ "$nskin" = "$skin" ] && exit 0
+	[ ! -e "$shr/$nfw/bin.squash" ] && {
+		echo "sskin: $nfw gui not found"
+		exit 0
+	}
+
+	[ "$nfw" = "$fw" ] && [ "$nskin" = "$skin" ] && {
+		echo "sskin: $nfw gui and $nskin skin use already"
+		exit 0
+	}
 
 	if [ "$nfw" != "$fw" ] ; then
 		# disable old fw
@@ -117,7 +152,10 @@ skin=$nskin" > $shr/boot_fw.conf
 	fi
 	[ -n "$nskin" ] && getFile $nfw.$nskin $shr/$nfw
 	;;
+
   update)
+	[ "$nfw" == "$fw" -o "$nskin" == "$skin" ] && stopAll
+
 	if [ -z "$nskin" ] ; then
 		# update FW
 		getFile $nfw $shr
@@ -129,9 +167,23 @@ skin=$nskin" > $shr/boot_fw.conf
 		# update skin
 		 getFile $nfw.$nskin $shr/$nfw
 	fi
+
+	if [ "$nfw" == "$fw" ] || [ "$nskin" == "$skin" ] ; then
+		sync
+		$mos/bin/reboot.sh&
+	fi
+	;;
+  us)
+	[ "$nfw" == "$fw" ] && stopAll
+
+	cd $shr/$nfw
+
+	unSquash bin.squash
+	for i in res.*.squash ; do
+		unSquash $i
+	done
 	;;
   *)
-	echo "Usage: $0 {change|delete|get|update}"
 	;;
 esac
 

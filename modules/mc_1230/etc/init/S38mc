@@ -1,0 +1,69 @@
+#!/bin/sh
+#
+# description: Enable and disable Midnight commander
+#
+etc=/usr/local/etc
+mos=$etc/mos
+home=$etc
+
+[ -d /data ] && home=/data
+
+# -------------------------------------
+# $1 - name
+# $2 - value
+#
+changeEnv()
+{
+	if ! grep -q 'export '$1'="'$2'"' $etc/profile ; then
+		if grep -q $1'=' $etc/profile ; then
+			sed -ri 's!^.*'$1'=.*$!export '$1'="'$2'"!' $etc/profile
+		else
+			sed -i '
+/#export PATH /i\
+export '$1'="'$2'"
+' $etc/profile
+		fi
+	fi
+}
+# -------------------------------------
+#
+case "$1" in
+    start | stop | status)
+	;;
+
+    enable)
+	# previous installed config
+	[ -d $home/.cache ]  && mv -Rf $home/.cache $mos/etc/.mc/
+	[ -d $home/.config ] && mv -Rf $home/.config $mos/etc/.mc/
+	[ -d $home/.local ]  && mv -Rf $home/.local $mos/etc/.mc/
+
+	# add path to profile
+	if [ -f $etc/profile ] ; then
+
+		changeEnv TERMINFO $mos/share/terminfo
+		changeEnv TERM 'xterm-256color'
+
+		sed -i '/# mc section/{N;N;N;d}' $etc/profile
+		sed -i '
+/#export PATH /i\
+# mc section\
+export MC_HOME=/usr/local/etc/mos/etc/.mc\
+alias mc="mc -c"\
+#
+' $etc/profile
+	fi
+
+	# patch home directory for root
+	sed -ri 's!^(root:[^:]*:0:0:root:)[^:]*(:.*)$!\1/\2!' $etc/passwd
+	;;
+
+    disable)
+	# remove from profile
+	sed -i '/# mc section/{N;N;N;d}' $etc/profile
+	;;
+  *)
+	echo "Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

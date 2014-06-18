@@ -1,8 +1,8 @@
 [libssl_1228]
-	revision = 1
+	revision = 2
 	title = "lib SSL 1.0.0"
 	role = package
 	check = "lib libssl.so.1"
 	env = 1228
 	files = "lib/libssl.so lib/libssl.so.1 lib/libssl.so.1.0.0"
-	size = 356
+	size = 392

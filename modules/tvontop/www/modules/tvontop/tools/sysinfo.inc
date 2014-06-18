@@ -1,12 +1,13 @@
 <?php
 class SysInfo {
-	
+
 	public static function getMac() {
 		ob_start();
 		$cmd = "/sbin/ifconfig | grep Ether";
 		passthru($cmd);
 		$dump = ob_get_contents();
 		preg_match('/[A-F0-9]{2}:[A-F0-9]{2}:[A-F0-9]{2}:[A-F0-9]{2}:[A-F0-9]{2}:[A-F0-9]{2}/i', $dump, $mac);
+		$mac_address = null;
 		if(null != $mac) {
 			$mac_address = $mac[0];
 		}
@@ -24,18 +25,36 @@ class SysInfo {
 
 	public static function getPlatform() {
 		$platformExt = self::getPlatformExt();
-		
+
 		if(strpos($platformExt,"PRODIGY") !== false ) {
 			$platform = "prodigy";
 		} else if(is_file("/tmp/model")) {
 			$platform = "xtreamer";
 		} else if(strpos(strtolower($platformExt),"inext") !== false ){
-			$platform = "inext";		
+			$platform = "inext";
+		} else if(strpos(strtolower($platformExt),"iconbit") !== false ){
+			$platform = "iconbit";
 		} else {
 			$platform = "realtek";
 		}
 		return $platform;
 	}
+
+	public static function getResolution() {
+		$file = "/sys/devices/virtual/graphics/fb0/modes";
+		$resolution = null;
+		//1186
+		if(is_file($file)) {
+			if ($fp = fopen($file, 'r')) {
+	            $_result = fgets($fp);
+	            fclose($fp);
+  				preg_match('/(\\d+[a-z]\\d+)/is', $_result, $match); 
+  				$resolution= $match[0];
+            	return $resolution;
+        	}
+		}
+		return null;		
+	} 
 
 	public static function getPlatformExt() {
 		//xtreamer
@@ -43,7 +62,7 @@ class SysInfo {
 			if ($fp = fopen("/tmp/model", 'r')) {
 	            $_result .= fgets($fp);
             	fclose($fp);
-            	return $_result;
+            	return trim($_result);
         	}
         	else {
         		return "xtreamer";
@@ -54,9 +73,9 @@ class SysInfo {
 		//iNext
 		} else if(is_file("/usr/local/bin/Resource/model.dat")) {
 			if ($fp = fopen("/usr/local/bin/Resource/model.dat", 'r')) {
-	            $_result .= fgets($fp);
+	            $_result = fgets($fp);
             	fclose($fp);
-            	return $_result;
+            	return trim($_result);
         	}
         //mos
 		} else if(is_dir("/usr/local/etc/mos/www/modules")) {
@@ -82,7 +101,7 @@ class SysInfo {
 			$verFile = getcwd() . '/version.xml';
 			if (file_exists($verFile)) {
 				$verXml  = simplexml_load_file($verFile);
-				if(false != $verXml) {
+				if(false !== $verXml) {
 					$ttVersion = (string)$verXml->version;
 				} 
 			}
@@ -96,7 +115,7 @@ class SysInfo {
 		try {
 			$verFile =  'http://tvontop.com/update/version.php';
 			$verXml  = simplexml_load_file($verFile);
-			if(false != $verXml) {
+			if(false !== $verXml) {
 				$ttVersion = (string)$verXml->version;
 			} 
 		} catch(Exception $e) {}

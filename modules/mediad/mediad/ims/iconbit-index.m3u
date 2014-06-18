@@ -1,0 +1,5 @@
+#EXTM3U
+#EXTINF:-1,Favorites
+/usr/local/etc/playlist/
+#EXTINF:-1,Storage
+/tmp/ramfs/volumes/

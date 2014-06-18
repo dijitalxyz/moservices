@@ -1,0 +1,8 @@
+[libpcre1_1228]
+	revision = 1
+	title = "Lib Pcre 1.0.1"
+	role = package
+	check = "lib lib/libpcre.so.1"
+	env = 1228
+	files = "lib/libpcre.so.1 lib/libpcre.so.1.0.1"
+	size = 268

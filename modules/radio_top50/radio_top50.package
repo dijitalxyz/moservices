@@ -1,0 +1,9 @@
+[radio_top50]
+	revision = 4
+	title = "radio_top50"
+	role = rss
+	config_link = "?page=radio_top50_sets"
+	navy_title = "RadioTop editor"
+	navy_frame = "/modules/radio_top50/redaktor/redaktor_radio_top50.php"
+	files = "www/modules/radio_top50/"
+	size = 268

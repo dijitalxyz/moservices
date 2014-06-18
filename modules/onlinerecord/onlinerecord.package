@@ -1,0 +1,8 @@
+[onlinerecord]
+	revision = 2
+	title = "Online-Record.RU"
+	role = rss
+	files = "www/modules/onlinerecord/"
+	logo = "modules/onlinerecord/onlinerec.png"
+	config_link = "?page=onlinerec_sets"
+	size = 220

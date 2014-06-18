@@ -1,0 +1,200 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- 
+##################################################################################
+# © IconBIT 2012                                                                 #
+##################################################################################
+-->
+
+<onEnter>
+	mediaServer = "http://127.0.0.1:9999/";
+	RSSmedia = mediaServer + "rss/";
+	locale = readStringFromFile("/tmp/app/REL_LOCALE");
+	if (locale == "ru")	{
+		MC_PTITLE = "Каналы";
+	} else {
+		MC_PTITLE = "Channels";
+	}
+	currentLink = getEnv("MC_PLAYLIST");
+	currentURL = getEnv("MC_URL");
+	focus = 0;
+	
+	itemTitleArray = null;
+	itemURLArray = null;
+	itemImageArray = null;
+	itemNowArray = null;
+	itemTime1Array = null;
+	itemTime2Array = null;
+	itemPercentArray = null;
+	itemSize = 0;
+	
+	dlok = loadXMLFile(RSSmedia + currentLink);
+	if (dlok != null)
+	{
+		iSize = getXMLElementCount("playlist", "item");
+		print("itemSize = ", iSize);
+		if(iSize &gt; 0)
+		{
+			itemCount = 0;		
+			while(1)
+			{
+				itemType  = getXMLText("playlist", "item", itemCount, "type");
+				if( itemType != "folder" &amp;&amp; itemType != "playlist" )
+				{
+					itemTypeArray  = pushBackStringArray(itemTypeArray, itemType);
+					itemTitle  = getXMLText("playlist", "item", itemCount, "title");
+					print("itemTitle = ", itemTitle);
+					itemTitle = "" + (itemSize + 1) + ". " + itemTitle;
+					itemTitleArray = pushBackStringArray(itemTitleArray, itemTitle);
+					itemURL = getXMLText("playlist", "item", itemCount, "url");
+					itemURLArray = pushBackStringArray(itemURLArray, itemURL);
+					itemImage = getXMLText("playlist", "item", itemCount, "image");
+					itemImageArray = pushBackStringArray(itemImageArray, itemImage);
+					itemNow = getXMLText("playlist", "item", itemCount, "now");
+					itemNowArray = pushBackStringArray(itemNowArray, itemNow);
+					itemTime1 = getXMLText("playlist", "item", itemCount, "time1");
+					itemTime1Array = pushBackStringArray(itemTime1Array, itemTime1);
+					itemTime2 = getXMLText("playlist", "item", itemCount, "time2");
+					itemTime2Array = pushBackStringArray(itemTime2Array, itemTime2);
+					itemPercent = getXMLText("playlist", "item", itemCount, "prcnt");
+					itemPercentArray = pushBackStringArray(itemPercentArray, itemPercent);
+					if ( itemURL == currentURL  &amp;&amp; currentURL != "none" &amp;&amp; focus == 0)
+						focus = itemSize;
+					itemSize += 1;
+				}
+				itemCount += 1;
+				if(itemCount == iSize)
+					break;
+			}
+		}
+	}
+	checkIndex = 0;
+	setFocusItemIndex(focus);
+	setItemFocus(focus);
+	redrawDisplay();
+	prepareAnimation();
+</onEnter>
+
+
+
+<mediaDisplay name=onePartView forceRedrawItems=yes viewAreaXPC=5 viewAreaYPC=5 viewAreaWidthPC=90 viewAreaHeightPC=90 sideColorRight=-1:-1:-1 sideColorLeft=-1:-1:-1 sideColorTop=-1:-1:-1 sideColorBottom=-1:-1:-1 backgroundColor=-1:-1:-1  focusBorderColor=-1:-1:-1 unFocusBorderColor=-1:-1:-1 itemBackgroundColor=-1:-1:-1 showHeader="no" showDefaultInfo="no" itemPerPage=14 itemWidthPC=96 itemXPC=2 itemHeightPC=6 itemImageWidthPC=0 itemImageHeightPC=0 itemYPC=12 itemImageXPC=0 itemImageYPC=0 imageFocus=null DoAnimation="yes" AnimationType=2 AnimationStep=26 AnimationDelay=1 BackgroundDark="no" rollItems=no	slidingItemText=yes idleImageXPC=83.12 idleImageYPC=89.58 idleImageWidthPC=3.1 idleImageHeightPC=5.5>
+	<idleImage> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage> image/POPUP_LOADING_06.png </idleImage>
+	<idleImage> image/POPUP_LOADING_07.png </idleImage>
+	<idleImage> image/POPUP_LOADING_08.png </idleImage>
+	<backgroundDisplay name=mcChannelLargeBG>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>/tmp/app/ims/mc_chbglarge.png</image>
+	</backgroundDisplay>
+	<text align=center offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=10 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+		<script>MC_PTITLE;</script>
+	</text>
+	<itemDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 useBackgroundSurface=yes />
+		<image offsetXPC=4 offsetYPC=0 widthPC=96 heightPC=100>
+			<script>
+				idx1 = getFocusItemIndex();
+				idx2 = getQueryItemIndex();
+				if (idx1 == idx2)
+					"/tmp/app/ims/mc_focus.png";
+				else
+					"";
+			</script>
+		</image>
+		<image offsetXPC=0 offsetYPC=10 widthPC=3.5 heightPC=90>
+			<script>
+				getStringArrayAt(itemImageArray, -1);
+			</script>
+		</image>
+		<text offsetXPC=5 offsetYPC=0 widthPC=30 heightPC=100 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+			<script>
+				getStringArrayAt(itemTitleArray, -1);
+			</script>
+		</text>
+		<text offsetXPC=35 offsetYPC=0 widthPC=8 heightPC=100 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+			<script>
+				getStringArrayAt(itemTime1Array, -1);
+			</script>
+		</text>
+		<text offsetXPC=43 offsetYPC=10 heightPC=90 backgroundColor=55:55:55>
+			<widthPC>
+				<script>
+					percent = getStringArrayAt(itemPercentArray, -1);
+					percent * 49 / 100;
+				</script>
+			</widthPC>
+		</text>
+		<text offsetXPC=43 offsetYPC=0 widthPC=49 heightPC=100 fontSize=14 backgroundColor=-1:-1:-1>
+			<script>
+				getStringArrayAt(itemNowArray, -1);
+			</script>
+		</text>
+		<text offsetXPC=92 offsetYPC=0 widthPC=8 heightPC=100 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+			<script>
+				getStringArrayAt(itemTime2Array, -1);
+			</script>
+		</text>
+	</itemDisplay>
+
+
+<onUserInput>
+	handled = "false";
+	userInput = currentUserInput();
+	focusIndex = getFocusItemIndex();
+	if ("enter" == userInput) {
+		data = getStringArrayAt(itemURLArray, focusIndex);
+		setReturnString(data);
+		postMessage("return");
+		handled = "true";
+	}
+	else if ("left" == userInput || "right" == userInput || "zero" == userInput) {
+		postMessage("return");
+		handled = "true";
+	}
+	else if (userInput == "video_frwd" || userInput == "video_ffwd")
+	{
+		postMessage("return");
+		handled = "true";
+	}
+	else if (userInput == "pagedown")
+	{
+		idx = getFocusItemIndex();
+		idx -= -14;
+		if (idx &gt;= itemSize)
+			idx = itemSize - 1;
+		setFocusItemIndex(idx);
+		setItemFocus(idx);
+		redrawDisplay("item");
+		handled = "true";
+	}
+	else if (userInput == "pageup")
+	{
+		idx = getFocusItemIndex();
+		idx -= 14;
+		if (idx &lt; 0)
+			idx = 0;
+		setFocusItemIndex(idx);
+		setItemFocus(idx);
+		redrawDisplay("item");
+		handled = "true";
+	}
+	handled;
+</onUserInput>
+
+</mediaDisplay>
+
+
+<channel>
+	<title>Channels list</title>
+	<link>/tmp/app/ims/mc-channels.rss</link>
+
+	<itemSize>
+		<script>itemSize;</script>
+	</itemSize>
+
+</channel>
+</rss>

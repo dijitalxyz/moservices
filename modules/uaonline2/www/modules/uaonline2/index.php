@@ -1,16 +1,280 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	WEB interface module v2.6
+	WEB interface module v4.0
 	------------------------------
-	Created by Sashunya 2012
+	Created by Sashunya 2014
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
 	------------------------------ */
 include("ua_paths.inc.php");
+
 ob_implicit_flush( false );
+
+//вывести сообщение
+function message($mes)
+{
+	?>
+			<script type="text/javascript">
+				alert("<?=$mes?>");
+			</script>
+	<?
+}
+// сохранить закладки в файл
+function save_fav($ua_fav)
+{
+global $fav_name_array;
+global $fav_link_array;
+global $fav_poster_array;
+global $fav_type_array;
+global $fav_site_array;
+global $ua_path;
+global $ua_favorites_filename;
+	$tmps="";
+	$count=0;
+	foreach ($fav_name_array as $key=>$val)
+		{
+			$name=$val;
+			$poster=$fav_poster_array[$key];
+			$link=$fav_link_array[$key];
+			$type=$fav_type_array[$key];
+			$site=$fav_site_array[$key];
+			$tmps.=$name."\n".$link."\n".$poster."\n".$type."\n".$site."\n";
+			$count++;
+		}
+	$tmps=$count."\n".$tmps;
+	file_put_contents($ua_favorites_filename,$tmps);
+}
+
+
+if ($_SERVER['REQUEST_METHOD']=='POST')
+{
+// загоняем в массив все что пришло постом, имена, ссылки закладок
+	$fav_name_array=array();
+	$fav_link_array=array();
+	$fav_poster_array=array();
+	$fav_type_array=array();
+	$fav_site_array=array();
+	$sel_array=array();
+	$fav_cnt=0;
+	foreach ($_REQUEST as $key=>$val)
+		{
+			if (preg_match("/fav_name/",$key)) { $fav_name_array[]=$val; $fav_cnt++;}
+			if (preg_match("/fav_link/",$key)) $fav_link_array[]=$val;
+			if (preg_match("/fav_poster/",$key)) $fav_poster_array[]=$val;
+			if (preg_match("/fav_type/",$key)) $fav_type_array[]=$val;
+			if (preg_match("/fav_site/",$key)) $fav_site_array[]=$val;
+			if (preg_match("/chk/",$key)) $sel_array[]=$fav_cnt;
+		}
+// удалить выбранные закладки
+		if ($_REQUEST["oper"]=='del_fav')
+		{
+			if (count($sel_array)!=0)
+			{
+				foreach ($sel_array as $val)
+				{
+					//echo $val;
+					unset($fav_name_array[$val]);
+					unset($fav_link_array[$val]);
+					unset($fav_poster_array[$val]);
+					unset($fav_type_array[$val]);
+					unset($fav_site_array[$val]);
+				}
+				save_fav();
+			}
+		}
+		
+// добавить пустую запись в начало списка или сохранить
+		if ($_REQUEST["oper"]=='add_fav' || $_REQUEST["oper"]=='save')
+			{
+				if ($_REQUEST["oper"]=='add_fav')
+				{
+					array_unshift($fav_name_array,"");
+					array_unshift($fav_link_array,"");
+					array_unshift($fav_poster_array,"./images/ua_web_logo_def.png");
+					array_unshift($fav_type_array,"-1");
+					array_unshift($fav_site_array,"-1");
+				}
+				if ($_REQUEST["oper"]=='save')
+				{
+					message("изменения сохранены");
+				}
+				save_fav();
+			}
+
+	// ОБНОВИТЬ		
+	if ($_REQUEST["oper"]=="refresh")
+	{
+		if (count($sel_array)!=0)
+			{
+				html_header();
+				fav_header("Редактор закладок");
+				?>
+					<div class="content">
+					<div class="enter_label label_restore center">Выполняется обновление закладок, подождите</div>
+					<!-- Progress bar holder -->
+					<div id="progress" class="progress center"></div>
+				<?
+				
+				// Total processes
+				$total = count($sel_array);
+				$i=1;
+				foreach ($sel_array as $val)
+				{
+					
+					// Calculate the percentation
+					$percent = intval($i/$total * 100)."%";
+					$i++;
+					// Javascript for updating the progress bar and information
+					echo '<script language="javascript">
+					document.getElementById("progress").innerHTML="<div class=\"progress_fill\" style=\"width:'.$percent.';\">'.$percent.'</div>";
+					</script>';
+
+				// This is for the buffer achieve the minimum size in order to flush data
+					echo str_repeat(' ',1024*64);
+				
+				// Send output to browser immediately
+					flush();
+					
+					
+						if ($fav_link_array[$val]!="")
+						{
+							if ($fav_site_array[$val]=='-1')
+							{
+								$link=$fav_link_array[$val];
+								// проверяем, а что за ссылку мы ввели
+								$fav_site_array[$val]=check_site($link);
+							}
+							//EX.UA
+							if ($fav_site_array[$val]=='0')
+							{
+								include_once($ua_path.$exua_parser_filename);
+								if(isset($fav_link_array[$val])) 
+								{
+									$link=$fav_link_array[$val];
+									
+									$fav_link_array[$val]=check_ex_link($link);
+								}
+							
+								$s=load_page($fav_link_array[$val]);
+								$fav_name_array[$val]=favtitle($s);	
+								if (analyze_page($s)) $fav_type_array[$val]="list"; else $fav_type_array[$val]="link";
+								$poster=get_poster_and_descr($s);
+								$fav_poster_array[$val]=$poster["purl"];	
+							}
+							// brb.to
+							if ($fav_site_array[$val]=='2')
+							{	
+								if(isset($fav_link_array[$val])) 
+								{
+								
+								$link=$fav_link_array[$val];
+									
+									if (!preg_match("/\?ajax&folder/",$link)) $link.="?ajax&folder";
+									$fav_link_array[$val]=$link;
+								}
+								
+								include_once($ua_path.$fsua_parser_filename);
+								
+								$s=check_prefix($fav_link_array[$val]);
+								$main=get_fs_data($fav_link_array[$val],'','',true);
+								$fav_type_array[$val]="list";
+								$fav_poster_array[$val]=$main["image"];
+								$fav_name_array[$val]=$main["title"];
+							}
+							// uakino.net
+							if ($fav_site_array[$val]=='3')
+							{
+								include_once($ua_path.$uakino_parser_filename);
+								if(isset($fav_link_array[$val])) 
+								{
+									$link=check_uakino_link($fav_link_array[$val]);
+									
+									$fav_link_array[$val]=$link;
+								
+								}
+								$s=file_get_contents("http://uakino.net/video/".$fav_link_array[$val]);
+								if ($s)
+								{
+									$main=get_data($s,$fav_link_array[$val],true);
+								
+									$fav_type_array[$val]="link";
+									$fav_poster_array[$val]=$main["image"];
+									$fav_name_array[$val]=$main["title"];
+								}
+							}
+						}
+					
+					sleep(1);
+				}
+				echo "</div>";
+				html_footer();
+				save_fav();
+				message("Обновление закладок выполнено");
+				
+			}
+		exit("<meta http-equiv='refresh' content='0; url= $_SERVER[PHP_SELF]'>");
+	}
+				
+		
+// создаем резервную копию
+if ($_REQUEST["oper"]=="backup")
+{
+	if (file_exists($ua_favorites_filename)) 
+	{
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename='.basename($ua_favorites_filename));
+		header('Content-Length: ' . filesize($ua_favorites_filename));
+		readfile($ua_favorites_filename);
+		exit;
+	}
+}	
+
+// загружает резервную копию на сервер
+if(isset( $_FILES['backup']['tmp_name'] ))
+{
+	exec( "cp ".$_FILES['backup']['tmp_name']." ".$ua_favorites_filename);
+}	
+	
+// страница восстановления из резервной копии
+if ($_REQUEST["oper"]=="restore")
+{
+	html_header();
+	fav_header("Редактор закладок");
+?>	
+	<div class="content">
+		<table border="0">
+			<tr>
+				<td colspan="2">
+					<span class="enter_label label_restore">Укажите путь резервной копии закладок</span>
+				</td>
+			</tr>	
+			<tr>
+				<td>
+					<form action="<?=$_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data">
+					<input type="file" name="backup"><br />
+				</td>
+				<td>
+					<button class="button green" type="submit">Загрузить</button>
+				</td>
+					</form>
+				<td>
+					<a href="<?=$_SERVER["PHP_SELF"]?>" class="button green" title="Вернуться на главную страницу">Назад</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+<?php	
+	html_footer();
+	exit;	
+}
+
+	
+}
+
 // это читает постеры
+/*
 if ($_REQUEST["get_poster"])
 {
 	$url=$_REQUEST["get_poster"];
@@ -18,12 +282,19 @@ if ($_REQUEST["get_poster"])
 	readfile($url);	
 	exit;
 }
+*/
+if ($_REQUEST["oper"]=="cancel")
+{
+	header("Location: ".$_SERVER["PHP_SELF"]);
+	exit;
+}
+
 // исправляет линк для постера, если он локальный
 function check_poster($poster)
 {
-global $ua_path_link3;
-$pattern="/http:\/\/127.0.0.1\//";
-return preg_replace($pattern,$ua_path_link3,$poster);
+	global $ua_path_link3;
+	$pattern="/http:\/\/127.0.0.1\//";
+	return preg_replace($pattern,$ua_path_link3,$poster);
 }
 // прочитать закладки из файла
 function get_fav($name_fav)
@@ -49,32 +320,7 @@ function get_fav($name_fav)
 return $fav_arr;
 }
 
-// сохранить закладки в файл
-function save_fav($ua_fav)
-{
-global $ua_path;
-global $ua_favorites_filename;
-	$tmps="";
-	$count=0;
-	foreach ($ua_fav as $id=>$val)
-	{
-		foreach ($val as $id2=>$val2)
-		{
-			if ($id2=="name") $name=$val2;
-			if ($id2=="poster") $poster=$val2;
-			if ($id2=="link") $link=$val2;
-			if ($id2=="type") $type=$val2;
-			if ($id2=="site") $site=$val2;
-			
-		}
-		$tmps.=$name."\n".$link."\n".$poster."\n".$type."\n".$site."\n";
-		$count++;
-	}
-	$tmps=$count."\n".$tmps;
-	file_put_contents($ua_favorites_filename,$tmps);
-}
-
-if ($_REQUEST["operation"]=="fileman")
+if ($_REQUEST["oper"]=="fileman")
 {
 	if ($_REQUEST["type"]=="download")
 	{
@@ -88,8 +334,6 @@ if ($_REQUEST["operation"]=="fileman")
 	
 	}
  
-
-
 ?>
 <!doctype html>
 <html>
@@ -106,56 +350,38 @@ if ($_REQUEST["operation"]=="fileman")
 <?
 exit;
 }
-
 // текст для справки
-if ($_REQUEST["operation"]=="about")
+if ($_REQUEST["oper"]=="about")
 {
 ?>
 	<h3 align="center">КРАТКАЯ СПРАВКА ПО ИСПОЛЬЗОВАНИЮ РЕДАКТОРА ЗАКЛАДОК</h3>
 	<h3 align="center">UAOnline 2</h3>
 	<p>
-		<b>ДОБАВИТЬ ЗАКЛАДКУ</b> - Добавляет новую закладку в начале списка избранного. После этого 
-			нужно ввести ссылку закладки и нажать на <b>ОБНОВИТЬ</b><br>
+		<b>СОХРАНИТЬ</b> - сохраняет внесенные изменения: изменение имени, ссылки, позиции закладки<br>
+		<b>ДОБАВИТЬ</b> - Добавляет новую закладку в начале списка избранного. После этого 
+			нужно ввести ссылку закладки, выделить галочкой и нажать на <b>ОБНОВИТЬ</b><br>
+		<b>ОБНОВИТЬ</b> - обновляет данные закладки с онлайн сервиса. Обновляет только выделенные галочками<br>
+		<b>УДАЛИТЬ</b> - Удаляет выделенные закладки.<br>
 		<b>СОЗДАТЬ РЕЗЕРВНУЮ КОПИЮ</b> - Создает на ПК резервную копию закладок<br>
 		<b>ВОССТАНОВИТЬ ИЗ РЕЗЕРВНОЙ КОПИИ</b> - Восстанавливает закладки в модуле из файла, 
 		сохраненного на ПК<br>
 	</p>
 	<p>
-		В каждой закладке есть знак <img src='./images/ua_web_keyb.png' width="30" height="30"> при нажатии
-		на который появляется меню с операциями над закладками
+		Каждую закладку можно перемещать по списку. Достачно подвести курсор мыши справа на нужную закладку. Появится символ <img src='./images/ua_web_updown2.png' width="15" height="20"> после этого, удерживая левую кнопку мыши, можно перемещать закладку вверх или вниз.
 	</p>
 	<p>
-		<b>ОБНОВИТЬ</b> - обновляет данные закладки с онлайн сервиса<br>
-		<b>ПЕРЕИМЕНОВАТЬ</b> - Переименовывает закладку.<br>
-		<b>УДАЛИТЬ</b> - Удаляет текущую закладку.<br>
-		<b>ВВЕРХ</b> - Перемещает закладку вверх по списку.<br>
-		<b>ВНИЗ</b> - Перемещает закладку вниз по списку.<br>
+		Каждую закладку можно выделить галочкой слева от списка. Либо можно отметить все закладки нажав на галочку в самом верху таблицы.
 	</p>
-		
+	<p>
+		Также при нажатии <b>НАСТРОЙКИ</b> можно настроить работу приложения <b>UAOnline2</b>
+	</p>
 <?php
 	exit;
 }
-// создаем резервную копию
-if ($_REQUEST["operation"]=="backup")
-{
-	if (file_exists($ua_favorites_filename)) 
-	{
-		header('Content-Type: application/octet-stream');
-		header('Content-Disposition: attachment; filename='.basename($ua_favorites_filename));
-		header('Content-Length: ' . filesize($ua_favorites_filename));
-		readfile($ua_favorites_filename);
-		exit;
-	}
-}
 
-// загружает резервную копию на сервер
-if(isset( $_FILES['backup']['tmp_name'] ))
-{
-	exec( "cp ".$_FILES['backup']['tmp_name']." ".$ua_favorites_filename);
-}
 
 // Страница настроек ---------------------------------------------------------
-if ($_REQUEST["operation"]=="ua_set")
+if ($_REQUEST["oper"]=="ua_set")
 {
 	
 // сохраняем настройки	
@@ -163,14 +389,16 @@ if ($_REQUEST["operation"]=="ua_set")
 	{
 		$player_style=$_REQUEST["alt_player"];
 		$built_in_keyb=$_REQUEST["built_in_keyb"];
+		$position=$_REQUEST["position"];
+		$screensaver=$_REQUEST["screensaver"];
 		$hdpr1=$_REQUEST["hdp_r1"];
 		$exua_quality=$_REQUEST["ex_quality"];
 		$exua_region=$_REQUEST["ex_region"];
 		$exua_lang=$_REQUEST["ex_language"];
+		$exua_posters=$_REQUEST["exua_posters"];
 		$ua_sort=$_REQUEST["uakino_sort"];
 		$uakino_decode=$_REQUEST["uakino_decode"];
 		$fsua_sort=$_REQUEST["fs_sort"];
-		$search_history=$_REQUEST["search_text"];
 		$history_length=$_REQUEST["history_length"];
 		$d_path=$_REQUEST["download_path"];
 		$auto_path=$_REQUEST["auto_path"];
@@ -178,16 +406,17 @@ if ($_REQUEST["operation"]=="ua_set")
 		write_conf();
 		html_header();
 		?>
+		<form method="POST" action="<?=$_SERVER["PHP_SELF"]?>">
+		<input type="hidden" name="oper" value="ua_set">
 		<script type="text/javascript">
 			alert("настройки сохранены");
-			window.location.href='<?=$_SERVER["PHP_SELF"]."?operation=ua_set"?>';
+			document.forms[0].submit();
 		</script>
+		</form>
 		<?php
 		html_footer();
-		//header("Location: ".$_SERVER["PHP_SELF"]."?operation=ua_set");
 		exit;
 	}
-	
 		
 	// тут пошли переменные для установок
 	// автопуть для закачек
@@ -213,7 +442,28 @@ if ($_REQUEST["operation"]=="ua_set")
 			$built_in_keyb_on=""; 
 			$built_in_keyb_off="checked";
 		}
-		
+		// сохранять позицию
+		if ($position=='1') 
+		{
+			$position_on="checked"; 
+			$position_off="";
+		}
+			else 
+		{
+			$position_on=""; 
+			$position_off="checked";
+		}	
+		// фоновая заставка
+		if ($screensaver=='1') 
+		{
+			$screensaver_on="checked"; 
+			$screensaver_off="";
+		}
+			else 
+		{
+			$screensaver_on=""; 
+			$screensaver_off="checked";
+		}	
 	// альтернативный плеер
 	if ($player_style=='1') 
 		{
@@ -278,6 +528,18 @@ if ($_REQUEST["operation"]=="ua_set")
 			$exua_lang_1=""; 
 			$exua_lang_2="checked"; 
 		}
+	// ex.ua постеры
+		if ($exua_posters=='1') 
+		{
+			$exua_posters_on="checked"; 
+			$exua_posters_off="";
+		}
+			else 
+		{
+			$exua_posters_on=""; 
+			$exua_posters_off="checked";
+		}
+		
 	// uakino сортировка
 	if ($ua_sort=='date') 
 		{
@@ -331,8 +593,8 @@ if ($_REQUEST["operation"]=="ua_set")
 	fav_header("Настройки");
 ?>	
 	<div class="content">
-		<form method="get" action="<?=$_SERVER["PHP_SELF"]?>" class="enter_form">
-			<input type="hidden" name="operation" value="">
+		<form method="POST" action="<?=$_SERVER["PHP_SELF"]?>" class="enter_form">
+			<input type="hidden" name="oper" value="">
 			<input type="hidden" name="setup" value="">
 				<table class="setup_table" border=0>
 					<tr>
@@ -369,18 +631,28 @@ if ($_REQUEST["operation"]=="ua_set")
 					</tr>
 					<tr>
 						<td class="setup_td">
-							Кол-во фильмов в истории просмотров
+							Сохранять позицию просмотра
 						</td>
 						<td class="setup_td">
-							<p><input onkeyup="this.value = this.value.replace (/\D/, '')" name="history_length" class="setup_enter_text" maxlength="2" size="4" value="<?=$history_length?>"></p>
+							<p><input name="position" type="radio" value="1" <?=$position_on?>> вкл.</p>
+							<p><input name="position" type="radio" value="0" <?=$position_off?>> выкл. </p>
 						</td>
 					</tr>
 					<tr>
 						<td class="setup_td">
-							История поиска
+							Фоновая заставка
 						</td>
 						<td class="setup_td">
-							<p><input name="search_text" class="setup_enter_text" maxlength="90" size="50" value="<?=$search_history?>"></p>
+							<p><input name="screensaver" type="radio" value="1" <?=$screensaver_on?>> вкл.</p>
+							<p><input name="screensaver" type="radio" value="0" <?=$screensaver_off?>> выкл. </p>
+						</td>
+					</tr>
+					<tr>
+						<td class="setup_td">
+							Кол-во фильмов в истории просмотров
+						</td>
+						<td class="setup_td">
+							<p><input onkeyup="this.value = this.value.replace (/\D/, '')" name="history_length" class="setup_enter_text" maxlength="2" size="4" value="<?=$history_length?>"></p>
 						</td>
 					</tr>
 					<tr>
@@ -437,7 +709,7 @@ if ($auto_path=='1')
 									</td>
 									<td>
 											<div class="browse_div_button">
-												<a class="button gray" href="#" onclick="openFileman('?operation=fileman&type=download&d_path=','download','fileman_list','fileman_container')">Обзор...</a>
+												<a class="button gray" href="#" onclick="openFileman('?oper=fileman&type=download&d_path=','download','fileman_list','fileman_container')">Обзор...</a>
 											</div>
 									</td>
 								</tr>
@@ -475,7 +747,7 @@ if ($auto_path=='1')
 									</td>
 									<td>
 											<div class="browse_div_button">
-												<a class="button gray" href="#" onclick="openFileman('?operation=fileman&type=wget&d_path=','wget','wget_fileman_list','wget_fileman_container')">Обзор...</a>
+												<a class="button gray" href="#" onclick="openFileman('?oper=fileman&type=wget&d_path=','wget','wget_fileman_list','wget_fileman_container')">Обзор...</a>
 											</div>
 									</td>
 								</tr>
@@ -516,6 +788,16 @@ if ($auto_path=='1')
 						</td>
 					</tr>
 					<tr>
+						<td class="setup_td">
+							Показывать постеры
+						</td>
+						<td class="setup_td">
+							<p><input name="exua_posters" type="radio" value="0" <?=$exua_posters_off?>> выкл. </p>
+							<p><input name="exua_posters" type="radio" value="1" <?=$exua_posters_on?>> вкл. </p>
+						</td>
+					</tr>
+					<tr>
+					<tr>
 						<td class="setup_head_td" colspan=2>
 							Настройки uakino.net
 						</td>
@@ -535,13 +817,13 @@ if ($auto_path=='1')
 							Декодирование строк
 						</td>
 						<td class="setup_td">
-							<p><input name="uakino_decode" type="radio" value="0" <?=$uakino_decode_on?>> включено </p>
-							<p><input name="uakino_decode" type="radio" value="1" <?=$uakino_decode_off?>> выключено </p>
+							<p><input name="uakino_decode" type="radio" value="0" <?=$uakino_decode_on?>> вкл. </p>
+							<p><input name="uakino_decode" type="radio" value="1" <?=$uakino_decode_off?>> выкл. </p>
 						</td>
 					</tr>
 					<tr>
 						<td class="setup_head_td" colspan=2>
-							Настройки fs.ua
+							Настройки brb.to
 						</td>
 					</tr>
 					<tr>
@@ -563,10 +845,10 @@ if ($auto_path=='1')
 				<table border="0">
 					<tr>
 						<td>
-							<button class="button green" onclick="with (this) {form.operation.value = 'ua_set'; form.setup.value = 'save_settings'; form.submit ()}" title="Сохранить параметры">Сохранить</button>
+							<button class="button green" onclick="with (this) {form.oper.value = 'ua_set'; form.setup.value = 'save_settings'; form.submit ()}" title="Сохранить параметры">Сохранить</button>
 						</td>
 						<td>
-							<button class="button green" onclick="with (this) {form.operation.value = 'cancel'; form.submit ()}" title="Вернуться на главную страница">Назад</button>
+							<button class="button green" onclick="with (this) {form.oper.value = 'cancel'; form.submit ()}" title="Вернуться на главную страница">Назад</button>
 						</td>
 					</tr>
 				</table>
@@ -578,271 +860,21 @@ if ($auto_path=='1')
 	exit;	
 }
 
-
-
-// страница восстановления из резервной копии
-if ($_REQUEST["operation"]=="restore")
-{
-	html_header();
-	fav_header("Редактор закладок");
-?>	
-	<div class="content">
-		<table border="0">
-			<tr>
-				<td colspan="2">
-					<span class="enter_label label_restore">Укажите путь резервной копии закладок</span>
-				</td>
-			</tr>	
-			<tr>
-				<td>
-					<form action="<?=$_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data">
-					<input type="file" name="backup"><br />
-				</td>
-				<td>
-					<button class="button green" type="submit">Загрузить</button>
-				</td>
-					</form>
-				<td>
-					<a href="<?=$_SERVER["PHP_SELF"]."?operation=cancel"?>" class="button green" title="Вернуться на главную страница">Назад</a>
-				</td>
-			</tr>
-		</table>
-	</div>
-<?php	
-	html_footer();
-	exit;	
-}
-
 // функция проверки названия сайта для новых закладок
 function check_site($link)
 {
 	if(preg_match("/(fex.net|ex.ua)/", $link)) $type=0;
-	if(preg_match("/fs.ua/", $link)) $type=2;
+	if(preg_match("/brb.to|fs.to/", $link)) $type=2;
 	if(preg_match("/uakino.net/", $link)) $type=3;
 	return $type;
 }
-
-// обрабатываем перемещение закладки вверх, вниз, добавить, удалить и т.п.
-$oper=$_REQUEST["operation"];
-if ($oper=="up"||$oper=="down"||$oper=="add_fav" 
-	||$oper=="delete" ||$oper=="rename" ||$oper=="refresh" ||$oper=="confirm_del" )
-{
-	$fav_arr=get_fav($ua_favorites_filename);
-	if(isset($_REQUEST["num"])) $num=$_REQUEST["num"]; else $num=0;
-	$count=count($fav_arr)-1;
-
-// подтвердить удаление
-
-	if ($oper=="confirm_del")
-	{
-	html_header();
-	?>
-	<script type="text/javascript">
-		isConfirmed = confirm('Удалить закладку?');
-		if(isConfirmed)
-		{
-			window.location.href = '?operation=delete&num=<?=$num?>';
-		}
-		else
-		{
-			window.location.href='<?=$_SERVER["PHP_SELF"]?>';
-		}
-	</script>
-	<?php
-	html_footer();
-	}
-
-// переименовать
-	if ($_REQUEST["operation"]=="rename")
-	{
-		$fav_arr[$num]["name"]=urldecode($_REQUEST["fav_name"]);
-		save_fav($fav_arr);
-	}
-
-// ОБНОВИТЬ		
-	if ($_REQUEST["operation"]=="refresh")
-	{
-		//$fav_arr[$num]['site']='0';
-		if(!$_REQUEST["fav_link"]=="")
-		{
-		// пустая закладка
-			if ($fav_arr[$num]['site']=='-1')
-			{
-				$link=$_REQUEST["fav_link"];
-				// проверяем, а что за ссылку мы ввели
-				$fav_arr[$num]['site']=check_site($link);
-				//echo check_site($link);
-			}
-		// EX.ua
-			if ($fav_arr[$num]['site']=='0')
-			{
-				include($ua_.$exua_parser_filename);
-				if(isset($_REQUEST["fav_link"])) 
-				{
-					$link=$_REQUEST["fav_link"];
-					
-					$fav_arr[$num]["link"]=check_ex_link($link);
-				}
-				
-				//$fav_arr[$num]["name"]=$name;
-				
-				$s=load_page($fav_arr[$num]['link']);
-				$fav_arr[$num]["name"]=favtitle($s);	
-				if (analyze_page($s)) $fav_arr[$num]["type"]="list"; else $fav_arr[$num]["type"]="link";
-				$poster=get_poster_and_descr($s);
-				$fav_arr[$num]["poster"]=$poster["image"];	
-			}
-			// fs.ua
-			if ($fav_arr[$num]['site']=='2')
-			{	
-				
-				
-				
-				if(isset($_REQUEST["fav_link"])) 
-				{
-				
-				$link=$_REQUEST["fav_link"];
-					
-					if (!preg_match("/\?ajax&folder/",$link)) $link.="?ajax&folder";
-					//preg_match("/(.*?)#/", $link,$out);
-					//if ($out) $fav_arr[$num]["link"]=$out[1]; else $fav_arr[$num]["link"]=$link;
-					$fav_arr[$num]["link"]=$link;
-				}
-				
-				include($ua_path.$fsua_parser_filename);
-				
-				$s=check_prefix($fav_arr[$num]['link']);
-				$main=get_data($fav_arr[$num]['link'],'','',true);
-				//print_r($main);
-				//if ($main["fav_folder"]) $fav_arr[$num]["type"]="list"; else $fav_arr[$num]["type"]="link";
-				$fav_arr[$num]["type"]="list";
-				$fav_arr[$num]["poster"]=$main["image"];
-				$fav_arr[$num]["name"]=$main["title"];
-				
-			}
-			//uakino.net
-			
-			if ($fav_arr[$num]['site']=='3')
-			{
-				include($ua_path.$uakino_parser_filename);
-				if(isset($_REQUEST["fav_link"])) 
-				{
-					$link=check_uakino_link($_REQUEST["fav_link"]);
-					
-					$fav_arr[$num]["link"]=$link;
-				}
-				
-				//$fav_arr[$num]["name"]=$name;
-				$s=get_page("uakino.net","/video/".$fav_arr[$num]['link']);
-				if ($s)
-				{
-				$main=get_data($s,$fav_arr[$num]['link'],true);
-				$fav_arr[$num]["type"]="link";
-				$fav_arr[$num]["poster"]=$main["image"];
-				$fav_arr[$num]["name"]=$main["title"];
-				}
-			}
-				
-			save_fav($fav_arr);
-			
-		}
-	}
-// ВВЕРХ
-	if ($_REQUEST["operation"]=="up")
-	{
-		foreach ($fav_arr[$num] as $id2=>$val2)
-		{
-			if ($id2=="poster") $poster=$val2;
-			if ($id2=="link") $link=$val2;
-			if ($id2=="name") $name=$val2;
-			if ($id2=="type") $type=$val2;
-			if ($id2=="site") $site=$val2;
-		}
-		
-		if ($num>0) 
-		{
-			$num-=1;
-			foreach ($fav_arr[$num] as $id2=>$val2)
-			{
-				if ($id2=="poster") {$fav_arr[$num+1]["poster"]=$val2; $fav_arr[$num]["poster"]=$poster;}
-				if ($id2=="link") {$fav_arr[$num+1]["link"]=$val2; $fav_arr[$num]["link"]=$link;}
-				if ($id2=="name") {$fav_arr[$num+1]["name"]=$val2; $fav_arr[$num]["name"]=$name;}
-				if ($id2=="type") {$fav_arr[$num+1]["type"]=$val2; $fav_arr[$num]["type"]=$type;}
-				if ($id2=="site") {$fav_arr[$num+1]["site"]=$val2; $fav_arr[$num]["site"]=$site;}
-			}
-			
-			save_fav($fav_arr);
-		}
-	}
-// ВНИЗ
-	if ($_REQUEST["operation"]=="down")
-	{
-		foreach ($fav_arr[$num] as $id2=>$val2)
-		{
-			if ($id2=="poster") $poster=$val2;
-			if ($id2=="link") $link=$val2;
-			if ($id2=="name") $name=$val2;
-			if ($id2=="type") $type=$val2;
-			if ($id2=="site") $site=$val2;
-		}
-		
-		if ($num<$count) 
-		{
-			$num+=1;
-			foreach ($fav_arr[$num] as $id2=>$val2)
-			{
-				if ($id2=="poster") {$fav_arr[$num-1]["poster"]=$val2; $fav_arr[$num]["poster"]=$poster;}
-				if ($id2=="link") {$fav_arr[$num-1]["link"]=$val2; $fav_arr[$num]["link"]=$link;}
-				if ($id2=="name") {$fav_arr[$num-1]["name"]=$val2; $fav_arr[$num]["name"]=$name;}
-				if ($id2=="type") {$fav_arr[$num-1]["type"]=$val2; $fav_arr[$num]["type"]=$type;}
-				if ($id2=="site") {$fav_arr[$num-1]["site"]=$val2; $fav_arr[$num]["site"]=$site;}
-			}
-			
-			save_fav($fav_arr);
-		}
-	}
-// ДОБАВИТЬ
-	if ($_REQUEST["operation"]=="add_fav")
-	{
-		array_unshift($fav_arr,array("name"=>"","link"=>"","poster"=>"http://".$_SERVER["HTTP_HOST"].$ua_path_link2.$ua_images_foldername."ua_web_logo_def.png","type"=>"-1","site"=>"-1"));
-		save_fav($fav_arr);
-	}
-// УДАЛИТЬ	
-	if ($_REQUEST["operation"]=="delete")
-	{
-		unset($fav_arr[$num]);
-		save_fav($fav_arr);
-	}
-header("Location: ".$_SERVER["PHP_SELF"]."#fav_".$num);
-//header("Location: ".$_SERVER["PHP_SELF"]."?fav=".$num);
-//header("Location: ".$_SERVER["PHP_SELF"]);
-exit;	
-}
-
-if ($_REQUEST["operation"]=="cancel")
-	{
-		header("Location: ".$_SERVER["PHP_SELF"]);
-		exit;
-	}
-
-	
 // выводит заголовок шапки html
 function html_header()
 {
 global $ua_path_link2;
 global $xtreamer;
 global $ua_update_standalone;
-if ($ua_update_standalone)
-{ 
-	$navbar=$ua_path_link2."js/navbar.js";
-	$about=$ua_path_link2."js/about.js";
-} 
-else
-{
-	$navbar="/modules/core/js/navbar.js";
-	$about="/modules/core/js/about.js";
-}
-
+ 
 ?>
 <!doctype html>
 <html>
@@ -850,8 +882,12 @@ else
 <meta charset="utf-8">
 <title>UAOnline 2 - Редактор закладок</title>
 <link rel="shortcut icon" href="<?=$ua_path_link2."images/uaonline2.ico"?>" />
-<script src="<?=$navbar?>" type="text/javascript" charset="utf-8"></script>
-<script src="<?=$about?>" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="js/navbar.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/about.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/sel_all.js"></script>
+
 <script language="javascript">
 function openFileman(url,id,id_list,id_container)
 {
@@ -883,11 +919,12 @@ function closeFileman(id,id_container,ok)
 	iframe.parentNode.removeChild(iframe);	
 }
 </script>
-<link rel="stylesheet" type="text/css" href="<?=$ua_path_link2."css/ua_web_fav.css"?>">
+<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
 <?php
 }
+
 // выводит заголовок (верхнюю часть) редактора
 function fav_header($head)
 {
@@ -911,7 +948,7 @@ function fav_header($head)
 					<span id="header_text"><?=$head?></span>
 				</td>
 				<td>
-					<a class="button blue" id="about_button" href="#" onclick="openAbout('?operation=about')">Справка</a>
+					<a class="button blue" id="about_button" href="#" onclick="openAbout('?oper=about')">Справка</a>
 				</td>
 			</tr>
 		</table>
@@ -919,26 +956,51 @@ function fav_header($head)
 <?php
 }
 
+function left_side()
+{
+global $p_u;
+?>
+<div class="left_side">
+			<table border="0">
+					<tr>
+						<td>
+							<button class="button medium green" onclick="with (this) { form.oper.value = 'save'; form.submit ()}" title="Сохранить внесенные изменения">Сохранить</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button class="button medium green" onclick="with (this) { form.oper.value = 'add_fav';  form.submit ()}" title="Добавить пустую закладку">Добавить</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button class="button medium green" onclick="with (this) { form.oper.value = 'refresh'; form.submit ()}" title="Обновить данные выбранных закладок с онлайн сервиса">Обновить</button>
+						</td>
+					<tr>
+					<tr>
+						<td>
+							<button class="button medium green" onclick="with (this) { isConfirmed = confirm('Удалить выбранные закладки?'); if(isConfirmed) {form.oper.value = 'del_fav';} else {form.oper.value = 'reset';} form.submit ()} " title="Удалить выбранные закладки">Удалить</button>														
+						</td>
+					</tr>
+				</table>
+	</div>
+<?
+}
 // выводит нижнюю часть редактора 
 function fav_footer()
 {
 ?>
 	<div class="footer">
-		<form method="get" action="<?=$_SERVER["PHP_SELF"]?>" class="enter_form">
-			<input type="hidden" name="operation" value="">
 				<table border="0">
 					<tr>
-						<td>
-							<button class="button green" onclick="with (this) {form.operation.value = 'add_fav'; form.submit ()}" title="Добавить новую закладку. Новая закладка будет первой в списке. После этого нужно ввести ссылку и нажать ОБНОВИТЬ">Добавить закладку</button>
+					<td>
+							<button class="button medium green" onclick="with (this) {form.oper.value = 'backup'; form.submit ()}" title="Создать резервную копию избранного на ПК">Создать резервную копию</button>
 						</td>
 						<td>
-							<button class="button green" onclick="with (this) {form.operation.value = 'backup'; form.submit ()}" title="Создать резервную копию избранного на ПК">Создать резервную копию</button>
+							<button class="button medium green" onclick="with (this) {form.oper.value = 'restore'; form.submit ()}" title="Восстановить из резервной копии избранного">Восстановить из резевной копии</button>
 						</td>
 						<td>
-							<button class="button green" onclick="with (this) {form.operation.value = 'restore'; form.submit ()}" title="Восстановить из резервной копии избранного">Восстановить из резевной копии</button>
-						</td>
-						<td>
-							<button class="button blue" onclick="with (this) {form.operation.value = 'ua_set'; form.submit ()}" title="Настройки UAOnline">Настройки</button>
+							<button class="button medium blue" onclick="with (this) {form.oper.value = 'ua_set'; form.submit ()}" title="Настройки UAOnline">Настройки</button>
 						</td>
 
 					</tr>
@@ -956,80 +1018,73 @@ function html_footer()
 </html>
 <?php
 }
+// Пункт меню стандартный
+function fav_template($poster, $name, $link,  $site_num, $site,  $url_site, $type, $num, $new=false, $fav_lnk=false)
+{
+?>
+	<tr class="table_hover" id="<?=$num?>_row">
+				<input type="hidden" name="<?=$num?>_fav_site" id="<?=$num?>_fav_site" value="<?=$site_num?>">
+				<input type="hidden" name="<?=$num?>_fav_type" id="<?=$num?>_fav_type" value="<?=$type?>">
+				<td class="main checkbox">
+				<div align="center">
+					<input  type='checkbox'  class="example_check" name='<?=$num?>_chk' id='<?=$num?>_chk' value='1' hidden/><label for="<?=$num?>_chk"></label>
+				</div>
+				</td>
+				<td class="main nomerpp">
+					<div align="center">
+						<span class="number"><?=$num+1?></span>
+					</div>
+				</td>
+				<td class="main poster">
+					<?$post=check_poster($poster);?>
+					<input type="hidden" name="<?=$num?>_fav_poster" id="<?=$num?>_fav_poster" value="<?=$post?>">
+					<img src="<?=$post?>" class="poster" alt="постер">
+					
+				</td>
+				<td class="main tdsite">
+							<a href="<?=$url_site?>" target="_blank"><img class="site" src="<?=$site?>" border="0"></a>
+				</td>
+				<td class="main favorites">
+					<span class="enter_label">Название</span><br>
+					<input class="chan_id col_view favorites" type="text" name="<?=$num?>_fav_name" id="<?=$num?>_fav_name" value="<?=$name?>" placeholder="введите название закладки"/> 
+					<br>
+					<span class="enter_label">Ссылка</span><br>
+					<input class="chan_playlist_link col_view favorites" type="text" name="<?=$num?>_fav_link" id="<?=$num?>_fav_link" value="<?=$link?>" placeholder="введите ссылку на закладку"/> 
+				</td>
+				<td class="main" align=center>
+					<span class="arrow_up_down" title="переместить"></span>
+				</td>
+
+		</tr>
+<?php
+}
+
 
 // пункт меню "СПИСОК ПУСТОЙ"
 function fav_template_empty()
 {
 ?>
-			<li class="items">
-				<img src="./images/ua_web_logo_def.png" class="poster">		
-				<span class="empty_list_label">СПИСОК ПУСТ</span>
-								
-			</li>
-<?php
-}
-
-// Пункт меню стандартный
-function fav_template($poster, $name, $link, $site,  $url_site, $type, $num, $new=false, $fav_lnk=false)
-{
-?>
-	<li class="items" id="fav_<?=$num?>">
-					<table  class="item_table" border="0">
-					<tr>
-						<td class="poster" rowspan=2>
-							<img src="<?=check_poster($poster)?>" class="poster" alt="постер">
-						</td>					
-						<td colspan=2>
-							<a href="<?=$url_site?>" target="_blank"><img class="site" src="<?=$site?>" border="0"></a>
-						</td>
-					</tr>
-					<tr>
-					<td>
-					<form method="get" action="<?=$_SERVER["PHP_SELF"]?>">
-							<input type="hidden" name="operation" value="">
-							<input type="hidden" name="num" value="0">
-							
-							<ul class="enter_list">
-								<li><span class="enter_label">Название</span> </li>
-								<li><input type="text" name="fav_name" class="enter_text"  value="<?=$name?>" placeholder="введите название закладки"/></li>
-<?php
-								if ($fav_lnk)
-								{
-?>								<li><span class="enter_label">Ссылка</span> </li>
-								<li><input type="text" name="fav_link" class="enter_text"  value="<?=$link?>" placeholder="введите ссылку на закладку"/></li>
-<?php							}
-?>							</ul>
-							</td>
-							<td class="table_menu">		
-							<div class="navbarmenu">
-													
-								<a class="img" onclick="mopen('opt_menu_<?=$num?>')" onmouseout="mclosetime()" title="операции"></a>
-									<div class="menu" id="opt_menu_<?=$num?>" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-										<input class="button gray small" type="button" onclick="with (this) {form.operation.value = 'refresh'; form.num.value = <?=$num?>; form.fav_name.value=''; form.submit ()}" value="ОБНОВИТЬ" title="Обновить данные закладки с онлайн сервиса"><br>																			
-<?php
-									if (!$new)
-										{
-?>
-										<input class="button gray small" type="button" onclick="with (this) {form.operation.value = 'rename'; form.num.value = <?=$num?>; form.fav_link.value=''; form.submit ()}" value="ПЕРЕИМЕНОВАТЬ" title="Сохранить измененное имя закладки"><br>
-<?php
-										}
-?>
-										<input class="button gray small" type="button" onclick="with (this) {form.operation.value = 'confirm_del'; form.num.value = <?=$num?>; <?if ($fav_lnk) echo "form.fav_link.value='';"?> form.fav_name.value=''; form.submit ()}" value="УДАЛИТЬ" title="Удалить закладку"><br>
-										<input class="button gray small" type="button" onclick="with (this) {form.operation.value = 'up'; form.num.value = <?=$num?>; <?if ($fav_lnk) echo "form.fav_link.value='';"?> form.fav_name.value='';  form.submit ()}" value="ВВЕРХ" title="Переместить закладку вверх"><br>
-										<input class="button gray small" type="button" onclick="with (this) {form.operation.value = 'down'; form.num.value = <?=$num?>; <?if ($fav_lnk) echo "form.fav_link.value='';"?> form.fav_name.value=''; form.submit ()}" value="ВНИЗ" title="Переместить закладку вниз">
-									</div>
-							</div>
-					</form>
-					</td>
-					</tr>
-					</table>
+			<tr class="table_hover" id="<?=$num?>_row">
+				
+				<td class="main checkbox">
+				</td>
+				<td class="main nomerpp">
+				</td>
+				<td class="main poster">
+					<img src="./images/ua_web_logo_def.png" class="poster" alt="постер">
+				</td>
+				<td class="main tdsite">
 					
-			</li>
+				</td>
+				<td class="main favorites">
+					<span class="enter_label">Список пуст</span><br>
+				</td>
+				<td class="main" align=center>
+				</td>
+
+		</tr>
 <?php
 }
-
-
-
 // выводит среднюю часть (список закладок)
 function fav_content()
 {
@@ -1041,9 +1096,24 @@ global $ua_images_foldername;
 
 ?>
 	<div class="content">
-		<ul id="list">
+		<form method="POST" action="<?=$_SERVER["PHP_SELF"]?>" name="favorites">
+		<input type="hidden" name="oper" value="">
+		
+		<div class='block'>
+		<div class="scroll">
+		<div class="head fixed"></div>
+		<table class="table"  id="sort"  width="100%">
+			<tr class='head'>
+				<td ><div class='st'><input type="checkbox" id="example_maincb"><label for="example_maincb"></label></div><div class='or'><input id="example_maincb" type="checkbox"><label for="example_maincb"></label></div></td>  <!-- должны быть одинаковые значениея для авто подгонки столбцов по заголовкам -->
+				<td><div class='st'>№</div><div class='or'>№</div></td>  <!-- должны быть одинаковые значениея для авто подгонки столбцов по заголовкам -->
+				<td><div class='st'>Закладка</div><div class='or'>Закладка</div></td>  <!-- должны быть одинаковые значениея для авто подгонки столбцов по заголовкам -->
+				<td><div class='st'></div><div class='or'></div></td>
+			</tr>
+		<tbody>
+		
 <?php
 	
+
 	$ua_fav=get_fav($ua_favorites_filename);
 	$count=0;
 	if (count($ua_fav)==0) fav_template_empty(); else
@@ -1057,31 +1127,58 @@ global $ua_images_foldername;
 				if ($id2=="name") $name=$val2;
 				if ($id2=="site")
 				{
-					
+									
 					$logo_arr=get_site_logo($val2);
 					$site=$logo_arr["image"];
 					$url_site=$logo_arr["site_url"];
+					$site_num=$val2;
+					if ($val2 == "0") $url_site.="/".$link;
+					if ($val2 == "2") 
+					{
+						$parse =  parse_url($link);
+						$url_site="http://".$parse["host"].$parse["path"];
+					}
+					if ($val2 == "3") 
+					{
+						$url_site.="/video/".$link;
+					}					
 					unset($logo_arr);
-					$type=$val2;
+					
 				}
+				if ($id2=="type") $type=$val2;
 			}
-			//if ($link=="") $fav_lnk=true; else $fav_lnk=false;
+
 			$fav_lnk=true;
 			if ($name=="") $new=true; else $new=false;
-			fav_template($poster, $name, $link, $site,$url_site, $type, $count,$new,$fav_lnk);		
+			fav_template($poster, $name, $link, $site_num,$site,$url_site, $type, $count,$new,$fav_lnk);		
 			$count++;
 		}
 	}
 	
 ?>
-		</ul>
+		</tbody>
+		</table>
+		<script type="text/javascript">
+				var fixHelper = function(e, ui) {
+					ui.children().each(function() {
+					$(this).width($(this).width());
+					});
+				return ui;
+				};
+ 
+				$("#sort tbody").sortable({
+				helper: fixHelper
+				});
+		</script>
+		</div>
+		</div>
 	</div>
-											
 <?php
 }	
 html_header();
 fav_header("Редактор закладок");
 fav_content();
+left_side();
 fav_footer();
 html_footer();
 ?>

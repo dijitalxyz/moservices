@@ -1,0 +1,8 @@
+[libslang_1230]
+	revision = 1
+	title = "Lib Slang 2.1.4"
+	role = package
+	check = "lib lib/libslang.so.2"
+	env = 1230
+	files = "lib/libslang.so lib/libslang.so.2 lib/libslang.so.2.1.4"
+	size = 848

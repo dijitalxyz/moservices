@@ -118,13 +118,13 @@ class Dispatcher {
 		        	}
 		        }
 			}
-			if(null != $resultObj) {
-				//$localeName = $this->cfg->get("Locale",null,"en_EN");
-			    //$lang = new Lang(); 
-			    //$view->setLocale($lang->getLocale($localeName));
-			    $view->setLocale($locale);
-				return $view->drawObject($resultObj, $mode);
-			}
+		}
+		if(null != $resultObj) {
+			//$localeName = $this->cfg->get("Locale",null,"en_EN");
+		    //$lang = new Lang(); 
+		    //$view->setLocale($lang->getLocale($localeName));
+		    $view->setLocale($locale);
+			return $view->drawObject($resultObj, $mode);
 		}
 		return;
 	}

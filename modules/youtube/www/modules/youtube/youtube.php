@@ -11,8 +11,8 @@ $youtube_config = array(
 	'cat'		=> '',
 	'period'	=> 'all_time',
 	'region'	=> '',
-	'quality'	=> 'lo',
-	'keyboard'	=> 'rss',
+	'quality'	=> 'hi',
+	'keyboard'	=> 'emb',
 	'username'	=> '',
 );
 if( is_file( $mos.'/www/modules/youtube/youtube.config.php' ) )
@@ -417,6 +417,19 @@ function parseUrlParameters( $s )
 	}
 	return $a;
 }
+
+//
+// ====================================
+function DecryptYouTubeCypher( $signature )
+{
+	$s = substr(strrev($signature), 3);
+	$ts = substr($s, 0, 1);
+	$n = 19 % strlen( $s );
+	$s = substr( $s, $n, 1 ) . substr( $s, 1, $n-1 ) . $ts . substr( $s, $n+1 );
+	$s = substr(strrev($s),2);
+
+	return $s;
+} 
 //
 // ====================================
 function youtubeGetStream( $id, $quality = 'lo' )
@@ -424,54 +437,112 @@ function youtubeGetStream( $id, $quality = 'lo' )
 	$opts = array(
 		'http' => array(
 			'method'  => 'GET',
-//			'user-agent' => 'Mozilla/5.0 (Windows NT 5.1; rv:7.0) Gecko/20100101 Firefox/7.0'
-			'user-agent' => 'Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1C25 Safari/419.3'
+			'user-agent' => 'Mozilla/5.0 (Windows NT 5.1; rv:7.0) Gecko/20100101 Firefox/7.0'
+//			'user-agent' => 'Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1C25 Safari/419.3'
 		)
 	);
 	$context = stream_context_create($opts);
 
-	$s = file_get_contents( "http://www.youtube.com/get_video_info?video_id=$id&el=detailpage&ps=xl&eurl=&hl=en_US", false, $context);
-//	$s = file_get_contents( "http://www.youtube.com/get_video_info?video_id=$id&el=embedded&ps=default&hl=en_US", false, $context);
-//	$s = file_get_contents( "http://www.youtube.com/watch?v=$id&feature=player_embedded", false, $context);
+	$url = "http://www.youtube.com/get_video_info?html5=1&video_id=$id&eurl=https%3A%2F%2Fwww.youtube.com%2Ftv%23%2Fwatch%3Fv%$id%26mode%3Dtransport&ps=leanback&el=leanback&hl=en_US&sts=1588&c=TVHTML5&cver=4";
+// &cpn=-j_vxMYPUvpBnlmo&cbr=Firefox&cbrver=21.0%2Cgzip(gfe&cos=Windows&cosver=5.2
 
+//	$url = "http://www.youtube.com/get_video_info?video_id=$id&el=detailpage&ps=xl&eurl=&hl=en_US";
+//	$url = "http://www.youtube.com/get_video_info?video_id=$id&el=embedded&ps=default&hl=en_US";
+//	$url = "http://www.youtube.com/watch?v=$id&feature=player_embedded";
+
+if( isset( $_REQUEST['debug'])) echo "url=$url\n";
+
+	$s = file_get_contents( $url, false, $context);
 
 	$ps = parseUrlParameters( $s );
+
+if( isset( $_REQUEST['debug']))
+{
+	echo "====================\nparameters:\n";
+	print_r( $ps );
+}
+
 	if( ! isset( $ps['url_encoded_fmt_stream_map'] )) return false;
 
 	$ss = explode( ',', $ps['url_encoded_fmt_stream_map'] );
+
+if( isset( $_REQUEST['debug']))
+{
+	echo "====================\nurl_encoded_fmt_stream_map:\n";
+	print_r( $ss );
+}
+
 	$streams = array();
 
 	foreach( $ss as $str )
 	{
 		$s = parseUrlParameters( $str );
+
+if( isset( $_REQUEST['debug']))
+{
+	echo "\n====================\n";
+	print_r( $s );
+}
+
 		if( ! isset( $s['itag'] )) continue;
 		if( ! isset( $s['url']  )) continue;
-		if( ! isset( $s['sig']  )) continue;
-//		$streams[ $s['itag'] ] = urldecode( $s['url'] ).'&signature='.$s['sig'];
-		$streams[ $s['itag'] ] = $s['url'] .'&signature='. $s['sig'];
-	}
-	if( isset( $_REQUEST['debug'])) print_r( $streams );
 
-	// 45 - hd720 webm
+		$url = $s['url'];
+		if( strpos( $url, 'signature=' ) > 0 )
+		{
+			$streams[ $s['itag'] ] = $url;
+			continue;
+		}
+
+		if(     isset( $s['sig'] )) $sig = $s['sig'];
+		elseif( isset( $s['s']   ))
+		{
+			$sig = $s['s'];
+
+if( isset( $_REQUEST['debug'])) echo "s  ='$sig'\n";
+
+			$sig = DecryptYouTubeCypher( $sig );
+
+if( isset( $_REQUEST['debug'])) echo "sig='$sig'\n";
+		}
+		else continue;
+		$streams[ $s['itag'] ] = $url .'&signature='. $sig;
+	}
+
+if( isset( $_REQUEST['debug']))
+{
+	echo "====================\nstreams:\n";
+	print_r( $streams );
+}
+
 	// 22 - hd720 mp4
-	// 44 - large webm
+	// 45 - hd720 webm
+	// 84 - hd720 mp4
+
 	// 35 - large flv
-	// 43 - medium webm
-	// 34 - medium flv
+	// 44 - large webm
+
 	// 18 - medium mp4
+	// 34 - medium flv
+	// 43 - medium webm
+	// 82 - medium mp4
+	// 100 - medium webm
+
 	//  5 - small flv
-	// 36 - small 3gpp
 	// 17 - small 3gpp
+	// 36 - small 3gpp
 
 	# large
 	if( $quality == 'hi' )
 	{
 		if( isset( $streams[ 22 ] )) return $streams[ 22 ];
+		if( isset( $streams[ 84 ] )) return $streams[ 84 ];
 		if( isset( $streams[ 35 ] )) return $streams[ 35 ];
 	}
 	# medium
 	if( isset( $streams[ 18 ] )) return $streams[ 18 ];
 	if( isset( $streams[ 34 ] )) return $streams[ 34 ];
+	if( isset( $streams[ 82 ] )) return $streams[ 82 ];
 	# small
 	if( isset( $streams[  5 ] )) return $streams[  5 ];
 
@@ -904,7 +975,7 @@ global $youtube_lists;
 		$id = $item['yt$username']['$t'];
 
 		$youtube_lists['subscriptions'][ $id ] = array(
-			'title' => str_replace( 'Activity of:', '', $item['title']['$t']),
+			'title' => trim( str_replace( array( 'Videos published by:', 'Activity of:'), '', $item['title']['$t'])),
 			'image' => $item['media$thumbnail']['url'],
 		);
 	}

@@ -1,0 +1,388 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- 
+##################################################################################
+# © IconBIT 2011                                                                 #
+##################################################################################
+-->
+
+<onEnter>
+	showIdle();
+</onEnter>
+
+<!-- <onRefresh>
+	currentIndex = getFocusItemIndex();
+	executeScript("refreshList");
+</onRefresh> -->
+
+<script>	
+	locale = readStringFromFile("/tmp/app/REL_LOCALE");
+	if (locale == "ru")
+	{
+		DL_TITLE = "Загрузки (FTP)";
+		DL_WAIT = "В очереди";
+		DL_LOAD = "Загрузка";
+		DL_PAUSE = "Пауза";
+		DL_OK = "Готово";
+		DL_ERROR = "Ошибка";
+		DL_INFO = "Info - Обновить список";
+		DL_KILL = "Операции";
+		DL_MB = "Мб";
+	}
+	else
+	{
+		DL_TITLE = "Downloads (FTP)";
+		DL_WAIT = "Wait";
+		DL_LOAD = "Loading";
+		DL_PAUSE = "Pause";
+		DL_OK = "Success";
+		DL_ERROR = "Failed";
+		DL_INFO = "Info - Refresh list";
+		DL_KILL = "Action";
+		DL_MB = "MB";
+	}
+	currentIndex = 0;
+	executeScript("refreshList");
+</script>
+
+<mediaDisplay
+	name=onePartView
+	itemPerPage=6
+	viewAreaXPC=0
+	viewAreaYPC=0
+	viewAreaWidthPC=100
+	viewAreaHeightPC=100
+
+	itemXPC=10
+	itemYPC=17
+	itemWidthPC=80
+	itemHeightPC=11
+	itemImageXPC=27.4
+	itemImageYPC=37.5
+	itemImageWidthPC=60.8
+	itemImageHeightPC=6.3
+
+	imageFocus=""
+	imageUnFocus=""
+
+	sideColorRight=-1:-1:-1
+	sideColorLeft=-1:-1:-1
+	sideColorTop=-1:-1:-1
+	sideColorBottom=-1:-1:-1
+	backgroundColor=-1:-1:-1
+	focusBorderColor=-1:-1:-1
+	unFocusBorderColor=-1:-1:-1
+	itemBackgroundColor=-1:-1:-1
+
+	showHeader="no"
+	showDefaultInfo="no"
+
+	rollItems="no"
+	forceRedrawItems="yes"
+	idleImageXPC=83.12
+	idleImageYPC=89.58
+	idleImageWidthPC=3.1
+	idleImageHeightPC=5.5
+>
+	<idleImage> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage> image/POPUP_LOADING_06.png </idleImage>
+	<backgroundDisplay name=MCDownloadBackground>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>/tmp/app/ims/mc_back.png</image>
+	</backgroundDisplay>
+	<text offsetXPC=10 offsetYPC=7 widthPC=100 heightPC=5 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+		<script>
+			DL_TITLE;
+		</script>
+	</text>
+	<text redraw=yes align=right offsetXPC=70 offsetYPC=7 widthPC=21 heightPC=5 fontSize=14 backgroundColor=0:0:0 foregroundColor=255:255:255>
+		<script>
+			idx = getFocusItemIndex();
+			idx -= -1;
+			idx + "/" + itemSize;
+		</script>
+	</text>
+	<text offsetXPC=10 offsetYPC=87 widthPC=36 heightPC=5 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+		<script>DL_INFO;</script>
+	</text>
+	<image offsetXPC=74 offsetYPC=87 widthPC=3.04 heightPC=5.42>
+		/tmp/app/ims/mc-image/video_setting_ok_icon.png
+	</image>
+	<text align=left offsetXPC=77.8 offsetYPC=87 widthPC=19.5 heightPC=5 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+		<script>DL_KILL;</script>
+	</text>
+	<scrollbar offsetXPC=93 offsetYPC=13 widthPC=2.26 heightPC=74.0 backgroundImage="/tmp/app/ims/mc_scroll_bar_01.png" foregroundImage="/tmp/app/ims/mc_scroll_bar_02.png" border=5 offset=0 direction="vertical" redraw="yes">
+		<totalSize>
+			<script>
+				getPageInfo("itemCount");
+			</script>
+		</totalSize>
+		<startIndex>
+			<script>
+				getFocusItemIndex();
+			</script>
+		</startIndex>
+	</scrollbar>
+	<itemDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 useBackgroundSurface="yes"/>
+		<image offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
+			<script>
+				idx1 = getFocusItemIndex();
+				idx2 = getQueryItemIndex();
+				if (idx1 == idx2)
+					"/tmp/app/ims/shedule_focus.png";
+				else
+					null;
+			</script>
+		</image>
+		<text offsetXPC=2 offsetYPC=10 widthPC=96 heightPC=40 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>getStringArrayAt(itemTitleArray, -1);</script>
+		</text>
+		<text offsetXPC=2 offsetYPC=50 widthPC=48 heightPC=40 fontSize=14 backgroundColor=-1:-1:-1>
+			<foregroundColor><script>getStringArrayAt(itemColorArray, -1);</script></foregroundColor>
+			<script>getStringArrayAt(itemStatusArray, -1);</script>
+		</text>
+		<text align=right offsetXPC=50 offsetYPC=50 widthPC=48 heightPC=40 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>getStringArrayAt(itemPcArray, -1);</script>
+		</text>
+	</itemDisplay>
+	<onUserInput>
+		input = currentUserInput();
+		major = getPageInfo("majorContext");
+		print("*************************", input);
+		ret = "false";
+		if (input == "guide") {
+			postMessage("return");
+			ret = "true";
+		} else if (input == "display") {
+			currentIndex = getFocusItemIndex();
+			executeScript("refreshList");
+			ret = "true";
+		} else if (input == "pagedown") {
+			idx = getFocusItemIndex();
+			idx -= -10;
+			if (idx &gt;= itemSize)
+				idx = itemSize - 1;
+			setFocusItemIndex(idx);
+			setItemFocus(idx);
+			redrawDisplay("item");
+			ret = "true";
+		} else if (input == "pageup") {
+			idx = getFocusItemIndex();
+			idx -= 10;
+			if (idx &lt; 0)
+				idx = 0;
+			setFocusItemIndex(idx);
+			setItemFocus(idx);
+			redrawDisplay("item");
+			ret = "true";
+		}
+		ret;
+	</onUserInput>
+</mediaDisplay>
+
+<refreshList>
+	cancelIdle();
+	itemTitleArray = null;
+	itemStateArray = null;
+	itemStatusArray = null;
+	itemColorArray = null;
+	itemPcArray = null;
+	itemPathArray = null;
+	itemIdArray = null;
+	itemSize = 0;
+	dlok = loadXMLFile("http://127.0.0.1:9998/list/");
+	if (dlok != null) {			
+		itemSize = getXMLElementCount("list", "item");
+		print("itemSize = ", itemSize);
+		if(itemSize &gt; 0) {
+			itemCount = 0;		
+			while(1) {
+				itemTitle = getXMLText("list", "item", itemCount, "title");
+				itemTitleArray = pushBackStringArray(itemTitleArray, itemTitle);
+				itemPath = getXMLText("list", "item", itemCount, "filepath");
+				itemPathArray = pushBackStringArray(itemPathArray, itemPath);
+				itemId = getXMLText("list", "item", itemCount, "id");
+				itemIdArray = pushBackStringArray(itemIdArray, itemId);
+				itemState  = getXMLText("list", "item", itemCount, "state");
+				itemStateArray  = pushBackStringArray(itemStateArray, itemState);
+				if (locale != "ru")	{
+					if (itemState == "wait") {
+						itemStatus = "Waiting";
+						itemColor = "255:255:255";
+					} else if (itemState == "prepare") {
+						itemStatus = "Prepare";
+						itemColor = "255:255:0";
+					} else if (itemState == "open") {
+						itemStatus = "Connecting...";
+						itemColor = "255:255:0";
+					} else if (itemState == "work") {
+						itemStatus = "Downloading";
+						itemColor = "255:255:255";
+					} else if (itemState == "success") {
+						itemStatus = "Success";
+						itemColor = "0:255:0";
+					} else if (itemState == "trycancel") {
+						itemStatus = "Canceling...";
+						itemColor = "255:0:0";
+					} else if (itemState == "cancel") {
+						itemStatus = "Canceled";
+						itemColor = "255:0:0";
+					} else if (itemState == "dontstream") {
+						itemStatus = "Don't support";
+						itemColor = "255:0:0";
+					} else if (itemState == "dontopen") {
+						itemStatus = "Connection error";
+						itemColor = "255:0:0";
+					} else if (itemState == "notfound") {
+						itemStatus = "Not found";
+						itemColor = "255:0:0";
+					} else if (itemState == "writefailed") {
+						itemStatus = "Write failed";
+						itemColor = "255:0:0";
+					} else {
+						itemStatus = "Unknown error";
+						itemColor = "255:0:0";
+					}
+				} else {
+					if (itemState == "wait") {
+						itemStatus = "В очереди";
+						itemColor = "255:255:255";
+					} else if (itemState == "prepare") {
+						itemStatus = "Подготовка";
+						itemColor = "255:255:0";
+					} else if (itemState == "open") {
+						itemStatus = "Соединение...";
+						itemColor = "255:255:0";
+					} else if (itemState == "work") {
+						itemStatus = "Загрузка";
+						itemColor = "0:255:255";
+					} else if (itemState == "success") {
+						itemStatus = "Готово";
+						itemColor = "0:255:0";
+					} else if (itemState == "trycancel") {
+						itemStatus = "Отмена...";
+						itemColor = "255:255:0";
+					} else if (itemState == "cancel") {
+						itemStatus = "Отменен";
+						itemColor = "255:0:0";
+					} else if (itemState == "dontstream") {
+						itemStatus = "Не поддерживается";
+						itemColor = "255:0:0";
+					} else if (itemState == "dontopen") {
+						itemStatus = "Ошибка соединения";
+						itemColor = "255:0:0";
+					} else if (itemState == "notfound") {
+						itemStatus = "Не найден";
+						itemColor = "255:0:0";
+					} else if (itemState == "writefailed") {
+						itemStatus = "Ошибка записи";
+						itemColor = "255:0:0";
+					} else {
+						itemStatus = "Неизвестная ошибка";
+						itemColor = "255:0:0";
+					}
+				}
+				itemStatusArray  = pushBackStringArray(itemStatusArray, itemStatus);
+				itemColorArray  = pushBackStringArray(itemColorArray, itemColor);
+				progress = getXMLText("list", "item", itemCount, "progress");
+				itemPcArray  = pushBackStringArray(itemPcArray, progress);
+				itemCount += 1;
+				if(itemCount == itemSize)
+					break;
+			}
+			if (currentIndex &gt;= itemSize)
+				currentIndex = itemSize - 1;
+			setFocusItemIndex(currentIndex);
+			setItemFocus(currentIndex);
+		}		
+	}
+	redrawDisplay();
+</refreshList>
+
+<item_template>
+<mediaDisplay>
+	<onEnter>
+		popupOptionSize = 1;		
+		popupOptions = null;
+		state = getEnv("MC_STATE");
+		unsetEnv("MC_STATE");
+		locale = readStringFromFile("/tmp/app/REL_LOCALE");
+		if (locale == "ru") {
+			popupHeader = "Операции";
+			if (state == "success") {
+				popupOptions  = pushBackStringArray(popupOptions, "Воспроизвести");
+				popupOptionSize += 1;
+			}
+			if (state != "success" &amp;&amp; state != "cancel") {
+				popupOptions  = pushBackStringArray(popupOptions, "Остановить");
+				popupOptionSize += 1;
+			}
+			if (state != "success" &amp;&amp; state != "work" &amp;&amp; state != "wait") {
+				popupOptions  = pushBackStringArray(popupOptions, "Продолжить");
+				popupOptionSize += 1;
+			}
+			popupOptions  = pushBackStringArray(popupOptions, "Удалить");
+		} else {
+			popupHeader = "Action";
+			if (state == "success") {
+				popupOptions  = pushBackStringArray(popupOptions, "Play");
+				popupOptionSize += 1;
+			}
+			if (state != "success" &amp;&amp; state != "cancel") {
+				popupOptions  = pushBackStringArray(popupOptions, "Stop");
+				popupOptionSize += 1;
+			}
+			if (state != "success" &amp;&amp; state != "work" &amp;&amp; state != "wait") {
+				popupOptions  = pushBackStringArray(popupOptions, "Resume");
+				popupOptionSize += 1;
+			}
+			popupOptions  = pushBackStringArray(popupOptions, "Remove");
+		}	
+		popupOptionFocus = null;
+	</onEnter>
+</mediaDisplay>
+<onClick>
+	<script>
+		idx = getFocusItemIndex();
+		itemState = getStringArrayAt(itemStateArray, idx);
+		setEnv("MC_STATE", itemState);
+		rss = "rss_file:///tmp/app/ims/mc-dynamicPopup.rss";
+		ret = doModalRss(rss);
+		if( ret != NULL ) {
+			if (ret == "Воспроизвести" || ret == "Play") {
+				itemPath = getStringArrayAt(itemPathArray, idx);
+				playItemURL(-1, 1);
+				playItemURL(itemPath, 0);
+			} else {
+				id = getStringArrayAt(itemIdArray, idx);
+				if (ret == "Продолжить" || ret == "Resume") {
+					dlok = getUrl("http://127.0.0.1:9998/resume/"+id);
+				} else if (ret == "Остановить" || ret == "Stop") {
+					dlok = getUrl("http://127.0.0.1:9998/cancel/"+id);
+				} else if (ret == "Удалить" || ret == "Remove") {
+					dlok = getUrl("http://127.0.0.1:9998/drop/"+id);
+				}
+				currentIndex = idx;
+				executeScript("refreshList");
+			}
+		}
+		null;
+	</script>
+</onClick>
+</item_template>
+
+<channel>
+	<title>IconBIT Downloads</title>
+	<link>/tmp/app/ims/dlman.rss</link>	
+	<itemSize>
+		<script>
+			itemSize;
+		</script>
+	</itemSize>
+</channel>
+</rss>;

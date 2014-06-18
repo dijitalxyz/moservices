@@ -16,9 +16,18 @@ class rss_player_std
 	global $xtreamer;
 	global $key_enter;
 	global $key_return;
+	global $screensaver;
 	?>
 	
 <onEnter>
+	<?
+			if ($screensaver == "1")
+			{
+		?>
+			SetScreenSaverStatus("no");
+		<?	
+			}
+		?>
 	idx_play="<?=$_GET["idx"]?>";
 	<?php
 				if ($xtreamer)
@@ -39,6 +48,14 @@ class rss_player_std
 </onRefresh>
 
 <onExit>
+		<?
+			if ($screensaver == "1")
+			{
+		?>
+			SetScreenSaverStatus("yes");
+		<?	
+			}
+		?>
 	playItemURL(-1, 1);
 	setRefreshTime(-1);
 	writeStringToFile("/tmp/env_idx_play_message", idx_play);

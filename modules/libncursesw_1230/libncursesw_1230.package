@@ -1,0 +1,8 @@
+[libncursesw_1230]
+	revision = 1
+	title = "Lib NcursesW 5.9"
+	role = package
+	check = "lib lib/libncursesw.so.5"
+	env = 1230
+	files = "lib/libncursesw.so lib/libncursesw.so.5 lib/libncursesw.so.5.9"
+	size = 340

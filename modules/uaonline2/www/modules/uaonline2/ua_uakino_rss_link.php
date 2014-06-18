@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	UAKINO.NET RSS link module v1.4
+	UAKINO.NET RSS link module v1.5
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2013	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -105,21 +105,24 @@ class ua_rss_link extends ua_rss_link_const2
 				ds8 = getStringArrayAt(dlok, 8);
 				ds9 = getStringArrayAt(dlok, 9);
 				img = getStringArrayAt(dlok, 10);
-				down = getStringArrayAt(dlok, 12);
-				link = getStringArrayAt(dlok, 13);	 
-				name = getStringArrayAt(dlok, 14);	 
+				poster = getStringArrayAt(dlok, 11);
+				down = getStringArrayAt(dlok, 13);
+				link = getStringArrayAt(dlok, 14);	 
+				name = getStringArrayAt(dlok, 15);	 
 				
 	 		}
 			
 		menuArray = null;
 		menucmdArray = null;
-		menuCount = 3;
+		menuCount = 4;
 		menuArray = pushBackStringArray( menuArray, "Загрузить");
 		menucmdArray = pushBackStringArray( menucmdArray, "download");
 		menuArray = pushBackStringArray( menuArray, "Менеджер");
 		menucmdArray = pushBackStringArray( menucmdArray, "manager");
 		menuArray = pushBackStringArray( menuArray, "Плеер");
 		menucmdArray = pushBackStringArray( menucmdArray, "player_style");
+		menuArray = pushBackStringArray( menuArray, "Описание");
+		menucmdArray = pushBackStringArray( menucmdArray, "description");
 		
 		
 		setFocusItemIndex(itm_index);
@@ -136,6 +139,7 @@ class ua_rss_link extends ua_rss_link_const2
 	global $key_return;
 	global $ua_rss_download_filename;
 	global $ua_player_parser_filename;
+	global $ua_full_description;
 	include ("ua_rss_download_rss_link.inc.php");
 	?>
 	<menu_template>
@@ -163,6 +167,10 @@ class ua_rss_link extends ua_rss_link_const2
 		if (act == "manager") {
 			down_jump="<?=$ua_path_link.$ua_rss_download_filename."?display=1"?>";
 			jumpToLink("download");
+		}
+		else
+		if (act == "description") {
+			doModalRss("<?=$ua_path_link.$ua_full_description?>");
 		}
 		null;
 	</onClick>
@@ -203,6 +211,8 @@ class ua_rss_link extends ua_rss_link_const2
 	<?
 		include ("ua_rss_historyfiles.inc.php");
 	?>
+	checkElapsed = 0;
+	playElapsed = 0;
 	setRefreshTime(1);    
 	}
 	</onEnter>
@@ -340,7 +350,7 @@ class ua_rss_link extends ua_rss_link_const2
 					else saveBookArray = pushBackStringArray(saveBookArray, count);
 					
 					saveBookArray = pushBackStringArray(saveBookArray, name);
-					saveBookArray = pushBackStringArray(saveBookArray, img);
+					saveBookArray = pushBackStringArray(saveBookArray, poster);
 					saveBookArray = pushBackStringArray(saveBookArray, site);
 										
 					

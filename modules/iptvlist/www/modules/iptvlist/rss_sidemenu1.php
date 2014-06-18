@@ -1,11 +1,33 @@
 <?php
 
+define("epgenabledconf","/usr/local/etc/mos/www/modules/iptvlist/epg_enabled.conf");
+
 function rss_sidemenu1_content()
 {
 	header( "Content-type: text/plain" );
 	echo '<?xml version="1.0" encoding="UTF8" ?>'.PHP_EOL;
 	echo '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">'.PHP_EOL;
 
+	if (file_exists(epgenabledconf)) 
+	{
+		$epgenabled = file_get_contents(epgenabledconf);
+		$epgenabled = trim( str_replace('\r', '', str_replace('\n', '', $epgenabled)) );
+	} 
+	else 
+	{
+		$epgenabled="1";
+	} 
+
+	if ( $epgenabled == "1" ) 
+	{
+		$epgintitle = getMsg( 'iptvEPGInListYes' ); 
+		$epginaction = "epgDisable";
+	} 
+	else 
+	{ 
+		$epgintitle = getMsg( 'iptvEPGInListNo' ); 
+		$epginaction = "epgEnable";
+	} 
 ?>
 
 <onEnter>
@@ -43,7 +65,7 @@ setReturnString( "" );
     itemImageYPC=0
 	itemImageWidthPC = 0
     itemImageHeightPC = 0
-    itemPerPage=10
+    itemPerPage=20
 
 	
 	imageFocus = ""
@@ -111,7 +133,6 @@ setReturnString( "" );
 
 	if ("return" == userInput)
 	{
- handle = "false";
     	}
     	else if ("left" == userInput || "right" == userInput)
     	{
@@ -151,6 +172,16 @@ setReturnString( "" );
 <item>
 	<title><?= getMsg( 'iptvPlaySt' ) ?></title>
 	<action>video_play</action>
+</item>
+
+<item>
+	<title><?= getMsg( 'iptvProgramGuide' ) ?></title>
+	<action>display</action>
+</item>
+
+<item>
+	<title><?= $epgintitle ?></title>
+	<action><?= $epginaction ?></action>
 </item>
 
 <item>

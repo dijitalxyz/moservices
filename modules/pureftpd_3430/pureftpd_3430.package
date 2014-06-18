@@ -1,0 +1,11 @@
+[pureftpd_3430]
+	revision = 1
+	title = "Pure FTP daemon v1.0.36"
+	role = daemon
+	init = S15pureftpd
+	navy_title = "Explore FTP"
+	navy_frame = "ftp://root@%addr%/tmp/usbmounts"
+	env = 3430
+	files = "bin/pure-ftpd etc/init/S15pureftpd"
+	require = "libiconv"
+	size = 160

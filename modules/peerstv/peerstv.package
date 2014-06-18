@@ -1,0 +1,8 @@
+[peerstv]
+	revision = 3
+	title = "Peers.TV"
+	role = rss
+	files = "www/modules/peerstv/"
+	logo = "modules/peerstv/peerstv.png"
+	config_link = "?page=peerstv_sets"
+	size = 180

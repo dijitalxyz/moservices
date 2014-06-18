@@ -9,6 +9,29 @@ class rssSkinLeftView extends rssSkinLeft
 	public $itemImage = '';
 	//
 	// ------------------------------------
+	function showScripts()
+	{
+?>
+  <onEnter>
+	cancelIdle();
+<?php
+	if( $this->position == 0 )
+	if( getMosOption('sdk_version') > 3 )
+	{
+
+?>
+	setParentFade(96);
+<?php
+
+	}
+
+?>
+	itemCount = getPageInfo( "itemCount" );
+  </onEnter>
+<?php
+	}
+	//
+	// ------------------------------------
 	function showOnUserInput()
 	{
 ?>
@@ -106,10 +129,6 @@ class rssSkinLeftView extends rssSkinLeft
 
    focusBorderColor = "<?= static::focusBorderColor ?>"
    unFocusBorderColor = "<?= static::unFocusBorderColor ?>"
-
-   imageFocus=""
-   imageParentFocus=""
-   imageUnFocus=""
 
    idleImageXPC="<?= round( static::idleImageX/$sw*100, 4) ?>"
    idleImageYPC="<?= round( static::idleImageY/$sh*100, 4) ?>"

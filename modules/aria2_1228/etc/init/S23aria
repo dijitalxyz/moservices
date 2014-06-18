@@ -1,0 +1,132 @@
+#!/bin/sh
+#
+# description: Starts ans stops aria2 daemon
+#
+etc=/usr/local/etc
+mos=$etc/mos
+conf=$mos/etc/aria2c.conf
+
+# -------------------------------------
+#
+stateAria()
+{
+	ps | grep -q '[a]ria2c'
+}
+# -------------------------------------
+#
+getParam()
+{
+	sed -rn 's!^ *'$1' *= *(.*)$!\1!p' $conf
+}
+# -------------------------------------
+#
+setParam()
+{
+	sed -ri 's!^( *'$1' *= *).*$!\1'$2'!' $conf
+}
+#
+# -------------------------------------
+checkSetParam()
+{
+	grep -Eq $1' *= *'$2 $conf || setParam $1 $2
+}
+#
+# -------------------------------------
+start()
+{
+	stateAria && return 0
+
+	# get work directory
+	work=$( getParam dir )
+
+	if [ -n "$work" ] ; then
+		# check drive
+		drive=$( dirname $work )
+		if [ -e $drive ] ; then
+			p=$( realpath $drive )
+			cat /proc/mounts | grep -q " $p " || work=''
+		else
+			work=''
+		fi
+	fi
+
+	if [ -z "$work" ] ; then
+		#first entry. Find drive...
+		drive=''
+		for d in /tmp/ramfs/volumes/* ; do
+			[ -L "$d" ] || continue
+			p=$( realpath "$d" )
+			cat /proc/mounts | grep -q " $p " || continue
+			drive="$d"
+			break
+		done
+
+		[ -z "$drive" ] && return 1
+		work=$drive/download
+	fi
+
+	# make work dirs
+	[ -d $work ] || mkdir -p $work
+
+	# check and edit configs
+	checkSetParam dir $work
+	checkSetParam log $work/aria2c.log
+	checkSetParam 'save-session' $work/aria2c.save
+	checkSetParam 'input-file' $work/aria2c.save
+
+	# make required files
+	touch $work/aria2c.save
+	touch $etc/dth.dat
+
+	echo 'run' > /tmp/aria_run
+
+	# start aria2 as daemon
+	echo 'Starting aria2...'
+	$mos/bin/aria2c --conf-path=$conf
+}
+# -------------------------------------
+#
+stop()
+{
+	stateAria || return 0
+
+	echo 'Stopping aria2...'
+
+	killall aria2c 2>/dev/null
+	i=60
+	while [ $i -ne 0 ] ; do
+		stateAria || break
+		sleep 1
+		let i-=1
+	done
+	stateAria && killall -9 aria2c 2>/dev/null
+}
+# -------------------------------------
+# main
+#
+case "$1" in
+    start)
+	while [ -f /tmp/wait_aria ] ; do sleep 1; done
+
+	touch /tmp/wait_aria
+	start
+	rm -f /tmp/wait_aria
+	;;
+    stop)
+	stop
+	;;
+    status)
+	if stateAria
+	then
+		echo 'aria2c running'
+	else
+		echo 'aria2c stopped'
+	fi
+	;;
+    enable | disable)
+	;;
+    *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+esac
+
+exit $?

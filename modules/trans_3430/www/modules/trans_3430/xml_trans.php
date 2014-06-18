@@ -3,11 +3,15 @@
 $trans_dir = dirname( __FILE__ );
 require_once( $trans_dir . '/TransmissionRPC.class.php' );
 
-$rpc = new TransmissionRPC();
-$rpc->username = 'torrent';
-$rpc->password = '1234';
-//$rpc->debug = true;
-//header( "Content-type: text/plain" );
+$rpc = new TransmissionRPC('http://localhost:9091/transmission/rpc', 'torrent', '1234');
+//$rpc->username = 'torrent';
+//$rpc->password = '1234';
+
+if( isset( $_REQUEST['debug']))
+{
+	$rpc->debug = true;
+	header( "Content-type: text/plain" );
+}
 
 // ------------------------------------
 // Actions
@@ -27,6 +31,15 @@ try
 		{
 			$ids = array();
 			$result = $rpc->stop( $ids );
+		}
+		elseif( $act == 'alt_speed' )
+		{
+			if( isset( $_REQUEST['disable'] ))
+				$sets = array( 'alt-speed-enabled' => 0 );
+			else
+				$sets = array( 'alt-speed-enabled' => 1 );
+
+			$result = $rpc->sset( $sets );
 		}
 		else
 		if( isset( $_REQUEST['id'] ))
@@ -57,6 +70,18 @@ try
 			elseif( $act == 'check' )
 			{
 				$result = $rpc->verify( $ids );
+			}
+			elseif( $act == 'high' )
+			{
+				$result = $rpc->set( $ids, array( 'priority-high' ) );
+			}
+			elseif( $act == 'normal' )
+			{
+				$result = $rpc->set( $ids, array( 'priority-normal' ) );
+			}
+			elseif( $act == 'low' )
+			{
+				$result = $rpc->set( $ids, array( 'priority-low' ) );
 			}
 		}
 	}
@@ -156,6 +181,10 @@ try
 	'uploadRatio',
 	'uploadedEver',
 
+	'seedRatioMode',
+	'seedRatioLimit',
+        'isFinished',
+
 	'rateDownload',
 	'rateUpload',
 
@@ -221,8 +250,7 @@ foreach( $result->arguments->torrents as $item )
 	if( $st == 1 )		// check_wait
 	{
 		$item_left = getMsg( 'transWaitCheck' );
-		$progress_bg  = $trans_dir . '/images/progress_red.png';
-		$progress_bar = $trans_dir . '/images/progress_deep_green.png';
+		$progress_bar = $trans_dir . '/images/progress_grey.png';
 	}
 	elseif( $st == 2 )		// check
 	{
@@ -234,20 +262,38 @@ foreach( $result->arguments->torrents as $item )
 		$progress_bar = $trans_dir . '/images/progress_deep_green.png';
 		$progress_ratio = round( $item->recheckProgress*100, 2 );
 	}
+	elseif( $st == 3 )	// download_wait
+	{
+		$item_left = getMsg( 'transWaitDownload' );
+		$progress_bar = $trans_dir . '/images/progress_grey.png';
+	}
+	elseif( $st == 5 )	// seed_wait
+	{
+		$item_left = getMsg( 'transWaitSeed' );
+		$progress_bar = $trans_dir . '/images/progress_grey.png';
+	}
 	elseif( $st == 4 )		// download
 	{
 		$item_left = getMsg('transDownload') . getPeers( $item->peersSendingToUs, $item->peersConnected, getMsg( 'transFrom' ) );
 		$progress_bar = $trans_dir . '/images/progress_blue.png';
 	}
-	elseif( $st == 6 )		// seed
+	elseif( $st == 6 )			// seeding
 	{
 		$item_left = getMsg( 'transSeeding' ) . getPeers( $item->peersGettingFromUs, $item->peersConnected, getMsg( 'transTo' ) );
-		$progress_bar = $trans_dir . '/images/progress_green.png';
+		$progress_bg = $trans_dir . '/images/progress_green.png';
+		$progress_bar = $trans_dir . '/images/progress_deep_green.png';
 	}
-//	elseif( $st == 0 )		// paused
-	else				// stopped
+	elseif( $st == 0 )				// paused
 	{
-		$item_left = getMsg( 'transPaused' );
+		if( $item->isFinished )
+			$item_left = getMsg( 'transFinished' );
+		else
+			$item_left = getMsg( 'transPaused' );
+		$progress_bar = $trans_dir . '/images/progress_grey.png';
+	}
+	else						// stopped
+	{
+		$item_left = getMsg( 'transUnknown' );
 		$progress_bar = $trans_dir . '/images/progress_grey.png';
 	}
 	// DL & UL
@@ -277,18 +323,28 @@ foreach( $result->arguments->torrents as $item )
 				$progress_ratio = round( $item->percentDone*100, 4 );
 			}
 			if( isset( $item->rateDownload ))
-			$item_right .= ' - '. getHumanPeriod( ($ts-$vs)/$item->rateDownload ).getMsg( 'transRemain' );
+				$item_right .= ' - '. getHumanPeriod( ($ts-$vs)/$item->rateDownload ).getMsg( 'transRemain' );
 		}
 		else
 		{
 			// complete
+			$progress_ratio =100;
 			$item_right .= getHumanValue( $ts );
 			if( isset( $item->uploadedEver ))
-			$item_right .= getMsg( 'transUploaded' ).getHumanValue( $item->uploadedEver );
-			if( isset( $item->uploadRatio ))
-			$item_right .= getMsg( 'transRatio' ).sprintf( '%01.2f', $item->uploadRatio ).')';
-
-			$progress_ratio =100;
+				$item_right .= getMsg( 'transUploaded' ).getHumanValue( $item->uploadedEver );
+			if( isset( $item->uploadRatio )) {
+				$item_right .= getMsg( 'transRatio' ).sprintf( '%01.2f', $item->uploadRatio ).')';
+				// seeding ratio
+				if( isset( $item->seedRatioLimit ) && $item->seedRatioMode && $st == 6 ) {
+					$srl = $item->seedRatioLimit;
+					if( $srl > 0 ) {
+						$progress_ratio = round( $item->uploadRatio * 100 / $srl, 2 );
+						// $item_right .= " SRL=$srl"; // debug
+					}
+				}
+			}
+			else
+				$progress_ratio =0;
 		}
 	}
 

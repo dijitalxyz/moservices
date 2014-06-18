@@ -6,5 +6,5 @@
 # check returned hotplug status
 [ $1 -ne 0 ] && exit
 
-sleep 5
+sleep 10
 /usr/local/etc/mos/etc/init/S12nfsd rescan

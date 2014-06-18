@@ -19,6 +19,9 @@ statfile="/tmp/spindown.stat"
 
 rm -f $statfile
 
+devs=/dev
+[ -d /dev/block ] && devs=/dev/block
+
 while [ 0 ] ; do
 
 	[ -f ${statfile}.new ] && rm -f ${statfile}.new
@@ -53,7 +56,7 @@ while [ 0 ] ; do
 					let iTime=iTime-cycleTime
 					if [ $iTime -le 0 ] ; then
 						# stop drive
-						$mos/bin/sg_start --stop /dev/$disk
+						$mos/bin/sg_start --stop $devs/$disk
 
 						iTime=0
 					fi

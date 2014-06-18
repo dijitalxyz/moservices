@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# description: Enable and disable Nano
+#
+etc=/usr/local/etc
+mos=$etc/mos
+home=$etc
+
+[ -d /data ] && home=/data
+
+# -------------------------------------
+# $1 - name
+# $2 - value
+#
+changeEnv()
+{
+	if ! grep -q 'export '$1'="'$2'"' $etc/profile ; then
+		if grep -q $1'=' $etc/profile ; then
+			sed -ri 's!^.*'$1'=.*$!export '$1'="'$2'"!' $etc/profile
+		else
+			sed -i '
+/#export PATH /i\
+export '$1'="'$2'"
+' $etc/profile
+		fi
+	fi
+}
+# -------------------------------------
+#
+case "$1" in
+    start | stop | status | disable)
+	;;
+
+    enable)
+	# copy config
+	[ ! -f $home/.nanorc ]  && cp -a $mos/etc/.nanorc  $home/
+
+	# change term in profile
+	changeEnv TERMINFO $mos/share/terminfo
+	changeEnv TERM 'xterm-256color'
+
+	# patch home directory for root
+	grep -q ':root:'$home':' $etc/passwd || \
+	sed -ri 's!^(root:[^:]*:0:0:root:)[^:]*(:.*)$!\1'$home'\2!' $etc/passwd
+	;;
+  *)
+	echo "Usage: $0 {start|stop|enable|disable|status}"
+	;;
+esac
+
+exit $?

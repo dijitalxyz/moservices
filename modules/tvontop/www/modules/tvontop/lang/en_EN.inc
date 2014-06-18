@@ -53,7 +53,9 @@ class Locale_en_EN extends Localization {
         	'new_version_title' => 'New version available.',
         	'new_version_msg' => 'Version %1$d is available on http://tvontop.com. Please update.',
         	'Best' => 'Best',
-        	'Loading video...' => 'Loading video...' 
+        	'Loading video...' => 'Loading video...',
+        	'Watch' => 'Watch',
+        	'Protected channel password:' => 'Protected channel password:' 
         );
     }
 }

@@ -1,0 +1,3 @@
+f982e4e45a415693ec146cb2c1079538  bin/wakelan
+e27471f0502de6a83256d7ee88ccad77  etc/wakelan.conf
+55c1da81d6e598b08dde64c1374b6354  etc/init/S38wakelan

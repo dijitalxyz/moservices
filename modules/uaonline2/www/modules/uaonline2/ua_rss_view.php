@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS threePartsView style module v1.4
+	RSS threePartsView style module v1.5
 	------------------------------
-	Created by Sashunya 2013	
+	Created by Sashunya 2014	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -32,7 +32,6 @@ class ua_rss_view
 				}
 			else
 				{
-		
 						color = "<?= static::focus_color ?>";
 				}
 		</script> 
@@ -45,7 +44,7 @@ class ua_rss_view
 	
 	<?php
 	}
-	public function onUserInput_script()	
+	public function onUserInput_script($fav)	
 	{
 		global $key_up;
 		global $key_down;
@@ -55,9 +54,12 @@ class ua_rss_view
 		global $xtreamer;
 		global $key_pageup;
 		global $key_pagedown;
+		global $key_play;
+		global $ua_favorites_filename;
 	?>
 		<onUserInput>
 				<script>
+					
 					userInput = currentUserInput();
 					itm_index = getFocusItemIndex();
 					majorContext = getPageInfo("majorContext");	
@@ -65,6 +67,59 @@ class ua_rss_view
 					
 					if ( majorContext == "items" )
 					{
+					<?
+					if ($fav)
+					{
+					?>
+					if ( userInput == "<?= $key_play ?>" )
+					{
+						if ( switchSort == "true" )
+						{
+								titleBookArray = deleteStringArrayAt(titleBookArray, switchItem);
+								linkBookArray = deleteStringArrayAt(linkBookArray, switchItem);
+								imageBookArray = deleteStringArrayAt(imageBookArray, switchItem);
+								typeBookArray = deleteStringArrayAt(typeBookArray, switchItem);
+								siteBookArray = deleteStringArrayAt(siteBookArray, switchItem);
+								
+								
+								saveBookArray = null;
+								saveBookArray = pushBackStringArray(saveBookArray, itemCount);
+								count = 0;
+								while( count != itemCount )
+								{				
+									if (count == itm_index) 
+									{
+										saveBookArray = pushBackStringArray(saveBookArray, switchTitleBook);
+										saveBookArray = pushBackStringArray(saveBookArray, switchLinkBook);
+										saveBookArray = pushBackStringArray(saveBookArray, switchImageBook);
+										saveBookArray = pushBackStringArray(saveBookArray, switchTypeBook);
+										saveBookArray = pushBackStringArray(saveBookArray, switchSiteBook);
+									}
+									saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(titleBookArray,count));
+									saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(linkBookArray,count));
+									saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(imageBookArray,count));
+									saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(typeBookArray,count));
+									saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(siteBookArray,count));
+									count += 1;
+								}
+								writeStringToFile("<?=$ua_favorites_filename?>", saveBookArray);
+								switchSort = "false";
+								setRefreshTime(1); 
+						} else
+						{
+							switchTitleBook = getStringArrayAt(titleBookArray, itm_index );
+							switchLinkBook = getStringArrayAt(linkBookArray, itm_index );
+							switchImageBook = getStringArrayAt(imageBookArray, itm_index );
+							switchTypeBook = getStringArrayAt(typeBookArray, itm_index );
+							switchSiteBook = getStringArrayAt(siteBookArray, itm_index );
+							switchItem = itm_index;
+							switchSort = "true";
+							redrawDisplay();
+						}
+					}
+					<?
+					}
+					?>
 					if (userInput == "<?= $key_right ?>" )
 					{	
 						ret="true";
@@ -126,13 +181,14 @@ class ua_rss_view
 					}	
 					
 					ret;
+					
 			</script>
 			</onUserInput>
 	<?php
 	}
 	
 	// функция подготовки параметров выходного RSS
-	public function showDisplay()
+	public function showDisplay($fav)
 	{
 	global $ua_images_path;
 	?>
@@ -152,6 +208,10 @@ class ua_rss_view
 		forceFocusOnMenu	= "no"
 		showHeader			= "no"
 		showDefaultInfo		= "no"
+		
+		rollItems			= "no"
+				
+		
 	
 		headerCapXPC		= "100"
 		headerCapYPC		= "0"
@@ -192,7 +252,7 @@ class ua_rss_view
 		$this->showIdle();
 	?>
 	
-	<backgroundDisplay>
+	<backgroundDisplay name=ListMenuBackground>
 			<image  redraw="no" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
 					<?=$ua_images_path?>ua_background_items.png
 			</image>
@@ -213,7 +273,7 @@ class ua_rss_view
 	?>	
 		</itemDisplay>
 	<?php
-		$this->onUserInput_script();
+		$this->onUserInput_script($fav);
 	?>
 	</mediaDisplay>
 	<?php
@@ -225,13 +285,13 @@ class ua_rss_view
 		$this->channel();
 	}
 	
-	public function showRss()
+	public function showRss($fav)
 	{
 		header( "Content-type: text/plain" );
 		echo "<?xml version=\"1.0\" encoding=\"UTF8\" ?>\n";
 		echo '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">'.PHP_EOL;
 
-		$this->showDisplay();
+		$this->showDisplay($fav);
 		
 		echo '</rss>'.PHP_EOL;
 	}

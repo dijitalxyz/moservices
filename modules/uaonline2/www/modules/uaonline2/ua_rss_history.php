@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS history module v1.1
+	RSS history module v1.2
 	------------------------------
 	Created by Sashunya 2013
 	wall9e@gmail.com			
@@ -27,6 +27,8 @@ class ua_rss_favorites  extends ua_rss_favorites2
 	public function mediaDisplay_content()
 	{
 	global $ua_images_path;
+	global $ua_path_link;
+	global $ua_images_foldername;
 	?>
 			
 	<text  align="<?= static::text_header_align ?>" redraw="<?= static::text_header_redraw ?>" lines="<?= static::text_header_lines ?>" offsetXPC="<?= static::text_header_offsetXPC ?>" offsetYPC="<?= static::text_header_offsetYPC ?>" widthPC="<?= static::text_header_widthPC ?>" heightPC="<?= static::text_header_heightPC ?>" fontSize="<?= static::text_header_fontSize ?>" backgroundColor="<?= static::text_header_backgroundColor ?>" foregroundColor="<?= static::text_header_foregroundColor ?>">
@@ -36,7 +38,18 @@ class ua_rss_favorites  extends ua_rss_favorites2
 	<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
 		
 	</text>
-	
+	<scrollbar offsetXPC=93 offsetYPC=13 widthPC=2.26 heightPC=75.0 backgroundImage="<?=$ua_path_link.$ua_images_foldername?>ua_scroll_bar_01.png" foregroundImage="<?=$ua_path_link.$ua_images_foldername?>ua_scroll_bar_02.png" border=7 offset=0 direction="vertical" redraw="yes">
+		<totalSize>
+			<script>
+				getPageInfo("itemCount");
+			</script>
+		</totalSize>
+		<startIndex>
+			<script>
+				getFocusItemIndex();
+			</script>
+		</startIndex>
+	</scrollbar>
 	<?php	
 		
 	}
@@ -107,11 +120,13 @@ class ua_rss_favorites  extends ua_rss_favorites2
 		typeBookArray = null;
 		menuArray = null;
 		menucmdArray = null;
-		menuCount = 3;
+		menuCount = 4;
 		menuArray = pushBackStringArray( menuArray, "В избранное");
 		menucmdArray = pushBackStringArray( menucmdArray, "bookmark");
 		menuArray = pushBackStringArray( menuArray, "Удалить");
 		menucmdArray = pushBackStringArray( menucmdArray, "delete");
+		menuArray = pushBackStringArray( menuArray, "Очистить ист.");
+		menucmdArray = pushBackStringArray( menucmdArray, "clear");
 		menuArray = pushBackStringArray( menuArray, "Выход");
 		menucmdArray = pushBackStringArray( menucmdArray, "exit");
 			
@@ -224,29 +239,38 @@ class ua_rss_favorites  extends ua_rss_favorites2
 		} 
 		if (act == "delete") 
 		{
-			histFileDel=getStringArrayAt(historyFilesListArray,idx)
+			histFileDel=getStringArrayAt(historyFilesListArray,idx);
 			linkBookArray = deleteStringArrayAt(linkBookArray, idx);
 			historyFilesListArray = deleteStringArrayAt(historyFilesListArray, idx);
 			titleBookArray = deleteStringArrayAt(titleBookArray, idx);
 			imageBookArray = deleteStringArrayAt(imageBookArray, idx);
 			siteBookArray = deleteStringArrayAt(siteBookArray, idx);
 			itemCount -=1;
-
+			
 			saveBookArray = null;
 			saveBookArray = pushBackStringArray(saveBookArray, itemCount);
 			count = itemCount-1;
+			cnt=0;
 			while( count != -1 )
 				{	
 					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(linkBookArray,count));
-					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(historyFilesListArray,count));
+					hst = getStringArrayAt(historyFilesListArray,count);
+					tmp_hist = readStringFromFile( "<?=$confs_path."ua_history/"?>" +hst+".conf" );
+					writeStringToFile("<?=$confs_path."ua_history/"?>" +cnt+".conf", tmp_hist);
+					saveBookArray = pushBackStringArray(saveBookArray, cnt);
 					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(titleBookArray,count));
 					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(imageBookArray,count));
 					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(siteBookArray,count));
 					count -= 1;
+					cnt +=1;
 				}				
-			
-			writeStringToFile("<?=$confs_path."ua_history/"?>" +histFileDel+".conf", "");
+			writeStringToFile("<?=$confs_path."ua_history/"?>" +cnt+".conf", "");
 			writeStringToFile("<?=$ua_history_main_filename?>", saveBookArray);
+			setRefreshTime(1);
+		}
+		if (act == "clear") 
+		{
+			dlok = getURL("<?=$ua_path_link.'ua_paths.inc.php?clear=1'?>");
 			setRefreshTime(1);
 		}
 		
@@ -293,6 +317,9 @@ class ua_rss_favorites  extends ua_rss_favorites2
 		setRefreshTime(1);    
 	}
 	</onEnter>
+	<onExit>
+		writeStringToFile("/tmp/env_returnFromList_message", "1");
+	</onExit>
 	<?php
 	}
 	//-------------------------------

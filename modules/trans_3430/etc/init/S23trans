@@ -4,65 +4,76 @@
 #
 bin=/usr/local/etc/mos/bin
 mos=/usr/local/etc/mos/trans
-
-getParam() {
-  cat $mos/home/settings.json | sed -n 's/^.*"'$1'".*: *"*\([^ ,"]*\).*$/\1/p'
+home=$mos/home
+#
+# -------------------------------------
+stateTrans()
+{
+	ps | grep -q '[t]ransmission-daemon'
 }
-
+#
+# -------------------------------------
+getParam() {
+  cat $home/settings.json | sed -n 's/^.*"'$1'" *: *"*\([^ ,"]*\).*$/\1/p'
+}
+#
+# -------------------------------------
 start() {
-	# waiting for mount
-	$bin/wait_mount && exit 1
+	stateTrans && exit 0
 
-	# copying files
-	cgi=/tmp/www/cgi-bin
-	[ -d /sbin/www ] && cgi=/sbin/www/cgi-bin
-	[ ! -d $cgi ] && mkdir $cgi
-	cp -af $mos/torrents_xml.cgi $cgi/
+	sd=''
+	for d in /tmp/ramfs/volumes/* ; do
+		[ -L "$d" ] || continue
+		p=$( $bin/realpath $d )
+		m=$( cat /proc/mounts | grep " $p " | cut -d' ' -f 3 )
+		[ -z "$m" ] && continue
 
-	export TRANSMISSION_HOME=$mos
-	export TRANSMISSION_WEB_HOME=$mos/web
-
-	#prepare paths
-	export USERNAME=root
-	mkdir -p /var/run
-	mkdir -p /var/log
-	mkdir -p /var/tmp
-	chmod 777 /var/tmp
-
-	sd=
-	for folder in /tmp/usbmounts/ext3 /tmp/hdd/volumes/HDD*/ext /tmp/hdd/volumes/HDD*/ext3 /tmp/hddmedia/*/ext3 /tmp/usbmounts/sd*/ext3 /tmp/hdd/volumes/HDD* /tmp/hddmedia/* /tmp/usbmounts/sd*; do
-		[ -d "$folder" ] || continue
-		m=$(cat /proc/mounts | grep "$folder ")
-		[ $? -ne 0 ] && continue
-		sd="$folder"
-		fs=$(echo $m | cut -d" " -f 3)
-		if [ "$fs" == ext3 -o "$fs" == ext2 ]; then
+		sd="$d"
+		if [ "$m" == ext3 -o "$m" == ext2 ] ; then
 			limit_down=2048
 			limit_up=512
 			limit_file=100
 			limit_peer=100
 			limit_peer_t=30
-			prealloc=1
+			prealloc=0
 		else
 			limit_down=1024
 			limit_up=100
 			limit_file=30
 			limit_peer=50
 			limit_peer_t=50
-			prealloc=1
+			prealloc=0
 		fi
 		break
 	done
 	[ -z "$sd" ] && exit 1
 
+	# check no_trans
+	[ -e $sd/no_trans ] && exit 1
+
+	#remount rw torrent drive
+	mount -o remount,rw $p
+
 	dl_dir=$sd/torrent
-	ic_dir=$dl_dir/incomplete
+	ic_dir=$dl_dir/.incomplete
 	wch_dir=/tmp/watch
+	home=$dl_dir/.home
 
-	[ ! -d $mos/home ] && mkdir -p $mos/home
-	export TRANSMISSION_CONFIG_PATH=$mos/home
+	[ ! -d $home ] && mkdir -p $home
 
-	if [ -f $mos/home/settings.json ] ; then
+	# previous revisions config and torrents
+	if [ -d $mos/home ] ; then
+		cp -a $mos/home/* $home/
+		rm -Rf $mos/home
+	fi
+
+	# unsaved config
+	if [ -f $mos/settings.json ] ; then
+		cp -a  $mos/settings.json $home/settings.json
+		rm -f  $mos/settings.json
+	fi
+
+	if [ -f $home/settings.json ] ; then
 		# use config
 		i=$( getParam download-dir )
 		[ -n "$i" ] && dl_dir=$i
@@ -133,10 +144,8 @@ start() {
 	"watch-dir": "'$wch_dir'",
 	"watch-dir-enabled": true,
 	"cache-size-mb": 8
-}' > $mos/home/settings.json
+}' > $home/settings.json
 	fi
-	#remount rw torrent drive
-	mount -o remount,rw $( dirname $dl_dir )
 
 	[ ! -d $dl_dir ] && mkdir -p $dl_dir
 	[ "$is_ic" == 'true' ] && [ ! -d $ic_dir ] && mkdir -p $ic_dir
@@ -149,15 +158,47 @@ start() {
 	echo $wch_dir > $mos/watch.dir
 
 	echo "Starting Transmission..."
-	$mos/transmission-daemon -c $wch_dir -g $mos/home -p 9091 -t
-#	sleep 1
-#	$mos/transmission-remote 127.0.0.1:9091 -n torrent:1234 -t all -s >/dev/null 2>&1
+
+	# copying files
+	cgi=/tmp/www/cgi-bin
+	[ -d /sbin/www ] && cgi=/sbin/www/cgi-bin
+	[ ! -d $cgi ] && mkdir -p $cgi
+	cp -af $mos/torrents_xml.cgi $cgi/
+
+	# make symlink to transmission home
+	[ -e /tmp/trans_home ] && rm -f /tmp/trans_home
+	ln -s $home/ /tmp/trans_home
+
+	# global variables
+	export TRANSMISSION_HOME=$home
+	export TRANSMISSION_WEB_HOME=$mos/web
+	export USERNAME=root
+
+	#prepare paths
+	mkdir -p /var/run
+	mkdir -p /var/log
+	mkdir -p /var/tmp
+	chmod 777 /var/tmp
+
+	# sysctl patch
+	if ! sysctl 2>/dev/null ; then
+		[ -f $bin/busybox.1.18.5 ] && ln -s $bin/busybox.1.18.5 $bin/sysctl
+	fi
+	#
+	if sysctl 2>/dev/null ; then
+		sysctl -w net.core.rmem_max=2097152 >/dev/null
+		sysctl -w net.core.wmem_max=524288 >/dev/null
+	fi
+
+	nice -n 19 $mos/transmission-daemon -c $wch_dir -g $home -p 9091 -t
 }
+#
+# -------------------------------------
 stop()
 {
+	stateTrans || exit 1
+
 	echo "Stopping Transmission..."
-#	$mos/transmission-remote 127.0.0.1:9091 -n torrent:1234 -t all -S >/dev/null 2>&1
-#	sleep 1
 
 	killall transmission-daemon 2>/dev/null
 	i=60
@@ -167,12 +208,12 @@ stop()
 		let i-=1
 	done
 
+	rm -f $mos/watch.dir
+
 	# remove cgi
 	cgi=/tmp/www/cgi-bin
 	[ -d /sbin/www ] && cgi=/sbin/www/cgi-bin
 	rm -f $cgi/torrents_xml.cgi
-
-	rm -f $mos/watch.dir
 }
 
 case "$1" in
@@ -183,11 +224,22 @@ case "$1" in
 	stop
 	;;
   status)
-	if [ -z "$( ps | grep '[t]ransmission-daemon' )" ] ; then
-		echo "Transmission stopped"
-	else
+	if stateTrans
+	then
 		echo "Transmission running"
+	else
+		echo "Transmission stopped"
 	fi
+	;;
+  copy)
+	[ -f /tmp/trans_home/settings.json ] && \
+	cp -a /tmp/trans_home/settings.json $mos/settings.json
+	;;
+
+  save)
+	[ -f /tmp/trans_home/settings.json ] && \
+	[ -f $mos/settings.json ] && \
+	cp -a  $mos/settings.json /tmp/trans_home/settings.json
 	;;
   enable | disable)
 	;;

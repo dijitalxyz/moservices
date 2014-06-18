@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	EX.ua RSS category module v1.2
+	EX.ua RSS category module v1.3
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2014	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -18,7 +18,7 @@ class ua_rss_cat extends ua_rss_cat_const
 	{	
 	global $ua_path_link;
 	global $ua_images_path;
-	global $ua_images_category_path;
+	global $ua_images_path;
 	global $exua_rss_list_filename;
 	return $category = array(	
 	
@@ -26,150 +26,153 @@ class ua_rss_cat extends ua_rss_cat_const
 	
 		("ФИЛЬМЫ ЗАРУБЕЖНЫЕ" 	=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=2",
-									"image"=>$ua_images_category_path."ua_films_eng.png"),
+									"image"=>$ua_images_path."ua_films_eng.png"),
 		"ФИЛЬМЫ НАШИ" 			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=70538",
-									"image"=>$ua_images_category_path."ua_films_rus.png"),
+									"image"=>$ua_images_path."ua_films_rus.png"),
 		"СЕРИАЛЫ НАШИ" 			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=422546",
-									"image"=>$ua_images_category_path."ua_serials_rus.png"),
+									"image"=>$ua_images_path."ua_serials_rus.png"),
 		"СЕРИАЛЫ ЗАРУБЕЖНЫЕ" 	=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=1988",
-									"image"=>$ua_images_category_path."ua_serials_eng.png"),
-		"МУЛЬТФИЛЬМЫ" 			=> array (
+									"image"=>$ua_images_path."ua_serials_eng.png"),
+		"МУЛЬТ-\nФИЛЬМЫ" 			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=1989",
-									"image"=>$ua_images_category_path."ua_mult.png"),
-		"ДОКУМЕНТАЛЬНОЕ"		=> array (
+									"image"=>$ua_images_path."ua_mult.png"),
+		"ДОКУМЕН-\nТАЛЬНОЕ"		=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=1987",
-									"image"=>$ua_images_category_path."ua_docum.png"),
+									"image"=>$ua_images_path."ua_docum.png"),
 		"ПРИКОЛЫ"	 			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=23785",
-									"image"=>$ua_images_category_path."ua_prikols.png"),
+									"image"=>$ua_images_path."ua_prikols.png"),
 		"КЛИПЫ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=1991",
-									"image"=>$ua_images_category_path."ua_clips.png"),
+									"image"=>$ua_images_path."ua_clips.png"),
 		"КОНЦЕРТЫ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=70533",
-									"image"=>$ua_images_category_path."ua_concerts.png"),
+									"image"=>$ua_images_path."ua_concerts.png"),
 		"ШОУ И ПЕРЕДАЧИ" 		=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=28713",
-									"image"=>$ua_images_category_path."ua_show.png"),
+									"image"=>$ua_images_path."ua_show.png"),
 		"ТРЕЙЛЕРЫ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=1990",
-									"image"=>$ua_images_category_path."ua_trailers.png"),
+									"image"=>$ua_images_path."ua_trailers.png"),
 		"СПОРТ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=69663",
-									"image"=>$ua_images_category_path."ua_sport.png"),						
+									"image"=>$ua_images_path."ua_sport.png"),						
+		"3D" 					=> array (
+									"link"=>$ua_path_link.$exua_rss_list_filename."?view=73427589",
+									"image"=>$ua_images_path."ua_3d.png"),
 		"АНИМЕ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=23786",
-									"image"=>$ua_images_category_path."ua_anime.png"),							
+									"image"=>$ua_images_path."ua_anime.png"),							
 		"ТЕАТР" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=70665",
-									"image"=>$ua_images_category_path."ua_theatre.png"),
+									"image"=>$ua_images_path."ua_theatre.png"),
 		"ПРОПОВЕДИ" 			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=371146",
-									"image"=>$ua_images_category_path."ua_religion.png"),
+									"image"=>$ua_images_path."ua_religion.png"),
 		"РЕКЛАМНЫЕ РОЛИКИ" 		=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=371152",
-									"image"=>$ua_images_category_path."ua_reklama.png"),
+									"image"=>$ua_images_path."ua_reklama.png"),
 		"СОЦИАЛЬНАЯ РЕКЛАМА" 	=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=4313886",
-									"image"=>$ua_images_category_path."ua_social.png"),							
+									"image"=>$ua_images_path."ua_social.png"),							
 		"УРОКИ И ТРЕНИНГИ" 		=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=28714",
-									"image"=>$ua_images_category_path."ua_trennings.png")							
+									"image"=>$ua_images_path."ua_trennings.png")							
 		),
 						
 	"УКРАИНСКИЙ" => array
 	
 		("ЗАРУБІЖНЕ КІНО" 	=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82470",
-									"image"=>$ua_images_category_path."ua_films_eng.png"),
+									"image"=>$ua_images_path."ua_films_eng.png"),
 		"НАШЕ КІНО" 			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82473",
-									"image"=>$ua_images_category_path."ua_films_rus.png"),
+									"image"=>$ua_images_path."ua_films_rus.png"),
 		"СЕРІАЛИ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82480",
-									"image"=>$ua_images_category_path."ua_serials_eng.png"),
+									"image"=>$ua_images_path."ua_serials_eng.png"),
 		"МУЛЬТФІЛЬМИ" 			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82484",
-									"image"=>$ua_images_category_path."ua_mult.png"),
-		"ДОКУМЕНТАЛЬНІ"			=> array (
+									"image"=>$ua_images_path."ua_mult.png"),
+		"ДОКУМЕН-\nТАЛЬНІ"			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82476",
-									"image"=>$ua_images_category_path."ua_docum.png"),
+									"image"=>$ua_images_path."ua_docum.png"),
 		"EXTUBE"	 			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82499",
-									"image"=>$ua_images_category_path."ua_extube.png"),
+									"image"=>$ua_images_path."ua_extube.png"),
 		"КЛІПИ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82489",
-									"image"=>$ua_images_category_path."ua_clips.png"),
+									"image"=>$ua_images_path."ua_clips.png"),
 		"КОНЦЕРТИ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82490",
-									"image"=>$ua_images_category_path."ua_concerts.png"),
+									"image"=>$ua_images_path."ua_concerts.png"),
 		"ШОУ ТА ПЕРЕДАЧІ" 		=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82493",
-									"image"=>$ua_images_category_path."ua_show.png"),
+									"image"=>$ua_images_path."ua_show.png"),
 		"ТРЕЙЛЕРИ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82483",
-									"image"=>$ua_images_category_path."ua_trailers.png"),
+									"image"=>$ua_images_path."ua_trailers.png"),
 		"СПОРТ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82496",
-									"image"=>$ua_images_category_path."ua_sport.png"),						
+									"image"=>$ua_images_path."ua_sport.png"),						
 		"АНІМЕ" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82488",
-									"image"=>$ua_images_category_path."ua_anime.png"),							
+									"image"=>$ua_images_path."ua_anime.png"),							
 		"ТЕАТР" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82508",
-									"image"=>$ua_images_category_path."ua_theatre.png"),
+									"image"=>$ua_images_path."ua_theatre.png"),
 		"ПРОПОВІДІ" 			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=371167",
-									"image"=>$ua_images_category_path."ua_religion.png"),
+									"image"=>$ua_images_path."ua_religion.png"),
 		"РЕКЛАМНІ РОЛИКИ" 		=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=371168",
-									"image"=>$ua_images_category_path."ua_reklama.png"),
+									"image"=>$ua_images_path."ua_reklama.png"),
 		"УРОКИ ТА ТРЕНІНГИ" 		=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82495",
-									"image"=>$ua_images_category_path."ua_trennings.png")
+									"image"=>$ua_images_path."ua_trennings.png")
 		),
 		
 	"ENGLISH" => array
 		
 		("MOVIES" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82316",
-									"image"=>$ua_images_category_path."ua_films_eng.png"),
+									"image"=>$ua_images_path."ua_films_eng.png"),
 		"SERIES" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82325",
-									"image"=>$ua_images_category_path."ua_serials_eng.png"),
+									"image"=>$ua_images_path."ua_serials_eng.png"),
 		"CARTOONS" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82329",
-									"image"=>$ua_images_category_path."ua_mult.png"),
-		"DOCUMENTARIES"			=> array (
+									"image"=>$ua_images_path."ua_mult.png"),
+		"DOCUMENTA-\nRIES"			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82318",
-									"image"=>$ua_images_category_path."ua_docum.png"),
+									"image"=>$ua_images_path."ua_docum.png"),
 		"CLIPS" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82333",
-									"image"=>$ua_images_category_path."ua_clips.png"),
+									"image"=>$ua_images_path."ua_clips.png"),
 		"LIVE CONCERTS" 		=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82335",
-									"image"=>$ua_images_category_path."ua_concerts.png"),
+									"image"=>$ua_images_path."ua_concerts.png"),
 		"TRAILERS" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82326",
-									"image"=>$ua_images_category_path."ua_trailers.png"),
+									"image"=>$ua_images_path."ua_trailers.png"),
 		"SPORT" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82348",
-									"image"=>$ua_images_category_path."ua_sport.png"),						
+									"image"=>$ua_images_path."ua_sport.png"),						
 		"ANIME" 				=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82331",
-									"image"=>$ua_images_category_path."ua_anime.png"),							
+									"image"=>$ua_images_path."ua_anime.png"),							
 		"THEATRE & MUSICALS" 	=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82354",
-									"image"=>$ua_images_category_path."ua_theatre.png"),
+									"image"=>$ua_images_path."ua_theatre.png"),
 		"COMMERCIALS" 			=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=371172",
-									"image"=>$ua_images_category_path."ua_reklama.png"),
+									"image"=>$ua_images_path."ua_reklama.png"),
 		"LESSONS & TRAININGS" 	=> array (
 									"link"=>$ua_path_link.$exua_rss_list_filename."?view=82343",
-									"image"=>$ua_images_category_path."ua_trennings.png")							
+									"image"=>$ua_images_path."ua_trennings.png")							
 		));	
 									
 	}
@@ -209,9 +212,9 @@ class ua_rss_cat extends ua_rss_cat_const
 	public function footer($lang)
 	{
 		$footer = array( 
-						"РУССКИЙ"=>"RETURN - выход",
-						"УКРАИНСКИЙ"=>"RETURN - вихід",
-						"ENGLISH"=>"RETURN - exit"
+						"РУССКИЙ"=>"Выход",
+						"УКРАИНСКИЙ"=>"Вихід",
+						"ENGLISH"=>"Exit"
 						);
 		return $footer[$lang];				
 	}
@@ -233,6 +236,9 @@ class ua_rss_cat extends ua_rss_cat_const
 			<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
 		 <?=$this->footer($this->language)?>
 	</text>
+	<image redraw="no" offsetXPC="17" offsetYPC="90" widthPC="3" heightPC="6">
+			<?=$ua_images_path?>ua_back.png
+		</image>
 	
 	<?php	
 		

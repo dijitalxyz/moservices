@@ -6,11 +6,11 @@ function get_process_info()
 {
 global $mos;
 
-	if( file_exists( "$mos/bin/top" ))
+	if( file_exists( "$mos/bin/busybox.1.18.5" ))
 	{
-		exec("$mos/bin/top -b", $result);
+		exec("$mos/bin/busybox.1.18.5 top -n 1", $result);
 	}
-	else exec("top -b", $result);
+	else exec("top -n 1", $result);
 	return implode("\n", $result);
 }
 

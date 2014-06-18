@@ -54,22 +54,30 @@ loadFile()
 	[ -n "$2" ] && tmp=$2
 
 	# download
-	if [ ! -f $tmp/$1.tar.bz2 ]; then
+	if [ ! -f $tmp/$1 ]; then
 		if [ -n "$localrepo" ] ; then
-			if [ ! -e $localrepo/$1.tar.bz2 ] ; then
-				echo "Load error: File $localrepo/$1.tar.bz2 not found"
+			if [ ! -e $localrepo/$1 ] ; then
+				echo "Load error: File $localrepo/$1 not found"
 				return 1
 			fi
-			cp -a $localrepo/$1.tar.bz2 $tmp/
+			cp -a $localrepo/$1 $tmp/
 		else
-			nice -n 10 wget $repository/$1.tar.bz2 -O $tmp/$1.tar.bz2
+			nice -n 10 wget $repository/$1 -O $tmp/$1
 			if [ $? -ne 0 ] ; then
-				echo "Load error: Unable to download $repository/$1.tar.bz2"
-				rm -f $tmp/$1.tar.bz2
+				echo "Load error: Unable to download $repository/$1"
+				rm -f $tmp/$1
 				return 1
 			fi
 		fi
 	fi
+	return 0
+}
+
+#--------------------------------------
+loadPackage()
+{
+	loadFile $1.tar.bz2 $2
+
 	# check
 	tar -tjf $tmp/$1.tar.bz2 >/dev/null 2>&1
 	if [ $? -ne 0 ] ; then
@@ -77,11 +85,10 @@ loadFile()
 		rm -f $tmp/$1.tar.bz2
 		return 1
 	fi
-	return 0
 }
 
 #--------------------------------------
-extractFile()
+extractPackage()
 {
 	# untar
 	tar -xjf $tmp/$1.tar.bz2 -C $mos/
@@ -149,8 +156,8 @@ updateList()
 {
 	echo "Update repository list..."
 
-	loadFile packages || return 1
-	extractFile packages || return 1
+	loadPackage packages || return 1
+	extractPackage packages || return 1
 
 	if [ ! -f $pm/installed ] ; then
 		getPackageFromList $pm/packages base > $pm/installed
@@ -261,6 +268,7 @@ local p
 	echo "Install package $pkg..."
 
 	if checkPackageInstalled $pkg ; then
+		pkg=$retPkg
 		echo "Install notice: Package $pkg already installed"
 	else
 		if [ "$2" != 'alone' ] ; then
@@ -300,18 +308,9 @@ local p
 				return 1
 			fi
 		fi
-		#
-		loadFile $pkg || return 1
-		extractFile $pkg || return 1
-
-		goesToNewVersion $pkg
-
-		cat $mos/$pkg.package >> $pm/installed
-		echo >> $pm/installed
-		rm -f $mos/$pkg.package
 	fi
 	# required packages
-	h="$( getParameterFromList $pm/installed $pkg require )"
+	h="$( getParameterFromList $pm/packages $pkg require )"
 	if [ -n "$h" ] ; then
 
 		for p in $h ; do
@@ -332,6 +331,19 @@ local p
 				echo "$p=\"$pkg\"" >> $pm/uses
 			fi
 		done
+	fi
+
+	# install package
+	if ! checkPackageInstalled $pkg ; then
+		#
+		loadPackage $pkg || return 1
+		extractPackage $pkg || return 1
+
+		goesToNewVersion $pkg
+
+		cat $mos/$pkg.package >> $pm/installed
+		echo >> $pm/installed
+		rm -f $mos/$pkg.package
 	fi
 
 	runPatches $pkg
@@ -398,6 +410,7 @@ local p
 updatePackage()
 {
 local pkg
+local cond
 local req
 local h
 local p
@@ -417,7 +430,12 @@ local p
 		return 0
 	fi
 
-	if [ "$2" != 'now' ] ; then
+	cond="$2"
+
+	if [ "$cond" == 'only' ] ; then
+		cond=''
+
+	elif [ "$cond" != 'now' ] ; then
 		arev=$( getParameterFromList $pm/packages $pkg revision )
 		if [ -z "$arev" ] ; then
 			echo "Update notice: $pkg is alone"
@@ -441,9 +459,6 @@ local p
 		echo "Update error: No enough memory for update $pkg"
 		return 1
 	fi
-
-	# load package
-	loadFile $pkg || return 1
 
 	# remove old requires from uses
 	req="$( getParameterFromList $pm/installed $pkg require )"
@@ -473,27 +488,18 @@ local p
 	fi
 	removePackageFromList $pm/installed $pkg
 
-	# extract package
-	extractFile  $pkg || return 1
-
-	goesToNewVersion $pkg
-
-	cat $mos/$pkg.package >> $pm/installed
-	echo >> $pm/installed
-	rm -f $mos/$pkg.package
-
 	# required packages
-	h="$( getParameterFromList $pm/installed $pkg require )"
+	h="$( getParameterFromList $pm/packages $pkg require )"
 	if [ -n "$h" ] ; then
 
 		for p in $h ; do
 
 			checkPackageInstalled $p
 			if [ $? -ne 0 ] ; then
-				installPackage $p $2 || continue
+				installPackage $p $cond || continue
 				p=$retPkg
 			else
-				updatePackage $p $2 || continue
+				updatePackage $p $cond || continue
 				p=$retPkg
 			fi
 
@@ -522,6 +528,16 @@ local p
 			grep -Eq '^'$p'=' $pm/uses || removePackage $p $2
 		done
 	fi
+
+	# load package
+	loadPackage $pkg || return 1
+	extractPackage $pkg || return 1
+
+	goesToNewVersion $pkg
+
+	cat $mos/$pkg.package >> $pm/installed
+	echo >> $pm/installed
+	rm -f $mos/$pkg.package
 
 	runPatches $pkg
 
@@ -564,18 +580,36 @@ makePackage() {
 		echo "Making package $pkg..."
 		[ -f $pm/check/$pkg ]  && h=$h" etc/pm/check/$pkg"
 
-		# files, require for old version
-		mkFileFromParameter $pkg files files
-		[ -f $pm/files/$pkg ] && h=$h" etc/pm/files/$pkg"
-		mkFileFromParameter $pkg require required
-		[ -f $pm/required/$pkg ] && h=$h" etc/pm/required/$pkg"
-
 		# about
 		for a in $mos/etc/about/$pkg.* ; do
 			[ -f $a ] || continue
 			h="$h etc/about/$( basename $a )"
 		done
 
+
+		# make check sum
+		p=$PWD
+		cd $mos
+		rm -f $2/$pkg.md5
+
+		s=$( find $h -type f )
+
+		cIFS=$IFS
+		IFS='
+'
+		for a in $s ; do
+			md5sum $a >> $2/$pkg.md5
+		done
+		IFS=$cIFS
+		cd $p
+
+		# files, require for old version
+		mkFileFromParameter $pkg files files
+		[ -f $pm/files/$pkg ] && h=$h" etc/pm/files/$pkg"
+		mkFileFromParameter $pkg require required
+		[ -f $pm/required/$pkg ] && h=$h" etc/pm/required/$pkg"
+
+		# calculate volume
 		p=$PWD
 		cd $mos
 		s=$( du -sc $h | tail -n1 | cut -f1 )
@@ -637,7 +671,7 @@ case "$1" in
 	fi
 	;;
   get)
-	loadFile $2 $3
+	loadPackage $2 $3
 	;;
   show)
 	case "$2" in
@@ -673,13 +707,38 @@ case "$1" in
 	esac
 	;;
 
+  check)
+	[ -n "$2" ] && tmp=$2
+
+	cd $mos
+	for m in $( sed -nr 's/\[(.*)\]/\1/p' $pm/installed ) ; do
+		# get md5 file from repository
+
+		irev=$( getParameterFromList $pm/installed $m revision )
+		[ "$irev" == 'emb' ] && continue
+
+		loadFile $m.md5 2>/dev/null
+		[ $? -ne 0 ] && continue
+
+		md5sum -cs $tmp/$m.md5 2>/dev/null
+		if [ $? -ne 0 ] ; then
+			echo "--------------------------------------"
+			echo "$m:"
+			md5sum -c $tmp/$m.md5 2>/dev/null | grep FAIL
+			echo "--------------------------------------"
+		else
+			echo "$m Ok"
+		fi
+		rm -f $tmp/$m.md5
+	done
+	;;
   *)
-	echo "moServices Package Manager rev10 (http://www.moservices.org)
+	echo "moServices Package Manager rev11 (http://www.moservices.org)
 Usage: pm <action> ...
 Avaiable:
 	install <package>	[alone]
 	remove	<package>
-	update	<package>	[now]
+	update	<package>	[now|only]
 	make	<package>|full	[<destination_path>] (default /tmp)
 	get 	<package>	[<destination_path>] (default /tmp)
 	updatelist
@@ -692,7 +751,8 @@ Avaiable:
 		package	  <package>
 	list
 		installed
-		packages"
+		packages
+	check			[<temp_path>] (default /tmp)"
 	;;
 esac
 

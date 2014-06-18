@@ -29,15 +29,26 @@ keyReturn = "return";
 keyEdit  = "guide";
 keyGuide = "display";
 
+key1    = "one";
+key2    = "two";
+key3    = "three";
+key4    = "four";
+key5    = "five";
+key6    = "six";
+key7    = "seven";
+key8    = "eight";
+key9    = "nine";
+key0    = "zero";
+
 /*
 keyEdit     = "edit";
 keyGuide    = "guide";
 */
 /*redefine used keys*/
-keyUser1 = keyPgDn;
-keyUser2 = keyZoom;
-keyUser3 = keyPgUp;
-keyUser4 = keyDisplay;
+keyUser1 = key1;
+keyUser2 = key2;
+keyUser3 = key3;
+keyUser4 = key4;
 </initConstants>
 <getTime>
     now = currentTimestamp;

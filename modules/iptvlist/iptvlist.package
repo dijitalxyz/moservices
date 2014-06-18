@@ -1,10 +1,10 @@
 [iptvlist]
-	revision = 5
-	title = "IPTVList"
+	revision = 8
+	title = "IPTVList v1.5"
 	role = rss
 	navy_title = "IPTVList configuration"
 	navy_frame = "/modules/iptvlist/index.html"
 	backup = "www/modules/iptvlist/*.conf www/modules/iptvlist/*.m3u"
 	files = "www/modules/iptvlist/"
 	require = "rtmpdump"
-	size = 2460
+	size = 2420

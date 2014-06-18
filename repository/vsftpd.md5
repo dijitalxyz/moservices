@@ -1,0 +1,3 @@
+da04d91746a5a18d40c828c05c15c4cc  bin/vsftpd
+37c14f0ad03bbfedc7345ca719043008  etc/vsftpd.conf
+8f57454b7527feae278048405fb05bbf  etc/init/S15vsftpd

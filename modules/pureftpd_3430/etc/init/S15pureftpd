@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# description: Starts and stops the pure-ftpd daemon
+#
+etc=/usr/local/etc
+mos=$etc/mos
+
+case "$1" in
+  start)
+	echo "Starting pure-ftpd service..."
+	grep -q 'root::/bin/sh' $etc/passwd && sed -i 's/root::\/bin/root:\/:\/bin/' $etc/passwd
+
+	# seagate fork
+	if [ -f $etc/autorun.sh ] ; then
+		umount /etc/passwd
+		mount -o bind $etc/passwd /etc/passwd
+	fi
+
+	nice -n 5  pure-ftpd -4 -B -M -I unix -U 022:022 >/dev/null 2>&1 &
+
+	;;
+
+  stop)
+	echo "Shutting down pure-tpd services..."
+	killall -9 pure-ftpd
+
+	# seagate fork
+	if [ -f $etc/autorun.sh ] ; then
+		umount /etc/passwd
+		mount -o bind $etc/passwd /etc/passwd
+	fi
+
+	;;
+
+  status)
+	if ps | grep -q '[p]ure-ftpd'
+	then echo "pure-ftpd running"
+	else echo "pure-ftpd stopped"
+	fi
+	;;
+
+  enable | disable)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+	;;
+esac
+
+exit $?

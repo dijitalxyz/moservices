@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# start transmission service
+#
+ini=/usr/local/etc/mos/etc/init/S23trans
+
+# check returned hotplug status
+[ $1 -ne 0 ] && exit
+
+# check action
+[ "$ACTION" != 'add' ] && exit
+
+sleep 15
+[ -x $ini ] && $ini start

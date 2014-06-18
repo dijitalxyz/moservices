@@ -1,5 +1,7 @@
 <?php
 
+require_once 'detectfw.php';
+
 function rss_select_playlist_content()
 {
 	header( "Content-type: text/plain" );
@@ -111,13 +113,13 @@ redrawDisplay();
 	</script>
 </text>
 
-<text offsetXPC=28 offsetYPC=89 widthPC=96 heightPC=11.24 align=left fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255 >
+<text offsetXPC=<?= detectFirmware( '28', '31' ) ?> offsetYPC=<?= detectFirmware( '89', '89.3' ) ?> widthPC=96 heightPC=11.24 align=left fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255 >
 	<script>
                 hint = "<?= getMsg( 'iptvSelect' ) ?>";
 	</script>
 </text>
 
-<text offsetXPC=61 offsetYPC=89 widthPC=96 heightPC=11.24 align=left fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255 >
+<text offsetXPC=<?= detectFirmware( '61', '64' ) ?> offsetYPC=<?= detectFirmware( '89', '89.3' ) ?> widthPC=96 heightPC=11.24 align=left fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255 >
 	<script>
                 hint = "<?= getMsg( 'iptvCancel' ) ?>";
 	</script>

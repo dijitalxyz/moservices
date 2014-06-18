@@ -1,5 +1,5 @@
 [uaonline2]
-	revision = 24
+	revision = 46
 	title = "UA Online 2"
 	role = rss
 	backup = "www/modules/uaonline2/ua_favorites.conf www/modules/uaonline2/ua_settings.conf"
@@ -7,4 +7,4 @@
 	navy_title = "UAOnline 2 Fav. Editor"
 	navy_frame = "http://%addr%/modules/uaonline2/index.php"
 	files = "www/modules/uaonline2/"
-	size = 2120
+	size = 3588

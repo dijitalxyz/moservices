@@ -1,6 +1,7 @@
 <?php
 
-$nav_msg['iptvTitle'		] = 'IPTV list';
+$nav_msg['iptvTitle'		] = 'Watch IPTV';
+$nav_msg['iptvTitle1'		] = 'IPTV List - ';
 $nav_msg['iptvSelectPlaylist'	] = 'Select playlist';
 $nav_msg['iptvPlay'		] = 'Play';
 $nav_msg['iptvShowActionsMenu'	] = 'Show actions menu';
@@ -53,4 +54,16 @@ $nav_msg['iptvFast'		] = 'Fast forward +1 / -1 minute';
 $nav_msg['iptvShowHideOSDVid'	] = 'Show / hide OSD or switch to selected video';
 $nav_msg['iptvDelSelVid'	] = 'Delete selected video';
 $nav_msg['iptvRenSelVid'	] = 'Rename selected video';
+$nav_msg['iptvProgramGuide'	] = 'Program Guide';
+$nav_msg['iptvStandartPlayer'] = '(allows audio channel selection)';
+$nav_msg['iptvEPGReturn'] = 'Return';
+$nav_msg['iptvEPGAssign'] = 'Assign program guide to current channel';
+$nav_msg['iptvEPGCancel'] = 'Cancel';
+$nav_msg['iptvEPGSelect'] = 'Please select program guide for current channel';
+$nav_msg['iptvEPGReassign'] = 'Reassign program guide to channel';
+$nav_msg['iptvEPGNotAvailable'] = 'EPG not available';
+$nav_msg['iptvEPGNow'] = 'Now on channel:';
+$nav_msg['iptvEPGInListYes'] = 'Show EPG in list: On';
+$nav_msg['iptvEPGInListNo'] = 'Show EPG in list: Off';
+
 ?>

@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS player module v1.7
+	RSS player module v2.4
 	------------------------------
-	Created by Sashunya 2012
+	Created by Sashunya 2014
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice , sayler project 
@@ -28,62 +28,85 @@ class ua_player_const
 	const top_widthPC				= "100"; 
 	const top_heightPC				= "100";
 	// это константы линии времени
-	const timeline_offsetXPC		= "3"; 
-	const timeline_offsetYPC		= "86"; 
+	const timeline_offsetXPC		= "15"; 
+	const timeline_offsetYPC		= "84"; 
 	const timeline_heightPC			= "8";
-	const timeline_widthPC			= "94";
+	const timeline_widthPC			= "50";
 	const timeline_foreground_image	= "ua_timeline_fg.png";
 	const timeline_background_image	= "ua_timeline_bg.png";
-	
-	const prev_offsetXPC			= "0";
-	const prev_offsetYPC			= "30";
-	const prev_widthPC				= "5"; 
-	const prev_heightPC				= "40";
-
-	const next_offsetXPC			= "95";
-	const next_offsetYPC			= "30";
-	const next_widthPC				= "5"; 
-	const next_heightPC				= "40";
+	const seek_image	= "ua_seek.png";
 	
 	// картинка фона
 	const info_prev					= "ua_info_prev.png";
 	const info_next					= "ua_info_next.png";
 	const info_background			= "ua_info_bkgd.png";
 
-	// это текст названия фильма для окна информации
-	const title_offsetXPC			= "3";
-	const title_offsetYPC			= "0"; 
-	const title_widthPC				= "55"; 
-	const title_heightPC			= "73"; 
-	const title_fontSize			= "22"; 
+	// это текст названия файла для окна информации
+	const title_offsetXPC			= "0";
+	//const title_offsetXPC			= "11";
+	const title_offsetYPC			= "28"; 
+	const title_widthPC				= "98"; 
+	//const title_widthPC				= "88"; 
+	const title_heightPC			= "40"; 
+	const title_fontSize			= "18"; 
 	const title_backgroundColor		= "-1:-1:-1"; 
-	const title_foregroundColor		= "255:255:255";
-	const title_lines 				= "3";
+	const title_foregroundColor		= "255:235:8";
+	const title_lines 				= "2";
+	
+	// это текст названия фильма для окна информации
+	const name_offsetXPC			= "2.5";
+	//const name_offsetXPC			= "13.5";
+	const name_offsetYPC			= "0"; 
+	const name_widthPC				= "88"; 
+	//const name_widthPC				= "75"; 
+	const name_heightPC				= "30"; 
+	const name_fontSize				= "20"; 
+	const name_backgroundColor		= "-1:-1:-1"; 
+	const name_foregroundColor		= "255:255:255";
+	const name_lines 				= "1";
 	
 	//	это параметры картинок статуса (пауза, воспроизведение)
-	const status_offsetXPC				= "89";
-	const status_offsetYPC				= "52";
+	const status_offsetXPC				= "93";
+	const status_offsetYPC				= "50";
 	const status_widthPC				= "5"; 
 	const status_heightPC				= "30";	
+	
+	//	это параметры логотипа
+	const logo_offsetXPC				= "93";
+	const logo_offsetYPC				= "10";
+	const logo_widthPC					= "5"; 
+	const logo_heightPC					= "30";	
 	// настройки прогрессбара для буфера
-	const bar_offsetXPC					= "58";
-	const bar_offsetYPC					= "40";
-	const bar_widthPC					= "35";
+	const bar_offsetXPC					= "80";
+	const bar_offsetYPC					= "84";
+	const bar_widthPC					= "17";
 	const bar_heightPC					= "8";
 	const bar_barColor					= "0:0:0";
-	const bar_progressColor				= "200:200:200";
+	const bar_progressColor				= "84:255:8";
 	const bar_bufferColor				= "-1:-1:-1";
 	
 
+	// текст для отображения текущего времени
+	const time_elapsed_offsetXPC			= "1.5";
+	const time_elapsed_offsetYPC			= "71"; 
+	const time_elapsed_widthPC				= "41"; 
+	const time_elapsed_heightPC				= "32"; 
+	const time_elapsed_fontSize				= "19"; 
+	const time_elapsed_backgroundColor		= "-1:-1:-1"; 
+	const time_elapsed_foregroundColor		= "255:255:255";
 	// текст для отображения длительности времени
-	const time_offsetXPC			= "56";
-	const time_offsetYPC			= "2"; 
+	
+	const time_offsetXPC			= "66.5";
+	const time_offsetYPC			= "71"; 
 	const time_widthPC				= "41"; 
 	const time_heightPC				= "32"; 
-	const time_fontSize				= "30"; 
+	const time_fontSize				= "19"; 
 	const time_backgroundColor		= "-1:-1:-1"; 
 	const time_foregroundColor		= "255:255:255";
 	
+	const fsua_logo								= 'ua_fsua.png';
+	const exua_logo								= 'ua_exua_ukr.png';
+	const uakino_logo							= 'ua_uakinonet.png';
 }
 class ua_player extends ua_player_const
 {	
@@ -103,7 +126,6 @@ class ua_player extends ua_player_const
 	<?php
 	}
 	
-	
 	public function onUserInput_script()	
 	{
 		global $key_display;
@@ -116,6 +138,9 @@ class ua_player extends ua_player_const
 		global $key_frwd;
 		global $key_ffwd;
 		global $key_return;
+		global $key_enter;
+		global $goto_time;
+		global $screensaver;
 
 	?>
 		<onUserInput>
@@ -129,37 +154,62 @@ class ua_player extends ua_player_const
 						if(showInfo == 0) showInfo = 1;	else showInfo = 0;
 						ret = "true";
 					}	
-					if (input == "<?= $key_play ?>")
+					else if (input == "<?= $key_play ?>")
 					{
 						if (cPlayPause == 1) 
 						{
 							postMessage("<?= $key_pause ?>"); 
 							cPlayPause = 0;
+							<?
+							 if ($screensaver == "1")
+								{
+							?>
+								SetScreenSaverStatus("yes");
+							<?	
+								}
+							?>
+							
 							
 						} else
 						{
 							postMessage("<?= $key_play ?>"); 
 							cPlayPause = 1;	
+							<?
+							 if ($screensaver == "1")
+								{
+							?>
+								SetScreenSaverStatus("no");
+							<?	
+								}
+							?>
+							
 						}
 						ret = "true";
 					}
 					
-					if (input == "video_stop") {
+					else if (input == "video_stop") {
+						
+						executeScript("historyCheck");
 						stop_play = 1;
+						ret = "true";
 						}
-					if (input == "<?= $key_left ?>")
+					else if (input == "<?= $key_down ?>")
 					{
+						executeScript("historyCheck");
 							if( pitemCount != 1 )
 								{
 									if( idx == 0 ) idx = pitemCount - 1;
 										else idx -= 1;
+											
 									startVideo = 1;
 								}
 						ret = "true";
 					}
 
-					if (input == "<?= $key_right ?>" )
+					else if (input == "<?= $key_up ?>" )
 					{
+							executeScript("historyCheck");
+							
 							if( pitemCount != 1 )
 								{
 									idx -= -1;
@@ -169,17 +219,38 @@ class ua_player extends ua_player_const
 						ret = "true";
 					}
 					
-					if (input == "U" || input == "D" )
+					else if (input == "<?=$key_left?>" || input == "<?=$key_right?>" )
 					{
-						print("playElapsed_before",playElapsed);
-						if (input == "<?= $key_up ?>" )playElapsed -= -300;
-						if (input == "<?= $key_down ?>" )playElapsed -= 300;
-						print("playElapsed_after",playElapsed);			
-						if (playElapsed != -1) playAtTime(playElapsed); 
-						
+						showInfo = 1;
+						seek = "true";
+						info_timer = 0;
+						if (input == "<?= $key_right ?>" )p_seek -= -60;
+						if (input == "<?= $key_left ?>" )p_seek -= 30;
+						if (p_seek &lt; 0) p_seek = 0;
+						if (p_seek &gt; playTotal) p_seek = playTotal;
 						ret = "true";
 					}
-						
+					else if (input == "<?=$key_enter?>")
+					{
+						if (seek == "true")
+						{
+							
+							playAtTime(p_seek); 
+							seek = "false";
+						} else
+						{
+							gotoTimeArr = null;
+							gotoTimeArr = pushBackStringArray( gotoTimeArr, h_e );
+							gotoTimeArr = pushBackStringArray( gotoTimeArr, m_e );
+							gotoTimeArr = pushBackStringArray( gotoTimeArr, s_e );
+							gotoTimeArr = pushBackStringArray( gotoTimeArr, h_t );
+							gotoTimeArr = pushBackStringArray( gotoTimeArr, m_t );
+							gotoTimeArr = pushBackStringArray( gotoTimeArr, s_t );
+							writeStringToFile("<?=$goto_time?>", gotoTimeArr);
+							jumpToLink("gotoMenu");
+						}
+						ret = "true";
+					}
 					ret;
 				</script>
 		</onUserInput>
@@ -190,68 +261,134 @@ class ua_player extends ua_player_const
 	public function onEnters()
 	{
 	global $ua_path_link;
+	global $ua_images_path;
 	global $tmp;
+	global $goto_time;
+	global $position;
+	global $screensaver;
 	?>
 	<onEnter>
-		<?php
-		if (isset($_GET['idx'])) {
-			$idx=$_GET['idx'];
-			} else $idx=0;
-		?>
-		url = "<?=$tmp?>";
-		idx="<?=$idx?>";
-		param = "<?=$_GET['param']?>";
-		site = "<?=$_GET['site']?>";
-		stop_play = 0;
-		ptitleArray = null;
-		plinkArray = null;
-		downameArray = null;
-		pitemCount = 0;
-		dlok = readStringFromFile(url);
-		if (dlok != null)
+		<?
+			if ($screensaver == "1")
 			{
-				if (site == "2")
-				{
-					name = getStringArrayAt(dlok, 1);
-					img = getStringArrayAt(dlok, 11);
-					param = getStringArrayAt(dlok, 0);
-					c = 12;
-				} else
-				{
-					name = getStringArrayAt(dlok, 0);
-					img = getStringArrayAt(dlok, 10);
-					c = 11;
-				}
+		?>
+			SetScreenSaverStatus("no");
+		<?	
+			}
+		?>
+		
+		
+		env_goto = readStringFromFile("/tmp/env_goto");
+		env_ret_goto = readStringFromFile("/tmp/env_ret_goto");
+		if (env_goto == "1" )
+		{
+			gotoTime = readStringFromFile("<?=$goto_time?>");
+			env_goto = "0";
+			writeStringToFile("/tmp/env_goto", "0");
+			writeStringToFile("/tmp/env_ret_goto", "0");
+			p_seek=gotoTime;
+			playAtTime(gotoTime);
+		}
+		else
+		{
+			if (env_ret_goto == "1")
+			{
+				writeStringToFile("/tmp/env_ret_goto", "0");	
+			} else
+			{
 				
-				
-				pitemCount = getStringArrayAt(dlok, c); c += 2;
-				count = 0;
-				while( count != pitemCount )
+				<?php
+				if (isset($_GET['idx'])) {
+					$idx=$_GET['idx'];
+					} else $idx=0;
+					
+				?>
+				url = "<?=$tmp?>";
+				idx="<?=$idx?>";
+				param = "<?=$_GET['param']?>";
+				site = "<?=$_GET['site']?>";
+				pos = "<?=$position?>";
+				go_elapsed = 0;
+				stop_play = 0;
+				ptitleArray = null;
+				plinkArray = null;
+				downameArray = null;
+				pitemCount = 0;
+				dlok = readStringFromFile(url);
+				if (dlok != null)
 					{
-					plinkArray = pushBackStringArray( plinkArray, getStringArrayAt(dlok, c)); c += 2;		
-					downameArray = pushBackStringArray( downameArray, getStringArrayAt(dlok, c)); c += 1;
-					ptitleArray = pushBackStringArray( ptitleArray, getStringArrayAt(dlok, c)); c += 3;
-					count += 1;
-					}
-			}	
-		
-		
-		
-		setRefreshTime(100);
-		startVideo = 1;
-		cPlayPause = 1;
-		elapsedTime = "";
-		totalTime = "";
-		showLoading = 0;
-		showInfo = 0;
+						if (site == "2")
+						{
+							name = getStringArrayAt(dlok, 1);
+							img = getStringArrayAt(dlok, 11);
+							poster = getStringArrayAt(dlok, 12);
+							param = getStringArrayAt(dlok, 0);
+							c = 13;
+							logo = "<?= $ua_images_path.static::fsua_logo ?>";
+						} else
+						if (site == "3")
+						{
+							name = getStringArrayAt(dlok, 0);
+							img = getStringArrayAt(dlok, 10);
+							poster = getStringArrayAt(dlok, 11);
+							c = 12;
+							logo = "<?= $ua_images_path.static::uakino_logo ?>";
+						}
+						else
+						{
+							name = getStringArrayAt(dlok, 0);
+							img = getStringArrayAt(dlok, 10);
+							poster = getStringArrayAt(dlok, 11);
+							c = 12;
+							logo = "<?= $ua_images_path.static::exua_logo ?>";
+							
+						}
+						
+						
+						pitemCount = getStringArrayAt(dlok, c); c += 1;
+						count = 0;
+						while( count != pitemCount )
+							{
+							ptitleArray = pushBackStringArray( ptitleArray, getStringArrayAt(dlok, c)); c += 1;
+							plinkArray = pushBackStringArray( plinkArray, getStringArrayAt(dlok, c)); c += 2;		
+							downameArray = pushBackStringArray( downameArray, getStringArrayAt(dlok, c)); c += 3;
+							count += 1;
+							}
+					}	
+				
+				
+				
+				setRefreshTime(100);
+				startVideo = 1;
+				cPlayPause = 1;
+				elapsedTime = "";
+				totalTime = "";
+				showLoading = 0;
+				showInfo = 0;
+			}
+		}
 	</onEnter>
 	<?php
 	}	
 
 	public function onExits()
 	{
+	global $screensaver;
 	?>
 		<onExit>
+				<?
+			if ($screensaver == "1")
+			{
+		?>
+			SetScreenSaverStatus("yes");
+		<?	
+			}
+		?>
+		
+			if (stop_play == 0)
+			{
+						executeScript("historyCheck");
+			}
 			playItemURL(-1, 1);
 			setRefreshTime(-1);
 			writeStringToFile("/tmp/env_idx_play_message", idx);
@@ -275,53 +412,70 @@ class ua_player extends ua_player_const
 		vidProgress = getPlaybackStatus();
 		bufProgress = getCachedStreamDataSize(0, 262144);
 		playElapsed = getStringArrayAt(vidProgress, 0);
+		if (seek == "false") p_seek=playElapsed;
 		playTotal = getStringArrayAt(vidProgress, 1);
 		playStatus = getStringArrayAt(vidProgress, 3);
+		if (go_elapsed == 1 &amp;&amp; bufProgress == 100 &amp;&amp; playStatus !=0) 
+			{
+				delay +=1;
+				if (delay &gt; 3)
+				{
+					if (currElapsed &gt; 0 &amp;&amp; pos == "1") 
+						{
+							p_seek=currElapsed;
+							playAtTime(currElapsed);
+						}
+					go_elapsed = 0;
+					delay = 0;
+				}
+			}
 		if (startVideo == 1)
 		{
+			elapsedTime = "00:00:00";
+			totalTime = elapsedTime;
 			info_streamTitle = getStringArrayAt(ptitleArray, idx); 
 			info_playURL =  getStringArrayAt(plinkArray, idx)+ " autoReconnect"; 
 			playItemURL(-1, 1);
-			setRefreshTime(1000);
+			setRefreshTime(500);
 			showLoading = 1;
 			startVideo = 0;
 			timeStamp += 1;
 			info_timer = 0;
 			showInfo = 1;
+			delay = 0;
 			playItemURL(info_playURL, 0, "mediaDisplay", "previewWindow");
-			<?
-			include ("ua_rss_historyfiles.inc.php");
-			include ("ua_rss_history_check.inc.php");
-			?>
-			
+			checkElapsed = 1;
+			executeScript("historyFiles");
+			executeScript("historyCheck");
+			checkElapsed = 0;
+			go_elapsed = 1;
 			
 		} else
 		{
+			
 			if (playElapsed != 0)
 			{
 				x = Integer(playElapsed / 60);
-				h = Integer(playElapsed / 3600);
-				s = playElapsed - (x * 60);
-				m = x - (h * 60);
-				if(h &lt; 10) 
-				elapsedTime = "0" + sprintf("%s:", h);	else	elapsedTime = sprintf("%s:", h);
-				if(m &lt; 10)  elapsedTime += "0";
-				elapsedTime += sprintf("%s:", m);
-				if(s &lt; 10)  elapsedTime += "0";
-				elapsedTime += sprintf("%s", s);
+				h_e = Integer(playElapsed / 3600);
+				s_e = playElapsed - (x * 60);
+				m_e= x - (h_e * 60);
+				if(h_e &lt; 10) 
+				elapsedTime = "0" + sprintf("%s:", h_e);	else	elapsedTime = sprintf("%s:", h_e);
+				if(m_e &lt; 10)  elapsedTime += "0";
+				elapsedTime += sprintf("%s:", m_e);
+				if(s_e &lt; 10)  elapsedTime += "0";
+				elapsedTime += sprintf("%s", s_e);
 							
 				x = Integer(playTotal / 60);
-				h = Integer(playTotal / 3600);
-				s = playTotal - (x * 60);
-				m = x - (h * 60);
-				if(h &lt; 10) totalTime = "0" + sprintf("%s:", h); else		totalTime = sprintf("%s:", h);
-				if(m &lt; 10)  totalTime += "0";
-				totalTime += sprintf("%s:", m);
-				if(s &lt; 10)  totalTime += "0";
-				totalTime += sprintf("%s", s);
-				
-
-				timeLine = elapsedTime+"/"+totalTime;
+				h_t = Integer(playTotal / 3600);
+				s_t = playTotal - (x * 60);
+				m_t = x - (h_t * 60);
+				if(h_t &lt; 10) totalTime = "0" + sprintf("%s:", h_t); else		totalTime = sprintf("%s:", h_t);
+				if(m_t &lt; 10)  totalTime += "0";
+				totalTime += sprintf("%s:", m_t);
+				if(s_t &lt; 10)  totalTime += "0";
+				totalTime += sprintf("%s", s_t);
+								
 				if (startVideo == 0)
 				{
 					startVideo = 2;
@@ -346,7 +500,7 @@ class ua_player extends ua_player_const
 			else if (playStatus == 0)
 			{
 				print ("stop_play------",stop_play);
-				if (stop_play == 1) {postMessage("<?= $key_return ?>");} else
+				executeScript("historyCheck");
 				if( pitemCount != 1 )
 								{
 									idx -= -1;
@@ -355,6 +509,7 @@ class ua_player extends ua_player_const
 										idx -=1;
 										postMessage("<?= $key_return ?>");
 									}
+									
 									startVideo = 1;
 								} else	postMessage("<?= $key_return ?>");
 						
@@ -365,12 +520,27 @@ class ua_player extends ua_player_const
 				updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
 			}
 		}
+	
+		if (stop_play == 1 &amp;&amp; playStatus != 0) 
+		{
+			executeScript("historyCheck");
+			postMessage("<?= $key_return ?>");
+		}
+
 		if(showInfo == 1)
 		{
 			info_timer += 1;
 			updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
-		} else info_timer = 0;
-		if (info_timer == 10) showInfo =0;
+		} else
+		{	
+			info_timer = 0;
+			seek = "false";
+		}
+		if (info_timer == 20) 
+		{
+			showInfo =0;
+			seek = "false";
+		}
 	</onRefresh>
 	<?php
 	}
@@ -391,16 +561,39 @@ class ua_player extends ua_player_const
 	public function showDisplay()
 	{
 	global $ua_images_path;
+	global $ua_path_link;
 	?>
+	<historyFiles>
+			<?
+				include ("ua_rss_historyfiles.inc.php");
+			?>
+	</historyFiles>
+	
+	<historyCheck>
+			<?
+				include ("ua_rss_history_check.inc.php");
+			?>
+	</historyCheck>
+	
+	
+	<gotoMenu>
+	    <link>
+		<script>
+			link="<?=$ua_path_link?>ua_rss_goto.php";
+			link;
+		</script>
+		</link>
+	</gotoMenu>
+	
 	<mediaDisplay name = "threePartsView"
 		showDefaultInfo 	= "no" 
 		sideLeftWidthPC 	= "0" 
 		sideRightWidthPC 	= "0" 
 		backgroundColor		= "<?= static::main_backgroundColor ?>"
-		idleImageXPC		="88"
-		idleImageYPC		="80"
-		idleImageWidthPC	="5"
-		idleImageHeightPC	="8"
+		idleImageXPC		="0"
+		idleImageYPC		="0"
+		idleImageWidthPC	="0"
+		idleImageHeightPC	="0"
 	>
 	
 	<previewWindow 
@@ -428,17 +621,15 @@ class ua_player extends ua_player_const
 		<image redraw="yes" offsetXPC="<?= static::top_offsetXPC ?>" offsetYPC="<?= static::top_offsetYPC ?>" widthPC="<?= static::top_widthPC ?>" heightPC="<?= static::top_heightPC ?>">
 				<?= $ua_images_path.static::info_background ?>
 		</image>
+		
+		<text redraw="yes" offsetXPC="<?= static::name_offsetXPC ?>" offsetYPC="<?= static::name_offsetYPC ?>" widthPC="<?= static::name_widthPC ?>" heightPC="<?= static::name_heightPC ?>" fontSize="<?= static::name_fontSize ?>" backgroundColor="<?= static::name_backgroundColor ?>" foregroundColor="<?= static::name_foregroundColor ?>" lines="<?= static::name_lines ?>">
+			<script>name;</script>
+		</text>
+		
 		<text redraw="yes" offsetXPC="<?= static::title_offsetXPC ?>" offsetYPC="<?= static::title_offsetYPC ?>" widthPC="<?= static::title_widthPC ?>" heightPC="<?= static::title_heightPC ?>" fontSize="<?= static::title_fontSize ?>" backgroundColor="<?= static::title_backgroundColor ?>" foregroundColor="<?= static::title_foregroundColor ?>" lines="<?= static::title_lines ?>">
 			<script>info_streamTitle;</script>
 		</text>
-		
-		<image redraw="yes" offsetXPC="<?= static::next_offsetXPC ?>" offsetYPC="<?= static::next_offsetYPC ?>" widthPC="<?= static::next_widthPC ?>" heightPC="<?= static::next_heightPC ?>">
-				<?= $ua_images_path.static::info_next ?>
-		</image>
-		
-		<image redraw="yes" offsetXPC="<?= static::prev_offsetXPC ?>" offsetYPC="<?= static::prev_offsetYPC ?>" widthPC="<?= static::prev_widthPC ?>" heightPC="<?= static::prev_heightPC ?>">
-				<?= $ua_images_path.static::info_prev ?>
-		</image>
+
 
 		<image redraw="yes" offsetXPC="<?= static::status_offsetXPC ?>" offsetYPC="<?= static::status_offsetYPC ?>" widthPC="<?= static::status_widthPC ?>" heightPC="<?= static::status_heightPC ?>">
 				<script>
@@ -458,6 +649,23 @@ class ua_player extends ua_player_const
 					
 		</image>
 		
+		
+		<image redraw="yes" offsetXPC="<?= static::logo_offsetXPC ?>" offsetYPC="<?= static::logo_offsetYPC ?>" widthPC="<?= static::logo_widthPC ?>" heightPC="<?= static::logo_heightPC ?>">
+			<script>
+					logo;
+			</script>
+					
+		</image>
+		
+<!--	
+		<image redraw="no" offsetXPC="2.3" offsetYPC="4" widthPC="9.5" heightPC="72">
+			<script>
+					img;
+			</script>
+			
+		</image>
+-->	
+		
 		<image redraw="no" offsetXPC="<?= static::timeline_offsetXPC ?>" offsetYPC="<?= static::timeline_offsetYPC ?>" heightPC="<?= static::timeline_heightPC ?>" widthPC="<?= static::timeline_widthPC ?>">
 			<script>
 				img_bg_timeline;
@@ -470,30 +678,47 @@ class ua_player extends ua_player_const
 			</script>
 		<widthPC>
 			<script>
-				(playElapsed/playTotal)*94;
+				(playElapsed/playTotal)*50;
 			</script>
 		</widthPC>
 		</image>
-		
-		
+		<image redraw="yes" offsetYPC="82" heightPC="12" widthPC="2"> 
+			<script>
+				"<?= $ua_images_path.static::seek_image?>";
+			</script>
+		<offsetXPC>
+			<script>
+				if (playStatus == 2)
+				{
+					 off=((p_seek/playTotal)+0.28)*50;
+				} else off=14;
+				off;
+			</script>
+		</offsetXPC>
+				
+				
+			
+		</image>
 		
 		<bar offsetXPC="<?= static::bar_offsetXPC ?>" offsetYPC="<?= static::bar_offsetYPC ?>" widthPC="<?= static::bar_widthPC ?>" heightPC="<?= static::bar_heightPC ?>" barColor="<?= static::bar_barColor ?>" progressColor="<?= static::bar_progressColor ?>" bufferColor="<?= static::bar_bufferColor ?>"/>
 
 		
-		<text redraw="yes" offsetXPC="<?= static::time_offsetXPC ?>" offsetYPC="<?= static::time_offsetYPC ?>" widthPC="<?= static::time_widthPC ?>" heightPC="<?= static::time_heightPC ?>" fontSize="<?= static::time_fontSize ?>" backgroundColor="<?= static::time_backgroundColor ?>" foregroundColor="<?= static::time_foregroundColor ?>">
-			<script>timeLine;</script>
+		<text redraw="yes" offsetXPC="<?= static::time_elapsed_offsetXPC ?>" offsetYPC="<?= static::time_elapsed_offsetYPC ?>" widthPC="<?= static::time_elapsed_widthPC ?>" heightPC="<?= static::time_elapsed_heightPC ?>" fontSize="<?= static::time_elapsed_fontSize ?>" backgroundColor="<?= static::time_elapsed_backgroundColor ?>" foregroundColor="<?= static::time_elapsed_foregroundColor ?>">
+			<script>elapsedTime;</script>
 		</text>
+		
+		<text redraw="yes" offsetXPC="<?= static::time_offsetXPC ?>" offsetYPC="<?= static::time_offsetYPC ?>" widthPC="<?= static::time_widthPC ?>" heightPC="<?= static::time_heightPC ?>" fontSize="<?= static::time_fontSize ?>" backgroundColor="<?= static::time_backgroundColor ?>" foregroundColor="<?= static::time_foregroundColor ?>">
+			<script>totalTime;</script>
+		</text>
+		
 		<destructor offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" color="-1:-1:-1">
 		</destructor>
 
 	</progressBar>
 	
-	<?php
-		$this->showIdle();
-	?>
-		
 	<?php	
 		
+		$this->showIdle();
 		$this->onUserInput_script();
 	?>
 	</mediaDisplay>

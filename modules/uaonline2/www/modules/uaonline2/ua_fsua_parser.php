@@ -2,24 +2,26 @@
 
 /*	------------------------------
 	Ukraine online services 	
-	FS.UA parser module v2.0
+	FS.UA parser module v2.8
 	------------------------------
-	Created by Sashunya 2013	
+	Created by Sashunya 2014	
 	wall9e@gmail.com			
 	------------------------------ */
 
 header( "Content-type: text/html; charset=utf-8" );
+//---------------------------------------------------------------------------------
 // подключаем разные константы пути кнопки и т.п.
+//---------------------------------------------------------------------------------
 include_once ("ua_paths.inc.php");
 
-$url_prefix="http://fs.ua";
+$url_prefix="http://brb.to";
 //---------------------------------------------------------------------------------
 // проверяет есть ли $url_prefix в ссылке, если нет, то добавляет
 //---------------------------------------------------------------------------------
 function check_prefix($s)
 {
 	global $url_prefix;
-	if (!preg_match("/(?<=http\:\/\/fs\.ua)(.*?)/",$s)) $s = $url_prefix.$s;
+	if (!preg_match("/(?<=".addcslashes($url_prefix,"/.:").")(.*?)/",$s)) $s = $url_prefix.$s;
 	return $s;
 }
 
@@ -35,7 +37,9 @@ function check_url2($s)
 	return $out[0];
 }
 
+//---------------------------------------------------------------------------------
 // возвращает индекс папки из полной ссылки
+//---------------------------------------------------------------------------------
 function get_digit_url($link)
 {
 	preg_match("/(?<=\?folder\=)(\d*)/",$link,$out);
@@ -48,42 +52,41 @@ function get_name($s)
 	return $out[1];
 }
 
+
+//---------------------------------------------------------------------------------
+// Changing size of the poster (Notice: qual is the quality number. Change for different size)
+//---------------------------------------------------------------------------------
+function big($url,$qual=10)
+{
+	$pattern = '/\/(\d+)\/(\d+)\/(\d+)\/(\d+)\/(\d+)./i';
+	$replacement = '/$1/$2/$3/'.$qual.'/$5.';
+	return preg_replace($pattern, $replacement, $url);
+}
+
+//---------------------------------------------------------------------------------
 // ПОИСК
-if (isset($_GET['search'])){
-		
-	if (isset($_GET['page']))
-		$page = $_GET['page'];
-		$search_prefix=$_GET['search_prefix'];
-		$title=$_GET["search"];
-		$search=urlencode($title);
-		$title="ПОИСК:".$title;
-		
-	if($page) {
+//---------------------------------------------------------------------------------
+function fsua_search($search,$page)
+{
+global $url_prefix;
+global $search_prefix;
+
+if($page) {
 			$nt= $page-1;
-			$s = file_get_contents("http://fs.ua/".$search_prefix."/search.aspx?search=".$search."&page=".$nt);
+			//$s = file_get_contents($url_prefix."/".$search_prefix."/search.aspx?search=".$search."&page=".$nt);
+			$s = file_get_contents($url_prefix."/search.aspx?search=".$search."&page=".$nt);
 		}
 		else {
 			$page = 1;
-			$s = file_get_contents("http://fs.ua/".$search_prefix."/search.aspx?search=".$search);
+			//$s = file_get_contents($url_prefix."/".$search_prefix."/search.aspx?search=".$search);
+			$s = file_get_contents($url_prefix."/search.aspx?search=".$search);
 		}
 		
-			$search=array ();
+			$search_arr=array ();
 			$tmp_array=array();
 			$doc = new DOMDocument();
 			libxml_use_internal_errors( true );
 			$doc->loadHTML($s);
-			$videocount=0;		
-			$temps = '';
-			/*
-			$as= $doc->getElementsByTagName('a');
-			foreach( $as as $a )
-			if( $a->hasAttribute('class'))
-			if( $a->getAttribute('class') == 'title' )
-				{
-					$name=$a->textContent;
-					$search[$name]=array();
-				} 
-			*/	
 			$tds= $doc->getElementsByTagName('td');
 			foreach( $tds as $td )
 			if( $td->hasAttribute('class'))
@@ -96,36 +99,51 @@ if (isset($_GET['search'])){
 								$name = $a->getAttribute('title');
 								$imgs = $a->getElementsByTagName('img');
 								foreach( $imgs as $img ) $image = $img->getAttribute('src');
-								$fav=$link; 
-								$link=$ua_path_link.$fsua_parser_filename."?file=".urlencode($link."?ajax&folder")."&img=".$image;
-								$temps.= $name."\n".$link."\n".$image."\n".$fav."?ajax&folder"."\nlist\n";		
-								//$tmp_array[$name]=array("link"=>$link, "image"=>$image);
-								$videocount++;
+								if ( preg_match("/\/audio|video\//",$link))
+								{
+									if ( preg_match("/\/audio\//",$link)) $name .= "(Аудио)";
+									if ( preg_match("/\/video\//",$link)) $name .= "(Видео)";
+									$search_arr[]=	array (
+													'link' => $link,
+													'image' => $image,
+													'title' => $name
+									);
+								}
 							}
 					
 				}
-/*$temps = '';
-foreach ($tmp_array as $name=>$val)
-	{ 
-		$link = $tmp_array[$count]["link"];
-		$image = $tmp_array[$count]["image"];
-		$fav=$link; $link=$ua_path_link.$fsua_parser_filename."?file=".$link."&enter=1";
-		$temps.= $name."\n".$link."\n".$image."\n".$ua_path_link.$fsua_parser_filename."?file=".$fav."&fav_refresh=1\n";		
+
+return $search_arr;
+}
+
+if (isset($_GET['search'])){
 		
-	}
-*/
+	if (isset($_GET['page']))
+		$page = $_GET['page'];
+		$search_prefix=$_GET['search_prefix'];
+		$title=$_GET["search"];
+		$search=urlencode($title);
+		$title="ПОИСК:".$title;
+		$videocount=0;		
+		$temps = '';
+		$search_arr = fsua_search($search, $page);
+		foreach ($search_arr as $val)
+		{
+			$fav=$val["link"]; 
+			$link=$ua_path_link.$fsua_parser_filename."?file=".urlencode($val["link"]."?ajax&folder")."&img=".$val["image"]."&name=".$search;
+			$temps.= $val["title"]."\n".$link."\n".$val["image"]."\n".$fav."?ajax&folder"."\nlist\n";		
+			$videocount++;
+		}
 	$temps = $title."\n".$videocount."\n".$temps;
     file_put_contents( $tmp, $temps );
 	
 	echo $tmp;
-	
-		
 }
 
 //---------------------------------------------------------------------------------
 // получаем список фильмов
 //---------------------------------------------------------------------------------
-function get_film_list($s,$now=false)
+function get_film_list($s,$title)
 {
 global $url_prefix;
 global $tmp;
@@ -146,79 +164,64 @@ function get_img($img)
 			foreach( $divs as $div )
 					if( $div->hasAttribute('class'))
 					{
-// это класс для фильмов с сортировкой по рейтингу
-					if (!$now)
-					{
-	/*				$class=$div->getAttribute('class');
-					if( $class == 'b-poster b-poster_films'|| $class == 'b-poster b-poster_serials'
-						|| $class == 'b-poster b-poster_clips' || $class == 'b-poster b-poster_music')
-						{
-							$videocount++;
-							$image=get_img($div->getAttribute('style'));
-							$as= $div->getElementsByTagName('a');
-							foreach( $as as $a )
-							if( $a->hasAttribute('class'))
-							if( $a->getAttribute('class') == 'details-link' )
-								{
-									$link=$a->getAttribute('href');
-									$name = trim($a->textContent);
-								}
-							$films[$name]=array("link"=>$link, "image"=>$image);
-						}
-						*/
-// это класс для фильмов с сортировкой по дате
-					$videocount=0;
 					$class= $div->getAttribute('class');
 					
-					if( $class == 'b-poster-section ' || $class == 'b-poster-section b-poster-clip' )
+					if( preg_match("/b-poster-tile\s/",$class))
 						{
-							$as= $div->getElementsByTagName('a');
+							$as=$div->getElementsByTagName('a');
 							foreach( $as as $a )
-							if( $a->hasAttribute('class'))
-							if( $a->getAttribute('class') == 'subject-link' )
+							{
+								$qua = "(";
+								$link=check_prefix($a->getAttribute('href'));	
+								$spans=$a->getElementsByTagName('span');
+								foreach( $spans as $span )
 								{
-									$videocount++;
-									$link=check_prefix($a->getAttribute('href'));
-									$bs=$a->getElementsByTagName('b');
-									foreach( $bs as $b )
+									if( $span ->hasAttribute('class'))
 									{
-										$imgs=$b->getElementsByTagName('img');
-										foreach( $imgs as $img )
+										$span_class = $span ->getAttribute('class');
+										if ($span_class=="b-poster-tile__image")
 										{
-											$image=$img->getAttribute('src');
-											$name=$img->getAttribute('alt');
+											$imgs=$span->getElementsByTagName('img');
+											foreach( $imgs as $img )
+											{
+												$image=big($img->getAttribute('src'),9);
+											}
+										}
+										if ($span_class == 'b-poster-tile__title-full')
+										{
+											$name=trim(fix_str($span->textContent));
+										}
+										if 	(preg_match("/(?<=quality\sm\-)(.+)/",$span_class, $out)) 
+										{
+										$q ="";
+										switch ($out[0])
+										{
+											case "hd": 
+												$q = "HD";
+												break;
+											case "hq": 
+												$q = "Высокое";
+												break;
+											case "sq": 
+												$q = "Среднее";
+												break;
+											case "lq": 
+												$q = "Низкое";
+												break;
+										}
+										if ($qua == "(") $qua.=$q; else $qua.=",".$q;
+										
 										}
 									}
-									$films[$name]=array("link"=>$link, "image"=>$image);
-								
 								}
-						}	
-						if( $div->getAttribute('class') == 'b-section-title' )
-						{
-							$title=trim(fix_str($div->textContent));
+							}
+						if ($qua!='(') $qua.=" качество)"; else $qua='';
+						$name .=  $qua;
+						$films[$name]=array("link"=>$link, "image"=>$image);
 						}
-						} else
-						{
-// это класс для списка часто просматриваемых фильмов
-						if( $div->getAttribute('class') == 'b-posters m-section' )
-						{
-							$title="Сейчас смотрят";
-							$as= $div->getElementsByTagName('a');
-							$videocount=0;
-							foreach( $as as $a )
-							if( $a->hasAttribute('class'))
-							if( $a->getAttribute('class') == 'b-poster m-video' )
-								{
-									$videocount++;
-									$link=$a->getAttribute('href');
-									$image=get_img($a->getAttribute('style'));
-									$name = trim($a->textContent);
-									$films[$name]=array("link"=>$link, "image"=>$image);
-			
-								}
-						}
-						}
-				}
+						
+					}
+					
 	// далее названия фильмов
 	// тут генерится список фильмов
 	$temps = '';
@@ -244,10 +247,9 @@ function get_img($img)
 	}
 
    $temps = $title."\n".$videocount."\n".$temps;
-   
    file_put_contents( $tmp, $temps );
-	
-	return $tmp;
+	//echo $temps;
+		return $tmp;
 }
 
 //---------------------------------------------------------------------------------
@@ -258,26 +260,30 @@ if (isset($_GET['view'])){
 	if (isset($_GET['page'])){
 		$page = $_GET['page'];
 	}
+	$nam=$_GET['name'];
 	
 	if($page) {
-		$nt= $page-1;
-        
-		$html = file_get_contents($url_prefix.$view."?view=list&page=".$nt."&sort=".$fsua_sort);
-		
+		$nt= ($page-1)*20;
+		$html = '<meta http-equiv="content-type" content="text/html; charset=utf-8">'.stripcslashes(file_get_contents($view."?scrollload=1&view=list&start=".$nt."&length=4&sort=".$fsua_sort));
     }
-	else {
-		$page = 1;
-		$html = file_get_contents($url_prefix.$view."?view=list&sort=".$fsua_sort);
-		
-    }
-
-	echo get_film_list($html);
+	
+	echo get_film_list($html,$nam);
 	
  }
-
+// сохранение постера 
+function save_poster($img)
+{
+	//$purl = big($img);
+	$image= "/tmp/poster".rand(0, 1000);
+	shell_exec("rm -f /tmp/poster*");
+	shell_exec("wget -c -O ".$image." ".$img);
+	return $image;
+}
+ 
  // тут берем грузим главную страницу с фильмом и берем постер и описание
- function get_description($url)
- {
+function get_description($url)
+{
+global $tmpdescr;
 	$s=file_get_contents($url);
 	$doc = new DOMDocument();
 	libxml_use_internal_errors( true );
@@ -287,26 +293,72 @@ if (isset($_GET['view'])){
 	if( $div->hasAttribute('class'))
 	{
 		// ПОСТЕР
-			if( $div->getAttribute('class') == 'poster-main' )
+			$post_class = $div->getAttribute('class');
+			if( $post_class == 'poster-main ' || $post_class == 'poster-main poster-main_type_audio' )
 				{
-					$imgs=$div->getElementsByTagName('img');
-					foreach( $imgs as $img ) 
+					
+					$as=$div->getElementsByTagName('a');
+					foreach( $as as $a ) 
 					{
-						$image=$img->getAttribute('src');
+						if ($post_class == 'poster-main poster-main_type_audio')
+						{
+							$purl=$a->getAttribute('style');
+							preg_match("/(?<=url\()(.*?)(?=\)\;)/",$purl,$out);
+							$purl = big($out[0]);
+							$image = save_poster($purl);
+							/*
+							$purl = big($out[0]);
+							$image= "/tmp/poster".rand(0, 1000);
+							shell_exec("rm -f /tmp/poster*");
+							shell_exec("wget -c -O ".$image." ".$purl);
+							*/
+						}
+						else
+						{
+						$imgs=$a->getElementsByTagName('img');
+						foreach( $imgs as $img ) 
+						{
+							$purl = big($img->getAttribute('src'));
+							$image = save_poster($purl);
+							/*
+							$purl = big($img->getAttribute('src'));
+							$image= "/tmp/poster".rand(0, 1000);
+							shell_exec("rm -f /tmp/poster*");
+							shell_exec("wget -c -O ".$image." ".$purl);
+							*/
+						}
+						/*
+						$image=$a->getAttribute('style');
+						preg_match("/(?<=url\()(.*?)(?=\)\;)/",$image,$out);
+						$image = big($out[0]);
+						*/
 						if ($image!="") break;
+						}
 					}
 				}
 			// ЗАГОЛОВОК
-			if( $div->getAttribute('class') == 'head m-themed' )
+			if( $div->getAttribute('class') == 'b-tab-item__title-inner' )
 				{
-					$hs=$div->getElementsByTagName('h1');
-					foreach( $hs as $h ) 
+					//$title=trim(fix_str($div->textContent));
+					// video
+					$spans=$div->getElementsByTagName('span');
+					foreach( $spans as $span ) 
 					{
-						$title=trim(fix_str($h->textContent));
+						$title=trim(fix_str($span->textContent));
 						if ($title!="") break;
 					}
+					// audio
+					if ($title=="")
+					{
+						$hs = $div->getElementsByTagName('h1');
+						foreach( $hs as $h ) 
+						{
+							$title=trim(fix_str($h->textContent));
+							if ($title!="") break;
+						}
+					}
 				}
-			// описание фильма
+			// краткое описание фильма
 			if( $div->getAttribute('class') == 'item-info' )
 					{
 						$tds= $div->getElementsByTagName('td');
@@ -317,18 +369,64 @@ if (isset($_GET['view'])){
 							$ds .= " ".$temp_d." ";
 						}
 						$ds .=".";
-						$ds = trim($ds);
+						$ds = fix_str(trim($ds));
+						/*
+						$descr = '';
 						$ps=$div->getElementsByTagName('p');
-						foreach( $ps as $p ) $ds .= " ".$p->textContent." ";
-						$ds = fix_str($ds);
+						foreach( $ps as $p ) $descr .= " ".$p->textContent." ";
+						$descr = fix_str($descr);
+							
+						break;
+						*/
+						
 					}
+			// полное описание
+			
+			if ( $div->getAttribute('class') == 'b-tab-item__description' )
+				{
+					$descr = '';
+					$ps=$div->getElementsByTagName('p');
+					foreach( $ps as $p ) $descr .= " ".$p->textContent." ";
+					$descr = fix_str($descr);
+					break;
+				}
+					
 	}
- return array("title"=>$title,"poster"=>$image,"desc"=>$ds);
- }
+	$temps = "";
+	//Year
+	preg_match("/[Год\:\s+](\d{4})/", $ds, $year);
+	//Genre
+	preg_match("/(?<=Жанр\:\s{2})(.*?)(?=Год|Период)/", $ds, $genre);
+	//Period
+	preg_match("/(?<=Период показа:\s{2})(.*?)(?=Статус)/", $ds, $period);
+	//Status
+	preg_match("/(?<=Статус\:\s{2})(.*?)(?=Страна)/", $ds, $status);
+	//country
+	preg_match("/(?<=Страна\:\s{2})(.*?)(?=Режиссёр|Ведущие)/", $ds, $country);
+	//managers
+	preg_match("/(?<=Ведущие\:\s{2})(.+)/", $ds, $managers);
+	//director
+	preg_match("/(?<=Режиссёр\:\s{2})(.*?)(?=В\sролях)/", $ds, $director);
+	//cast
+	preg_match("/(?<=В\sролях\:\s{2})(.+)/", $ds, $cast);
+	$cnt=8;
+	if ($year) {$temps.= "Год: ".$year[0]."\n"; $cnt--;}
+	if ($period) {$temps.= "Период показа: ".$period[0]."\n"; $cnt--;}
+	if ($status) {$temps.= "Статус: ".$status[0]."\n"; $cnt--;}
+	if ($genre) {$temps.= "Жанр: ".$genre[0]."\n"; $cnt--;}
+	if ($country) {$temps.= "Страна: ".$country[0]."\n"; $cnt--;}
+	if ($director) {$temps.= "Режиссёр: ".get_short_text($director[0])."\n"; $cnt--;}
+	if ($cast) {$temps.= "В ролях: ".get_short_text($cast[0])."\n"; $cnt--;}
+	if ($managers) {$temps.= "Ведущие: ".$managers[0]."\n"; $cnt--;}
+	for ($i=0; $i<$cnt; $i++) $temps.="\n";
+	file_put_contents( $tmpdescr,descr_split($descr,65,15));
+return array("title"=>$title,"poster"=>$image,"purl"=>$purl,"desc"=>$temps);
+}
  
 // парсим сезоны, переводы, список файлов
-function get_data($file,$img,$nam,$header=false)
+function get_fs_data($file,$img,$nam,$header=false)
 {
+global $url_prefix;
 global $ua_path_link;
 global $fsua_parser_filename;
 global $ua_path_link2;
@@ -336,14 +434,10 @@ global $fsua_rss_link_filename;
 global $ua_path_link2;
 global $fsua_rss_list_filename;
 global $tmp;
-//$file="http://fs.ua/item/i6odgT61l6CKZsTwmzpJmr7?ajax&folder";
 $s=file($file);
-//echo $s;
 preg_match("/(.*?)(?=\?ajax)/",$file,$out);
 $empty_link=$out[0];
-//echo $empty_link."<br>";
 $main_link=$empty_link."?ajax&folder=";			
-//echo $main_link."<br>";
 $temps = '';
 $videocount=0;
 $final = false;
@@ -364,27 +458,30 @@ foreach ($s as $key=>$val)
 		$li_cnt--;
 	}
 	
-	
 	// тут получаем список линков на файлы
 
-	if (!$folder && preg_match("/(?<=href\=\")(.*?)\"\sclass\=\"link-material\"\\s\>\<span\sstyle\=\"\"\>(.*?)(?=\<\/span\>)/",$val,$out))
+	if (!$folder && preg_match("/(?=href\=\"(.*?)\"\sclass\=\"b-file-new__link-material-)/",$val,$out))
 	{
-		$cont_arr[$out[1]]=array("name"=>$out[2],"type"=>"file");
-		
+		$name = basename($out[1]);
+		$cont_arr[$out[1]]=array("name"=>$name,"type"=>"file");
 	}
 
-	
+	// file size
+/*
+	if (!$folder && preg_match("/(?<=b-file-new__link-material-size\"\>)(.*?)(?=\<\/span)/",$val,$out2))
+	{
+		$cont_arr[$curr_idx]=array("name"=>$curr_name,"type"=>"file","size"=>$out2[0]);
+	}
+*/	
 	// тут получаем список качества и переводов
 	if ($li_cnt==1 && preg_match("/link-subtype.*?\stitle/",$val))
 	{
 		preg_match("/(?<=parent_id\:\s\')(\d+)\'\}\".*?\>(.*?)(?=\<\/a\>)/",$val,$out);
-		//echo $out[2]."<br>";
 		$id=$main_link.$out[1];
 		$cont_arr[$id]=array("name"=>$out[2],"type"=>"perevod");
 		$fnd=true;
 		$folder=true;
-		//$cnt_cont++;
-		//$perevod=true;
+
 	}
 	// тут получаем список сезонов
 	if (preg_match("/link-simple\stitle/",$val))
@@ -393,14 +490,24 @@ foreach ($s as $key=>$val)
 		$fnd=true;
 		$id=$main_link.$out[0];
 	} 
+	
+	
 	// тут получаем названия сезонов
 	if ($li_cnt==1 && $fnd && preg_match("/(?<=\s\<b\>)(.*?)(?=\<\/b\>)/",$val,$out))
 	{
 		$season = true;
-		$cont_arr[$id]=array("name"=>$out[0],"type"=>"season");
+		$s_name = $out[0];
+		$cont_arr[$id]=array("name"=>$s_name,"type"=>"season");
 		$folder=true;
-		//$cnt_cont++;
 	}
+	// other file links
+/*
+	if ($li_cnt==1 && $fnd && $season && preg_match("/(?<=folder\=)(\d+)(?=\"\sclass\=\"folder\-filelist\")/",$val,$out))
+	{
+		$cont_arr[$id]=array("name"=>$s_name,"type"=>"perevod");
+	}
+*/
+	
 	// тут берется информация о размере контента и качестве
 	if ($fnd && $material<2 && preg_match("/(?<=material-size\"\>)(.*?)(?=\<\/span\>)/",$val,$out))
 	{
@@ -414,16 +521,15 @@ foreach ($s as $key=>$val)
 		
 	}
 }
-//print_r($cont_arr);
-// тут результаты парсинга сохраняем в файл
+
 $final = false;
 foreach ($cont_arr as $key=>$val)
 {
 	if ($val["type"]=='file') 
 	{
 		$name=$val["name"];
-		$link=urlencode($key);
-		$temps .= ($videocount+1).".".fix_str($name)."\n".$ua_path_link.$fsua_parser_filename."?play=".$link."\n".$link."\n".$name."\n".$name."\n".$ua_path_link.$fsua_parser_filename."?file=".$link."&fav_refresh=1\n";	
+		$link=urlencode($url_prefix.$key);
+		$temps .= ($videocount+1).".".fix_str(urldecode($name))."\n".$ua_path_link.$fsua_parser_filename."?play=".$link."\n".$link."\n".$name."\n".$name."\n".$ua_path_link.$fsua_parser_filename."?file=".$link."&fav_refresh=1\n";	
 		$videocount++;
 		$final = true;
 	}
@@ -457,24 +563,25 @@ if ($final)
 	$title = $desc["title"];
 	$ds = $desc["desc"];
 	$image = $desc["poster"];
-	$temps = $file."\n".$title."\n".descr_split($ds)."\n".$image."\n".$videocount."\n".$temps;
+	$purl = $desc["purl"];
+	$temps = $file."\n".$title."\n".$ds."\n".$image."\n".$purl."\n".$videocount."\n".$temps;
 	$redirect = $ua_path_link2.$fsua_rss_link_filename;
 } else
 {
-	$desc=get_description($empty_link);
-	$title = $desc["title"];
-	$temps = $nam." ".$title."\n".$videocount."\n".$temps;
+	//$desc=get_description($empty_link);
+	//$title = $desc["title"];
+	$title = file_get_contents("/tmp/ua_title.tmp");
+	$temps = $title."\n".$videocount."\n".$temps;
 	$redirect=$ua_path_link2.$fsua_rss_list_filename;
 }
-//echo $temps."<br>";
-//echo $redirect."<br>";
 
 file_put_contents( $tmp, $temps );
+
 if ($header)
 {
 	$desc=get_description($empty_link);
 	$title = $desc["title"];
-	$image = $desc["poster"];
+	$image = $desc["purl"];
 	return array("image"=>$image, "title"=>$title);
 }
 else 
@@ -491,12 +598,12 @@ if (isset($_GET["name"])) $name = urldecode($_GET["name"]);
 $file=urldecode($_GET["file"]);
 if (isset($_GET["fav_refresh"])) 
 	{
-		$main=get_data($file,$image,$name,true);			
-		echo $main["title"].$main["name1"];
+		$main=get_fs_data($file,$image,$name,true);			
+		echo $main["title"].$main["name1"]."\n".$main["image"];
 		exit;
 	}	
 	
-$redirect=get_data($file,$image,$name);
+$redirect=get_fs_data($file,$image,$name);
 header('Location: '.$redirect."?param=".urlencode($file)); 
 }
  

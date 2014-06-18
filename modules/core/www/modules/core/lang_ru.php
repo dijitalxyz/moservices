@@ -69,6 +69,7 @@ $nav_msg[ 'coreRole_patch'  ] = 'Патчи';
 $nav_msg[ 'coreRole_package'] = 'Пакеты';
 $nav_msg[ 'coreRole_web'    ] = 'Веб модули';
 $nav_msg[ 'coreRole_rss'    ] = 'RSS модули';
+$nav_msg[ 'coreRole_util'   ] = 'Утилиты';
 
 $nav_msg[ 'coreSt_disable'  ] = 'Запрещено';
 $nav_msg[ 'coreSt_embeded'  ] = 'Встроено';

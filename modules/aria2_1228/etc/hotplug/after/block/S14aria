@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# start aria2 service
+#
+ini=/usr/local/etc/mos/etc/init/S23aria
+
+# check returned hotplug status
+[ $1 -ne 0 ] && exit
+
+# check action
+[ "$ACTION" != 'add' ] && exit
+
+sleep 15
+[ -x $ini ] && $ini start

@@ -2,9 +2,9 @@
 /*	------------------------------
 	Ukraine online services 	
 	items part for 
-	rss_list V1.1
+	rss_list V1.2
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2013	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice  & others 
@@ -15,6 +15,9 @@
 			<script>
 			idx = getFocusItemIndex();
 			url = getStringArrayAt( linkArray , idx );
+			titl = getStringArrayAt( titleArray , idx );
+			if (fsua == 1) writeStringToFile("/tmp/ua_title.tmp", titl);
+			url;
 			</script>
 		</link>
 	</item_template>

@@ -1,11 +1,11 @@
 #!/bin/sh
 #
 mos=/usr/local/etc/mos/trans
+wget=/usr/local/etc/mos/bin/wget
 
 echo -e "Content-type: application/xml; charset=utf8\n"
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 echo "<return>"
-
 
 P1=`echo "$QUERY_STRING" | cut -d"," -f 1`
 P2=`echo "$QUERY_STRING" | cut -d"," -f 2`
@@ -23,7 +23,7 @@ case "$P1" in
 		QS=`echo "$P3" |  sed 's/pornoshara\.tv\/item/pornoshara.tv\/download/g'`
 		;;
 	  fileszona)
-		ID=`/usr/bin/wget -O- "$P3" |  grep "download.php?id=" | sed 's/.*id\=\([0-9]\+\).*/\1/'`
+		ID=`$wget -O- "$P3" |  grep "download.php?id=" | sed 's/.*id\=\([0-9]\+\).*/\1/'`
 		QS="http://fileszona.com/engine/download.php?id=$ID"
 		;;
 	  *)
@@ -33,7 +33,7 @@ case "$P1" in
 
 	echo "<item><title>"
 	ID=`echo "$QS" | sed 's/[a-z\.\:\/\?\=]*//g'`
-	/usr/bin/wget -q -O "/tmp/${ID}" "${QS}" 2> /dev/null
+	$wget -q -O "/tmp/${ID}" "${QS}" 2> /dev/null
 	WATCHDIR=/tmp/watch
 	TRANSMISSION=`ps | grep '[t]ransmission-daemon'`
 

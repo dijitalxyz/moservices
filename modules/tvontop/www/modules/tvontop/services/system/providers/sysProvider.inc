@@ -4,8 +4,6 @@ require_once 'loader.inc';
 require_once "tools/http.inc";
 
 class SysProvider extends Provider {
-	public static $OBJ_KEYBOARD			= "KEYBOARD";
-	public static $OBJ_KEY_LOCALE		= "KEY_LOCALE";
 	
 	function init(Configuration &$cfg) {
 		parent::init($cfg);

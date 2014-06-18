@@ -35,6 +35,7 @@ function apower_sets_body()
 		'r1'  => 'Asus O!Play R1/R3',
 		'hd2' => 'Asus O!Play HD2',
 		'mele'=> 'Mele players',
+		'mele1283'=> 'Mele players 1283',
 		'xtr' => 'xTreamer players',
 	);
 

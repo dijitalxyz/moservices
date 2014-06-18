@@ -7,16 +7,22 @@ $fex_config = array(
 	'home'    => '23775',
 	'quality' => 'lo',
 	'start'   => 'home',
+	'keyboard'=> 'rss',
 );
 $fex_bookmarks = array();
 
-if( is_file( '/usr/local/etc/dvdplayer/fex.config.php' ) )
+$fex_file_config = dirname( __FILE__ ) .'/fex.config.php';
+$fex_file_bookmarks = dirname( __FILE__ ) .'/fex.bookmarks.php';
+
+if( is_file( $fex_file_config    ) ) include( $fex_file_config );
+if( is_file( $fex_file_bookmarks ) ) include( $fex_file_bookmarks );
+//
+// ------------------------------------
+function getFexConfigParameter( $name )
 {
-	include( '/usr/local/etc/dvdplayer/fex.config.php' );
-}
-if( is_file( '/usr/local/etc/dvdplayer/fex.bookmarks.php' ) )
-{
-	include( '/usr/local/etc/dvdplayer/fex.bookmarks.php' );
+global $fex_config;
+
+	return $fex_config[ $name ];
 }
 //
 // ------------------------------------
@@ -322,11 +328,15 @@ function fexGetList( $s )
 	if(( preg_match( '/<table .*? class=include_0>(.*?)<\/table>/s' , $s, $ss ) > 0 )
 	 ||( preg_match( '/<table .*? class=panel>(.*?)<\/table>/s' , $s, $ss ) > 0 ))
 	{
+
 		$as = $ss[1];
 		if( preg_match_all( '/<a .*?>.*?<\/a>/s' , $as, $ss ) === false ) return $links;
 		foreach( $ss[0] as $a )
 		{
-			if( preg_match( '/<a href=\'\/view\/(\d+).*?\'><img src=\'(.*?)\'.* alt=\'(.*?)\'.*<\/a>/' , $a, $as ) > 0 )
+
+if( isset( $_REQUEST['debug'] )) echo "$a\n";
+
+			if( preg_match( '/<a href=\'\/(\d+).*?\'><img src=\'(.*?)\'.* alt=\'(.*?)\'.*<\/a>/' , $a, $as ) > 0 )
 			{
 				if( isset( $links[ $ss[1] ] )) continue;
 
@@ -436,16 +446,18 @@ function get_fex_content()
 function fexSaveConfig()
 {
 global $fex_config;
+global $fex_file_config;
 
-	file_put_contents( '/usr/local/etc/dvdplayer/fex.config.php', '<?php $fex_config = '.var_export( $fex_config, true ).'; ?>' );
+	file_put_contents( $fex_file_config, '<?php $fex_config = '.var_export( $fex_config, true ).'; ?>' );
 }
 //
 // ------------------------------------
 function fexSaveBookmarks()
 {
 global $fex_bookmarks;
+global $fex_file_bookmarks;
 
-	file_put_contents( '/usr/local/etc/dvdplayer/fex.bookmarks.php', '<?php $fex_bookmarks = '.var_export( $fex_bookmarks, true ).'; ?>' );
+	file_put_contents( $fex_file_bookmarks, '<?php $fex_bookmarks = '.var_export( $fex_bookmarks, true ).'; ?>' );
 }
 //
 // ------------------------------------
@@ -476,6 +488,13 @@ header( "Content-type: text/plain" );
 	if( isset( $_REQUEST['start']))
 	{
 		$fex_config['start'] = $_REQUEST['start'];
+		fexSaveConfig();
+		$s = 'none'.PHP_EOL;
+	}
+
+	if( isset( $_REQUEST['keyboard']))
+	{
+		$fex_config['keyboard'] = $_REQUEST['keyboard'];
 		fexSaveConfig();
 		$s = 'none'.PHP_EOL;
 	}
@@ -593,7 +612,27 @@ header( "Content-type: text/plain" );
 
 		// get html page
 		$s = file_get_contents( $url );
-
+       		$s = str_replace('/ru/video/foreign_series','/view/1988',$s);
+		$s = str_replace('/ru/video/our_series','/view/422546',$s);
+		$s = str_replace('/ru/video/foreign','/view/2',$s);
+		$s = str_replace('/ru/video/our','/view/70538',$s);
+		$s = str_replace('/ru/video/cartoon','/view/1989',$s);
+		$s = str_replace('/ru/video/documentary','/view/1987',$s);
+		$s = str_replace('/ru/video/short','/view/23785',$s);
+		$s = str_replace('/ru/video/clip','/view/1991',$s);
+		$s = str_replace('/ru/video/concert','/view/70533',$s);
+		$s = str_replace('/ru/video/show','/view/28713',$s);
+		$s = str_replace('/ru/video/trailer','/view/1990',$s);
+		$s = str_replace('/ru/video/sport','/view/69663',$s);
+		$s = str_replace('/ru/video/anime','/view/23786',$s);
+		$s = str_replace('/ru/video/theater','/view/70665',$s);
+		$s = str_replace('/ru/video/sermon','/view/371146',$s);
+		$s = str_replace('/ru/video/commercial','/view/371152',$s);
+		$s = str_replace('/ru/video/social_ad','/view/4313886',$s);
+		$s = str_replace('/ru/video/training','/view/28714',$s);
+		$s = str_replace('/ru/video/artist','/view/7513588',$s);
+		$s = str_replace('/ru/video/mobile','/view/607160',$s);
+		
 		if(( preg_match( '/<table .*? class=include_0>/' , $s ) > 0 )
 		 ||( preg_match( '/<table .*? class=panel>/' , $s ) > 0 ))
 		{
@@ -759,9 +798,8 @@ function rss_fex_menu_content()
 {
 global $fex_bookmarks;
 
-	include( 'modules/core/rss_view_left.php' );
-
-	$view = new rssSkinLeftView;
+	include( 'rss_fex_view_left.php' );
+	$view = new rssFexLeftView;
 
 	$view->items = array();
 	$view->items[] = array(
@@ -805,18 +843,24 @@ global $fex_config;
 	$url = 'http://'. $fex_config['site'] .'/ru/video';
 	$s = file_get_contents( $url );
 
+
 	// get languages
 	if( preg_match( '/<a href=\'\/view\/(\d+)\'.*?<b>Видео на других языках<\/b>/' , $s, $ss ) === false ) return;
 
 	$url = 'http://'. $fex_config['site'] .'/view/' . $ss[1];
 	$s = file_get_contents( $url );
-
+	$s = str_replace('/ru/video','/view/23775',$s);
+	$s = str_replace('/uk/video','/view/80934',$s);
+	$s = str_replace('/en/video','/view/80925',$s);
+	$s = str_replace('/de/video','/view/45205',$s);
+	$s = str_replace('/es/video','/view/187077',$s);
+	$s = str_replace('/pl/video','/view/933750',$s);
+	$s = str_replace('/ja/video','/view/1250406',$s);
 	$links = fexGetList( $s );
 
 
-	include( 'modules/core/rss_view_left.php' );
-
-	$view = new rssSkinLeftView;
+	include( 'rss_fex_view_left.php' );
+	$view = new rssFexLeftView;
 
 	$view->position = 1;
 
@@ -840,9 +884,8 @@ function rss_fex_sets_content()
 {
 global $fex_config;
 
-	include( 'modules/core/rss_view_left.php' );
-
-	$view = new rssSkinLeftView;
+	include( 'rss_fex_view_left.php' );
+	$view = new rssFexLeftView;
 
 	$view->position = 1;
 
@@ -862,6 +905,11 @@ global $fex_config;
 			'action'=> 'rss',
 			'link'	=> getMosUrl().'?page=rss_fex_start'
 		),
+		3 => array(
+			'title'	=> getMsg('fexKeyboard'),
+			'action'=> 'rss',
+			'link'	=> getMosUrl().'?page=rss_fex_keyboard'
+		),
 	);
 
 	$view->showRss();
@@ -872,9 +920,8 @@ function rss_fex_site_content()
 {
 global $fex_config;
 
-	include( 'modules/core/rss_view_left.php' );
-
-	$view = new rssSkinLeftView;
+	include( 'rss_fex_view_left.php' );
+	$view = new rssFexLeftView;
 
 	$view->position = 2;
 
@@ -899,9 +946,8 @@ function rss_fex_qual_content()
 {
 global $fex_config;
 
-	include( 'modules/core/rss_view_left.php' );
-
-	$view = new rssSkinLeftView;
+	include( 'rss_fex_view_left.php' );
+	$view = new rssFexLeftView;
 
 	$view->position = 2;
 
@@ -926,9 +972,8 @@ function rss_fex_start_content()
 {
 global $fex_config;
 
-	include( 'modules/core/rss_view_left.php' );
-
-	$view = new rssSkinLeftView;
+	include( 'rss_fex_view_left.php' );
+	$view = new rssFexLeftView;
 
 	$view->position = 2;
 
@@ -942,6 +987,32 @@ global $fex_config;
 			'title'	=> getMsg('fexBookmarks'),
 			'action'=> 'ret',
 			'link'	=> getMosUrl().'?page=xml_fex&amp;start=bookmarks'
+		)
+	);
+
+	$view->showRss();
+}
+//
+// ------------------------------------
+function rss_fex_keyboard_content()
+{
+global $fex_config;
+
+	include( 'rss_fex_view_left.php' );
+	$view = new rssFexLeftView;
+
+	$view->position = 2;
+
+	$view->items = array(
+		0 => array(
+			'title'	=> getMsg('fexKbdRss'),
+			'action'=> 'ret',
+			'link'	=> getMosUrl().'?page=xml_fex&amp;keyboard=rss'
+		),
+		1 => array(
+			'title'	=> getMsg('fexKbdEmb'),
+			'action'=> 'ret',
+			'link'	=> getMosUrl().'?page=xml_fex&amp;keyboard=emb'
 		)
 	);
 

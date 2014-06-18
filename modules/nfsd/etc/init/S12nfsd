@@ -6,6 +6,9 @@ etc=/usr/local/etc
 
 reScan()
 {
+	while [ -f /tmp/wait_nfsd ] ; do sleep 1 ; done
+	touch /tmp/wait_nfsd
+
 	exportfs -ua
 
 	IFS='
@@ -20,9 +23,11 @@ reScan()
 		fs=$( echo $s | cut -d ' ' -f 3 )
 
 		[ "$fs" == 'ext3' ] && exportfs -o rw,no_root_squash,no_subtree_check *:$mt
+		[ "$fs" == 'ext2' ] && exportfs -o rw,no_root_squash,no_subtree_check *:$mt
 	done
-}
 
+	rm -f /tmp/wait_nfsd
+}
 
 case "$1" in
     start)

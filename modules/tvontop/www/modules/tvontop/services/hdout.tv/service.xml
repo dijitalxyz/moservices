@@ -10,12 +10,16 @@
     </description>
 	<keys>
 		<key name="keyUser1" params="?pl=hdo&amp;amp;op=get&amp;amp;type=CHANGE_AUTH" >Change account</key>
-		<key name="keyUser2" params="?pl=hdo&amp;amp;op=get&amp;amp;select=favorites" >Favorites</key>
-		<key name="keyUser3" params="?pl=hdo&amp;amp;op=get&amp;amp;select=new" >Last added</key>
+		<key name="keyUser2" params="?pl=hdo&amp;amp;op=get&amp;amp;id=favorites&amp;amp;select=favorites" >Favorites</key>
+		<key name="keyUser3" params="?pl=hdo&amp;amp;op=get&amp;amp;id=new&amp;amp;select=new" >Last added</key>
 	</keys>
     	<provider class="ImgCacheProvider">
-        	<provider class="HdoProvider" />
+    		<provider class="HistoryProvider">
+    		    <provider class="CacheProvider">
+	        		<provider class="HdoProvider" />
+				</provider>
+			</provider>
     	</provider>
-    <version>0.1</version>
+    <version>0.2</version>
     <author>http://TVonTop.com</author>
 </provider>

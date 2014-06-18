@@ -1,16 +1,16 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS bookmarks module v1.4
+	RSS bookmarks module v1.6
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2014	
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
 	------------------------------ */
 
 include( 'ua_rss_view.php' );
-class ua_rss_favorites2 extends ua_rss_list_const
+class ua_rss_favorites2 extends ua_rss_favorites_const
 {
 	const itemdisplay_widthPC	=	'80';
 	
@@ -22,11 +22,14 @@ class ua_rss_favorites2 extends ua_rss_list_const
 }
 class ua_rss_favorites  extends ua_rss_favorites2
 {
+	
 	// функция вставляет бордюры все картинки и текст
 	//-------------------------------
 	public function mediaDisplay_content()
 	{
 	global $ua_images_path;
+	global $ua_path_link;
+	global $ua_images_foldername;
 	?>
 	
 			
@@ -37,6 +40,26 @@ class ua_rss_favorites  extends ua_rss_favorites2
 	<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
 		
 	</text>
+	
+	<image  offsetXPC="<?= static::image_play_footer_display_offsetXPC ?>" offsetYPC="<?= static::image_play_footer_display_offsetYPC ?>" widthPC="<?= static::image_play_footer_display_widthPC ?>" heightPC="<?= static::image_play_footer_display_heightPC ?>">
+					<?= $ua_images_path . static::play_pause ?>
+	</image>
+	<text  align="left" redraw="no" lines="1" offsetXPC="<?= static::text_play_footer_display_offsetXPC ?>" offsetYPC="<?= static::text_play_footer_display_offsetYPC ?>" widthPC="<?= static::text_play_footer_display_widthPC ?>" heightPC="<?= static::text_play_footer_display_heightPC ?>" fontSize="<?= static::text_play_footer_fontSize ?>" backgroundColor="<?= static::text_play_footer_backgroundColor ?>" foregroundColor="<?= static::text_play_footer_foregroundColor ?>">
+		 Переместить
+	</text>
+	<scrollbar offsetXPC=93 offsetYPC=13 widthPC=2.26 heightPC=75.0 backgroundImage="<?=$ua_path_link.$ua_images_foldername?>ua_scroll_bar_01.png" foregroundImage="<?=$ua_path_link.$ua_images_foldername?>ua_scroll_bar_02.png" border=7 offset=0 direction="vertical" redraw="yes">
+		<totalSize>
+			<script>
+				getPageInfo("itemCount");
+			</script>
+		</totalSize>
+		<startIndex>
+			<script>
+				getFocusItemIndex();
+			</script>
+		</startIndex>
+	</scrollbar>
+	
 	
 	<?php	
 		
@@ -52,7 +75,16 @@ class ua_rss_favorites  extends ua_rss_favorites2
 	</image>
 	
 	<text offsetXPC="<?= static::itemdisplay_offsetXPC ?>" offsetYPC="<?= static::itemdisplay_offsetYPC ?>" widthPC="<?= static::itemdisplay_widthPC ?>" heightPC="<?= static::itemdisplay_heightPC ?>" fontSize="<?= static::itemdisplay_fontSize ?>" lines="<?= static::itemdisplay_lines ?>">
-		<foregroundColor><script>color;</script></foregroundColor>
+		<foregroundColor>
+			<script>
+					if (switchSort == "true" &amp;&amp; idx == switchItem)
+						{
+							color = "242:255:97";
+						}
+						else color = "255:255:255";
+				color;
+			</script>
+		</foregroundColor>
 	    <script> 
 			dname = getStringArrayAt( downameBookArray , idx );
 			if (dname == "none") getStringArrayAt(titleBookArray,idx);
@@ -88,10 +120,10 @@ class ua_rss_favorites  extends ua_rss_favorites2
 		menuArray = null;
 		menucmdArray = null;
 		menuCount = 3;
-		menuArray = pushBackStringArray( menuArray, "Удалить");
-		menucmdArray = pushBackStringArray( menucmdArray, "delete");
 		menuArray = pushBackStringArray( menuArray, "Обновить");
 		menucmdArray = pushBackStringArray( menucmdArray, "refresh");
+		menuArray = pushBackStringArray( menuArray, "Удалить");
+		menucmdArray = pushBackStringArray( menucmdArray, "delete");
 		menuArray = pushBackStringArray( menuArray, "Выход");
 		menucmdArray = pushBackStringArray( menucmdArray, "exit");
 			
@@ -197,13 +229,17 @@ class ua_rss_favorites  extends ua_rss_favorites2
 			saveBookArray = null;
 			saveBookArray = pushBackStringArray(saveBookArray, itemCount);
 			count = 0;
-			if (site!="2")
-			{
+<?
+//			if (site!="2")
+//			{
+?>
 				if (site!="-1")
 				{ 
 				link1 = getURL("<?=$ua_path_link.'ua_paths.inc.php?get_fav_site='?>"+site+"&amp;get_fav_type=parser");
 				link= link1+link2+"&amp;fav_refresh=1";
-				title1 = getURL(link);
+				favRef=getURL(link);
+				title1 = getStringArrayAt( favRef , 0 );
+				image1 = getStringArrayAt( favRef , 1 );
 				} 
 				while( count != itemCount )
 					{				
@@ -212,13 +248,18 @@ class ua_rss_favorites  extends ua_rss_favorites2
 						saveBookArray = pushBackStringArray(saveBookArray, title1);					
 					} 	else	saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(titleBookArray,count));
 					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(linkBookArray,count));
-					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(imageBookArray,count));
+					if (count == idx &amp;&amp; site!="-1") 
+					{
+						saveBookArray = pushBackStringArray(saveBookArray, image1);					
+					} else saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(imageBookArray,count));
 					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(typeBookArray,count));
 					saveBookArray = pushBackStringArray(saveBookArray, getStringArrayAt(siteBookArray,count));
 					count += 1;
 					}
 				writeStringToFile("<?=$ua_favorites_filename?>", saveBookArray);
-			}
+<?
+//				}
+?>			
 			setRefreshTime(1);
 		}
 		null;
@@ -234,6 +275,7 @@ class ua_rss_favorites  extends ua_rss_favorites2
 	global $ua_images_foldername;
 	?>
 	<onEnter>
+	switchSort = "false";
 	returnFromLink=readStringFromFile("/tmp/env_returnFromLink_message");
 	returnFromList=readStringFromFile("/tmp/env_returnFromList_message");
 		if (returnFromLink == "1" || returnFromList == "1")
@@ -290,6 +332,7 @@ class ua_rss_favorites  extends ua_rss_favorites2
 					image=getStringArrayAt(imageBookArray , idx );
 					titl=getStringArrayAt(titleBookArray , idx );
 					link2=urlEncode(link2)+"&amp;img="+image+"&amp;name="+urlEncode(titl);
+					writeStringToFile("/tmp/ua_title.tmp", titl);
 				}
 				link1 = getURL("<?=$ua_path_link.'ua_paths.inc.php?get_fav_site='?>"+site+"&amp;get_fav_type="+type);
 				link= link1+link2;
@@ -326,7 +369,7 @@ class ua_rss_favorites  extends ua_rss_favorites2
 	}
 }
 //-------------------------------
-$view = new ua_rss_favorites;
-$view->showRss();
+$view = new ua_rss_favorites();
+$view->showRss(true);
 exit;
 ?>

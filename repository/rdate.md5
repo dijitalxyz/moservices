@@ -1,0 +1,3 @@
+07ba7e8457159a59c6e52349e89c8760  bin/rdate
+4b6a4a7868bc025a8d0905de126f5790  etc/rdate.conf
+99d76a5f54b4b2a03f8d7b8548f4539a  etc/init/S11rdate

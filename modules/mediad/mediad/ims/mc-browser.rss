@@ -1,0 +1,873 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- 
+##################################################################################
+# © IconBIT 2012                                                                 #
+##################################################################################
+-->
+	
+<script>	
+	startVideo = 0;
+	checkStatus = 1;
+	showLoading = 0;
+	elapsedTime = "00:00:00";
+	AllTime = null;
+	loadingStatus = 0;
+	setRefreshTime(-1);
+	
+	versionInfo = null;
+	
+	mediaServer = "http://127.0.0.1:9999/";
+	RSSMedia = mediaServer + "rss/";
+	
+	currentSection = "one";
+	currentPath = null;
+	currentLink = null;
+	currentPlayTitle = null;
+	currentPlayRealURL = null;
+	currentPlayURL = null;
+	currentPlayProtocol = null;
+	currentPlayStreamTitle = null;
+	currentPlayStream = null;
+	currentPlayImage = null;
+	currentPlay = -1;
+	currentNoMeta = 0;
+	currentProtocol = null;
+	
+	techInfo = null;
+	
+	historyLink = null;
+	historyFocus = null;
+	historyPath = null;
+	history = -1;
+	
+	setAction = 0;
+	currentAction = 0;
+	
+	
+	currentView = 0;
+	executeScript("loadOption");
+
+	storageConfig = "/usr/local/etc/mc_storage.conf";
+	
+	storageTitleArray = null;
+	storagePathArray = null;
+	storageSize = 0;
+	storage = 0;
+	isFull = 0;
+	
+	locale = readStringFromFile("/tmp/app/REL_LOCALE");
+	if (locale == "ru")	{
+		MC_TITLE = "Медиацентр";
+		MC_FAVORITE = "Избранное";
+		MC_STORAGE = "Устройства";
+		MC_ITEMS = "Всего";
+		MC_RECORD = "Запись";
+		MC_REMOVED = "Ссылка успешно удалена";
+		MC_FAILED = "Ошибка удаления ссылки!";
+		MC_ADDED = "Ссылка успешно добавлена";
+		MC_EXISTS = "Ссылка уже существует!";
+		MC_DL_SUCCESS = "Добавлена в загрузку";
+		MC_DL_FAILED = "Ошибка при добавлении";
+	} else {
+		MC_TITLE = "Mediacenter";
+		MC_FAVORITE = "Favorites";
+		MC_STORAGE = "Storage";
+		MC_ITEMS = "Items";
+		MC_RECORD = "Record";
+		MC_REMOVED = "Link removed success";
+		MC_FAILED = "Link removed failed!";
+		MC_ADDED = "Link added success";
+		MC_EXISTS = "Link exists!";
+		MC_DL_SUCCESS = "Added to downloads";
+		MC_DL_FAILED = "Added failed";
+	}
+	
+	setStoragePath = readStringFromFile(storageConfig);
+	setStoragePathIndex = -1;
+	dlok = loadXMLFile(mediaServer + "storage/");
+	if (dlok != null) {
+		versionInfo = getXMLText("playlist", 0, "version");
+		storageSize = getXMLElementCount("playlist", "item");
+		if(storageSize &gt; 0) {
+			storageCount = 0;
+			while(1) {
+				storageTitle = getXMLText("playlist", "item", storageCount, "title");
+				storageTitleArray = pushBackStringArray(storageTitleArray, storageTitle);
+				storageName = getXMLText("playlist", "item", storageCount, "name");
+				storagePath = getXMLText("playlist", "item", storageCount, "path");
+				storagePathArray = pushBackStringArray(storagePathArray, storagePath);				
+				if (storagePath == setStoragePath)
+					setStoragePathIndex = storageCount;
+				storageCount += 1;
+				if(storageCount == storageSize)
+					break;
+			}
+		}
+	}	
+	if (setStoragePathIndex == -1 &amp;&amp; storageSize &gt; 0) {
+		tmpPath = getStringArrayAt(storagePathArray, 0);
+		writeStringToFile(storageConfig, tmpPath);
+		storage = 0;
+	} else if (setStoragePathIndex &gt;= 0)
+		storage = setStoragePathIndex;
+	else {
+		storage = 0;
+		storageTitleArray = pushBackStringArray(storageTitleArray, "...");
+	}
+	refreshType = 0;
+	refreshTime = -1;
+	playStatus = 0;
+	executeScript("commandSection");
+</script>
+
+<onExit>
+    playItemURL(-1, 1);
+    setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+	if (refreshType == 0)
+	{
+		vidProgress = getPlaybackStatus();
+		bufProgress = getCachedStreamDataSize(0, 262144);
+		playElapsed = getStringArrayAt(vidProgress, 0);
+		playTime = getStringArrayAt(vidProgress, 1);
+		playStatus = getStringArrayAt(vidProgress, 3);
+		print("Media status =", vidProgress);	
+		if(checkStatus != 0 &amp;&amp; loadingStatus == 0) {loadingStatus = 1;checkStatus = 0;}
+		loadingStatus = 0;
+		if (startVideo == 1) {
+			setRefreshTime(-1);
+			showLoading = 1;
+			startVideo = 0;
+			timeStamp += 1;
+			if (currentView == 0)
+				playItemURL(currentPlayURL, 10, "mediaDisplay", "previewWindow");
+			else if (input == "four")
+				playItemURL(currentPlayURL + ",,,,,norange", 0);
+			else
+				playItemURL(currentPlayURL, 0);
+			updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+			refreshTime = 1000;
+			setRefreshTime(1000);
+		} else if (playStatus == 0)
+		{
+			setRefreshTime(-1);
+			currentPlayTitle = null;
+			currentPlayRealURL = null;
+			currentPlayURL = null;
+			currentPlayProtocol = null;
+			currentPlayStreamTitle = null;
+			currentPlayStream = null;
+			currentPlayImage = null;
+			refreshTime = -1;
+			redrawDisplay();
+		} else
+		{
+			if (playElapsed != 0)
+			{
+				x = Integer(playElapsed / 60);
+				h = Integer(playElapsed / 3600);
+				s = playElapsed - (x * 60);m = x - (h * 60);
+				if(h &lt; 10) elapsedTime = "0" + sprintf("%s:", h); else elapsedTime = sprintf("%s:", h);
+				if(m &lt; 10)  elapsedTime += "0";elapsedTime += sprintf("%s:", m);
+				if(s &lt; 10)  elapsedTime += "0";elapsedTime += sprintf("%s", s);
+				print("elapsedTime =", elapsedTime);				
+				if(AllTime == null)
+				{
+					x = Integer(playTime / 60);
+					h = Integer(playTime / 3600);
+					s = playTime - (x * 60);m = x - (h * 60);
+					if(h &lt; 10) AllTime = "0" + sprintf("%s:", h); else AllTime = sprintf("%s:", h);
+					if(m &lt; 10)  AllTime += "0";AllTime += sprintf("%s:", m);
+					if(s &lt; 10)  AllTime += "0";AllTime += sprintf("%s", s);
+					print("AllTime =", AllTime);
+				}				
+				checkInfoElapsed -= 1;
+				if ( checkInfoElapsed == 0 &amp;&amp; currentPlayProtocol == "http" &amp;&amp; currentNoMeta == 0)
+				{
+					itemTitle = "";itemStream = "";	
+					dlok = loadXMLFile(mediaServer+"info/?"+currentPlayRealURL);
+					if(dlok != null)
+					{
+						value = getXMLAttribute("info","stream","title");
+						if(value != null) itemTitle = value;
+						value = getXMLAttribute("info","stream","description");
+						if(value != null) itemStream = value;							
+						if( itemTitle == "nometa" ) { currentNoMeta = 1;currentPlayStreamTitle = "";currentPlayStream = ""; }
+						else if ( itemTitle != currentPlayStreamTitle )	{ currentPlayStreamTitle = itemTitle;currentPlayStream = itemStream;redrawDisplay(); }
+					}
+					checkInfoElapsed = 15;
+				}				
+				if (startVideo == 0) 
+				{
+					startVideo = 2;
+					statusCounter = 0;
+					statusTimeout = 60;
+					updatePlaybackProgress("delete", "mediaDisplay", "progressBar");
+				} else if(startVideo == 2)
+				{
+					statusCounter += 1;print("statusCounter =", statusCounter);
+					if (statusCounter &gt;= statusTimeout) { statusCounter = 0;checkStatus = 1;	}
+				}
+			}
+			updatePlaybackProgress(bufProgress, "mediaDisplay", "progressBar");
+		}
+	} else
+	{
+		itemTitleArray = null;itemLinkArray = null;itemTypeArray = null;itemSubTypeArray = null;
+		itemURLArray = null;itemImageArray = null;itemProtocolArray = null;itemEPGArray = null;
+		itemSize = 0;techInfo = null;
+		loadUrl = RSSMedia + currentLink;
+		if (refreshType == 2 &amp;&amp; currentProtocol == "ftp")
+		{
+			res = getUrl(loadUrl+",,,,,refresh");
+			refreshType == 1;
+		}
+		dlok = loadXMLFile(loadUrl);
+		if (dlok != null)
+		{
+			plstd = getXMLAttribute("playlist", "std");
+			state = getXMLText("playlist", "info", 0, "state");
+			if (state != "wait")
+			{
+				itemSize = getXMLElementCount("playlist", "item");
+				print("itemSize = ", itemSize);
+				if(itemSize &gt; 0)
+				{
+					itemCount = 0;
+					while(1)
+					{
+						itemTitle = getXMLText("playlist", "item", itemCount, "title");
+						print("itemTitle = ", itemTitle);
+						itemTitleArray = pushBackStringArray(itemTitleArray, itemTitle);
+						itemLink = getXMLText("playlist", "item", itemCount, "link");
+						itemLinkArray = pushBackStringArray(itemLinkArray, itemLink);
+						itemType = getXMLText("playlist", "item", itemCount, "type");
+						itemTypeArray = pushBackStringArray(itemTypeArray, itemType);
+						itemSubType = getXMLText("playlist", "item", itemCount, "subtype");
+						itemSubTypeArray = pushBackStringArray(itemSubTypeArray, itemSubType);
+						itemEPG = getXMLText("playlist", "item", itemCount, "epg");
+						itemEPGArray = pushBackStringArray(itemEPGArray, itemEPG);
+						itemURL = getXMLText("playlist", "item", itemCount, "url");
+						itemURLArray = pushBackStringArray(itemURLArray, itemURL);
+						itemImage = getXMLText("playlist", "item", itemCount, "image");
+						itemImageArray = pushBackStringArray(itemImageArray, itemImage);
+						itemProtocol = getXMLText("playlist", "item", itemCount, "protocol");
+						itemProtocolArray  = pushBackStringArray(itemProtocolArray, itemProtocol);
+						itemCount += 1;
+						if(itemCount == itemSize) break;
+					}
+					if(historyItem &gt; itemSize - 1) historyItem = itemSize - 1;
+				}
+				else
+					historyItem = 0;
+				setFocusItemIndex(historyItem);
+				setItemFocus(historyItem);
+				redrawDisplay();
+				setRefreshTime(refreshTime);
+				refreshType = 0;
+			} else
+				setRefreshTime(100);
+		} 
+		else
+		{ 
+			redrawDisplay();
+			setRefreshTime(refreshTime);
+			refreshType = 0;
+		}
+	}
+</onRefresh>
+
+<mediaDisplay
+	name=onePartView
+	itemPerPage=12
+	viewAreaXPC=0
+	viewAreaYPC=0
+	viewAreaWidthPC=100
+	viewAreaHeightPC=100
+
+	itemXPC=10
+	itemYPC=17
+	itemWidthPC=43
+	itemHeightPC=5.5
+	itemImageXPC=27.4
+	itemImageYPC=37.5
+	itemImageWidthPC=60.8
+	itemImageHeightPC=6.3
+
+	imageFocus=""
+	imageUnFocus=""
+
+	sideColorRight=-1:-1:-1
+	sideColorLeft=-1:-1:-1
+	sideColorTop=-1:-1:-1
+	sideColorBottom=-1:-1:-1
+	backgroundColor=-1:-1:-1
+	focusBorderColor=-1:-1:-1
+	unFocusBorderColor=-1:-1:-1
+	itemBackgroundColor=-1:-1:-1
+
+	showHeader="no"
+	showDefaultInfo="no"
+
+	rollItems="no"
+	forceRedrawItems="yes"
+	idleImageXPC=83.12
+	idleImageYPC=89.58
+	idleImageWidthPC=3.1
+	idleImageHeightPC=5.5
+>
+	<idleImage> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage> image/POPUP_LOADING_06.png </idleImage>
+	<idleImage> image/POPUP_LOADING_07.png </idleImage>
+	<idleImage> image/POPUP_LOADING_08.png </idleImage>
+	<backgroundDisplay name=MediaCenterBackground>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>/tmp/app/ims/mc_back.png</image>
+	</backgroundDisplay>
+	<image offsetXPC=54 offsetYPC=17 widthPC=36.33 heightPC=65.97>/tmp/app/ims/mc_preview.png</image>
+	<previewWindow offsetXPC=55.25 windowColor=0:0:0 offsetYPC=19.22 widthPC=33.91 heightPC=34.36></previewWindow>
+	<text redraw=yes align=left offsetXPC=10 offsetYPC=7 widthPC=50 heightPC=5 fontSize=14 foregroundColor=255:255:255>
+		<script>if (currentSection == "one") MC_TITLE+" ("+MC_FAVORITE+")"; else MC_TITLE+" ("+MC_STORAGE+")";</script>
+	</text>
+	<text redraw=yes align=right offsetXPC=70 offsetYPC=7 widthPC=21 heightPC=5 fontSize=14 backgroundColor=0:0:0 foregroundColor=255:255:255>
+		<script>getPageInfo("focusItemIndex") + "/" + getPageInfo("itemCount");</script>
+	</text>
+	<text offsetXPC=14 offsetYPC=92 widthPC=35 heightPC=5 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+		<script>techInfo;</script>
+	</text>
+	<text align=right offsetXPC=80 offsetYPC=92 widthPC=15 heightPC=5 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+		<script>versionInfo;</script>
+	</text>
+	<text redraw=yes align=left offsetXPC=8 offsetYPC=87 widthPC=57 heightPC=10 lines=2 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+		<script>currentPath;</script>
+	</text>
+	<text align=right offsetXPC=69 offsetYPC=87 widthPC=22 heightPC=5 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+		<script>getStringArrayAt(storageTitleArray, storage);</script>
+	</text>
+	<text offsetXPC=58 offsetYPC=53 widthPC=28 heightPC=5 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+		<script>currentPlayTitle;</script>
+	</text>
+	<text offsetXPC=56 offsetYPC=66 widthPC=32 heightPC=8 lines=2 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=63:100:127>
+		<script>currentPlayStreamTitle;</script>
+	</text>
+	<text offsetXPC=56 lines=2 offsetYPC=74 widthPC=32 heightPC=7 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+		<script>if (currentPlayStream == "" || currentPlayStream == null) currentPlayRealURL; else currentPlayStream;</script>
+	</text>
+	<progressBar offsetXPC=58 backgroundColor=0:0:0 offsetYPC=60 widthPC=28 heightPC=5>
+		<text offsetXPC=33 offsetYPC=45 widthPC=41.5 heightPC=10 backgroundColor=10:10:10 />
+		<bar offsetXPC=33 offsetYPC=45 heightPC=10 barColor=20:20:20 progressColor=200:200:200 bufferColor=63:100:127>
+			<widthPC>
+				<script>if (AllTime == "00:00:00" || AllTime == null) "65.5"; else "0";</script>
+			</widthPC>
+		</bar>
+		<text redraw=yes offsetXPC=33 offsetYPC=45 heightPC=10 backgroundColor=200:200:200>
+			<widthPC>
+				<script>if (AllTime == "00:00:00" || AllTime == null) "0"; else Integer(playElapsed / playTime * 41.5);</script>
+			</widthPC>
+		</text>
+		<text redraw=yes offsetXPC=0 offsetYPC=0 widthPC=30 heightPC=100 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>if (playStatus == 2) elapsedTime; else "--:--:--";</script>
+		</text>
+		<image offsetXPC=25.5 offsetYPC=10 widthPC=7.5 heightPC=80>
+			<script>if (playStatus == 2) "/tmp/app/ims/mc_action_" + currentAction + ".png"; else null;</script>
+		</image>
+		<text redraw=yes align=right offsetXPC=70 offsetYPC=0 widthPC=30 heightPC=100 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>if (playStatus == 2 &amp;&amp; AllTime != "00:00:00") AllTime; else null;</script>
+		</text>
+		<destructor offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 color=-1:-1:-1>
+		</destructor>
+	</progressBar>
+	<scrollbar offsetXPC=93 offsetYPC=13 widthPC=2.26 heightPC=74.0 backgroundImage="/tmp/app/ims/mc_scroll_bar_01.png" foregroundImage="/tmp/app/ims/mc_scroll_bar_02.png" border=7 offset=0 direction="vertical" redraw="yes">
+		<totalSize>
+			<script>
+				getPageInfo("itemCount");
+			</script>
+		</totalSize>
+		<startIndex>
+			<script>
+				getFocusItemIndex();
+			</script>
+		</startIndex>
+	</scrollbar>
+	<itemDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 useBackgroundSurface="yes"/>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			<script>
+				if (getFocusItemIndex() == getQueryItemIndex())
+					"/tmp/app/ims/mc_focus.png";
+				else
+					"";
+			</script>
+		</image>
+		<image offsetXPC=2 offsetYPC=15 widthPC=6.0 heightPC=70 backgroundColor=-1:-1:-1>
+			<script>
+				getStringArrayAt(itemImageArray , -1);
+			</script>
+		</image>
+		<text offsetXPC=11 offsetYPC=0 widthPC=88 heightPC=100 fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>
+				getStringArrayAt(itemTitleArray, -1);
+			</script>
+		</text>
+	</itemDisplay>
+	<onUserInput>
+		input = currentUserInput();
+		major = getPageInfo("majorContext");
+		print("*************************", input);
+		ret = "false";
+		if (input == "guide")
+		{
+			playItemURL(-1, 1);
+			postMessage("return");
+			ret = "true";
+		}
+		else if (input == "video_frwd") {
+			doModalRSS("/tmp/app/ims/mc-schedule.rss");
+			ret = "true";
+		}
+		else if (input == "video_ffwd") {
+			idx = getFocusItemIndex();
+			itemTitle = getStringArrayAt(itemTitleArray, idx);
+			itemLink = getStringArrayAt(itemLinkArray, idx);
+			itemType = getStringArrayAt(itemTypeArray, idx);
+			itemURL = getStringArrayAt(itemURLArray, idx);
+			itemProtocol = getStringArrayAt(itemProtocolArray, idx);
+			if (itemType != "folder" &amp;&amp; itemType != "playlist" &amp;&amp; itemProtocol != "none" &amp;&amp; itemProtocol != "ftp") {
+				if (itemType == "udpxy")
+					currentUrlForSchedule = "http://"+udphostOption+"/udp/"+itemLink;
+				else if (itemType == "rssex")
+					currentUrlForSchedule = "http://127.0.0.1/cgi-bin/translate?stream,"+itemProtocol+"://"+itemLink;
+				else
+					currentUrlForSchedule = itemProtocol+"://"+itemLink;
+				setEnv("MC_TITLE", itemTitle);
+				setEnv("MC_URL", itemURL);
+				setEnv("MC_PLAYURL", currentUrlForSchedule);
+				doModalRSS("/tmp/app/ims/mc-addschedule.rss");
+				ret = "true";
+			}
+		}
+		else if (input == "left" || input == "return") {
+			if ( history &gt;= 0 ) {		
+				currentLink = getStringArrayAt(historyLink, history);
+				currentPath = getStringArrayAt(historyPath, history);
+				historyItem = getStringArrayAt(historyFocus, history);				
+				historyFocus = deleteStringArrayAt(historyFocus, history);
+				historyLink = deleteStringArrayAt(historyLink, history);
+				historyPath  = deleteStringArrayAt(historyPath, history);
+				history -= 1;
+				refreshType = 1;
+				setRefreshTime(1);
+				ret = "true";
+			} else if (input != "return") {
+				ret = "true";
+			}			
+		}
+		else if (input == "right" || input == "video_play" || input == "four") {
+			idx = getFocusItemIndex();
+			itemProtocol = getStringArrayAt(itemProtocolArray, idx);
+			itemType = getStringArrayAt(itemTypeArray, idx);
+			if (stdvideoOption != "on" &amp;&amp; itemType == "playlist" &amp;&amp; plstd != "yes") {
+				executeScript("commandOpenFullWindow");
+			} else if (plstd == "yes") {
+				executeScript("commandOpenVideo");
+			} else if (stdvideoOption == "on" || itemProtocol == "ftp" || (itemProtocol == "none" &amp;&amp; itemType != "list")) {
+				setAction = 0;
+				techInfo = null;
+				currentView = 1;
+				executeScript("commandOpen");
+			}
+			else
+				executeScript("commandOpenFullWindow");
+			ret = "true";
+		}
+		else if (input == "edit" || input == "nine") {
+			executeScript("addLink");
+			ret = "true";
+		}
+		else if (input == "one" || input == "two") {
+			currentSection = input;
+			executeScript("commandSection");
+			ret = "true";
+		}
+		else if (input == "three") {
+			refreshType = 2;
+			setRefreshTime(1);
+			ret = "true";
+		}
+		else if (input == "six" || input == "setup") {
+			idx = getFocusItemIndex();
+			itemType = getStringArrayAt(itemTypeArray, idx);
+			itemEPG = getStringArrayAt(itemEPGArray, idx);
+			if (itemType == "playlist" &amp;&amp; itemEPG != null &amp;&amp; itemEPG != "") {
+				doModalRSS(itemEPG);
+			} else {
+				doModalRSS("/tmp/app/ims/mc-options.rss");
+				executeScript("loadOption");
+			}
+			ret = "true";
+		}
+		else if (input == "seven" &amp;&amp; currentProtocol == "ftp") {
+			idx = getFocusItemIndex();
+			itemType = getStringArrayAt(itemTypeArray, idx);
+			if(itemType != "folder") {
+				itemTitle = getStringArrayAt(itemTitleArray, idx);
+				itemURL = getStringArrayAt(itemURLArray, idx);
+				itemLink = getStringArrayAt(itemLinkArray, idx);
+				itemProtocol = getStringArrayAt(itemProtocolArray, idx);
+				setEnv("MC_TITLE", itemTitle);
+				setEnv("MC_URL", itemURL);
+				setEnv("MC_PLAYURL", itemProtocol+"://"+itemLink);
+				doModalRSS("/tmp/app/ims/mc-adddownload.rss");
+			}
+			ret = "true";
+		}
+		else if (input == "eight") {
+			doModalRSS("/tmp/app/ims/dlman.rss");
+			ret = "true";
+		}
+		else if (input == "pagedown") {
+			idx = getFocusItemIndex();
+			idx -= -12;
+			if (idx &gt;= itemSize)
+				idx = itemSize - 1;
+			setFocusItemIndex(idx);
+			setItemFocus(idx);
+			redrawDisplay("item");
+			ret = "true";
+		}
+		else if (input == "pageup") {
+			idx = getFocusItemIndex();
+			idx -= 12;
+			if (idx &lt; 0)
+				idx = 0;
+			setFocusItemIndex(idx);
+			setItemFocus(idx);
+			redrawDisplay("item");
+			ret = "true";
+		}
+		else if (input == "five") {
+			if (storageSize &gt; 0)	{
+				storage += 1;
+				if (storage == storageSize)
+					storage = 0;
+				storagePath = getStringArrayAt(storagePathArray, storage);
+				writeStringToFile(storageConfig, storagePath);
+				techInfo = null;
+				redrawDisplay();
+			}
+			ret = "true";
+		}
+		else if (input == "video_search")
+			ret = "true";
+		else if (input == "video_frwd" || input == "video_ffwd")
+			if (currentPlayProtocol == "none" || currentPlayProtocol == "http" || currentPlayProtocol == "ftp")
+				;
+			else
+				ret = "true";
+		else if (input == "video_record" || input == "zero") {
+			idx = getFocusItemIndex();
+			setAction = 1;
+			currentView = 0;
+			executeScript("commandOpen");
+			redrawDisplay();
+			ret = "true";
+		}
+		ret;
+	</onUserInput>
+</mediaDisplay>
+
+<loadOption>
+	dlok = loadXMLFile(mediaServer + "option/");
+	if (dlok != null) {
+		stdvideoOption = getXMLText("option", 0, "stdvideo");
+		viewOption = getXMLText("option", 0, "view");
+		udphostOption = getXMLText("option", 0, "udphost");
+	}
+</loadOption>
+
+<commandSection>
+	if (currentSection == "one")
+		currentLink = "/usr/local/etc/playlist/";
+	else
+		currentLink = "/tmp/ramfs/volumes/";
+	currentPath = "/";
+	historyItem = 0;
+	historyLink = null;
+	historyFocus = null;
+	historyPath = null;
+	history = -1;
+	refreshType = 1;
+	setRefreshTime(1);
+</commandSection>
+
+<commandOpen>
+	itemTitle = getStringArrayAt(itemTitleArray, idx);
+	itemLink = getStringArrayAt(itemLinkArray, idx);
+	itemType = getStringArrayAt(itemTypeArray, idx);
+	itemSubType = getStringArrayAt(itemSubTypeArray, idx);
+	itemURL = getStringArrayAt(itemURLArray, idx);
+	itemImage = getStringArrayAt(itemImageArray, idx);
+	itemProtocol = getStringArrayAt(itemProtocolArray, idx);
+	subContinue = "true";
+	if (itemSubType == "keyword") {
+		ret = doModalRSS("/tmp/app/ims/mc-kb.rss");
+		if (ret == null) {
+			subContinue = "false";
+		} else {
+			itemLink += urlEncode(ret);
+			itemURL += ret;
+		}
+	}
+	if (itemType == "rss") {
+		subContinue = "false";
+		if (itemLink != null &amp;&amp; itemLink != "") {
+			setEnv("MC_ARG_TITLE", itemTitle);
+			setEnv("MC_ARG_LINK", itemLink);
+			ret = doModalRSS(itemLink);
+		}
+	}
+	if (subContinue == "true") {
+		if (itemType == "list") {
+			subContinue = "false";
+			dlok = loadXMLFile(RSSMedia+itemLink);
+			if (dlok != null) {
+				setAction = 0;
+				itemType = "stream";
+				itemProtocol = "none";
+				itemLink = "/tmp/videopls.m3u";
+				itemURL = null;
+				strUrlArray = null;		
+				listSize = getXMLElementCount("playlist", "item");
+				if(listSize &gt; 0) {
+					listCount = 0;
+					while(1) {
+						if(listSize == 1) {
+							link = getXMLText("playlist", "item", "link");
+							type = getXMLText("playlist", "item", "type");
+							proto = getXMLText("playlist", "item", "protocol");
+						} else {
+							link = getXMLText("playlist", "item", itemCount, "link");
+							type = getXMLText("playlist", "item", itemCount, "type");
+							proto = getXMLText("playlist", "item", itemCount, "protocol");
+						}
+						if (type == "udpxy")
+							urlPlay = "http://"+udphostOption+"/udp/"+link;
+						else if (proto == "none")
+							urlPlay = link;
+						else if (proto == "http")
+							urlPlay = proto+"://"+link;
+						else
+							urlPlay = mediaServer+proto+"/"+link;
+						strUrlArray = pushBackStringArray(strUrlArray, urlPlay);
+						listCount += 1;
+						if(listCount == listSize) break;
+					}
+					subContinue = "true";
+				}
+				writeStringToFile(itemLink, strUrlArray);
+			}
+		}
+		if (subContinue == "true") {
+			if(itemType == "folder" || itemType == "playlist") {		
+				historyLink = pushBackStringArray(historyLink, currentLink);
+				historyFocus = pushBackStringArray(historyFocus, idx);
+				historyPath = pushBackStringArray(historyPath, currentPath);
+				history += 1;
+				currentLink = itemLink;
+				currentPath = itemURL;
+				currentProtocol = itemProtocol;
+				historyItem = 0;
+				refreshType = 1;
+				setRefreshTime(1);
+			} else if ( itemType == "image" ) {
+				if ( itemProtocol == "ftp" )
+					photoUrl = mediaServer + itemProtocol + "/" + itemLink;
+				else
+					photoUrl = itemProtocol + "://" + itemLink;
+				setEnv("MC_URL", photoUrl);
+				doModalRSS("/tmp/app/ims/mc-photo.rss");
+			} else if ( itemType == "text" ) {
+				textUrl = mediaServer + "text/" + itemProtocol + "://" + itemLink;
+				setEnv("MC_URL", textUrl);
+				doModalRSS("/tmp/app/ims/mc-text.rss");
+			} else if ( itemPlayURL != "" &amp;&amp; (setAction == 0 || itemRecordURL != "")) {
+				setRefreshTime(-1);
+				elapsedTime = "00:00:00";
+				AllTime = null;
+				playItemURL(-1, 1);
+				if ((itemProtocol == "none" || itemType == "rssex" || itemProtocol == "ftp") &amp;&amp; setAction == 1) setAction == 0;
+				startVideo = 1;
+				currentPlayTitle = itemTitle;
+				currentPlayRealURL = itemURL;
+				currentPlayProtocol = itemProtocol;
+				currentPlayStreamTitle = null;
+				currentPlayStream = null;
+				currentPlay = idx;
+				currentNoMeta = 0;
+				currentAction = setAction;
+				currentPlayImage = itemImage;
+				checkInfoElapsed = 5;
+				currentPlayLink = itemLink;
+				currentType = itemType;
+				refreshType = 0;
+				if (currentType == "udpxy" &amp;&amp; currentAction == 0)
+					currentPlayURL = "http://"+udphostOption+"/udp/"+currentPlayLink;
+				else if (currentType == "udpxy" &amp;&amp; currentAction == 1)
+					currentPlayURL = mediaServer+"rec/http/"+udphostOption+"/udp/"+currentPlayLink;
+				else if (currentType == "rssex" &amp;&amp; currentAction == 0)
+					currentPlayURL = "http://127.0.0.1/cgi-bin/translate?stream,"+currentPlayProtocol+"://"+currentPlayLink;
+				else if (currentPlayProtocol == "none" &amp;&amp; currentAction == 0)
+					currentPlayURL = currentPlayLink;
+				else if (currentPlayProtocol == "http" &amp;&amp; currentAction == 0)
+					currentPlayURL = currentPlayProtocol+"://"+currentPlayLink;
+				else if (currentAction == 1)
+					currentPlayURL = mediaServer+"rec/"+currentPlayProtocol+"/"+currentPlayLink;
+				else
+					currentPlayURL = mediaServer+currentPlayProtocol+"/"+currentPlayLink;
+				setRefreshTime(1);
+			}
+		}
+	}
+</commandOpen>
+
+<commandOpenVideo>
+	refreshType = 0;
+	refreshTime = -1;
+	setRefreshTime(-1);
+	playItemURL(-1, 1);
+	elapsedTime = "00:00:00";
+	AllTime = null;
+	startVideo = 0;
+	currentPlayTitle = null;
+	currentPlayRealURL = null;
+	currentPlayURL = null;
+	currentPlayImage = null;
+	currentPlayProtocol = null;
+	currentPlayStreamTitle = null;
+	currentPlayStream = null;
+	currentPlay = -1;
+	currentRecordURL = null;
+	checkInfoElapsed = -1;
+	techInfo = null;
+	idx = getFocusItemIndex();
+	itemURL = getStringArrayAt(itemURLArray, idx);
+	itemType = getStringArrayAt(itemTypeArray, idx);
+	itemLink = getStringArrayAt(itemLinkArray, idx);
+	setArray = null;
+	if (itemType == "folder" || itemType == "playlist")	{
+		setEnv("MC_PLAYLIST", itemLink);
+		setEnv("MC_URL", "none");
+	} else {
+		setEnv("MC_PLAYLIST", currentLink);
+		setEnv("MC_URL", itemURL);
+	}
+	doModalRSS("/tmp/app/ims/mc-video.rss");
+</commandOpenVideo>
+
+<commandOpenFullWindow>
+	refreshType = 0;
+	refreshTime = -1;
+	setRefreshTime(-1);
+	playItemURL(-1, 1);
+	elapsedTime = "00:00:00";
+	AllTime = null;
+	startVideo = 0;
+	currentPlayTitle = null;
+	currentPlayRealURL = null;
+	currentPlayURL = null;
+	currentPlayImage = null;
+	currentPlayProtocol = null;
+	currentPlayStreamTitle = null;
+	currentPlayStream = null;
+	currentPlay = -1;
+	currentRecordURL = null;
+	checkInfoElapsed = -1;
+	techInfo = null;
+	idx = getFocusItemIndex();
+	itemURL = getStringArrayAt(itemURLArray, idx);
+	itemType = getStringArrayAt(itemTypeArray, idx);
+	itemLink = getStringArrayAt(itemLinkArray, idx);
+	setArray = null;
+	if (itemType == "folder" || itemType == "playlist")	{
+		setEnv("MC_PLAYLIST", itemLink);
+		setEnv("MC_URL", "none");
+	} else {
+		setEnv("MC_PLAYLIST", currentLink);
+		setEnv("MC_URL", itemURL);
+	}
+	doModalRSS("/tmp/app/ims/mc-tv.rss");
+</commandOpenFullWindow>
+
+<addLink>
+	techInfo = null;
+	mcFile = "/usr/local/etc/playlist/mc-link.m3u";
+	mcLinkArray = readStringFromFile(mcFile);
+	idx = getFocusItemIndex();
+	itemURL = getStringArrayAt(itemURLArray, idx);
+	itemProtocol = getStringArrayAt(itemProtocolArray, idx);
+	if(itemProtocol == "none")
+		itemURL = "/usr/local/etc/playlist" + itemURL;
+	if(currentPath == "/") {
+		count = 0;
+		while(1) {
+			mcLink = getStringArrayAt(mcLinkArray, count);
+			if(mcLink == null)
+				break;
+			else if (mcLink == itemURL)	{
+				mcLinkArray = deleteStringArrayAt(mcLinkArray, count);
+				break;
+			}
+			count += 1;
+		}
+		if (mcLink == itemURL) {
+			writeStringToFile(mcFile, mcLinkArray);
+			techInfo = MC_REMOVED;
+		} else
+			techInfo = MC_FAILED;
+	} else {
+		count = 0;
+		while(1) {
+			mcLink = getStringArrayAt(mcLinkArray, count);
+			if(mcLink == null || mcLink == itemURL)
+				break;
+			count += 1;
+		}
+		if (mcLink != itemURL) {
+			mcLinkArray = pushBackStringArray(mcLinkArray, itemURL);
+			writeStringToFile(mcFile, mcLinkArray);
+			techInfo = MC_ADDED;
+		}
+		else
+			techInfo = MC_EXISTS;
+	}
+	redrawDisplay();
+</addLink>
+
+<item_template>
+	<onClick>
+		idx = getFocusItemIndex();
+		setAction = 0;
+		techInfo = null;
+		currentView = 0;
+		executeScript("commandOpen");
+		null;
+	</onClick>
+</item_template>
+
+<channel>
+	<title>Mediacenter - multimedia browser</title>
+	<link>/tmp/app/ims/mc-browser.rss</link>	
+	<itemSize>
+		<script>
+			itemSize;
+		</script>
+	</itemSize>
+</channel>
+</rss>

@@ -1,0 +1,7 @@
+[iconhack]
+	revision = 2
+	title = "IconBIT hack"
+	role = package
+	files = "bin/iconhack"
+	require = "busybox"
+	size = 40

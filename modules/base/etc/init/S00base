@@ -52,8 +52,10 @@ case "$1" in
 	fi
 	if grep -q '/usr/share/bin/boot_fw' $rcs ; then
 		sed -i '/# bin.squash hack/{N;N;d}' $rcs
-		cp -a $rc/S04sskin.sh $etc/rc.init/
+		cp -a $rc/S05sskin.sh $etc/rc.init/
 	fi
+
+	[ -f $rc/S04sskin.sh ] && mv $rc/S04sskin.sh $rc/S05sskin.sh
 
 	sed -i '/# rc.init patch/{N;d}' $rcs
 

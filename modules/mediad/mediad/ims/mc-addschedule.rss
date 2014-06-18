@@ -1,0 +1,225 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+##################################################################################
+# © IconBIT 2012                                                                 #
+##################################################################################
+-->
+
+<onEnter>
+	errorMessage = null;
+	addTitle = getEnv("MC_TITLE");
+	addUrl = getEnv("MC_URL");
+	addRealUrl = getEnv("MC_PLAYURL");
+	locale = readStringFromFile("/tmp/app/REL_LOCALE");
+	if (locale == "ru")	{
+		pageTitle = "Добавление задания";
+		errAddText = "Ошибка при добавлении, проверьте вводимые данные!";
+	} else {
+		pageTitle = "Add schedule";
+		errAddText = "Add failed!";
+	}
+	dlok = loadXMLFile("http://127.0.0.1:9997/time/");
+	if (dlok != null) {
+		time1 = getXMLText("time", 0, "time1");
+		time2 = getXMLText("time", 0, "time2");
+	}
+	setFocusItemIndex(0);
+	setItemFocus(0);
+	redrawDisplay();
+</onEnter>
+
+<onExit>
+	unsetEnv("MC_TITLE");
+	unsetEnv("MC_URL");
+	unsetEnv("MC_PLAYURL");	
+</onExit>
+
+<mediaDisplay name=onePartView forceRedrawItems=yes viewAreaXPC=20 viewAreaYPC=30 viewAreaWidthPC=60 viewAreaHeightPC=40 sideColorRight=-1:-1:-1 sideColorLeft=-1:-1:-1 sideColorTop=-1:-1:-1 sideColorBottom=-1:-1:-1 backgroundColor=-1:-1:-1  focusBorderColor=-1:-1:-1 unFocusBorderColor=-1:-1:-1 itemBackgroundColor=-1:-1:-1 showHeader="no" showDefaultInfo="no" itemPerPage=7 itemWidthPC=96 itemXPC=2 itemHeightPC=12 itemImageWidthPC=0 itemImageHeightPC=0 itemYPC=15 itemImageXPC=0 itemImageYPC=0 imageFocus=null DoAnimation="yes" AnimationType=2 AnimationStep=26 AnimationDelay=1 BackgroundDark="no" idleImageXPC=83.12 idleImageYPC=89.58 idleImageWidthPC=3.1 idleImageHeightPC=5.5>
+	<idleImage> image/POPUP_LOADING_01.png </idleImage>
+	<idleImage> image/POPUP_LOADING_02.png </idleImage>
+	<idleImage> image/POPUP_LOADING_03.png </idleImage>
+	<idleImage> image/POPUP_LOADING_04.png </idleImage>
+	<idleImage> image/POPUP_LOADING_05.png </idleImage>
+	<idleImage> image/POPUP_LOADING_06.png </idleImage>
+	<idleImage> image/POPUP_LOADING_07.png </idleImage>
+	<idleImage> image/POPUP_LOADING_08.png </idleImage>
+	<backgroundDisplay name=mcAddSchedule>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>/tmp/app/ims/mc_chbglarge.png</image>
+	</backgroundDisplay>
+	<text align=center offsetXPC=0 offsetYPC=1 widthPC=100 heightPC=12 fontSize=16 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+		<script>pageTitle;</script>
+	</text>
+	<text redraw=yes align=left offsetXPC=3 offsetYPC=88 widthPC=96 heightPC=10 lines=1 fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=200:0:0>
+		<script>errorMessage;</script>
+	</text>
+	<itemDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 useBackgroundSurface=yes />
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			<script>
+				url = null;
+				if (getFocusItemIndex() == getQueryItemIndex())
+					url = "/tmp/app/ims/mc_focus_large.png";
+				url;
+			</script>
+		</image>
+		<text offsetXPC=2 offsetYPC=5 widthPC=50 heightPC=90 align=left fontSize=14 backgroundColor=-1:-1:-1>
+			<foregroundColor>
+				<script>
+					id = getItemInfo("id");
+					if(id == "add" || id == "cancel")
+						"155:155:0";
+					else
+						"255:255:255";
+				</script>
+			</foregroundColor>
+			<script>
+				title = getItemInfo("title_"+locale);
+				if(title == null) title = getItemInfo("title");
+				title;
+			</script>
+		</text>
+		<text offsetXPC=50 offsetYPC=5 widthPC=45 heightPC=90 align=right fontSize=14 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+			<script>				
+				status = null;
+				if(id == "time1")
+					status = time1;
+				else if(id == "time2")
+					status = time2;
+				else if(id == "title")
+					status = addTitle;
+				else if(id == "url")
+					status = addUrl;
+				status;
+			</script>
+		</text>
+	</itemDisplay>
+	<onUserInput>
+		input = currentUserInput();
+		major = getPageInfo("majorContext");
+		print("*************************", input);
+		ret = "false";
+		if (input == "guide" || input == "setup")
+		{
+			postMessage("return");
+			if (input == "setup")
+				postMessage("setup");
+			else
+				postMessage("guide");
+			ret = "true";
+		}
+		else if (input == "pagedown") {
+			idx = getFocusItemIndex();
+			idx -= -10;
+			if (idx &gt;= itemSize)
+				idx = itemSize - 1;
+			setFocusItemIndex(idx);
+			setItemFocus(idx);
+			redrawDisplay("item");
+			ret = "true";
+		}
+		else if (input == "pageup")	{
+			idx = getFocusItemIndex();
+			idx -= 10;
+			if (idx &lt; 0)
+				idx = 0;
+			setFocusItemIndex(idx);
+			setItemFocus(idx);
+			redrawDisplay("item");
+			ret = "true";
+		}
+		ret;
+	</onUserInput>
+</mediaDisplay>
+
+<channel>
+	<title>Mediacenter - Add schedule</title>
+	<link>/tmp/app/ims/mc-addschedule.rss</link>
+	
+<item>
+	<id>title</id>
+	<title>Title</title>
+	<title_ru>Заголовок</title_ru>
+	<onClick>
+		<script>
+			null;
+		</script>
+	</onClick>
+</item>
+
+<item>
+	<id>url</id>
+	<title>URL</title>
+	<onClick>
+		<script>
+			null;
+		</script>
+	</onClick>
+</item>
+
+<item>
+	<id>time1</id>
+	<title>Time begin</title>
+	<title_ru>Время начало</title_ru>
+	<onClick>
+		<script>
+			ret = getInput("Enter text");
+			if (ret != null) {
+				time1 = ret;
+				redrawDisplay("item");
+			}
+			null;
+		</script>
+	</onClick>
+</item>
+
+<item>
+	<id>time2</id>
+	<title>Time end</title>
+	<title_ru>Время окончания</title_ru>
+	<onClick>
+		<script>
+			ret = getInput("Enter text");
+			if (ret != null) {
+				time2 = ret;
+				redrawDisplay("item");
+			}
+			null;
+		</script>
+	</onClick>
+</item>
+	
+<item>
+	<id>add</id>
+	<title>Add schedule</title>
+	<title_ru>Добавить задание</title_ru>
+	<onClick>
+		<script>
+			q = "time1="+time1+"&amp;time2="+time2+"&amp;url="+addRealUrl+"&amp;title="+addTitle;
+			ret = getUrl("http://127.0.0.1:9997/add/?"+urlEncode(q));
+			if (ret == "hello")
+				postMessage("return");
+			else {
+				errorMessage = errAddText;
+				redrawDisplay();
+			}
+			null;
+		</script>
+	</onClick>
+</item>
+
+<item>
+	<id>cancel</id>
+	<title>Cancel</title>
+	<title_ru>Отмена</title_ru>
+	<onClick>
+		<script>
+			postMessage("return");
+			null;
+		</script>
+	</onClick>
+</item>
+	
+</channel>
+</rss>

@@ -12,4 +12,10 @@ $nav_pages[ 'get_capture'] = array (
 	'load'	=> 'capture.php'
 );
 
+$nav_pages[ 'send_command'] = array (
+	'type'	=> 'ajax',
+	'module'=> 'capture',
+	'load'	=> 'capture.php'
+);
+
 ?>

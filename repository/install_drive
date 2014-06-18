@@ -251,15 +251,6 @@ export LD_LIBRARY_PATH=/usr/local/etc/mos/lib:/lib
 
 #================ 1262 ================
 if [ "$2" = '1262' ] ; then
-	echo "*** Install patch for lib... ***"
-	wget http://www.moservices.org/patches/lib.tar.bz2 -O /tmp/lib.tar.bz2
-	cError $? "Unable to download lib.tar.bz2" /tmp/lib.tar.bz2
-
-	mkdir -p $mos/lib
-
-	tar xjf /tmp/lib.tar.bz2 -C $mos/lib/
-	cError $? "Archive /tmp/lib.tar.bz2 is corrupt!" /tmp/lib.tar.bz2
-
 	mods='base samba_1228 vsftpd_1228 trans'
 
 else
@@ -273,6 +264,20 @@ done
 
 # starting packages
 $mos/services enable
+
+# lib patch
+if [ -n "$( php -i 2>&1 1>/dev/null )" ] ; then
+	f='lib.tar.bz2'
+	wget http://www.moservices.org/patches/$f -O /tmp/$f
+	cError $? "Unable to download $f" /tmp/$f
+	tar -tjf /tmp/$f >/dev/null 2>&1
+	cError $? "Archive /tmp/$f is corrupt!" /tmp/$f
+	tar -xjf /tmp/$f -C $mos/lib/
+	cError $? "Archive /tmp/$f extract error!" /tmp/$f
+	rm -f /tmp/$f
+fi
+#
+
 $mos/services start
 
 echo 'moServices3 install complete. Please, reboot the player'

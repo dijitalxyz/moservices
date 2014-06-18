@@ -2,75 +2,122 @@
 /*	------------------------------
 	Ukraine online services 	
 	uakino.net parser
-	module v1.8
+	module v2.2
 	------------------------------
-	Created by Sashunya 2012	
+	Created by Sashunya 2014
 	wall9e@gmail.com			
 	------------------------------ */
-
 include_once ("ua_paths.inc.php");
-
+//header('Content-Type: text/html; charset=utf-8');
 set_time_limit(0);
 ob_implicit_flush ();
 
+// получение ссылки на фильм 11.11.2013
+function get_playlink($view)
+{
+	$pref = "http://api.uakino.net/ifr_uakino.php?mid=";
+	preg_match("/(\d+)\-/",$view,$ot);
+	$digit = $ot[1];
+	$parse_plink=$pref.$digit;
+	$parse_plink = file_get_contents($parse_plink);
+	preg_match("/(?<=file\"\:\")(.*?)(?=\")/",$parse_plink,$ot);
+	return $ot[0];
+}
 
 function get_data($s,$view,$header=false)
 {
 global $tmp;
 global $ua_path_link;
 global $uakino_parser_filename;
-$image="http://uakino.net/media/thumbs/306/".$view.".jpg";
-$ua_file = $view.".mp4";
-		
-		$url = "http://uakino.net/play.php?mid=".$view;
-		$fp = fopen( $url, 'r' );
-		$meta_data = stream_get_meta_data( $fp );
-		$tmps = implode( "\n", $meta_data['wrapper_data'] );
-		if( preg_match( '/[Ll]ocation:\s*(.*)/' , $tmps, $tmpss ) > 0 )
-		$url = $tmpss[1];
-		$url = dirname( $url ) .'/'. urlencode( basename( $url ));
+global $tmpdescr;
 
+$url = get_playlink($view);
 
 $doc = new DOMDocument();
 libxml_use_internal_errors( true );
 $doc->loadHTML($s);
-$metas= $doc->getElementsByTagName('meta');
-foreach( $metas as $meta )
-	{
-	/*
-	if( $meta->hasAttribute('name'))
-	if( $meta->getAttribute('name') == 'description' )
-		{
-			$descr=uakino_utf8_check($meta->getAttribute('content'));
-		}
-	*/
-	if( $meta->hasAttribute('property'))
-	if( $meta->getAttribute('property') == 'og:title' )
-		{
-			$item_name=uakino_utf8_check($meta->getAttribute('content'));
-		}
-	}	
-$title=trim($item_name);
+
 $divs= $doc->getElementsByTagName('div');
 foreach( $divs as $div )
-	if( $div->hasAttribute('id'))
-	if( $div->getAttribute('id') == 'media_description')
 	{
-		$descr=uakino_utf8_check(trim(strip_tags($div->textContent)));
+	if( $div->hasAttribute('id'))
+	{
+		if( $div->getAttribute('id') == 'media_description')
+		{
+			$descr=uakino_utf8_check(trim(strip_tags($div->textContent)));
+		} 
 	}
+	if( $div->hasAttribute('class'))
+		{
+			if( $div->getAttribute('class') == 'poster')
+				{
+					$imgs=$div->getElementsByTagName('img');
+					foreach ($imgs as $img)
+					{
+						$purl = $img->getAttribute('src');
+						$image= "/tmp/poster".rand(0, 1000);
+						shell_exec("rm -f /tmp/poster*");
+						shell_exec("wget -c -O ".$image." ".$purl);
+						$item_name = uakino_utf8_check($img->getAttribute('title'));
+					}
+				}
+//-------------------------------------------------------------------------------------
 
+			if( $div->getAttribute('class') == 'tab')
+			{
+				$uls=$div->getElementsByTagName('ul');
+				foreach ($uls as $ul)
+					{
+						if ($ul->hasAttribute('class'))
+						{
+							if( $ul->getAttribute('class') == 'media_info')
+							{
+							    
+								$short=$ul->textContent;
+								preg_match("/год\sвыхода\:\s?(.+)\n?/iu", $short, $year);
+								preg_match("/жанр\:\s?(.+)\n/iu", $short, $genre);
+								preg_match("/режиссер\:\s?(.+)\n/iu", $short, $director);
+								preg_match("/в\sролях\:\s?(.+)\n/iu", $short, $cast);
+								preg_match("/страна\:\s?(.+)\n/iu", $short, $country);
+								preg_match("/киностудия\:\s?(.+)\n/iu", $short, $company);
+								preg_match("/язык\:\s?(.+)\n/iu", $short, $language);
+								preg_match("/перевод\:\s?(.+)\n/iu", $short, $trans);
+								$ds = null;
+								$cnt=8;
+								if ($year) {$ds .= "Год: ".$year[1]."\n";  $cnt--;}
+								if ($genre) {$ds .= "Жанр: ".$genre[1]."\n";  $cnt--;}
+								if ($director) {$ds .= "Режиссер: ".$director[1]."\n";  $cnt--;}
+								if ($country) {$ds .= "Страна: ".$country[1]."\n";  $cnt--;}
+								if ($cast) {$ds .= "В ролях: ".$cast[1]."\n";  $cnt--;}
+								if ($company) {$ds .= "Компания: ".$company[1]."\n";  $cnt--;}
+								if ($trans) {$ds .= "Перевод: ".$trans[1]."\n";  $cnt--;}
+								if ($language) {$ds .= "Язык: ".$language[1]."\n"; $cnt--;}
+								for ($i=0; $i<$cnt; $i++) $ds.="\n";
+								break;
+								
+							}
+							
+						}
+					
+					}
+			}
+//-----------------------------------------------------------------------------------------			
+		}
+	}
 
 unset($doc);
 
-$temps = $title."\n".descr_split($descr)."\n".$image."\n1\n".$ua_file."\n".$url."\n".$item_name."\n0\n".$item_name."\n";
+$temps = $item_name."\n".$ds."\n".$image."\n".$purl."\n1\n".basename($url)."\n".$url."\n".$item_name."\n0\n".$item_name."\n";
 if ($header)
 {
-	return array ("title"=>$title,"image"=>$image) ;
+	return array ("title"=>$item_name,"image"=>$purl) ;
 }
 else {
 		file_put_contents( $tmp, $temps );
+		file_put_contents( $tmpdescr,descr_split($descr,65,15));
 		echo $tmp;
 	 }
+	 
 }
 
 
@@ -81,14 +128,10 @@ else {
 if(isset($_GET["file"])) {
 $view = $_GET["file"];
 $s=file_get_contents("http://uakino.net/video/".$view);
-//$s=iconv("utf-8","cp1251",$s);
-//$s=str_replace( "\r", "", $s );
-
-//file_put_contents( "/tmp/test.txt", $s );
 if (isset($_GET["fav_refresh"])) 
 			{
 				$main=get_data($s,$view,true);			
-				echo $main["title"];
+				echo $main["title"]."\n".$main["image"];
 				exit;
 			}
 echo get_data($s,$view);
@@ -97,14 +140,8 @@ echo get_data($s,$view);
 //----------------------------------------------------------------
 // функция получения списка фильмов для просмотра категорий
 //----------------------------------------------------------------
-function uakino_getlist($s)
+function uakino_preplist($s)
 {
-global $tmp;
-global $ua_path_link;
-global $uakino_rss_list_filename;
-global $uakino_rss_link_filename;
-$temps = '';
-$videocount=0;
 $doc = new DOMDocument();
 libxml_use_internal_errors( true );
 $doc->loadHTML($s);
@@ -115,8 +152,7 @@ foreach( $divs as $div )
 	if( $div->hasAttribute('class'))
 	if( $div->getAttribute('class') == 'tab media_line' || $div->getAttribute('class') == 'media_line')
 	{
-		$cats = array();
-		$films = array();
+		$links = array();
 		
 				$divs2 = $div->getElementsByTagName('div');
 				foreach( $divs2 as $div2 )
@@ -150,16 +186,17 @@ foreach( $divs as $div )
 										$preview = 	$img->getAttribute('src');
 								
 										if ($categ) {
-														$link =$ua_path_link.$uakino_rss_list_filename."?view=".$cat;
 														$preview='http://uakino.net'.$preview;
 														$type="list";
 													}
-										else 		{
-														$link = $ua_path_link.$uakino_rss_link_filename."?file=".$cat."&image=".$preview;
-														$type="link";
-													}
-										$temps.= fix_str(trim(uakino_utf8_check($titl)))."\n".$link."\n".$preview."\n".$cat."\n".$type."\n";
-										$videocount++;
+										else $type="link";
+										$links[]= array(
+											'link' => $cat,
+											'image' => $preview,
+											'type' => $type,
+											'title' => fix_str(trim(uakino_utf8_check($titl))),
+										);
+										
 									}
 							}
 						}
@@ -167,11 +204,57 @@ foreach( $divs as $div )
 				}
 	}
 unset($doc);
-$temps = $title."\n".$videocount."\n".$temps;
-//echo $temps;
+return array('links'=>$links, 'title' => $title);
+}
+
+// функция формирует выходной файл
+function uakino_getlist($s)
+{
+global $tmp;
+global $ua_path_link;
+global $uakino_rss_list_filename;
+global $uakino_rss_link_filename;
+$temps = '';
+$videocount=0;
+$links = uakino_preplist($s);
+foreach ($links['links'] as $val)
+{
+	if ($val["type"]=='list') 
+		{
+			$link =$ua_path_link.$uakino_rss_list_filename."?view=".$val["link"];
+			$preview='http://uakino.net'.$val["image"];
+			$type="list";
+		}
+	else
+		{
+			$link = $ua_path_link.$uakino_rss_link_filename."?file=".$val["link"]."&image=".$val["image"];
+			$type="link";
+		}
+	$temps.= $val["title"]."\n".$link."\n".$val["image"]."\n".$val["link"]."\n".$type."\n";
+	$videocount++;
+}
+$temps = $links['title']."\n".$videocount."\n".$temps;
 file_put_contents( $tmp, $temps );
 return $tmp;
 }
+
+function uakino_search($search, $page, $global=false)
+{
+	if($page) {
+		$nt= $page-1;
+		
+		$s=file_get_contents('http://uakino.net/search_result.php?search_id='.$search.'&search_type_id=search_videos&offset='.$nt*30);
+   }
+	else {
+		$page = 1;
+		$s=file_get_contents('http://uakino.net/search_result.php?search_id='.$search.'&search_type_id=search_videos');
+		
+    }
+	if ($global) return uakino_preplist($s);
+	else
+	return uakino_getlist($s);
+}
+
 
 //---------------------------------------------------------------------------------
 // тут парсим странцы, когда попадаем в нужную категорию, например в Зарубежные сериалы
@@ -216,26 +299,19 @@ if (isset($_GET['search'])){
 if (isset($_GET['page'])){
 	$page = $_GET['page'];
 	}
-	if($page) {
-		$nt= $page-1;
-		
-		$s=file_get_contents('http://uakino.net/search_result.php?search_id='.$search.'&search_type_id=search_videos&offset='.$nt*30);
-   }
-	else {
-		$page = 1;
-		$s=file_get_contents('http://uakino.net/search_result.php?search_id='.$search.'&search_type_id=search_videos');
-		
-    }
-
-	echo uakino_getlist($s);
+	echo uakino_search($search, $page);
 }
+
+
 
 // приводит линки UAKINO.NET к правильному виду
 function check_uakino_link($url)
 {
-preg_match( "/uakino.net\/video\/(\d*)/" , $url, $out);
+preg_match( "/uakino.net\/video\/(.*?.html)/" , $url, $out);
 if ($out) return $out[1]; else return $url;
+return $out;
 }
+
 
 
 //---------------------------------------------------------------------------------

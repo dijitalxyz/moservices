@@ -7,7 +7,8 @@
 #
 
 # get path to RootApp from rcS
-p=$( cat /usr/local/etc/rcS | sed -rn 's/^[ \t]*(.*?)RootApp DvdPlayer.*$/\1/p' )
+p=$( sed -rn 's/^[ 	]+.*?[ 	]([^ 	]*)RootApp[ 	]+DvdPlayer.*$/\1/p' /usr/local/etc/rcS )
+
 [ -z "$p" ] && exit 1
 
 [ "$p" == './' ] && p='/usr/local/bin/'
@@ -17,6 +18,7 @@ grep -Eq '/usr/local/etc/rc\.' ${p}RootApp && exit 2
 
 # check platform
 s=$( cat /sys/realtek_boards/cpu_id | sed 's/^.*\(.\)$/\1/' )
-[ "$s" == '2' ] || exit 0
+
+[ "$s" == '2' ] && exit 0
 
 exit 1

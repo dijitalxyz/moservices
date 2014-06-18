@@ -1,7 +1,7 @@
 [capture]
-	revision = 5
+	revision = 7
 	title = "Capture TV screen"
 	role = web
 	init="S36capture.sh"
 	files = "bin/bmp2jpg bin/captured etc/init/S36capture.sh www/modules/capture/"
-	size = 3756
+	size = 3912

@@ -1,0 +1,8 @@
+[libcares_1230]
+	revision = 1
+	title = "lib Cares 2.0.0"
+	role = package
+	files = "lib/libcares.so lib/libcares.so.2 lib/libcares.so.2.0.0"
+	check = "lib libcares.so.2"
+	env = 1230
+	size = 100

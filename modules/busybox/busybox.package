@@ -2,5 +2,5 @@
 	revision= 6
 	title = "BusyBox v1.18.5"
 	role = package
-	files = "bin/bunzip2 bin/busybox.1.18.5 bin/bzip2 bin/gunzip bin/gzip bin/httpd bin/mkfifo bin/passwd bin/realpath bin/tar bin/telnetd bin/sort"
+	files = "bin/bunzip2 bin/busybox.1.18.5 bin/bzip2 bin/gunzip bin/gzip bin/httpd bin/mkfifo bin/passwd bin/realpath bin/tar bin/telnetd bin/sort bin/sysctl"
 	size = 1288

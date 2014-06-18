@@ -1,0 +1,3 @@
+02c7a85ad56e0701b07fea6fcc040fbd  bin/bftpd
+941face2a033062c2d583e66c14abec2  etc/bftpd.conf
+cb88f4e1b957f763b042fc09ba0b7a5c  etc/init/S15bftpd

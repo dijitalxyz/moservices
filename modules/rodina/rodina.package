@@ -1,0 +1,6 @@
+[rodina]
+	revision = 0
+	title = "Rodina.TV"
+	role = rss
+	files = "www/modules/rodina/"
+	size = 188

@@ -5,8 +5,6 @@ require_once "tools/parser.inc";
 require_once "tools/exceptions.inc";
 require_once "tools/httpSession.inc";
 
-
-
 define('E_UNKNOW_ERROR',            0);
 define('E_INCORRECT_REQUEST',       1);
 define('E_TOO_ENOUGH_DATA',         2);
@@ -57,10 +55,9 @@ class KtvConnection {
             "User-Agent: Mozilla/5.0\r\n" .
             "Content-Type: application/x-www-form-urlencoded\r\n" .
             "Connection: Close\r\n");
-	
-		$this->session = new HttpSession();
 
- 		$this->http->cookie = $this->session->exists($this->cookieName) ?
+		$this->session = new HttpSession();
+		$this->http->cookie = $this->session->exists($this->cookieName) ?
         					$this->session->get($this->cookieName) : "";
 
 		//TODO: move it!move it!

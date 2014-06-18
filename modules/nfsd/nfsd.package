@@ -1,5 +1,5 @@
 [nfsd]
-	revision= 1
+	revision= 3
 	title = "NFS daemon"
 	role = daemon
 	init = S12nfsd

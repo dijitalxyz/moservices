@@ -4,14 +4,38 @@
 <bookmark> Guide_Menu </bookmark>
 
 <onRefresh>
-	setRefreshTime(1000);
+	setRefreshTime(-1);
+
 	DBReady = IsDBReady();
 
-	if(DBReady != LastDBReady){
-		 redrawDisplay();
-    }
-    LastDBReady = DBReady;
-    
+	if(AndroidDisable == "no")
+	{
+		AndroidReadyFlag = IsAndroidSystemReady();
+	}
+	else AndroidReadyFlag = "false";
+
+	if(DBReady != LastDBReady) redrawDisplay();
+	LastDBReady = DBReady;
+
+	/* VFD time */
+	if(mele_fw == "yes")
+
+	{
+		s = getTimeDate();
+	
+		t = getStringArrayAt(s, 3); if( t &lt; 10 ) t = "0" + t; d = t + ":";
+		t = getStringArrayAt(s, 4); if( t &lt; 10 ) t = "0" + t; d = d + t + " ";
+/*		t = getStringArrayAt(s, 5); if( t &lt; 10 ) t = "0" + t; d = d + t; 	*/
+
+		if( d != vfd_time )
+		{
+			vfd_time = d;
+			MeleVFDShow(vfd_time);
+	
+		}
+	}
+	setRefreshTime(10000);
+	null;
 </onRefresh>
 
 <onExit>
@@ -90,17 +114,61 @@
     <popupDialog>
       <mediaDisplay>
 	<onEnter>
-
 	popupHeader = "$[POWER_OFF]";
 	popupOptionSize = 2;
 	popupOptions = null;
 	popupOptions = pushBackStringArray(popupOptions, "$[YES]");
 	popupOptions = pushBackStringArray(popupOptions, "$[NO]");
 	popupOptionFocus = "$[NO]"
-
 	</onEnter>
       </mediaDisplay>
     </popupDialog>
+
+
+    <popupDialog>
+      <mediaDisplay>
+	<onEnter>
+	popupHeader = "$[IMS_ANDROID]";
+	popupOptionSize = 1;
+	popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+	popupMessageSize = 1;
+	popupOptionWide = 1;
+	popupMessages = "$[LOADING_ANDROID]";
+	popupOptionFocus = "$[OK]"
+	</onEnter>
+      </mediaDisplay>
+    </popupDialog>
+
+    <popupDialog>
+      <mediaDisplay>
+	<onEnter>
+	popupHeader = "$[IMS_ANDROID]";
+	popupOptionSize = 1;
+	popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+	popupMessageSize = 1;
+	popupOptionWide = 1;
+	popupMessages = "$[LOAD_ANDROID_FAILED]";
+	popupOptionFocus = "$[OK]"
+	</onEnter>
+      </mediaDisplay>
+    </popupDialog>
+
+    <popupDialog>
+      <mediaDisplay>
+	<onEnter>
+	popupHeader = "$[IMS_ANDROID]";
+	popupOptionSize = 1;
+	popupOptions = pushBackStringArray(popupOptions, "$[OK]");
+	popupMessageSize = 1;
+	popupOptionWide = 1;
+	popupMessages = "$[ANDROID_INFO_NOTSTARTED]";
+	popupOptionFocus = "$[OK]"
+	</onEnter>
+      </mediaDisplay>
+    </popupDialog>
+
+
+
       <backgroundDisplay name=GuideMenuBackground>
 	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
 	  <script>
@@ -114,69 +182,43 @@
 	-->
       </backgroundDisplay>
 
-      <BltRows>
-	<script>
-	if(EntryTimes &lt; 2){
-		500;
-	}
-	else{
-		120;
-	}
-	</script>
-      </BltRows>
-
-      <BackgroundDark>
-	<script>
-	ret = "yes";
-	if(CurrentAP=="IMSAP"){
-		if(CurrentType=="Photo"){
-			ret = "no";
-		}else if(CurrentType=="Video"){
-			ret = "no";
-		}
-	}else if(CurrentAP=="VideoPlayback"){
-		ret = "no";
-	}else if(CurrentAP=="PhotoPlaybackAP"){
-		ret = "no";
-	}
-	</script>
-      </BackgroundDark>
-
   <!-- the entry point of the view, you can set the initial focus here -->
   <!-- you can also use postMessage to do the initial operation on the focus item -->
 
       <onEnter>
-	CurAPName = getCurrentAPName();
 	image_type = ".fsp";
-	BG_image_type = ".fsp";
 
-	CurrentAP = getEnv("EntryStatusString1");
-	CurrentType = getEnv("EntryStatusString2");
-	PlayMusic = getEnv("EntryStatusString3");
-	CurrentSubType = getEnv("EntryStatusString4");
-	CurrentSubType5 = getEnv("EntryStatusString5");
-	CurrentSubType6 = getEnv("EntryStatusString6");
-	CurrentSubType7 = getEnv("EntryStatusString7");
+        BltType = "NoBitBlt";
+
+	vfd_time = null;
 
 	dlok = loadXMLFile("/usr/local/etc/mos/iconmenu/iconmenu.conf");
 	if(dlok != null)
 	{
-		webkit_ipad = getXMLText("webkit_ipad");
+		webkit_ipad = getXMLText("config","webkit_ipad");
 		if( webkit_ipad == null || webkit_ipad == "")
 		 webkit_ipad = "no";
 
-		IsAVinDisable    = getXMLAttribute("servicesDock","AVin","disable");
-		GBrowserDisable  = getXMLAttribute("servicesDock","GBrowser","disable");
-		GMovieDisable    = getXMLAttribute("servicesDock","GMovie","disable");
-		GMusicDisable    = getXMLAttribute("servicesDock","GMusic","disable");
-		GPictureDisable  = getXMLAttribute("servicesDock","GPicture","disable");
-		FavoritesDisable = getXMLAttribute("servicesDock","Favorites","disable");
-		IMSDisable       = getXMLAttribute("servicesDock","moMenu","disable");
-		IPTVDisable      = getXMLAttribute("servicesDock","mediaCenter","disable");
-		WebKitDisable    = getXMLAttribute("servicesDock","WebKit","disable");
-		TransDisable     = getXMLAttribute("servicesDock","Transmission","disable");
-		SetupDisable     = getXMLAttribute("servicesDock","Setup","disable");
-		PowerOffDisable  = getXMLAttribute("servicesDock","PowerOff","disable");
+		mele_fw = getXMLText("config","mele");
+		if( mele_fw == null || mele_fw == "")
+		 mele_fw = "no";
+
+		IsAVinDisable    = getXMLAttribute("config","servicesDock","DTV","disable");
+		GBrowserDisable  = getXMLAttribute("config","servicesDock","GBrowser","disable");
+		GMovieDisable    = getXMLAttribute("config","servicesDock","GMovie","disable");
+		GMusicDisable    = getXMLAttribute("config","servicesDock","GMusic","disable");
+		GPictureDisable  = getXMLAttribute("config","servicesDock","GPicture","disable");
+		FavoritesDisable = getXMLAttribute("config","servicesDock","Favorites","disable");
+		MoMenuDisable    = getXMLAttribute("config","servicesDock","moMenu","disable");
+		IPTVDisable      = getXMLAttribute("config","servicesDock","mediaCenter","disable");
+		IMCDisable       = getXMLAttribute("config","servicesDock","mediaCenter2","disable");
+		WebKitDisable    = getXMLAttribute("config","servicesDock","WebKit","disable");
+		SetupDisable     = getXMLAttribute("config","servicesDock","Setup","disable");
+		PowerOffDisable  = getXMLAttribute("config","servicesDock","PowerOff","disable");
+		TransDisable     = getXMLAttribute("config","servicesDock","Transmission","disable");
+		AriaDisable      = getXMLAttribute("config","servicesDock","Aria","disable");
+ 		AndroidDisable   = getXMLAttribute("config","servicesDock","Android","disable");
+ 		WebBrowserDisable = getXMLAttribute("config","servicesDock","AndroidBrowser","disable");
 	}	
 	else
 	{
@@ -186,60 +228,73 @@
 		GMusicDisable    = "no";
 		GPictureDisable  = "no";
 		FavoritesDisable = "no";
-		IMSDisable       = "no";
+		MoMenuDisable    = "no";
 		IPTVDisable      = "no";
+		IMCDisable       = "no";
 		WebKitDisable    = "no";
 		SetupDisable     = "no";
 		PowerOffDisable  = "no";
-		TransDisable     = "no";
+		TransDisable 	 = "no";
+		AriaDisable	 = "no";
+ 		AndroidDisable   = "no";
+		WebBrowserDisable = "no";
 	}
-	if(IsAVinDisable != "yes" &amp;&amp; IsItemDisasble("IsAVinDisable") == "true")
-	 IsAVinDisable = "yes";
+
+	if(IsAVinDisable != "yes")
+	 if( IsItemDisasble("IsAVinDisable") == "true" &amp;&amp; IsItemDisasble("DtvDisable") == "true" )
+	  IsAVinDisable = "yes";
 		
 	if(FavoritesDisable != "yes" &amp;&amp; IsItemDisasble("IsFavoritesDisable") == "true")
 	 FavoritesDisable = "yes";
 
-	if(IMSDisable != "yes" &amp;&amp; IsItemDisasble("NetworkDisable") == "true")
-	 IMSDisable = "yes";
-
 	if(WebKitDisable != "yes" &amp;&amp; IsItemDisasble("WebKitDisable") == "true")
 	 WebKitDisable = "yes";
 
-	if(TransDisable != "yes"){
+	if(TransDisable != "yes")
+	{
 		TransDisable = "no";
 		test = readStringFromFile("/usr/local/etc/mos/trans/watch.dir");
 		if (test == null) TransDisable = "yes";
 	}
-
-/* farvoice added */
-		if(IPTVDisable != "yes"){
-			IPTVDisable = "no";
-			test = readStringFromFile("/tmp/app/REL_LOCALE");
-			if (test == null) IPTVDisable = "yes";
+	if(AriaDisable != "yes")
+	{
+		AriaDisable = "no";
+		test = readStringFromFile("/tmp/aria_run");
+		if (test == null) AriaDisable = "yes";
+	}
+ 	if(AndroidDisable != "yes")
+	{
+		if (getCurrentSetting("$[IMS_ANDROID]") == "$[OFF]" || IsItemDisasble("IsAndroidDisable") == "true")
+		{
+			AndroidDisable = "yes";
+			WebBrowserDisable = "yes";
 		}
-/* end farvoice */
-	FocusCnt = 0;
-	if(IsAVinDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(GBrowserDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(GMovieDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(GMusicDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(GPictureDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(FavoritesDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(IMSDisable == "no")		FocusCnt = FocusCnt + 1;
-	if(IPTVDisable == "no")		FocusCnt = FocusCnt + 1;
-	if(WebKitDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(TransDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(SetupDisable == "no")	FocusCnt = FocusCnt + 1;
-	if(PowerOffDisable == "no")	FocusCnt = FocusCnt + 1;
+ 	}
 
-	CurrentSel = FocusCnt / 2 ;
+	if(PowerOffDisable != "yes")
+	 if( IsItemDisasble("PowerOffDisable") == "true" &amp;&amp; IsItemDisasble("IsPowerOffDisable") != "false" )
+	  PowerOffDisable = "yes";
+
+	if(IPTVDisable == "no")
+	{
+		test = readStringFromFile("/tmp/app/ims/mc-browser.rss");
+		if (test == null) IPTVDisable = "yes";
+	}
+
+	if(IMCDisable == "no")
+	{
+		test = readStringFromFile("/tmp/app/mediacenter/share/view/video.xml");
+		if (test == null) IMCDisable = "yes";
+	}
+
+/* end pokrass */
+
+	CurrentSel = getPageInfo( "itemCount" ) / 2 ;
+
 	setParentFade(100);
 
 	setItemFocus(CurrentSel);
 	redrawDisplay();
-
-        EntryTimes = 1;
-        BltType = "NoBitBlt";
 
         DBReady = IsDBReady();
         LastDBReady = DBReady;
@@ -259,13 +314,23 @@
 		postMessage("return");
 		ret = "true";
 	}
-	else if("down" == userInput)
-	{
-		ret = "true";
-        }
-	else if (userInput == "guide")	ret = "true";
 	else if (userInput == "down")	ret = "true";
+	else if (userInput == "guide")	ret = "true";
 	else if (userInput == "edit")	ret = "true";
+	else if (userInput == "menu")	ret = "true";
+
+	else if (userInput == "display") 
+	{
+		if( IsItemDisasble("IsFavoritesDisable") != "true" )
+		{
+			APName = "IMSAP";
+			MenuType = "MyFavorites";
+			MenuLink = "rss_file://./scripts/myfavorites_list.rss";
+			menuCmd(APName, MenuType, MenuLink, BltType);
+		}
+		ret = "true";
+	}
+
 	else if (userInput == "one") 	newIndex = 0;
 	else if (userInput == "two") 	newIndex = 1;
 	else if (userInput == "three")	newIndex = 2;
@@ -279,7 +344,7 @@
 
 	if( newIndex !="-1" )
 	{
-		if( newIndex &lt; FocusCnt )
+		if( newIndex &lt; getPageInfo("itemCount") )
 		{
 			setFocusItemIndex( newIndex );
 			redrawDisplay();
@@ -305,28 +370,21 @@
         <image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=92>
           <script>
 
-	queryIndex = getQueryItemIndex();
-	focusIndex = getFocusItemIndex();
-	lastSelectedIndex = getSelectedItemIndex();
-	thumbnail = getItemInfo("media:thumbnail");
-	ItemGroup = getItemInfo("group");
-	state = getDrawingItemState();
+	query = getQueryItemIndex();
+
+	thumbnail = getItemInfo(query, "media:thumbnail");
+	ItemGroup = getItemInfo(query, "group");
+
 	if(ItemGroup == "DB"){
 		if(DBReady == "false"){
 			thumbnail = thumbnail + "_gray";
 		}
 	}
-	if (queryIndex != focusIndex){
-		thumbnail = thumbnail;
-	}
-	thumbnail = thumbnail + image_type;
-
-	thumbnail;
+	thumbnail + image_type;
 
 	  </script>
         </image>
       </itemDisplay>
-
     </mediaDisplay>
 
   <channel>
@@ -354,27 +412,27 @@
 <title>$[IMS_FILE_MANAGER]</title>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_FileManager </media:thumbnail>
 <disable>
-	<script>
-		GBrowserDisable;
-	</script>
+  <script>
+	GBrowserDisable;
+  </script>
 </disable>
 <onClick>
-	<script>
-		subStoragePath = getStoragePath("key");
-		subStoragePath = subStoragePath + "DeviceSelects.dat";
-		selectArray = readStringFromFile(subStoragePath);
-		if (selectArray == null){
-		  selectArray = pushBackStringArray(selectArray, "Grid");
- 		  selectArray = pushBackStringArray(selectArray, "All");
-  		  writeStringToFile(subStoragePath, selectArray);
-		}
-		APName = "GBrowserGridViewAP";
-		Source = "Dev";
-		ViewSel = getStringArrayAt(selectArray, 0);
-		MMType = getStringArrayAt(selectArray, 1);
-		menuCmd(APName, Source, ViewSel, MMType, BltType);
-		null;
-	</script>
+  <script>
+	subStoragePath = getStoragePath("key");
+	subStoragePath = subStoragePath + "DeviceSelects.dat";
+	selectArray = readStringFromFile(subStoragePath);
+	if (selectArray == null){
+		selectArray = pushBackStringArray(selectArray, "Grid");
+		selectArray = pushBackStringArray(selectArray, "All");
+		writeStringToFile(subStoragePath, selectArray);
+	}
+	APName = "GBrowserGridViewAP";
+	Source = "Dev";
+	ViewSel = getStringArrayAt(selectArray, 0);
+	MMType = getStringArrayAt(selectArray, 1);
+	menuCmd(APName, Source, ViewSel, MMType, BltType);
+	null;
+  </script>
 </onClick>
 </item>
 
@@ -382,71 +440,68 @@
 <title>$[GBROWSER_MOVIE]</title>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Movie </media:thumbnail>
 <disable>
-	<script>
-		GMovieDisable;
-	</script>
+  <script>
+    if( DBReady == "true" ) GMovieDisable;
+    else "yes";
+  </script>
 </disable>
 <group> DB </group>
 <onClick>
-	<script>
-		if(DBReady == "true"){
-			subStoragePath = getStoragePath("key");
-			subStoragePath = subStoragePath + "MoviesSelects.dat";
-			selectArray = readStringFromFile(subStoragePath);
-			if (selectArray == null){
-			  selectArray = pushBackStringArray(selectArray, "Grid");
-			  selectArray = pushBackStringArray(selectArray, "ByName");
-			  selectArray = pushBackStringArray(selectArray, "All");
-			  writeStringToFile(subStoragePath, selectArray);
-			}
-			APName = "GBrowserGridViewAP";
-			MMType = "Video";
-			SrcSel = "DB";
-			ViewSel = getStringArrayAt(selectArray, 0);
-			SortSel = getStringArrayAt(selectArray, 1);
-			ShowSel = getStringArrayAt(selectArray, 2);
-			menuCmd(APName, SrcSel, ViewSel, MMType, ShowSel, SortSel, BltType);
-		}
-		null;
-	</script>
+  <script>
+	subStoragePath = getStoragePath("key");
+	subStoragePath = subStoragePath + "MoviesSelects.dat";
+	selectArray = readStringFromFile(subStoragePath);
+	if (selectArray == null){
+		selectArray = pushBackStringArray(selectArray, "Grid");
+		selectArray = pushBackStringArray(selectArray, "ByName");
+		selectArray = pushBackStringArray(selectArray, "All");
+		writeStringToFile(subStoragePath, selectArray);
+	}
+	APName = "GBrowserGridViewAP";
+	MMType = "Video";
+	SrcSel = "DB";
+	ViewSel = getStringArrayAt(selectArray, 0);
+	SortSel = getStringArrayAt(selectArray, 1);
+	ShowSel = getStringArrayAt(selectArray, 2);
+	menuCmd(APName, SrcSel, ViewSel, MMType, ShowSel, SortSel, BltType);
+	null;
+  </script>
 </onClick>
-
 </item>
 
 <item>
 <title>$[GBROWSER_MUSIC]</title>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Music </media:thumbnail>
 <disable>
-	<script>
-		GMusicDisable;
-	</script>
+  <script>
+    if( DBReady == "true" ) GMusicDisable;
+    else "yes";
+  </script>
 </disable>
 <group> DB </group>
 <onClick>
-	<script>
-		if(DBReady == "true"){
-			subStoragePath = getStoragePath("key");
-			subStoragePath = subStoragePath + "MusicSelects.dat";
-			selectArray = readStringFromFile(subStoragePath);
-			if (selectArray == null){
-			  selectArray = pushBackStringArray(selectArray, "List");
-	  		  selectArray = pushBackStringArray(selectArray, "ByRectPlay");
-	  		  selectArray = pushBackStringArray(selectArray, "All");
-	  		  writeStringToFile(subStoragePath, selectArray);
-			}
-			APName = "GBrowserGridViewAP";
-			MMType = "Music";
-			SrcSel = "DB";
-			ViewSel = getStringArrayAt(selectArray, 0);
-			SortSel = getStringArrayAt(selectArray, 1);
-			ShowSel = getStringArrayAt(selectArray, 2);
-			if(ShowSel != "All"){
-				SortSel = "None";
-			}
-			menuCmd(APName, SrcSel, ViewSel, MMType, ShowSel, SortSel, BltType);
-		}
-		null;
-	</script>
+  <script>
+	subStoragePath = getStoragePath("key");
+	subStoragePath = subStoragePath + "MusicSelects.dat";
+	selectArray = readStringFromFile(subStoragePath);
+	if (selectArray == null){
+		selectArray = pushBackStringArray(selectArray, "List");
+		selectArray = pushBackStringArray(selectArray, "ByRectPlay");
+		selectArray = pushBackStringArray(selectArray, "All");
+		writeStringToFile(subStoragePath, selectArray);
+	}
+	APName = "GBrowserGridViewAP";
+	MMType = "Music";
+	SrcSel = "DB";
+	ViewSel = getStringArrayAt(selectArray, 0);
+	SortSel = getStringArrayAt(selectArray, 1);
+	ShowSel = getStringArrayAt(selectArray, 2);
+	if(ShowSel != "All"){
+		SortSel = "None";
+	}
+	menuCmd(APName, SrcSel, ViewSel, MMType, ShowSel, SortSel, BltType);
+	null;
+  </script>
 </onClick>
 </item>
 
@@ -454,58 +509,57 @@
 <title>$[GBROWSER_PICTURE]</title>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Photo </media:thumbnail>
 <disable>
-	<script>
-		GPictureDisable;
-	</script>
+  <script>
+    if( DBReady == "true" ) GPictureDisable;
+    else "yes";
+  </script>
 </disable>
 <group> DB </group>
 <onClick>
-	<script>
-		if(DBReady == "true"){
-			subStoragePath = getStoragePath("key");
-			subStoragePath = subStoragePath + "PictureSelects.dat";
-			selectArray = readStringFromFile(subStoragePath);
-			if (selectArray == null){
-			  selectArray = pushBackStringArray(selectArray, "Grid");
-	  		  selectArray = pushBackStringArray(selectArray, "ByName");
-	  		  selectArray = pushBackStringArray(selectArray, "PhotoDir");
-			  writeStringToFile(subStoragePath, selectArray);
-			}
-			APName = "GBrowserGridViewAP";
-			MMType = "Photo";
-			SrcSel = "DB";
-			ViewSel = getStringArrayAt(selectArray, 0);
-			SortSel = getStringArrayAt(selectArray, 1);
-			ShowSel = getStringArrayAt(selectArray, 2);
-			menuCmd(APName, SrcSel, ViewSel, MMType, ShowSel, SortSel, BltType);
-		}
-		null;
-	</script>
+  <script>
+	subStoragePath = getStoragePath("key");
+	subStoragePath = subStoragePath + "PictureSelects.dat";
+	selectArray = readStringFromFile(subStoragePath);
+	if (selectArray == null){
+		selectArray = pushBackStringArray(selectArray, "Grid");
+		selectArray = pushBackStringArray(selectArray, "ByName");
+		selectArray = pushBackStringArray(selectArray, "PhotoDir");
+		writeStringToFile(subStoragePath, selectArray);
+	}
+	APName = "GBrowserGridViewAP";
+	MMType = "Photo";
+	SrcSel = "DB";
+	ViewSel = getStringArrayAt(selectArray, 0);
+	SortSel = getStringArrayAt(selectArray, 1);
+	ShowSel = getStringArrayAt(selectArray, 2);
+	menuCmd(APName, SrcSel, ViewSel, MMType, ShowSel, SortSel, BltType);
+	null;
+  </script>
 </onClick>
 </item>
 
 <item>
 <title>$[ims_vt_FAV]</title>
 <disable>
-	<script>
-		FavoritesDisable;
-	</script>
+  <script>
+	FavoritesDisable;
+  </script>
 </disable>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Favorites </media:thumbnail>
 <onClick>
-	<script>
-		APName = "IMSAP";
-		MenuType = "MyFavorites";
-		MenuLink = "rss_file://./scripts/myfavorites_list.rss";
-		menuCmd(APName, MenuType, MenuLink, BltType);
+  <script>
+	APName = "IMSAP";
+	MenuType = "MyFavorites";
+	MenuLink = "rss_file://./scripts/myfavorites_list.rss";
+	menuCmd(APName, MenuType, MenuLink, BltType);
 
-		null;
-	</script>
+	null;
+  </script>
 </onClick>
 </item>
 
 <item>
-<title>$[IMS_IPTV]</title>
+<title>Media Center</title>
 <disable>
 	<script>
 		IPTVDisable;
@@ -520,6 +574,31 @@
 	menuCmd(APName, MenuType, MenuLink, BltType);
 	null;
   </script>
+</onClick>
+</item>
+
+<item>
+<title>Media Center v2</title>
+<disable>
+	<script>
+		IMCDisable;
+	</script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_MediaCenter </media:thumbnail>
+<onClick>
+	<script>
+		status = readStringFromFile("/tmp/share/appInit.dat");
+		if (status == "yes") {
+			APName = "IMSAP";
+			MenuType = "TopMenu";
+			MenuLink = "http://127.0.0.1:8881/?cmd=rss&amp;url=home";
+			menuCmd(APName, MenuType, MenuLink, BltType);
+		} else {
+			rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+			doModalRss(rss, "mediaDisplay", "popupDialog", 0);
+		}
+		null;
+	</script>
 </onClick>
 </item>
 
@@ -560,12 +639,31 @@
 </onClick>
 </item>
 
+<item>
+<title>Aria</title>
+<disable>
+    <script>
+	AriaDisable;
+    </script>
+</disable>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/aria </media:thumbnail>
+<onClick>
+	<script>
+		APName = "IMSAP";
+		MenuType = "TopMenu";
+		MenuLink = "http://127.0.0.1/?page=rss_aria";
+		menuCmd(APName, MenuType, MenuLink, BltType);
+		null;
+	</script>
+</onClick>
+</item>
+
 
 <item>
 <title>moServices</title>
 <disable>
 	<script>
-		IMSDisable;
+		MoMenuDisable;
 	</script>
 </disable>
 <media:thumbnail> /usr/local/etc/mos/iconmenu/images/moMenu </media:thumbnail>
@@ -579,6 +677,73 @@
 	</script>
 </onClick>
 </item>
+
+
+<item>
+<title>$[IMS_ANDROID]</title>
+<group>ANDROID</group>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Android </media:thumbnail>
+<disable>
+  <script>
+	AndroidDisable;
+  </script>
+</disable>
+<onClick>
+  <script>
+	if(AndroidReadyFlag == "true"){
+		APName = "AndroidAP";
+    		menuCmd(APName);
+	}
+	else if (getCurrentSetting("$[IMS_ANDROID]") == "$[OFF]") {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 4);
+	}
+	else if (AndroidReadyFlag == "false") {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 2);
+	}
+	else {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 3);
+	}
+	null;
+  </script>
+</onClick>
+</item>
+
+<item>
+<title>Android $[IMS_WEB_BROWSER]</title>
+<group>ANDROID</group>
+<media:thumbnail> /usr/local/etc/mos/iconmenu/images/Home_Android_WebBrowser </media:thumbnail>
+<disable>
+  <script>
+	WebBrowserDisable;
+  </script>
+</disable>
+<onClick>
+  <script>
+	if(AndroidReadyFlag == "true"){
+		APName = "AndroidAP";
+		type = "WebBrowser";
+		menuCmd(APName, type);
+	}
+	else if (getCurrentSetting("$[IMS_ANDROID]") == "$[OFF]") {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 4);
+	}
+	else if (AndroidReadyFlag == "false") {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 2);
+	}
+	else {
+		rss = "rss_file://./setup_menu/scripts/dynamicPopup.rss";
+		doModalRss(rss, "mediaDisplay", "popupDialog", 3);
+	}
+    	null;
+	</script>
+</onClick>
+</item>
+
 
 <item>
 <title>$[SETUP_MENU]</title>
@@ -594,7 +759,6 @@
 		MenuType = "TopMenu";
 		MenuLink = "rss_file://./setup_menu/scripts/setup.rss";
 		menuCmd(APName, MenuType, MenuLink, BltType);
-
 		null;
 	</script>
 </onClick>

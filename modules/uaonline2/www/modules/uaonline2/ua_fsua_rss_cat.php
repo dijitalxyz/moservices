@@ -1,9 +1,9 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	fs.ua RSS category module v1.4
+	fs.ua RSS category module v1.9
 	------------------------------
-	Created by Sashunya 2013
+	Created by Sashunya 2014
 	wall9e@gmail.com			
 	Some code was used from 
 	Farvoice & others 
@@ -24,7 +24,8 @@ class ua_rss_cat extends ua_rss_cat_const2
 	global $ua_path_link;
 	global $fsua_parser_cat_filename;
 		// получаем категории и их ссылки для FS.UA	
-		$s = file_get_contents("http://fs.ua");
+		$url="http://brb.to";
+		$s = file_get_contents($url);
 		$cats=array();
 		$doc = new DOMDocument();
 		libxml_use_internal_errors( true );
@@ -32,25 +33,24 @@ class ua_rss_cat extends ua_rss_cat_const2
 		$divs= $doc->getElementsByTagName('div');
 		foreach( $divs as $div )
 				if( $div->hasAttribute('class'))
-				if( $div->getAttribute('class') == 'b-category-menu b-subsection-icons m-video ' )
 				{
-				   $divs2= $div->getElementsByTagName('div');
-				   foreach( $divs2 as $div2 )
-				   if( $div2->hasAttribute('class'))
-				   if( $div2->getAttribute('class') == 'b-subcategories' )
-					{
-						$as = $div2->getElementsByTagName('a');
+				$div_class=$div->getAttribute('class');
+				if( preg_match("/b-header__menu-section m-header__menu-section_type_(video|audio)/",$div_class))
+				{
+					$as = $div->getElementsByTagName('a');
 						foreach( $as as $a )
 						{
-							$link = $a->getAttribute('href');
-							$name = $a->textContent;
-							$cats[trim($name)." ЗАРУБЕЖНЫЕ"]=urlencode($link.'fl_foreign/');
-							$cats[trim($name)." НАШИ"]=urlencode($link.'fl_our/');
+							if ($a->getAttribute('class') == "b-header__menu-subsections-item")
+							{
+								$link = $url.$a->getAttribute('href');
+								$name = $a->textContent;
+								$cats[trim($name)." ЗАРУБЕЖНЫЕ"]=$link.'fl_foreign/';
+								$cats[trim($name)." НАШИ"]=$link.'fl_our/';
+							}
 						}
-						break;
-					}
-				 break;
 				}
+				}
+	
 	return $cats; 
 	}
 		
@@ -69,9 +69,11 @@ class ua_rss_cat extends ua_rss_cat_const2
 		</image>
 	
 		<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
-			Выход - RETURN
+			Выход
 		</text>
-	
+		<image redraw="no" offsetXPC="17" offsetYPC="90" widthPC="3" heightPC="6">
+			<?=$ua_images_path?>ua_back.png
+		</image>
 	<?php	
 		
 	}
@@ -136,10 +138,12 @@ class ua_rss_cat extends ua_rss_cat_const2
 	$categ=$this->categories();
 	foreach ($categ as $key=>$cat)
 	{
+		if (preg_match("/\/video\//",$cat)) $fold= "ua_folder.png";
+		if (preg_match("/\/audio\//",$cat)) $fold= "ua_folder_audio.png";
 		echo "	<item>\n";
 		echo "			<title>".$key."</title>\n";
-		echo "			<link>".$ua_path_link.$fsua_rss_list_filename."?view=".$cat."&amp;en_sort=1</link>\n"; 
-		echo "			<image>".$ua_images_path."ua_folder.png"."</image>\n";
+		echo "			<link>".$ua_path_link.$fsua_rss_list_filename."?view=".urlencode($cat)."&amp;en_sort=1&amp;name=".urlencode($key)."</link>\n"; 
+		echo "			<image>".$ua_images_path.$fold."</image>\n";
 		echo "	</item>\n";
 	}
 	

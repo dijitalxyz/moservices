@@ -1,0 +1,8 @@
+[xio_3430]
+	revision = 1
+	title = "eXended input output kernel module"
+	role = package
+	init = S001xio.sh
+	env = 3430
+	files = "etc/x_io.ko etc/init/S001xio.sh"
+	size = 40

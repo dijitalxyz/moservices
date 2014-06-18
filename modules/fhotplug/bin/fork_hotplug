@@ -15,24 +15,37 @@ export PATH=$mos/bin:$PATH
 starter() {
 	[ ! -d $mos/etc/hotplug/$1 ] && return 0
 
+	ret=0
 	for i in $mos/etc/hotplug/$1/* ; do
 		[ ! -f $i ] && continue
 		[ ! -x $i ] && continue
 		if [ -z "$2" ] ; then
 			$i
+			ret=$?
+			[ $ret -eq 13 ] && break
+
 		else
 			$i $2 &
+			ret=0
 		fi
 	done
+	return $ret
 }
 #
 # main
 #
 [ -f /tmp/hotplug.orig ] && orig=$( cat /tmp/hotplug.orig )
 [ ! -f $orig ] && orig=/sbin/hotplug
-#echo $SUBSYSTEM >>/tmp/fh__.log
+
+#echo "-------------" >>/tmp/fh__.log
+#export >>/tmp/fh__.log
+
 # before
 starter before/$SUBSYSTEM
+[ $? -eq 13 ] && exit 0
+
+#echo "-------------" >>/tmp/fh__.log
+#echo "run $orig" >>/tmp/fh__.log
 
 # run original hotplug
 [ ! -f $orig ] || $orig "$@"

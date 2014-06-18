@@ -37,12 +37,12 @@ redrawDisplay();
 	itemXPC = 3
     itemYPC = 10 
 	itemWidthPC = 90
-	itemHeightPC = 7
+	itemHeightPC = 6.9
     itemImageXPC = 0
     itemImageYPC=0
 	itemImageWidthPC = 0
     itemImageHeightPC = 0
-    itemPerPage=10
+    itemPerPage=11
 
 	
 	imageFocus = ""
@@ -71,12 +71,12 @@ redrawDisplay();
 
 <!-- itemDisplay will draw widget inside the item area, item area is decided by mediaDisplay attributes -->
 <itemDisplay>
-<image offsetXPC=5 offsetYPC=10  widthPC=6.3 heightPC=91 useBackgroundSurface=yes>
+<image offsetXPC=5 offsetYPC=10  widthPC=6.1 heightPC=91 useBackgroundSurface=yes>
         <script>
         	getItemInfo("icon");
         </script>
 </image>	
-<image offsetXPC=15 offsetYPC=10  widthPC=6.3 heightPC=91 useBackgroundSurface=yes>
+<image offsetXPC=15 offsetYPC=10  widthPC=6.1 heightPC=91 useBackgroundSurface=yes>
         <script>
         	getItemInfo("icon2");
         </script>
@@ -87,6 +87,12 @@ redrawDisplay();
         	getItemInfo("title");
         </script>
 </text>
+<text align=left fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=255:255:255
+		offsetXPC=23 offsetYPC=60 widthPC=100 heightPC=100>
+        <script>
+        	getItemInfo("text");
+        </script>
+</text>
 </itemDisplay>
 
 <onUserInput>
@@ -94,7 +100,6 @@ redrawDisplay();
 	userInput = currentUserInput();
     if ("return" == userInput)
 	{
-	handle = "false";
     }
     else if ("left" == userInput || "right" == userInput)
     {
@@ -105,6 +110,26 @@ redrawDisplay();
 		postMessage("return");
     	handle = "true";
     }
+    	else if ( "video_play" == userInput ) 
+    	{
+    		handle = "true";
+    	}
+    	else if ( "video_stop" == userInput ) 
+    	{
+    		handle = "true";
+    	}
+    	else if ( "video_pause" == userInput ) 
+    	{
+    		handle = "true";
+    	}
+    	else if ( "video_ffwd" == userInput ) 
+    	{
+    		handle = "true";
+    	}
+    	else if ( "video_frwd" == userInput ) 
+    	{
+    		handle = "true";
+    	}
 	handle;
 </onUserInput>
 
@@ -163,12 +188,13 @@ redrawDisplay();
 </item>
 
 <item>
-    <title><?= getMsg( 'iptvShowHelp' ) ?></title>
+    <title><?= getMsg( 'iptvProgramGuide' ) ?></title>
 	<icon>/usr/local/etc/mos/www/modules/iptvlist/images/display.png</icon>
 </item>
 
 <item>
 	<title><?= getMsg( 'iptvSwitchSt' ) ?></title>
+	<text><?= getMsg( 'iptvStandartPlayer' ) ?></text>
 	<icon>/usr/local/etc/mos/www/modules/iptvlist/images/option.png</icon>
 </item>
 

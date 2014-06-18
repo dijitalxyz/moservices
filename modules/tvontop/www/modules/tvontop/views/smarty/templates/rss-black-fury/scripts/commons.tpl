@@ -56,6 +56,11 @@
 {/for}
 {/function}
 
+{* No idle images *}
+{function disableIdleImages}
+    <idleImage>{$config->get(cfg_resources_home,Runtime)}img/loading/empty.png</idleImage>
+{/function}
+
 {*
     link used by the jumpToLink command
     (must be outside of the mediaDisplay item)

@@ -1,0 +1,7 @@
+0bb0311ebad8968a5b60269223f34f88  etc/init/S50aPower
+5b1891cb65428562a1bf0b71613401ab  etc/rc.init/S01aPower.sh
+64278a7ba5339dc2bf0b874d85ffd619  www/modules/apower/lang_hu.php
+f2a2bca6ff25dd01bee5e4d1105c6482  www/modules/apower/lang_ru.php
+d9c80c649e0632ad79fca7742f1b9adf  www/modules/apower/apower_sets.php
+355c1e7e22788906e22c0907ee2f36e4  www/modules/apower/def_pages.php
+643765bbd0907fd36123212717c87d9c  www/modules/apower/lang_en.php

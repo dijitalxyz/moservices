@@ -68,11 +68,10 @@
 {for $i=10 to 23}
     <idleImage>{$config->get(cfg_resources_home,Runtime)}img/progress/img000{$i}.jpg</idleImage>
 {/for}
-    
     <text offsetXPC="0.5" offsetYPC="18" widthPC="99" heightPC="81" backgroundColor="0:0:0" />
-    <text offsetXPC="1" offsetYPC="1" widthPC="98" heightPC="16" backgroundColor="255:170:0" >{$locale->msg('Loading video...')}</text>
-	<image offsetXPC="3" offsetYPC="20" widthPC="23" heightPC="50">{$config->get(cfg_resources_home,Runtime)}img/film.png</image>
-	<text offsetXPC="30"  offsetYPC="20" widthPC="60" heightPC="40" backgroundColor="0:0:0" foregroundColor="160:160:160" fontSize="14" align="justify"	lines="3" redraw="yes" >
+    <text offsetXPC="1"   offsetYPC="1"  widthPC="98" heightPC="16" backgroundColor="255:170:0" >{$locale->msg('Loading video...')}</text>
+	<image offsetXPC="3"  offsetYPC="20" widthPC="23" heightPC="50">{$config->get(cfg_resources_home,Runtime)}img/film.png</image>
+	<text offsetXPC="30"  offsetYPC="20" widthPC="60" heightPC="40" backgroundColor="0:0:0" foregroundColor="160:160:160" fontSize="14" align="left" lines="3" redraw="yes" >
  	<script>
 		envKey 		= "playedTitle";
 		executeScript("getEnvValue");
@@ -84,7 +83,6 @@
         } title;
         </script>
 	</text>
-
 </mediaDisplay>
 
 <channel>

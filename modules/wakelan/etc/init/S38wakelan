@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# description: Starts a wakelan
+#
+mos=/usr/local/etc/mos
+
+case "$1" in
+  start)
+	# waiting valid IP address
+	$mos/bin/wait_ip && exit 1
+
+	echo "Send UDP packets..."
+
+	# read config
+	[ -f $mos/etc/wakelan.conf ] && eval "$( cat $mos/etc/wakelan.conf | sed '/^$/d' )"
+
+	mac=${mac:-"00:11:22:33:44:55"}
+	bcast=${bcast:-''}
+	port=${port:-''}
+
+	# running wakelan
+	[ ! -z $mac   ] && m="-m $mac"
+	[ ! -z $bcast ] && b="-b $bcast"
+	[ ! -z $port  ] && p="-p $port"
+
+	$mos/bin/wakelan $m $b $p
+	;;
+  enable | disable | stop | restart | status)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|enable|disable}"
+esac
+
+exit $?

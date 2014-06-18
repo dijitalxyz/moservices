@@ -117,7 +117,7 @@ class RtvProvider extends LiveTvProvider {
 		$metaId = explode("_",$objectId);
 		$channelId =  $metaId[0];
 
-		$gmt   = isset($params['gmt'])   ? $params['gmt']  : null;
+		$gmt   = isset($params['pid'])   ? $params['pid']  : null;
 		$pkey   = isset($params['pkey']) ? $params['pkey'] : null;
 		$url = $this->baseUrl . "/get_url_tv?cid=$channelId";
 
@@ -328,6 +328,7 @@ class RtvProvider extends LiveTvProvider {
 
     protected function parseEpgProgram($xml) {
         $program = new MediaObject((int)$xml->begin, self::$OBJ_PROGRAMM,(string) $xml->title);
+        $program->setParam('pid', (int)$xml->begin);
         $program->setParam('start', (int)$xml->begin);
         $program->setParam('end',   (int)$xml->end);
         $program->setParam('descr', (string) $xml->info);

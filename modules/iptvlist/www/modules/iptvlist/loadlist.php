@@ -7,6 +7,7 @@
 define("last_playlist","/tmp/iptv_lastlist.dat");
 define("udpsettings","/usr/local/etc/mos/www/modules/iptvlist/udp_proxy.conf");
 define("settings","/usr/local/etc/mos/www/modules/iptvlist/settings.conf");
+define("epgenabledconf","/usr/local/etc/mos/www/modules/iptvlist/epg_enabled.conf");
 
 if (file_exists("Favorites.m3u") == false) 
 {
@@ -31,7 +32,15 @@ else
 	$udpproxy="http://127.0.0.1:8080/";
 } 
 
-
+if (file_exists(epgenabledconf)) 
+{
+	$epgenabled = file_get_contents(epgenabledconf);
+	$epgenabled = trim( str_replace('\r', '', str_replace('\n', '', $epgenabled)) );
+} 
+else 
+{
+	$epgenabled="1";
+} 
 
 $m3uFileName = "";
 if (file_exists(last_playlist)) 
@@ -51,6 +60,7 @@ if ( $m3uFileName == "" )
 {
 	$m3uFileName = "Favorites.m3u";
 } 
+
 
 /*
 $m3uFile = file( "/usr/local/etc/mos/www/modules/iptvlist/playlist.m3u" );
@@ -101,10 +111,27 @@ if ( $m3uFileName == "Recordings" )
 }
 else
 {
+
+	if (file_exists( $m3uFileName.".url") )
+	{
+		$m3uFile = file_get_contents( $m3uFileName.".url" );
+        $m3uFile = str_replace("\n", "", $m3uFile);  
+        $m3uFile = str_replace("\r", "", $m3uFile);  
+
+		$m3uFile = file_get_contents( $m3uFile );
+		
+		if ( $m3uFile != FALSE )
+		{
+			file_put_contents( $m3uFileName, $m3uFile );
+		}
+	} 
+
+
 	$m3uFile = file_get_contents( $m3uFileName );
         $m3uFile = str_replace("\n", "\r", $m3uFile);  
         $m3uFile = str_replace("\r\r", "\r", $m3uFile);  
 	$m3uFile = explode( "\r", $m3uFile );
+
 
 	foreach( $m3uFile as $key => $line ) 
 	{
@@ -164,7 +191,7 @@ else
 				if ( $rtmpPos == 0 )
 				{
 			 		$link = "http://127.0.0.1/modules/iptvlist/rtmp.cgi?rtmp-raw=".$link;
-	
+
 				}
 			}
 	
@@ -174,10 +201,30 @@ else
 				$link = $udpproxy."udp/".substr( $link, 7 );		
 			}
 	
+			$rtpPos = strpos( $link, "rtp://@" );
+			if ( $rtpPos === 0 )
+		        {
+		        	$link = $udpproxy."rtp/".substr( $link, 7 );      
+			}	
+
+			$m3u8Pos = strpos( $link, ".m3u8" );
+			if ( $m3u8Pos === ( strlen( $link ) - 5 ) )
+		    {
+		        	$link = "http://127.0.0.1/modules/iptvlist/extendm3u8.php?link=".$link;
+			}	
+
 			$res .= $link."\n";
 			$count++;
 	      	}      	          
 	}
+
+	include_once("epglist.php");
+
+	if ( $epgenabled == "1" )
+	{
+		createEPGList( $m3uFileName );
+	}
+
 }
 
 $name= str_replace( ".m3u", "", $m3uFileName );

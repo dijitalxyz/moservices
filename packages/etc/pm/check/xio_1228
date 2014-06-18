@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# Check for install:
+# returns 2 - embedded
+# returns 1 - not installable
+# returns 0 - installable
+#
+[ -f /usr/local/sbin/hwinfo ] && exit 2
+exit 0

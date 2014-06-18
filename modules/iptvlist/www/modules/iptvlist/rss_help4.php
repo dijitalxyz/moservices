@@ -72,18 +72,18 @@ redrawDisplay();
 
 <!-- itemDisplay will draw widget inside the item area, item area is decided by mediaDisplay attributes -->
 <itemDisplay>
-<image offsetXPC=5 offsetYPC=11  widthPC=6.6 heightPC=89 useBackgroundSurface=yes>
+<image offsetXPC=2 offsetYPC=11  widthPC=6.6 heightPC=89 useBackgroundSurface=yes>
         <script>
         	getItemInfo("icon");
         </script>
 </image>	
-<image offsetXPC=15 offsetYPC=11  widthPC=6.6 heightPC=89 useBackgroundSurface=yes>
+<image offsetXPC=12 offsetYPC=11  widthPC=6.6 heightPC=89 useBackgroundSurface=yes>
         <script>
         	getItemInfo("icon2");
         </script>
 </image>	
 <text align=left fontSize=12 backgroundColor=-1:-1:-1 foregroundColor=255:255:255
-		offsetXPC=25 offsetYPC=0 widthPC=100 heightPC=100>
+		offsetXPC=22 offsetYPC=0 widthPC=100 heightPC=100>
         <script>
         	getItemInfo("title");
         </script>
@@ -142,6 +142,11 @@ redrawDisplay();
 	<title><?= getMsg( 'iptvPlay' ) ?> / <?= getMsg( 'iptvPlaySt' ) ?></title>
 	<icon>/usr/local/etc/mos/www/modules/iptvlist/images/ok.png</icon>
 	<icon2>/usr/local/etc/mos/www/modules/iptvlist/images/play.png</icon2>
+</item>
+
+<item>
+    	<title><?= getMsg( 'iptvShowHelp' ) ?></title>
+	<icon>/usr/local/etc/mos/www/modules/iptvlist/images/display.png</icon>
 </item>
 
 <item>

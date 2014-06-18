@@ -1,0 +1,9 @@
+[htop_1228]
+	revision = 1
+	title = "HTop v1.0.2"
+	role = util
+	init = S37htop
+	env = 1228
+	files = "bin/htop etc/init/S37htop"
+	require = "xterm libncursesw libgccs"
+	size = 200

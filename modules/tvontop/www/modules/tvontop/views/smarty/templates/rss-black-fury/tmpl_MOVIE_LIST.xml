@@ -150,7 +150,7 @@
 {foreach $mediaObj->getChildren() as $child}
 {$link = "{$config->get(cfg_processing_url,Runtime)}&amp;id={$child->id}&amp;type={$child->type}"}
     <item>
-        <title>{$child->title}</title>
+        <title>{$child->title|escape:'html'}</title>
         <type>{$child->type}</type>
         <media:thumbnail>{$child->getParam(thumbnail)}</media:thumbnail>
 {if $child->type == "STREAM_URL"}
@@ -165,7 +165,7 @@
         <country>{$child->getParam(country)}</country>
         <rating>{$child->getParam(rating)}</rating>
         <midRating>{$child->getParam(midRating)}</midRating>
-        <description>{$child->getParam(descr)}</description>
+        <description>{$child->getParam(descr)|escape:'html'}</description>
     </item>
 {/foreach}
 </channel>

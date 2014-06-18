@@ -1,7 +1,7 @@
 <?php
 /*	------------------------------
 	Ukraine online services 	
-	RSS part keyboard module v1.2.2
+	RSS part keyboard module v1.4
 	------------------------------
 	Created by Sashunya 2013	
 	wall9e@gmail.com			
@@ -47,11 +47,11 @@ class ua_rss_keyb_const
 	const text_footer_align		=	'left';
 	const text_footer_redraw	=	'no';
 	const text_footer_lines		=	'1';
-	const text_footer_offsetXPC	=	'6';
-	const text_footer_offsetYPC	=	'88';
+	const text_footer_offsetXPC	=	'7.5';
+	const text_footer_offsetYPC	=	'88.5';
 	const text_footer_widthPC	=	'95';
 	const text_footer_heightPC	=	'10';
-	const text_footer_fontSize	=	'19'; 
+	const text_footer_fontSize	=	'14'; 
 	const text_footer_backgroundColor	=	'-1:-1:-1';
 	const text_footer_foregroundColor	=	'255:255:255'; 
 	
@@ -60,10 +60,11 @@ class ua_rss_keyb_const
 	const descr_offsetYPC		=	'15';
 	const descr_widthPC			=	'78';
 	const descr_heightPC		=	'10';
-	const descr_image			=	'ua_border_descr.png';
+	//const descr_image			=	'ua_border_descr.png';
+	const descr_image			=	'ua_keyb_enter_text.png';
 
 	const text_descr_align		=	'left';
-	const text_descr_redraw		=	'yes';
+	const text_descr_redraw		=	'no';
 	const text_descr_offsetXPC	=	'14';
 	const text_descr_offsetYPC	=	'16';
 	const text_descr_widthPC	=	'78';
@@ -100,11 +101,11 @@ class ua_rss_keyb extends ua_rss_keyb_const
 		<text redraw="<?= static::text_descr_redraw ?>" align="<?= static:: text_descr_align ?>" offsetXPC="<?= static::text_descr_offsetXPC ?>" offsetYPC="<?= static::text_descr_offsetYPC ?>" widthPC="<?= static::text_descr_widthPC ?>" heightPC="<?= static::text_descr_heightPC ?>" fontSize="<?= static::text_descr_fontSize ?>" backgroundColor="<?= static::text_descr_backgroundColor ?>" foregroundColor="<?= static::text_descr_foregroundColor ?>">
 		<script>inputText + "_";</script>
 		<foregroundColor>
-				<script> if(firstUse == 1) "80:80:80"; else "200:200:200";</script>
+				<script> "200:200:200";</script>
 		</foregroundColor>
 		</text>
 		
-		<image offsetXPC="<?= static::descr_offsetXPC ?>" offsetYPC="<?= static::descr_offsetYPC ?>" widthPC="<?= static::descr_widthPC ?>" heightPC="<?= static::descr_heightPC ?>" >
+		<image redraw="no" offsetXPC="<?= static::descr_offsetXPC ?>" offsetYPC="<?= static::descr_offsetYPC ?>" widthPC="<?= static::descr_widthPC ?>" heightPC="<?= static::descr_heightPC ?>" >
 			<?= $ua_images_path . static::descr_image ?>
 		</image>
 	
@@ -127,9 +128,14 @@ class ua_rss_keyb extends ua_rss_keyb_const
 				{
 					
 					backcolor = "<?= static::unFocusFontBackColor ?>";
-					if (itemTitle == "OK" || itemTitle == "spac" || itemTitle == "del" || itemTitle == "lang") color="255:239:69";				
+					if (itemTitle == "clear" || itemTitle == "OK" || itemTitle == "spac" || itemTitle == "del" || itemTitle == "lang") 
+					{
+						color="255:239:69";	
+						backcolor = "12:57:127";
+					}
 					else
 					color = "<?= static::unFocusFontColor ?>";
+					
 				}
 			else
 				{
@@ -141,7 +147,7 @@ class ua_rss_keyb extends ua_rss_keyb_const
       </script>
 		
 						
-		<text align="<?= static::items_text_align ?>" lines="<?= static::items_text_lines ?>" offsetXPC="<?= static::items_text_offsetXPC ?>" offsetYPC="<?= static::items_text_offsetYPC ?>" widthPC="<?= static::items_text_widthPC ?>" heightPC="<?= static::items_text_heightPC ?>" fontSize="<?= static::items_text_fontSize ?>" >
+		<text cornerRounding="10" redraw="no" align="<?= static::items_text_align ?>" lines="<?= static::items_text_lines ?>" offsetXPC="<?= static::items_text_offsetXPC ?>" offsetYPC="<?= static::items_text_offsetYPC ?>" widthPC="<?= static::items_text_widthPC ?>" heightPC="<?= static::items_text_heightPC ?>" fontSize="<?= static::items_text_fontSize ?>" >
 		<foregroundColor>
 				<script>
 					color;
@@ -173,19 +179,50 @@ class ua_rss_keyb extends ua_rss_keyb_const
 	global $key_down;
 	global $key_left;
 	global $key_right;
+	global $key_display;
 	?>
 		<onUserInput>
 		<script>
-			ret = "false";
+			ret = "true";
+			idx = getFocusItemIndex();
+			row = idx % rows;
+			col = idx / rows;
 			userInput = currentUserInput();
-			majorContext = getPageInfo("majorContext");
-			if ( majorContext == "menu" )
-				{
-					if (userInput == "<?= $key_left ?>" )
+					if (userInput == "<?= $key_left ?>" &amp;&amp; Add(col, 0) == 0)
 					{
-						ret="true";
+						setFocusItemIndex(Add(idx, (cols - 1) * rows));
 					}
-				}
+					else if (userInput == "<?= $key_right ?>" &amp;&amp; Add(col, 1) == cols)
+					{
+						setFocusItemIndex(idx - (cols - 1) * rows);
+					}
+					else if (userInput == "<?= $key_up ?>" &amp;&amp; Add(row, 0) == 0)
+					{
+						setFocusItemIndex(Add(idx, rows) - 1);
+					}
+					else if (userInput == "<?= $key_down ?>" &amp;&amp; Add(row, 1) == rows)
+					{
+						 setFocusItemIndex(Add(idx, 1) - rows);
+					}
+					else if (userInput == "<?= $key_display ?>")
+					{
+						rss = "<?=$ua_path_link."ua_keybpopup_rss.php"?>";
+						dlok = doModalRss(rss);
+						if (dlok !=null)
+						{
+							executeScript("loadHistory");
+							setFocusItemIndex(25);
+							redrawDisplay();
+						}
+					}
+					else 
+					{
+						ret = "false";
+					}
+					if (ret == "true") 
+					{
+						redrawDisplay();
+					}
 			ret;
 		</script>
 	</onUserInput>
@@ -197,21 +234,39 @@ class ua_rss_keyb extends ua_rss_keyb_const
 	{
 	global $ua_path_link;
 	?>
+	<loadHistory>
+	inputText = "";
+	inputTextCount = 0;
+	inputTextArray = null;
+	if (dlok != null)
+			{
+				c = 1;
+				inputTextCount = getStringArrayAt(dlok, 0);
+				count = 0;
+				while( count != inputTextCount )
+				{
+					itemTitle = getStringArrayAt(dlok, c);
+					inputTextArray = pushBackStringArray(inputTextArray,itemTitle );  c += 1;
+					inputText += itemTitle;
+					count +=1;
+				}
+			}
+	</loadHistory>
+	
+	
 	<onEnter>
-    itemLocale = "rus";
+    rows = 5;
+    cols = 11;
+	
+	itemLocale = "rus";
 	curLang="rus";
 	dlok = getURL("<?= $ua_path_link."ua_keyboard_layout.php?lang="?>"+curLang);
 	itemTitleArray = readStringFromFile(dlok);
 	itemSize = getStringArrayAt(itemTitleArray, 0);
-	inputTextCount = 0;
-	inputTextArray = null;
-	inputText = getURL("<?=$ua_path_link.'ua_keyboard_layout.php?search_history=req'?>");
-	print("!!!!!!---",inputText);
-	firstUse = 0;
-	if(inputText != "")
-	firstUse = 1;
+	dlok = getURL("<?=$ua_path_link.'ua_keyboard_layout.php?search_history=req'?>");
+	executeScript("loadHistory");
 	redrawDisplay();
-	setFocusItemIndex(20);
+	setFocusItemIndex(25);
 	
 	</onEnter>
 	
@@ -233,7 +288,7 @@ class ua_rss_keyb extends ua_rss_keyb_const
 		</text>
 			
 		<text  align="<?= static::text_footer_align ?>" redraw="<?= static::text_footer_redraw ?>" lines="<?= static::text_footer_lines ?>" offsetXPC="<?= static::text_footer_offsetXPC ?>" offsetYPC="<?= static::text_footer_offsetYPC ?>" widthPC="<?= static::text_footer_widthPC ?>" heightPC="<?= static::text_footer_heightPC ?>" fontSize="<?= static::text_footer_fontSize ?>" backgroundColor="<?= static::text_footer_backgroundColor ?>" foregroundColor="<?= static::text_footer_foregroundColor ?>">
-		OK-конец ввода; spac-пробел; del-удалить символ; lang-язык; RET-выход
+		OK-конец ввода; disp-история; spac-пробел; del-удалить; clear-очистить; lang-язык; RET-выход
 		</text>
 	
 	<?php	
@@ -258,7 +313,7 @@ class ua_rss_keyb extends ua_rss_keyb_const
 				dlok = getURL("<?= $ua_path_link."ua_keyboard_layout.php?lang="?>"+curLang);
 				itemTitleArray = readStringFromFile(dlok);
 				itemSize = getStringArrayAt(itemTitleArray, 0);
-				setFocusItemIndex(20);
+				setFocusItemIndex(25);
 				ret = "true";
 		}
 		else
@@ -272,8 +327,6 @@ class ua_rss_keyb extends ua_rss_keyb_const
 		else	
 		if (itemTitle == "del"){
 		 	
-			if (firstUse == 0)
-			{
 				if(inputTextCount &gt; 0)
 				{
 					inputTextCount -= 1;
@@ -290,20 +343,22 @@ class ua_rss_keyb extends ua_rss_keyb_const
 					}
 					
 				}	
-			}
+			
 			
 		}
 		else
-		{
-		if (itemTitle == "spac") itemTitle=" ";
-			
-		if(firstUse == 1)
+		if (itemTitle == "clear")
 		  {
 	      inputText = "";
 	      inputTextArray = null;
 	      inputTextCount = 0;
-  		  firstUse = 0;
+  		 
 		  }
+		else
+		{
+		if (itemTitle == "spac") itemTitle=" ";
+			
+		
 		
 		inputText += itemTitle;
 		inputTextArray  = pushBackStringArray(inputTextArray, itemTitle);
@@ -337,7 +392,7 @@ class ua_rss_keyb extends ua_rss_keyb_const
 	global $ua_images_path;
 	?>
 	<mediaDisplay name="photoView"
-		rowCount			= "4" 
+		rowCount			= "5" 
 		columnCount			= "12"
 		drawItemText		= "no" 
 		menuBorderColor		= "0:0:0" 
@@ -347,17 +402,18 @@ class ua_rss_keyb extends ua_rss_keyb_const
 		fontSize			= "22"
 		sideTopHeightPC		= "0"
 		
-		itemOffsetXPC		= "9" 
+		itemOffsetXPC		= "11.5" 
 		itemOffsetYPC		= "30" 
-		itemWidthPC			= "6.5" 
-		itemHeightPC		= "11.5" 
-		itemBackgroundColor = "0:0:0"
-		itemBorderColor		= "0:0:0" 
-		backgroundColor		= "0:0:0" 
+		itemWidthPC			= "6.68" 
+		itemHeightPC		= "10.5" 
+		itemBackgroundColor = "-1:-1:-1"
+		itemBorderColor		= "-1:-1:-1" 
+		backgroundColor		= "-1:-1:-1" 
 		sliding				= "no" 
 		showHeader			= "no" 
 		showDefaultInfo		= "no"
 		rollItems			= "no" 
+		drawItemBorder=no
 		forceFocusOnItem	= "yes"
 		itemGapXPC			= "0.4"
 		itemGapYPC			= "0.4"
@@ -370,7 +426,7 @@ class ua_rss_keyb extends ua_rss_keyb_const
 		$this->showIdle();
 	?>
 
-	
+	<!--
 	<image  redraw="no" offsetXPC="<?= static::header_offsetXPC ?>" offsetYPC="<?= static::header_offsetYPC ?>" widthPC="<?= static::header_widthPC ?>" heightPC="<?= static::header_heightPC ?>">
 			<?= $ua_images_path.static::header ?>
 	</image>
@@ -378,7 +434,13 @@ class ua_rss_keyb extends ua_rss_keyb_const
 	<image  redraw="no" offsetXPC="<?= static::footer_offsetXPC ?>" offsetYPC="<?= static::footer_offsetYPC ?>" widthPC="<?= static::footer_widthPC ?>" heightPC="<?= static::footer_heightPC ?>">
 			<?= $ua_images_path.static::footer ?>
 	</image>
-
+	-->
+	
+	<backgroundDisplay name=KeyboardMenuBackground>
+			<image  redraw="no" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+					<?=$ua_images_path?>ua_background_main.png
+			</image>
+	</backgroundDisplay>
 
 	
 	<?php	

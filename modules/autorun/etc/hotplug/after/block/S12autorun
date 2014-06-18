@@ -14,7 +14,7 @@ s=$( echo "$DEVPATH" | sed -n 's/^.*\/\(.*\)$/\1/p' )
 [ -z "$s" ] && exit
 
 # save device
-dev="$( cat /proc/mounts | grep /tmp/usbmounts/$s | cut -d ' ' -f 1 )"
+dev="$( cat /proc/mounts | grep ' /tmp/usbmounts/'$s' ' | cut -d ' ' -f 1 )"
 
 sleep 5
 
